@@ -1,31 +1,36 @@
 import Foundation
 import os
 
-enum MeetingSignal { case inputActive, inputInactive }
-
 protocol MeetingDetectorDelegate: AnyObject {
     func meetingStarted(at: Date)
     func meetingEnded(at: Date)
 }
 
-/// Чистая логика: переводит поток сигналов «Толк держит/отпустил вход» в события встречи.
-/// Mute не рвёт встречу (R-8a): стоп — только реальный inputInactive после активной встречи.
+/// Превращает поток сигналов аудио-активности Толка в события встречи с grace-окном на спад.
+/// active=true → встреча идёт; стоп — только если активности нет непрерывно ≥ graceSeconds.
 final class MeetingDetector {
     weak var delegate: MeetingDetectorDelegate?
+    private let graceSeconds: TimeInterval
     private var isMeeting = false
+    private var lastActiveAt: Date?
 
-    func handle(_ signal: MeetingSignal, at date: Date) {
-        switch signal {
-        case .inputActive:
-            guard !isMeeting else { return }
-            isMeeting = true
-            Log.detector.info("meetingStarted")
-            delegate?.meetingStarted(at: date)
-        case .inputInactive:
-            guard isMeeting else { return }
-            isMeeting = false
-            Log.detector.info("meetingEnded")
-            delegate?.meetingEnded(at: date)
+    init(graceSeconds: TimeInterval = 300) { self.graceSeconds = graceSeconds }
+
+    func handle(active: Bool, at date: Date) {
+        if active {
+            lastActiveAt = date
+            if !isMeeting {
+                isMeeting = true
+                Log.detector.info("meetingStarted")
+                delegate?.meetingStarted(at: date)
+            }
+        } else {
+            guard isMeeting, let last = lastActiveAt else { return }
+            if date.timeIntervalSince(last) >= graceSeconds {
+                isMeeting = false
+                Log.detector.info("meetingEnded")
+                delegate?.meetingEnded(at: date)
+            }
         }
     }
 }
