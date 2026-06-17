@@ -31,4 +31,14 @@ private final class SpyDelegate: MeetingDetectorDelegate {
         det.handle(.inputInactive, at: Date())
         #expect(spy.ends.isEmpty)
     }
+
+    @Test func reArmsAfterCompleteCycle() {
+        let spy = SpyDelegate(); let det = MeetingDetector(); det.delegate = spy
+        let t0 = Date(timeIntervalSince1970: 0)
+        det.handle(.inputActive, at: t0)
+        det.handle(.inputInactive, at: t0.addingTimeInterval(60))
+        det.handle(.inputActive, at: t0.addingTimeInterval(90))
+        #expect(spy.starts.count == 2)
+        #expect(spy.ends.count == 1)
+    }
 }
