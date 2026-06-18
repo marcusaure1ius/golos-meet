@@ -10,3 +10,7 @@ xcuserdata/
 # Code coverage (LLVM profile data)
 *.profraw
 *.profdata
+
+# Локальные доки и настройки агента — вне репозитория
+docs/
+.claude/
