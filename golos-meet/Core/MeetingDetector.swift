@@ -14,7 +14,7 @@ final class MeetingDetector {
     private var isMeeting = false
     private var lastActiveAt: Date?
 
-    init(graceSeconds: TimeInterval = 300) { self.graceSeconds = graceSeconds }
+    init(graceSeconds: TimeInterval = 30) { self.graceSeconds = graceSeconds }
 
     func handle(active: Bool, at date: Date) {
         if active {
