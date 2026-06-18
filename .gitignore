@@ -6,3 +6,7 @@ xcuserdata/
 .DS_Store
 *.swiftpm
 .build/
+
+# Code coverage (LLVM profile data)
+*.profraw
+*.profdata
