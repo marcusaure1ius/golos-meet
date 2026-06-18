@@ -69,7 +69,10 @@ final class MicCaptureTrack: AudioTrack {
             consumed = true
             return inputBuffer
         })
-        guard status == .haveData else { return }
+        // КРИТИЧНО: при downsample конвертер часто отдаёт готовый выход со статусом
+        // .inputRanDry (вход исчерпан), а не .haveData. Приём только .haveData терял ~10%
+        // кадров → дорожка короче реального времени. Писать по факту frameLength > 0.
+        if status == .error { return }
 
         let frameCount = Int(outBuf.frameLength)
         guard frameCount > 0, let int16Ptr = outBuf.int16ChannelData?[0] else { return }
