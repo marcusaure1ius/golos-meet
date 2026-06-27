@@ -18,7 +18,14 @@ struct MeetingMeta: Codable, Equatable {
     static func encoded(_ meta: MeetingMeta) throws -> Data {
         let enc = JSONEncoder()
         enc.outputFormatting = [.prettyPrinted, .sortedKeys]
+        enc.dateEncodingStrategy = .iso8601
         return try enc.encode(meta)
+    }
+
+    static func decoded(_ data: Data) throws -> MeetingMeta {
+        let dec = JSONDecoder()
+        dec.dateDecodingStrategy = .iso8601
+        return try dec.decode(MeetingMeta.self, from: data)
     }
 
     func write(to url: URL) throws { try Self.encoded(self).write(to: url) }
