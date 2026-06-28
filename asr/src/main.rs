@@ -24,8 +24,9 @@ use std::thread;
 #[command(version, about = "GigaAM-v3 transcription sidecar for golos.app")]
 struct Args {
     /// Путь к FIFO с бинарным потоком PCM (Int16 LE, 16kHz mono).
+    /// Опционально: если не задан, batch-режим (TranscribeFile) работает без audio-fifo.
     #[arg(long)]
-    audio_path: PathBuf,
+    audio_path: Option<PathBuf>,
 }
 
 const AUDIO_CHUNK_SAMPLES: usize = 1600; // ~100ms @16kHz
@@ -34,7 +35,7 @@ const _: () = assert!(AUDIO_CHUNK_SAMPLES > 0);
 fn main() -> Result<()> {
     init_logging();
     let args = Args::parse();
-    tracing::info!("golos-asr starting (audio_path={:?})", args.audio_path);
+    tracing::info!("golos-asr starting (audio_path={:?})", args.audio_path.as_deref());
 
     // 1. Стандартный output — наш канал ответов. Заворачиваем в Mutex,
     //    чтобы оба треда (main и audio-reader) могли писать.
@@ -51,14 +52,16 @@ fn main() -> Result<()> {
     let (samples_tx, samples_rx) = channel::<u64>();
 
     // 3. Отдельный тред читает audio-path (FIFO) и пушит сэмплы в Session::feed_samples.
-    let audio_session = Arc::clone(&session);
-    let audio_counter = Arc::clone(&samples_read);
-    let audio_path = args.audio_path.clone();
-    thread::spawn(move || {
-        if let Err(e) = audio_reader_loop(&audio_path, audio_session, audio_counter, samples_tx) {
-            tracing::error!("audio reader exited with error: {:#}", e);
-        }
-    });
+    //    В batch-режиме (TranscribeFile без audio-fifo) тред не запускается.
+    if let Some(audio_path) = args.audio_path.clone() {
+        let audio_session = Arc::clone(&session);
+        let audio_counter = Arc::clone(&samples_read);
+        thread::spawn(move || {
+            if let Err(e) = audio_reader_loop(&audio_path, audio_session, audio_counter, samples_tx) {
+                tracing::error!("audio reader exited with error: {:#}", e);
+            }
+        });
+    }
 
     // 4. Основной цикл — читаем stdin построчно, обрабатываем control messages.
     let stdin = std::io::stdin();

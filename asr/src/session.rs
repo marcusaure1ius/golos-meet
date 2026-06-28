@@ -6,7 +6,8 @@
 //!     Recording → Loaded (после EndSession → Final, или Cancel)
 
 use crate::audio::AudioBuffer;
-use crate::protocol::{Request, Response};
+use crate::protocol::{Request, Response, TimedSegment};
+use crate::segment::{segment_speech, SegmentConfig, SAMPLE_RATE};
 use crate::transcriber::Transcriber;
 use anyhow::Result;
 use std::path::PathBuf;
@@ -53,6 +54,7 @@ impl Session {
         let id = req.id();
         match (self.state, req) {
             (_, Request::Load { model_path, .. }) => self.do_load(id, model_path),
+            (State::Loaded, Request::TranscribeFile { path, .. }) => self.do_transcribe_file(id, path),
             (State::Loaded, Request::BeginSession { .. }) => {
                 self.buffer.clear();
                 self.state = State::Recording;
@@ -89,6 +91,42 @@ impl Session {
                 message: format!("{:#}", e),
             },
         }
+    }
+
+    fn do_transcribe_file(&mut self, id: u64, path: std::path::PathBuf) -> Response {
+        let t = match self.transcriber.as_mut() {
+            Some(t) => t,
+            None => return Response::Error {
+                id: Some(id), kind: "model_not_loaded".into(),
+                message: "transcriber missing".into() },
+        };
+        let started = std::time::Instant::now();
+        let samples = match transcribe_rs::audio::read_wav_samples(&path) {
+            Ok(s) => s,
+            Err(e) => return Response::Error {
+                id: Some(id), kind: "wav_read_failed".into(),
+                message: format!("{e}") },
+        };
+        let regions = segment_speech(&samples, &SegmentConfig::default());
+        let mut segments = Vec::with_capacity(regions.len());
+        for r in regions {
+            let slice = &samples[r.start_sample..r.end_sample.min(samples.len())];
+            match t.transcribe_samples(slice) {
+                Ok(text) => {
+                    let text = text.trim().to_string();
+                    if text.is_empty() { continue; }
+                    segments.push(TimedSegment {
+                        start: r.start_sample as f32 / SAMPLE_RATE as f32,
+                        end: r.end_sample as f32 / SAMPLE_RATE as f32,
+                        text,
+                    });
+                }
+                Err(e) => return Response::Error {
+                    id: Some(id), kind: "transcribe_failed".into(),
+                    message: format!("{e:#}") },
+            }
+        }
+        Response::Segments { id, segments, duration_ms: started.elapsed().as_millis() as u64 }
     }
 
     fn do_finalize(&mut self, id: u64) -> Response {
