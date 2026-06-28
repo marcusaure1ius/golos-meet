@@ -80,4 +80,31 @@ import Foundation
         #expect(FileManager.default.fileExists(atPath: dir.appendingPathComponent("mic.wav").path))
         #expect(meta.status == .ready || meta.status == .discarded)
     }
+
+    @Test func startupResetsProcessingToFailed() throws {
+        // отдельный temp-root с двумя встречами: одна processing, одна ready
+        let root = FileManager.default.temporaryDirectory
+            .appendingPathComponent("gm-root-\(UUID().uuidString)", isDirectory: true)
+        try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
+        func make(_ id: String, _ status: MeetingStatus) throws {
+            let dir = root.appendingPathComponent(id, isDirectory: true)
+            try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+            let m = MeetingMeta(id: id, source: "kontur.talk",
+                                startedAt: Date(timeIntervalSince1970: 0),
+                                endedAt: Date(timeIntervalSince1970: 600),
+                                durationSeconds: 600, status: status, asrModel: nil)
+            try m.write(to: dir.appendingPathComponent("meta.json"))
+        }
+        try make("stuck", .processing)
+        try make("done", .ready)
+
+        StartupRecovery.resetStaleProcessing(root: root)
+
+        let stuck = try MeetingMeta.decoded(Data(contentsOf:
+            root.appendingPathComponent("stuck/meta.json")))
+        let done = try MeetingMeta.decoded(Data(contentsOf:
+            root.appendingPathComponent("done/meta.json")))
+        #expect(stuck.status == .failed)   // зависший processing сброшен
+        #expect(done.status == .ready)     // готовый не тронут
+    }
 }
