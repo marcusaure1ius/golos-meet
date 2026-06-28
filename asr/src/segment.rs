@@ -16,6 +16,8 @@ pub struct SpeechRegion {
 #[derive(Debug, Clone)]
 pub struct SegmentConfig {
     pub frame_size: usize,
+    /// VAD порог (RMS энергия); подобран эмпирически на 10 встречах
+    /// выше шума дальних/шумных микрофонов (~0.003–0.004), но ловит тихую речь
     pub threshold_rms: f32,
     /// Сколько подряд тихих фреймов закрывают речевой регион.
     pub hangover_frames: usize,
@@ -27,7 +29,7 @@ impl Default for SegmentConfig {
     fn default() -> Self {
         Self {
             frame_size: 480,          // 30ms @16kHz
-            threshold_rms: 0.01,
+            threshold_rms: 0.005,
             hangover_frames: 15,      // ~450ms тишины закрывает регион
             min_region_samples: 4_800, // 300ms
         }
