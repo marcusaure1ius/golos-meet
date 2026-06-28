@@ -15,5 +15,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
         NSApp.setActivationPolicy(.accessory)   // без иконки в Dock, фоновый агент
         coordinator.start()
+        // dev: одноразовый backfill по флагу окружения.
+        if ProcessInfo.processInfo.environment["GOLOS_MEET_BACKFILL"] == "1" {
+            Task { await Backfill.run() }
+        }
     }
 }
