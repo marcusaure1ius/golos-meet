@@ -1,16 +1,21 @@
 import SwiftUI
 
-/// Контейнер раздела «Встречи». На этом шаге — только лента; переключатель и
-/// детали добавляются в следующих задачах.
 struct MeetingsScreen: View {
     @Environment(\.palette) var p
     @EnvironmentObject var library: MeetingLibrary
     @Environment(\.scenePhase) private var scenePhase
+    @State private var selected: MeetingSummary?
 
     var body: some View {
-        VStack(spacing: 0) {
-            header
-            MeetingFeedView(meetings: library.summaries, now: Date()) { _ in }
+        Group {
+            if let m = selected {
+                MeetingDetailView(meeting: m) { selected = nil }
+            } else {
+                VStack(spacing: 0) {
+                    header
+                    MeetingFeedView(meetings: library.summaries, now: Date()) { selected = $0 }
+                }
+            }
         }
         .onAppear { library.reload() }
         .onChange(of: scenePhase) { _, phase in if phase == .active { library.reload() } }
