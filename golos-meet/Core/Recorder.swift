@@ -9,6 +9,9 @@ protocol AudioTrack {
 
 /// Метаданные одной встречи, ложатся рядом с дорожками как `meta.json`.
 struct MeetingMeta: Codable, Equatable {
+    /// Текущая версия схемы meta.json. Растёт при несовместимых изменениях.
+    static let currentSchemaVersion = 1
+
     let id: String
     let source: String
     let startedAt: Date
@@ -16,6 +19,10 @@ struct MeetingMeta: Codable, Equatable {
     let durationSeconds: Int
     var status: MeetingStatus?
     var asrModel: String?
+    /// Заголовок встречи для UI (placeholder при старте, позже уточняется).
+    var title: String? = nil
+    /// Версия схемы; nil у старых meta, записанных до введения поля.
+    var schemaVersion: Int? = nil
 
     static func encoded(_ meta: MeetingMeta) throws -> Data {
         let enc = JSONEncoder()
@@ -30,8 +37,11 @@ struct MeetingMeta: Codable, Equatable {
         return try dec.decode(MeetingMeta.self, from: data)
     }
 
-    func write(to url: URL) throws { try Self.encoded(self).write(to: url) }
+    func write(to url: URL) throws { try Self.encoded(self).write(to: url, options: .atomic) }
 }
+
+/// Глобальная константа версии схемы meta.json (см. `MeetingMeta.currentSchemaVersion`).
+let currentMetaSchemaVersion = MeetingMeta.currentSchemaVersion
 
 /// Оркестрация записи: по `meetingStarted` создаёт папку встречи, поднимает две дорожки
 /// (микрофон + системный звук) в свои WavWriter'ы; по `meetingEnded` останавливает,
@@ -49,11 +59,36 @@ final class Recorder: MeetingDetectorDelegate {
 
     private var active: Active?
 
+    /// Placeholder-заголовок для UI: «Встреча HH:mm» в локальном времени.
+    private static let titleFormatter: DateFormatter = {
+        let f = DateFormatter()
+        f.locale = Locale(identifier: "ru_RU")
+        f.timeZone = .current
+        f.dateFormat = "HH:mm"
+        return f
+    }()
+    private static func placeholderTitle(for date: Date) -> String {
+        "Встреча \(titleFormatter.string(from: date))"
+    }
+
     func meetingStarted(at date: Date) {
         guard active == nil else { return }
         do {
             let folder = MeetingFolder.make(startedAt: date, source: "kontur.talk")
             try FileManager.default.createDirectory(at: folder.url, withIntermediateDirectories: true)
+            // Пишем meta.json сразу: краш во время записи оставит на диске
+            // восстановимую запись со status:.recording (вместо пустоты).
+            let meta = MeetingMeta(id: folder.id, source: folder.source,
+                                   startedAt: date, endedAt: date,
+                                   durationSeconds: 0,
+                                   status: .recording, asrModel: nil,
+                                   title: Self.placeholderTitle(for: date),
+                                   schemaVersion: currentMetaSchemaVersion)
+            do {
+                try meta.write(to: folder.url.appendingPathComponent("meta.json"))
+            } catch {
+                Log.recorder.error("meta.json (старт) не записан: \(error.localizedDescription, privacy: .public)")
+            }
             let mic = try WavWriter(url: folder.url.appendingPathComponent("mic.wav"))
             let system = try WavWriter(url: folder.url.appendingPathComponent("system.wav"))
             let micTrack = MicCaptureTrack()
@@ -74,17 +109,33 @@ final class Recorder: MeetingDetectorDelegate {
         a.micTrack.stop()
         a.sysTrack.stop()
         Task {
-            try? await a.mic.finalize()
-            try? await a.system.finalize()
+            do {
+                try await a.mic.finalize()
+            } catch {
+                Log.recorder.error("финализация mic.wav провалилась: \(error.localizedDescription, privacy: .public)")
+            }
+            do {
+                try await a.system.finalize()
+            } catch {
+                Log.recorder.error("финализация system.wav провалилась: \(error.localizedDescription, privacy: .public)")
+            }
+            // Перезаписываем meta с реальными endedAt/duration, сохраняя
+            // status:.recording (пайплайн дальше переведёт в processing/ready/...).
             let meta = MeetingMeta(id: a.folder.id, source: a.folder.source,
                                    startedAt: a.startedAt, endedAt: date,
                                    durationSeconds: Int(date.timeIntervalSince(a.startedAt)),
-                                   status: .recording, asrModel: nil)
-            try? meta.write(to: a.folder.url.appendingPathComponent("meta.json"))
+                                   status: .recording, asrModel: nil,
+                                   title: Self.placeholderTitle(for: a.startedAt),
+                                   schemaVersion: currentMetaSchemaVersion)
+            do {
+                try meta.write(to: a.folder.url.appendingPathComponent("meta.json"))
+            } catch {
+                Log.recorder.error("meta.json (стоп) не записан: \(error.localizedDescription, privacy: .public)")
+            }
             Log.recorder.info("запись завершена: \(a.folder.id, privacy: .public)")
-            let pipeline = ProcessingPipeline(asrFactory: {
-                LocalASR.forChoice(ASRSettings.current)
-            })
+            let pipeline = ProcessingPipeline(
+                asrFactory: { LocalASR.forChoice(ASRSettings.current) },
+                modelId: ASRSettings.current.modelId)
             await pipeline.process(folder: a.folder.url)
         }
     }
