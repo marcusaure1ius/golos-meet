@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Scheme
+   LastUpgradeVersion = "1700"
+   version = "1.7">
+   <BuildAction
+      parallelizeBuildables = "YES"
+      buildImplicitDependencies = "YES"
+      buildArchitectures = "Automatic">
+      <BuildActionEntries>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "75EC79612FE330CC00D3BFD9"
+               BuildableName = "golos-meet.app"
+               BlueprintName = "golos-meet"
+               ReferencedContainer = "container:golos-meet.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+      </BuildActionEntries>
+   </BuildAction>
+   <TestAction
+      buildConfiguration = "Debug"
+      selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
+      selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      shouldUseLaunchSchemeArgsEnv = "NO">
+      <Testables>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "75EC796E2FE330CD00D3BFD9"
+               BuildableName = "golos-meetTests.xctest"
+               BlueprintName = "golos-meetTests"
+               ReferencedContainer = "container:golos-meet.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+      </Testables>
+      <!-- E2E integration test vars.
+           Set isEnabled="YES" and fill real paths to run PipelineE2ETests locally.
+           Leave isEnabled="NO" (default) to skip on CI / machines without the model. -->
+      <EnvironmentVariables>
+         <EnvironmentVariable
+            key = "GOLOS_MEET_ASR_BIN"
+            value = "/Users/alfa/Development/golos-meet/asr/target/release/golos-asr"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+         <EnvironmentVariable
+            key = "GOLOS_MEET_GIGAAM_DIR"
+            value = "/Users/alfa/Library/Application Support/golos/models/e2e_ctc"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+         <EnvironmentVariable
+            key = "GOLOS_MEET_E2E_SRC"
+            value = "/Users/alfa/Library/Application Support/golos-meet/meetings/2026-06-23_09-44-58"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+      </EnvironmentVariables>
+   </TestAction>
+   <LaunchAction
+      buildConfiguration = "Debug"
+      selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
+      selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      launchStyle = "0"
+      useCustomWorkingDirectory = "NO"
+      ignoresPersistentStateOnLaunch = "NO"
+      debugDocumentVersioning = "YES"
+      debugServiceExtension = "internal"
+      allowLocationSimulation = "YES">
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "75EC79612FE330CC00D3BFD9"
+            BuildableName = "golos-meet.app"
+            BlueprintName = "golos-meet"
+            ReferencedContainer = "container:golos-meet.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
+   </LaunchAction>
+   <ProfileAction
+      buildConfiguration = "Release"
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      savedToolIdentifier = ""
+      useCustomWorkingDirectory = "NO"
+      debugDocumentVersioning = "YES">
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "75EC79612FE330CC00D3BFD9"
+            BuildableName = "golos-meet.app"
+            BlueprintName = "golos-meet"
+            ReferencedContainer = "container:golos-meet.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
+   </ProfileAction>
+   <AnalyzeAction
+      buildConfiguration = "Debug">
+   </AnalyzeAction>
+   <ArchiveAction
+      buildConfiguration = "Release"
+      revealArchiveInOrganizer = "YES">
+   </ArchiveAction>
+</Scheme>
