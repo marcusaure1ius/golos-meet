@@ -21,4 +21,27 @@ enum AppPaths {
     static func meetingDir(_ id: String) -> URL {
         meetingsRoot.appendingPathComponent(id, isDirectory: true)
     }
+
+    /// `…/golos-meet/models/`
+    static var modelsRoot: URL {
+        let dir = appSupport.appendingPathComponent("models", isDirectory: true)
+        try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+        return dir
+    }
+
+    /// Каталог конкретной модели.
+    static func modelDir(_ id: String) -> URL {
+        modelsRoot.appendingPathComponent(id, isDirectory: true)
+    }
+
+    /// Бинарь sidecar. В релизе — из бандла; в dev — из env GOLOS_MEET_ASR_BIN.
+    static var sidecarBinary: URL {
+        if let p = ProcessInfo.processInfo.environment["GOLOS_MEET_ASR_BIN"] {
+            return URL(fileURLWithPath: p)
+        }
+        if let url = Bundle.main.url(forResource: "golos-asr", withExtension: nil) {
+            return url
+        }
+        return appSupport.appendingPathComponent("golos-asr")
+    }
 }
