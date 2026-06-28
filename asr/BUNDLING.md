@@ -91,6 +91,17 @@ The project uses Xcode objectVersion 77. There is no safe, stable CLI tooling (`
 
 ---
 
+## Model install (M2: manual)
+
+В M2 модель GigaAM устанавливается вручную по пути:
+```
+~/Library/Application Support/golos-meet/models/gigaam-v3/
+```
+
+Автоматическая загрузка при первом запуске через `ModelManager` реализована, но **не подключена** к процессу запуска (отложено; URL-дескрипторы/контрольные суммы подлежат подтверждению). Если модель отсутствует, `LocalASR.start()` вернёт ошибку, и встреча будет помечена статусом `failed`.
+
+---
+
 ## Notes
 
 - **Dev:** Use env var + `cargo build --release` to iterate quickly
