@@ -14,6 +14,8 @@ struct MeetingMeta: Codable, Equatable {
     let startedAt: Date
     let endedAt: Date
     let durationSeconds: Int
+    var status: MeetingStatus?
+    var asrModel: String?
 
     static func encoded(_ meta: MeetingMeta) throws -> Data {
         let enc = JSONEncoder()
@@ -76,7 +78,8 @@ final class Recorder: MeetingDetectorDelegate {
             try? await a.system.finalize()
             let meta = MeetingMeta(id: a.folder.id, source: a.folder.source,
                                    startedAt: a.startedAt, endedAt: date,
-                                   durationSeconds: Int(date.timeIntervalSince(a.startedAt)))
+                                   durationSeconds: Int(date.timeIntervalSince(a.startedAt)),
+                                   status: .recording, asrModel: nil)
             try? meta.write(to: a.folder.url.appendingPathComponent("meta.json"))
             Log.recorder.info("запись завершена: \(a.folder.id, privacy: .public)")
         }
