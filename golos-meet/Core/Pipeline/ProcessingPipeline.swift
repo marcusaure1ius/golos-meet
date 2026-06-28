@@ -26,10 +26,10 @@ final class ProcessingPipeline {
 
         // Короткая встреча в авто-режиме — выбросить.
         if meta.durationSeconds <= config.thresholdSeconds && config.deleteShortAudio {
-            try? FileManager.default.removeItem(at: folder.appendingPathComponent("mic.wav"))
-            try? FileManager.default.removeItem(at: folder.appendingPathComponent("system.wav"))
             meta.status = .discarded
             try? meta.write(to: metaURL)
+            try? FileManager.default.removeItem(at: folder.appendingPathComponent("mic.wav"))
+            try? FileManager.default.removeItem(at: folder.appendingPathComponent("system.wav"))
             Log.pipeline.info("\(meta.id, privacy: .public): discarded (<= порога)")
             return
         }
