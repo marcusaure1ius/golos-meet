@@ -67,7 +67,9 @@ import Foundation
             endedAt: now,
             durationSeconds: 600,
             status: .recording,
-            asrModel: nil)
+            asrModel: nil,
+            title: "Встреча 09:44",
+            schemaVersion: currentMetaSchemaVersion)
         try meta.write(to: tempDir.appendingPathComponent("meta.json"))
 
         // Прогон пайплайна с реальным LocalASR + реальным sidecar
@@ -106,6 +108,10 @@ import Foundation
                 "статус встречи должен быть .ready; получено: \(String(describing: reloaded.status))")
         #expect(reloaded.asrModel == "gigaam-v3",
                 "asrModel должен быть 'gigaam-v3'; получено: \(reloaded.asrModel ?? "nil")")
+        #expect(reloaded.title == "Встреча 09:44",
+                "title должен сохраняться через пайплайн; получено: \(reloaded.title ?? "nil")")
+        #expect(reloaded.schemaVersion == currentMetaSchemaVersion,
+                "schemaVersion должен сохраняться; получено: \(String(describing: reloaded.schemaVersion))")
 
         // 4. Хотя бы один сегмент содержит непустой текст
         let nonEmpty = transcript.segments.filter {

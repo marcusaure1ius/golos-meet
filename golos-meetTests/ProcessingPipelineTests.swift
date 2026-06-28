@@ -54,11 +54,26 @@ import Foundation
         await p.process(folder: dir)
         let meta = try readMeta(dir)
         #expect(meta.status == .ready)
+        #expect(meta.asrModel == "gigaam-v3")   // дефолтный modelId
         let jsonURL = dir.appendingPathComponent("transcript.json")
         #expect(FileManager.default.fileExists(atPath: jsonURL.path))
         let tr = try JSONDecoder().decode(Transcript.self, from: Data(contentsOf: jsonURL))
         #expect(tr.segments.map(\.text) == ["привет", "да"])
         #expect(FileManager.default.fileExists(atPath: dir.appendingPathComponent("transcript.md").path))
+    }
+
+    @Test func asrModelIsThreadedIntoMeta() async throws {
+        let dir = try tempMeeting(duration: 600)
+        let stub = StubASR(perFile: ["mic.wav": [TimedSegment(start: 0, end: 1, text: "x")]])
+        let p = ProcessingPipeline(asrFactory: { stub }, modelId: "whisper-large-v3")
+        await p.process(folder: dir)
+        let meta = try readMeta(dir)
+        #expect(meta.status == .ready)
+        #expect(meta.asrModel == "whisper-large-v3")
+        let tr = try JSONDecoder().decode(
+            Transcript.self,
+            from: Data(contentsOf: dir.appendingPathComponent("transcript.json")))
+        #expect(tr.asrModel == "whisper-large-v3")
     }
 
     @Test func asrFailureMarksFailedAndKeepsAudio() async throws {
@@ -97,15 +112,19 @@ import Foundation
             try m.write(to: dir.appendingPathComponent("meta.json"))
         }
         try make("stuck", .processing)
+        try make("crashed", .recording)
         try make("done", .ready)
+        try make("dropped", .discarded)
 
-        StartupRecovery.resetStaleProcessing(root: root)
+        StartupRecovery.resetStale(root: root)
 
-        let stuck = try MeetingMeta.decoded(Data(contentsOf:
-            root.appendingPathComponent("stuck/meta.json")))
-        let done = try MeetingMeta.decoded(Data(contentsOf:
-            root.appendingPathComponent("done/meta.json")))
-        #expect(stuck.status == .failed)   // зависший processing сброшен
-        #expect(done.status == .ready)     // готовый не тронут
+        func status(_ id: String) throws -> MeetingStatus? {
+            try MeetingMeta.decoded(Data(contentsOf:
+                root.appendingPathComponent("\(id)/meta.json"))).status
+        }
+        #expect(try status("stuck") == .failed)      // зависший processing сброшен
+        #expect(try status("crashed") == .failed)    // краш во время записи сброшен
+        #expect(try status("done") == .ready)        // готовый не тронут
+        #expect(try status("dropped") == .discarded) // отброшенный не тронут
     }
 }
