@@ -1,12 +1,23 @@
 use serde::{Deserialize, Serialize};
 use std::path::PathBuf;
 
+/// Движок распознавания речи.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize, Default)]
+#[serde(rename_all = "snake_case")]
+pub enum ModelKind {
+    /// GigaAM-v3 ONNX CTC (по умолчанию, быстро).
+    #[default]
+    Gigaam,
+    /// Whisper large-v3 через whisper.cpp / GGML (качество).
+    Whisper,
+}
+
 /// Сообщения от Swift app в sidecar (по stdin, JSON-lines).
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(tag = "type", rename_all = "snake_case")]
 pub enum Request {
-    /// Загрузить модель из директории. Должно прийти один раз перед begin_session.
-    Load { id: u64, model_path: PathBuf },
+    /// Загрузить модель. kind определяет движок (по умолчанию gigaam). Должно прийти один раз перед begin_session.
+    Load { id: u64, model_path: PathBuf, #[serde(default)] kind: ModelKind },
     /// Начать новую сессию записи. Аудио идёт по audio-fd.
     BeginSession { id: u64 },
     /// Закончить сессию. Sidecar финализирует и шлёт Response::Final.
@@ -75,6 +86,18 @@ impl Response {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn load_kind_defaults_to_gigaam() {
+        // load без поля kind → ModelKind::Gigaam
+        let json = r#"{"type":"load","id":1,"model_path":"/models/gigaam"}"#;
+        let req: Request = serde_json::from_str(json).unwrap();
+        assert_eq!(req, Request::Load { id: 1, model_path: "/models/gigaam".into(), kind: ModelKind::Gigaam });
+        // load с kind:"whisper" → ModelKind::Whisper
+        let json2 = r#"{"type":"load","id":2,"model_path":"/models/ggml.bin","kind":"whisper"}"#;
+        let req2: Request = serde_json::from_str(json2).unwrap();
+        assert_eq!(req2, Request::Load { id: 2, model_path: "/models/ggml.bin".into(), kind: ModelKind::Whisper });
+    }
 
     #[test]
     fn transcribe_file_request_roundtrips() {
