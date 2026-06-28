@@ -17,7 +17,7 @@ enum MeetingGrouping {
 
     /// Группирует встречи по календарному дню. Дни — новые сверху; внутри дня — новые сверху.
     static func group(_ meetings: [MeetingSummary], now: Date, calendar: Calendar = .current) -> [MeetingDayGroup] {
-        var cal = calendar
+        let cal = calendar
         keyFormatter.timeZone = cal.timeZone
         dayFormatter.timeZone = cal.timeZone
 
