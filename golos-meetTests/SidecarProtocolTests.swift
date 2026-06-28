@@ -36,4 +36,11 @@ import Foundation
         let resp = try JSONDecoder().decode(SidecarResponse.self, from: Data(json.utf8))
         #expect(resp == .hello(version: "1.0"))
     }
+
+    /// Подтверждение готовности sidecar после загрузки модели (используется LocalASR.start()).
+    @Test func decodesReady() throws {
+        let json = #"{"type":"ready","id":3}"#
+        let resp = try JSONDecoder().decode(SidecarResponse.self, from: Data(json.utf8))
+        #expect(resp == .ready(id: 3))
+    }
 }

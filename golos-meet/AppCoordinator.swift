@@ -12,7 +12,7 @@ final class AppCoordinator {
         return 30
     }
 
-    private let detector = MeetingDetector(graceSeconds: AppCoordinator.graceSeconds)
+    let detector = MeetingDetector(graceSeconds: AppCoordinator.graceSeconds)
     private let audioMonitor = AudioProcessMonitor()
     private let windowMonitor = WindowMonitor()
     private let recorder = Recorder()
@@ -31,7 +31,7 @@ final class AppCoordinator {
         Log.recorder.info("golos-meet запущен (accessory agent)")
     }
 
-    private func update(audio: Bool? = nil, window: Bool? = nil) {
+    func update(audio: Bool? = nil, window: Bool? = nil) {
         if let audio { lastAudioActive = audio }
         if let window { lastWindowActive = window }
         detector.handle(active: lastAudioActive || lastWindowActive, at: Date())
