@@ -1,8 +1,8 @@
-use golos_asr::protocol::{Request, Response};
+use golos_asr::protocol::{ModelKind, Request, Response};
 
 #[test]
 fn request_load_round_trip() {
-    let r = Request::Load { id: 1, model_path: "/tmp/model".into() };
+    let r = Request::Load { id: 1, model_path: "/tmp/model".into(), kind: ModelKind::Gigaam };
     let json = serde_json::to_string(&r).unwrap();
     assert!(json.contains(r#""type":"load""#));
     assert!(json.contains(r#""id":1"#));
