@@ -42,7 +42,7 @@ struct MainWindowView: View {
     @ViewBuilder private var paneView: some View {
         switch selection {
         case .meetings: MeetingsScreen()
-        case .settings: ContentUnavailableView("Настройки", systemImage: "gearshape")
+        case .settings: SettingsScreen()
         }
     }
 }
