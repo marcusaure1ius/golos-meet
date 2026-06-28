@@ -82,6 +82,11 @@ mod tests {
         let req: Request = serde_json::from_str(json).unwrap();
         assert_eq!(req, Request::TranscribeFile { id: 7, path: "/tmp/mic.wav".into() });
         assert_eq!(req.id(), 7);
+        // serialize back and confirm the snake_case tag round-trips
+        let out = serde_json::to_string(&req).unwrap();
+        assert!(out.contains(r#""type":"transcribe_file""#));
+        let back: Request = serde_json::from_str(&out).unwrap();
+        assert_eq!(back, req);
     }
 
     #[test]
