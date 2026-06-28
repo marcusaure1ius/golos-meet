@@ -59,19 +59,38 @@ actor LocalASR: ASRClient {
         try await waitHello(timeout: 5)
         let resp = try await roundtrip(timeout: 180) { .load(id: $0, modelPath: modelPath.path, kind: engine) }
         switch resp {
-        case .ready: return
-        case .error(_, _, let m): throw ASRError.modelLoadFailed(m)
-        default: throw ASRError.protocolError("after load: \(resp)")
+        case .ready:
+            Log.asr.info("модель загружена: engine=\(self.engine.rawValue, privacy: .public)")
+            return
+        case .error(_, _, let m):
+            Log.asr.error("загрузка модели провалилась: \(m, privacy: .public)")
+            throw ASRError.modelLoadFailed(m)
+        default:
+            Log.asr.error("неожиданный ответ после load: \(String(describing: resp), privacy: .public)")
+            throw ASRError.protocolError("after load: \(resp)")
         }
     }
 
     func transcribe(fileURL: URL) async throws -> [TimedSegment] {
         if process == nil { try await start() }
-        let resp = try await roundtrip(timeout: 3600) { .transcribeFile(id: $0, path: fileURL.path) }
-        switch resp {
-        case .segments(_, let segs, _): return segs
-        case .error(_, _, let m): throw ASRError.transcribeFailed(m)
-        default: throw ASRError.protocolError("after transcribe_file: \(resp)")
+        let name = fileURL.lastPathComponent
+        Log.asr.info("transcribe \(name, privacy: .public): старт")
+        do {
+            let resp = try await roundtrip(timeout: 3600) { .transcribeFile(id: $0, path: fileURL.path) }
+            switch resp {
+            case .segments(_, let segs, let ms):
+                Log.asr.info("transcribed \(name, privacy: .public): \(segs.count) segs in \(ms)ms")
+                return segs
+            case .error(_, _, let m):
+                Log.asr.error("transcribe \(name, privacy: .public) failed: \(m, privacy: .public)")
+                throw ASRError.transcribeFailed(m)
+            default:
+                Log.asr.error("неожиданный ответ после transcribe_file (\(name, privacy: .public)): \(String(describing: resp), privacy: .public)")
+                throw ASRError.protocolError("after transcribe_file: \(resp)")
+            }
+        } catch {
+            Log.asr.error("transcribe \(name, privacy: .public) прерван: \(error.localizedDescription, privacy: .public)")
+            throw error
         }
     }
 
@@ -137,6 +156,9 @@ actor LocalASR: ASRClient {
     private func handleTermination() {
         guard !terminated else { return }
         terminated = true
+        if !pending.isEmpty || helloWaiter != nil {
+            Log.asr.error("sidecar завершился преждевременно (ожидало \(self.pending.count) запросов)")
+        }
         if let c = helloWaiter { helloWaiter = nil; c.resume(throwing: ASRError.sidecarNotRunning) }
         let waiters = pending
         pending.removeAll()
@@ -170,6 +192,7 @@ actor LocalASR: ASRClient {
         }
 
         try proc.run()
+        Log.asr.info("sidecar запущен: engine=\(self.engine.rawValue, privacy: .public) model=\(self.modelPath.path, privacy: .public)")
         process = proc
         terminated = false
         stdin = inPipe.fileHandleForWriting
