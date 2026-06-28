@@ -7,6 +7,25 @@ protocol ASRClient {
     func transcribe(fileURL: URL) async throws -> [TimedSegment]
 }
 
+/// Накопитель байтов из stdout/stderr sidecar.
+/// Доступ строго сериализован (вызывается с приватной очереди `readabilityHandler`),
+/// поэтому `@unchecked Sendable` безопасен.
+private final class LineAccumulator: @unchecked Sendable {
+    private var buffer = Data()
+
+    /// Добавить порцию байтов, вернуть все завершённые строки (без `\n`).
+    func append(_ data: Data) -> [Data] {
+        buffer.append(data)
+        var lines: [Data] = []
+        while let nl = buffer.firstIndex(of: 0x0A) {
+            let line = buffer.subdata(in: buffer.startIndex..<nl)
+            lines.append(line)
+            buffer.removeSubrange(buffer.startIndex...nl)
+        }
+        return lines
+    }
+}
+
 /// Клиент вендоренного `golos-asr` sidecar для batch-режима.
 /// Один процесс: hello → load → (transcribe_file)* → shutdown.
 actor LocalASR: ASRClient {
@@ -15,9 +34,12 @@ actor LocalASR: ASRClient {
     private let modelPath: URL
     private var process: Process?
     private var stdin: FileHandle?
+    private var stdout: FileHandle?
+    private var stderr: FileHandle?
     private var pending: [UInt64: CheckedContinuation<SidecarResponse, Error>] = [:]
     private var helloWaiter: CheckedContinuation<Void, Error>?
     private var helloReceived = false
+    private var terminated = false
     private var counter: UInt64 = 0
 
     init(sidecarURL: URL = AppPaths.sidecarBinary, engine: ASREngine, modelPath: URL) {
@@ -57,16 +79,34 @@ actor LocalASR: ASRClient {
         if let c = helloWaiter { helloWaiter = nil; c.resume(throwing: ASRError.sidecarNotRunning) }
         let id = next()
         try? send(.shutdown(id: id))
+        // Снимаем readabilityHandler'ы — иначе фоновые источники продолжат жить.
+        stdout?.readabilityHandler = nil; stdout = nil
+        stderr?.readabilityHandler = nil; stderr = nil
         stdin?.closeFile(); stdin = nil
         let proc = process
         process = nil
-        await Task.detached { proc?.waitUntilExit() }.value
+        // Sidecar может не получить EOF / проигнорировать shutdown → принудительно
+        // завершаем и ждём ограниченное время, чтобы не зависнуть навсегда.
+        proc?.terminate()
+        await boundedWait(proc, seconds: 2)
         for (_, c) in pending { c.resume(throwing: ASRError.sidecarNotRunning) }
         pending.removeAll()
     }
 
     // MARK: private
     private func next() -> UInt64 { counter &+= 1; return counter }
+
+    /// Ждать завершения процесса не дольше `seconds`; блокирующий `waitUntilExit`
+    /// выполняется в detached-задаче, чтобы не занимать кооперативный пул.
+    private func boundedWait(_ proc: Process?, seconds: TimeInterval) async {
+        guard let proc else { return }
+        await withTaskGroup(of: Void.self) { group in
+            group.addTask { await Task.detached { proc.waitUntilExit() }.value }
+            group.addTask { try? await Task.sleep(nanoseconds: UInt64(seconds * 1e9)) }
+            await group.next()
+            group.cancelAll()
+        }
+    }
 
     private func roundtrip(timeout: TimeInterval,
                            _ make: (UInt64) -> SidecarRequest) async throws -> SidecarResponse {
@@ -92,6 +132,17 @@ actor LocalASR: ASRClient {
         c.resume(returning: resp)
     }
 
+    /// Процесс sidecar умер — завершаем все ожидающие continuations с ошибкой,
+    /// чтобы они не висели до своего (длинного) таймаута.
+    private func handleTermination() {
+        guard !terminated else { return }
+        terminated = true
+        if let c = helloWaiter { helloWaiter = nil; c.resume(throwing: ASRError.sidecarNotRunning) }
+        let waiters = pending
+        pending.removeAll()
+        for (_, c) in waiters { c.resume(throwing: ASRError.sidecarNotRunning) }
+    }
+
     private func waitHello(timeout: TimeInterval) async throws {
         if helloReceived { return }
         try await withCheckedThrowingContinuation { (cont: CheckedContinuation<Void, Error>) in
@@ -112,21 +163,45 @@ actor LocalASR: ASRClient {
         proc.standardInput = inPipe
         proc.standardOutput = outPipe
         proc.standardError = errPipe
+
+        // Смерть процесса должна немедленно провалить ожидающие continuations.
+        proc.terminationHandler = { [weak self] _ in
+            Task { await self?.handleTermination() }
+        }
+
         try proc.run()
         process = proc
+        terminated = false
         stdin = inPipe.fileHandleForWriting
 
-        let out = outPipe.fileHandleForReading
-        Task.detached { [weak self] in
-            let dec = JSONDecoder()
-            for try await line in out.bytes.lines {
-                guard let data = line.data(using: .utf8),
-                      let resp = try? dec.decode(SidecarResponse.self, from: data) else { continue }
-                await self?.deliver(resp)
+        // Неблокирующее чтение stdout: readabilityHandler вызывается на приватной
+        // фоновой очереди, не занимая кооперативный пул Swift Concurrency (иначе
+        // блокирующие read() голодают actor и continuations не резолвятся).
+        let outHandle = outPipe.fileHandleForReading
+        stdout = outHandle
+        let outAcc = LineAccumulator()
+        let dec = JSONDecoder()
+        outHandle.readabilityHandler = { [weak self] h in
+            let data = h.availableData
+            guard !data.isEmpty else { return }   // EOF
+            for line in outAcc.append(data) {
+                guard let resp = try? dec.decode(SidecarResponse.self, from: line) else { continue }
+                Task { await self?.deliver(resp) }
             }
         }
-        let err = errPipe.fileHandleForReading
-        Task.detached { for try await l in err.bytes.lines { Log.sidecar.debug("\(l, privacy: .public)") } }
+
+        // stderr → Log.sidecar.debug, тоже неблокирующе и построчно.
+        let errHandle = errPipe.fileHandleForReading
+        stderr = errHandle
+        let errAcc = LineAccumulator()
+        errHandle.readabilityHandler = { h in
+            let data = h.availableData
+            guard !data.isEmpty else { return }
+            for line in errAcc.append(data) {
+                let s = String(decoding: line, as: UTF8.self)
+                Log.sidecar.debug("\(s, privacy: .public)")
+            }
+        }
     }
 
     private func send(_ req: SidecarRequest) throws {
