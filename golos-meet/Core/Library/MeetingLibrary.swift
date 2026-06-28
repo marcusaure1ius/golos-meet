@@ -8,8 +8,8 @@ final class MeetingLibrary: ObservableObject {
     @Published private(set) var summaries: [MeetingSummary] = []
     private let root: URL
 
-    /// Инициализатор с явным корнем (для тестов). Без аргумента — используется `AppPaths.meetingsRoot`.
-    init(root: URL? = nil) { self.root = root ?? AppPaths.meetingsRoot }
+    init(root: URL) { self.root = root }
+    convenience init() { self.init(root: AppPaths.meetingsRoot) }
 
     func reload() { summaries = MeetingLibrary.scan(root: root) }
 
