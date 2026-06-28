@@ -23,6 +23,8 @@ pub struct SegmentConfig {
     pub hangover_frames: usize,
     /// Регионы короче этого (в сэмплах) отбрасываем как шум.
     pub min_region_samples: usize,
+    /// Максимальная длина одного VAD-региона в сэмплах; ограничивает подачу бесконечно длинных кусков в модель.
+    pub max_region_samples: usize,
 }
 
 impl Default for SegmentConfig {
@@ -32,6 +34,7 @@ impl Default for SegmentConfig {
             threshold_rms: 0.005,
             hangover_frames: 15,      // ~450ms тишины закрывает регион
             min_region_samples: 4_800, // 300ms
+            max_region_samples: 480_000, // 30s @16kHz
         }
     }
 }
@@ -39,6 +42,7 @@ impl Default for SegmentConfig {
 /// Найти речевые регионы. Простая state-machine: вход в речь по первому
 /// speech-фрейму, выход — после `hangover_frames` тишины подряд.
 pub fn segment_speech(samples: &[f32], cfg: &SegmentConfig) -> Vec<SpeechRegion> {
+    debug_assert!(cfg.frame_size > 0);
     let mut vad = EnergyVad::new(cfg.frame_size, cfg.threshold_rms);
     let mut regions = Vec::new();
     let mut in_speech = false;
@@ -57,6 +61,13 @@ pub fn segment_speech(samples: &[f32], cfg: &SegmentConfig) -> Vec<SpeechRegion>
             }
             silence_run = 0;
             last_speech_end = i + cfg.frame_size;
+            // Принудительно закрываем регион, если он достиг максимальной длины.
+            if i + cfg.frame_size - region_start >= cfg.max_region_samples {
+                push_region(&mut regions, region_start, last_speech_end, cfg);
+                region_start = i;
+                silence_run = 0;
+                // in_speech остаётся true
+            }
         } else if in_speech {
             silence_run += 1;
             if silence_run >= cfg.hangover_frames {
@@ -123,5 +134,24 @@ mod tests {
         s.extend(tone(2_000)); // 125ms < min 300ms
         s.extend(silence(16_000));
         assert!(segment_speech(&s, &cfg).is_empty());
+    }
+
+    #[test]
+    fn long_speech_is_split_by_max_region() {
+        // 75s непрерывного тона — должен быть разбит на несколько регионов.
+        let mut s = silence(8_000);
+        s.extend(tone(1_200_000)); // 75s @16kHz
+        s.extend(silence(8_000));
+        let cfg = SegmentConfig::default();
+        let regions = segment_speech(&s, &cfg);
+        assert!(regions.len() >= 2, "ожидалось >= 2 регионов, получено {}", regions.len());
+        for r in &regions {
+            let len = r.end_sample - r.start_sample;
+            assert!(
+                len <= cfg.max_region_samples,
+                "регион [{}, {}) длиннее max_region_samples={}: {}",
+                r.start_sample, r.end_sample, cfg.max_region_samples, len
+            );
+        }
     }
 }
