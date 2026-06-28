@@ -4,9 +4,13 @@ enum TranscriptMerger {
     /// Слить сегменты двух дорожек, отсортировав по `start` (стабильно).
     static func merge(meetingId: String, asrModel: String,
                       me: [TimedSegment], participants: [TimedSegment]) -> Transcript {
-        let tagged: [(Int, TranscriptSegment)] =
-            me.enumerated().map { ($0.offset, TranscriptSegment(start: $0.element.start, end: $0.element.end, speaker: .me, text: $0.element.text)) }
-            + participants.enumerated().map { ($0.offset, TranscriptSegment(start: $0.element.start, end: $0.element.end, speaker: .participants, text: $0.element.text)) }
+        let meTagged: [(Int, TranscriptSegment)] = me.enumerated().map {
+            ($0.offset, TranscriptSegment(start: $0.element.start, end: $0.element.end, speaker: .me, text: $0.element.text))
+        }
+        let participantsTagged: [(Int, TranscriptSegment)] = participants.enumerated().map {
+            ($0.offset, TranscriptSegment(start: $0.element.start, end: $0.element.end, speaker: .participants, text: $0.element.text))
+        }
+        let tagged = meTagged + participantsTagged
         let sorted = tagged.sorted { a, b in
             a.1.start != b.1.start ? a.1.start < b.1.start : a.0 < b.0
         }.map(\.1)
