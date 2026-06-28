@@ -14,6 +14,14 @@ enum ASRModelChoice: String, CaseIterable, Codable {
 
     var engine: ASREngine { self == .speed ? .gigaam : .whisper }
 
+    /// Идентификатор модели для meta.asrModel и шапки транскрипта.
+    var modelId: String {
+        switch self {
+        case .speed:   return "gigaam-v3"
+        case .quality: return "whisper-large-v3"
+        }
+    }
+
     /// Путь к модели для sidecar: GigaAM — каталог; Whisper — файл .bin.
     var modelPath: URL {
         switch self {

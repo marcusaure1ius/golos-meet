@@ -11,10 +11,15 @@ struct PipelineConfig {
 final class ProcessingPipeline {
     private let asrFactory: () -> ASRClient
     private let config: PipelineConfig
+    /// Идентификатор ASR-модели; пишется в meta.asrModel и шапку транскрипта.
+    private let modelId: String
 
-    init(asrFactory: @escaping () -> ASRClient, config: PipelineConfig = .init()) {
+    init(asrFactory: @escaping () -> ASRClient,
+         config: PipelineConfig = .init(),
+         modelId: String = "gigaam-v3") {
         self.asrFactory = asrFactory
         self.config = config
+        self.modelId = modelId
     }
 
     func process(folder: URL) async {
@@ -30,10 +35,11 @@ final class ProcessingPipeline {
             do { try meta.write(to: metaURL) } catch { Log.pipeline.error("meta.write failed for \(meta.id, privacy: .public): \(error.localizedDescription, privacy: .public)") }
             try? FileManager.default.removeItem(at: folder.appendingPathComponent("mic.wav"))
             try? FileManager.default.removeItem(at: folder.appendingPathComponent("system.wav"))
-            Log.pipeline.info("\(meta.id, privacy: .public): discarded (<= порога)")
+            Log.pipeline.info("\(meta.id, privacy: .public): discarded (<= порога, engine=\(self.modelId, privacy: .public))")
             return
         }
 
+        Log.pipeline.info("processing \(meta.id, privacy: .public) engine=\(self.modelId, privacy: .public)")
         meta.status = .processing
         do { try meta.write(to: metaURL) } catch { Log.pipeline.error("meta.write failed for \(meta.id, privacy: .public): \(error.localizedDescription, privacy: .public)") }
 
@@ -41,22 +47,23 @@ final class ProcessingPipeline {
         do {
             let me = try await transcribeIfExists(asr, folder.appendingPathComponent("mic.wav"))
             let participants = try await transcribeIfExists(asr, folder.appendingPathComponent("system.wav"))
+            Log.pipeline.info("\(meta.id, privacy: .public): mic=\(me.count) сегм., system=\(participants.count) сегм.")
             let transcript = TranscriptMerger.merge(
-                meetingId: meta.id, asrModel: ModelDescriptor.asrModelId,
+                meetingId: meta.id, asrModel: modelId,
                 me: me, participants: participants)
             let title = "Встреча \(meta.id)"
             try TranscriptMerger.renderJSON(transcript)
-                .write(to: folder.appendingPathComponent("transcript.json"))
+                .write(to: folder.appendingPathComponent("transcript.json"), options: .atomic)
             try Data(TranscriptMerger.renderMarkdown(transcript, title: title).utf8)
-                .write(to: folder.appendingPathComponent("transcript.md"))
-            meta.asrModel = ModelDescriptor.asrModelId
+                .write(to: folder.appendingPathComponent("transcript.md"), options: .atomic)
+            meta.asrModel = modelId
             meta.status = .ready
             do { try meta.write(to: metaURL) } catch { Log.pipeline.error("meta.write failed for \(meta.id, privacy: .public): \(error.localizedDescription, privacy: .public)") }
-            Log.pipeline.info("\(meta.id, privacy: .public): ready (\(transcript.segments.count) сегм.)")
+            Log.pipeline.info("\(meta.id, privacy: .public): ready (\(transcript.segments.count) сегм., engine=\(self.modelId, privacy: .public))")
         } catch {
             meta.status = .failed
             do { try meta.write(to: metaURL) } catch { Log.pipeline.error("meta.write failed for \(meta.id, privacy: .public): \(error.localizedDescription, privacy: .public)") }
-            Log.pipeline.error("\(meta.id, privacy: .public): failed — \(error.localizedDescription, privacy: .public)")
+            Log.pipeline.error("\(meta.id, privacy: .public): failed (engine=\(self.modelId, privacy: .public)) — \(error.localizedDescription, privacy: .public)")
         }
         if let local = asr as? LocalASR { await local.shutdown() }
     }

@@ -23,7 +23,8 @@ enum Backfill {
         for dir in pending {
             let pipeline = ProcessingPipeline(
                 asrFactory: { LocalASR.forChoice(ASRSettings.current) },
-                config: .init(thresholdSeconds: 300, deleteShortAudio: false))
+                config: .init(thresholdSeconds: 300, deleteShortAudio: false),
+                modelId: ASRSettings.current.modelId)
             await pipeline.process(folder: dir)
         }
         Log.pipeline.info("backfill: готово")
