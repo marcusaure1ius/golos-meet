@@ -46,10 +46,13 @@ actor LocalASR: ASRClient {
     }
 
     func shutdown() async {
+        if let c = helloWaiter { helloWaiter = nil; c.resume(throwing: ASRError.sidecarNotRunning) }
         let id = next()
         try? send(.shutdown(id: id))
-        process?.waitUntilExit()
+        stdin?.closeFile(); stdin = nil
+        let proc = process
         process = nil
+        await Task.detached { proc?.waitUntilExit() }.value
         for (_, c) in pending { c.resume(throwing: ASRError.sidecarNotRunning) }
         pending.removeAll()
     }
@@ -74,7 +77,7 @@ actor LocalASR: ASRClient {
     private func deliver(_ resp: SidecarResponse) {
         if case .hello = resp {
             helloReceived = true
-            helloWaiter?.resume(); helloWaiter = nil
+            if let c = helloWaiter { helloWaiter = nil; c.resume() }
             return
         }
         guard let id = resp.id, let c = pending.removeValue(forKey: id) else { return }
@@ -83,15 +86,14 @@ actor LocalASR: ASRClient {
 
     private func waitHello(timeout: TimeInterval) async throws {
         if helloReceived { return }
-        try await withThrowingTaskGroup(of: Void.self) { group in
-            group.addTask { try await withCheckedThrowingContinuation { (c: CheckedContinuation<Void, Error>) in
-                Task { await self.setHelloWaiter(c) } } }
-            group.addTask { try await Task.sleep(nanoseconds: UInt64(timeout * 1e9)); throw ASRError.timeout }
-            _ = try await group.next(); group.cancelAll()
+        try await withCheckedThrowingContinuation { (cont: CheckedContinuation<Void, Error>) in
+            helloWaiter = cont
+            Task { try? await Task.sleep(nanoseconds: UInt64(timeout * 1_000_000_000)); expireHello() }
         }
     }
-    private func setHelloWaiter(_ c: CheckedContinuation<Void, Error>) {
-        if helloReceived { c.resume() } else { helloWaiter = c }
+
+    private func expireHello() {
+        if let c = helloWaiter { helloWaiter = nil; c.resume(throwing: ASRError.timeout) }
     }
 
     private func spawn() throws {
