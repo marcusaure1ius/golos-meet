@@ -50,4 +50,26 @@ import Foundation
         let back = try JSONDecoder().decode(Transcript.self, from: data)
         #expect(back == t)
     }
+
+    /// Документирует стабильный тай-брейк: при одинаковом `start` `me` идёт раньше `participants`.
+    @Test func crossTrackTieBreakPrefersMe() {
+        let t = TranscriptMerger.merge(
+            meetingId: "M", asrModel: "g",
+            me: [seg(0.0, 1.0, "я")],
+            participants: [seg(0.0, 1.0, "они")])
+        #expect(t.segments.count == 2)
+        #expect(t.segments[0].speaker == .me)
+        #expect(t.segments[1].speaker == .participants)
+    }
+
+    /// Пины контракта JSON: поле speaker содержит литеральные строки "me"/"participants".
+    @Test func jsonSpeakerLabelsAreLiteralStrings() throws {
+        let t = TranscriptMerger.merge(
+            meetingId: "M", asrModel: "g",
+            me: [seg(0, 1, "a")],
+            participants: [seg(1, 2, "b")])
+        let json = String(data: try TranscriptMerger.renderJSON(t), encoding: .utf8)!
+        #expect(json.contains("\"me\""))
+        #expect(json.contains("\"participants\""))
+    }
 }

@@ -22,4 +22,18 @@ import Foundation
         let resp = try JSONDecoder().decode(SidecarResponse.self, from: Data(json.utf8))
         #expect(resp == .error(id: 2, kind: "wav_read_failed", message: "nope"))
     }
+
+    /// Ошибка без поля `id` (sidecar шлёт при ранних сбоях до получения запроса).
+    @Test func decodesErrorWithoutId() throws {
+        let json = #"{"type":"error","kind":"x","message":"y"}"#
+        let resp = try JSONDecoder().decode(SidecarResponse.self, from: Data(json.utf8))
+        #expect(resp == .error(id: nil, kind: "x", message: "y"))
+    }
+
+    /// Приветственное сообщение sidecar.
+    @Test func decodesHello() throws {
+        let json = #"{"type":"hello","version":"1.0"}"#
+        let resp = try JSONDecoder().decode(SidecarResponse.self, from: Data(json.utf8))
+        #expect(resp == .hello(version: "1.0"))
+    }
 }
