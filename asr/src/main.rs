@@ -52,7 +52,9 @@ fn main() -> Result<()> {
     let (samples_tx, samples_rx) = channel::<u64>();
 
     // 3. Отдельный тред читает audio-path (FIFO) и пушит сэмплы в Session::feed_samples.
-    //    В batch-режиме (TranscribeFile без audio-fifo) тред не запускается.
+    //    В batch-режиме (TranscribeFile без audio-fifo) тред не запускается;
+    //    samples_tx остаётся живым, но samples_rx.recv_timeout используется только
+    //    в ветке EndSession, которую batch-режим никогда не достигает — утечки нет.
     if let Some(audio_path) = args.audio_path.clone() {
         let audio_session = Arc::clone(&session);
         let audio_counter = Arc::clone(&samples_read);

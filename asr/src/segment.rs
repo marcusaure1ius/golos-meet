@@ -79,7 +79,8 @@ pub fn segment_speech(samples: &[f32], cfg: &SegmentConfig) -> Vec<SpeechRegion>
         i += cfg.frame_size;
     }
     if in_speech {
-        push_region(&mut regions, region_start, last_speech_end.max(region_start), cfg);
+        // Invariant: last_speech_end >= region_start (always updated before in_speech is set).
+        push_region(&mut regions, region_start, last_speech_end, cfg);
     }
     regions
 }
