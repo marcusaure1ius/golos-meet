@@ -6,7 +6,7 @@
 //!     Recording → Loaded (после EndSession → Final, или Cancel)
 
 use crate::audio::AudioBuffer;
-use crate::protocol::{Request, Response, TimedSegment};
+use crate::protocol::{ModelKind, Request, Response, TimedSegment};
 use crate::segment::{segment_speech, SegmentConfig, SAMPLE_RATE};
 use crate::transcriber::Transcriber;
 use anyhow::Result;
@@ -53,7 +53,7 @@ impl Session {
     pub fn handle(&mut self, req: Request) -> Response {
         let id = req.id();
         match (self.state, req) {
-            (_, Request::Load { model_path, .. }) => self.do_load(id, model_path),
+            (_, Request::Load { model_path, kind, .. }) => self.do_load(id, model_path, kind),
             (State::Loaded, Request::TranscribeFile { path, .. }) => self.do_transcribe_file(id, path),
             (State::Loaded, Request::BeginSession { .. }) => {
                 self.buffer.clear();
@@ -78,8 +78,8 @@ impl Session {
         }
     }
 
-    fn do_load(&mut self, id: u64, model_path: PathBuf) -> Response {
-        match Transcriber::load(&model_path) {
+    fn do_load(&mut self, id: u64, model_path: PathBuf, kind: ModelKind) -> Response {
+        match Transcriber::load(&model_path, kind) {
             Ok(t) => {
                 self.transcriber = Some(t);
                 self.state = State::Loaded;
@@ -199,7 +199,7 @@ mod tests {
     #[test]
     fn load_with_bad_path_returns_error_keeps_idle() {
         let mut s = Session::new().unwrap();
-        let r = s.handle(Request::Load { id: 1, model_path: "/nonexistent".into() });
+        let r = s.handle(Request::Load { id: 1, model_path: "/nonexistent".into(), kind: ModelKind::Gigaam });
         assert!(matches!(r, Response::Error { ref kind, .. } if kind == "model_load_failed"));
         assert_eq!(s.state(), State::Idle);
     }
