@@ -68,6 +68,7 @@ import Foundation
         let meta = try readMeta(dir)
         #expect(meta.status == .failed)
         #expect(FileManager.default.fileExists(atPath: dir.appendingPathComponent("mic.wav").path))
+        #expect(FileManager.default.fileExists(atPath: dir.appendingPathComponent("system.wav").path))
     }
 
     @Test func backfillModeKeepsShortAudio() async throws {
@@ -76,9 +77,9 @@ import Foundation
                                    config: .init(thresholdSeconds: 300, deleteShortAudio: false))
         await p.process(folder: dir)
         let meta = try readMeta(dir)
-        // короткая в backfill: не discarded-с-удалением; аудио на месте
+        // короткая в backfill: не discarded-с-удалением; аудио на месте; ASR успешен → ready
         #expect(FileManager.default.fileExists(atPath: dir.appendingPathComponent("mic.wav").path))
-        #expect(meta.status == .ready || meta.status == .discarded)
+        #expect(meta.status == .ready)
     }
 
     @Test func startupResetsProcessingToFailed() throws {

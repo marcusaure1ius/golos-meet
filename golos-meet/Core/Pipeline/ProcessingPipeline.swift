@@ -27,7 +27,7 @@ final class ProcessingPipeline {
         // Короткая встреча в авто-режиме — выбросить.
         if meta.durationSeconds <= config.thresholdSeconds && config.deleteShortAudio {
             meta.status = .discarded
-            try? meta.write(to: metaURL)
+            do { try meta.write(to: metaURL) } catch { Log.pipeline.error("meta.write failed for \(meta.id, privacy: .public): \(error.localizedDescription, privacy: .public)") }
             try? FileManager.default.removeItem(at: folder.appendingPathComponent("mic.wav"))
             try? FileManager.default.removeItem(at: folder.appendingPathComponent("system.wav"))
             Log.pipeline.info("\(meta.id, privacy: .public): discarded (<= порога)")
@@ -35,7 +35,7 @@ final class ProcessingPipeline {
         }
 
         meta.status = .processing
-        try? meta.write(to: metaURL)
+        do { try meta.write(to: metaURL) } catch { Log.pipeline.error("meta.write failed for \(meta.id, privacy: .public): \(error.localizedDescription, privacy: .public)") }
 
         let asr = asrFactory()
         do {
@@ -51,11 +51,11 @@ final class ProcessingPipeline {
                 .write(to: folder.appendingPathComponent("transcript.md"))
             meta.asrModel = ModelDescriptor.asrModelId
             meta.status = .ready
-            try? meta.write(to: metaURL)
+            do { try meta.write(to: metaURL) } catch { Log.pipeline.error("meta.write failed for \(meta.id, privacy: .public): \(error.localizedDescription, privacy: .public)") }
             Log.pipeline.info("\(meta.id, privacy: .public): ready (\(transcript.segments.count) сегм.)")
         } catch {
             meta.status = .failed
-            try? meta.write(to: metaURL)
+            do { try meta.write(to: metaURL) } catch { Log.pipeline.error("meta.write failed for \(meta.id, privacy: .public): \(error.localizedDescription, privacy: .public)") }
             Log.pipeline.error("\(meta.id, privacy: .public): failed — \(error.localizedDescription, privacy: .public)")
         }
         if let local = asr as? LocalASR { await local.shutdown() }
