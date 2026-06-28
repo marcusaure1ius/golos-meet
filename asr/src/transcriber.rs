@@ -39,6 +39,16 @@ impl Transcriber {
             duration_ms: started.elapsed().as_millis() as u64,
         })
     }
+
+    /// Транскрибировать срез сэмплов (16kHz mono f32). Используется для
+    /// поштучной транскрибации речевых регионов из VAD-сегментации.
+    /// Возвращает только текст; таймкоды добавляет вызывающий по позиции куска.
+    pub fn transcribe_samples(&mut self, samples: &[f32]) -> Result<String> {
+        let opts = transcribe_rs::TranscribeOptions::default();
+        let result = transcribe_rs::SpeechModel::transcribe(&mut self.model, samples, &opts)
+            .context("transcribe_samples")?;
+        Ok(result.text)
+    }
 }
 
 #[cfg(test)]
