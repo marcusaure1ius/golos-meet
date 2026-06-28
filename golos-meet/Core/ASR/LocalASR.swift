@@ -11,7 +11,8 @@ protocol ASRClient {
 /// Один процесс: hello → load → (transcribe_file)* → shutdown.
 actor LocalASR: ASRClient {
     private let sidecarURL: URL
-    private let modelDir: URL
+    private let engine: ASREngine
+    private let modelPath: URL
     private var process: Process?
     private var stdin: FileHandle?
     private var pending: [UInt64: CheckedContinuation<SidecarResponse, Error>] = [:]
@@ -19,16 +20,22 @@ actor LocalASR: ASRClient {
     private var helloReceived = false
     private var counter: UInt64 = 0
 
-    init(sidecarURL: URL = AppPaths.sidecarBinary, modelDir: URL) {
+    init(sidecarURL: URL = AppPaths.sidecarBinary, engine: ASREngine, modelPath: URL) {
         self.sidecarURL = sidecarURL
-        self.modelDir = modelDir
+        self.engine = engine
+        self.modelPath = modelPath
+    }
+
+    /// Удобный инициализатор по пользовательскому выбору модели.
+    static func forChoice(_ c: ASRModelChoice) -> LocalASR {
+        LocalASR(engine: c.engine, modelPath: c.modelPath)
     }
 
     /// Поднять процесс и загрузить модель.
     func start() async throws {
         try spawn()
         try await waitHello(timeout: 5)
-        let resp = try await roundtrip(timeout: 180) { .load(id: $0, modelPath: modelDir.path) }
+        let resp = try await roundtrip(timeout: 180) { .load(id: $0, modelPath: modelPath.path, kind: engine) }
         switch resp {
         case .ready: return
         case .error(_, _, let m): throw ASRError.modelLoadFailed(m)

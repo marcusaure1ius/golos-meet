@@ -22,7 +22,7 @@ enum Backfill {
         Log.pipeline.info("backfill: \(pending.count) встреч к обработке")
         for dir in pending {
             let pipeline = ProcessingPipeline(
-                asrFactory: { LocalASR(modelDir: AppPaths.modelDir(ModelDescriptor.asrModelId)) },
+                asrFactory: { LocalASR.forChoice(ASRSettings.current) },
                 config: .init(thresholdSeconds: 300, deleteShortAudio: false))
             await pipeline.process(folder: dir)
         }

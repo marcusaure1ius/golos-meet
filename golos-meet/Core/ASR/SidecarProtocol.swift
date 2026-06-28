@@ -1,5 +1,11 @@
 import Foundation
 
+/// Движок ASR, который должен использовать sidecar.
+enum ASREngine: String, Codable {
+    case gigaam
+    case whisper
+}
+
 /// Сегмент с таймкодами (секунды от начала файла) от sidecar.
 struct TimedSegment: Decodable, Equatable {
     let start: Double
@@ -9,20 +15,20 @@ struct TimedSegment: Decodable, Equatable {
 
 /// Управляющие сообщения Swift → sidecar (stdin, JSON-lines).
 enum SidecarRequest: Encodable, Equatable {
-    case load(id: UInt64, modelPath: String)
+    case load(id: UInt64, modelPath: String, kind: ASREngine)
     case transcribeFile(id: UInt64, path: String)
     case shutdown(id: UInt64)
 
     var id: UInt64 {
         switch self {
-        case .load(let i, _): return i
+        case .load(let i, _, _): return i
         case .transcribeFile(let i, _): return i
         case .shutdown(let i): return i
         }
     }
 
     private enum CodingKeys: String, CodingKey {
-        case type, id, path
+        case type, id, path, kind
         case modelPath = "model_path"
     }
 
@@ -30,9 +36,10 @@ enum SidecarRequest: Encodable, Equatable {
         var c = encoder.container(keyedBy: CodingKeys.self)
         try c.encode(id, forKey: .id)
         switch self {
-        case .load(_, let p):
+        case .load(_, let p, let k):
             try c.encode("load", forKey: .type)
             try c.encode(p, forKey: .modelPath)
+            try c.encode(k.rawValue, forKey: .kind)
         case .transcribeFile(_, let p):
             try c.encode("transcribe_file", forKey: .type)
             try c.encode(p, forKey: .path)
