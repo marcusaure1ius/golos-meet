@@ -82,6 +82,10 @@ final class Recorder: MeetingDetectorDelegate {
                                    status: .recording, asrModel: nil)
             try? meta.write(to: a.folder.url.appendingPathComponent("meta.json"))
             Log.recorder.info("запись завершена: \(a.folder.id, privacy: .public)")
+            let pipeline = ProcessingPipeline(asrFactory: {
+                LocalASR(modelDir: AppPaths.modelDir(ModelDescriptor.asrModelId))
+            })
+            await pipeline.process(folder: a.folder.url)
         }
     }
 }

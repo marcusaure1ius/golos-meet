@@ -37,6 +37,7 @@ actor LocalASR: ASRClient {
     }
 
     func transcribe(fileURL: URL) async throws -> [TimedSegment] {
+        if process == nil { try await start() }
         let resp = try await roundtrip(timeout: 3600) { .transcribeFile(id: $0, path: fileURL.path) }
         switch resp {
         case .segments(_, let segs, _): return segs
