@@ -41,7 +41,7 @@ struct MainWindowView: View {
 
     @ViewBuilder private var paneView: some View {
         switch selection {
-        case .meetings: ContentUnavailableView("Встречи", systemImage: "waveform")
+        case .meetings: MeetingsScreen()
         case .settings: ContentUnavailableView("Настройки", systemImage: "gearshape")
         }
     }
