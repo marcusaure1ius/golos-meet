@@ -53,12 +53,12 @@ struct MeetingDetailView: View {
         HStack(spacing: 6) {
             Button(action: onBack) {
                 HStack(spacing: 4) {
-                    // Стрелка «назад» выезжает при наведении (ширина 0 → 11).
+                    // Место под стрелку зарезервировано всегда (ширина фиксирована) —
+                    // меняется только видимость, поэтому «/» и название не сдвигаются.
                     Image(systemName: "chevron.left")
                         .font(.system(size: 11, weight: .semibold))
                         .opacity(backHover ? 1 : 0)
-                        .frame(width: backHover ? 11 : 0, alignment: .leading)
-                        .clipped()
+                        .frame(width: 11, alignment: .leading)
                     Text("Встречи").font(.system(size: 13))
                 }
                 .foregroundStyle(backHover ? p.ink : p.link)
@@ -77,7 +77,8 @@ struct MeetingDetailView: View {
             Text(meeting.title).font(.system(size: 13)).foregroundStyle(p.muted)
             Spacer()
         }
-        .padding(.horizontal, 48).padding(.top, 38).padding(.bottom, 12)
+        // leading 33 + пилюля(8) + стрелка(11) + spacing(4) = 56 → «Встречи» на линии контента.
+        .padding(.leading, 33).padding(.trailing, 56).padding(.top, 38).padding(.bottom, 12)
     }
 
     private var header: some View {
