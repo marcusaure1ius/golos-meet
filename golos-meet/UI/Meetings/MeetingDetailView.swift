@@ -11,6 +11,7 @@ struct MeetingDetailView: View {
     let onBack: () -> Void
 
     @State private var transcript: Transcript?
+    @State private var backHover = false
 
     private static let dateFmt: DateFormatter = {
         let f = DateFormatter(); f.locale = Locale(identifier: "ru_RU"); f.timeZone = .current; f.dateFormat = "d MMMM, HH:mm"; return f
@@ -51,13 +52,32 @@ struct MeetingDetailView: View {
     private var breadcrumbs: some View {
         HStack(spacing: 6) {
             Button(action: onBack) {
-                Text("Встречи").font(.system(size: 13)).foregroundStyle(p.link)
-            }.buttonStyle(.plain)
+                HStack(spacing: 4) {
+                    // Стрелка «назад» выезжает при наведении (ширина 0 → 11).
+                    Image(systemName: "chevron.left")
+                        .font(.system(size: 11, weight: .semibold))
+                        .opacity(backHover ? 1 : 0)
+                        .frame(width: backHover ? 11 : 0, alignment: .leading)
+                        .clipped()
+                    Text("Встречи").font(.system(size: 13))
+                }
+                .foregroundStyle(backHover ? p.ink : p.link)
+                .padding(.horizontal, 8)
+                .padding(.vertical, 3)
+                .background(backHover ? p.selection : .clear)
+                .clipShape(Capsule())
+                .contentShape(Capsule())
+            }
+            .buttonStyle(.plain)
+            .onHover { backHover = $0 }
+            .animation(.easeOut(duration: 0.12), value: backHover)
+            .help("Вернуться к списку встреч")
+
             Text("/").font(.system(size: 13)).foregroundStyle(p.muted2)
             Text(meeting.title).font(.system(size: 13)).foregroundStyle(p.muted)
             Spacer()
         }
-        .padding(.horizontal, 56).padding(.top, 38).padding(.bottom, 12)
+        .padding(.horizontal, 48).padding(.top, 38).padding(.bottom, 12)
     }
 
     private var header: some View {
