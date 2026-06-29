@@ -5,6 +5,8 @@ struct MeetingCard: View {
     @Environment(\.palette) var p
     let meeting: MeetingSummary
 
+    @State private var hovering = false
+
     private static let timeFmt: DateFormatter = {
         let f = DateFormatter(); f.locale = Locale(identifier: "ru_RU"); f.timeZone = .current; f.dateFormat = "HH:mm"; return f
     }()
@@ -32,5 +34,12 @@ struct MeetingCard: View {
             }
             .padding(.horizontal, 16).padding(.vertical, 13)
         }
+        .overlay(
+            RoundedRectangle(cornerRadius: 12, style: .continuous)
+                .strokeBorder(p.accent.opacity(hovering ? 0.6 : 0), lineWidth: 1)
+        )
+        .shadow(color: .black.opacity(hovering ? 0.08 : 0), radius: hovering ? 6 : 0, y: 2)
+        .animation(.easeOut(duration: 0.12), value: hovering)
+        .onHover { hovering = $0 }
     }
 }

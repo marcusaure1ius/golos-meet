@@ -89,7 +89,7 @@ struct MeetingDetailView: View {
                 } label: {
                     if isProcessing {
                         HStack(spacing: 6) {
-                            ProgressView().controlSize(.small)
+                            Spinner(color: p.btnInk, size: 13, lineWidth: 1.5)
                             Text("Обработка…")
                         }
                     } else {

@@ -17,7 +17,7 @@ struct StatusBadge: View {
 
     @ViewBuilder private var indicator: some View {
         switch status {
-        case .processing: ProgressView().controlSize(.mini).scaleEffect(0.6).frame(width: 7, height: 7)
+        case .processing: Spinner(color: color, size: 9, lineWidth: 1.5)
         default:          Circle().fill(color).frame(width: 7, height: 7)
         }
     }
@@ -25,7 +25,7 @@ struct StatusBadge: View {
     private var color: Color {
         switch status {
         case .recording, .failed:        return p.danger
-        case .ready:                     return p.accent
+        case .ready:                     return .green
         case .processing:                return p.muted
         case .notTranscribed, .discarded: return p.muted2
         }
