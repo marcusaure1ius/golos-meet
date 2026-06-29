@@ -4,8 +4,17 @@ import AppKit
 @main
 struct golos_meetApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    @StateObject private var library = MeetingLibrary()
+    @StateObject private var processor = MeetingProcessor()
+
     var body: some Scene {
-        Settings { EmptyView() }   // удерживает App alive; реальные окна — позже (M5)
+        WindowGroup {
+            MainWindowView()
+                .environmentObject(library)
+                .environmentObject(processor)
+        }
+        .windowStyle(.hiddenTitleBar)
+        .defaultSize(width: 1000, height: 680)
     }
 }
 
@@ -13,10 +22,9 @@ struct golos_meetApp: App {
 final class AppDelegate: NSObject, NSApplicationDelegate {
     let coordinator = AppCoordinator()
     func applicationDidFinishLaunching(_ notification: Notification) {
-        NSApp.setActivationPolicy(.accessory)   // без иконки в Dock, фоновый агент
+        NSApp.setActivationPolicy(.regular)   // обычное приложение в Dock
         StartupRecovery.resetStale()
         coordinator.start()
-        // dev: одноразовый backfill по флагу окружения.
         if ProcessInfo.processInfo.environment["GOLOS_MEET_BACKFILL"] == "1" {
             Task { await Backfill.run() }
         }
