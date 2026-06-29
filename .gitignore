@@ -14,3 +14,4 @@ xcuserdata/
 # Локальные доки и настройки агента — вне репозитория
 docs/
 .claude/
+.playwright-mcp
