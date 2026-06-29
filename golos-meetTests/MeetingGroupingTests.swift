@@ -24,7 +24,8 @@ import Foundation
         #expect(groups[0].meetings.map(\.id) == ["b", "a"])   // внутри дня — новые сверху
         #expect(groups[1].label == "Вчера")
         #expect(groups[2].meetings.map(\.id) == ["o"])
-        #expect(groups[2].label.contains("20"))               // дата вида «20 июня»
+        #expect(groups[2].label.contains("20"))               // дата вида «20 июня, суббота»
+        #expect(groups[2].label.contains("суббота"))           // 2026-06-20 — суббота (день недели)
     }
 
     @Test func emptyInputYieldsNoGroups() {

@@ -15,11 +15,10 @@ struct StatusBadge: View {
         .clipShape(Capsule())
     }
 
+    // Статичная точка для всех состояний (в т.ч. «Обработка» — без кручения;
+    // живой спиннер показывается только на кнопке запуска).
     @ViewBuilder private var indicator: some View {
-        switch status {
-        case .processing: Spinner(color: color, size: 9, lineWidth: 1.5)
-        default:          Circle().fill(color).frame(width: 7, height: 7)
-        }
+        Circle().fill(color).frame(width: 7, height: 7)
     }
 
     private var color: Color {

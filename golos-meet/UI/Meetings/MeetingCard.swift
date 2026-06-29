@@ -3,9 +3,16 @@ import SwiftUI
 /// Карточка встречи в ленте/календаре: заголовок + время·длительность + статус-бейдж.
 struct MeetingCard: View {
     @Environment(\.palette) var p
+    @EnvironmentObject var processor: MeetingProcessor
     let meeting: MeetingSummary
 
     @State private var hovering = false
+
+    /// Если встреча сейчас обрабатывается (запущено из UI) — показываем «Обработка»,
+    /// иначе статус из read-model.
+    private var displayStatus: EffectiveStatus {
+        processor.processing.contains(meeting.id) ? .processing : meeting.status
+    }
 
     private static let timeFmt: DateFormatter = {
         let f = DateFormatter(); f.locale = Locale(identifier: "ru_RU"); f.timeZone = .current; f.dateFormat = "HH:mm"; return f
@@ -23,14 +30,10 @@ struct MeetingCard: View {
                             .font(.system(size: 13, design: .monospaced)).foregroundStyle(p.muted)
                         Text("·").foregroundStyle(p.muted2)
                         Text(meeting.durationText).font(.system(size: 13)).foregroundStyle(p.muted)
-                        if let model = meeting.asrModel {
-                            Text("·").foregroundStyle(p.muted2)
-                            Text(model).font(.system(size: 13)).foregroundStyle(p.muted2)
-                        }
                     }
                 }
                 Spacer(minLength: 0)
-                StatusBadge(status: meeting.status)
+                StatusBadge(status: displayStatus)
             }
             .padding(.horizontal, 16).padding(.vertical, 13)
         }
