@@ -29,7 +29,7 @@ struct SidebarView: View {
         // Полупрозрачная вибрантность + лёгкий тон палитры сверху (чтобы «слегка», а не насквозь).
         .background {
             VisualEffectView(material: .sidebar)
-                .overlay(p.sidebar.opacity(0.35))
+                .overlay(p.sidebar.opacity(0.2))
         }
     }
 

@@ -30,7 +30,7 @@ struct MainWindowView: View {
     }
 
     @ViewBuilder private func contentPane(p: Palette) -> some View {
-        let shape = UnevenRoundedRectangle(topLeadingRadius: 18, bottomLeadingRadius: 18,
+        let shape = UnevenRoundedRectangle(topLeadingRadius: 0, bottomLeadingRadius: 0,
                                            bottomTrailingRadius: 0, topTrailingRadius: 0)
         ZStack { paneView }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
