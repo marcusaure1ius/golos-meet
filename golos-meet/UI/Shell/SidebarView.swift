@@ -26,7 +26,11 @@ struct SidebarView: View {
             .padding(.horizontal, 8)
         }
         .frame(width: 250)
-        .background(p.sidebar)
+        // Полупрозрачная вибрантность + лёгкий тон палитры сверху (чтобы «слегка», а не насквозь).
+        .background {
+            VisualEffectView(material: .sidebar)
+                .overlay(p.sidebar.opacity(0.35))
+        }
     }
 
     @ViewBuilder private func groupHeader(_ title: String) -> some View {

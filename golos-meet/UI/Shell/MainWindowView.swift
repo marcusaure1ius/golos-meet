@@ -21,7 +21,8 @@ struct MainWindowView: View {
             SidebarView(selection: $selection)
             contentPane(p: p)
         }
-        .background(p.sidebar)
+        // Без сплошного фона: за сайдбаром — вибрантность, за контентом — его непрозрачный фон.
+        .background(WindowConfigurator())
         .environment(\.palette, p)
         .preferredColorScheme(effectiveScheme)
         .frame(minWidth: 1000, minHeight: 680)
