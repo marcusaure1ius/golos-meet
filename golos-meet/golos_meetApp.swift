@@ -5,11 +5,13 @@ import AppKit
 struct golos_meetApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     @StateObject private var library = MeetingLibrary()
+    @StateObject private var processor = MeetingProcessor()
 
     var body: some Scene {
         WindowGroup {
             MainWindowView()
                 .environmentObject(library)
+                .environmentObject(processor)
         }
         .windowStyle(.hiddenTitleBar)
         .defaultSize(width: 1000, height: 680)
