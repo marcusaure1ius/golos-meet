@@ -4,27 +4,32 @@ import Foundation
 
 @MainActor
 @Suite struct MeetingProcessorTests {
+    /// Держатель ссылки на процессор: замыкание захватывает `let holder`, а мы
+    /// присваиваем `holder.proc` после init — так нет «mutated after capture».
+    private final class Holder { var proc: MeetingProcessor? }
+
     @Test func reprocess_marksProcessingDuringRun_thenClears() async {
         var midRunContains: Bool?
-        var procRef: MeetingProcessor!
-        procRef = MeetingProcessor(work: { _ in
-            midRunContains = procRef.processing.contains("m1")
+        let holder = Holder()
+        let proc = MeetingProcessor(work: { _ in
+            midRunContains = holder.proc?.processing.contains("m1")
         })
-        #expect(procRef.processing.isEmpty)
-        await procRef.reprocess(id: "m1", folder: URL(fileURLWithPath: "/tmp/m1"))
-        #expect(midRunContains == true)      // во время work id присутствовал
-        #expect(procRef.processing.isEmpty)  // после — снят
+        holder.proc = proc
+        #expect(proc.processing.isEmpty)
+        await proc.reprocess(id: "m1", folder: URL(fileURLWithPath: "/tmp/m1"))
+        #expect(midRunContains == true)
+        #expect(proc.processing.isEmpty)
     }
 
     @Test func reprocess_ignoresDuplicateForSameId() async {
         var callCount = 0
-        var procRef: MeetingProcessor!
-        procRef = MeetingProcessor(work: { _ in
+        let holder = Holder()
+        let proc = MeetingProcessor(work: { _ in
             callCount += 1
-            // повторный запуск той же встречи, пока она «в обработке» — гард игнорирует
-            await procRef.reprocess(id: "m1", folder: URL(fileURLWithPath: "/tmp/m1"))
+            await holder.proc?.reprocess(id: "m1", folder: URL(fileURLWithPath: "/tmp/m1"))
         })
-        await procRef.reprocess(id: "m1", folder: URL(fileURLWithPath: "/tmp/m1"))
+        holder.proc = proc
+        await proc.reprocess(id: "m1", folder: URL(fileURLWithPath: "/tmp/m1"))
         #expect(callCount == 1)
     }
 }
