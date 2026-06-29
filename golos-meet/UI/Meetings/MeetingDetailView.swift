@@ -18,6 +18,11 @@ struct MeetingDetailView: View {
 
     private var isProcessing: Bool { processor.processing.contains(meeting.id) }
 
+    /// Свежая строка из library (после reprocess/reload), с откатом к снапшоту-пропу.
+    private var liveMeeting: MeetingSummary {
+        library.summaries.first { $0.id == meeting.id } ?? meeting
+    }
+
     private var folder: URL { AppPaths.meetingDir(meeting.id) }
 
     private var hasAudio: Bool {
@@ -26,7 +31,7 @@ struct MeetingDetailView: View {
     }
 
     private var actionTitle: String {
-        meeting.status == .ready ? "Переобработать" : "Расшифровать"
+        liveMeeting.status == .ready ? "Переобработать" : "Расшифровать"
     }
 
     var body: some View {
@@ -62,11 +67,11 @@ struct MeetingDetailView: View {
                 Text(Self.dateFmt.string(from: meeting.startedAt)).font(.system(size: 13)).foregroundStyle(p.muted)
                 Text("·").foregroundStyle(p.muted2)
                 Text(meeting.durationText).font(.system(size: 13)).foregroundStyle(p.muted)
-                if let model = meeting.asrModel {
+                if let model = liveMeeting.asrModel {
                     Text("·").foregroundStyle(p.muted2)
                     Text(model).font(.system(size: 13)).foregroundStyle(p.muted2)
                 }
-                StatusBadge(status: isProcessing ? .processing : meeting.status)
+                StatusBadge(status: isProcessing ? .processing : liveMeeting.status)
             }
             actions
         }
@@ -111,7 +116,10 @@ struct MeetingDetailView: View {
         } else if let t = transcript {
             TranscriptView(transcript: t)
         } else {
-            switch meeting.status {
+            switch liveMeeting.status {
+            case .processing:
+                ContentUnavailableView("Идёт расшифровка…", systemImage: "waveform")
+                    .frame(maxWidth: .infinity).padding(.top, 40)
             case .failed:
                 ContentUnavailableView("Не удалось расшифровать", systemImage: "exclamationmark.triangle",
                                        description: Text("Обработка встречи завершилась ошибкой."))
