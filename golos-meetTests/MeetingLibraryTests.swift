@@ -53,6 +53,18 @@ import Foundation
         #expect(lib.transcript(for: "missing") == nil)
     }
 
+    @Test func scan_excludesPhantomFolders() throws {
+        let root = try tempRoot()
+        // папка без аудио, без meta, без транскрипта — не должна попасть в результат
+        _ = try makeDir(root, "phantom-empty-dir")
+        // папка с аудио — должна попасть
+        let a = try makeDir(root, "2026-06-18_20-46-13"); try touch(a.appendingPathComponent("mic.wav"))
+
+        let result = MeetingLibrary.scan(root: root)
+        #expect(result.count == 1)
+        #expect(result[0].id == "2026-06-18_20-46-13")
+    }
+
     @Test func reload_populatesPublished() throws {
         let root = try tempRoot()
         let a = try makeDir(root, "2026-06-18_20-46-13"); try touch(a.appendingPathComponent("mic.wav"))

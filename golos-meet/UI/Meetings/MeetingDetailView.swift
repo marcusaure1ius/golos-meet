@@ -24,7 +24,7 @@ struct MeetingDetailView: View {
                 .padding(.horizontal, 56).padding(.vertical, 24)
             }
         }
-        .onAppear { transcript = library.transcript(for: meeting.id) }
+        .task(id: meeting.id) { transcript = library.transcript(for: meeting.id) }
     }
 
     private var breadcrumbs: some View {

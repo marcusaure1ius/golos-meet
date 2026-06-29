@@ -19,6 +19,10 @@ final class SystemAppearance: ObservableObject {
         }
     }
 
+    deinit {
+        if let token { DistributedNotificationCenter.default().removeObserver(token) }
+    }
+
     @MainActor static func current() -> ColorScheme {
         let best = NSApp.effectiveAppearance.bestMatch(from: [.aqua, .darkAqua])
         return best == .darkAqua ? .dark : .light

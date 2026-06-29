@@ -30,6 +30,7 @@ final class MeetingLibrary: ObservableObject {
             let hasAudio = fm.fileExists(atPath: dir.appendingPathComponent("mic.wav").path)
                         || fm.fileExists(atPath: dir.appendingPathComponent("system.wav").path)
             let hasTranscript = fm.fileExists(atPath: dir.appendingPathComponent("transcript.json").path)
+            guard meta != nil || hasAudio || hasTranscript else { continue }
             result.append(MeetingSummary.make(folderId: id, meta: meta, hasAudio: hasAudio, hasTranscript: hasTranscript))
         }
         return result.sorted { $0.startedAt > $1.startedAt }
