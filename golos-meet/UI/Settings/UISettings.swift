@@ -19,8 +19,16 @@ final class UISettings: ObservableObject {
         }
     }
 
-    @AppStorage("ui.themeMode")   var themeMode: ThemeMode = .auto
-    @AppStorage("asrModelChoice") var modelChoice: ASRModelChoice = .speed
+    @Published var themeMode: ThemeMode {
+        didSet { UserDefaults.standard.set(themeMode.rawValue, forKey: "ui.themeMode") }
+    }
+    @Published var modelChoice: ASRModelChoice {
+        didSet { UserDefaults.standard.set(modelChoice.rawValue, forKey: "asrModelChoice") }
+    }
 
-    private init() {}
+    private init() {
+        let d = UserDefaults.standard
+        themeMode = d.string(forKey: "ui.themeMode").flatMap(ThemeMode.init) ?? .auto
+        modelChoice = d.string(forKey: "asrModelChoice").flatMap(ASRModelChoice.init) ?? .speed
+    }
 }
