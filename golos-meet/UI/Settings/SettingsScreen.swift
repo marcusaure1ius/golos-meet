@@ -5,6 +5,15 @@ struct SettingsScreen: View {
     @Environment(\.palette) var p
     @ObservedObject private var settings = UISettings.shared
     @State private var apiKey: String = UISettings.shared.openRouterKey
+    @State private var keySaved: Bool = !UISettings.shared.openRouterKey.isEmpty
+
+    /// Доступные LLM-модели (пока одна; список расширяется здесь).
+    private let llmModels = ["qwen/qwen3.6-flash"]
+
+    private func persistKey() {
+        settings.openRouterKey = apiKey
+        keySaved = !apiKey.isEmpty
+    }
 
     var body: some View {
         ScrollView {
@@ -35,20 +44,36 @@ struct SettingsScreen: View {
                     }
                 }
                 GCard {
-                    GSettingRow("Action points (LLM)",
-                                desc: "Заголовок, конспект и задачи через OpenRouter.",
+                    GSettingRow("Генерировать автоматически",
+                                desc: "Заголовок, конспект и задачи через OpenRouter после расшифровки.",
                                 showTopDivider: false) {
-                        Toggle("", isOn: $settings.llmEnabled).labelsHidden()
+                        Toggle("", isOn: $settings.llmEnabled)
+                            .labelsHidden()
+                            .toggleStyle(.switch)
+                            .controlSize(.small)
                     }
                     GSettingRow("Модель") {
-                        TextField("qwen/qwen3.6-flash", text: $settings.llmModel)
-                            .textFieldStyle(.roundedBorder).frame(width: 220)
+                        Menu {
+                            ForEach(llmModels, id: \.self) { m in
+                                Button(m) { settings.llmModel = m }
+                            }
+                        } label: {
+                            GSelectLabel(settings.llmModel)
+                        }
+                        .menuStyle(.borderlessButton).fixedSize()
                     }
-                    GSettingRow("Ключ OpenRouter", desc: "Хранится в Keychain.") {
-                        SecureField("sk-or-v1-…", text: $apiKey)
-                            .textFieldStyle(.roundedBorder).frame(width: 220)
-                            .onSubmit { settings.openRouterKey = apiKey }
-                            .onChange(of: apiKey) { _, v in settings.openRouterKey = v }
+                    GSettingRow("Ключ OpenRouter",
+                                desc: keySaved ? "Сохранён в Keychain." : "Хранится в Keychain, не в настройках.") {
+                        HStack(spacing: 8) {
+                            Image(systemName: keySaved ? "checkmark.circle.fill" : "circle.dashed")
+                                .font(.system(size: 13))
+                                .foregroundStyle(keySaved ? Color.green : p.muted2)
+                                .help(keySaved ? "Ключ сохранён" : "Ключ не задан")
+                            SecureField("sk-or-v1-…", text: $apiKey)
+                                .textFieldStyle(.roundedBorder).frame(width: 220)
+                                .onSubmit { persistKey() }
+                                .onChange(of: apiKey) { _, _ in persistKey() }
+                        }
                     }
                 }
             }

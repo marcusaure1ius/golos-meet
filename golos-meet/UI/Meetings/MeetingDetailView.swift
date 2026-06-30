@@ -80,7 +80,7 @@ struct MeetingDetailView: View {
             .help("Вернуться к списку встреч")
 
             Text("/").font(.system(size: 13)).foregroundStyle(p.muted2)
-            Text(meeting.title).font(.system(size: 13)).foregroundStyle(p.muted)
+            Text(liveMeeting.title).font(.system(size: 13)).foregroundStyle(p.muted)
             Spacer()
         }
         // leading 33 + пилюля(8) + стрелка(11) + spacing(4) = 56 → «Встречи» на линии контента.
@@ -89,12 +89,12 @@ struct MeetingDetailView: View {
 
     private var header: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text(meeting.title)
+            Text(liveMeeting.title)
                 .font(.system(size: 26, weight: .semibold)).tracking(-0.3).foregroundStyle(p.ink)
-                .id(meeting.title)
+                .id(liveMeeting.title)
                 .transition(.opacity.combined(with: .offset(y: 4)))
                 .shimmerOnce(active: titleShimmer)
-                .animation(.easeOut(duration: 0.35), value: meeting.title)
+                .animation(.easeOut(duration: 0.35), value: liveMeeting.title)
             HStack(spacing: 10) {
                 Text(Self.dateFmt.string(from: meeting.startedAt)).font(.system(size: 13)).foregroundStyle(p.muted)
                 Text("·").foregroundStyle(p.muted2)
@@ -146,7 +146,7 @@ struct MeetingDetailView: View {
                     }
                 } label: {
                     if isSummarizing {
-                        HStack(spacing: 6) { Spinner(color: p.btnInk, size: 13, lineWidth: 1.5); Text("Анализирую…") }
+                        HStack(spacing: 6) { Spinner(color: p.ink, size: 13, lineWidth: 1.5); Text("Анализирую…") }
                     } else {
                         Text(insights == nil ? "Сгенерировать" : "Перегенерировать")
                     }
@@ -170,14 +170,10 @@ struct MeetingDetailView: View {
                 .frame(maxWidth: .infinity).padding(.top, 40)
         } else if let t = transcript {
             VStack(alignment: .leading, spacing: 24) {
-                if isSummarizing {
-                    HStack(spacing: 6) {
-                        Spinner(color: p.muted, size: 13, lineWidth: 1.5)
-                        Text("Анализирую…").font(.system(size: 13)).foregroundStyle(p.muted)
-                    }
-                } else if let ins = insights {
+                // Прогресс генерации показывают бейдж «Анализирую» и кнопка — здесь не дублируем.
+                if let ins = insights {
                     InsightsView(insights: ins)
-                } else {
+                } else if !isSummarizing {
                     Text("Action points ещё не сгенерированы.")
                         .font(.system(size: 13)).foregroundStyle(p.muted2)
                 }
