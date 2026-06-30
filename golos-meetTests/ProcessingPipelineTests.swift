@@ -97,6 +97,8 @@ import Foundation
         #expect(meta.status == .ready)
     }
 
+    // MARK: — LLM insights tests (Task 8) — see extension below
+
     @Test func startupResetsProcessingToFailed() throws {
         // отдельный temp-root с двумя встречами: одна processing, одна ready
         let root = FileManager.default.temporaryDirectory
@@ -126,5 +128,47 @@ import Foundation
         #expect(try status("crashed") == .failed)    // краш во время записи сброшен
         #expect(try status("done") == .ready)        // готовый не тронут
         #expect(try status("dropped") == .discarded) // отброшенный не тронут
+    }
+}
+
+extension ProcessingPipelineTests {
+    // Мок-completer прямо отдаёт готовый JSON инсайтов или бросает.
+    struct OKCompleter: ChatCompleter {
+        nonisolated func complete(model: String, messages: [ChatMessage], responseFormat: ResponseFormat?) async throws -> String {
+            "{\"title\":\"Умный заголовок\",\"summary\":\"Кратко.\",\"actionPoints\":[{\"text\":\"Сделать\",\"owner\":null}]}"
+        }
+    }
+    struct FailCompleter: ChatCompleter {
+        nonisolated func complete(model: String, messages: [ChatMessage], responseFormat: ResponseFormat?) async throws -> String {
+            throw LLMError.http(status: 500, body: "boom")
+        }
+    }
+
+    @Test func generatesInsightsAndTitleAfterTranscript() async throws {
+        let dir = try tempMeeting(duration: 600)
+        let stub = StubASR(perFile: ["mic.wav": [TimedSegment(start: 0, end: 1, text: "привет")]])
+        let gen = InsightsGenerator(client: OKCompleter(), model: "qwen/qwen3.6-flash")
+        let p = ProcessingPipeline(asrFactory: { stub }, insightsGenerator: gen)
+        await p.process(folder: dir)
+
+        let meta = try readMeta(dir)
+        #expect(meta.status == .ready)
+        #expect(meta.title == "Умный заголовок")
+        let insURL = dir.appendingPathComponent("insights.json")
+        #expect(FileManager.default.fileExists(atPath: insURL.path))
+        let ins = try MeetingInsights.decoded(Data(contentsOf: insURL))
+        #expect(ins.actionPoints.first?.text == "Сделать")
+    }
+
+    @Test func llmFailureKeepsMeetingReadyWithoutInsights() async throws {
+        let dir = try tempMeeting(duration: 600)
+        let stub = StubASR(perFile: ["mic.wav": [TimedSegment(start: 0, end: 1, text: "привет")]])
+        let gen = InsightsGenerator(client: FailCompleter(), model: "m")
+        let p = ProcessingPipeline(asrFactory: { stub }, insightsGenerator: gen)
+        await p.process(folder: dir)
+
+        let meta = try readMeta(dir)
+        #expect(meta.status == .ready)   // НЕ failed — транскрипт валиден
+        #expect(!FileManager.default.fileExists(atPath: dir.appendingPathComponent("insights.json").path))
     }
 }
