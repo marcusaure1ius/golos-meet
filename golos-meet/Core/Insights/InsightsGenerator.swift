@@ -45,9 +45,12 @@ struct InsightsGenerator {
                   let obj = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
                   let title = obj["title"] as? String,
                   let summary = obj["summary"] as? String else { return nil }
-            let rawPoints = obj["actionPoints"] as? [[String: Any]] ?? []
+            // Модель не всегда соблюдает имя поля из json_schema: qwen через
+            // OpenRouter возвращает snake_case `action_points`. Принимаем оба.
+            let rawPoints = (obj["actionPoints"] ?? obj["action_points"]) as? [[String: Any]] ?? []
             let points: [(String, String?)] = rawPoints.compactMap { p in
-                guard let text = p["text"] as? String else { return nil }
+                // Имя поля тоже не из схемы: qwen отдаёт `task` вместо `text`.
+                guard let text = (p["text"] ?? p["task"]) as? String else { return nil }
                 return (text, p["owner"] as? String)   // null/отсутствие → nil
             }
             return (title, summary, points)

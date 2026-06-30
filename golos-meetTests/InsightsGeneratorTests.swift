@@ -57,6 +57,21 @@ extension InsightsGeneratorTests {
         #expect(ins.actionPoints.isEmpty)
     }
 
+    @Test func parsesSnakeCaseActionPoints() async throws {
+        // Реальное наблюдение: qwen/qwen3.6-flash через OpenRouter не соблюдает
+        // json_schema — отдаёт `action_points` вместо `actionPoints` и `task`
+        // вместо `text`. Парсер должен принимать оба варианта.
+        let snake = """
+        {"title":"Релиз","summary":"С.","action_points":[
+          {"task":"Сделать","owner":"Денис"},{"task":"Проверить","owner":null}]}
+        """
+        let gen = InsightsGenerator(client: StubCompleter(reply: snake), model: "m")
+        let ins = try await gen.generate(from: Self.sampleTranscript(), meetingId: "M", now: .now)
+        #expect(ins.actionPoints.map(\.text) == ["Сделать", "Проверить"])
+        #expect(ins.actionPoints[0].owner == "Денис")
+        #expect(ins.actionPoints[1].owner == nil)
+    }
+
     @Test func throwsDecodeOnGarbage() async throws {
         let gen = InsightsGenerator(client: StubCompleter(reply: "извините, не понял"), model: "m")
         await #expect(throws: LLMError.self) {
