@@ -19,6 +19,7 @@ struct MeetingDetailView: View {
     }()
 
     private var isProcessing: Bool { processor.processing.contains(meeting.id) }
+    private var isSummarizing: Bool { processor.insightsProcessing.contains(meeting.id) }
 
     /// Свежая строка из library (после reprocess/reload), с откатом к снапшоту-пропу.
     private var liveMeeting: MeetingSummary {
@@ -96,7 +97,7 @@ struct MeetingDetailView: View {
                     Text("·").foregroundStyle(p.muted2)
                     Text(model).font(.system(size: 13)).foregroundStyle(p.muted2)
                 }
-                StatusBadge(status: isProcessing ? .processing : liveMeeting.status)
+                StatusBadge(status: isProcessing ? .processing : (isSummarizing ? .summarizing : liveMeeting.status))
             }
             actions
         }
@@ -132,14 +133,14 @@ struct MeetingDetailView: View {
                         library.reload()
                     }
                 } label: {
-                    if isProcessing {
+                    if isSummarizing {
                         HStack(spacing: 6) { Spinner(color: p.btnInk, size: 13, lineWidth: 1.5); Text("Анализирую…") }
                     } else {
                         Text(insights == nil ? "Сгенерировать" : "Перегенерировать")
                     }
                 }
                 .buttonStyle(GhostButton())
-                .disabled(isProcessing)
+                .disabled(isSummarizing)
             }
             Button {
                 NSWorkspace.shared.open(folder)
@@ -157,9 +158,14 @@ struct MeetingDetailView: View {
                 .frame(maxWidth: .infinity).padding(.top, 40)
         } else if let t = transcript {
             VStack(alignment: .leading, spacing: 24) {
-                if let ins = insights {
+                if isSummarizing {
+                    HStack(spacing: 6) {
+                        Spinner(color: p.muted, size: 13, lineWidth: 1.5)
+                        Text("Анализирую…").font(.system(size: 13)).foregroundStyle(p.muted)
+                    }
+                } else if let ins = insights {
                     InsightsView(insights: ins)
-                } else if !isProcessing {
+                } else {
                     Text("Action points ещё не сгенерированы.")
                         .font(.system(size: 13)).foregroundStyle(p.muted2)
                 }
