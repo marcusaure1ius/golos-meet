@@ -25,10 +25,24 @@ final class UISettings: ObservableObject {
     @Published var modelChoice: ASRModelChoice {
         didSet { UserDefaults.standard.set(modelChoice.rawValue, forKey: "asrModelChoice") }
     }
+    @Published var llmEnabled: Bool {
+        didSet { UserDefaults.standard.set(llmEnabled, forKey: "llm.enabled") }
+    }
+    @Published var llmModel: String {
+        didSet { UserDefaults.standard.set(llmModel, forKey: "llm.model") }
+    }
+
+    /// API-ключ OpenRouter — хранится в Keychain, не в UserDefaults.
+    var openRouterKey: String {
+        get { Keychain.get(account: Keychain.openRouterAccount) ?? "" }
+        set { Keychain.set(newValue, account: Keychain.openRouterAccount) }
+    }
 
     private init() {
         let d = UserDefaults.standard
         themeMode = d.string(forKey: "ui.themeMode").flatMap(ThemeMode.init) ?? .auto
         modelChoice = d.string(forKey: "asrModelChoice").flatMap(ASRModelChoice.init) ?? .speed
+        llmEnabled = (d.object(forKey: "llm.enabled") as? Bool) ?? true
+        llmModel = d.string(forKey: "llm.model") ?? "qwen/qwen3.6-flash"
     }
 }

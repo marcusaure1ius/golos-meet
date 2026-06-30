@@ -11,13 +11,21 @@ struct MeetingDetailView: View {
     let onBack: () -> Void
 
     @State private var transcript: Transcript?
+    @State private var insights: MeetingInsights?
     @State private var backHover = false
+
+    // Анимация «проявления» нового заголовка (typewriter + мягкий блюр).
+    @State private var displayedTitle = ""
+    @State private var isRevealing = false
+    @State private var titleBlur: CGFloat = 0
+    @State private var titleOpacity: Double = 1
 
     private static let dateFmt: DateFormatter = {
         let f = DateFormatter(); f.locale = Locale(identifier: "ru_RU"); f.timeZone = .current; f.dateFormat = "d MMMM, HH:mm"; return f
     }()
 
     private var isProcessing: Bool { processor.processing.contains(meeting.id) }
+    private var isSummarizing: Bool { processor.insightsProcessing.contains(meeting.id) }
 
     /// Свежая строка из library (после reprocess/reload), с откатом к снапшоту-пропу.
     private var liveMeeting: MeetingSummary {
@@ -46,7 +54,11 @@ struct MeetingDetailView: View {
                 .padding(.horizontal, 56).padding(.vertical, 24)
             }
         }
-        .task(id: meeting.id) { transcript = library.transcript(for: meeting.id) }
+        .task(id: meeting.id) {
+            transcript = library.transcript(for: meeting.id)
+            insights = library.insights(for: meeting.id)
+            displayedTitle = liveMeeting.title
+        }
     }
 
     private var breadcrumbs: some View {
@@ -74,7 +86,7 @@ struct MeetingDetailView: View {
             .help("Вернуться к списку встреч")
 
             Text("/").font(.system(size: 13)).foregroundStyle(p.muted2)
-            Text(meeting.title).font(.system(size: 13)).foregroundStyle(p.muted)
+            Text(liveMeeting.title).font(.system(size: 13)).foregroundStyle(p.muted)
             Spacer()
         }
         // leading 33 + пилюля(8) + стрелка(11) + spacing(4) = 56 → «Встречи» на линии контента.
@@ -83,7 +95,10 @@ struct MeetingDetailView: View {
 
     private var header: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text(meeting.title).font(.system(size: 26, weight: .semibold)).tracking(-0.3).foregroundStyle(p.ink)
+            Text(isRevealing ? displayedTitle : liveMeeting.title)
+                .font(.system(size: 26, weight: .semibold)).tracking(-0.3).foregroundStyle(p.ink)
+                .blur(radius: titleBlur)
+                .opacity(titleOpacity)
             HStack(spacing: 10) {
                 Text(Self.dateFmt.string(from: meeting.startedAt)).font(.system(size: 13)).foregroundStyle(p.muted)
                 Text("·").foregroundStyle(p.muted2)
@@ -92,7 +107,7 @@ struct MeetingDetailView: View {
                     Text("·").foregroundStyle(p.muted2)
                     Text(model).font(.system(size: 13)).foregroundStyle(p.muted2)
                 }
-                StatusBadge(status: isProcessing ? .processing : liveMeeting.status)
+                StatusBadge(status: isProcessing ? .processing : (isSummarizing ? .summarizing : liveMeeting.status))
             }
             actions
         }
@@ -103,9 +118,14 @@ struct MeetingDetailView: View {
             if hasAudio {
                 Button {
                     Task {
+                        let before = liveMeeting.title
                         await processor.reprocess(id: meeting.id, folder: folder)
                         transcript = library.transcript(for: meeting.id)
+                        insights = library.insights(for: meeting.id)
                         library.reload()
+                        if liveMeeting.title != before {
+                            await revealTitle(from: before, to: liveMeeting.title)
+                        }
                     }
                 } label: {
                     if isProcessing {
@@ -119,6 +139,27 @@ struct MeetingDetailView: View {
                 }
                 .buttonStyle(PrimaryButton())
                 .disabled(isProcessing)
+            }
+            if liveMeeting.hasTranscript {
+                Button {
+                    Task {
+                        let before = liveMeeting.title
+                        await processor.regenerateInsights(id: meeting.id, folder: folder)
+                        insights = library.insights(for: meeting.id)
+                        library.reload()
+                        if liveMeeting.title != before {
+                            await revealTitle(from: before, to: liveMeeting.title)
+                        }
+                    }
+                } label: {
+                    if isSummarizing {
+                        HStack(spacing: 6) { Spinner(color: p.ink, size: 13, lineWidth: 1.5); Text("Анализирую…") }
+                    } else {
+                        Text(insights == nil ? "Сгенерировать" : "Перегенерировать")
+                    }
+                }
+                .buttonStyle(GhostButton())
+                .disabled(isSummarizing || isProcessing)
             }
             Button {
                 NSWorkspace.shared.open(folder)
@@ -135,7 +176,16 @@ struct MeetingDetailView: View {
             ContentUnavailableView("Идёт расшифровка…", systemImage: "waveform")
                 .frame(maxWidth: .infinity).padding(.top, 40)
         } else if let t = transcript {
-            TranscriptView(transcript: t)
+            VStack(alignment: .leading, spacing: 24) {
+                // Прогресс генерации показывают бейдж «Анализирую» и кнопка — здесь не дублируем.
+                if let ins = insights {
+                    InsightsView(insights: ins)
+                } else if !isSummarizing {
+                    Text("Action points ещё не сгенерированы.")
+                        .font(.system(size: 13)).foregroundStyle(p.muted2)
+                }
+                TranscriptView(transcript: t)
+            }
         } else {
             switch liveMeeting.status {
             case .processing:
@@ -151,5 +201,33 @@ struct MeetingDetailView: View {
                     .frame(maxWidth: .infinity).padding(.top, 40)
             }
         }
+    }
+
+    /// Старый заголовок гаснет в блюр, новый «печатается», проявляясь из дымки
+    /// (как переименование чата в сайдбаре ChatGPT).
+    private func revealTitle(from old: String, to target: String) async {
+        isRevealing = true
+        displayedTitle = old
+        titleBlur = 0; titleOpacity = 1
+        // 1) старый растворяется
+        withAnimation(.easeIn(duration: 0.18)) { titleOpacity = 0; titleBlur = 6 }
+        try? await Task.sleep(nanoseconds: 190_000_000)
+
+        // 2) новый печатается по символу, выплывая из блюра
+        displayedTitle = ""
+        titleOpacity = 1
+        titleBlur = 5
+        let chars = Array(target)
+        let count = max(chars.count, 1)
+        let step = max(UInt64(14_000_000), min(UInt64(45_000_000), UInt64(750_000_000) / UInt64(count)))
+        for i in 1...chars.count {
+            displayedTitle = String(chars[0..<i])
+            withAnimation(.easeOut(duration: 0.18)) {
+                titleBlur = CGFloat(5.0 * (1.0 - Double(i) / Double(count)))
+            }
+            try? await Task.sleep(nanoseconds: step)
+        }
+        withAnimation(.easeOut(duration: 0.25)) { titleBlur = 0 }
+        isRevealing = false   // дальше источник — liveMeeting.title (та же строка)
     }
 }

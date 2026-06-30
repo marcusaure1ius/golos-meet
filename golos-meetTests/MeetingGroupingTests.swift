@@ -6,7 +6,7 @@ import Foundation
     private var cal: Calendar { var c = Calendar(identifier: .gregorian); c.timeZone = TimeZone(identifier: "Europe/Moscow")!; return c }
 
     private func summary(_ id: String, _ date: Date) -> MeetingSummary {
-        MeetingSummary(id: id, startedAt: date, durationSeconds: 0, source: "", title: id, status: .ready, asrModel: nil, hasTranscript: false)
+        MeetingSummary(id: id, startedAt: date, durationSeconds: 0, source: "", title: id, status: .ready, asrModel: nil, hasTranscript: false, hasInsights: false)
     }
 
     @Test func groupsByDayWithRelativeLabels() {

@@ -73,4 +73,23 @@ import Foundation
         lib.reload()
         #expect(lib.summaries.count == 1)
     }
+
+    @Test func insightsRoundTripAndHasInsightsFlag() throws {
+        let root = FileManager.default.temporaryDirectory
+            .appendingPathComponent("gm-lib-\(UUID().uuidString)", isDirectory: true)
+        let dir = root.appendingPathComponent("2026-06-30_10-00-00", isDirectory: true)
+        try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+        // транскрипт (чтобы встреча попала в скан) + инсайты
+        try Data("{}".utf8).write(to: dir.appendingPathComponent("transcript.json"))
+        let ins = MeetingInsights(meetingId: dir.lastPathComponent, llmModel: "m",
+            generatedAt: Date(timeIntervalSince1970: 0), title: "Загол", summary: "С",
+            actionPoints: [ActionPoint(id: UUID(), text: "A", owner: nil)], schemaVersion: 1)
+        try ins.write(to: dir.appendingPathComponent("insights.json"))
+
+        let summaries = MeetingLibrary.scan(root: root)
+        #expect(summaries.first?.hasInsights == true)
+
+        let lib = MeetingLibrary(root: root)
+        #expect(lib.insights(for: dir.lastPathComponent)?.title == "Загол")
+    }
 }

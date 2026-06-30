@@ -5,6 +5,7 @@ import Foundation
 enum EffectiveStatus: Equatable {
     case recording
     case processing
+    case summarizing
     case ready
     case notTranscribed   // запись есть, ASR ещё не прогонялся
     case failed
@@ -14,6 +15,7 @@ enum EffectiveStatus: Equatable {
         switch self {
         case .recording:      return "Запись"
         case .processing:     return "Обработка"
+        case .summarizing:    return "Анализирую"
         case .ready:          return "Готово"
         case .notTranscribed: return "Не расшифрована"
         case .failed:         return "Ошибка"
@@ -32,6 +34,7 @@ struct MeetingSummary: Identifiable, Equatable {
     let status: EffectiveStatus
     let asrModel: String?
     let hasTranscript: Bool
+    let hasInsights: Bool
 
     /// Длительность вида «48 с» / «32 мин» / «1 ч 05 мин».
     var durationText: String { MeetingSummary.formatDuration(durationSeconds) }
@@ -41,9 +44,11 @@ struct MeetingSummary: Identifiable, Equatable {
     static func make(folderId: String,
                      meta: MeetingMeta?,
                      hasAudio: Bool,
-                     hasTranscript: Bool) -> MeetingSummary {
+                     hasTranscript: Bool,
+                     hasInsights: Bool = false) -> MeetingSummary {
         let startedAt = meta?.startedAt ?? parseId(folderId) ?? Date(timeIntervalSince1970: 0)
-        let status = effectiveStatus(metaStatus: meta?.status, hasAudio: hasAudio, hasTranscript: hasTranscript)
+        let status = effectiveStatus(metaStatus: meta?.status, hasAudio: hasAudio,
+                                     hasTranscript: hasTranscript, hasInsights: hasInsights)
         return MeetingSummary(
             id: folderId,
             startedAt: startedAt,
@@ -52,16 +57,19 @@ struct MeetingSummary: Identifiable, Equatable {
             title: meta?.title ?? fallbackTitle(for: startedAt),
             status: status,
             asrModel: meta?.asrModel,
-            hasTranscript: hasTranscript)
+            hasTranscript: hasTranscript,
+            hasInsights: hasInsights)
     }
 
     static func effectiveStatus(metaStatus: MeetingStatus?,
                                 hasAudio: Bool,
-                                hasTranscript: Bool) -> EffectiveStatus {
+                                hasTranscript: Bool,
+                                hasInsights: Bool = false) -> EffectiveStatus {
+        if metaStatus == .summarizing { return .summarizing }
         if hasTranscript { return .ready }
         switch metaStatus {
         case .recording: return .recording
-        case .processing: return .processing
+        case .processing, .summarizing: return .processing
         case .failed:     return .failed
         case .discarded:  return .discarded
         case .ready, .none: return .notTranscribed   // нет транскрипта → расшифровка не выполнена

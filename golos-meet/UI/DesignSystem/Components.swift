@@ -143,7 +143,7 @@ struct GhostButton: ButtonStyle {
             .font(.system(size: 13.5, weight: .regular))
             .foregroundStyle(p.ink)
             .padding(.horizontal, 14)
-            .padding(.vertical, 6)
+            .frame(height: 28)
             .background(Color.clear)
             .clipShape(RoundedRectangle(cornerRadius: 7, style: .continuous))
             .overlay(
@@ -163,7 +163,7 @@ struct PrimaryButton: ButtonStyle {
             .font(.system(size: 13.5, weight: .regular))
             .foregroundStyle(p.btnInk)
             .padding(.horizontal, 14)
-            .padding(.vertical, 6)
+            .frame(height: 28)
             .background(p.btn)
             .clipShape(RoundedRectangle(cornerRadius: 7, style: .continuous))
             .opacity(configuration.isPressed ? 0.8 : 1)
