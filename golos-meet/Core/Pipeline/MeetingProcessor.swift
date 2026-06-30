@@ -43,6 +43,8 @@ final class MeetingProcessor: ObservableObject {
     /// `generator` по умолчанию nil; при nil пробует фабрику `makeInsightsGenerator()`.
     func regenerateInsights(id: String, folder: URL, generator: InsightsGenerator? = nil) async {
         guard !insightsProcessing.contains(id) else { return }
+        // Не запускать regen, пока для той же встречи идёт ASR (оба пишут meta.json через await).
+        guard !processing.contains(id) else { return }
         let gen = generator ?? MeetingProcessor.makeInsightsGenerator()
         guard let gen else { return }
 
@@ -51,11 +53,16 @@ final class MeetingProcessor: ObservableObject {
               let transcript = try? JSONDecoder().decode(Transcript.self, from: data),
               !transcript.segments.isEmpty else { return }
 
+        let metaURL = folder.appendingPathComponent("meta.json")
+        var meta = try? MeetingMeta.decoded(Data(contentsOf: metaURL))
+        guard meta != nil else {
+            Log.llm.error("\(id, privacy: .public): regenerate aborted — meta.json не прочитан")
+            return
+        }
+
         insightsProcessing.insert(id)
         defer { insightsProcessing.remove(id) }
 
-        let metaURL = folder.appendingPathComponent("meta.json")
-        var meta = try? MeetingMeta.decoded(Data(contentsOf: metaURL))
         meta?.status = .summarizing
         if let meta { try? meta.write(to: metaURL) }
 

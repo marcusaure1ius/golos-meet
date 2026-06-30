@@ -36,6 +36,7 @@ final class MockURLProtocol: URLProtocol {
     override func stopLoading() {}
 }
 
+// .serialized: тесты делят MockURLProtocol.stubs (nonisolated(unsafe) static) — параллельный прогон гонит состояние.
 @Suite(.serialized) struct OpenRouterClientTests {
     private func makeClient() -> OpenRouterClient {
         let cfg = URLSessionConfiguration.ephemeral

@@ -152,7 +152,7 @@ struct MeetingDetailView: View {
                     }
                 }
                 .buttonStyle(GhostButton())
-                .disabled(isSummarizing)
+                .disabled(isSummarizing || isProcessing)
             }
             Button {
                 NSWorkspace.shared.open(folder)
