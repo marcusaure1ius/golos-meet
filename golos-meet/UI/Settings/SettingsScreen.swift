@@ -4,6 +4,7 @@ import SwiftUI
 struct SettingsScreen: View {
     @Environment(\.palette) var p
     @ObservedObject private var settings = UISettings.shared
+    @State private var apiKey: String = UISettings.shared.openRouterKey
 
     var body: some View {
         ScrollView {
@@ -31,6 +32,23 @@ struct SettingsScreen: View {
                             GSelectLabel(settings.themeMode.title)
                         }
                         .menuStyle(.borderlessButton).fixedSize()
+                    }
+                }
+                GCard {
+                    GSettingRow("Action points (LLM)",
+                                desc: "Заголовок, конспект и задачи через OpenRouter.",
+                                showTopDivider: false) {
+                        Toggle("", isOn: $settings.llmEnabled).labelsHidden()
+                    }
+                    GSettingRow("Модель") {
+                        TextField("qwen/qwen3.6-flash", text: $settings.llmModel)
+                            .textFieldStyle(.roundedBorder).frame(width: 220)
+                    }
+                    GSettingRow("Ключ OpenRouter", desc: "Хранится в Keychain.") {
+                        SecureField("sk-or-v1-…", text: $apiKey)
+                            .textFieldStyle(.roundedBorder).frame(width: 220)
+                            .onSubmit { settings.openRouterKey = apiKey }
+                            .onChange(of: apiKey) { _, v in settings.openRouterKey = v }
                     }
                 }
             }

@@ -22,7 +22,8 @@ final class MeetingProcessor: ObservableObject {
         let pipeline = ProcessingPipeline(
             asrFactory: { LocalASR.forChoice(ASRSettings.current) },
             config: PipelineConfig(deleteShortAudio: false),
-            modelId: ASRSettings.current.modelId)
+            modelId: ASRSettings.current.modelId,
+            insightsGenerator: makeInsightsGenerator())
         await pipeline.process(folder: folder)
     }
 
@@ -68,8 +69,12 @@ final class MeetingProcessor: ObservableObject {
     }
 
     /// Собирает генератор инсайтов из настроек/Keychain. nil → LLM-шаг выключен.
-    /// Тело дополняется в задаче настроек (Task 11).
     static func makeInsightsGenerator() -> InsightsGenerator? {
-        nil
+        let settings = UISettings.shared
+        guard settings.llmEnabled else { return nil }
+        let key = Keychain.get(account: Keychain.openRouterAccount) ?? ""
+        guard !key.isEmpty else { return nil }
+        let client = OpenRouterClient(apiKey: key)
+        return InsightsGenerator(client: client, model: settings.llmModel)
     }
 }
