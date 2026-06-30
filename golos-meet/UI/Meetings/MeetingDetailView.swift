@@ -118,9 +118,14 @@ struct MeetingDetailView: View {
             if hasAudio {
                 Button {
                     Task {
+                        let before = liveMeeting.title
                         await processor.reprocess(id: meeting.id, folder: folder)
                         transcript = library.transcript(for: meeting.id)
+                        insights = library.insights(for: meeting.id)
                         library.reload()
+                        if liveMeeting.title != before {
+                            await revealTitle(from: before, to: liveMeeting.title)
+                        }
                     }
                 } label: {
                     if isProcessing {
