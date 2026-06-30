@@ -30,8 +30,9 @@ final class MeetingLibrary: ObservableObject {
             let hasAudio = fm.fileExists(atPath: dir.appendingPathComponent("mic.wav").path)
                         || fm.fileExists(atPath: dir.appendingPathComponent("system.wav").path)
             let hasTranscript = fm.fileExists(atPath: dir.appendingPathComponent("transcript.json").path)
+            let hasInsights = fm.fileExists(atPath: dir.appendingPathComponent("insights.json").path)
             guard meta != nil || hasAudio || hasTranscript else { continue }
-            result.append(MeetingSummary.make(folderId: id, meta: meta, hasAudio: hasAudio, hasTranscript: hasTranscript))
+            result.append(MeetingSummary.make(folderId: id, meta: meta, hasAudio: hasAudio, hasTranscript: hasTranscript, hasInsights: hasInsights))
         }
         return result.sorted { $0.startedAt > $1.startedAt }
     }
@@ -41,5 +42,13 @@ final class MeetingLibrary: ObservableObject {
         let url = root.appendingPathComponent(id, isDirectory: true).appendingPathComponent("transcript.json")
         guard let data = try? Data(contentsOf: url) else { return nil }
         return try? JSONDecoder().decode(Transcript.self, from: data)
+    }
+
+    /// Ленивая загрузка инсайтов встречи.
+    func insights(for id: String) -> MeetingInsights? {
+        let url = root.appendingPathComponent(id, isDirectory: true)
+            .appendingPathComponent("insights.json")
+        guard let data = try? Data(contentsOf: url) else { return nil }
+        return try? MeetingInsights.decoded(data)
     }
 }
