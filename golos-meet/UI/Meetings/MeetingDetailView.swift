@@ -11,6 +11,7 @@ struct MeetingDetailView: View {
     let onBack: () -> Void
 
     @State private var transcript: Transcript?
+    @State private var insights: MeetingInsights?
     @State private var backHover = false
 
     private static let dateFmt: DateFormatter = {
@@ -46,7 +47,10 @@ struct MeetingDetailView: View {
                 .padding(.horizontal, 56).padding(.vertical, 24)
             }
         }
-        .task(id: meeting.id) { transcript = library.transcript(for: meeting.id) }
+        .task(id: meeting.id) {
+            transcript = library.transcript(for: meeting.id)
+            insights = library.insights(for: meeting.id)
+        }
     }
 
     private var breadcrumbs: some View {
@@ -120,6 +124,23 @@ struct MeetingDetailView: View {
                 .buttonStyle(PrimaryButton())
                 .disabled(isProcessing)
             }
+            if liveMeeting.hasTranscript {
+                Button {
+                    Task {
+                        await processor.regenerateInsights(id: meeting.id, folder: folder)
+                        insights = library.insights(for: meeting.id)
+                        library.reload()
+                    }
+                } label: {
+                    if isProcessing {
+                        HStack(spacing: 6) { Spinner(color: p.btnInk, size: 13, lineWidth: 1.5); Text("Анализирую…") }
+                    } else {
+                        Text(insights == nil ? "Сгенерировать" : "Перегенерировать")
+                    }
+                }
+                .buttonStyle(GhostButton())
+                .disabled(isProcessing)
+            }
             Button {
                 NSWorkspace.shared.open(folder)
             } label: {
@@ -135,7 +156,15 @@ struct MeetingDetailView: View {
             ContentUnavailableView("Идёт расшифровка…", systemImage: "waveform")
                 .frame(maxWidth: .infinity).padding(.top, 40)
         } else if let t = transcript {
-            TranscriptView(transcript: t)
+            VStack(alignment: .leading, spacing: 24) {
+                if let ins = insights {
+                    InsightsView(insights: ins)
+                } else if !isProcessing {
+                    Text("Action points ещё не сгенерированы.")
+                        .font(.system(size: 13)).foregroundStyle(p.muted2)
+                }
+                TranscriptView(transcript: t)
+            }
         } else {
             switch liveMeeting.status {
             case .processing:
