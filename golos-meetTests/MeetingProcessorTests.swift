@@ -33,3 +33,34 @@ import Foundation
         #expect(callCount == 1)
     }
 }
+
+extension MeetingProcessorTests {
+    struct OKCompleter: ChatCompleter {
+        nonisolated func complete(model: String, messages: [ChatMessage], responseFormat: ResponseFormat?) async throws -> String {
+            "{\"title\":\"Ручной заголовок\",\"summary\":\"С.\",\"actionPoints\":[]}"
+        }
+    }
+
+    @Test func regenerateInsights_writesInsightsAndTitle() async throws {
+        let dir = FileManager.default.temporaryDirectory
+            .appendingPathComponent("gm-reg-\(UUID().uuidString)", isDirectory: true)
+        try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+        let meta = MeetingMeta(id: dir.lastPathComponent, source: "kontur.talk",
+            startedAt: Date(timeIntervalSince1970: 0), endedAt: Date(timeIntervalSince1970: 600),
+            durationSeconds: 600, status: .ready, asrModel: "gigaam-v3")
+        try meta.write(to: dir.appendingPathComponent("meta.json"))
+        let tr = Transcript(meetingId: meta.id, asrModel: "gigaam-v3",
+            segments: [TranscriptSegment(start: 0, end: 1, speaker: .me, text: "привет")])
+        try TranscriptMerger.renderJSON(tr).write(to: dir.appendingPathComponent("transcript.json"))
+
+        let proc = MeetingProcessor()
+        let gen = InsightsGenerator(client: OKCompleter(), model: "m")
+        await proc.regenerateInsights(id: meta.id, folder: dir, generator: gen)
+
+        let updated = try MeetingMeta.decoded(Data(contentsOf: dir.appendingPathComponent("meta.json")))
+        #expect(updated.title == "Ручной заголовок")
+        #expect(updated.status == .ready)
+        #expect(FileManager.default.fileExists(atPath: dir.appendingPathComponent("insights.json").path))
+        #expect(proc.processing.isEmpty)
+    }
+}
