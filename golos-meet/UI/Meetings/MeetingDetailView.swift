@@ -13,6 +13,7 @@ struct MeetingDetailView: View {
     @State private var transcript: Transcript?
     @State private var insights: MeetingInsights?
     @State private var backHover = false
+    @State private var titleShimmer = false
 
     private static let dateFmt: DateFormatter = {
         let f = DateFormatter(); f.locale = Locale(identifier: "ru_RU"); f.timeZone = .current; f.dateFormat = "d MMMM, HH:mm"; return f
@@ -88,7 +89,12 @@ struct MeetingDetailView: View {
 
     private var header: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text(meeting.title).font(.system(size: 26, weight: .semibold)).tracking(-0.3).foregroundStyle(p.ink)
+            Text(meeting.title)
+                .font(.system(size: 26, weight: .semibold)).tracking(-0.3).foregroundStyle(p.ink)
+                .id(meeting.title)
+                .transition(.opacity.combined(with: .offset(y: 4)))
+                .shimmerOnce(active: titleShimmer)
+                .animation(.easeOut(duration: 0.35), value: meeting.title)
             HStack(spacing: 10) {
                 Text(Self.dateFmt.string(from: meeting.startedAt)).font(.system(size: 13)).foregroundStyle(p.muted)
                 Text("·").foregroundStyle(p.muted2)
@@ -128,9 +134,15 @@ struct MeetingDetailView: View {
             if liveMeeting.hasTranscript {
                 Button {
                     Task {
+                        let before = liveMeeting.title
                         await processor.regenerateInsights(id: meeting.id, folder: folder)
                         insights = library.insights(for: meeting.id)
                         library.reload()
+                        if liveMeeting.title != before {
+                            titleShimmer = true
+                            try? await Task.sleep(nanoseconds: 1_200_000_000)
+                            titleShimmer = false
+                        }
                     }
                 } label: {
                     if isSummarizing {
