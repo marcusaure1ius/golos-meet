@@ -25,7 +25,7 @@ struct StatusBadge: View {
         switch status {
         case .recording, .failed:        return p.danger
         case .ready:                     return .green
-        case .processing:                return p.muted
+        case .processing, .summarizing:  return p.muted
         case .notTranscribed, .discarded: return p.muted2
         }
     }

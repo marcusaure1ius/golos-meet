@@ -42,8 +42,27 @@ import Foundation
     }
 
     @Test func durationText_formats() {
-        #expect(MeetingSummary(id: "x", startedAt: .now, durationSeconds: 48, source: "", title: "t", status: .ready, asrModel: nil, hasTranscript: false).durationText == "48 с")
-        #expect(MeetingSummary(id: "x", startedAt: .now, durationSeconds: 1920, source: "", title: "t", status: .ready, asrModel: nil, hasTranscript: false).durationText == "32 мин")
-        #expect(MeetingSummary(id: "x", startedAt: .now, durationSeconds: 3905, source: "", title: "t", status: .ready, asrModel: nil, hasTranscript: false).durationText == "1 ч 05 мин")
+        #expect(MeetingSummary(id: "x", startedAt: .now, durationSeconds: 48, source: "", title: "t", status: .ready, asrModel: nil, hasTranscript: false, hasInsights: false).durationText == "48 с")
+        #expect(MeetingSummary(id: "x", startedAt: .now, durationSeconds: 1920, source: "", title: "t", status: .ready, asrModel: nil, hasTranscript: false, hasInsights: false).durationText == "32 мин")
+        #expect(MeetingSummary(id: "x", startedAt: .now, durationSeconds: 3905, source: "", title: "t", status: .ready, asrModel: nil, hasTranscript: false, hasInsights: false).durationText == "1 ч 05 мин")
+    }
+}
+
+extension MeetingSummaryTests {
+    @Test func effectiveStatus_summarizingWinsOverTranscript() {
+        #expect(MeetingSummary.effectiveStatus(
+            metaStatus: .summarizing, hasAudio: true, hasTranscript: true, hasInsights: false) == .summarizing)
+    }
+    @Test func effectiveStatus_readyWhenTranscriptAndNotSummarizing() {
+        #expect(MeetingSummary.effectiveStatus(
+            metaStatus: .ready, hasAudio: true, hasTranscript: true, hasInsights: true) == .ready)
+    }
+    @Test func make_carriesHasInsights() {
+        let s = MeetingSummary.make(folderId: "M", meta: nil, hasAudio: true,
+                                    hasTranscript: true, hasInsights: true)
+        #expect(s.hasInsights == true)
+    }
+    @Test func summarizingLabel() {
+        #expect(EffectiveStatus.summarizing.label == "Анализирую")
     }
 }
