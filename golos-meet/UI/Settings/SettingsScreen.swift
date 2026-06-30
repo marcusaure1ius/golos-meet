@@ -30,7 +30,7 @@ struct SettingsScreen: View {
                         } label: {
                             GSelectLabel(settings.modelChoice.displayName)
                         }
-                        .menuStyle(.borderlessButton).fixedSize()
+                        .menuStyle(.borderlessButton).menuIndicator(.hidden).fixedSize()
                     }
                     GSettingRow("Тема") {
                         Menu {
@@ -40,7 +40,7 @@ struct SettingsScreen: View {
                         } label: {
                             GSelectLabel(settings.themeMode.title)
                         }
-                        .menuStyle(.borderlessButton).fixedSize()
+                        .menuStyle(.borderlessButton).menuIndicator(.hidden).fixedSize()
                     }
                 }
                 GCard {
@@ -60,7 +60,7 @@ struct SettingsScreen: View {
                         } label: {
                             GSelectLabel(settings.llmModel)
                         }
-                        .menuStyle(.borderlessButton).fixedSize()
+                        .menuStyle(.borderlessButton).menuIndicator(.hidden).fixedSize()
                     }
                     GSettingRow("Ключ OpenRouter",
                                 desc: keySaved ? "Сохранён в Keychain." : "Хранится в Keychain, не в настройках.") {
