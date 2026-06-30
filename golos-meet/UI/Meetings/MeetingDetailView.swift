@@ -13,7 +13,12 @@ struct MeetingDetailView: View {
     @State private var transcript: Transcript?
     @State private var insights: MeetingInsights?
     @State private var backHover = false
-    @State private var titleShimmer = false
+
+    // Анимация «проявления» нового заголовка (typewriter + мягкий блюр).
+    @State private var displayedTitle = ""
+    @State private var isRevealing = false
+    @State private var titleBlur: CGFloat = 0
+    @State private var titleOpacity: Double = 1
 
     private static let dateFmt: DateFormatter = {
         let f = DateFormatter(); f.locale = Locale(identifier: "ru_RU"); f.timeZone = .current; f.dateFormat = "d MMMM, HH:mm"; return f
@@ -52,6 +57,7 @@ struct MeetingDetailView: View {
         .task(id: meeting.id) {
             transcript = library.transcript(for: meeting.id)
             insights = library.insights(for: meeting.id)
+            displayedTitle = liveMeeting.title
         }
     }
 
@@ -89,12 +95,10 @@ struct MeetingDetailView: View {
 
     private var header: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text(liveMeeting.title)
+            Text(isRevealing ? displayedTitle : liveMeeting.title)
                 .font(.system(size: 26, weight: .semibold)).tracking(-0.3).foregroundStyle(p.ink)
-                .id(liveMeeting.title)
-                .transition(.opacity.combined(with: .offset(y: 4)))
-                .shimmerOnce(active: titleShimmer)
-                .animation(.easeOut(duration: 0.35), value: liveMeeting.title)
+                .blur(radius: titleBlur)
+                .opacity(titleOpacity)
             HStack(spacing: 10) {
                 Text(Self.dateFmt.string(from: meeting.startedAt)).font(.system(size: 13)).foregroundStyle(p.muted)
                 Text("·").foregroundStyle(p.muted2)
@@ -139,9 +143,7 @@ struct MeetingDetailView: View {
                         insights = library.insights(for: meeting.id)
                         library.reload()
                         if liveMeeting.title != before {
-                            titleShimmer = true
-                            try? await Task.sleep(nanoseconds: 1_200_000_000)
-                            titleShimmer = false
+                            await revealTitle(from: before, to: liveMeeting.title)
                         }
                     }
                 } label: {
@@ -194,5 +196,33 @@ struct MeetingDetailView: View {
                     .frame(maxWidth: .infinity).padding(.top, 40)
             }
         }
+    }
+
+    /// Старый заголовок гаснет в блюр, новый «печатается», проявляясь из дымки
+    /// (как переименование чата в сайдбаре ChatGPT).
+    private func revealTitle(from old: String, to target: String) async {
+        isRevealing = true
+        displayedTitle = old
+        titleBlur = 0; titleOpacity = 1
+        // 1) старый растворяется
+        withAnimation(.easeIn(duration: 0.18)) { titleOpacity = 0; titleBlur = 6 }
+        try? await Task.sleep(nanoseconds: 190_000_000)
+
+        // 2) новый печатается по символу, выплывая из блюра
+        displayedTitle = ""
+        titleOpacity = 1
+        titleBlur = 5
+        let chars = Array(target)
+        let count = max(chars.count, 1)
+        let step = max(UInt64(14_000_000), min(UInt64(45_000_000), UInt64(750_000_000) / UInt64(count)))
+        for i in 1...chars.count {
+            displayedTitle = String(chars[0..<i])
+            withAnimation(.easeOut(duration: 0.18)) {
+                titleBlur = CGFloat(5.0 * (1.0 - Double(i) / Double(count)))
+            }
+            try? await Task.sleep(nanoseconds: step)
+        }
+        withAnimation(.easeOut(duration: 0.25)) { titleBlur = 0 }
+        isRevealing = false   // дальше источник — liveMeeting.title (та же строка)
     }
 }
