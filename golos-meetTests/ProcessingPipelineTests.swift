@@ -171,4 +171,20 @@ extension ProcessingPipelineTests {
         #expect(meta.status == .ready)   // НЕ failed — транскрипт валиден
         #expect(!FileManager.default.fileExists(atPath: dir.appendingPathComponent("insights.json").path))
     }
+
+    @Test func startupResetsSummarizingToReady() throws {
+        let root = FileManager.default.temporaryDirectory
+            .appendingPathComponent("gm-root-\(UUID().uuidString)", isDirectory: true)
+        let dir = root.appendingPathComponent("sum", isDirectory: true)
+        try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+        let m = MeetingMeta(id: "sum", source: "kontur.talk",
+            startedAt: Date(timeIntervalSince1970: 0), endedAt: Date(timeIntervalSince1970: 600),
+            durationSeconds: 600, status: .summarizing, asrModel: "gigaam-v3")
+        try m.write(to: dir.appendingPathComponent("meta.json"))
+
+        StartupRecovery.resetStale(root: root)
+
+        let status = try MeetingMeta.decoded(Data(contentsOf: dir.appendingPathComponent("meta.json"))).status
+        #expect(status == .ready)   // не failed: транскрипт уже есть, недоделан только LLM
+    }
 }

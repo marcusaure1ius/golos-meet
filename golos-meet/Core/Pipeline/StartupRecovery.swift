@@ -9,12 +9,21 @@ enum StartupRecovery {
             at: root, includingPropertiesForKeys: nil)) ?? []
         for dir in dirs {
             let metaURL = dir.appendingPathComponent("meta.json")
-            guard var meta = try? MeetingMeta.decoded(Data(contentsOf: metaURL)),
-                  meta.status == .processing || meta.status == .recording else { continue }
-            let from = meta.status?.rawValue ?? "?"
-            meta.status = .failed
-            try? meta.write(to: metaURL)
-            Log.pipeline.info("recovery: \(meta.id, privacy: .public) \(from, privacy: .public)→failed")
+            guard var meta = try? MeetingMeta.decoded(Data(contentsOf: metaURL)) else { continue }
+            switch meta.status {
+            case .processing, .recording:
+                let from = meta.status?.rawValue ?? "?"
+                meta.status = .failed
+                try? meta.write(to: metaURL)
+                Log.pipeline.info("recovery: \(meta.id, privacy: .public) \(from, privacy: .public)→failed")
+            case .summarizing:
+                // Транскрипт готов, недоделан только LLM — не теряем встречу.
+                meta.status = .ready
+                try? meta.write(to: metaURL)
+                Log.pipeline.info("recovery: \(meta.id, privacy: .public) summarizing→ready")
+            default:
+                continue
+            }
         }
     }
 
