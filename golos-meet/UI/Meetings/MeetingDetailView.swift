@@ -27,7 +27,7 @@ struct MeetingDetailView: View {
     private var isProcessing: Bool { processor.processing.contains(meeting.id) }
     private var isSummarizing: Bool { processor.insightsProcessing.contains(meeting.id) }
 
-    /// Свежая строка из library (после reprocess/reload), с откатом к снапшоту-пропу.
+    /// Свежая строка из library (обновляется после задач очереди), с откатом к снапшоту-пропу.
     private var liveMeeting: MeetingSummary {
         library.summaries.first { $0.id == meeting.id } ?? meeting
     }
@@ -58,6 +58,11 @@ struct MeetingDetailView: View {
             transcript = library.transcript(for: meeting.id)
             insights = library.insights(for: meeting.id)
             displayedTitle = liveMeeting.title
+        }
+        .onChange(of: processor.completedJobsCount) { _, _ in
+            // Фоновая задача очереди завершилась — перечитать артефакты (чтение lazy и дешёвое).
+            transcript = library.transcript(for: meeting.id)
+            insights = library.insights(for: meeting.id)
         }
     }
 
@@ -107,9 +112,21 @@ struct MeetingDetailView: View {
                     Text("·").foregroundStyle(p.muted2)
                     Text(model).font(.system(size: 13)).foregroundStyle(p.muted2)
                 }
-                StatusBadge(status: isProcessing ? .processing : (isSummarizing ? .summarizing : liveMeeting.status))
+                headerBadge
             }
             actions
+        }
+    }
+
+    /// Активная обработка → «Обработка»/«Анализирую», ожидание в очереди → «В очереди»,
+    /// иначе — статус из read-model (тот же порядок, что в MeetingCard.badge).
+    @ViewBuilder private var headerBadge: some View {
+        if let a = processor.activeJob, a.meetingId == meeting.id {
+            StatusBadge(status: a.kind == .insights ? .summarizing : .processing)
+        } else if processor.isQueued(meeting.id) {
+            QueuedBadge()
+        } else {
+            StatusBadge(status: liveMeeting.status)
         }
     }
 
@@ -176,8 +193,13 @@ struct MeetingDetailView: View {
 
     @ViewBuilder private var content: some View {
         if isProcessing {
-            ContentUnavailableView("Идёт расшифровка…", systemImage: "waveform")
-                .frame(maxWidth: .infinity).padding(.top, 40)
+            if processor.activeJob?.meetingId == meeting.id {
+                ContentUnavailableView("Идёт расшифровка…", systemImage: "waveform")
+                    .frame(maxWidth: .infinity).padding(.top, 40)
+            } else {
+                ContentUnavailableView("В очереди…", systemImage: "clock")
+                    .frame(maxWidth: .infinity).padding(.top, 40)
+            }
         } else if let t = transcript {
             VStack(alignment: .leading, spacing: 24) {
                 // Прогресс генерации показывают бейдж «Анализирую» и кнопка — здесь не дублируем.
