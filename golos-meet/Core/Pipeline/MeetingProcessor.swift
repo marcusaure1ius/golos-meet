@@ -2,80 +2,183 @@ import Foundation
 import Combine
 import os
 
-/// Отслеживает встречи «в обработке» и запускает ASR-пайплайн текущей моделью.
-/// `MeetingLibrary` (read-model) этим не занимается — обработка живёт здесь.
+/// Задача единой очереди обработки.
+struct ProcessingJob: Identifiable, Equatable {
+    enum Kind: Equatable {
+        /// Полный пайплайн: порог → ASR обеих дорожек → merge → инсайты → статус.
+        case process(deleteShortAudio: Bool)
+        /// Только инсайты по готовому transcript.json (без sidecar).
+        case insights
+    }
+
+    let meetingId: String
+    let folder: URL
+    let kind: Kind
+
+    var isProcess: Bool { if case .process = kind { return true }; return false }
+    /// Конфиг process в id не входит: повтор с другим конфигом — дубликат.
+    var id: String { "\(meetingId)|\(isProcess ? "process" : "insights")" }
+}
+
+/// Единая последовательная очередь всей обработки (FIFO, строго по одной задаче).
+/// Источники: конец записи (Recorder), «Переобработать»/«Сгенерировать» из UI,
+/// Backfill, спасённые встречи при старте (StartupRescue).
 @MainActor
 final class MeetingProcessor: ObservableObject {
-    /// id встреч, для которых сейчас идёт ASR-обработка (драйвит спиннер в UI).
-    @Published private(set) var processing: Set<String> = []
+    /// Единый экземпляр для app-wiring (Recorder/AppDelegate/UI). Тесты создают свои.
+    static let shared = MeetingProcessor()
 
-    /// id встреч, для которых сейчас идёт генерация инсайтов (отдельно от ASR).
-    @Published private(set) var insightsProcessing: Set<String> = []
+    @Published private(set) var queuedJobs: [ProcessingJob] = []
+    @Published private(set) var activeJob: ProcessingJob?
 
-    /// Рабочая функция: что делать с папкой встречи. Инъектируется для тестов;
-    /// по умолчанию — реальный `ProcessingPipeline`.
-    private let work: @MainActor (URL) async -> Void
-
-    init(work: (@MainActor (URL) async -> Void)? = nil) {
-        self.work = work ?? MeetingProcessor.runPipeline
+    /// id встреч с задачей `.process` (в очереди или активной) — драйвит спиннеры ASR.
+    var processing: Set<String> {
+        var ids = Set(queuedJobs.filter(\.isProcess).map(\.meetingId))
+        if let a = activeJob, a.isProcess { ids.insert(a.meetingId) }
+        return ids
     }
 
-    /// Реальный прогон: текущая модель (`ASRSettings.current`), без удаления коротких записей.
-    static func runPipeline(_ folder: URL) async {
-        let pipeline = ProcessingPipeline(
-            asrFactory: { LocalASR.forChoice(ASRSettings.current) },
-            config: PipelineConfig(deleteShortAudio: false),
-            modelId: ASRSettings.current.modelId,
-            insightsGenerator: makeInsightsGenerator())
-        await pipeline.process(folder: folder)
+    /// id встреч с задачей `.insights` (в очереди или активной).
+    var insightsProcessing: Set<String> {
+        var ids = Set(queuedJobs.filter { $0.kind == .insights }.map(\.meetingId))
+        if let a = activeJob, a.kind == .insights { ids.insert(a.meetingId) }
+        return ids
     }
 
-    /// Переобработать (или впервые расшифровать) встречу. Повторный вызов для той же
-    /// встречи, пока она в обработке, игнорируется.
-    func reprocess(id: String, folder: URL) async {
-        guard !processing.contains(id) else { return }
-        processing.insert(id)
-        await work(folder)
-        processing.remove(id)
+    /// Встреча ждёт в очереди (не активна) — бейдж «В очереди».
+    func isQueued(_ meetingId: String) -> Bool {
+        queuedJobs.contains { $0.meetingId == meetingId }
     }
 
-    /// Ручная (пере)генерация инсайтов по уже готовому transcript.json — без ASR/sidecar.
-    /// `generator` по умолчанию nil; при nil пробует фабрику `makeInsightsGenerator()`.
-    func regenerateInsights(id: String, folder: URL, generator: InsightsGenerator? = nil) async {
-        guard !insightsProcessing.contains(id) else { return }
-        // Не запускать regen, пока для той же встречи идёт ASR (оба пишут meta.json через await).
-        guard !processing.contains(id) else { return }
-        let gen = generator ?? MeetingProcessor.makeInsightsGenerator()
-        guard let gen else { return }
+    /// Уникальные встречи в работе (активная + очередь) — счётчик баннера.
+    var busyMeetingsCount: Int {
+        var ids = Set(queuedJobs.map(\.meetingId))
+        if let a = activeJob { ids.insert(a.meetingId) }
+        return ids.count
+    }
 
-        let trURL = folder.appendingPathComponent("transcript.json")
-        guard let data = try? Data(contentsOf: trURL),
+    // Рабочие функции; инъектируются в тестах, по умолчанию — реальные пайплайн и LLM.
+    private let processWork: @MainActor (URL, PipelineConfig) async -> Void
+    private let insightsWork: @MainActor (String, URL) async -> Void
+
+    private var worker: Task<Void, Never>?
+    private var waiters: [String: [CheckedContinuation<Void, Never>]] = [:]
+
+    init(processWork: (@MainActor (URL, PipelineConfig) async -> Void)? = nil,
+         insightsWork: (@MainActor (String, URL) async -> Void)? = nil) {
+        self.processWork = processWork ?? { folder, config in
+            let pipeline = ProcessingPipeline(
+                asrFactory: { LocalASR.forChoice(ASRSettings.current) },
+                config: config,
+                modelId: ASRSettings.current.modelId,
+                insightsGenerator: MeetingProcessor.makeInsightsGenerator())
+            await pipeline.process(folder: folder)
+        }
+        self.insightsWork = insightsWork ?? { id, folder in
+            await MeetingProcessor.runInsights(
+                id: id, folder: folder,
+                generator: MeetingProcessor.makeInsightsGenerator())
+        }
+    }
+
+    // MARK: Очередь
+
+    /// Ставит задачу (fire-and-forget). Дедупликация по встрече:
+    /// 1) `.process` вытесняет ЖДУЩУЮ `.insights` той же встречи (полная обработка её включает);
+    /// 2) `.insights` игнорируется, если у встречи уже есть `.process` (в очереди или активная);
+    /// 3) повтор того же типа — игнор.
+    func enqueue(_ kind: ProcessingJob.Kind, id: String, folder: URL) {
+        let job = ProcessingJob(meetingId: id, folder: folder, kind: kind)
+        guard !isPending(job.id) else { return }                          // правило 3
+        if case .insights = kind, pendingProcessJob(for: id) != nil { return }  // правило 2
+        if job.isProcess,
+           let idx = queuedJobs.firstIndex(where: { $0.meetingId == id && $0.kind == .insights }) {
+            // Правило 1: ожидающие вытесненной insights-задачи переезжают на process.
+            let removed = queuedJobs.remove(at: idx)
+            if let moved = waiters.removeValue(forKey: removed.id) {
+                waiters[job.id, default: []].append(contentsOf: moved)
+            }
+        }
+        queuedJobs.append(job)
+        pump()
+    }
+
+    /// enqueue + ожидание завершения (для UI: перезагрузить транскрипт/заголовок после).
+    /// Если insights срезана правилом 2 — ждём process-задачу той же встречи.
+    func enqueueAndWait(_ kind: ProcessingJob.Kind, id: String, folder: URL) async {
+        enqueue(kind, id: id, folder: folder)
+        let jobId = ProcessingJob(meetingId: id, folder: folder, kind: kind).id
+        let waitId: String
+        if isPending(jobId) {
+            waitId = jobId
+        } else if case .insights = kind, let p = pendingProcessJob(for: id) {
+            waitId = p.id
+        } else {
+            return   // ничего не поставилось и ждать нечего
+        }
+        await withCheckedContinuation { waiters[waitId, default: []].append($0) }
+    }
+
+    private func isPending(_ jobId: String) -> Bool {
+        activeJob?.id == jobId || queuedJobs.contains { $0.id == jobId }
+    }
+
+    private func pendingProcessJob(for meetingId: String) -> ProcessingJob? {
+        if let a = activeJob, a.meetingId == meetingId, a.isProcess { return a }
+        return queuedJobs.first { $0.meetingId == meetingId && $0.isProcess }
+    }
+
+    /// Запускает воркер, если он не крутится. Воркер выгребает очередь по одной задаче.
+    private func pump() {
+        guard worker == nil else { return }
+        worker = Task { @MainActor [weak self] in
+            while let self, !self.queuedJobs.isEmpty {
+                let job = self.queuedJobs.removeFirst()
+                self.activeJob = job
+                await self.run(job)
+                self.activeJob = nil
+                (self.waiters.removeValue(forKey: job.id) ?? []).forEach { $0.resume() }
+            }
+            self?.worker = nil
+        }
+    }
+
+    private func run(_ job: ProcessingJob) async {
+        switch job.kind {
+        case .process(let deleteShort):
+            await processWork(job.folder, PipelineConfig(deleteShortAudio: deleteShort))
+        case .insights:
+            await insightsWork(job.meetingId, job.folder)
+        }
+    }
+
+    // MARK: Инсайты по готовому транскрипту
+
+    /// Инсайты без ASR: transcript.json → insights.json + meta.title.
+    /// Ошибка LLM не роняет встречу — статус возвращается в ready.
+    static func runInsights(id: String, folder: URL, generator: InsightsGenerator?) async {
+        guard let gen = generator else { return }
+        guard let data = try? Data(contentsOf: folder.appendingPathComponent("transcript.json")),
               let transcript = try? JSONDecoder().decode(Transcript.self, from: data),
               !transcript.segments.isEmpty else { return }
 
         let metaURL = folder.appendingPathComponent("meta.json")
-        var meta = try? MeetingMeta.decoded(Data(contentsOf: metaURL))
-        guard meta != nil else {
-            Log.llm.error("\(id, privacy: .public): regenerate aborted — meta.json не прочитан")
+        guard var meta = try? MeetingMeta.decoded(Data(contentsOf: metaURL)) else {
+            Log.llm.error("\(id, privacy: .public): insights aborted — meta.json не прочитан")
             return
         }
-
-        insightsProcessing.insert(id)
-        defer { insightsProcessing.remove(id) }
-
-        meta?.status = .summarizing
-        if let meta { try? meta.write(to: metaURL) }
-
+        meta.status = .summarizing
+        try? meta.write(to: metaURL)
         do {
             let insights = try await gen.generate(from: transcript, meetingId: id)
             try insights.write(to: folder.appendingPathComponent("insights.json"))
-            meta?.title = insights.title
+            meta.title = insights.title
+            Log.llm.info("\(id, privacy: .public): insights ok (\(insights.actionPoints.count) action points)")
         } catch {
-            Log.llm.error("\(id, privacy: .public): manual insights failed — \(error.localizedDescription, privacy: .public)")
+            Log.llm.error("\(id, privacy: .public): insights failed — \(error.localizedDescription, privacy: .public)")
         }
-
-        meta?.status = .ready
-        if let meta { try? meta.write(to: metaURL) }
+        meta.status = .ready
+        try? meta.write(to: metaURL)
     }
 
     /// Собирает генератор инсайтов из настроек/Keychain. nil → LLM-шаг выключен.

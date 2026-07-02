@@ -119,7 +119,7 @@ struct MeetingDetailView: View {
                 Button {
                     Task {
                         let before = liveMeeting.title
-                        await processor.reprocess(id: meeting.id, folder: folder)
+                        await processor.enqueueAndWait(.process(deleteShortAudio: false), id: meeting.id, folder: folder)
                         transcript = library.transcript(for: meeting.id)
                         insights = library.insights(for: meeting.id)
                         library.reload()
@@ -144,7 +144,7 @@ struct MeetingDetailView: View {
                 Button {
                     Task {
                         let before = liveMeeting.title
-                        await processor.regenerateInsights(id: meeting.id, folder: folder)
+                        await processor.enqueueAndWait(.insights, id: meeting.id, folder: folder)
                         insights = library.insights(for: meeting.id)
                         library.reload()
                         if liveMeeting.title != before {
