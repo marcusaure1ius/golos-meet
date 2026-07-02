@@ -1,32 +1,19 @@
 import Foundation
 import os
 
-/// Dev-триггер: дообработать уже записанные встречи без transcript.json.
-/// Короткие записи НЕ удаляет (deleteShortAudio: false).
+/// Dev-триггер (GOLOS_MEET_BACKFILL=1): дообработать записанные встречи без transcript.json.
+/// Короткие записи НЕ удаляет (manual-конфиг). Кладёт задачи в общую очередь.
+@MainActor
 enum Backfill {
-    static func run() async {
-        let root = AppPaths.meetingsRoot
-        let dirs = (try? FileManager.default.contentsOfDirectory(
-            at: root, includingPropertiesForKeys: nil)) ?? []
-        let pending = dirs.filter { url in
-            var isDir: ObjCBool = false
-            FileManager.default.fileExists(atPath: url.path, isDirectory: &isDir)
-            guard isDir.boolValue else { return false }
-            let hasMeta = FileManager.default.fileExists(
-                atPath: url.appendingPathComponent("meta.json").path)
-            let hasTranscript = FileManager.default.fileExists(
-                atPath: url.appendingPathComponent("transcript.json").path)
-            return hasMeta && !hasTranscript
-        }.sorted { $0.lastPathComponent < $1.lastPathComponent }
-
+    static func run(processor: MeetingProcessor = .shared, root: URL = AppPaths.meetingsRoot) {
+        let pending = MeetingLibrary.scan(root: root)
+            .filter { $0.hasAudio && !$0.hasTranscript }
+            .sorted { $0.id < $1.id }
         Log.pipeline.info("backfill: \(pending.count) встреч к обработке")
-        for dir in pending {
-            let pipeline = ProcessingPipeline(
-                asrFactory: { LocalASR.forChoice(ASRSettings.current) },
-                config: .init(thresholdSeconds: 300, deleteShortAudio: false),
-                modelId: ASRSettings.current.modelId)
-            await pipeline.process(folder: dir)
+        for m in pending {
+            processor.enqueue(.process(deleteShortAudio: false),
+                              id: m.id,
+                              folder: root.appendingPathComponent(m.id, isDirectory: true))
         }
-        Log.pipeline.info("backfill: готово")
     }
 }

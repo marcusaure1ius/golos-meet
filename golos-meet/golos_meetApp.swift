@@ -30,7 +30,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         }
         coordinator.start()
         if ProcessInfo.processInfo.environment["GOLOS_MEET_BACKFILL"] == "1" {
-            Task { await Backfill.run() }
+            Backfill.run()
         }
     }
 }
