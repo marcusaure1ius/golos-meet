@@ -3,6 +3,7 @@ import SwiftUI
 struct MeetingsScreen: View {
     @Environment(\.palette) var p
     @EnvironmentObject var library: MeetingLibrary
+    @EnvironmentObject var processor: MeetingProcessor
     @Environment(\.scenePhase) private var scenePhase
     @State private var selected: MeetingSummary?
     @State private var mode: Mode = .feed
@@ -16,6 +17,10 @@ struct MeetingsScreen: View {
             } else {
                 VStack(spacing: 0) {
                     header
+                    if processor.busyMeetingsCount > 0 {
+                        ProcessingBanner(count: processor.busyMeetingsCount)
+                            .padding(.horizontal, 56).padding(.bottom, 8)
+                    }
                     switch mode {
                     case .feed:     MeetingFeedView(meetings: library.summaries, now: Date()) { selected = $0 }
                     case .calendar: MeetingCalendarView(meetings: library.summaries) { selected = $0 }
@@ -25,6 +30,9 @@ struct MeetingsScreen: View {
         }
         .onAppear { library.reload() }
         .onChange(of: scenePhase) { _, phase in if phase == .active { library.reload() } }
+        .onChange(of: processor.activeJob) { _, job in
+            if job == nil { library.reload() }   // задача завершилась — подтянуть статусы/заголовки
+        }
     }
 
     private var header: some View {

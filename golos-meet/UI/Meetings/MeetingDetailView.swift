@@ -131,7 +131,7 @@ struct MeetingDetailView: View {
                     if isProcessing {
                         HStack(spacing: 6) {
                             Spinner(color: p.btnInk, size: 13, lineWidth: 1.5)
-                            Text("Обработка…")
+                            Text(processor.activeJob?.meetingId == meeting.id ? "Обработка…" : "В очереди…")
                         }
                     } else {
                         Text(actionTitle)
@@ -153,7 +153,10 @@ struct MeetingDetailView: View {
                     }
                 } label: {
                     if isSummarizing {
-                        HStack(spacing: 6) { Spinner(color: p.ink, size: 13, lineWidth: 1.5); Text("Анализирую…") }
+                        HStack(spacing: 6) {
+                            Spinner(color: p.ink, size: 13, lineWidth: 1.5)
+                            Text(processor.activeJob?.meetingId == meeting.id ? "Анализирую…" : "В очереди…")
+                        }
                     } else {
                         Text(insights == nil ? "Сгенерировать" : "Перегенерировать")
                     }

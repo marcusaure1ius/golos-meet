@@ -8,10 +8,16 @@ struct MeetingCard: View {
 
     @State private var hovering = false
 
-    /// Если встреча сейчас обрабатывается (запущено из UI) — показываем «Обработка»,
-    /// иначе статус из read-model.
-    private var displayStatus: EffectiveStatus {
-        processor.processing.contains(meeting.id) ? .processing : meeting.status
+    /// Активная обработка → «Обработка»/«Анализирую», ожидание → «В очереди»,
+    /// иначе — статус из read-model.
+    @ViewBuilder private var badge: some View {
+        if let a = processor.activeJob, a.meetingId == meeting.id {
+            StatusBadge(status: a.kind == .insights ? .summarizing : .processing)
+        } else if processor.isQueued(meeting.id) {
+            QueuedBadge()
+        } else {
+            StatusBadge(status: meeting.status)
+        }
     }
 
     private static let timeFmt: DateFormatter = {
@@ -33,7 +39,7 @@ struct MeetingCard: View {
                     }
                 }
                 Spacer(minLength: 0)
-                StatusBadge(status: displayStatus)
+                badge
             }
             .padding(.horizontal, 16).padding(.vertical, 13)
         }

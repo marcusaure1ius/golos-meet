@@ -30,3 +30,17 @@ struct StatusBadge: View {
         }
     }
 }
+
+/// Бейдж «В очереди» — встреча ждёт своей очереди на обработку.
+struct QueuedBadge: View {
+    @Environment(\.palette) var p
+    var body: some View {
+        HStack(spacing: 5) {
+            Circle().fill(p.muted2).frame(width: 7, height: 7)
+            Text("В очереди").font(.system(size: 12)).foregroundStyle(p.muted2)
+        }
+        .padding(.horizontal, 8).padding(.vertical, 3)
+        .background(p.muted2.opacity(0.12))
+        .clipShape(Capsule())
+    }
+}
