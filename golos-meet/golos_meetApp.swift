@@ -35,24 +35,44 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     /// Выход во время записи: дописать WAV-заголовки и закрыть meta (миллисекунды),
-    /// потом отпустить приложение. Таймаут страхует от зависшего диска — краш-путь
-    /// (StartupRescue) всё равно спасёт запись при следующем запуске.
+    /// потом отпустить приложение. Если финализация не уложилась в ~3 с (зависший диск) —
+    /// отпускаем всё равно: недописанную запись спасёт StartupRescue при следующем запуске.
     func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
         guard coordinator.recorder.isRecording else { return .terminateNow }
         let recorder = coordinator.recorder
         Task { @MainActor in
-            await withTaskGroup(of: Void.self) { group in
-                group.addTask { @MainActor in
+            // Race «финализация против таймаута»: withTaskGroup не годится —
+            // он ждёт ВСЕХ детей, а finalize не проверяет отмену.
+            await withCheckedContinuation { (cont: CheckedContinuation<Void, Never>) in
+                let resumeGuard = ResumeOnceGuard(continuation: cont)
+                Task { @MainActor in
                     await recorder.finalizeActive(endedAt: Date())
+                    resumeGuard.resume()
                 }
-                group.addTask {
+                Task { @MainActor in
                     try? await Task.sleep(for: .seconds(3))
+                    resumeGuard.resume()
                 }
-                await group.next()
-                group.cancelAll()
             }
             sender.reply(toApplicationShouldTerminate: true)
         }
         return .terminateLater
+    }
+}
+
+/// Резюмирует continuation ровно один раз — обе стороны гонки (finalize/таймаут)
+/// зовут `resume()`, побеждает первая; хранится на MainActor, гонки за флагом нет.
+@MainActor
+private final class ResumeOnceGuard {
+    private var continuation: CheckedContinuation<Void, Never>?
+
+    init(continuation: CheckedContinuation<Void, Never>) {
+        self.continuation = continuation
+    }
+
+    func resume() {
+        guard let continuation else { return }
+        self.continuation = nil
+        continuation.resume()
     }
 }
