@@ -30,6 +30,8 @@ final class MeetingProcessor: ObservableObject {
 
     @Published private(set) var queuedJobs: [ProcessingJob] = []
     @Published private(set) var activeJob: ProcessingJob?
+    /// Счётчик завершённых задач; растёт после каждой — сигнал UI перечитать ленту.
+    @Published private(set) var completedJobsCount = 0
 
     /// id встреч с задачей `.process` (в очереди или активной) — драйвит спиннеры ASR.
     var processing: Set<String> {
@@ -137,6 +139,7 @@ final class MeetingProcessor: ObservableObject {
                 self.activeJob = job
                 await self.run(job)
                 self.activeJob = nil
+                self.completedJobsCount += 1
                 (self.waiters.removeValue(forKey: job.id) ?? []).forEach { $0.resume() }
             }
             self?.worker = nil

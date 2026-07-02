@@ -30,9 +30,7 @@ struct MeetingsScreen: View {
         }
         .onAppear { library.reload() }
         .onChange(of: scenePhase) { _, phase in if phase == .active { library.reload() } }
-        .onChange(of: processor.activeJob) { _, job in
-            if job == nil { library.reload() }   // задача завершилась — подтянуть статусы/заголовки
-        }
+        .onChange(of: processor.completedJobsCount) { _, _ in library.reload() }   // после каждой задачи — подтянуть статусы/заголовки
     }
 
     private var header: some View {

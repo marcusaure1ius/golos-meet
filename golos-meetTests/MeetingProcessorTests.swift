@@ -34,6 +34,7 @@ private final class Gate {
         #expect(order == ["p:a", "i:b", "p:c"])
         #expect(proc.activeJob == nil)
         #expect(proc.queuedJobs.isEmpty)
+        #expect(proc.completedJobsCount == 3)
     }
 
     @Test func dedupe_sameKindSameMeeting_ignored() async {
