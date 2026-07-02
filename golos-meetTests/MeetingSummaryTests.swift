@@ -65,4 +65,13 @@ extension MeetingSummaryTests {
     @Test func summarizingLabel() {
         #expect(EffectiveStatus.summarizing.label == "Анализирую")
     }
+    @Test func make_preservesRawStatusAndAudio() {
+        let meta = MeetingMeta(id: "m", source: "s",
+                               startedAt: Date(timeIntervalSince1970: 0),
+                               endedAt: Date(timeIntervalSince1970: 60),
+                               durationSeconds: 60, status: .recording, asrModel: nil)
+        let s = MeetingSummary.make(folderId: "m", meta: meta, hasAudio: true, hasTranscript: false)
+        #expect(s.metaStatus == .recording)
+        #expect(s.hasAudio)
+    }
 }

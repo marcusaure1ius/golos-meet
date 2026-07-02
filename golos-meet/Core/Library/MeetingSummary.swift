@@ -32,6 +32,11 @@ struct MeetingSummary: Identifiable, Equatable {
     let source: String
     let title: String
     let status: EffectiveStatus
+    /// Сырой статус из meta.json (nil у старых записей и сирот). Нужен rescue/backfill;
+    /// UI пользуется эффективным `status`.
+    var metaStatus: MeetingStatus? = nil
+    /// Есть ли на диске хотя бы одна аудио-дорожка.
+    var hasAudio: Bool = false
     let asrModel: String?
     let hasTranscript: Bool
     let hasInsights: Bool
@@ -56,6 +61,8 @@ struct MeetingSummary: Identifiable, Equatable {
             source: meta?.source ?? "",
             title: meta?.title ?? fallbackTitle(for: startedAt),
             status: status,
+            metaStatus: meta?.status,
+            hasAudio: hasAudio,
             asrModel: meta?.asrModel,
             hasTranscript: hasTranscript,
             hasInsights: hasInsights)
