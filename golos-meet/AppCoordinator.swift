@@ -15,7 +15,7 @@ final class AppCoordinator {
     let detector = MeetingDetector(graceSeconds: AppCoordinator.graceSeconds)
     private let audioMonitor = AudioProcessMonitor()
     private let windowMonitor = WindowMonitor()
-    private let recorder = Recorder()
+    let recorder = Recorder()
 
     // Последние значения каждого сигнала; встреча активна, если активен ХОТЯ БЫ ОДИН
     // (аудио ловит звук; окно ловит присутствие в звонке независимо от тишины/фокуса).

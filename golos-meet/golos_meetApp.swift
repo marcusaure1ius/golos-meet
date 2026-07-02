@@ -33,4 +33,26 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             Backfill.run()
         }
     }
+
+    /// Выход во время записи: дописать WAV-заголовки и закрыть meta (миллисекунды),
+    /// потом отпустить приложение. Таймаут страхует от зависшего диска — краш-путь
+    /// (StartupRescue) всё равно спасёт запись при следующем запуске.
+    func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
+        guard coordinator.recorder.isRecording else { return .terminateNow }
+        let recorder = coordinator.recorder
+        Task { @MainActor in
+            await withTaskGroup(of: Void.self) { group in
+                group.addTask { @MainActor in
+                    await recorder.finalizeActive(endedAt: Date())
+                }
+                group.addTask {
+                    try? await Task.sleep(for: .seconds(3))
+                }
+                await group.next()
+                group.cancelAll()
+            }
+            sender.reply(toApplicationShouldTerminate: true)
+        }
+        return .terminateLater
+    }
 }
