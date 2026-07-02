@@ -1,0 +1,82 @@
+import Testing
+import Foundation
+@testable import golos_meet
+
+@MainActor
+@Suite struct StartupRescueTests {
+    /// Временный корень meetings/ с одной встречей в заданном статусе.
+    private func makeMeeting(in root: URL, id: String, status: MeetingStatus,
+                             brokenWavDataBytes: Int? = nil) throws -> URL {
+        let dir = root.appendingPathComponent(id, isDirectory: true)
+        try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+        let meta = MeetingMeta(id: id, source: "kontur.talk",
+                               startedAt: Date(timeIntervalSince1970: 1_000_000),
+                               endedAt: Date(timeIntervalSince1970: 1_000_000),
+                               durationSeconds: 0, status: status, asrModel: nil,
+                               title: "t", schemaVersion: 1)
+        try meta.write(to: dir.appendingPathComponent("meta.json"))
+        if let bytes = brokenWavDataBytes {
+            // Заголовок с data size = 0 (как у оборванной записи) + данные.
+            var d = Data()
+            func le32(_ v: UInt32) { var x = v.littleEndian; d.append(Data(bytes: &x, count: 4)) }
+            func le16(_ v: UInt16) { var x = v.littleEndian; d.append(Data(bytes: &x, count: 2)) }
+            d.append(Data("RIFF".utf8)); le32(36); d.append(Data("WAVE".utf8))
+            d.append(Data("fmt ".utf8)); le32(16); le16(1); le16(1)
+            le32(16_000); le32(32_000); le16(2); le16(16)
+            d.append(Data("data".utf8)); le32(0)
+            d.append(Data(count: bytes))
+            try d.write(to: dir.appendingPathComponent("mic.wav"))
+        }
+        return dir
+    }
+
+    private func makeRoot() throws -> URL {
+        let root = FileManager.default.temporaryDirectory
+            .appendingPathComponent("gm-rescue-\(UUID().uuidString)", isDirectory: true)
+        try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
+        return root
+    }
+
+    @Test func recording_wavRepaired_metaClosed_folderReturned() throws {
+        let root = try makeRoot()
+        // 320 000 байт = 10 c при 16 кГц mono Int16.
+        let dir = try makeMeeting(in: root, id: "2026-07-01_10-00-00", status: .recording,
+                                  brokenWavDataBytes: 320_000)
+        let rescued = StartupRescue.run(root: root)
+        #expect(rescued == [dir])
+        let meta = try MeetingMeta.decoded(Data(contentsOf: dir.appendingPathComponent("meta.json")))
+        #expect(meta.durationSeconds == 10)
+        #expect(meta.endedAt == meta.startedAt.addingTimeInterval(10))
+        #expect(meta.status == .recording)
+        // Заголовок починен.
+        let wav = try Data(contentsOf: dir.appendingPathComponent("mic.wav"))
+        let dataField = wav.subdata(in: 40..<44).withUnsafeBytes { UInt32(littleEndian: $0.loadUnaligned(as: UInt32.self)) }
+        #expect(dataField == 320_000)
+    }
+
+    @Test func processing_folderReturned_metaUntouched() throws {
+        let root = try makeRoot()
+        let dir = try makeMeeting(in: root, id: "2026-07-01_11-00-00", status: .processing)
+        let rescued = StartupRescue.run(root: root)
+        #expect(rescued == [dir])
+        let meta = try MeetingMeta.decoded(Data(contentsOf: dir.appendingPathComponent("meta.json")))
+        #expect(meta.status == .processing)
+    }
+
+    @Test func summarizing_becomesReady_notReturned() throws {
+        let root = try makeRoot()
+        let dir = try makeMeeting(in: root, id: "2026-07-01_12-00-00", status: .summarizing)
+        let rescued = StartupRescue.run(root: root)
+        #expect(rescued.isEmpty)
+        let meta = try MeetingMeta.decoded(Data(contentsOf: dir.appendingPathComponent("meta.json")))
+        #expect(meta.status == .ready)
+    }
+
+    @Test func terminalStatuses_untouched_notReturned() throws {
+        let root = try makeRoot()
+        for (i, status) in [MeetingStatus.ready, .failed, .discarded].enumerated() {
+            _ = try makeMeeting(in: root, id: "2026-07-01_13-0\(i)-00", status: status)
+        }
+        #expect(StartupRescue.run(root: root).isEmpty)
+    }
+}

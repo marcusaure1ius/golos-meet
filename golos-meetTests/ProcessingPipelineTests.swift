@@ -99,12 +99,12 @@ import Foundation
 
     // MARK: — LLM insights tests (Task 8) — see extension below
 
-    @Test func startupResetsProcessingToFailed() throws {
-        // отдельный temp-root с двумя встречами: одна processing, одна ready
+    @Test func startupRescuesProcessingAndRecording() throws {
+        // отдельный temp-root с встречами в разных статусах
         let root = FileManager.default.temporaryDirectory
             .appendingPathComponent("gm-root-\(UUID().uuidString)", isDirectory: true)
         try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
-        func make(_ id: String, _ status: MeetingStatus) throws {
+        func make(_ id: String, _ status: MeetingStatus) throws -> URL {
             let dir = root.appendingPathComponent(id, isDirectory: true)
             try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
             let m = MeetingMeta(id: id, source: "kontur.talk",
@@ -112,20 +112,22 @@ import Foundation
                                 endedAt: Date(timeIntervalSince1970: 600),
                                 durationSeconds: 600, status: status, asrModel: nil)
             try m.write(to: dir.appendingPathComponent("meta.json"))
+            return dir
         }
-        try make("stuck", .processing)
-        try make("crashed", .recording)
-        try make("done", .ready)
-        try make("dropped", .discarded)
+        let stuckDir = try make("stuck", .processing)
+        let crashedDir = try make("crashed", .recording)
+        _ = try make("done", .ready)
+        _ = try make("dropped", .discarded)
 
-        StartupRecovery.resetStale(root: root)
+        let rescued = StartupRescue.run(root: root)
 
         func status(_ id: String) throws -> MeetingStatus? {
             try MeetingMeta.decoded(Data(contentsOf:
                 root.appendingPathComponent("\(id)/meta.json"))).status
         }
-        #expect(try status("stuck") == .failed)      // зависший processing сброшен
-        #expect(try status("crashed") == .failed)    // краш во время записи сброшен
+        #expect(rescued == [crashedDir, stuckDir])  // recording и processing возвращены (sorted by id)
+        #expect(try status("stuck") == .processing)    // статус не изменен
+        #expect(try status("crashed") == .recording)   // статус не изменен
         #expect(try status("done") == .ready)        // готовый не тронут
         #expect(try status("dropped") == .discarded) // отброшенный не тронут
     }
@@ -182,9 +184,10 @@ extension ProcessingPipelineTests {
             durationSeconds: 600, status: .summarizing, asrModel: "gigaam-v3")
         try m.write(to: dir.appendingPathComponent("meta.json"))
 
-        StartupRecovery.resetStale(root: root)
+        let rescued = StartupRescue.run(root: root)
 
         let status = try MeetingMeta.decoded(Data(contentsOf: dir.appendingPathComponent("meta.json"))).status
         #expect(status == .ready)   // не failed: транскрипт уже есть, недоделан только LLM
+        #expect(rescued.isEmpty)    // summarizing не возвращается в очередь
     }
 }
