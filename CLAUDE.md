@@ -6,6 +6,7 @@
 - **M1 (готово):** автономный записывальщик — детект встречи (аудио `kontur.talk*` ИЛИ окно звонка + grace), запись `mic.wav` + `system.wav` (16 кГц mono Int16) + `meta.json`.
 - **M2 (готово):** локальная транскрибация — VAD-нарезка + GigaAM/Whisper через Rust-sidecar, склейка «я/участники» по таймкодам → `transcript.json` + `transcript.md`, статусы встречи.
 - **UI (готово):** Dock-приложение в дизайн-языке `golos` — сайдбар (Встречи/Настройки), лента встреч ⇄ календарь, детали с транскриптом «я/участники», экран настроек (модель ASR + тема). Read-model `MeetingLibrary` (скан `meetings/`, эффективный статус, lazy-транскрипт). Action points — следующий слой (LLM).
+- **Надёжность (готово):** единая FIFO-очередь обработки (`MeetingProcessor`: `.process`/`.insights`, дедупликация, баннер «Обрабатываю N встреч»), terminate-handler (финализация записи при выходе), `WavRepair` + `StartupRescue` (спасённые встречи авто-встают в очередь; `processing` после краша переобрабатывается).
 - **Дальше:** LLM-постобработка (заголовок/конспект/action points) поверх готового UI. См. «Отложено до UI».
 
 ## Сборка и тесты
@@ -23,7 +24,7 @@ Swift (`golos-meet/`):
 - `Core/MeetingDetector` — grace-машина: started/ended. `Core/Recorder` — пишет 2 дорожки + meta, по `meetingEnded` запускает `ProcessingPipeline`.
 - `Core/ASR/` — `SidecarProtocol` (JSON-lines), `LocalASR` (actor: spawn sidecar, load, transcribe_file; **неблокирующий** reader через `readabilityHandler`), `ModelManager` (download-on-first-run; **пока не подключён**), `ASRModel` (выбор Скорость/Качество + `ASRSettings`).
 - `Core/Transcript/` — `TranscriptModels`, `TranscriptMerger` (мерж двух дорожек по `start`, метки me/participants).
-- `Core/Pipeline/` — `ProcessingPipeline` (порог 5 мин, статусы, ASR, merge, запись), `MeetingStatus`, `Backfill` (dev-флаг), `StartupRecovery` (залипшие processing/recording → failed).
+- `Core/Pipeline/` — `MeetingProcessor` (единая FIFO-очередь с дедупликацией), `ProcessingPipeline` (порог 5 мин, статусы, ASR, merge, запись), `MeetingStatus`, `Backfill` (dev-флаг), `StartupRescue` (ремонт WAV + авто-очередь).
 - `Util/` — `AppPaths`, `Logger` (`Log.recorder/pipeline/asr/detector/sidecar/...`).
 
 Rust (`asr/`, вендор из соседнего проекта `golos`): `protocol.rs` (Request/Response, `ModelKind` gigaam|whisper), `session.rs`, `transcriber.rs` (движок-агностичный `Box<dyn SpeechModel>`), `segment.rs` (`EnergyVad`-нарезка), `audio.rs`, `main.rs`. Зависит от `transcribe-rs 0.3` (features `onnx,whisper-cpp,whisper-metal`). **`Cargo.lock` закоммичен** (воспроизводимость).
@@ -50,7 +51,5 @@ Rust (`asr/`, вендор из соседнего проекта `golos`): `pro
 - SourceKit в редакторе часто пишет «Cannot find type …» для межфайловых символов — это шум анализа вне модуля; авторитетен `xcodebuild`/`cargo`.
 
 ## Отложено до UI (намеренно, чтобы не переделывать)
-- **`MeetingLibrary` read-model (введён в UI-слое):** `Core/Library/` — единая точка чтения/листинга встреч с «эффективным» статусом (есть `transcript.json` → ready; есть аудио без транскрипта → не расшифрована; сирота без meta → id из имени папки). Осталось: сканирование папок всё ещё дублируется в `StartupRecovery`/`Backfill` — свести их на `MeetingLibrary`.
-- **Последовательная очередь обработки:** сейчас каждая встреча поднимает свой sidecar; параллельные встречи могут грузить 2× Whisper (~3ГБ) одновременно. Ввести сериализацию при UI.
+- **`MeetingLibrary` read-model (введён в UI-слое):** `Core/Library/` — единая точка чтения/листинга встреч с «эффективным» статусом (есть `transcript.json` → ready; есть аудио без транскрипта → не расшифрована; сирота без meta → id из имени папки).
 - **ModelManager** подключить (download-on-first-run, экран загрузки модели); уточнить URL/sha/размеры дескрипторов.
-- **Terminate-handler** (дозаписать встречу при выходе) и ремонт WAV-заголовка осиротевших записей.
