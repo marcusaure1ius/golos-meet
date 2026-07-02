@@ -7,7 +7,8 @@
 - **M2 (готово):** локальная транскрибация — VAD-нарезка + GigaAM/Whisper через Rust-sidecar, склейка «я/участники» по таймкодам → `transcript.json` + `transcript.md`, статусы встречи.
 - **UI (готово):** Dock-приложение в дизайн-языке `golos` — сайдбар (Встречи/Настройки), лента встреч ⇄ календарь, детали с транскриптом «я/участники», экран настроек (модель ASR + тема). Read-model `MeetingLibrary` (скан `meetings/`, эффективный статус, lazy-транскрипт). Action points — следующий слой (LLM).
 - **Надёжность (готово):** единая FIFO-очередь обработки (`MeetingProcessor`: `.process`/`.insights`, дедупликация, баннер «Обрабатываю N встреч»), terminate-handler (финализация записи при выходе), `WavRepair` + `StartupRescue` (спасённые встречи авто-встают в очередь; `processing` после краша переобрабатывается).
-- **Дальше:** LLM-постобработка (заголовок/конспект/action points) поверх готового UI. См. «Отложено до UI».
+- **LLM-инсайты (готово):** заголовок/конспект/action points через OpenRouter (`Core/Insights/`), `insights.json` + `meta.title`, настройки ключа/модели в UI.
+- **Дальше:** дистрибуция (подключить `ModelManager`, бандлинг sidecar — под-проект B) и UI-хвосты (поиск/фильтр, плеер — под-проект C).
 
 ## Сборка и тесты
 - **Swift-приложение:** `xcodebuild build -scheme golos-meet -destination 'platform=macOS'`
@@ -17,11 +18,11 @@
 - **Реальный e2e (gated):** `GOLOS_MEET_ASR_BIN=$PWD/asr/target/release/golos-asr GOLOS_MEET_GIGAAM_DIR="$HOME/Library/Application Support/golos/models/e2e_ctc" xcodebuild test ... -only-testing:golos-meetTests/PipelineE2ETests` — прогоняет настоящий пайплайн с живым sidecar; без env-переменных тест скипается.
 
 ## Архитектура (модульный монолит)
-Поток: `MeetingDetector` → `Recorder` → (`meetingEnded`) → `ProcessingPipeline` → `LocalASR`↔sidecar → `TranscriptMerger` → файлы + статус.
+Поток: `MeetingDetector` → `Recorder` → (`meetingEnded`) → очередь `MeetingProcessor` → `ProcessingPipeline` → `LocalASR`↔sidecar → `TranscriptMerger` → файлы + статус.
 
 Swift (`golos-meet/`):
 - `AppCoordinator` — сводит сигналы (аудио `AudioProcessMonitor` ИЛИ окно `WindowMonitor`) в `MeetingDetector.handle(active:at:)` (OR-логика).
-- `Core/MeetingDetector` — grace-машина: started/ended. `Core/Recorder` — пишет 2 дорожки + meta, по `meetingEnded` запускает `ProcessingPipeline`.
+- `Core/MeetingDetector` — grace-машина: started/ended. `Core/Recorder` — пишет 2 дорожки + meta, по `meetingEnded` финализирует запись (`finalizeActive`, идемпотентно) и ставит задачу в очередь `MeetingProcessor`.
 - `Core/ASR/` — `SidecarProtocol` (JSON-lines), `LocalASR` (actor: spawn sidecar, load, transcribe_file; **неблокирующий** reader через `readabilityHandler`), `ModelManager` (download-on-first-run; **пока не подключён**), `ASRModel` (выбор Скорость/Качество + `ASRSettings`).
 - `Core/Transcript/` — `TranscriptModels`, `TranscriptMerger` (мерж двух дорожек по `start`, метки me/participants).
 - `Core/Pipeline/` — `MeetingProcessor` (единая FIFO-очередь с дедупликацией), `ProcessingPipeline` (порог 5 мин, статусы, ASR, merge, запись), `MeetingStatus`, `Backfill` (dev-флаг), `StartupRescue` (ремонт WAV + авто-очередь).
