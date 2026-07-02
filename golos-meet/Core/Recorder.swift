@@ -59,6 +59,26 @@ final class Recorder: MeetingDetectorDelegate {
 
     private var active: Active?
 
+    // Инъекции (тесты); дефолты — прод-поведение.
+    private let enqueueProcessing: (String, URL) -> Void
+    private let makeMicTrack: () -> AudioTrack
+    private let makeSysTrack: () -> AudioTrack
+    private let makeFolder: (Date, String) -> MeetingFolder
+
+    init(enqueueProcessing: ((String, URL) -> Void)? = nil,
+         makeMicTrack: @escaping () -> AudioTrack = { MicCaptureTrack() },
+         makeSysTrack: @escaping () -> AudioTrack = { SystemAudioCaptureTrack() },
+         makeFolder: @escaping (Date, String) -> MeetingFolder = { MeetingFolder.make(startedAt: $0, source: $1) }) {
+        self.enqueueProcessing = enqueueProcessing ?? { id, folder in
+            MeetingProcessor.shared.enqueue(.process(deleteShortAudio: true), id: id, folder: folder)
+        }
+        self.makeMicTrack = makeMicTrack
+        self.makeSysTrack = makeSysTrack
+        self.makeFolder = makeFolder
+    }
+
+    var isRecording: Bool { active != nil }
+
     /// Placeholder-заголовок для UI: «Встреча HH:mm» в локальном времени.
     private static let titleFormatter: DateFormatter = {
         let f = DateFormatter()
@@ -74,7 +94,7 @@ final class Recorder: MeetingDetectorDelegate {
     func meetingStarted(at date: Date) {
         guard active == nil else { return }
         do {
-            let folder = MeetingFolder.make(startedAt: date, source: "kontur.talk")
+            let folder = makeFolder(date, "kontur.talk")
             try FileManager.default.createDirectory(at: folder.url, withIntermediateDirectories: true)
             // Пишем meta.json сразу: краш во время записи оставит на диске
             // восстановимую запись со status:.recording (вместо пустоты).
@@ -91,8 +111,8 @@ final class Recorder: MeetingDetectorDelegate {
             }
             let mic = try WavWriter(url: folder.url.appendingPathComponent("mic.wav"))
             let system = try WavWriter(url: folder.url.appendingPathComponent("system.wav"))
-            let micTrack = MicCaptureTrack()
-            let sysTrack = SystemAudioCaptureTrack()
+            let micTrack = makeMicTrack()
+            let sysTrack = makeSysTrack()
             try micTrack.start(into: mic)
             try sysTrack.start(into: system)
             active = Active(folder: folder, mic: mic, system: system,
@@ -104,39 +124,40 @@ final class Recorder: MeetingDetectorDelegate {
     }
 
     func meetingEnded(at date: Date) {
-        guard let a = active else { return }
+        guard active != nil else { return }
+        Task {
+            guard let folder = await finalizeActive(endedAt: date) else { return }
+            enqueueProcessing(folder.id, folder.url)
+        }
+    }
+
+    /// Останавливает дорожки, финализирует WAV, закрывает meta реальной длительностью
+    /// (статус остаётся .recording — дальше статусы ведёт пайплайн). Идемпотентен:
+    /// повторный вызов (terminate вслед за meetingEnded) возвращает nil.
+    @discardableResult
+    func finalizeActive(endedAt: Date) async -> MeetingFolder? {
+        guard let a = active else { return nil }
         active = nil
         a.micTrack.stop()
         a.sysTrack.stop()
-        Task {
-            do {
-                try await a.mic.finalize()
-            } catch {
-                Log.recorder.error("финализация mic.wav провалилась: \(error.localizedDescription, privacy: .public)")
-            }
-            do {
-                try await a.system.finalize()
-            } catch {
-                Log.recorder.error("финализация system.wav провалилась: \(error.localizedDescription, privacy: .public)")
-            }
-            // Перезаписываем meta с реальными endedAt/duration, сохраняя
-            // status:.recording (пайплайн дальше переведёт в processing/ready/...).
-            let meta = MeetingMeta(id: a.folder.id, source: a.folder.source,
-                                   startedAt: a.startedAt, endedAt: date,
-                                   durationSeconds: Int(date.timeIntervalSince(a.startedAt)),
-                                   status: .recording, asrModel: nil,
-                                   title: Self.placeholderTitle(for: a.startedAt),
-                                   schemaVersion: currentMetaSchemaVersion)
-            do {
-                try meta.write(to: a.folder.url.appendingPathComponent("meta.json"))
-            } catch {
-                Log.recorder.error("meta.json (стоп) не записан: \(error.localizedDescription, privacy: .public)")
-            }
-            Log.recorder.info("запись завершена: \(a.folder.id, privacy: .public)")
-            let pipeline = ProcessingPipeline(
-                asrFactory: { LocalASR.forChoice(ASRSettings.current) },
-                modelId: ASRSettings.current.modelId)
-            await pipeline.process(folder: a.folder.url)
+        do { try await a.mic.finalize() } catch {
+            Log.recorder.error("финализация mic.wav провалилась: \(error.localizedDescription, privacy: .public)")
         }
+        do { try await a.system.finalize() } catch {
+            Log.recorder.error("финализация system.wav провалилась: \(error.localizedDescription, privacy: .public)")
+        }
+        let meta = MeetingMeta(id: a.folder.id, source: a.folder.source,
+                               startedAt: a.startedAt, endedAt: endedAt,
+                               durationSeconds: Int(endedAt.timeIntervalSince(a.startedAt)),
+                               status: .recording, asrModel: nil,
+                               title: Self.placeholderTitle(for: a.startedAt),
+                               schemaVersion: currentMetaSchemaVersion)
+        do {
+            try meta.write(to: a.folder.url.appendingPathComponent("meta.json"))
+        } catch {
+            Log.recorder.error("meta.json (стоп) не записан: \(error.localizedDescription, privacy: .public)")
+        }
+        Log.recorder.info("запись завершена: \(a.folder.id, privacy: .public)")
+        return a.folder
     }
 }
