@@ -32,7 +32,10 @@ final class MeetingLibrary: ObservableObject {
             let hasTranscript = fm.fileExists(atPath: dir.appendingPathComponent("transcript.json").path)
             let hasInsights = fm.fileExists(atPath: dir.appendingPathComponent("insights.json").path)
             guard meta != nil || hasAudio || hasTranscript else { continue }
-            result.append(MeetingSummary.make(folderId: id, meta: meta, hasAudio: hasAudio, hasTranscript: hasTranscript, hasInsights: hasInsights))
+            let summary = MeetingSummary.make(folderId: id, meta: meta, hasAudio: hasAudio, hasTranscript: hasTranscript, hasInsights: hasInsights)
+            // Отброшенные (короче порога) не листим вовсе — папка на диске остаётся.
+            guard summary.status != .discarded else { continue }
+            result.append(summary)
         }
         return result.sorted { $0.startedAt > $1.startedAt }
     }

@@ -65,6 +65,33 @@ import Foundation
         #expect(result[0].id == "2026-06-18_20-46-13")
     }
 
+    @Test func scan_excludesDiscardedMeetings() throws {
+        let root = try tempRoot()
+        // discarded-«надгробие»: meta без аудио (пайплайн удалил WAV) — не в результат
+        let d1 = try makeDir(root, "2026-06-20_10-00-00")
+        let m1 = MeetingMeta(id: "2026-06-20_10-00-00", source: "kontur.talk",
+                             startedAt: Date(timeIntervalSince1970: 1_781_900_000),
+                             endedAt: Date(timeIntervalSince1970: 1_781_900_060),
+                             durationSeconds: 60, status: .discarded, asrModel: nil,
+                             title: nil, schemaVersion: 1)
+        try MeetingMeta.encoded(m1).write(to: d1.appendingPathComponent("meta.json"))
+        // discarded с уцелевшим аудио (краш между meta и удалением WAV) — тоже не в результат
+        let d2 = try makeDir(root, "2026-06-21_10-00-00")
+        let m2 = MeetingMeta(id: "2026-06-21_10-00-00", source: "kontur.talk",
+                             startedAt: Date(timeIntervalSince1970: 1_781_990_000),
+                             endedAt: Date(timeIntervalSince1970: 1_781_990_060),
+                             durationSeconds: 60, status: .discarded, asrModel: nil,
+                             title: nil, schemaVersion: 1)
+        try MeetingMeta.encoded(m2).write(to: d2.appendingPathComponent("meta.json"))
+        try touch(d2.appendingPathComponent("mic.wav"))
+        // обычная встреча — в результат
+        let ok = try makeDir(root, "2026-06-22_10-00-00"); try touch(ok.appendingPathComponent("mic.wav"))
+
+        let result = MeetingLibrary.scan(root: root)
+        #expect(result.count == 1)
+        #expect(result[0].id == "2026-06-22_10-00-00")
+    }
+
     @Test func reload_populatesPublished() throws {
         let root = try tempRoot()
         let a = try makeDir(root, "2026-06-18_20-46-13"); try touch(a.appendingPathComponent("mic.wav"))
