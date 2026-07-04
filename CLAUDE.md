@@ -50,6 +50,7 @@ Rust (`asr/`, вендор из соседнего проекта `golos`): `pro
 
 ## Конвенции
 - **Коммиты:** `[type] описание` — одна строка, без трейлеров (`[feat]/[fix]/[refactor]/[test]/[chore]/[docs]`).
+- **Имена (не путать!):** пользователю — **«Golos Meet»** (`PRODUCT_NAME`/`INFOPLIST_KEY_CFBundleDisplayName` → бандл `Golos Meet.app`). Внутренние имена НЕ менять: target `golos-meet`, bundle id `com.golos.golos-meet`, Swift-модуль `golos_meet` (прибит `PRODUCT_MODULE_NAME = golos_meet` — иначе рвётся `@testable import golos_meet` во всех тестах и меняется designated requirement TCC).
 - **Xcode:** проект использует синхронизированные группы (`objectVersion 77`) — новые файлы подхватываются по каталогу, **`project.pbxproj` править не нужно**.
 - `docs/` и `.claude/` — вне git (`.gitignore`).
 - SourceKit в редакторе часто пишет «Cannot find type …» для межфайловых символов — это шум анализа вне модуля; авторитетен `xcodebuild`/`cargo`.
