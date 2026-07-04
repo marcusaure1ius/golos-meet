@@ -6,12 +6,14 @@ struct golos_meetApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     @StateObject private var library = MeetingLibrary()
     @StateObject private var processor = MeetingProcessor.shared
+    @StateObject private var recordingState = RecordingState.shared
 
     var body: some Scene {
         WindowGroup {
             MainWindowView()
                 .environmentObject(library)
                 .environmentObject(processor)
+                .environmentObject(recordingState)
         }
         .windowStyle(.hiddenTitleBar)
         .defaultSize(width: 1000, height: 680)
@@ -32,6 +34,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         if ProcessInfo.processInfo.environment["GOLOS_MEET_BACKFILL"] == "1" {
             Backfill.run()
         }
+    }
+
+    /// Клик по значку в Dock при закрытом окне — воссоздать окно WindowGroup.
+    func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows: Bool) -> Bool {
+        true
     }
 
     /// Выход во время записи: дописать WAV-заголовки и закрыть meta (миллисекунды),
