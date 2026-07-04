@@ -119,6 +119,7 @@ final class Recorder: MeetingDetectorDelegate {
             try sysTrack.start(into: system)
             active = Active(folder: folder, mic: mic, system: system,
                             micTrack: micTrack, sysTrack: sysTrack, startedAt: date)
+            RecordingState.shared.begin(id: folder.id, startedAt: date, isManual: manual)
             Log.recorder.info("запись начата: \(folder.id, privacy: .public)")
         } catch {
             Log.recorder.error("старт записи провалился: \(error.localizedDescription, privacy: .public)")
@@ -140,6 +141,7 @@ final class Recorder: MeetingDetectorDelegate {
     func finalizeActive(endedAt: Date) async -> MeetingFolder? {
         guard let a = active else { return nil }
         active = nil
+        RecordingState.shared.end()
         a.micTrack.stop()
         a.sysTrack.stop()
         do { try await a.mic.finalize() } catch {

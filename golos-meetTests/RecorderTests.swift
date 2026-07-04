@@ -59,4 +59,15 @@ import Foundation
         #expect(enqueued.count == 1)
         #expect(!rec.isRecording)
     }
+
+    @Test func meetingStarted_publishesLiveState_finalizeClears() async {
+        RecordingState.shared.end()   // чистим синглтон на входе
+        let (rec, _, _, _) = makeRecorder(enqueued: { _, _ in })
+        let start = Date(timeIntervalSince1970: 3_000_000)
+        rec.meetingStarted(at: start, manual: true)
+        #expect(RecordingState.shared.live?.isManual == true)
+        #expect(RecordingState.shared.live?.startedAt == start)
+        _ = await rec.finalizeActive(endedAt: start.addingTimeInterval(60))
+        #expect(RecordingState.shared.live == nil)
+    }
 }
