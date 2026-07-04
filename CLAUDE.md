@@ -5,7 +5,7 @@
 ## Состояние
 - **M1 (готово):** автономный записывальщик — детект встречи (аудио `kontur.talk*` ИЛИ окно звонка + grace), запись `mic.wav` + `system.wav` (16 кГц mono Int16) + `meta.json`.
 - **M2 (готово):** локальная транскрибация — VAD-нарезка + GigaAM/Whisper через Rust-sidecar, склейка «я/участники» по таймкодам → `transcript.json` + `transcript.md`, статусы встречи.
-- **UI (готово):** Dock-приложение в дизайн-языке `golos` — сайдбар (Встречи/Настройки), лента встреч ⇄ календарь, детали с транскриптом «я/участники», экран настроек (модель ASR + тема). Read-model `MeetingLibrary` (скан `meetings/`, эффективный статус, lazy-транскрипт). Action points — следующий слой (LLM).
+- **UI (готово):** Dock-приложение в дизайн-языке `golos` — сайдбар (Встречи/Настройки), лента встреч ⇄ календарь, детали с транскриптом «я/участники», экран настроек (модель ASR + тема). Поиск по встречам/расшифровкам + фильтр по периоду, действия над встречей (переименовать/удалить/копировать конспект), аудиоплеер с перемоткой по транскрипту, чекбоксы на action points.
 - **Надёжность (готово):** единая FIFO-очередь обработки (`MeetingProcessor`: `.process`/`.insights`, дедупликация, баннер «Обрабатываю N встреч»), terminate-handler (финализация записи при выходе), `WavRepair` + `StartupRescue` (спасённые встречи авто-встают в очередь; `processing` после краша переобрабатывается).
 - **LLM-инсайты (готово):** заголовок/конспект/action points через OpenRouter (`Core/Insights/`), `insights.json` + `meta.title`, настройки ключа/модели в UI.
 - **Дальше:** дистрибуция (подключить `ModelManager`, бандлинг sidecar — под-проект B) и UI-хвосты (поиск/фильтр, плеер — под-проект C).
@@ -26,6 +26,9 @@ Swift (`golos-meet/`):
 - `Core/ASR/` — `SidecarProtocol` (JSON-lines), `LocalASR` (actor: spawn sidecar, load, transcribe_file; **неблокирующий** reader через `readabilityHandler`), `ModelManager` (download-on-first-run; **пока не подключён**), `ASRModel` (выбор Скорость/Качество + `ASRSettings`).
 - `Core/Transcript/` — `TranscriptModels`, `TranscriptMerger` (мерж двух дорожек по `start`, метки me/participants).
 - `Core/Pipeline/` — `MeetingProcessor` (единая FIFO-очередь с дедупликацией), `ProcessingPipeline` (порог 5 мин, статусы, ASR, merge, запись), `MeetingStatus`, `Backfill` (dev-флаг), `StartupRescue` (ремонт WAV + авто-очередь).
+- `Core/Library/` — `MeetingLibrary` (чтение/листинг встреч), `MeetingStore` (мутации: delete/rename/setActionPointDone), `MeetingSearchIndex` (ленивый поисковый текст), `MeetingFilter` (фильтр по периоду + поиск).
+- `Core/Player/` — `MeetingPlayer` (синхронное воспроизведение двух дорожек, seek по таймкодам).
+- `Core/Insights/` — `InsightsGenerator` (запрос к OpenRouter), `InsightsMarkdown` (рендер заголовка/конспекта/action points).
 - `Util/` — `AppPaths`, `Logger` (`Log.recorder/pipeline/asr/detector/sidecar/...`).
 
 Rust (`asr/`, вендор из соседнего проекта `golos`): `protocol.rs` (Request/Response, `ModelKind` gigaam|whisper), `session.rs`, `transcriber.rs` (движок-агностичный `Box<dyn SpeechModel>`), `segment.rs` (`EnergyVad`-нарезка), `audio.rs`, `main.rs`. Зависит от `transcribe-rs 0.3` (features `onnx,whisper-cpp,whisper-metal`). **`Cargo.lock` закоммичен** (воспроизводимость).
