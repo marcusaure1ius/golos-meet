@@ -18,6 +18,8 @@ struct MeetingDetailView: View {
 
     @State private var isRenaming = false
     @State private var draftTitle = ""
+    @State private var titleHover = false
+    @FocusState private var titleFieldFocused: Bool
     @State private var showDeleteConfirm = false
     @State private var showRegenWarn = false
     @State private var showReprocessWarn = false
@@ -34,6 +36,12 @@ struct MeetingDetailView: View {
 
     private var isProcessing: Bool { processor.processing.contains(meeting.id) }
     private var isSummarizing: Bool { processor.insightsProcessing.contains(meeting.id) }
+
+    /// Переименование доступно только когда встреча «в покое»: не идёт ASR/LLM, не в очереди,
+    /// не пишется. Иначе LLM может сменить заголовок под редактированием → рассинхрон.
+    private var canRename: Bool {
+        !isProcessing && !isSummarizing && liveMeeting.status != .recording
+    }
 
     /// Свежая строка из library (обновляется после задач очереди), с откатом к снапшоту-пропу.
     private var liveMeeting: MeetingSummary {
@@ -74,6 +82,11 @@ struct MeetingDetailView: View {
             // Фоновая задача очереди завершилась — перечитать артефакты (чтение lazy и дешёвое).
             transcript = library.transcript(for: meeting.id)
             insights = library.insights(for: meeting.id)
+        }
+        .onChange(of: canRename) { _, now in
+            // Началась обработка/анализ во время редактирования — выйти из режима, чтобы
+            // LLM-заголовок не разошёлся с полем ввода (переименование снова доступно по готовности).
+            if !now && isRenaming { isRenaming = false }
         }
         .confirmationDialog("Удалить встречу насовсем?", isPresented: $showDeleteConfirm, titleVisibility: .visible) {
             Button("Удалить", role: .destructive) {
@@ -138,16 +151,43 @@ struct MeetingDetailView: View {
     private var header: some View {
         VStack(alignment: .leading, spacing: 12) {
             if isRenaming {
-                TextField("Название встречи", text: $draftTitle, onCommit: commitRename)
+                TextField("Название встречи", text: $draftTitle)
                     .textFieldStyle(.plain)
                     .font(.system(size: 26, weight: .semibold)).tracking(-0.3).foregroundStyle(p.ink)
-                    .onExitCommand { isRenaming = false }
+                    .focused($titleFieldFocused)
+                    .onSubmit(commitRename)
+                    .onExitCommand { isRenaming = false }   // Esc — отменить
+                    .padding(.horizontal, 10).padding(.vertical, 5)
+                    .background(RoundedRectangle(cornerRadius: 8, style: .continuous).fill(p.selection.opacity(0.6)))
+                    .overlay(RoundedRectangle(cornerRadius: 8, style: .continuous).strokeBorder(p.accent.opacity(0.6), lineWidth: 1))
+                    .padding(.horizontal, -10).padding(.vertical, -5)   // фон вокруг, текст на линии контента
+                    .onAppear { titleFieldFocused = true }
+                    .onChange(of: titleFieldFocused) { _, focused in
+                        if !focused && isRenaming { commitRename() }    // клик мимо — сохранить
+                    }
             } else {
-                Text(isRevealing ? displayedTitle : liveMeeting.title)
-                    .font(.system(size: 26, weight: .semibold)).tracking(-0.3).foregroundStyle(p.ink)
-                    .blur(radius: titleBlur).opacity(titleOpacity)
-                    .onTapGesture(count: 2) { draftTitle = liveMeeting.title; isRenaming = true }
-                    .help("Двойной клик — переименовать")
+                HStack(spacing: 8) {
+                    Text(isRevealing ? displayedTitle : liveMeeting.title)
+                        .font(.system(size: 26, weight: .semibold)).tracking(-0.3).foregroundStyle(p.ink)
+                        .blur(radius: titleBlur).opacity(titleOpacity)
+                    if canRename {
+                        Button(action: beginRename) {
+                            Image(systemName: "pencil").font(.system(size: 15)).foregroundStyle(p.muted2)
+                        }
+                        .buttonStyle(.plain)
+                        .opacity(titleHover ? 1 : 0)
+                        .help("Переименовать")
+                    }
+                }
+                .padding(.horizontal, 8).padding(.vertical, 4)
+                .background(RoundedRectangle(cornerRadius: 8, style: .continuous)
+                    .fill(canRename && titleHover ? p.selection.opacity(0.5) : .clear))
+                .padding(.horizontal, -8).padding(.vertical, -4)
+                .contentShape(Rectangle())
+                .onHover { titleHover = $0 }
+                .onTapGesture(count: 2) { if canRename { beginRename() } }
+                .animation(.easeOut(duration: 0.12), value: titleHover)
+                .help(canRename ? "Двойной клик — переименовать" : "Переименование доступно после обработки")
             }
             HStack(spacing: 10) {
                 Text(Self.dateFmt.string(from: meeting.startedAt)).font(.system(size: 13)).foregroundStyle(p.muted)
@@ -281,6 +321,13 @@ struct MeetingDetailView: View {
                     .frame(maxWidth: .infinity).padding(.top, 40)
             }
         }
+    }
+
+    private func beginRename() {
+        guard canRename else { return }
+        draftTitle = liveMeeting.title
+        isRenaming = true
+        titleFieldFocused = true
     }
 
     private func commitRename() {
