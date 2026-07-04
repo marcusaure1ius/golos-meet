@@ -4,6 +4,7 @@ struct MeetingsScreen: View {
     @Environment(\.palette) var p
     @EnvironmentObject var library: MeetingLibrary
     @EnvironmentObject var processor: MeetingProcessor
+    @EnvironmentObject var recordingState: RecordingState
     @Environment(\.scenePhase) private var scenePhase
     @State private var selected: MeetingSummary?
     @State private var mode: Mode = .feed
@@ -48,6 +49,7 @@ struct MeetingsScreen: View {
         .onAppear { library.reload() }
         .onChange(of: scenePhase) { _, phase in if phase == .active { library.reload() } }
         .onChange(of: processor.completedJobsCount) { _, _ in library.reload() }   // после каждой задачи — подтянуть статусы/заголовки
+        .onChange(of: recordingState.live?.id) { _, _ in library.reload() }   // старт/стоп записи — показать/убрать живую карточку
     }
 
     private var header: some View {
