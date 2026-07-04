@@ -29,7 +29,7 @@ import Foundation
     @Test func finalizeActive_closesMetaWithRealDuration_andIsIdempotent() async throws {
         let (rec, _, mic, sys) = makeRecorder(enqueued: { _, _ in })
         let start = Date(timeIntervalSince1970: 1_000_000)
-        rec.meetingStarted(at: start, manual: false)
+        #expect(rec.meetingStarted(at: start, manual: false))
         #expect(rec.isRecording)
 
         let folder = await rec.finalizeActive(endedAt: start.addingTimeInterval(90))
@@ -52,7 +52,7 @@ import Foundation
         var enqueued: [(String, URL)] = []
         let (rec, _, _, _) = makeRecorder(enqueued: { id, url in enqueued.append((id, url)) })
         let start = Date(timeIntervalSince1970: 2_000_000)
-        rec.meetingStarted(at: start, manual: false)
+        #expect(rec.meetingStarted(at: start, manual: false))
         rec.meetingEnded(at: start.addingTimeInterval(400))
         // meetingEnded финализирует в Task — дожидаемся.
         for _ in 0..<2000 where enqueued.isEmpty { await Task.yield() }
@@ -64,7 +64,7 @@ import Foundation
         RecordingState.shared.end()   // чистим синглтон на входе
         let (rec, _, _, _) = makeRecorder(enqueued: { _, _ in })
         let start = Date(timeIntervalSince1970: 3_000_000)
-        rec.meetingStarted(at: start, manual: true)
+        #expect(rec.meetingStarted(at: start, manual: true))
         #expect(RecordingState.shared.live?.isManual == true)
         #expect(RecordingState.shared.live?.startedAt == start)
         _ = await rec.finalizeActive(endedAt: start.addingTimeInterval(60))

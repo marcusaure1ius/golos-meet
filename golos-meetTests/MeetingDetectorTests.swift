@@ -4,7 +4,7 @@ import Foundation
 
 private final class SpyDelegate: MeetingDetectorDelegate {
     var starts: [Date] = []; var ends: [Date] = []; var manuals: [Bool] = []
-    func meetingStarted(at d: Date, manual: Bool) { starts.append(d); manuals.append(manual) }
+    func meetingStarted(at d: Date, manual: Bool) -> Bool { starts.append(d); manuals.append(manual); return true }
     func meetingEnded(at d: Date) { ends.append(d) }
 }
 

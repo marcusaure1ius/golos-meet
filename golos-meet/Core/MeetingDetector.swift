@@ -2,7 +2,9 @@ import Foundation
 import os
 
 protocol MeetingDetectorDelegate: AnyObject {
-    func meetingStarted(at: Date, manual: Bool)
+    /// Возвращает true, если запись реально начата. false → детектор откатывает
+    /// состояние (напр. не удался захват аудио), чтобы не «залипнуть» в мнимой встрече.
+    func meetingStarted(at: Date, manual: Bool) -> Bool
     func meetingEnded(at: Date)
 }
 
@@ -27,7 +29,9 @@ final class MeetingDetector {
             if !isMeeting {
                 isMeeting = true
                 Log.detector.info("meetingStarted")
-                delegate?.meetingStarted(at: date, manual: false)
+                if delegate?.meetingStarted(at: date, manual: false) != true {
+                    isMeeting = false   // запись не поднялась — повторим на следующем сигнале
+                }
             }
         } else {
             suppressUntilInactive = false          // пришёл спад — блок авто-рестарта снят
@@ -48,7 +52,11 @@ final class MeetingDetector {
         suppressUntilInactive = false
         lastActiveAt = date
         Log.detector.info("meetingStarted (manual)")
-        delegate?.meetingStarted(at: date, manual: true)
+        if delegate?.meetingStarted(at: date, manual: true) != true {
+            // старт не удался — полный откат, иначе manualSession навсегда заглушит и авто-детект.
+            isMeeting = false
+            manualSession = false
+        }
     }
 
     /// Ручной стоп: завершает текущую встречу (ручную или авто) и блокирует

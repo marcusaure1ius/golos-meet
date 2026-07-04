@@ -5,7 +5,7 @@ import Foundation
 private final class Spy: MeetingDetectorDelegate {
     var starts: [Bool] = []   // manual-флаг каждого старта
     var ends = 0
-    func meetingStarted(at _: Date, manual: Bool) { starts.append(manual) }
+    func meetingStarted(at _: Date, manual: Bool) -> Bool { starts.append(manual); return true }
     func meetingEnded(at _: Date) { ends += 1 }
 }
 
@@ -58,5 +58,23 @@ private final class Spy: MeetingDetectorDelegate {
         d.handle(active: true, at: t0)                           // авто-старт
         d.forceStop(at: t0.addingTimeInterval(1))
         #expect(s.ends == 1)
+    }
+
+    private final class ConfigurableSpy: MeetingDetectorDelegate {
+        var shouldStart = true
+        var starts: [Bool] = []   // manual-флаг каждой попытки старта
+        var ends = 0
+        func meetingStarted(at _: Date, manual: Bool) -> Bool { starts.append(manual); return shouldStart }
+        func meetingEnded(at _: Date) { ends += 1 }
+    }
+
+    @Test func failedManualStartRollsBackAndAutoStillWorks() {
+        let d = MeetingDetector(graceSeconds: 5)
+        let spy = ConfigurableSpy(); spy.shouldStart = false; d.delegate = spy
+        d.forceStart(at: t0)                    // ручной старт проваливается → откат латча
+        #expect(spy.starts == [true])           // ручная попытка была
+        spy.shouldStart = true
+        d.handle(active: true, at: t0.addingTimeInterval(1))
+        #expect(spy.starts == [true, false])    // авто-старт СОСТОЯЛСЯ — manualSession не заглушил детект
     }
 }

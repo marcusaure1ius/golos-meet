@@ -93,8 +93,8 @@ final class Recorder: MeetingDetectorDelegate {
         "Встреча \(titleFormatter.string(from: date))"
     }
 
-    func meetingStarted(at date: Date, manual: Bool) {
-        guard active == nil else { return }
+    func meetingStarted(at date: Date, manual: Bool) -> Bool {
+        guard active == nil else { return false }
         do {
             let folder = makeFolder(date, "kontur.talk")
             try FileManager.default.createDirectory(at: folder.url, withIntermediateDirectories: true)
@@ -121,8 +121,10 @@ final class Recorder: MeetingDetectorDelegate {
                             micTrack: micTrack, sysTrack: sysTrack, startedAt: date)
             RecordingState.shared.begin(id: folder.id, startedAt: date, isManual: manual)
             Log.recorder.info("запись начата: \(folder.id, privacy: .public)")
+            return true
         } catch {
             Log.recorder.error("старт записи провалился: \(error.localizedDescription, privacy: .public)")
+            return false
         }
     }
 
