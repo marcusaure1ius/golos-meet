@@ -44,7 +44,7 @@ final class ProcessingPipeline {
 
         Log.pipeline.info("processing \(meta.id, privacy: .public) engine=\(self.modelId, privacy: .public)")
         meta.status = .processing
-        do { try meta.write(to: metaURL) } catch { Log.pipeline.error("meta.write failed for \(meta.id, privacy: .public): \(error.localizedDescription, privacy: .public)") }
+        writePreservingManualTitle(&meta, to: metaURL)
 
         let asr = asrFactory()
         do {
@@ -66,14 +66,23 @@ final class ProcessingPipeline {
             await runInsights(&meta, transcript: transcript, folder: folder, metaURL: metaURL)
 
             meta.status = .ready
-            do { try meta.write(to: metaURL) } catch { Log.pipeline.error("meta.write failed for \(meta.id, privacy: .public): \(error.localizedDescription, privacy: .public)") }
+            writePreservingManualTitle(&meta, to: metaURL)
             Log.pipeline.info("\(meta.id, privacy: .public): ready (\(transcript.segments.count) сегм., engine=\(self.modelId, privacy: .public))")
         } catch {
             meta.status = .failed
-            do { try meta.write(to: metaURL) } catch { Log.pipeline.error("meta.write failed for \(meta.id, privacy: .public): \(error.localizedDescription, privacy: .public)") }
+            writePreservingManualTitle(&meta, to: metaURL)
             Log.pipeline.error("\(meta.id, privacy: .public): failed (engine=\(self.modelId, privacy: .public)) — \(error.localizedDescription, privacy: .public)")
             if let local = asr as? LocalASR { await local.shutdown() }
         }
+    }
+
+    /// Пользователь мог переименовать встречу вручную, пока шла обработка — не затирать свежий ручной заголовок.
+    private func writePreservingManualTitle(_ meta: inout MeetingMeta, to url: URL) {
+        if let fresh = try? MeetingMeta.decoded(Data(contentsOf: url)), fresh.titleManual == true {
+            meta.title = fresh.title
+            meta.titleManual = true
+        }
+        do { try meta.write(to: url) } catch { Log.pipeline.error("meta.write failed: \(error.localizedDescription, privacy: .public)") }
     }
 
     private func transcribeIfExists(_ asr: ASRClient, _ url: URL) async throws -> [TimedSegment] {
@@ -87,7 +96,7 @@ final class ProcessingPipeline {
         guard let gen = insightsGenerator, !transcript.segments.isEmpty else { return }
         meta.status = .summarizing
         let meetingId = meta.id   // копия, чтобы не захватывать inout в escaping-замыкании
-        do { try meta.write(to: metaURL) } catch { Log.pipeline.error("meta.write failed for \(meetingId, privacy: .public): \(error.localizedDescription, privacy: .public)") }
+        writePreservingManualTitle(&meta, to: metaURL)
         do {
             let insights = try await gen.generate(from: transcript, meetingId: meetingId)
             try insights.write(to: folder.appendingPathComponent("insights.json"))

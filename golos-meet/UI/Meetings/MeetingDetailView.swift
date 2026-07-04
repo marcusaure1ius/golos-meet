@@ -303,6 +303,7 @@ struct MeetingDetailView: View {
 
     private func runReprocessFlow() {
         Task {
+            player?.stop()
             let before = liveMeeting.title
             await processor.enqueueAndWait(.process(deleteShortAudio: false), id: meeting.id, folder: folder)
             transcript = library.transcript(for: meeting.id)

@@ -166,4 +166,25 @@ extension MeetingProcessorTests {
         #expect(updated.status == .ready)
         #expect(!FileManager.default.fileExists(atPath: dir.appendingPathComponent("insights.json").path))
     }
+
+    /// Регрессия I-1: если пользователь успел вручную переименовать встречу (titleManual=true
+    /// на диске) до/во время регенерации инсайтов, финальная запись meta не должна затирать
+    /// ручной заголовок заголовком из LLM — при этом insights.json всё равно пишется.
+    @Test func runInsights_regeneration_doesNotOverwriteManualTitle() async throws {
+        let dir = try makeMeetingDir(status: .ready)
+        let metaURL = dir.appendingPathComponent("meta.json")
+        var meta = try MeetingMeta.decoded(Data(contentsOf: metaURL))
+        meta.title = "Ручной"
+        meta.titleManual = true
+        try meta.write(to: metaURL)
+
+        let gen = InsightsGenerator(client: OKCompleter(), model: "m")   // вернул бы «Ручной заголовок»
+        await MeetingProcessor.runInsights(id: dir.lastPathComponent, folder: dir, generator: gen)
+
+        let updated = try MeetingMeta.decoded(Data(contentsOf: metaURL))
+        #expect(updated.title == "Ручной")
+        #expect(updated.titleManual == true)
+        #expect(updated.status == .ready)
+        #expect(FileManager.default.fileExists(atPath: dir.appendingPathComponent("insights.json").path))
+    }
 }

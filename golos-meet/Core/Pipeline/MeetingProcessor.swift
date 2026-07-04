@@ -181,6 +181,11 @@ final class MeetingProcessor: ObservableObject {
             Log.llm.error("\(id, privacy: .public): insights failed — \(error.localizedDescription, privacy: .public)")
         }
         meta.status = .ready
+        // Пользователь мог переименовать встречу вручную, пока шла обработка — не затирать свежий ручной заголовок.
+        if let fresh = try? MeetingMeta.decoded(Data(contentsOf: metaURL)), fresh.titleManual == true {
+            meta.title = fresh.title
+            meta.titleManual = true
+        }
         try? meta.write(to: metaURL)
     }
 

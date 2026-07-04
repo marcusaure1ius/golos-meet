@@ -24,7 +24,7 @@ enum StartupRescue {
                                        endedAt: old.startedAt.addingTimeInterval(TimeInterval(duration)),
                                        durationSeconds: duration,
                                        status: .recording, asrModel: old.asrModel,
-                                       title: old.title, schemaVersion: old.schemaVersion)
+                                       title: old.title, titleManual: old.titleManual, schemaVersion: old.schemaVersion)
                 try? meta.write(to: metaURL)
                 Log.pipeline.info("rescue: \(old.id, privacy: .public) recording → в очередь (\(duration) c)")
                 toProcess.append(dir)

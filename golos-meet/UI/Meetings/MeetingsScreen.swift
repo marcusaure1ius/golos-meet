@@ -18,6 +18,10 @@ struct MeetingsScreen: View {
         }
     }
 
+    private var isFilterActive: Bool {
+        !query.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || period != .all
+    }
+
     var body: some View {
         Group {
             if let m = selected {
@@ -29,9 +33,14 @@ struct MeetingsScreen: View {
                         ProcessingBanner(count: processor.busyMeetingsCount)
                             .padding(.horizontal, 56).padding(.bottom, 8)
                     }
-                    switch mode {
-                    case .feed:     MeetingFeedView(meetings: filteredMeetings, now: Date()) { selected = $0 }
-                    case .calendar: MeetingCalendarView(meetings: filteredMeetings) { selected = $0 }
+                    if filteredMeetings.isEmpty && isFilterActive {
+                        ContentUnavailableView("Ничего не найдено", systemImage: "magnifyingglass")
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    } else {
+                        switch mode {
+                        case .feed:     MeetingFeedView(meetings: filteredMeetings, now: Date()) { selected = $0 }
+                        case .calendar: MeetingCalendarView(meetings: filteredMeetings) { selected = $0 }
+                        }
                     }
                 }
             }

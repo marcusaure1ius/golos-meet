@@ -18,7 +18,7 @@ extension ActionPoint: Codable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(id, forKey: .id)
         try container.encode(text, forKey: .text)
-        try container.encode(owner, forKey: .owner)
+        try container.encodeIfPresent(owner, forKey: .owner)
         try container.encode(done, forKey: .done)
     }
 
