@@ -20,6 +20,13 @@ struct ProcessingJob: Identifiable, Equatable {
     var id: String { "\(meetingId)|\(isProcess ? "process" : "insights")" }
 }
 
+/// Одна задача «догнать»: встреча + что для неё доделать. Результат чистого решения
+/// `MeetingProcessor.catchUpJobs`, который потом ставится в очередь через `enqueueCatchUp`.
+struct CatchUpJob: Equatable {
+    let id: String
+    let kind: ProcessingJob.Kind
+}
+
 /// Единая последовательная очередь всей обработки (FIFO, строго по одной задаче).
 /// Источники: конец записи (Recorder), «Переобработать»/«Сгенерировать» из UI,
 /// Backfill, спасённые встречи при старте (StartupRescue).
@@ -119,6 +126,33 @@ final class MeetingProcessor: ObservableObject {
             return   // ничего не поставилось и ждать нечего
         }
         await withCheckedContinuation { waiters[waitId, default: []].append($0) }
+    }
+
+    // MARK: «Догнать» недоделанные встречи (кнопка «Обновить»)
+
+    /// Чистое решение: какие встречи не доведены до конца и что для них поставить.
+    /// Нет транскрипта, но есть аудио → полный пайплайн; есть транскрипт, но нет инсайтов
+    /// → только инсайты (когда LLM настроен). Пишущиеся/отброшенные пропускаем;
+    /// дедуп уже активных/стоящих в очереди — за `enqueue`.
+    static func catchUpJobs(for summaries: [MeetingSummary], insightsEnabled: Bool) -> [CatchUpJob] {
+        summaries.compactMap { m in
+            if m.status == .recording || m.status == .discarded { return nil }
+            if !m.hasTranscript && m.hasAudio {
+                return CatchUpJob(id: m.id, kind: .process(deleteShortAudio: true))
+            }
+            if insightsEnabled && m.hasTranscript && !m.hasInsights {
+                return CatchUpJob(id: m.id, kind: .insights)
+            }
+            return nil
+        }
+    }
+
+    /// Ставит в очередь всё недоделанное из `summaries`. Возвращает число поставленных задач.
+    @discardableResult
+    func enqueueCatchUp(summaries: [MeetingSummary], insightsEnabled: Bool) -> Int {
+        let jobs = MeetingProcessor.catchUpJobs(for: summaries, insightsEnabled: insightsEnabled)
+        for j in jobs { enqueue(j.kind, id: j.id, folder: AppPaths.meetingDir(j.id)) }
+        return jobs.count
     }
 
     private func isPending(_ jobId: String) -> Bool {

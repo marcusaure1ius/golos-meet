@@ -10,6 +10,7 @@ struct MeetingsScreen: View {
     @State private var mode: Mode = .feed
     @State private var query = ""
     @State private var period: MeetingPeriod = .all
+    @State private var refreshPulse = false   // разовый оборот, когда догонять нечего
 
     private enum Mode: String, CaseIterable { case feed = "Лента", calendar = "Календарь" }
 
@@ -52,6 +53,21 @@ struct MeetingsScreen: View {
         .onChange(of: recordingState.live?.id) { _, _ in library.reload() }   // старт/стоп записи — показать/убрать живую карточку
     }
 
+    /// «Обновить»: перечитать ленту и поставить в очередь всё недоделанное.
+    /// Пошла работа — стрелка крутится сама (пока `busyMeetingsCount > 0`).
+    /// Догонять нечего — короткий отклик одним оборотом.
+    private func runCatchUp() {
+        library.reload()
+        let insightsEnabled = MeetingProcessor.makeInsightsGenerator() != nil
+        processor.enqueueCatchUp(summaries: library.summaries, insightsEnabled: insightsEnabled)
+        guard processor.busyMeetingsCount == 0 else { return }
+        refreshPulse = true
+        Task {
+            try? await Task.sleep(for: .seconds(0.8))
+            refreshPulse = false
+        }
+    }
+
     private var header: some View {
         VStack(spacing: 12) {
             HStack {
@@ -61,8 +77,11 @@ struct MeetingsScreen: View {
                     ForEach(Mode.allCases, id: \.self) { Text($0.rawValue).tag($0) }
                 }
                 .pickerStyle(.segmented).fixedSize().labelsHidden()
-                Button { library.reload() } label: { Image(systemName: "arrow.clockwise") }
-                    .buttonStyle(GhostButton())
+                Button { runCatchUp() } label: {
+                    SpinningArrow(active: processor.busyMeetingsCount > 0 || refreshPulse)
+                }
+                .buttonStyle(GhostButton())
+                .help("Обновить и догнать необработанные встречи")
             }
             HStack(spacing: 10) {
                 HStack(spacing: 6) {
@@ -79,5 +98,21 @@ struct MeetingsScreen: View {
             }
         }
         .padding(.horizontal, 56).padding(.top, 38).padding(.bottom, 8)
+    }
+}
+
+/// Стрелка «Обновить». Пока `active` — плавно и непрерывно крутится (один оборот за `period`
+/// по таймеру `TimelineView`, без реверса и рывков); по завершении замирает вертикально.
+private struct SpinningArrow: View {
+    let active: Bool
+    private let period = 0.9   // секунд на оборот
+
+    var body: some View {
+        TimelineView(.animation(paused: !active)) { timeline in
+            let t = timeline.date.timeIntervalSinceReferenceDate
+            let angle = active ? (t.truncatingRemainder(dividingBy: period) / period) * 360 : 0
+            Image(systemName: "arrow.clockwise")
+                .rotationEffect(.degrees(angle))
+        }
     }
 }
