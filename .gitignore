@@ -15,3 +15,7 @@ xcuserdata/
 docs/
 .claude/
 .playwright-mcp
+
+# Локальные для разработки — не публикуем (файлы остаются на диске)
+design/
+scripts/
