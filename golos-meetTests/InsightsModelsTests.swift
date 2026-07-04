@@ -22,4 +22,19 @@ import Foundation
         #expect(back == ins)
         #expect(back.actionPoints[1].owner == nil)
     }
+
+    @Test func actionPoint_doneDefaultsFalse_andDecodesLegacy() throws {
+        // Новый round-trip
+        let ap = ActionPoint(id: UUID(), text: "сделать", owner: nil)
+        #expect(ap.done == false)
+        var checked = ap; checked.done = true
+        let data = try JSONEncoder().encode(checked)
+        let back = try JSONDecoder().decode(ActionPoint.self, from: data)
+        #expect(back.done == true)
+
+        // Legacy JSON без поля done → false
+        let legacy = #"{"id":"\#(UUID().uuidString)","text":"старый"}"#.data(using: .utf8)!
+        let decoded = try JSONDecoder().decode(ActionPoint.self, from: legacy)
+        #expect(decoded.done == false)
+    }
 }
