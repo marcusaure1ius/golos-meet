@@ -7,8 +7,16 @@ struct MeetingsScreen: View {
     @Environment(\.scenePhase) private var scenePhase
     @State private var selected: MeetingSummary?
     @State private var mode: Mode = .feed
+    @State private var query = ""
+    @State private var period: MeetingPeriod = .all
 
     private enum Mode: String, CaseIterable { case feed = "Лента", calendar = "Календарь" }
+
+    private var filteredMeetings: [MeetingSummary] {
+        MeetingFilter.apply(library.summaries, query: query, period: period, now: Date()) {
+            library.searchText(for: $0)
+        }
+    }
 
     var body: some View {
         Group {
@@ -22,8 +30,8 @@ struct MeetingsScreen: View {
                             .padding(.horizontal, 56).padding(.bottom, 8)
                     }
                     switch mode {
-                    case .feed:     MeetingFeedView(meetings: library.summaries, now: Date()) { selected = $0 }
-                    case .calendar: MeetingCalendarView(meetings: library.summaries) { selected = $0 }
+                    case .feed:     MeetingFeedView(meetings: filteredMeetings, now: Date()) { selected = $0 }
+                    case .calendar: MeetingCalendarView(meetings: filteredMeetings) { selected = $0 }
                     }
                 }
             }
@@ -34,15 +42,30 @@ struct MeetingsScreen: View {
     }
 
     private var header: some View {
-        HStack {
-            Text("Встречи").font(.system(size: 26, weight: .semibold)).tracking(-0.3).foregroundStyle(p.ink)
-            Spacer()
-            Picker("", selection: $mode) {
-                ForEach(Mode.allCases, id: \.self) { Text($0.rawValue).tag($0) }
+        VStack(spacing: 12) {
+            HStack {
+                Text("Встречи").font(.system(size: 26, weight: .semibold)).tracking(-0.3).foregroundStyle(p.ink)
+                Spacer()
+                Picker("", selection: $mode) {
+                    ForEach(Mode.allCases, id: \.self) { Text($0.rawValue).tag($0) }
+                }
+                .pickerStyle(.segmented).fixedSize().labelsHidden()
+                Button { library.reload() } label: { Image(systemName: "arrow.clockwise") }
+                    .buttonStyle(GhostButton())
             }
-            .pickerStyle(.segmented).fixedSize().labelsHidden()
-            Button { library.reload() } label: { Image(systemName: "arrow.clockwise") }
-                .buttonStyle(GhostButton())
+            HStack(spacing: 10) {
+                HStack(spacing: 6) {
+                    Image(systemName: "magnifyingglass").font(.system(size: 12)).foregroundStyle(p.muted2)
+                    TextField("Поиск по встречам и расшифровкам", text: $query)
+                        .textFieldStyle(.plain).font(.system(size: 13))
+                }
+                .padding(.horizontal, 10).padding(.vertical, 6)
+                .background(p.selection.opacity(0.5)).clipShape(Capsule())
+                Picker("", selection: $period) {
+                    ForEach(MeetingPeriod.allCases) { Text($0.title).tag($0) }
+                }
+                .pickerStyle(.segmented).fixedSize().labelsHidden()
+            }
         }
         .padding(.horizontal, 56).padding(.top, 38).padding(.bottom, 8)
     }

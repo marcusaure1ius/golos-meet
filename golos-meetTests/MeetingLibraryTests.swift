@@ -119,4 +119,20 @@ import Foundation
         let lib = MeetingLibrary(root: root)
         #expect(lib.insights(for: dir.lastPathComponent)?.title == "Загол")
     }
+
+    @Test func reload_invalidatesSearchIndex() throws {
+        let root = try tempRoot()
+        let a = try makeDir(root, "2026-06-18_20-46-13"); try touch(a.appendingPathComponent("mic.wav"))
+        let meta = MeetingMeta(id: "2026-06-18_20-46-13", source: "kontur.talk",
+                               startedAt: Date(timeIntervalSince1970: 0), endedAt: Date(timeIntervalSince1970: 60),
+                               durationSeconds: 60, status: .ready, asrModel: nil, title: "Первый", schemaVersion: 1)
+        try meta.write(to: a.appendingPathComponent("meta.json"))
+        let lib = MeetingLibrary(root: root)
+        #expect(lib.searchText(for: "2026-06-18_20-46-13").contains("первый"))
+        // переименовали на диске + reload → индекс перечитал
+        var m2 = meta; m2.title = "Второй"
+        try m2.write(to: a.appendingPathComponent("meta.json"))
+        lib.reload()
+        #expect(lib.searchText(for: "2026-06-18_20-46-13").contains("второй"))
+    }
 }

@@ -7,11 +7,18 @@ import Combine
 final class MeetingLibrary: ObservableObject {
     @Published private(set) var summaries: [MeetingSummary] = []
     private let root: URL
+    private let searchIndex = MeetingSearchIndex()
 
     init(root: URL) { self.root = root }
     convenience init() { self.init(root: AppPaths.meetingsRoot) }
 
-    func reload() { summaries = MeetingLibrary.scan(root: root) }
+    func reload() {
+        searchIndex.invalidate()
+        summaries = MeetingLibrary.scan(root: root)
+    }
+
+    /// Поисковый текст встречи (через ленивый индекс; root — как у библиотеки).
+    func searchText(for id: String) -> String { searchIndex.text(for: id, root: root) }
 
     /// Чистое сканирование каталога встреч (тестируется на временной папке).
     static func scan(root: URL) -> [MeetingSummary] {
