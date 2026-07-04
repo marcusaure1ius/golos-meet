@@ -1,7 +1,6 @@
 import Foundation
 import AVFoundation
 import Combine
-import os
 
 /// Синхронное воспроизведение двух дорожек встречи (mic + system) как одной записи.
 /// Обе стартуют в t=0, поэтому играют/сикаются вместе по общему таймлайну.
@@ -29,12 +28,16 @@ final class MeetingPlayer: ObservableObject {
         self.duration = loaded.map(\.duration).max() ?? 0
     }
 
+    deinit { ticker?.invalidate() }
+
     func toggle() {
         guard hasAudio else { return }
         if isPlaying { pause() } else { play() }
     }
 
     private func play() {
+        // Выровнять дорожки к общему времени перед синхронным стартом (гасит дрейф после пауз).
+        for p in players { p.currentTime = min(currentTime, p.duration) }
         // Синхронный старт: назначаем общий deviceCurrentTime + небольшой префикс.
         let at = (players.first?.deviceCurrentTime ?? 0) + 0.02
         for p in players { p.play(atTime: at) }
