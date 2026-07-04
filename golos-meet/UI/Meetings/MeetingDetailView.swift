@@ -1,5 +1,6 @@
 import SwiftUI
 import AppKit
+import os
 
 /// Детали встречи: хлебные крошки + шапка (дата/длительность/статус/модель) +
 /// действия (переобработать, открыть папку) + транскрипт.
@@ -13,6 +14,10 @@ struct MeetingDetailView: View {
     @State private var transcript: Transcript?
     @State private var insights: MeetingInsights?
     @State private var backHover = false
+
+    @State private var isRenaming = false
+    @State private var draftTitle = ""
+    @State private var showDeleteConfirm = false
 
     // Анимация «проявления» нового заголовка (typewriter + мягкий блюр).
     @State private var displayedTitle = ""
@@ -64,6 +69,20 @@ struct MeetingDetailView: View {
             transcript = library.transcript(for: meeting.id)
             insights = library.insights(for: meeting.id)
         }
+        .confirmationDialog("Удалить встречу насовсем?", isPresented: $showDeleteConfirm, titleVisibility: .visible) {
+            Button("Удалить", role: .destructive) {
+                do {
+                    try MeetingStore.delete(id: meeting.id)
+                    library.reload()
+                    onBack()
+                } catch {
+                    Log.pipeline.error("delete failed: \(error.localizedDescription, privacy: .public)")
+                }
+            }
+            Button("Отмена", role: .cancel) {}
+        } message: {
+            Text("Запись, расшифровка и инсайты будут удалены с диска. Это действие необратимо.")
+        }
     }
 
     private var breadcrumbs: some View {
@@ -100,10 +119,18 @@ struct MeetingDetailView: View {
 
     private var header: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text(isRevealing ? displayedTitle : liveMeeting.title)
-                .font(.system(size: 26, weight: .semibold)).tracking(-0.3).foregroundStyle(p.ink)
-                .blur(radius: titleBlur)
-                .opacity(titleOpacity)
+            if isRenaming {
+                TextField("Название встречи", text: $draftTitle, onCommit: commitRename)
+                    .textFieldStyle(.plain)
+                    .font(.system(size: 26, weight: .semibold)).tracking(-0.3).foregroundStyle(p.ink)
+                    .onExitCommand { isRenaming = false }
+            } else {
+                Text(isRevealing ? displayedTitle : liveMeeting.title)
+                    .font(.system(size: 26, weight: .semibold)).tracking(-0.3).foregroundStyle(p.ink)
+                    .blur(radius: titleBlur).opacity(titleOpacity)
+                    .onTapGesture(count: 2) { draftTitle = liveMeeting.title; isRenaming = true }
+                    .help("Двойной клик — переименовать")
+            }
             HStack(spacing: 10) {
                 Text(Self.dateFmt.string(from: meeting.startedAt)).font(.system(size: 13)).foregroundStyle(p.muted)
                 Text("·").foregroundStyle(p.muted2)
@@ -181,6 +208,18 @@ struct MeetingDetailView: View {
                 .buttonStyle(GhostButton())
                 .disabled(isSummarizing || isProcessing)
             }
+            if insights != nil {
+                Button {
+                    if let ins = insights {
+                        let md = InsightsMarkdown.render(title: liveMeeting.title,
+                                                         date: meeting.startedAt, insights: ins)
+                        NSPasteboard.general.clearContents()
+                        NSPasteboard.general.setString(md, forType: .string)
+                    }
+                } label: { Image(systemName: "doc.on.doc") }
+                .buttonStyle(GhostButton())
+                .help("Скопировать конспект и action points")
+            }
             Button {
                 NSWorkspace.shared.open(folder)
             } label: {
@@ -188,6 +227,12 @@ struct MeetingDetailView: View {
             }
             .buttonStyle(GhostButton())
             .help("Открыть папку записи")
+
+            Button(role: .destructive) { showDeleteConfirm = true } label: {
+                Image(systemName: "trash")
+            }
+            .buttonStyle(GhostButton())
+            .help("Удалить встречу")
         }
     }
 
@@ -226,6 +271,14 @@ struct MeetingDetailView: View {
                     .frame(maxWidth: .infinity).padding(.top, 40)
             }
         }
+    }
+
+    private func commitRename() {
+        let trimmed = draftTitle.trimmingCharacters(in: .whitespacesAndNewlines)
+        isRenaming = false
+        guard !trimmed.isEmpty, trimmed != liveMeeting.title else { return }
+        do { try MeetingStore.rename(id: meeting.id, title: trimmed); library.reload() }
+        catch { Log.pipeline.error("rename failed: \(error.localizedDescription, privacy: .public)") }
     }
 
     /// Старый заголовок гаснет в блюр, новый «печатается», проявляясь из дымки
