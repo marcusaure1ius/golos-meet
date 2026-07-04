@@ -13,6 +13,7 @@ struct MeetingDetailView: View {
 
     @State private var transcript: Transcript?
     @State private var insights: MeetingInsights?
+    @State private var player: MeetingPlayer?
     @State private var backHover = false
 
     @State private var isRenaming = false
@@ -63,6 +64,9 @@ struct MeetingDetailView: View {
             transcript = library.transcript(for: meeting.id)
             insights = library.insights(for: meeting.id)
             displayedTitle = liveMeeting.title
+            player?.stop()
+            let p = MeetingPlayer(folder: folder)
+            player = p.hasAudio ? p : nil
         }
         .onChange(of: processor.completedJobsCount) { _, _ in
             // Фоновая задача очереди завершилась — перечитать артефакты (чтение lazy и дешёвое).
@@ -254,7 +258,8 @@ struct MeetingDetailView: View {
                     Text("Action points ещё не сгенерированы.")
                         .font(.system(size: 13)).foregroundStyle(p.muted2)
                 }
-                TranscriptView(transcript: t)
+                if let player { PlayerView(player: player) }
+                TranscriptView(transcript: t, onSeek: player.map { pl in { pl.seek(to: $0); if !pl.isPlaying { pl.toggle() } } })
             }
         } else {
             switch liveMeeting.status {

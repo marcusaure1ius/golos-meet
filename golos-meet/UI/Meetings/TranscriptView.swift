@@ -4,6 +4,7 @@ import SwiftUI
 struct TranscriptView: View {
     @Environment(\.palette) var p
     let transcript: Transcript
+    var onSeek: ((TimeInterval) -> Void)? = nil
 
     var body: some View {
         VStack(alignment: .leading, spacing: 14) {
@@ -15,7 +16,7 @@ struct TranscriptView: View {
                             .foregroundStyle(speakerColor(seg.speaker))
                         Text(TranscriptMerger.timecode(seg.start))
                             .font(.system(size: 12, design: .monospaced))
-                            .foregroundStyle(p.muted2)
+                            .foregroundStyle(onSeek == nil ? p.muted2 : p.link)
                     }
                     Text(seg.text)
                         .font(.system(size: 14))
@@ -23,6 +24,8 @@ struct TranscriptView: View {
                         .textSelection(.enabled)
                         .fixedSize(horizontal: false, vertical: true)
                 }
+                .contentShape(Rectangle())
+                .onTapGesture { onSeek?(seg.start) }
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
