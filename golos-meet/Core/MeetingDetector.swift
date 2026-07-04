@@ -2,7 +2,7 @@ import Foundation
 import os
 
 protocol MeetingDetectorDelegate: AnyObject {
-    func meetingStarted(at: Date)
+    func meetingStarted(at: Date, manual: Bool)
     func meetingEnded(at: Date)
 }
 
@@ -22,7 +22,7 @@ final class MeetingDetector {
             if !isMeeting {
                 isMeeting = true
                 Log.detector.info("meetingStarted")
-                delegate?.meetingStarted(at: date)
+                delegate?.meetingStarted(at: date, manual: false)
             }
         } else {
             guard isMeeting, let last = lastActiveAt else { return }

@@ -7,7 +7,7 @@ import Foundation
 private final class SpyDetectorDelegate: MeetingDetectorDelegate {
     var startedCount = 0
     var endedCount = 0
-    func meetingStarted(at _: Date) { startedCount += 1 }
+    func meetingStarted(at _: Date, manual _: Bool) { startedCount += 1 }
     func meetingEnded(at _: Date) { endedCount += 1 }
 }
 

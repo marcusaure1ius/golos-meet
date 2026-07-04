@@ -93,7 +93,7 @@ final class Recorder: MeetingDetectorDelegate {
         "Встреча \(titleFormatter.string(from: date))"
     }
 
-    func meetingStarted(at date: Date) {
+    func meetingStarted(at date: Date, manual: Bool) {
         guard active == nil else { return }
         do {
             let folder = makeFolder(date, "kontur.talk")
