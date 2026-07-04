@@ -6,6 +6,8 @@ import os
 @MainActor
 final class AppCoordinator {
     // grace-окно спада можно укоротить через env (для e2e); по умолчанию 30 c.
+    // Оконный сигнал держит активность сквозь тишину, поэтому длинный grace больше не нужен
+    // (см. docs/plans/2026-06-18-window-aware-detection.md).
     private static var graceSeconds: TimeInterval {
         if let raw = ProcessInfo.processInfo.environment["GM_GRACE_SECONDS"],
            let v = TimeInterval(raw) { return v }
@@ -17,6 +19,8 @@ final class AppCoordinator {
     private let windowMonitor = WindowMonitor()
     let recorder = Recorder()
 
+    // Последние значения каждого сигнала; встреча активна, если активен ХОТЯ БЫ ОДИН
+    // (аудио ловит звук; окно ловит присутствие в звонке независимо от тишины/фокуса).
     private var lastAudioActive = false
     private var lastWindowActive = false
 
@@ -74,9 +78,12 @@ final class AppCoordinator {
 
     private func startTick() {
         guard tickTimer == nil else { return }
-        tickTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] _ in
+        // .common — чтобы «Запись · MM:SS» тикала и при открытом меню (event-tracking mode).
+        let t = Timer(timeInterval: 1, repeats: true) { [weak self] _ in
             Task { @MainActor in self?.renderMenu() }
         }
+        RunLoop.main.add(t, forMode: .common)
+        tickTimer = t
     }
 
     private func stopTick() { tickTimer?.invalidate(); tickTimer = nil }
