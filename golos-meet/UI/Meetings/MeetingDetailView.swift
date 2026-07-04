@@ -19,6 +19,8 @@ struct MeetingDetailView: View {
     @State private var isRenaming = false
     @State private var draftTitle = ""
     @State private var showDeleteConfirm = false
+    @State private var showRegenWarn = false
+    @State private var showReprocessWarn = false
 
     // Анимация «проявления» нового заголовка (typewriter + мягкий блюр).
     @State private var displayedTitle = ""
@@ -86,6 +88,18 @@ struct MeetingDetailView: View {
             Button("Отмена", role: .cancel) {}
         } message: {
             Text("Запись, расшифровка и инсайты будут удалены с диска. Это действие необратимо.")
+        }
+        .confirmationDialog("Перегенерировать инсайты?", isPresented: $showRegenWarn, titleVisibility: .visible) {
+            Button("Перегенерировать", role: .destructive) { runInsightsFlow() }
+            Button("Отмена", role: .cancel) {}
+        } message: {
+            Text("Все action points будут сгенерированы заново, а отметки о выполнении сброшены.")
+        }
+        .confirmationDialog("Переобработать встречу?", isPresented: $showReprocessWarn, titleVisibility: .visible) {
+            Button("Переобработать", role: .destructive) { runReprocessFlow() }
+            Button("Отмена", role: .cancel) {}
+        } message: {
+            Text("Расшифровка и инсайты будут сгенерированы заново, отметки о выполнении сброшены.")
         }
     }
 
@@ -165,16 +179,8 @@ struct MeetingDetailView: View {
         HStack(spacing: 8) {
             if hasAudio {
                 Button {
-                    Task {
-                        let before = liveMeeting.title
-                        await processor.enqueueAndWait(.process(deleteShortAudio: false), id: meeting.id, folder: folder)
-                        transcript = library.transcript(for: meeting.id)
-                        insights = library.insights(for: meeting.id)
-                        library.reload()
-                        if liveMeeting.title != before {
-                            await revealTitle(from: before, to: liveMeeting.title)
-                        }
-                    }
+                    if liveMeeting.hasTranscript && insights != nil { showReprocessWarn = true }
+                    else { runReprocessFlow() }
                 } label: {
                     if isProcessing {
                         HStack(spacing: 6) {
@@ -190,15 +196,7 @@ struct MeetingDetailView: View {
             }
             if liveMeeting.hasTranscript {
                 Button {
-                    Task {
-                        let before = liveMeeting.title
-                        await processor.enqueueAndWait(.insights, id: meeting.id, folder: folder)
-                        insights = library.insights(for: meeting.id)
-                        library.reload()
-                        if liveMeeting.title != before {
-                            await revealTitle(from: before, to: liveMeeting.title)
-                        }
-                    }
+                    if insights != nil { showRegenWarn = true } else { runInsightsFlow() }
                 } label: {
                     if isSummarizing {
                         HStack(spacing: 6) {
@@ -253,7 +251,14 @@ struct MeetingDetailView: View {
             VStack(alignment: .leading, spacing: 24) {
                 // Прогресс генерации показывают бейдж «Анализирую» и кнопка — здесь не дублируем.
                 if let ins = insights {
-                    InsightsView(insights: ins)
+                    InsightsView(insights: ins) { ap in
+                        do {
+                            try MeetingStore.setActionPointDone(id: meeting.id, actionPointId: ap.id, done: !ap.done)
+                            insights = library.insights(for: meeting.id)
+                        } catch {
+                            Log.pipeline.error("toggle action point failed: \(error.localizedDescription, privacy: .public)")
+                        }
+                    }
                 } else if !isSummarizing {
                     Text("Action points ещё не сгенерированы.")
                         .font(.system(size: 13)).foregroundStyle(p.muted2)
@@ -284,6 +289,27 @@ struct MeetingDetailView: View {
         guard !trimmed.isEmpty, trimmed != liveMeeting.title else { return }
         do { try MeetingStore.rename(id: meeting.id, title: trimmed); library.reload() }
         catch { Log.pipeline.error("rename failed: \(error.localizedDescription, privacy: .public)") }
+    }
+
+    private func runInsightsFlow() {
+        Task {
+            let before = liveMeeting.title
+            await processor.enqueueAndWait(.insights, id: meeting.id, folder: folder)
+            insights = library.insights(for: meeting.id)
+            library.reload()
+            if liveMeeting.title != before { await revealTitle(from: before, to: liveMeeting.title) }
+        }
+    }
+
+    private func runReprocessFlow() {
+        Task {
+            let before = liveMeeting.title
+            await processor.enqueueAndWait(.process(deleteShortAudio: false), id: meeting.id, folder: folder)
+            transcript = library.transcript(for: meeting.id)
+            insights = library.insights(for: meeting.id)
+            library.reload()
+            if liveMeeting.title != before { await revealTitle(from: before, to: liveMeeting.title) }
+        }
     }
 
     /// Старый заголовок гаснет в блюр, новый «печатается», проявляясь из дымки
