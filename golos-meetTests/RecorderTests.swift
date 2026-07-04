@@ -3,7 +3,7 @@ import Foundation
 @testable import golos_meet
 
 @MainActor
-@Suite struct RecorderTests {
+@Suite(.serialized) struct RecorderTests {
     private final class FakeTrack: AudioTrack {
         var stopped = false
         func start(into writer: WavWriter) throws {}
