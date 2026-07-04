@@ -175,7 +175,7 @@ final class MeetingProcessor: ObservableObject {
         do {
             let insights = try await gen.generate(from: transcript, meetingId: id)
             try insights.write(to: folder.appendingPathComponent("insights.json"))
-            meta.title = insights.title
+            if meta.titleManual != true { meta.title = insights.title }
             Log.llm.info("\(id, privacy: .public): insights ok (\(insights.actionPoints.count) action points)")
         } catch {
             Log.llm.error("\(id, privacy: .public): insights failed — \(error.localizedDescription, privacy: .public)")

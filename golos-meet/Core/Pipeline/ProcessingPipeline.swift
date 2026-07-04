@@ -91,7 +91,7 @@ final class ProcessingPipeline {
         do {
             let insights = try await gen.generate(from: transcript, meetingId: meetingId)
             try insights.write(to: folder.appendingPathComponent("insights.json"))
-            meta.title = insights.title
+            if meta.titleManual != true { meta.title = insights.title }
             Log.llm.info("\(meetingId, privacy: .public): insights ok (\(insights.actionPoints.count) action points)")
         } catch {
             Log.llm.error("\(meetingId, privacy: .public): insights failed — \(error.localizedDescription, privacy: .public)")

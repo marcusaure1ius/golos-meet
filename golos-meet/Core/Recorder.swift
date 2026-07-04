@@ -21,6 +21,8 @@ struct MeetingMeta: Codable, Equatable {
     var asrModel: String?
     /// Заголовок встречи для UI (placeholder при старте, позже уточняется).
     var title: String? = nil
+    /// Заголовок задан вручную пользователем — LLM его не перезаписывает.
+    var titleManual: Bool? = nil
     /// Версия схемы; nil у старых meta, записанных до введения поля.
     var schemaVersion: Int? = nil
 

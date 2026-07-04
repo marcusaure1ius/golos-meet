@@ -13,4 +13,19 @@ import Foundation
         #expect(back == meta)
         #expect(back.durationSeconds == 312)
     }
+
+    @Test func titleManual_roundTripsAndDefaultsNil() throws {
+        let meta = MeetingMeta(id: "m", source: "kontur.talk",
+                               startedAt: Date(timeIntervalSince1970: 0),
+                               endedAt: Date(timeIntervalSince1970: 60),
+                               durationSeconds: 60, status: .ready, asrModel: nil)
+        #expect(meta.titleManual == nil)
+        let decoded = try MeetingMeta.decoded(MeetingMeta.encoded(meta))
+        #expect(decoded.titleManual == nil)
+
+        var manual = meta
+        manual.titleManual = true
+        let decodedManual = try MeetingMeta.decoded(MeetingMeta.encoded(manual))
+        #expect(decodedManual.titleManual == true)
+    }
 }
