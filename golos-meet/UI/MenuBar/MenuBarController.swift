@@ -47,7 +47,7 @@ final class MenuBarController {
         toggle.target = target; toggle.isEnabled = true
         menu.addItem(toggle); startStopItem = toggle
 
-        let open = NSMenuItem(title: "Открыть golos-meet",
+        let open = NSMenuItem(title: "Открыть Golos Meet",
                               action: #selector(MenuBarTarget.open(_:)), keyEquivalent: "")
         open.target = target; open.isEnabled = true
         menu.addItem(open)

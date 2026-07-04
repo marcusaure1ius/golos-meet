@@ -24,7 +24,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		75EC79622FE330CC00D3BFD9 /* golos-meet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "golos-meet.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		75EC79622FE330CC00D3BFD9 /* golos-meet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Golos Meet.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		75EC796F2FE330CD00D3BFD9 /* golos-meetTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "golos-meetTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		75EC79792FE330CD00D3BFD9 /* golos-meetUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "golos-meetUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -399,8 +399,9 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Golos Meet";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				INFOPLIST_KEY_NSMicrophoneUsageDescription = "golos-meet записывает ваш голос на встречах";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Golos Meet записывает ваш голос на встречах";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -408,7 +409,8 @@
 				MACOSX_DEPLOYMENT_TARGET = 14.4;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.golos.golos-meet";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_MODULE_NAME = golos_meet;
+				PRODUCT_NAME = "Golos Meet";
 				REGISTER_APP_GROUPS = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -431,8 +433,9 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Golos Meet";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				INFOPLIST_KEY_NSMicrophoneUsageDescription = "golos-meet записывает ваш голос на встречах";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Golos Meet записывает ваш голос на встречах";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -440,7 +443,8 @@
 				MACOSX_DEPLOYMENT_TARGET = 14.4;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.golos.golos-meet";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_MODULE_NAME = golos_meet;
+				PRODUCT_NAME = "Golos Meet";
 				REGISTER_APP_GROUPS = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -467,7 +471,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/golos-meet.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/golos-meet";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Golos Meet.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Golos Meet";
 			};
 			name = Debug;
 		};
@@ -487,7 +491,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/golos-meet.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/golos-meet";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Golos Meet.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Golos Meet";
 			};
 			name = Release;
 		};
