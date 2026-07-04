@@ -7,10 +7,27 @@
       "blur-material" : null,
       "layers" : [
         {
+          "glass" : true,
+          "hidden" : false,
           "image-name" : "Wave.svg",
-          "name" : "Wave"
+          "name" : "Wave",
+          "opacity-specializations" : [
+            {
+              "appearance" : "dark",
+              "value" : 0.11
+            }
+          ]
         },
         {
+          "fill-specializations" : [
+            {
+              "appearance" : "dark",
+              "value" : {
+                "solid" : "display-p3:0.37716,0.38606,0.41275,1.00000"
+              }
+            }
+          ],
+          "glass" : true,
           "image-name" : "Bubble.svg",
           "name" : "Bubble"
         },
