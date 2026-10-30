@@ -58,19 +58,30 @@ nonisolated struct TalkAPIClient: Sendable {
     private let token: String
     private let session: URLSession
 
-    init(server: URL, token: String, session: URLSession = .shared) throws {
+    init(server: URL, token: String, session: URLSession? = nil) throws {
         guard var components = URLComponents(url: server, resolvingAgainstBaseURL: false),
               components.scheme == "https", let host = components.host, !host.isEmpty,
               components.user == nil, components.password == nil,
               components.query == nil, components.fragment == nil,
               components.path.isEmpty || components.path == "/" else { throw TalkAPIError.invalidServer }
         let key = token.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !key.isEmpty, !key.contains("\n"), !key.contains("\r") else { throw TalkAPIError.noToken }
+        guard !key.isEmpty, !key.unicodeScalars.contains(where: { CharacterSet.controlCharacters.contains($0) }) else {
+            throw TalkAPIError.noToken
+        }
         components.path = ""
         guard let base = components.url else { throw TalkAPIError.invalidServer }
         self.server = base
         self.token = key
-        self.session = session
+        if let session {
+            self.session = session
+        } else {
+            let config = URLSessionConfiguration.ephemeral
+            config.httpCookieStorage = nil
+            config.httpShouldSetCookies = false
+            config.urlCredentialStorage = nil
+            config.urlCache = nil
+            self.session = URLSession(configuration: config)
+        }
     }
 
     func profile() async throws -> TalkProfile {

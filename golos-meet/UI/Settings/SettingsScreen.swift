@@ -18,7 +18,7 @@ struct SettingsScreen: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
-                GSectionHeader("Настройки", desc: "Модель распознавания и оформление.")
+                GSectionHeader("Настройки", desc: "Распознавание, подключения и оформление.")
                 GCard {
                     GSettingRow("Модель распознавания",
                                 desc: "Скорость — GigaAM; Качество — Whisper.",
@@ -43,6 +43,8 @@ struct SettingsScreen: View {
                         .menuStyle(.borderlessButton).menuIndicator(.hidden).fixedSize()
                     }
                 }
+                TalkConnectionSettings()
+                    .padding(.top, 12)
                 GCard {
                     GSettingRow("Генерировать автоматически",
                                 desc: "Заголовок, конспект и задачи через OpenRouter после расшифровки.",
