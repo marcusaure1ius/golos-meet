@@ -30,6 +30,7 @@ import Testing
         #expect(first.chunks.first?.location.startSeconds == 12.5)
         #expect(first.chunks.first?.location.endSeconds == 21.25)
         #expect(try await reader.synchronize(meetingID: "synthetic-meeting", store: store))
+        let observedA = try await store.observeEmbeddingSource(first.key)
         let model = EmbeddingIndexModel(id: "synthetic-meeting-storage", dimensions: 2)
         try await store.activateEmbeddingModel(model)
         let old = try #require(try await store.claimEmbeddingJob())
@@ -43,7 +44,7 @@ import Testing
         let second = try await reader.read(meetingID: "synthetic-meeting")
         #expect(second.revision != first.revision)
         // A delayed old scan cannot undo B even before returning to A.
-        #expect(try await store.synchronizeMeetingEmbedding(first, replacing: first.revision) == false)
+        #expect(try await store.synchronizeMeetingEmbedding(first, replacing: observedA) == false)
         try original.write(to: file, options: .atomic)
         try FileManager.default.setAttributes([.modificationDate: timestamp], ofItemAtPath: file.path)
         #expect(try await reader.synchronize(meetingID: "synthetic-meeting", store: store))

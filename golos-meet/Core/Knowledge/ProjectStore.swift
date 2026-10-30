@@ -196,20 +196,20 @@ actor ProjectStore {
         if let database { return database }
         let db = try ProjectDatabase(url: url)
         try db.execute("PRAGMA foreign_keys = ON")
-        let version = Int(try db.rows("PRAGMA user_version").first?.first ?? "") ?? -1
-        guard version <= 3 else { throw ProjectStoreError.newerSchema(version) }
-        guard version >= 0 else { throw ProjectStoreError.database("Invalid schema version") }
-        if version == 0 {
-            try db.transaction {
+        // Acquire the migration lock BEFORE reading user_version. A connection
+        // waiting behind another migrator must observe its committed version.
+        try db.transaction {
+            let version = Int(try db.rows("PRAGMA user_version").first?.first ?? "") ?? -1
+            guard version <= 3 else { throw ProjectStoreError.newerSchema(version) }
+            guard version >= 0 else { throw ProjectStoreError.database("Invalid schema version") }
+            if version == 0 {
                 try db.execute("CREATE TABLE projects (id TEXT PRIMARY KEY NOT NULL, name TEXT NOT NULL CHECK(length(trim(name)) BETWEEN 1 AND 200), parent_id TEXT REFERENCES projects(id), cloud_policy TEXT NOT NULL DEFAULT 'localOnly')")
                 try db.execute("CREATE TABLE meeting_decisions (meeting_id TEXT PRIMARY KEY NOT NULL, origin TEXT NOT NULL CHECK(origin = 'manual'))")
                 try db.execute("CREATE TABLE meeting_projects (meeting_id TEXT NOT NULL REFERENCES meeting_decisions(meeting_id), project_id TEXT NOT NULL REFERENCES projects(id), PRIMARY KEY (meeting_id, project_id))")
                 try db.execute("CREATE INDEX meeting_projects_by_project ON meeting_projects(project_id)")
                 try db.execute("PRAGMA user_version = 1")
             }
-        }
-        if version < 2 {
-            try db.transaction {
+            if version < 2 {
                 try db.execute("CREATE TABLE documents (id TEXT PRIMARY KEY NOT NULL, title TEXT NOT NULL, current_version TEXT)")
                 try db.execute("CREATE TABLE document_versions (id TEXT PRIMARY KEY NOT NULL, document_id TEXT NOT NULL REFERENCES documents(id), content_hash TEXT NOT NULL, relative_path TEXT NOT NULL UNIQUE, original_name TEXT NOT NULL, imported_at TEXT NOT NULL, warnings TEXT NOT NULL, UNIQUE(document_id, content_hash))")
                 try db.execute("CREATE INDEX document_versions_by_hash ON document_versions(content_hash)")
@@ -218,12 +218,13 @@ actor ProjectStore {
                 try db.execute("CREATE TABLE document_imports (id TEXT PRIMARY KEY NOT NULL, filename TEXT NOT NULL, target_id TEXT, state TEXT NOT NULL, message TEXT NOT NULL, created_at TEXT NOT NULL)")
                 try db.execute("PRAGMA user_version = 2")
             }
-        }
-        if version < 3 {
-            try db.transaction {
+            if version < 3 {
                 try db.execute("CREATE TABLE embedding_models (model_id TEXT PRIMARY KEY NOT NULL, dimensions INTEGER NOT NULL CHECK(dimensions BETWEEN 1 AND 4096))")
                 try db.execute("CREATE TABLE embedding_active_model (slot INTEGER PRIMARY KEY CHECK(slot = 1), model_id TEXT NOT NULL REFERENCES embedding_models(model_id), dimensions INTEGER NOT NULL CHECK(dimensions BETWEEN 1 AND 4096))")
                 try db.execute("CREATE TABLE embedding_sources (source_key TEXT PRIMARY KEY NOT NULL, kind TEXT NOT NULL CHECK(kind IN ('document','meeting')), external_id TEXT NOT NULL, revision TEXT NOT NULL, UNIQUE(kind, external_id))")
+                // Deliberately no source FK: tombstones survive delete/recreate
+                // and prevent an old observation of absence from being reused.
+                try db.execute("CREATE TABLE embedding_source_epochs (source_key TEXT PRIMARY KEY NOT NULL, generation TEXT NOT NULL)")
                 try db.execute("CREATE TABLE embedding_chunks (id TEXT PRIMARY KEY NOT NULL, source_key TEXT NOT NULL REFERENCES embedding_sources(source_key) ON DELETE CASCADE, source_id TEXT NOT NULL, revision TEXT NOT NULL, ordinal INTEGER NOT NULL, text TEXT NOT NULL, location TEXT NOT NULL, body_tokens INTEGER NOT NULL DEFAULT 0 CHECK(body_tokens >= 0), UNIQUE(source_key, ordinal))")
                 try db.execute("CREATE TABLE embedding_jobs (source_key TEXT PRIMARY KEY NOT NULL REFERENCES embedding_sources(source_key) ON DELETE CASCADE, generation TEXT NOT NULL, model_id TEXT NOT NULL, state TEXT NOT NULL CHECK(state IN ('waitingForModel','queued','running','ready','failed','cancelled')), completed INTEGER NOT NULL, total INTEGER NOT NULL, message TEXT NOT NULL, attempt TEXT NOT NULL DEFAULT '')")
                 try db.execute("CREATE INDEX embedding_jobs_by_state ON embedding_jobs(state, source_key)")
@@ -363,6 +364,17 @@ extension ProjectStore {
         try open().rows("SELECT revision FROM embedding_sources WHERE source_key = ?", bindings: [key.rawValue]).first?.first
     }
 
+    func observeEmbeddingSource(_ key: EmbeddingSourceKey) throws -> EmbeddingSourceObservation {
+        guard !key.externalID.isEmpty, !key.externalID.contains("\0") else { throw EmbeddingIndexError.invalidSource }
+        let db = try open()
+        return try db.transaction {
+            try db.execute("INSERT INTO embedding_source_epochs VALUES (?, ?) ON CONFLICT(source_key) DO NOTHING",
+                           bindings: [key.rawValue, UUID().uuidString])
+            guard let observation = try embeddingObservation(key, db: db) else { throw EmbeddingIndexError.corruptIndex }
+            return observation
+        }
+    }
+
     /// Seed documents imported before schema v3. Ordinary imports update this
     /// catalog in their own commit, including explicit selection of an old version.
     func synchronizeEmbeddingDocuments() throws {
@@ -376,12 +388,11 @@ extension ProjectStore {
     }
 
     @discardableResult
-    func synchronizeMeetingEmbedding(_ snapshot: EmbeddingSourceSnapshot, replacing expectedRevision: String?) throws -> Bool {
-        guard snapshot.key.kind == .meeting else { throw EmbeddingIndexError.invalidSource }
+    func synchronizeMeetingEmbedding(_ snapshot: EmbeddingSourceSnapshot, replacing observation: EmbeddingSourceObservation) throws -> Bool {
+        guard snapshot.key.kind == .meeting, observation.key == snapshot.key else { throw EmbeddingIndexError.invalidSource }
         let db = try open()
         return try db.transaction {
-            let current = try db.rows("SELECT revision FROM embedding_sources WHERE source_key = ?", bindings: [snapshot.key.rawValue]).first?.first
-            guard current == expectedRevision else { return false }
+            guard try embeddingObservation(snapshot.key, db: db) == observation else { return false }
             try registerEmbeddingSource(snapshot, db: db)
             return true
         }
@@ -390,17 +401,21 @@ extension ProjectStore {
     /// Call after a source is deleted or a meeting transcript is found invalid.
     /// Cascades invalidate outstanding leases and remove its derived data only.
     func removeEmbeddingSource(_ key: EmbeddingSourceKey) throws {
-        try open().execute("DELETE FROM embedding_sources WHERE source_key = ?", bindings: [key.rawValue])
+        let db = try open()
+        try db.transaction {
+            try db.execute("DELETE FROM embedding_sources WHERE source_key = ?", bindings: [key.rawValue])
+            try advanceEmbeddingCatalog(key, db: db)
+        }
     }
 
     @discardableResult
-    func invalidateMeetingEmbedding(_ key: EmbeddingSourceKey, replacing expectedRevision: String?) throws -> Bool {
-        guard key.kind == .meeting else { throw EmbeddingIndexError.invalidSource }
+    func invalidateMeetingEmbedding(_ key: EmbeddingSourceKey, replacing observation: EmbeddingSourceObservation) throws -> Bool {
+        guard key.kind == .meeting, observation.key == key else { throw EmbeddingIndexError.invalidSource }
         let db = try open()
         return try db.transaction {
-            let current = try db.rows("SELECT revision FROM embedding_sources WHERE source_key = ?", bindings: [key.rawValue]).first?.first
-            guard current == expectedRevision else { return false }
+            guard try embeddingObservation(key, db: db) == observation else { return false }
             try db.execute("DELETE FROM embedding_sources WHERE source_key = ?", bindings: [key.rawValue])
+            try advanceEmbeddingCatalog(key, db: db)
             return true
         }
     }
@@ -594,6 +609,18 @@ extension ProjectStore {
                                       String(decoding: try JSONEncoder().encode(chunk.location), as: UTF8.self)])
         }
         try resetEmbeddingJob(key, db: db)
+        try advanceEmbeddingCatalog(snapshot.key, db: db)
+    }
+
+    private func embeddingObservation(_ key: EmbeddingSourceKey, db: ProjectDatabase) throws -> EmbeddingSourceObservation? {
+        guard let row = try db.rows("SELECT e.generation, s.revision FROM embedding_source_epochs e LEFT JOIN embedding_sources s ON s.source_key = e.source_key WHERE e.source_key = ?", bindings: [key.rawValue]).first else { return nil }
+        guard !row[0].isEmpty else { throw EmbeddingIndexError.corruptIndex }
+        return .init(key: key, generation: row[0], revision: row[1].isEmpty ? nil : row[1])
+    }
+
+    private func advanceEmbeddingCatalog(_ key: EmbeddingSourceKey, db: ProjectDatabase) throws {
+        try db.execute("INSERT INTO embedding_source_epochs VALUES (?, ?) ON CONFLICT(source_key) DO UPDATE SET generation = excluded.generation",
+                       bindings: [key.rawValue, UUID().uuidString])
     }
 
     private func resetEmbeddingJob(_ key: String, db: ProjectDatabase) throws {

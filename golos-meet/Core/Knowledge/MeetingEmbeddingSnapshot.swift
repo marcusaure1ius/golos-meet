@@ -43,12 +43,12 @@ actor MeetingEmbeddingSnapshotReader {
         return .init(key: key, revision: revision, chunks: chunks)
     }
 
-    /// A fresh file snapshot must be taken after observing the catalog revision.
-    /// The CAS prevents a delayed scan from reverting a newer registered snapshot.
+    /// Observe the catalog instance before reading the file. Fingerprints alone
+    /// cannot fence ABA or delete/recreate; an absent source has a token too.
     @discardableResult
     func synchronize(meetingID: String, store: ProjectStore) async throws -> Bool {
         let key = EmbeddingSourceKey(kind: .meeting, externalID: meetingID)
-        let expected = try await store.embeddingRevision(for: key)
+        let expected = try await store.observeEmbeddingSource(key)
         do {
             let snapshot = try read(meetingID: meetingID)
             return try await store.synchronizeMeetingEmbedding(snapshot, replacing: expected)

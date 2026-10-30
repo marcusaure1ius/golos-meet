@@ -28,6 +28,14 @@ nonisolated struct EmbeddingSourceSnapshot: Sendable, Equatable {
     let chunks: [KnowledgeChunk]
 }
 
+/// Catalog identity, separate from content fingerprint and job generation.
+/// An observation also identifies a particular absence through a durable token.
+nonisolated struct EmbeddingSourceObservation: Sendable, Equatable {
+    let key: EmbeddingSourceKey
+    let generation: String
+    let revision: String?
+}
+
 nonisolated enum EmbeddingIndexState: String, Sendable {
     case waitingForModel, queued, running, ready, failed, cancelled
 }

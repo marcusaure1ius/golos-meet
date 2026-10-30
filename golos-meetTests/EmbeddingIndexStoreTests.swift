@@ -230,7 +230,7 @@ import Testing
         let url = root.appendingPathComponent("library.sqlite")
         let store = ProjectStore(url: url)
         let doc = try await put(root, store: store, text: textA)
-        try sql(url, "DROP TABLE embedding_vectors; DROP TABLE embedding_jobs; DROP TABLE embedding_chunks; DROP TABLE embedding_sources; DROP TABLE embedding_active_model; DROP TABLE embedding_models; PRAGMA user_version=2; CREATE TABLE embedding_sources(keep TEXT); INSERT INTO embedding_sources VALUES ('original')")
+        try sql(url, "DROP TABLE embedding_vectors; DROP TABLE embedding_jobs; DROP TABLE embedding_chunks; DROP TABLE embedding_sources; DROP TABLE embedding_source_epochs; DROP TABLE embedding_active_model; DROP TABLE embedding_models; PRAGMA user_version=2; CREATE TABLE embedding_sources(keep TEXT); INSERT INTO embedding_sources VALUES ('original')")
         await #expect(throws: ProjectStoreError.self) { try await ProjectStore(url: url).snapshot() }
         #expect(try scalar(url, "PRAGMA user_version") == 2)
         #expect(try scalar(url, "SELECT COUNT(*) FROM sqlite_master WHERE name='embedding_models'") == 0)
