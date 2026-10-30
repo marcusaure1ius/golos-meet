@@ -21,9 +21,8 @@ struct MeetingFeedView: View {
                             Text(group.label).font(.system(size: 13, weight: .semibold)).foregroundStyle(p.muted)
                             VStack(spacing: 8) {
                                 ForEach(group.meetings) { m in
-                                    MeetingCard(meeting: m)
-                                        .contentShape(Rectangle())
-                                        .onTapGesture { onSelect(m) }
+                                    Button { onSelect(m) } label: { MeetingCard(meeting: m) }
+                                        .buttonStyle(.plain)
                                 }
                             }
                         }

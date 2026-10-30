@@ -5,6 +5,7 @@ import os
 /// Детали встречи: хлебные крошки + шапка (дата/длительность/статус/модель) +
 /// действия (переобработать, открыть папку) + транскрипт.
 struct MeetingDetailView: View {
+    var backTitle: String = "Встречи"
     @Environment(\.palette) var p
     @EnvironmentObject var library: MeetingLibrary
     @EnvironmentObject var processor: MeetingProcessor
@@ -126,7 +127,7 @@ struct MeetingDetailView: View {
                         .font(.system(size: 11, weight: .semibold))
                         .opacity(backHover ? 1 : 0)
                         .frame(width: 11, alignment: .leading)
-                    Text("Встречи").font(.system(size: 13))
+                    Text(backTitle).font(.system(size: 13))
                 }
                 .foregroundStyle(backHover ? p.ink : p.link)
                 .padding(.horizontal, 8)
@@ -138,7 +139,7 @@ struct MeetingDetailView: View {
             .buttonStyle(.plain)
             .onHover { backHover = $0 }
             .animation(.easeOut(duration: 0.12), value: backHover)
-            .help("Вернуться к списку встреч")
+            .help("Вернуться: \(backTitle)")
 
             Text("/").font(.system(size: 13)).foregroundStyle(p.muted2)
             Text(liveMeeting.title).font(.system(size: 13)).foregroundStyle(p.muted)
@@ -200,6 +201,7 @@ struct MeetingDetailView: View {
                 headerBadge
             }
             actions
+            MeetingProjectButton(meetingID: meeting.id, meetingTitle: liveMeeting.title)
         }
     }
 
