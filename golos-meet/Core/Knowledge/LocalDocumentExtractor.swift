@@ -98,20 +98,26 @@ actor LocalDocumentExtractor {
                                  contentHash: hash, blocks: blocks, warnings: warnings)
     }
 
-    /// Ignore case, punctuation and OCR line wrapping when comparing with the text layer.
-    private static func merging(native: String, recognized: String) -> String {
+    /// Match whole lines across layers, one occurrence at a time. Preserve punctuation,
+    /// case and OCR-only repetitions: partial matches can be different facts/table cells.
+    nonisolated static func merging(native: String, recognized: String) -> String {
         func key(_ text: String) -> String {
-            text.folding(options: [.caseInsensitive, .diacriticInsensitive], locale: Locale(identifier: "en_US_POSIX"))
-                .unicodeScalars.filter { CharacterSet.alphanumerics.contains($0) }
-                .map(String.init).joined()
+            text.split(whereSeparator: { $0.isWhitespace }).joined(separator: " ")
+        }
+        var nativeOccurrences: [String: Int] = [:]
+        for line in native.components(separatedBy: .newlines) {
+            let normalized = key(line)
+            if !normalized.isEmpty { nativeOccurrences[normalized, default: 0] += 1 }
         }
         var result = native
-        var existing = key(native)
         for line in recognized.components(separatedBy: .newlines) {
             let candidate = key(line)
-            guard !candidate.isEmpty, !existing.contains(candidate) else { continue }
-            result += (result.isEmpty ? "" : "\n") + line
-            existing += candidate
+            guard !candidate.isEmpty else { continue }
+            if let remaining = nativeOccurrences[candidate], remaining > 0 {
+                nativeOccurrences[candidate] = remaining - 1
+            } else {
+                result += (result.isEmpty ? "" : "\n") + line
+            }
         }
         return result
     }
