@@ -1,5 +1,6 @@
 import Foundation
 import SQLite3
+import os
 
 nonisolated enum ProjectStoreError: LocalizedError, Equatable {
     case database(String)
@@ -24,19 +25,53 @@ nonisolated struct ProjectSnapshot: Sendable, Equatable {
     var meetingProjects: [String: Set<UUID>] = [:]
 }
 
-/// SQLite is used only from ProjectStore's executor. No meeting file is opened here.
-/// The wrapper is Sendable solely to allow deterministic close in deinit.
-private nonisolated final class ProjectDatabase: @unchecked Sendable {
+/// SQLite is used only from ProjectStore's executor (or exclusively owned test connections).
+/// Internal visibility permits real SQLite error/rollback tests without changing ProjectStore's API.
+nonisolated final class ProjectDatabase: @unchecked Sendable {
+    struct Diagnostic: Codable, Equatable, Sendable {
+        enum Phase: String, Codable, Sendable { case open, prepare, bind, step }
+        enum Operation: String, Codable, Sendable {
+            case open, beginImmediate, begin, commit, rollback, select, insert, update, delete
+            case pragmaUserVersion, pragmaForeignKeys, pragma, create, drop, alter, other
+        }
+        enum TransactionPhase: String, Codable, Sendable { case begin, work, commit, rollback }
+        let connection: UUID
+        let transaction: UUID?
+        let phase: Phase
+        let operation: Operation
+        let result: Int32
+        let extended: Int32
+        let elapsedMilliseconds: Double
+        let transactionPhase: TransactionPhase?
+        let transactionElapsedMilliseconds: Double?
+
+        var message: String {
+            let encoder = JSONEncoder(); encoder.outputFormatting = [.sortedKeys]
+            // Fields come only from fixed enums, numeric SQLite codes/clocks and random IDs.
+            guard let data = try? encoder.encode(self) else { return "SQLite diagnostic encoding failed" }
+            return String(decoding: data, as: UTF8.self)
+        }
+    }
+    private struct TransactionContext {
+        let id: UUID
+        let started: TimeInterval
+        var phase: Diagnostic.TransactionPhase
+    }
     let handle: OpaquePointer
+    private static let logger = Logger(subsystem: "com.golos.meet", category: "library")
+    private let connection = UUID()
+    private var context: TransactionContext?
 
     init(url: URL) throws {
         try FileManager.default.createDirectory(at: url.deletingLastPathComponent(), withIntermediateDirectories: true)
         var db: OpaquePointer?
+        let started = ProcessInfo.processInfo.systemUptime
         let result = sqlite3_open_v2(url.path, &db, SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE | SQLITE_OPEN_FULLMUTEX, nil)
         guard result == SQLITE_OK, let db else {
-            let message = db.map { String(cString: sqlite3_errmsg($0)) } ?? "open"
+            let error = Self.error(handle: db, connection: connection, context: nil,
+                                   phase: .open, operation: .open, result: result, started: started)
             if let db { sqlite3_close(db) }
-            throw ProjectStoreError.database(message)
+            throw error
         }
         handle = db
         sqlite3_busy_timeout(db, 2000)
@@ -47,25 +82,22 @@ private nonisolated final class ProjectDatabase: @unchecked Sendable {
     func execute(_ sql: String, bindings: [String] = [], blob: Data? = nil) throws {
         let statement = try prepare(sql, bindings: bindings, blob: blob)
         defer { sqlite3_finalize(statement) }
-        guard sqlite3_step(statement) == SQLITE_DONE else { throw failure() }
+        _ = try step(statement, operation: operation(sql), rowsAllowed: false)
     }
 
     func rows(_ sql: String, bindings: [String] = []) throws -> [[String]] {
         let statement = try prepare(sql, bindings: bindings)
         defer { sqlite3_finalize(statement) }
         var rows: [[String]] = []
-        while true {
-            switch sqlite3_step(statement) {
-            case SQLITE_ROW:
-                rows.append((0..<sqlite3_column_count(statement)).map { column in
-                    guard let bytes = sqlite3_column_text(statement, column) else { return "" }
-                    let count = Int(sqlite3_column_bytes(statement, column))
-                    return String(decoding: UnsafeBufferPointer(start: bytes, count: count), as: UTF8.self)
-                })
-            case SQLITE_DONE: return rows
-            default: throw failure()
-            }
+        let operation = operation(sql)
+        while try step(statement, operation: operation, rowsAllowed: true) == SQLITE_ROW {
+            rows.append((0..<sqlite3_column_count(statement)).map { column in
+                guard let bytes = sqlite3_column_text(statement, column) else { return "" }
+                let count = Int(sqlite3_column_bytes(statement, column))
+                return String(decoding: UnsafeBufferPointer(start: bytes, count: count), as: UTF8.self)
+            })
         }
+        return rows
     }
 
     /// Binary selects put the BLOB last; text decoding never touches vector bytes.
@@ -73,30 +105,34 @@ private nonisolated final class ProjectDatabase: @unchecked Sendable {
         let statement = try prepare(sql, bindings: bindings)
         defer { sqlite3_finalize(statement) }
         var result: [(fields: [String], data: Data)] = []
-        while true {
-            switch sqlite3_step(statement) {
-            case SQLITE_ROW:
-                let last = sqlite3_column_count(statement) - 1
-                guard last >= 0, sqlite3_column_type(statement, last) == SQLITE_BLOB,
-                      let bytes = sqlite3_column_blob(statement, last) else { throw EmbeddingIndexError.corruptIndex }
-                let fields = (0..<last).map { column -> String in
-                    guard let text = sqlite3_column_text(statement, column) else { return "" }
-                    return String(decoding: UnsafeBufferPointer(start: text, count: Int(sqlite3_column_bytes(statement, column))), as: UTF8.self)
-                }
-                result.append((fields, Data(bytes: bytes, count: Int(sqlite3_column_bytes(statement, last)))))
-            case SQLITE_DONE: return result
-            default: throw failure()
+        let operation = operation(sql)
+        while try step(statement, operation: operation, rowsAllowed: true) == SQLITE_ROW {
+            let last = sqlite3_column_count(statement) - 1
+            guard last >= 0, sqlite3_column_type(statement, last) == SQLITE_BLOB,
+                  let bytes = sqlite3_column_blob(statement, last) else { throw EmbeddingIndexError.corruptIndex }
+            let fields = (0..<last).map { column -> String in
+                guard let text = sqlite3_column_text(statement, column) else { return "" }
+                return String(decoding: UnsafeBufferPointer(start: text, count: Int(sqlite3_column_bytes(statement, column))), as: UTF8.self)
             }
+            result.append((fields, Data(bytes: bytes, count: Int(sqlite3_column_bytes(statement, last)))))
         }
+        return result
     }
 
     func transaction<T>(_ work: () throws -> T) throws -> T {
+        let previous = context
+        context = .init(id: UUID(), started: ProcessInfo.processInfo.systemUptime, phase: .begin)
+        defer { context = previous }
         try execute("BEGIN IMMEDIATE")
         do {
+            context?.phase = .work
             let result = try work()
+            context?.phase = .commit
             try execute("COMMIT")
             return result
         } catch {
+            context?.phase = .rollback
+            // Preserve the original failure; a rollback failure emits its own diagnostic.
             try? execute("ROLLBACK")
             throw error
         }
@@ -104,29 +140,86 @@ private nonisolated final class ProjectDatabase: @unchecked Sendable {
 
     private func prepare(_ sql: String, bindings: [String], blob: Data? = nil) throws -> OpaquePointer {
         var statement: OpaquePointer?
-        guard sqlite3_prepare_v2(handle, sql, -1, &statement, nil) == SQLITE_OK, let statement else {
-            throw failure()
+        let started = ProcessInfo.processInfo.systemUptime
+        let result = sqlite3_prepare_v2(handle, sql, -1, &statement, nil)
+        guard result == SQLITE_OK, let statement else {
+            let error = failure(phase: .prepare, operation: operation(sql), result: result, started: started)
+            if let statement { sqlite3_finalize(statement) }
+            throw error
         }
         for (index, value) in bindings.enumerated() {
+            let started = ProcessInfo.processInfo.systemUptime
             let result = value.withCString {
                 sqlite3_bind_text(statement, Int32(index + 1), $0, Int32(value.utf8.count), unsafeBitCast(-1, to: sqlite3_destructor_type.self))
             }
             guard result == SQLITE_OK else {
+                // Snapshot the extended code BEFORE finalize/rollback can replace it.
+                let error = failure(phase: .bind, operation: operation(sql), result: result, started: started)
                 sqlite3_finalize(statement)
-                throw failure()
+                throw error
             }
         }
         if let blob {
+            let started = ProcessInfo.processInfo.systemUptime
             let result = blob.withUnsafeBytes {
                 sqlite3_bind_blob(statement, Int32(bindings.count + 1), $0.baseAddress, Int32($0.count), unsafeBitCast(-1, to: sqlite3_destructor_type.self))
             }
-            guard result == SQLITE_OK else { sqlite3_finalize(statement); throw failure() }
+            guard result == SQLITE_OK else {
+                let error = failure(phase: .bind, operation: operation(sql), result: result, started: started)
+                sqlite3_finalize(statement); throw error
+            }
         }
         return statement
     }
 
-    private func failure() -> ProjectStoreError {
-        .database(String(cString: sqlite3_errmsg(handle)))
+    private func step(_ statement: OpaquePointer, operation: Diagnostic.Operation, rowsAllowed: Bool) throws -> Int32 {
+        let started = ProcessInfo.processInfo.systemUptime
+        let result = sqlite3_step(statement)
+        guard result == SQLITE_DONE || (rowsAllowed && result == SQLITE_ROW) else {
+            throw failure(phase: .step, operation: operation, result: result, started: started)
+        }
+        return result
+    }
+
+    /// Whitelist only operation names; never interpolate SQL, schema names, bindings or paths.
+    private func operation(_ sql: String) -> Diagnostic.Operation {
+        let words = sql.uppercased().split(whereSeparator: { $0.isWhitespace || $0 == "=" || $0 == ";" })
+        guard let first = words.first else { return .other }
+        switch first {
+        case "BEGIN": return words.dropFirst().first == "IMMEDIATE" ? .beginImmediate : .begin
+        case "COMMIT", "END": return .commit
+        case "ROLLBACK": return .rollback
+        case "SELECT": return .select
+        case "INSERT", "REPLACE": return .insert
+        case "UPDATE": return .update
+        case "DELETE": return .delete
+        case "PRAGMA":
+            if words.dropFirst().first == "USER_VERSION" { return .pragmaUserVersion }
+            if words.dropFirst().first == "FOREIGN_KEYS" { return .pragmaForeignKeys }
+            return .pragma
+        case "CREATE": return .create
+        case "DROP": return .drop
+        case "ALTER": return .alter
+        default: return .other
+        }
+    }
+
+    private func failure(phase: Diagnostic.Phase, operation: Diagnostic.Operation, result: Int32, started: TimeInterval) -> ProjectStoreError {
+        Self.error(handle: handle, connection: connection, context: context,
+                   phase: phase, operation: operation, result: result, started: started)
+    }
+    private static func error(handle: OpaquePointer?, connection: UUID, context: TransactionContext?,
+                              phase: Diagnostic.Phase, operation: Diagnostic.Operation,
+                              result: Int32, started: TimeInterval) -> ProjectStoreError {
+        let extended = handle.map(sqlite3_extended_errcode) ?? result
+        let now = ProcessInfo.processInfo.systemUptime
+        let diagnostic = Diagnostic(connection: connection, transaction: context?.id, phase: phase,
+            operation: operation, result: result, extended: extended,
+            elapsedMilliseconds: max(0, (now - started) * 1000), transactionPhase: context?.phase,
+            transactionElapsedMilliseconds: context.map { max(0, (now - $0.started) * 1000) })
+        let message = diagnostic.message
+        logger.error("SQLite failure \(message, privacy: .public)")
+        return .database(message)
     }
 }
 
