@@ -6,6 +6,7 @@ struct MainWindowView: View {
     @ObservedObject private var settings = UISettings.shared
     @StateObject private var system = SystemAppearance()
     @StateObject private var projects = ProjectLibrary.shared
+    @StateObject private var documents = DocumentLibrary.shared
     @State private var selection: SidebarSection = .meetings
 
     private var effectiveScheme: ColorScheme {
@@ -26,7 +27,8 @@ struct MainWindowView: View {
         .background(WindowConfigurator())
         .environment(\.palette, p)
         .environmentObject(projects)
-        .task { await projects.reload() }
+        .environmentObject(documents)
+        .task { await projects.reload(); await documents.reload() }
         .preferredColorScheme(effectiveScheme)
         .frame(minWidth: 1000, minHeight: 680)
         .ignoresSafeArea()
@@ -46,6 +48,7 @@ struct MainWindowView: View {
     @ViewBuilder private var paneView: some View {
         switch selection {
         case .meetings: MeetingsScreen()
+        case .documents: DocumentsScreen()
         case .inbox: MeetingsScreen(scope: .inbox)
         case .project(let id): MeetingsScreen(scope: .project(id)).id(id)
         case .settings: SettingsScreen()

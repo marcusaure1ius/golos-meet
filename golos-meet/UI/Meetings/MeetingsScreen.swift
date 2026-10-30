@@ -13,6 +13,7 @@ struct MeetingsScreen: View {
     @State private var query = ""
     @State private var period: MeetingPeriod = .all
     @State private var refreshPulse = false   // разовый оборот, когда догонять нечего
+    @State private var showingDocuments = false
 
     private enum Mode: String, CaseIterable { case feed = "Лента", calendar = "Календарь" }
 
@@ -33,11 +34,13 @@ struct MeetingsScreen: View {
             } else {
                 VStack(spacing: 0) {
                     header
-                    if processor.busyMeetingsCount > 0 {
+                    if !showingDocuments && processor.busyMeetingsCount > 0 {
                         ProcessingBanner(count: processor.busyMeetingsCount)
                             .padding(.horizontal, 56).padding(.bottom, 8)
                     }
-                    if scope != .all && (projects.isLoading || !projects.isLoaded || projects.loadError != nil) {
+                    if showingDocuments {
+                        DocumentContentView(scope: scope)
+                    } else if scope != .all && (projects.isLoading || !projects.isLoaded || projects.loadError != nil) {
                         projectLibraryState
                     } else if filteredMeetings.isEmpty && isFilterActive {
                         ContentUnavailableView("Ничего не найдено", systemImage: "magnifyingglass")
@@ -90,28 +93,38 @@ struct MeetingsScreen: View {
                 Text(screenTitle).font(.system(size: 26, weight: .semibold)).tracking(-0.3).foregroundStyle(p.ink)
                     .lineLimit(2)
                 Spacer()
-                Picker("", selection: $mode) {
-                    ForEach(Mode.allCases, id: \.self) { Text($0.rawValue).tag($0) }
+                if scope != .all {
+                    Picker("Содержимое", selection: $showingDocuments) {
+                        Text("Встречи").tag(false)
+                        Text("Документы").tag(true)
+                    }.pickerStyle(.segmented).fixedSize().labelsHidden()
                 }
-                .pickerStyle(.segmented).fixedSize().labelsHidden()
-                Button { runCatchUp() } label: {
-                    SpinningArrow(active: processor.busyMeetingsCount > 0 || refreshPulse)
+                if !showingDocuments {
+                    Picker("", selection: $mode) {
+                        ForEach(Mode.allCases, id: \.self) { Text($0.rawValue).tag($0) }
+                    }
+                    .pickerStyle(.segmented).fixedSize().labelsHidden()
+                    Button { runCatchUp() } label: {
+                        SpinningArrow(active: processor.busyMeetingsCount > 0 || refreshPulse)
+                    }
+                    .buttonStyle(GhostButton())
+                    .help("Обновить и догнать необработанные встречи")
                 }
-                .buttonStyle(GhostButton())
-                .help("Обновить и догнать необработанные встречи")
             }
-            HStack(spacing: 10) {
-                HStack(spacing: 6) {
-                    Image(systemName: "magnifyingglass").font(.system(size: 12)).foregroundStyle(p.muted2)
-                    TextField("Поиск по встречам и расшифровкам", text: $query)
-                        .textFieldStyle(.plain).font(.system(size: 13))
+            if !showingDocuments {
+                HStack(spacing: 10) {
+                    HStack(spacing: 6) {
+                        Image(systemName: "magnifyingglass").font(.system(size: 12)).foregroundStyle(p.muted2)
+                        TextField("Поиск по встречам и расшифровкам", text: $query)
+                            .textFieldStyle(.plain).font(.system(size: 13))
+                    }
+                    .padding(.horizontal, 10).padding(.vertical, 6)
+                    .background(p.selection.opacity(0.5)).clipShape(Capsule())
+                    Picker("", selection: $period) {
+                        ForEach(MeetingPeriod.allCases) { Text($0.title).tag($0) }
+                    }
+                    .pickerStyle(.segmented).fixedSize().labelsHidden()
                 }
-                .padding(.horizontal, 10).padding(.vertical, 6)
-                .background(p.selection.opacity(0.5)).clipShape(Capsule())
-                Picker("", selection: $period) {
-                    ForEach(MeetingPeriod.allCases) { Text($0.title).tag($0) }
-                }
-                .pickerStyle(.segmented).fixedSize().labelsHidden()
             }
         }
         .padding(.horizontal, 56).padding(.top, 38).padding(.bottom, 8)

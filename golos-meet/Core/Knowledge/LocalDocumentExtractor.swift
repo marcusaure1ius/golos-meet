@@ -29,7 +29,7 @@ nonisolated enum DocumentExtractionError: LocalizedError, Equatable {
 actor LocalDocumentExtractor {
     static let maximumBytes = 50 * 1024 * 1024
 
-    func extract(from url: URL) throws -> ExtractedDocument {
+    func extract(from url: URL, progress: (@Sendable (Int, Int) -> Void)? = nil) throws -> ExtractedDocument {
         try Task.checkCancellation()
         let attributes = try FileManager.default.attributesOfItem(atPath: url.path)
         guard let size = attributes[.size] as? NSNumber,
@@ -61,6 +61,7 @@ actor LocalDocumentExtractor {
             blocks = []
             for i in 0..<pdf.pageCount {
                 try Task.checkCancellation()
+                progress?(i, pdf.pageCount)
                 guard let page = pdf.page(at: i) else { throw DocumentExtractionError.invalidDocument }
                 let native = page.string?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
                 var text = native
@@ -80,6 +81,7 @@ actor LocalDocumentExtractor {
                 }
                 if !text.isEmpty { blocks.append(.init(text: text, location: .init(page: i + 1))) }
                 else { warnings.append("На странице \(i + 1) не найден текст.") }
+                progress?(i + 1, pdf.pageCount)
             }
         case "png", "jpg", "jpeg", "tif", "tiff", "heic":
             guard let source = CGImageSourceCreateWithData(data as CFData, nil),
@@ -88,10 +90,13 @@ actor LocalDocumentExtractor {
                     kCGImageSourceCreateThumbnailWithTransform: true,
                     kCGImageSourceThumbnailMaxPixelSize: 3000,
                   ] as CFDictionary) else { throw DocumentExtractionError.invalidDocument }
+            progress?(0, 1)
             blocks = [ExtractedTextBlock(text: try recognize(image), location: .init(page: 1))]
+            progress?(1, 1)
         default:
             throw DocumentExtractionError.unsupportedFormat(url.pathExtension.lowercased())
         }
+        try Task.checkCancellation()
         blocks = blocks.filter { !$0.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }
         guard !blocks.isEmpty else { throw DocumentExtractionError.noText }
         return ExtractedDocument(title: url.deletingPathExtension().lastPathComponent,
@@ -131,6 +136,7 @@ actor LocalDocumentExtractor {
         request.recognitionLanguages = ["ru-RU", "en-US"].filter(supported.contains)
         request.automaticallyDetectsLanguage = true
         try VNImageRequestHandler(cgImage: image).perform([request])
+        try Task.checkCancellation()
         return (request.results ?? []).compactMap { $0.topCandidates(1).first?.string }.joined(separator: "\n")
     }
 }
