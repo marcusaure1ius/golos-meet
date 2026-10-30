@@ -48,6 +48,7 @@ import Foundation
         #expect(meta.durationSeconds == 10)
         #expect(meta.endedAt == meta.startedAt.addingTimeInterval(10))
         #expect(meta.status == .recording)
+        #expect(meta.preserveAudio == true)
         // Заголовок починен.
         let wav = try Data(contentsOf: dir.appendingPathComponent("mic.wav"))
         let dataField = wav.subdata(in: 40..<44).withUnsafeBytes { UInt32(littleEndian: $0.loadUnaligned(as: UInt32.self)) }
@@ -61,6 +62,21 @@ import Foundation
         #expect(rescued == [dir])
         let meta = try MeetingMeta.decoded(Data(contentsOf: dir.appendingPathComponent("meta.json")))
         #expect(meta.status == .processing)
+    }
+
+    @Test func shortInterruptedCaptureSurvivesRescueAndDefaultPipeline() async throws {
+        let root = try makeRoot()
+        defer { try? FileManager.default.removeItem(at: root) }
+        let dir = try makeMeeting(in: root, id: "short-interrupted", status: .recording,
+                                  brokenWavDataBytes: 320_000)
+        #expect(StartupRescue.run(root: root) == [dir])
+        let repaired = try Data(contentsOf: dir.appendingPathComponent("mic.wav"))
+        let pipeline = ProcessingPipeline(asrFactory: { ProcessingPipelineTests.StubASR() })
+        await pipeline.process(folder: dir)
+        let meta = try MeetingMeta.decoded(Data(contentsOf: dir.appendingPathComponent("meta.json")))
+        #expect(meta.status == .ready)
+        #expect(meta.preserveAudio == true)
+        #expect(try Data(contentsOf: dir.appendingPathComponent("mic.wav")) == repaired)
     }
 
     @Test func summarizing_becomesReady_notReturned() throws {

@@ -53,6 +53,25 @@ private final class Spy: MeetingDetectorDelegate {
         #expect(s.starts == [false])
     }
 
+    @Test func asynchronousFailureReleasesManualLatchAndSuppressesAutoRetryStorm() {
+        let (d, s) = make()
+        d.forceStart(at: t0)
+        d.captureFailed()
+        d.handle(active: true, at: t0.addingTimeInterval(1))
+        #expect(s.starts == [true])
+        d.forceStart(at: t0.addingTimeInterval(2))
+        #expect(s.starts == [true, true])
+    }
+
+    @Test func asynchronousFailureAllowsAutoAfterRealInactivity() {
+        let (d, s) = make()
+        d.handle(active: true, at: t0)
+        d.captureFailed()
+        d.handle(active: false, at: t0.addingTimeInterval(1))
+        d.handle(active: true, at: t0.addingTimeInterval(2))
+        #expect(s.starts == [false, false])
+    }
+
     @Test func forceStopEndsAutoSession() {
         let (d, s) = make()
         d.handle(active: true, at: t0)                           // авто-старт

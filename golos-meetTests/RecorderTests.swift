@@ -3,71 +3,209 @@ import Foundation
 @testable import golos_meet
 
 @MainActor
-@Suite(.serialized) struct RecorderTests {
+@Suite struct RecorderTests {
     private final class FakeTrack: AudioTrack {
-        var stopped = false
-        func start(into writer: WavWriter) throws {}
-        func stop() { stopped = true }
+        var onFailure: (() -> Void)?
+        var stopCount = 0
+        var started = false
+        var delayed = false
+        var failing = false
+        var failOnStop = false
+        var writer: WavWriter?
+        private var continuation: CheckedContinuation<Void, Never>?
+        func start(into writer: WavWriter) async throws {
+            started = true
+            self.writer = writer
+            if delayed { await withCheckedContinuation { continuation = $0 } }
+            if failing { throw NSError(domain: "synthetic", code: 1) }
+        }
+        func releaseStart() { continuation?.resume(); continuation = nil }
+        func stop() async {
+            stopCount += 1
+            if failOnStop && stopCount == 1 { onFailure?() }
+        }
     }
 
-    private func makeRecorder(enqueued: @escaping (String, URL) -> Void)
-        -> (Recorder, URL, FakeTrack, FakeTrack) {
-        let root = FileManager.default.temporaryDirectory
-            .appendingPathComponent("gm-rec-\(UUID().uuidString)", isDirectory: true)
-        let mic = FakeTrack(), sys = FakeTrack()
-        let rec = Recorder(
-            enqueueProcessing: enqueued,
-            makeMicTrack: { mic },
-            makeSysTrack: { sys },
-            makeFolder: { date, source in
-                let id = ISO8601DateFormatter().string(from: date)
-                return MeetingFolder(id: id, url: root.appendingPathComponent(id, isDirectory: true), source: source)
-            })
-        return (rec, root, mic, sys)
+    @MainActor private struct Fixture {
+        let recorder: Recorder
+        let root: URL
+        let mic: FakeTrack
+        let sys: FakeTrack
+        let state: RecordingState
+        let date = Date(timeIntervalSince1970: 1_000_000)
+        var folder: URL { root.appendingPathComponent("synthetic") }
+        func meta() throws -> MeetingMeta {
+            try MeetingMeta.decoded(Data(contentsOf: folder.appendingPathComponent("meta.json")))
+        }
     }
 
-    @Test func finalizeActive_closesMetaWithRealDuration_andIsIdempotent() async throws {
-        let (rec, _, mic, sys) = makeRecorder(enqueued: { _, _ in })
-        let start = Date(timeIntervalSince1970: 1_000_000)
-        #expect(rec.meetingStarted(at: start, manual: false))
-        #expect(rec.isRecording)
+    private func fixture(timeout: Duration = .seconds(20), enqueued: @escaping (String, URL) -> Void = { _, _ in }) -> Fixture {
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent("gm-rec-\(UUID())")
+        let mic = FakeTrack(), sys = FakeTrack(), state = RecordingState()
+        let rec = Recorder(enqueueProcessing: enqueued, makeMicTrack: { mic }, makeSysTrack: { sys },
+                           makeFolder: { date, source in
+                               let id = date == Date(timeIntervalSince1970: 1_000_000) ? "synthetic" : "retry"
+                               return MeetingFolder(id: id, url: root.appendingPathComponent(id), source: source)
+                           },
+                           state: state, startupTimeout: timeout)
+        return Fixture(recorder: rec, root: root, mic: mic, sys: sys, state: state)
+    }
 
-        let folder = await rec.finalizeActive(endedAt: start.addingTimeInterval(90))
+    private func waitUntil(_ predicate: () -> Bool) async {
+        for _ in 0..<10_000 {
+            if predicate() { return }
+            await Task.yield()
+        }
+        #expect(predicate())
+    }
+
+    @Test func publishesRecordingOnlyAfterBothBackendsAreReady() async throws {
+        let f = fixture()
+        defer { try? FileManager.default.removeItem(at: f.root) }
+        f.sys.delayed = true
+        #expect(f.recorder.meetingStarted(at: f.date, manual: true))
+        #expect(f.state.phase == .starting)
+        #expect(f.state.live == nil)
+        await waitUntil { f.sys.started }
+        #expect(f.state.microphone == .ready)
+        #expect(f.state.system == .waiting)
+        #expect(f.state.live == nil)
+        f.sys.releaseStart()
+        await waitUntil { f.state.live != nil }
+        #expect(f.state.phase == .recording)
+        #expect(f.state.live?.isManual == true)
+        #expect(try f.meta().preserveAudio == true)
+        _ = await f.recorder.finalizeActive(endedAt: f.date.addingTimeInterval(90))
+        #expect(f.state.phase == .idle)
+    }
+
+    @Test func finalizeDrainsStopsClosesMetaAndIsIdempotent() async throws {
+        let f = fixture()
+        defer { try? FileManager.default.removeItem(at: f.root) }
+        #expect(f.recorder.meetingStarted(at: f.date, manual: false))
+        await waitUntil { f.state.live != nil }
+        await f.mic.writer?.append(Data(repeating: 0, count: 320))
+        let folder = await f.recorder.finalizeActive(endedAt: f.date.addingTimeInterval(90))
         #expect(folder != nil)
-        #expect(!rec.isRecording)
-        #expect(mic.stopped && sys.stopped)
-
-        let meta = try MeetingMeta.decoded(Data(contentsOf: folder!.url.appendingPathComponent("meta.json")))
-        #expect(meta.durationSeconds == 90)
-        #expect(meta.status == .recording)
-
-        // Идемпотентность: второй вызов (terminate вслед за meetingEnded) — nil, ничего не портит.
-        let second = await rec.finalizeActive(endedAt: start.addingTimeInterval(120))
+        #expect(!f.recorder.isRecording)
+        #expect(f.mic.stopCount > 0 && f.sys.stopCount > 0)
+        #expect(try f.meta().durationSeconds == 90)
+        #expect(try f.meta().preserveAudio == false)
+        let data = try Data(contentsOf: f.folder.appendingPathComponent("mic.wav"))
+        #expect(data.count == 364)
+        let second = await f.recorder.finalizeActive(endedAt: f.date.addingTimeInterval(120))
         #expect(second == nil)
-        let metaAfter = try MeetingMeta.decoded(Data(contentsOf: folder!.url.appendingPathComponent("meta.json")))
-        #expect(metaAfter.durationSeconds == 90)
+        #expect(try f.meta().durationSeconds == 90)
     }
 
-    @Test func meetingEnded_finalizesAndEnqueues() async {
-        var enqueued: [(String, URL)] = []
-        let (rec, _, _, _) = makeRecorder(enqueued: { id, url in enqueued.append((id, url)) })
-        let start = Date(timeIntervalSince1970: 2_000_000)
-        #expect(rec.meetingStarted(at: start, manual: false))
-        rec.meetingEnded(at: start.addingTimeInterval(400))
-        // meetingEnded финализирует в Task — дожидаемся.
-        for _ in 0..<2000 where enqueued.isEmpty { await Task.yield() }
-        #expect(enqueued.count == 1)
-        #expect(!rec.isRecording)
+    @Test func partialStartFailureStopsBothTracksPreservesAudioAndAllowsManualRetry() async throws {
+        let f = fixture()
+        defer { try? FileManager.default.removeItem(at: f.root) }
+        var failures = 0
+        f.recorder.onCaptureFailure = { failures += 1 }
+        f.sys.failing = true
+        #expect(f.recorder.meetingStarted(at: f.date, manual: true))
+        await waitUntil { !f.recorder.isRecording }
+        #expect(f.state.live == nil)
+        #expect(f.state.system == .failed)
+        #expect(f.mic.stopCount > 0 && f.sys.stopCount > 0)
+        #expect(failures == 1)
+        #expect(try f.meta().status == .failed)
+        #expect(try f.meta().preserveAudio == true)
+        // A fresh attempt must not be blocked by the failed manual session.
+        let detector = MeetingDetector()
+        detector.captureFailed()
+        f.sys.failing = false
+        detector.delegate = f.recorder
+        detector.forceStart(at: f.date.addingTimeInterval(120))
+        await waitUntil { f.state.live != nil }
+        #expect(f.state.live?.isManual == true)
+        _ = await f.recorder.finalizeActive(endedAt: f.date.addingTimeInterval(150))
     }
 
-    @Test func meetingStarted_publishesLiveState_finalizeClears() async {
-        RecordingState.shared.end()   // чистим синглтон на входе
-        let (rec, _, _, _) = makeRecorder(enqueued: { _, _ in })
-        let start = Date(timeIntervalSince1970: 3_000_000)
-        #expect(rec.meetingStarted(at: start, manual: true))
-        #expect(RecordingState.shared.live?.isManual == true)
-        #expect(RecordingState.shared.live?.startedAt == start)
-        _ = await rec.finalizeActive(endedAt: start.addingTimeInterval(60))
-        #expect(RecordingState.shared.live == nil)
+    @Test func stopDuringStartWaitsForLateBackendAndDoesNotPublishRecording() async throws {
+        let f = fixture()
+        defer { try? FileManager.default.removeItem(at: f.root) }
+        f.sys.delayed = true
+        #expect(f.recorder.meetingStarted(at: f.date, manual: true))
+        await waitUntil { f.sys.started }
+        let firstStop = Task { await f.recorder.finalizeActive(endedAt: f.date.addingTimeInterval(1)) }
+        await waitUntil { f.sys.stopCount > 0 }
+        let duplicate = Task { await f.recorder.finalizeActive(endedAt: f.date.addingTimeInterval(2)) }
+        #expect(f.recorder.isRecording)
+        #expect(!f.recorder.meetingStarted(at: f.date, manual: true))
+        #expect(f.state.phase == .stopping)
+        f.sys.releaseStart() // Deliberately ignores cancellation, like a late OS callback.
+        #expect(await firstStop.value != nil)
+        #expect(await duplicate.value == nil)
+        #expect(f.state.live == nil)
+        #expect(f.state.phase == .idle)
+        #expect(f.sys.stopCount >= 2)
+        #expect(try f.meta().preserveAudio == true)
+    }
+
+    @Test func backendFailureDuringRecordingFinalizesWithoutAutomaticProcessing() async throws {
+        var queued = 0
+        let f = fixture(enqueued: { _, _ in queued += 1 })
+        defer { try? FileManager.default.removeItem(at: f.root) }
+        #expect(f.recorder.meetingStarted(at: f.date, manual: false))
+        await waitUntil { f.state.live != nil }
+        await f.sys.writer?.append(Data(repeating: 0, count: 320))
+        f.sys.onFailure?()
+        f.sys.onFailure?()
+        await waitUntil { !f.recorder.isRecording }
+        #expect(queued == 0)
+        #expect(try f.meta().status == .failed)
+        #expect(try f.meta().preserveAudio == true)
+        #expect(try Data(contentsOf: f.folder.appendingPathComponent("system.wav")).count == 364)
+    }
+
+    @Test func shortManualRecordingEnqueuesWithPersistentProtection() async throws {
+        var queued = 0
+        let f = fixture(enqueued: { _, _ in queued += 1 })
+        defer { try? FileManager.default.removeItem(at: f.root) }
+        #expect(f.recorder.meetingStarted(at: f.date, manual: true))
+        await waitUntil { f.state.live != nil }
+        f.recorder.meetingEnded(at: f.date.addingTimeInterval(3))
+        await waitUntil { queued > 0 }
+        #expect(queued == 1)
+        #expect(try f.meta().preserveAudio == true)
+        #expect(try f.meta().durationSeconds == 3)
+    }
+
+    @Test func startupTimeoutCannotBecomeLateSuccess() async throws {
+        let f = fixture(timeout: .zero)
+        defer { try? FileManager.default.removeItem(at: f.root) }
+        f.mic.delayed = true
+        #expect(f.recorder.meetingStarted(at: f.date, manual: true))
+        await waitUntil { f.mic.stopCount > 0 }
+        f.mic.releaseStart()
+        await waitUntil { !f.recorder.isRecording }
+        #expect(f.state.live == nil)
+        #expect(try f.meta().status == .failed)
+    }
+
+    @Test func duplicateFolderCannotOverwritePreviousAudio() async throws {
+        let f = fixture()
+        defer { try? FileManager.default.removeItem(at: f.root) }
+        #expect(f.recorder.meetingStarted(at: f.date, manual: true))
+        await waitUntil { f.state.live != nil }
+        await f.mic.writer?.append(Data([7, 0]))
+        _ = await f.recorder.finalizeActive(endedAt: f.date.addingTimeInterval(1))
+        let data = try Data(contentsOf: f.folder.appendingPathComponent("mic.wav"))
+        #expect(!f.recorder.meetingStarted(at: f.date, manual: true))
+        #expect(try Data(contentsOf: f.folder.appendingPathComponent("mic.wav")) == data)
+    }
+
+    @Test func failureWhileDrainingKeepsProtectionAndFailureStatus() async throws {
+        let f = fixture()
+        defer { try? FileManager.default.removeItem(at: f.root) }
+        #expect(f.recorder.meetingStarted(at: f.date, manual: false))
+        await waitUntil { f.state.live != nil }
+        f.sys.failOnStop = true
+        _ = await f.recorder.finalizeActive(endedAt: f.date.addingTimeInterval(3))
+        #expect(try f.meta().preserveAudio == true)
+        #expect(try f.meta().status == .failed)
+        #expect(f.state.system == .failed)
     }
 }
