@@ -70,6 +70,17 @@ private actor ImportGate {
         #expect(try FileManager.default.contentsOfDirectory(atPath: root.appendingPathComponent("knowledge/documents").path).count == 1)
     }
 
+    @Test func importedTextPreservesEmbeddedNullAndUnicodeThroughSQLite() async throws {
+        let root = try root(); defer { try? FileManager.default.removeItem(at: root) }
+        let store = ProjectStore(url: root.appendingPathComponent("knowledge.sqlite"))
+        let worker = importer(root, store: store)
+        let text = "До\0после: русский текст и эмодзи 🚀"
+        let file = try source(root, text: text)
+        _ = try await run(worker, file)
+        let document = try #require(try await store.documents().first)
+        #expect(try await store.chunks(for: document.currentVersion.id).map(\.text).joined() == text)
+    }
+
     @Test func explicitUpdateKeepsVersionsAndGenericImportNeverGuessesByName() async throws {
         let root = try root(); defer { try? FileManager.default.removeItem(at: root) }
         let store = ProjectStore(url: root.appendingPathComponent("knowledge.sqlite"))

@@ -58,7 +58,9 @@ private nonisolated final class ProjectDatabase: @unchecked Sendable {
             switch sqlite3_step(statement) {
             case SQLITE_ROW:
                 rows.append((0..<sqlite3_column_count(statement)).map { column in
-                    sqlite3_column_text(statement, column).map { String(cString: $0) } ?? ""
+                    guard let bytes = sqlite3_column_text(statement, column) else { return "" }
+                    let count = Int(sqlite3_column_bytes(statement, column))
+                    return String(decoding: UnsafeBufferPointer(start: bytes, count: count), as: UTF8.self)
                 })
             case SQLITE_DONE: return rows
             default: throw failure()
@@ -85,7 +87,7 @@ private nonisolated final class ProjectDatabase: @unchecked Sendable {
         }
         for (index, value) in bindings.enumerated() {
             let result = value.withCString {
-                sqlite3_bind_text(statement, Int32(index + 1), $0, -1, unsafeBitCast(-1, to: sqlite3_destructor_type.self))
+                sqlite3_bind_text(statement, Int32(index + 1), $0, Int32(value.utf8.count), unsafeBitCast(-1, to: sqlite3_destructor_type.self))
             }
             guard result == SQLITE_OK else {
                 sqlite3_finalize(statement)
