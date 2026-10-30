@@ -12,6 +12,7 @@ private nonisolated final class MigrationTrace: @unchecked Sendable {
         let extended: Int32?
         let scheduledMilliseconds: Double?
         let diagnostic: ProjectDatabase.Diagnostic?
+        let connection: UUID?
     }
     let scenario = UUID()
     let version: Int
@@ -21,13 +22,13 @@ private nonisolated final class MigrationTrace: @unchecked Sendable {
     init(version: Int) { self.version = version }
     var milliseconds: Double { (ProcessInfo.processInfo.systemUptime - started) * 1000 }
     func record(_ name: String, result: Int32? = nil, extended: Int32? = nil,
-                scheduledMilliseconds: Double? = nil, error: (any Error)? = nil) {
+                scheduledMilliseconds: Double? = nil, error: (any Error)? = nil, connection: UUID? = nil) {
         let diagnostic: ProjectDatabase.Diagnostic?
         if let error = error as? ProjectStoreError, case .database(let message) = error {
             diagnostic = try? JSONDecoder().decode(ProjectDatabase.Diagnostic.self, from: Data(message.utf8))
         } else { diagnostic = nil }
         let entry = Event(name: name, milliseconds: milliseconds, result: result,
-                          extended: extended, scheduledMilliseconds: scheduledMilliseconds, diagnostic: diagnostic)
+                          extended: extended, scheduledMilliseconds: scheduledMilliseconds, diagnostic: diagnostic, connection: connection)
         mutex.lock(); entries.append(entry); mutex.unlock()
         let data = try! JSONEncoder().encode(entry)
         print("SQLITE_MIGRATION_FIXTURE scenario=\(scenario) version=\(version) \(String(decoding: data, as: UTF8.self))")
@@ -98,70 +99,78 @@ private nonisolated final class MigrationReservedLock: @unchecked Sendable {
 }
 
 private nonisolated enum MigrationRace {
-    /// The release deadline starts only after both child tasks have actually started.
-    /// Merely creating Task handles is insufficient under a busy test executor.
-    private nonisolated final class Starts: @unchecked Sendable {
+    enum ReleasePolicy { case afterSQLiteEntries, prematureNegativeControl }
+
+    /// Signals only from SQLite's statement callback, never from Task/actor entry.
+    private nonisolated final class Entries: @unchecked Sendable {
         private let mutex = NSLock()
-        private var remaining = 2
+        private let expected: Set<String>
+        private var connections: [String: UUID] = [:]
         private let ready = DispatchSemaphore(value: 0)
-        private var opened = false
-        private var entrants: [CheckedContinuation<Void, Never>] = []
-        func arrive() async {
-            await withCheckedContinuation { continuation in
-                mutex.lock()
-                remaining -= 1
-                let bothStarted = remaining == 0
-                let proceed = opened
-                if !proceed { entrants.append(continuation) }
-                mutex.unlock()
-                if bothStarted { ready.signal() }
-                if proceed { continuation.resume() }
-            }
-        }
-        func open() {
+        private let trace: MigrationTrace
+        init(expected: Set<String>, trace: MigrationTrace) { self.expected = expected; self.trace = trace }
+        func observe(_ label: String, connection: UUID) {
             mutex.lock()
-            opened = true
-            let pending = entrants
-            entrants.removeAll()
+            guard expected.contains(label), connections[label] == nil else { mutex.unlock(); return }
+            // Record before signaling: the release thread cannot race ahead of evidence.
+            trace.record(label + "-sqlite-begin", connection: connection)
+            connections[label] = connection
+            let complete = Set(connections.keys) == expected && Set(connections.values).count == expected.count
             mutex.unlock()
-            for entrant in pending { entrant.resume() }
+            if complete { ready.signal() }
         }
         func wait() async -> Bool {
             await withCheckedContinuation { continuation in
-                // The watchdog must also run independently of the executor whose
-                // startup delay we are measuring. Its timeout uses a monotonic clock.
                 let watchdog = Thread { [self] in
-                    let started = ready.wait(timeout: .now() + 5) == .success
-                    continuation.resume(returning: started)
+                    continuation.resume(returning: ready.wait(timeout: .now() + 5) == .success)
                 }
-                watchdog.name = "golos-migration-fixture-start-watchdog"
+                watchdog.name = "golos-migration-fixture-sqlite-watchdog"
                 watchdog.qualityOfService = .userInitiated
                 watchdog.start()
             }
         }
     }
 
-    private static func capture(_ label: String, trace: MigrationTrace, starts: Starts,
+    /// Both distinct connections must have begun SQLite statements while the real
+    /// reserved lock was held. Successful snapshots or Task markers are insufficient.
+    static func hasContentionEvidence(_ trace: MigrationTrace, expected: Set<String> = ["first", "second"]) -> Bool {
+        let events = trace.events
+        guard let acquired = events.first(where: { $0.name == "acquire" }), acquired.result == SQLITE_OK,
+              let release = events.first(where: { $0.name == "release-start" }) else { return false }
+        let entries = expected.compactMap { label in events.first { $0.name == label + "-sqlite-begin" } }
+        return entries.count == expected.count && Set(entries.compactMap(\.connection)).count == expected.count
+            && entries.allSatisfy { acquired.milliseconds < $0.milliseconds && $0.milliseconds < release.milliseconds }
+    }
+
+    private static func capture(_ label: String, trace: MigrationTrace, entries: Entries,
                         work: @Sendable () async throws -> ProjectSnapshot) async -> Result<ProjectSnapshot, any Error> {
-        trace.record(label + "-start")
-        await starts.arrive()
-        do { let value = try await work(); trace.record(label + "-success"); return .success(value) }
-        catch { trace.record(label + "-failure", error: error); return .failure(error) }
+        trace.record(label + "-task-start")
+        do {
+            let value = try await ProjectDatabase.$beginObserver.withValue({ connection in
+                entries.observe(label, connection: connection)
+            }) { try await work() }
+            trace.record(label + "-success")
+            return .success(value)
+        } catch { trace.record(label + "-failure", error: error); return .failure(error) }
     }
     static func run(lock: MigrationReservedLock, trace: MigrationTrace,
+                    expected: Set<String> = ["first", "second"], policy: ReleasePolicy = .afterSQLiteEntries,
                     first: @escaping @Sendable () async throws -> ProjectSnapshot,
                     second: @escaping @Sendable () async throws -> ProjectSnapshot) async -> (Result<ProjectSnapshot, any Error>, Result<ProjectSnapshot, any Error>) {
-        let starts = Starts()
-        let one = Task.detached { await capture("first", trace: trace, starts: starts, work: first) }
-        let two = Task.detached { await capture("second", trace: trace, starts: starts, work: second) }
-        let bothStarted = await starts.wait()
-        if !bothStarted { trace.record("startup-timeout") }
-        // Even on a failed startup barrier, release the real lock and join both
-        // children before allowing the caller to remove the temporary database.
-        lock.releaseAfterDelay(bothStarted ? 0.5 : 0)
-        starts.open()
-        #expect(bothStarted, Comment(rawValue: trace.summary))
-        // Await BOTH Results before propagating either error, including first-task failure.
+        let entries = Entries(expected: expected, trace: trace)
+        let one = Task.detached { await capture("first", trace: trace, entries: entries, work: first) }
+        let two = Task.detached { await capture("second", trace: trace, entries: entries, work: second) }
+        switch policy {
+        case .afterSQLiteEntries:
+            let entered = await entries.wait()
+            if !entered { trace.record("sqlite-entry-timeout") }
+            // On timeout, release immediately and STILL join both children before teardown.
+            lock.releaseAfterDelay(entered ? 0.5 : 0)
+            #expect(entered, Comment(rawValue: trace.summary))
+        case .prematureNegativeControl:
+            // Reproduce the old false positive: release before delayed snapshot calls.
+            lock.releaseAfterDelay()
+        }
         let firstResult = await one.value
         let secondResult = await two.value
         let release = await lock.waitForRelease()
@@ -204,12 +213,7 @@ private nonisolated enum MigrationRace {
         #expect(try await first.observeEmbeddingSource(key) == second.observeEmbeddingSource(key))
         // No writer remains before teardown. This is a real exclusive lock, not a mock.
         #expect(sqlite3_exec(db, "BEGIN EXCLUSIVE; ROLLBACK", nil, nil, nil) == SQLITE_OK, Comment(rawValue: trace.summary))
-        let events = trace.events
-        let released = try #require(events.first { $0.name == "release-start" })
-        for label in ["first-start", "second-start"] {
-            #expect(try #require(events.first { $0.name == label }).milliseconds < released.milliseconds,
-                    Comment(rawValue: trace.summary))
-        }
+        #expect(MigrationRace.hasContentionEvidence(trace), Comment(rawValue: trace.summary))
     }
 
     @Test func firstFailureStillWaitsForSecondConnectionAndReleaseBeforeTeardown() async throws {
@@ -222,7 +226,7 @@ private nonisolated enum MigrationRace {
         let trace = MigrationTrace(version: 3)
         let heldLock = try MigrationReservedLock(url: url, trace: trace)
         let second = ProjectStore(url: url)
-        let (one, two) = await MigrationRace.run(lock: heldLock, trace: trace,
+        let (one, two) = await MigrationRace.run(lock: heldLock, trace: trace, expected: ["second"],
             first: { throw SyntheticFailure.first }, second: { try await second.snapshot() })
         #expect(throws: SyntheticFailure.first) { try one.get() }
         #expect(try two.get().projects == [sentinel])
@@ -234,12 +238,54 @@ private nonisolated enum MigrationRace {
         #expect(failed.milliseconds < released.milliseconds, Comment(rawValue: trace.summary))
         #expect(succeeded.milliseconds <= joined.milliseconds, Comment(rawValue: trace.summary))
         #expect(events.first { $0.name == "close-result" }?.result == SQLITE_OK)
+        #expect(MigrationRace.hasContentionEvidence(trace, expected: ["second"]), Comment(rawValue: trace.summary))
         // A fresh real writer succeeds before the temporary directory is removed.
         let writer = try ProjectDatabase(url: url)
         try writer.execute("BEGIN EXCLUSIVE")
         try writer.execute("ROLLBACK")
         #expect(try writer.rows("PRAGMA user_version") == [["3"]])
         #expect(try await ProjectStore(url: url).snapshot().projects == [sentinel])
+    }
+
+    @Test(arguments: [false, true])
+    func delayedActorExecutionRequiresRealSQLiteEntries(prematureRelease: Bool) async throws {
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent("migration-delayed-\(UUID())")
+        try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: root) }
+        let url = root.appendingPathComponent("knowledge.sqlite")
+        // Create an actual v0 file, not a pre-migrated store.
+        do { _ = try ProjectDatabase(url: url) }
+        let trace = MigrationTrace(version: 0)
+        let heldLock = try MigrationReservedLock(url: url, trace: trace)
+        let first = ProjectStore(url: url), second = ProjectStore(url: url)
+        let (one, two) = await MigrationRace.run(lock: heldLock, trace: trace,
+            policy: prematureRelease ? .prematureNegativeControl : .afterSQLiteEntries,
+            first: {
+                if prematureRelease { _ = await heldLock.waitForRelease() }
+                try await Task.sleep(for: .milliseconds(650))
+                trace.record("first-snapshot-call")
+                return try await first.snapshot()
+            }, second: {
+                if prematureRelease { _ = await heldLock.waitForRelease() }
+                try await Task.sleep(for: .milliseconds(900))
+                trace.record("second-snapshot-call")
+                return try await second.snapshot()
+            })
+        #expect(try one.get() == two.get())
+        // The SAME predicate used by v0/v2 must reject the old false-positive path.
+        #expect(MigrationRace.hasContentionEvidence(trace) == !prematureRelease, Comment(rawValue: trace.summary))
+        let events = trace.events
+        let released = try #require(events.first { $0.name == "release-start" })
+        if prematureRelease {
+            for label in ["first-snapshot-call", "second-snapshot-call", "first-sqlite-begin", "second-sqlite-begin"] {
+                #expect(try #require(events.first { $0.name == label }).milliseconds > released.milliseconds,
+                        Comment(rawValue: trace.summary))
+            }
+        }
+        let writer = try ProjectDatabase(url: url)
+        try writer.execute("BEGIN EXCLUSIVE")
+        try writer.execute("ROLLBACK")
+        #expect(try writer.rows("PRAGMA user_version") == [["3"]])
     }
 
 }

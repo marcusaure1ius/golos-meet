@@ -61,6 +61,12 @@ nonisolated final class ProjectDatabase: @unchecked Sendable {
     private static let logger = Logger(subsystem: "com.golos.meet", category: "library")
     private let connection = UUID()
     private var context: TransactionContext?
+    #if DEBUG
+    // Opt-in, task-scoped test observation. No global hook or busy-handler replacement.
+    // Capture at connection creation so callbacks remain tied to that connection.
+    @TaskLocal static var beginObserver: (@Sendable (UUID) -> Void)?
+    private let capturedBeginObserver = ProjectDatabase.beginObserver
+    #endif
 
     init(url: URL) throws {
         try FileManager.default.createDirectory(at: url.deletingLastPathComponent(), withIntermediateDirectories: true)
@@ -75,9 +81,34 @@ nonisolated final class ProjectDatabase: @unchecked Sendable {
         }
         handle = db
         sqlite3_busy_timeout(db, 2000)
+        #if DEBUG
+        if capturedBeginObserver != nil {
+            sqlite3_trace_v2(db, UInt32(SQLITE_TRACE_STMT), { _, context, statement, _ in
+                guard let context, let statement else { return 0 }
+                let owner = Unmanaged<ProjectDatabase>.fromOpaque(context).takeUnretainedValue()
+                owner.observeBegin(OpaquePointer(statement))
+                return 0
+            }, Unmanaged.passUnretained(self).toOpaque())
+        }
+        #endif
     }
 
-    deinit { sqlite3_close(handle) }
+    deinit {
+        #if DEBUG
+        if capturedBeginObserver != nil { sqlite3_trace_v2(handle, 0, nil, nil) }
+        #endif
+        sqlite3_close(handle)
+    }
+
+    #if DEBUG
+    private func observeBegin(_ statement: OpaquePointer) {
+        // SQLITE_TRACE_STMT runs INSIDE sqlite3_step when the statement begins.
+        // Do not expand SQL or expose it, handles, bindings or paths to the observer.
+        guard context?.phase == .begin, let sql = sqlite3_sql(statement),
+              operation(String(cString: sql)) == .beginImmediate else { return }
+        capturedBeginObserver?(connection)
+    }
+    #endif
 
     func execute(_ sql: String, bindings: [String] = [], blob: Data? = nil) throws {
         let statement = try prepare(sql, bindings: bindings, blob: blob)
