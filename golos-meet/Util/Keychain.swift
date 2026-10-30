@@ -5,6 +5,7 @@ import Security
 enum Keychain {
     static let service = "golos-meet"
     static let openRouterAccount = "openrouter-api-key"
+    static let talkAccount = "kontur-talk-api-key"
 
     static func get(account: String) -> String? {
         let query: [String: Any] = [

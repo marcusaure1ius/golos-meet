@@ -1,5 +1,7 @@
 # CLAUDE.md — golos-meet
 
+Процесс разработки (issues, чаты этапов, worktree, проверки и независимое ревью) — в `AGENTS.md`. Agent Board не используется.
+
 Нативное macOS-приложение: пишет встречу (Контур.Толк) двумя дорожками, локально расшифровывает, далее (следующий слой) — action points через облачный LLM. Деталь продукта — `docs/brd.md`, архитектура — `docs/arch.md` (оба вне git).
 
 ## Состояние
@@ -49,7 +51,7 @@ Rust (`asr/`, вендор из соседнего проекта `golos`): `pro
 - Dev: модель GigaAM можно взять из соседнего `golos` (`~/Library/Application Support/golos/models/e2e_ctc`); бинарь sidecar — через `GOLOS_MEET_ASR_BIN`. Прод-бандлинг бинаря в .app и download-on-first-run — отложены (см. `asr/BUNDLING.md`).
 
 ## Конвенции
-- **Коммиты:** `[type] описание` — одна строка, без трейлеров (`[feat]/[fix]/[refactor]/[test]/[chore]/[docs]`).
+- **Коммиты:** `[type] #<issue> описание` — одна строка, без трейлеров (`[feat]/[fix]/[refactor]/[test]/[chore]/[docs]`). Подробности процесса — в `AGENTS.md`.
 - **Имена (не путать!):** пользователю — **«Golos Meet»** (`PRODUCT_NAME`/`INFOPLIST_KEY_CFBundleDisplayName` → бандл `Golos Meet.app`). Внутренние имена НЕ менять: target `golos-meet`, bundle id `com.golos.golos-meet`, Swift-модуль `golos_meet` (прибит `PRODUCT_MODULE_NAME = golos_meet` — иначе рвётся `@testable import golos_meet` во всех тестах и меняется designated requirement TCC).
 - **Xcode:** проект использует синхронизированные группы (`objectVersion 77`) — новые файлы подхватываются по каталогу, **`project.pbxproj` править не нужно**.
 - `docs/` и `.claude/` — вне git (`.gitignore`).
