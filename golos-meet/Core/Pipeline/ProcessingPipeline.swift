@@ -33,7 +33,7 @@ final class ProcessingPipeline {
         }
 
         // Короткая встреча в авто-режиме — выбросить.
-        if meta.durationSeconds <= config.thresholdSeconds && config.deleteShortAudio {
+        if meta.durationSeconds <= config.thresholdSeconds && config.deleteShortAudio && meta.preserveAudio != true {
             meta.status = .discarded
             do { try meta.write(to: metaURL) } catch { Log.pipeline.error("meta.write failed for \(meta.id, privacy: .public): \(error.localizedDescription, privacy: .public)") }
             try? FileManager.default.removeItem(at: folder.appendingPathComponent("mic.wav"))

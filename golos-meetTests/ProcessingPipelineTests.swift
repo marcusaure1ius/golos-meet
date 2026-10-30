@@ -97,6 +97,20 @@ import Foundation
         #expect(meta.status == .ready)
     }
 
+    @Test func persistentProtectionOverridesDefaultShortFilter() async throws {
+        let dir = try tempMeeting(duration: 3)
+        defer { try? FileManager.default.removeItem(at: dir) }
+        var meta = try readMeta(dir)
+        meta.preserveAudio = true
+        try meta.write(to: dir.appendingPathComponent("meta.json"))
+        let original = try Data(contentsOf: dir.appendingPathComponent("mic.wav"))
+        let pipeline = ProcessingPipeline(asrFactory: { StubASR() })
+        await pipeline.process(folder: dir)
+        #expect(try readMeta(dir).status == .ready)
+        #expect(try readMeta(dir).preserveAudio == true)
+        #expect(try Data(contentsOf: dir.appendingPathComponent("mic.wav")) == original)
+    }
+
     // MARK: — LLM insights tests (Task 8) — see extension below
 
     @Test func startupRescuesProcessingAndRecording() throws {

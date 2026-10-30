@@ -30,6 +30,7 @@ final class AppCoordinator {
 
     func start() {
         detector.delegate = recorder
+        recorder.onCaptureFailure = { [weak self] in self?.detector.captureFailed() }
         audioMonitor.onActive = { [weak self] active in self?.update(audio: active) }
         windowMonitor.onActive = { [weak self] active in self?.update(window: active) }
         audioMonitor.start()
@@ -53,14 +54,15 @@ final class AppCoordinator {
             onQuit: { NSApp.terminate(nil) })
         mb.install()
         menuBar = mb
-        liveCancellable = RecordingState.shared.$live.sink { [weak self] live in
-            Task { @MainActor in self?.onLiveChanged(live) }
+        liveCancellable = RecordingState.shared.objectWillChange.sink { [weak self] in
+            Task { @MainActor in self?.onLiveChanged(RecordingState.shared.live) }
         }
         renderMenu()
     }
 
     private func toggleRecording() {
-        if RecordingState.shared.live == nil {
+        guard RecordingState.shared.phase != .stopping else { return }
+        if !recorder.isRecording {
             detector.forceStart(at: Date())
         } else {
             detector.forceStop(at: Date())
@@ -73,7 +75,9 @@ final class AppCoordinator {
     }
 
     private func renderMenu() {
-        menuBar?.render(.from(live: RecordingState.shared.live, now: Date()))
+        let state = RecordingState.shared
+        menuBar?.render(.from(live: state.live, now: Date(), phase: state.phase,
+                             microphone: state.microphone, system: state.system))
     }
 
     private func startTick() {
