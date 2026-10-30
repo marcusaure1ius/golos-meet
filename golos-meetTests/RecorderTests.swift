@@ -26,6 +26,17 @@ import Foundation
         }
     }
 
+    /// Exercises the actual SystemAudioCaptureTrack stop path, not onFailure.
+    private final class FailingStopStream: SystemAudioStream {
+        var started = false
+        var stopCount = 0
+        func startCapture() async throws { started = true }
+        func stopCapture() async throws {
+            stopCount += 1
+            throw NSError(domain: "synthetic-stopCapture", code: 1)
+        }
+    }
+
     @MainActor private struct Fixture {
         let recorder: Recorder
         let root: URL
@@ -207,5 +218,35 @@ import Foundation
         #expect(try f.meta().preserveAudio == true)
         #expect(try f.meta().status == .failed)
         #expect(f.state.system == .failed)
+    }
+
+    @Test func systemTrackPropagatesBackendStopFailureBeforeMetadataAndQueue() async throws {
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent("stop-failure-\(UUID())")
+        defer { try? FileManager.default.removeItem(at: root) }
+        let backend = FailingStopStream()
+        let systemTrack = SystemAudioCaptureTrack(makeStream: { _, _, _ in backend })
+        let mic = FakeTrack()
+        let state = RecordingState()
+        var queued = 0
+        let date = Date(timeIntervalSince1970: 1_000_000)
+        let recorder = Recorder(enqueueProcessing: { _, _ in queued += 1 }, makeMicTrack: { mic },
+                                makeSysTrack: { systemTrack },
+                                makeFolder: { _, source in MeetingFolder(id: "synthetic", url: root, source: source) },
+                                state: state)
+        #expect(recorder.meetingStarted(at: date, manual: false))
+        await waitUntil { state.live != nil }
+        #expect(backend.started)
+        await mic.writer?.append(Data([7, 0]))
+        recorder.meetingEnded(at: date.addingTimeInterval(1))
+        await waitUntil { !recorder.isRecording }
+        let meta = try MeetingMeta.decoded(Data(contentsOf: root.appendingPathComponent("meta.json")))
+        #expect(backend.stopCount > 0)
+        #expect(meta.status == .failed)
+        #expect(meta.preserveAudio == true)
+        #expect(state.system == .failed)
+        #expect(queued == 0)
+        let pipeline = ProcessingPipeline(asrFactory: { ProcessingPipelineTests.StubASR() })
+        await pipeline.process(folder: root)
+        #expect(try Data(contentsOf: root.appendingPathComponent("mic.wav")).count == 46)
     }
 }

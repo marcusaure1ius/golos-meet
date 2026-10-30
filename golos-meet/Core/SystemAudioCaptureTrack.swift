@@ -1,16 +1,33 @@
 import AVFoundation
 import ScreenCaptureKit
 
+@MainActor
+protocol SystemAudioStream: AnyObject {
+    func startCapture() async throws
+    func stopCapture() async throws
+}
+
+extension SCStream: SystemAudioStream {}
+
 /// ScreenCaptureKit readiness is its completed startCapture, not scheduling a Task.
 /// The consumed screen output drives the audio pipeline; video is discarded.
 @MainActor
 final class SystemAudioCaptureTrack: NSObject, AudioTrack, SCStreamOutput, SCStreamDelegate {
     var onFailure: (() -> Void)?
-    private var stream: SCStream?
+    private var stream: (any SystemAudioStream)?
     private var generation: UUID?
     private var output: SystemAudioOutput?
     private let sampleQueue = DispatchQueue(label: "com.golos.meet.system-audio")
     private let videoQueue = DispatchQueue(label: "com.golos.meet.system-video")
+
+    /// Tests inject only the stream backend; the real track still owns startup,
+    /// stop error propagation and sink draining. The live factory is never called.
+    private let makeStream: (@MainActor (SCStreamOutput, SCStreamOutput, SCStreamDelegate) async throws -> any SystemAudioStream)?
+
+    init(makeStream: (@MainActor (SCStreamOutput, SCStreamOutput, SCStreamDelegate) async throws -> any SystemAudioStream)? = nil) {
+        self.makeStream = makeStream
+        super.init()
+    }
 
     func start(into writer: WavWriter) async throws {
         let id = UUID()
@@ -22,47 +39,59 @@ final class SystemAudioCaptureTrack: NSObject, AudioTrack, SCStreamOutput, SCStr
             Task { @MainActor [weak self] in self?.onFailure?() }
         }
         self.output = output
-        var startingStream: SCStream?
+        var startingStream: (any SystemAudioStream)?
         do {
-            let content = try await SCShareableContent.excludingDesktopWindows(false, onScreenWindowsOnly: false)
+            let backend: any SystemAudioStream
+            if let makeStream { backend = try await makeStream(output, self, self) }
+            else { backend = try await makeLiveStream(audioOutput: output) }
+            startingStream = backend
             try Task.checkCancellation()
-            guard generation == id, let display = content.displays.first else {
-                throw CancellationError()
-            }
-            let filter = SCContentFilter(display: display, excludingWindows: [])
-            let config = SCStreamConfiguration()
-            config.capturesAudio = true
-            config.excludesCurrentProcessAudio = true
-            config.sampleRate = 48_000
-            config.channelCount = 2
-            config.width = display.width
-            config.height = display.height
-            config.minimumFrameInterval = CMTime(value: 1, timescale: 1)
-            config.queueDepth = 5
-            let stream = SCStream(filter: filter, configuration: config, delegate: self)
-            startingStream = stream
-            self.stream = stream
-            try stream.addStreamOutput(output, type: .audio, sampleHandlerQueue: sampleQueue)
-            try stream.addStreamOutput(self, type: .screen, sampleHandlerQueue: videoQueue)
-            try await stream.startCapture()
+            guard generation == id else { throw CancellationError() }
+            self.stream = backend
+            try await backend.startCapture()
             try Task.checkCancellation()
             guard generation == id else { throw CancellationError() }
         } catch {
-            try? await startingStream?.stopCapture()
+            let startupError = error
+            var cleanupError: Error?
+            do { try await startingStream?.stopCapture() } catch { cleanupError = error }
             await sink.close()
             if generation == id { generation = nil; stream = nil; self.output = nil }
-            throw error
+            throw cleanupError ?? startupError
         }
     }
 
-    func stop() async {
+    private func makeLiveStream(audioOutput: SCStreamOutput) async throws -> SCStream {
+        let content = try await SCShareableContent.excludingDesktopWindows(false, onScreenWindowsOnly: false)
+        try Task.checkCancellation()
+        guard let display = content.displays.first else { throw CancellationError() }
+        let filter = SCContentFilter(display: display, excludingWindows: [])
+        let config = SCStreamConfiguration()
+        config.capturesAudio = true
+        config.excludesCurrentProcessAudio = true
+        config.sampleRate = 48_000
+        config.channelCount = 2
+        config.width = display.width
+        config.height = display.height
+        config.minimumFrameInterval = CMTime(value: 1, timescale: 1)
+        config.queueDepth = 5
+        let stream = SCStream(filter: filter, configuration: config, delegate: self)
+        try stream.addStreamOutput(audioOutput, type: .audio, sampleHandlerQueue: sampleQueue)
+        try stream.addStreamOutput(self, type: .screen, sampleHandlerQueue: videoQueue)
+        return stream
+    }
+
+    func stop() async throws {
         generation = nil
         let oldStream = stream
         let oldOutput = output
         stream = nil
         output = nil
-        try? await oldStream?.stopCapture()
+        var stopError: Error?
+        do { try await oldStream?.stopCapture() } catch { stopError = error }
+        // Always stop accepting buffers and drain, including when macOS refuses stop.
         await oldOutput?.sink.close()
+        if let stopError { throw stopError }
     }
 
     nonisolated func stream(_ stream: SCStream, didStopWithError error: Error) {

@@ -8,7 +8,7 @@ protocol AudioTrack: AnyObject {
     /// Returns only after the capture backend is ready. Silence is valid audio.
     func start(into writer: WavWriter) async throws
     /// Must stop accepting buffers and drain queued writes before returning.
-    func stop() async
+    func stop() async throws
 }
 
 /// Метаданные одной встречи, ложатся рядом с дорожками как `meta.json`.
@@ -235,13 +235,11 @@ final class Recorder: MeetingDetectorDelegate {
 
     private func finish(_ a: Active, endedAt: Date) async -> MeetingFolder? {
         // Stop during async start, then drain a possible late completion once more.
-        await a.micTrack.stop()
-        state.stopped(.microphone)
-        await a.sysTrack.stop()
-        state.stopped(.system)
+        await stop(a.micTrack, kind: .microphone, session: a)
+        await stop(a.sysTrack, kind: .system, session: a)
         await a.startTask?.value
-        await a.micTrack.stop()
-        await a.sysTrack.stop()
+        await stop(a.micTrack, kind: .microphone, session: a)
+        await stop(a.sysTrack, kind: .system, session: a)
         a.micTrack.onFailure = nil
         a.sysTrack.onFailure = nil
         do { try await a.mic.finalize() } catch { a.failed = true }
@@ -261,5 +259,16 @@ final class Recorder: MeetingDetectorDelegate {
             return nil
         }
         return a.folder
+    }
+
+    private func stop(_ track: AudioTrack, kind: RecordingState.Track, session: Active) async {
+        do {
+            try await track.stop()
+            state.stopped(kind)
+        } catch {
+            session.failed = true
+            state.trackFailed(kind)
+            Log.recorder.error("Не удалось подтвердить остановку дорожки захвата")
+        }
     }
 }

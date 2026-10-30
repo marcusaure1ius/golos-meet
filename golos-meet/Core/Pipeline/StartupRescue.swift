@@ -26,7 +26,13 @@ enum StartupRescue {
                                        status: .recording, asrModel: old.asrModel,
                                        title: old.title, titleManual: old.titleManual, schemaVersion: old.schemaVersion,
                                        preserveAudio: true)
-                try? meta.write(to: metaURL)
+                do { try meta.write(to: metaURL) }
+                catch {
+                    // The default pipeline rereads metadata before its short-file
+                    // deletion gate. Never enqueue until protection is durable.
+                    Log.pipeline.error("rescue: не удалось сохранить защиту аудио; обработка отложена")
+                    continue
+                }
                 Log.pipeline.info("rescue: \(old.id, privacy: .public) recording → в очередь (\(duration) c)")
                 toProcess.append(dir)
             case .processing:
