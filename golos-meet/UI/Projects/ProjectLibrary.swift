@@ -10,7 +10,7 @@ final class ProjectLibrary: ObservableObject {
     @Published private(set) var isSaving = false
     @Published private(set) var isLoaded = false
     @Published private(set) var loadError: String?
-    private let store: ProjectStore
+    let store: ProjectStore
 
     var isReady: Bool { isLoaded && loadError == nil && !isLoading && !isSaving }
     var projects: [KnowledgeProject] { snapshot.projects }
