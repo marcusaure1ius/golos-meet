@@ -22,22 +22,28 @@ final class PreviewDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
         controller = MenuBarController(onToggleRecording: {}, onOpenWindow: {}, onQuit: {})
         controller.install()
-        let content = NSView(frame: NSRect(x: 0, y: 0, width: 720, height: 200))
+        let content = NSView(frame: NSRect(x: 0, y: 0, width: 720, height: 420))
         window = NSWindow(contentRect: content.frame, styleMask: [.titled, .closable], backing: .buffered, defer: false)
-        window.title = "Golos Recording Preview — synthetic"
+        window.title = "Golos Talk Source Preview — synthetic"
         window.isReleasedWhenClosed = false
         window.contentView = content
         let label = NSTextField(labelWithString: "Только синтетические состояния. Запись, сеть и библиотека не подключены.")
-        label.frame = NSRect(x: 24, y: 145, width: 670, height: 30)
+        label.frame = NSRect(x: 24, y: 365, width: 670, height: 30)
         content.addSubview(label)
         for (i, title) in ["Подготовка", "Запись", "Сохранение", "Ошибка", "Ожидание"].enumerated() {
             let button = NSButton(title: title, target: self, action: #selector(selectPhase(_:)))
             button.tag = i
-            button.frame = NSRect(x: 20 + i * 137, y: 90, width: 135, height: 32)
+            button.frame = NSRect(x: 20 + i * 137, y: 310, width: 135, height: 32)
+            content.addSubview(button)
+        }
+        for (i, title) in ["Нет Толка", "Источник исчез", "Ошибка доступа"].enumerated() {
+            let button = NSButton(title: title, target: self, action: #selector(selectPhase(_:)))
+            button.tag = i + 5
+            button.frame = NSRect(x: 20 + i * 225, y: 255, width: 215, height: 32)
             content.addSubview(button)
         }
         let popup = NSButton(title: "Показать меню", target: self, action: #selector(showMenu(_:)))
-        popup.frame = NSRect(x: 24, y: 25, width: 180, height: 36)
+        popup.frame = NSRect(x: 24, y: 200, width: 180, height: 36)
         content.addSubview(popup)
         render()
         window.center()
@@ -61,6 +67,11 @@ final class PreviewDelegate: NSObject, NSApplicationDelegate {
         case 2: model = .from(live: live, now: now, phase: .stopping)
         case 3: model = .from(live: nil, now: now, phase: .failed("Запись прервана. Проверьте разрешения и свободное место."),
                               microphone: .stopped, system: .failed)
+        case 5, 6, 7:
+            let error: TalkAudioCaptureError = phase == 5 ? .nativeClientNotFound
+                : (phase == 6 ? .processDisappeared : .sourceUnavailable)
+            model = .from(live: nil, now: now, phase: .failed(error.localizedDescription),
+                          microphone: .stopped, system: .failed)
         default: model = .from(live: nil, now: now)
         }
         controller.render(model)

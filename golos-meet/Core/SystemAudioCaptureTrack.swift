@@ -9,6 +9,12 @@ protocol SystemAudioStream: AnyObject {
 
 extension SCStream: SystemAudioStream {}
 
+@MainActor
+struct SystemAudioCaptureSession {
+    let stream: any SystemAudioStream
+    var processGuard: TalkAudioProcessGuard? = nil
+}
+
 /// ScreenCaptureKit readiness is its completed startCapture, not scheduling a Task.
 /// The consumed screen output drives the audio pipeline; video is discarded.
 @MainActor
@@ -17,14 +23,17 @@ final class SystemAudioCaptureTrack: NSObject, AudioTrack, SCStreamOutput, SCStr
     private var stream: (any SystemAudioStream)?
     private var generation: UUID?
     private var output: SystemAudioOutput?
+    private var processGuard: TalkAudioProcessGuard?
+    private var sourceError: TalkAudioCaptureError?
+    var failureMessage: String? { sourceError?.errorDescription }
     private let sampleQueue = DispatchQueue(label: "com.golos.meet.system-audio")
     private let videoQueue = DispatchQueue(label: "com.golos.meet.system-video")
 
     /// Tests inject only the stream backend; the real track still owns startup,
     /// stop error propagation and sink draining. The live factory is never called.
-    private let makeStream: (@MainActor (SCStreamOutput, SCStreamOutput, SCStreamDelegate) async throws -> any SystemAudioStream)?
+    private let makeStream: (@MainActor (SCStreamOutput, SCStreamOutput, SCStreamDelegate) async throws -> SystemAudioCaptureSession)?
 
-    init(makeStream: (@MainActor (SCStreamOutput, SCStreamOutput, SCStreamDelegate) async throws -> any SystemAudioStream)? = nil) {
+    init(makeStream: (@MainActor (SCStreamOutput, SCStreamOutput, SCStreamDelegate) async throws -> SystemAudioCaptureSession)? = nil) {
         self.makeStream = makeStream
         super.init()
     }
@@ -32,27 +41,38 @@ final class SystemAudioCaptureTrack: NSObject, AudioTrack, SCStreamOutput, SCStr
     func start(into writer: WavWriter) async throws {
         let id = UUID()
         generation = id
+        sourceError = nil
         let sink = PCMWriteSink(writer: writer) { [weak self] in
-            Task { @MainActor [weak self] in self?.onFailure?() }
+            Task { @MainActor [weak self] in self?.reportFailure() }
         }
         let output = SystemAudioOutput(sink: sink) { [weak self] in
-            Task { @MainActor [weak self] in self?.onFailure?() }
+            Task { @MainActor [weak self] in self?.reportFailure() }
         }
         self.output = output
         var startingStream: (any SystemAudioStream)?
         do {
-            let backend: any SystemAudioStream
-            if let makeStream { backend = try await makeStream(output, self, self) }
-            else { backend = try await makeLiveStream(audioOutput: output) }
-            startingStream = backend
+            let session: SystemAudioCaptureSession
+            if let makeStream { session = try await makeStream(output, self, self) }
+            else { session = try await makeLiveStream(audioOutput: output) }
+            startingStream = session.stream
             try Task.checkCancellation()
             guard generation == id else { throw CancellationError() }
-            self.stream = backend
-            try await backend.startCapture()
+            self.processGuard = session.processGuard
+            try session.processGuard?.validate()
+            self.stream = session.stream
+            try await session.stream.startCapture()
             try Task.checkCancellation()
             guard generation == id else { throw CancellationError() }
+            try session.processGuard?.start { [weak self] error in
+                guard let self, self.generation == id else { return }
+                self.sourceError = error
+                self.onFailure?()
+            }
         } catch {
             let startupError = error
+            if let error = startupError as? TalkAudioCaptureError { sourceError = error }
+            processGuard?.stop()
+            processGuard = nil
             var cleanupError: Error?
             do { try await startingStream?.stopCapture() } catch { cleanupError = error }
             await sink.close()
@@ -61,11 +81,23 @@ final class SystemAudioCaptureTrack: NSObject, AudioTrack, SCStreamOutput, SCStr
         }
     }
 
-    private func makeLiveStream(audioOutput: SCStreamOutput) async throws -> SCStream {
-        let content = try await SCShareableContent.excludingDesktopWindows(false, onScreenWindowsOnly: false)
+    private func makeLiveStream(audioOutput: SCStreamOutput) async throws -> SystemAudioCaptureSession {
+        // Accidental use of the default path in a unit test must not prompt TCC
+        // or enumerate real screen content. Live checks require a separate host.
+        guard !AppRuntime.isTestHost else { throw TalkAudioCaptureError.sourceUnavailable }
+        let content: SCShareableContent
+        do { content = try await SCShareableContent.excludingDesktopWindows(false, onScreenWindowsOnly: false) }
+        catch { throw TalkAudioCaptureError.sourceUnavailable }
         try Task.checkCancellation()
-        guard let display = content.displays.first else { throw CancellationError() }
-        let filter = SCContentFilter(display: display, excludingWindows: [])
+        let targets = try TalkAudioSelection.select(content.applications.map {
+            TalkAudioProcess(processID: $0.processID, bundleIdentifier: $0.bundleIdentifier)
+        })
+        let pids = Set(targets.map(\.processID))
+        let included = content.applications.filter { pids.contains($0.processID) }
+        guard included.count == targets.count else { throw TalkAudioCaptureError.invalidProcesses }
+        guard let display = content.displays.first else { throw TalkAudioCaptureError.noDisplay }
+        // Explicit inclusion only. No window/title selection or all-system fallback.
+        let filter = SCContentFilter(display: display, including: included, exceptingWindows: [])
         let config = SCStreamConfiguration()
         config.capturesAudio = true
         config.excludesCurrentProcessAudio = true
@@ -78,11 +110,13 @@ final class SystemAudioCaptureTrack: NSObject, AudioTrack, SCStreamOutput, SCStr
         let stream = SCStream(filter: filter, configuration: config, delegate: self)
         try stream.addStreamOutput(audioOutput, type: .audio, sampleHandlerQueue: sampleQueue)
         try stream.addStreamOutput(self, type: .screen, sampleHandlerQueue: videoQueue)
-        return stream
+        return SystemAudioCaptureSession(stream: stream, processGuard: TalkAudioProcessGuard(targets: targets))
     }
 
     func stop() async throws {
         generation = nil
+        processGuard?.stop()
+        processGuard = nil
         let oldStream = stream
         let oldOutput = output
         stream = nil
@@ -97,8 +131,16 @@ final class SystemAudioCaptureTrack: NSObject, AudioTrack, SCStreamOutput, SCStr
     nonisolated func stream(_ stream: SCStream, didStopWithError error: Error) {
         Task { @MainActor [weak self] in
             guard let self, self.stream === stream, self.generation != nil else { return }
-            self.onFailure?()
+            self.reportFailure()
         }
+    }
+
+    private func reportFailure() {
+        guard generation != nil else { return }
+        // A stream callback can precede the next timer tick after a process exits.
+        do { try processGuard?.validate() }
+        catch { sourceError = (error as? TalkAudioCaptureError) ?? .sourceUnavailable }
+        onFailure?()
     }
 
     nonisolated func stream(_ stream: SCStream, didOutputSampleBuffer sampleBuffer: CMSampleBuffer,

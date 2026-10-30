@@ -224,7 +224,7 @@ import Foundation
         let root = FileManager.default.temporaryDirectory.appendingPathComponent("stop-failure-\(UUID())")
         defer { try? FileManager.default.removeItem(at: root) }
         let backend = FailingStopStream()
-        let systemTrack = SystemAudioCaptureTrack(makeStream: { _, _, _ in backend })
+        let systemTrack = SystemAudioCaptureTrack(makeStream: { _, _, _ in SystemAudioCaptureSession(stream: backend) })
         let mic = FakeTrack()
         let state = RecordingState()
         var queued = 0
