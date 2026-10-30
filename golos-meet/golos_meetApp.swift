@@ -1,29 +1,51 @@
 import SwiftUI
 import AppKit
+import Combine
 
 @main
 struct golos_meetApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-    @StateObject private var library = MeetingLibrary()
-    @StateObject private var processor = MeetingProcessor.shared
-    @StateObject private var recordingState = RecordingState.shared
-
+    @StateObject private var state = AppLibraryState()
     var body: some Scene {
         WindowGroup {
-            MainWindowView()
-                .environmentObject(library)
-                .environmentObject(processor)
-                .environmentObject(recordingState)
+            if let library = state.library {
+                ProductionRootView(library: library)
+            } else {
+                EmptyView()
+            }
         }
         .windowStyle(.hiddenTitleBar)
         .defaultSize(width: 1000, height: 680)
     }
 }
 
+/// Preserve one library across windows, without constructing it in the test host.
+@MainActor
+final class AppLibraryState: ObservableObject {
+    let library: MeetingLibrary? = AppRuntime.isTestHost ? nil : MeetingLibrary()
+}
+
+/// Do not construct settings or processing UI in a test host.
+private struct ProductionRootView: View {
+    @ObservedObject var library: MeetingLibrary
+    @StateObject private var processor = MeetingProcessor.shared
+    @StateObject private var recordingState = RecordingState.shared
+
+    var body: some View {
+        MainWindowView()
+            .environmentObject(library)
+            .environmentObject(processor)
+            .environmentObject(recordingState)
+    }
+}
+
 @MainActor
 final class AppDelegate: NSObject, NSApplicationDelegate {
-    let coordinator = AppCoordinator()
+    private(set) var coordinator: AppCoordinator?
     func applicationDidFinishLaunching(_ notification: Notification) {
+        guard !AppRuntime.isTestHost else { return }
+        let coordinator = AppCoordinator()
+        self.coordinator = coordinator
         NSApp.setActivationPolicy(.regular)   // обычное приложение в Dock
         let rescued = StartupRescue.run()
         for dir in rescued {
@@ -45,7 +67,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     /// потом отпустить приложение. Если финализация не уложилась в ~3 с (зависший диск) —
     /// отпускаем всё равно: недописанную запись спасёт StartupRescue при следующем запуске.
     func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
-        guard coordinator.recorder.isRecording else { return .terminateNow }
+        guard let coordinator, coordinator.recorder.isRecording else { return .terminateNow }
         let recorder = coordinator.recorder
         Task { @MainActor in
             // Race «финализация против таймаута»: withTaskGroup не годится —
