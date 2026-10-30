@@ -1,7 +1,10 @@
 """Guard regressions on synthetic bundle fixtures; never run Xcode or the app."""
 import importlib.util
+import json
+import os
 from pathlib import Path
 import plistlib
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -58,6 +61,72 @@ class PackagingGuards(unittest.TestCase):
         self.assertNotEqual(result.returncode, 0)
         self.assertFalse(output.exists())
         self.assertIn("Preview packaging failed", result.stderr)
+
+
+class MakeArgumentTransport(unittest.TestCase):
+    def test_real_make_to_python_preserves_literal_parameters(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            workspace = root / "workspace"
+            tooling = workspace / "research/preview-package"
+            tooling.mkdir(parents=True)
+            shutil.copy2(SCRIPT, tooling / SCRIPT.name)
+            shutil.copy2(packager.REPO / "Makefile", workspace / "Makefile")
+            binaries = root / "bin"
+            binaries.mkdir()
+            (binaries / "python3").symlink_to(sys.executable)
+            # Real Python/argparse/path handling; stop at git archive before any build.
+            git = binaries / "git"
+            git.write_text("#!" + sys.executable + "\n" +
+                           "import json, os, sys\n" +
+                           "with open(os.environ['ARGUMENT_CAPTURE'], 'a') as log:\n" +
+                           "    log.write(json.dumps({'argv': sys.argv[1:], 'env': {k: os.environ[k] for k in ['PREVIEW_REF', 'PREVIEW_OUTPUT', 'MAKEFLAGS', 'MFLAGS', 'MAKEOVERRIDES', 'GNUMAKEFLAGS'] if k in os.environ}}) + '\\n')\n" +
+                           "if sys.argv[1] == 'rev-parse':\n" +
+                           "    print('a' * 40)\n" +
+                           "else:\n" +
+                           "    print('Stopped before build for argument transport test', file=sys.stderr)\n" +
+                           "    sys.exit(7)\n")
+            git.chmod(0o755)
+            capture = root / "git-arguments.jsonl"
+            env = dict(os.environ, PATH=str(binaries) + os.pathsep + os.defpath,
+                       ARGUMENT_CAPTURE=str(capture), PYTHONDONTWRITEBYTECODE="1")
+            env.pop("PREVIEW_REF", None)
+            env.pop("PREVIEW_OUTPUT", None)
+            created_outputs = set()
+            for input_kind in ["command-line", "environment", "defaults"]:
+                with self.subTest(input_kind=input_kind):
+                    capture.unlink(missing_ok=True)
+                    output = root / (input_kind + """ "review" package O'Brien $HOME """
+                                     '$(touch shell-marker) `touch backtick-marker` '
+                                     '$(shell touch make-marker) $(file >make-file-marker,marker)')
+                    ref = ("""HEAD "ref" O'Brien $HOME $(touch ref-shell-marker) """
+                           '`touch ref-backtick-marker` $(shell touch ref-make-marker)')
+                    command = ["/usr/bin/make", "--no-print-directory", "preview-package"]
+                    case_env = env.copy()
+                    if input_kind == "command-line":
+                        command += ["PREVIEW_REF=" + ref, "PREVIEW_OUTPUT=" + str(output)]
+                    elif input_kind == "environment":
+                        case_env.update(PREVIEW_REF=ref, PREVIEW_OUTPUT=str(output))
+                    else:
+                        ref = "HEAD"
+                        output = workspace / ".build/preview"
+                    result = subprocess.run(command, cwd=workspace, env=case_env,
+                                            capture_output=True, text=True, timeout=15)
+                    self.assertNotEqual(result.returncode, 0)  # Intentional stop at archive.
+                    self.assertTrue(output.is_dir(), result.stdout + result.stderr)
+                    calls = [json.loads(line) for line in capture.read_text().splitlines()]
+                    self.assertEqual(calls[0]["argv"], ["rev-parse", "--verify", "--end-of-options", ref + "^{commit}"])
+                    self.assertEqual(calls[1]["argv"][0], "archive")
+                    self.assertEqual([call["env"] for call in calls], [{}, {}])
+                    self.assertIn("Stopped before build for argument transport test", result.stderr)
+                    # Only exact output data and fixtures exist; no shell/Make marker ran.
+                    if input_kind != "defaults":
+                        created_outputs.add(output.name)
+                    self.assertEqual({p.name for p in workspace.iterdir()},
+                                     {"Makefile", "research"} | ({".build"} if input_kind == "defaults" else set()))
+                    self.assertEqual({p.name for p in root.iterdir()},
+                                     {"workspace", "bin", "git-arguments.jsonl"} | created_outputs)
+                    self.assertEqual(len(list(output.glob("preview-aaaaaaaaaaaa-*"))), 1)
 
 
 if __name__ == "__main__":

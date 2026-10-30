@@ -2,7 +2,13 @@
 
 DERIVED_DATA ?= $(CURDIR)/.build/xcode
 PREVIEW_REF ?= HEAD
-PREVIEW_OUTPUT ?= $(CURDIR)/.build/preview
+PREVIEW_OUTPUT ?= .build/preview
+
+# Preserve CLI/environment values literally, including Make and shell syntax.
+# Simple exported variables prevent a second Make expansion; the recipe is constant.
+override PREVIEW_REF := $(value PREVIEW_REF)
+override PREVIEW_OUTPUT := $(value PREVIEW_OUTPUT)
+export PREVIEW_REF PREVIEW_OUTPUT
 
 help:
 	@echo "make check       — сборка и Swift-тесты без настоящего ASR E2E"
@@ -22,4 +28,4 @@ check-rust:
 	cd asr && cargo test --lib
 
 preview-package:
-	python3 research/preview-package/package_preview.py --ref "$(PREVIEW_REF)" --output "$(PREVIEW_OUTPUT)"
+	python3 research/preview-package/package_preview.py

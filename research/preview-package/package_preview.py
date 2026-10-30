@@ -173,10 +173,20 @@ def unregister_build_product(product):
 
 
 def main():
+    # Consume literal Make inputs once. Do not expose them or Make's recursive
+    # overrides to nested build tools, which may themselves invoke Make.
+    ref_default = os.environ.pop("PREVIEW_REF", "HEAD")
+    output_default = os.environ.pop("PREVIEW_OUTPUT", None)
+    for key in ("MAKEFLAGS", "MFLAGS", "MAKEOVERRIDES", "GNUMAKEFLAGS"):
+        os.environ.pop(key, None)
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--ref", default="HEAD", help="Committed source ref, resolved to full SHA before build")
-    parser.add_argument("--output", required=True, type=Path, help="Parent for a new unique build/output directory")
+    parser.add_argument("--ref", default=ref_default,
+                        help="Committed source ref (default: PREVIEW_REF or HEAD)")
+    parser.add_argument("--output", type=Path, default=output_default,
+                        help="Parent for a new unique build/output directory (or PREVIEW_OUTPUT)")
     args = parser.parse_args()
+    if args.output is None:
+        parser.error("--output or PREVIEW_OUTPUT is required")
     commit = run("git", "rev-parse", "--verify", "--end-of-options", args.ref + "^{commit}", cwd=REPO)
     output = args.output.expanduser().resolve()
     output.mkdir(parents=True, exist_ok=True)
