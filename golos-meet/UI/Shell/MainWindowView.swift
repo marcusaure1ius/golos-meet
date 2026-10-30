@@ -5,6 +5,7 @@ import AppKit
 struct MainWindowView: View {
     @ObservedObject private var settings = UISettings.shared
     @StateObject private var system = SystemAppearance()
+    @StateObject private var projects = ProjectLibrary.shared
     @State private var selection: SidebarSection = .meetings
 
     private var effectiveScheme: ColorScheme {
@@ -24,6 +25,8 @@ struct MainWindowView: View {
         // Без сплошного фона: за сайдбаром — вибрантность, за контентом — его непрозрачный фон.
         .background(WindowConfigurator())
         .environment(\.palette, p)
+        .environmentObject(projects)
+        .task { await projects.reload() }
         .preferredColorScheme(effectiveScheme)
         .frame(minWidth: 1000, minHeight: 680)
         .ignoresSafeArea()
@@ -43,6 +46,8 @@ struct MainWindowView: View {
     @ViewBuilder private var paneView: some View {
         switch selection {
         case .meetings: MeetingsScreen()
+        case .inbox: MeetingsScreen(scope: .inbox)
+        case .project(let id): MeetingsScreen(scope: .project(id)).id(id)
         case .settings: SettingsScreen()
         }
     }

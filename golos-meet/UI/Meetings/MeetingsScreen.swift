@@ -1,10 +1,12 @@
 import SwiftUI
 
 struct MeetingsScreen: View {
+    var scope: ProjectMeetingScope = .all
     @Environment(\.palette) var p
     @EnvironmentObject var library: MeetingLibrary
     @EnvironmentObject var processor: MeetingProcessor
     @EnvironmentObject var recordingState: RecordingState
+    @EnvironmentObject var projects: ProjectLibrary
     @Environment(\.scenePhase) private var scenePhase
     @State private var selected: MeetingSummary?
     @State private var mode: Mode = .feed
@@ -15,7 +17,7 @@ struct MeetingsScreen: View {
     private enum Mode: String, CaseIterable { case feed = "Лента", calendar = "Календарь" }
 
     private var filteredMeetings: [MeetingSummary] {
-        MeetingFilter.apply(library.summaries, query: query, period: period, now: Date()) {
+        MeetingFilter.apply(library.summaries.filter { scope.contains($0.id, snapshot: projects.snapshot) }, query: query, period: period, now: Date()) {
             library.searchText(for: $0)
         }
     }
@@ -27,7 +29,7 @@ struct MeetingsScreen: View {
     var body: some View {
         Group {
             if let m = selected {
-                MeetingDetailView(meeting: m) { selected = nil }
+                MeetingDetailView(backTitle: screenTitle, meeting: m) { selected = nil }
             } else {
                 VStack(spacing: 0) {
                     header
@@ -35,8 +37,17 @@ struct MeetingsScreen: View {
                         ProcessingBanner(count: processor.busyMeetingsCount)
                             .padding(.horizontal, 56).padding(.bottom, 8)
                     }
-                    if filteredMeetings.isEmpty && isFilterActive {
+                    if scope != .all && (projects.isLoading || !projects.isLoaded || projects.loadError != nil) {
+                        projectLibraryState
+                    } else if filteredMeetings.isEmpty && isFilterActive {
                         ContentUnavailableView("Ничего не найдено", systemImage: "magnifyingglass")
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    } else if filteredMeetings.isEmpty && scope != .all {
+                        ContentUnavailableView(scope == .inbox ? "Во Входящих нет встреч" : "В проекте пока нет встреч",
+                                               systemImage: scope == .inbox ? "tray" : "folder",
+                                               description: Text(scope == .inbox
+                                                   ? "Здесь появятся встречи без назначенных проектов."
+                                                   : "Откройте встречу в разделе «Встречи» и выберите её проекты."))
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
                     } else {
                         switch mode {
@@ -48,7 +59,12 @@ struct MeetingsScreen: View {
             }
         }
         .onAppear { library.reload() }
-        .onChange(of: scenePhase) { _, phase in if phase == .active { library.reload() } }
+        .onChange(of: scenePhase) { _, phase in
+            if phase == .active {
+                library.reload()
+                Task { await projects.reload() }
+            }
+        }
         .onChange(of: processor.completedJobsCount) { _, _ in library.reload() }   // после каждой задачи — подтянуть статусы/заголовки
         .onChange(of: recordingState.live?.id) { _, _ in library.reload() }   // старт/стоп записи — показать/убрать живую карточку
     }
@@ -71,7 +87,8 @@ struct MeetingsScreen: View {
     private var header: some View {
         VStack(spacing: 12) {
             HStack {
-                Text("Встречи").font(.system(size: 26, weight: .semibold)).tracking(-0.3).foregroundStyle(p.ink)
+                Text(screenTitle).font(.system(size: 26, weight: .semibold)).tracking(-0.3).foregroundStyle(p.ink)
+                    .lineLimit(2)
                 Spacer()
                 Picker("", selection: $mode) {
                     ForEach(Mode.allCases, id: \.self) { Text($0.rawValue).tag($0) }
@@ -98,6 +115,26 @@ struct MeetingsScreen: View {
             }
         }
         .padding(.horizontal, 56).padding(.top, 38).padding(.bottom, 8)
+    }
+
+    private var screenTitle: String {
+        switch scope {
+        case .all: return "Встречи"
+        case .inbox: return "Входящие"
+        case .project(let id): return projects.project(id)?.name ?? "Проект недоступен"
+        }
+    }
+
+    @ViewBuilder private var projectLibraryState: some View {
+        if let error = projects.loadError {
+            ContentUnavailableView {
+                Label("Библиотека проектов недоступна", systemImage: "exclamationmark.triangle")
+            } description: { Text(error) } actions: {
+                Button("Повторить") { Task { await projects.reload() } }.disabled(projects.isLoading)
+            }.frame(maxWidth: .infinity, maxHeight: .infinity)
+        } else {
+            ProgressView("Загружаю проекты…").frame(maxWidth: .infinity, maxHeight: .infinity)
+        }
     }
 }
 
