@@ -41,23 +41,12 @@
             </BuildableReference>
          </TestableReference>
       </Testables>
-      <!-- E2E integration test vars.
-           Set isEnabled="YES" and fill real paths to run PipelineE2ETests locally.
-           Leave isEnabled="NO" (default) to skip on CI / machines without the model. -->
+      <!-- Test hosts must remain isolated even when individual test selections change.
+           Real ASR E2E is opt-in via explicit local environment paths. -->
       <EnvironmentVariables>
          <EnvironmentVariable
-            key = "GOLOS_MEET_ASR_BIN"
-            value = "/Users/alfa/Development/golos-meet/asr/target/release/golos-asr"
-            isEnabled = "YES">
-         </EnvironmentVariable>
-         <EnvironmentVariable
-            key = "GOLOS_MEET_GIGAAM_DIR"
-            value = "/Users/alfa/Library/Application Support/golos/models/e2e_ctc"
-            isEnabled = "YES">
-         </EnvironmentVariable>
-         <EnvironmentVariable
-            key = "GOLOS_MEET_E2E_SRC"
-            value = "/Users/alfa/Library/Application Support/golos-meet/meetings/2026-06-23_09-44-58"
+            key = "GOLOS_MEET_TEST_MODE"
+            value = "1"
             isEnabled = "YES">
          </EnvironmentVariable>
       </EnvironmentVariables>

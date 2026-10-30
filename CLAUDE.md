@@ -13,11 +13,12 @@
 - **Дальше:** дистрибуция (подключить `ModelManager`, бандлинг sidecar — под-проект B) и menu-bar + ручной старт/стоп записи + живая встреча в ленте (под-проект C-4).
 
 ## Сборка и тесты
+- **Безопасный test host:** схема TestAction задаёт `GOLOS_MEET_TEST_MODE=1`; дополнительно распознаются маркеры XCTest. Рабочий UI, восстановление записей, детектор и автообработка не запускаются. `AppPaths` использует отдельный временный каталог процесса, Keychain — отдельный тестовый service. Изоляция действует и при запуске отдельных тестов через Xcode.
 - **Swift-приложение:** `xcodebuild build -scheme golos-meet -destination 'platform=macOS'`
 - **Swift-тесты:** `xcodebuild test -scheme golos-meet -destination 'platform=macOS' -only-testing:golos-meetTests`
   (используем именно `-only-testing:golos-meetTests` — бандл `golos-meetUITests` пустой/падает, это известный предсуществующий шум.)
 - **Rust-sidecar:** из `asr/` — `cargo test --lib` (юниты без модели); `cargo build --release` (бинарь).
-- **Реальный e2e (gated):** `GOLOS_MEET_ASR_BIN=$PWD/asr/target/release/golos-asr GOLOS_MEET_GIGAAM_DIR="$HOME/Library/Application Support/golos/models/e2e_ctc" xcodebuild test ... -only-testing:golos-meetTests/PipelineE2ETests` — прогоняет настоящий пайплайн с живым sidecar; без env-переменных тест скипается.
+- **Реальный e2e (gated):** `GOLOS_MEET_ASR_BIN=$PWD/asr/target/release/golos-asr GOLOS_MEET_GIGAAM_DIR="$HOME/Library/Application Support/golos/models/e2e_ctc" GOLOS_MEET_E2E_SRC=/path/to/explicitly-selected-audio xcodebuild test ... -only-testing:golos-meetTests/PipelineE2ETests` — прогоняет настоящий пайплайн с живым sidecar; без всех трёх env-переменных тест скипается; схема не содержит путей к моделям и пользовательским записям.
 
 ## Архитектура (модульный монолит)
 Поток: `MeetingDetector` → `Recorder` → (`meetingEnded`) → очередь `MeetingProcessor` → `ProcessingPipeline` → `LocalASR`↔sidecar → `TranscriptMerger` → файлы + статус.

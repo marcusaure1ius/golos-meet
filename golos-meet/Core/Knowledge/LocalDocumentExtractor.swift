@@ -62,13 +62,21 @@ actor LocalDocumentExtractor {
             for i in 0..<pdf.pageCount {
                 try Task.checkCancellation()
                 guard let page = pdf.page(at: i) else { throw DocumentExtractionError.invalidDocument }
-                var text = page.string?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-                if text.isEmpty {
+                let native = page.string?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+                var text = native
+                // A nonempty text layer can contain only a footer over a scanned page.
+                // OCR the rendered page as well; keep native text and append only new lines.
+                do {
                     let image = page.thumbnail(of: NSSize(width: 1800, height: 2400), for: .mediaBox)
                     guard let cgImage = image.cgImage(forProposedRect: nil, context: nil, hints: nil) else {
                         throw DocumentExtractionError.invalidDocument
                     }
-                    text = try recognize(cgImage)
+                    text = Self.merging(native: native, recognized: try recognize(cgImage))
+                } catch is CancellationError {
+                    throw CancellationError()
+                } catch {
+                    guard !native.isEmpty else { throw error }
+                    warnings.append("На странице \(i + 1) OCR недоступен; извлечён только текстовый слой, содержимое изображений может отсутствовать.")
                 }
                 if !text.isEmpty { blocks.append(.init(text: text, location: .init(page: i + 1))) }
                 else { warnings.append("На странице \(i + 1) не найден текст.") }
@@ -88,6 +96,24 @@ actor LocalDocumentExtractor {
         guard !blocks.isEmpty else { throw DocumentExtractionError.noText }
         return ExtractedDocument(title: url.deletingPathExtension().lastPathComponent,
                                  contentHash: hash, blocks: blocks, warnings: warnings)
+    }
+
+    /// Ignore case, punctuation and OCR line wrapping when comparing with the text layer.
+    private static func merging(native: String, recognized: String) -> String {
+        func key(_ text: String) -> String {
+            text.folding(options: [.caseInsensitive, .diacriticInsensitive], locale: Locale(identifier: "en_US_POSIX"))
+                .unicodeScalars.filter { CharacterSet.alphanumerics.contains($0) }
+                .map(String.init).joined()
+        }
+        var result = native
+        var existing = key(native)
+        for line in recognized.components(separatedBy: .newlines) {
+            let candidate = key(line)
+            guard !candidate.isEmpty, !existing.contains(candidate) else { continue }
+            result += (result.isEmpty ? "" : "\n") + line
+            existing += candidate
+        }
+        return result
     }
 
     private func recognize(_ image: CGImage) throws -> String {

@@ -3,7 +3,8 @@ import Security
 
 /// Минимальная обёртка над keychain (generic password) для секретов приложения.
 enum Keychain {
-    static let service = "golos-meet"
+    static let service = AppRuntime.isTestHost
+        ? "golos-meet.tests.\(AppRuntime.testStorage.lastPathComponent)" : "golos-meet"
     static let openRouterAccount = "openrouter-api-key"
     static let talkAccount = "kontur-talk-api-key"
 

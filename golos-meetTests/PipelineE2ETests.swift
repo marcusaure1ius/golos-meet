@@ -8,10 +8,7 @@ import Foundation
 /// Тест GATED: пропускается (pass-by-return), если не заданы env-переменные:
 ///   GOLOS_MEET_ASR_BIN   — путь к release-бинарю sidecar (asr/target/release/golos-asr)
 ///   GOLOS_MEET_GIGAAM_DIR — путь к каталогу модели GigaAM CTC (model.onnx + vocab.txt)
-///
-/// Опционально:
-///   GOLOS_MEET_E2E_SRC — каталог записи-источника (mic.wav + system.wav);
-///                         дефолт: ~/Library/Application Support/golos-meet/meetings/2026-06-23_09-44-58
+///   GOLOS_MEET_E2E_SRC — явно выбранный каталог записи-источника (mic.wav + system.wav).
 
 @Suite struct PipelineE2ETests {
 
@@ -28,6 +25,11 @@ import Foundation
             return
         }
 
+        guard let source = env["GOLOS_MEET_E2E_SRC"], !source.isEmpty else {
+            print("[PipelineE2ETests] GOLOS_MEET_E2E_SRC не задан — тест пропущен.")
+            return
+        }
+
         // Gate 2: referenced files must exist on this machine (skip gracefully on CI/other hosts)
         guard FileManager.default.fileExists(atPath: asrBin) else {
             print("[PipelineE2ETests] sidecar binary не найден: \(asrBin) — тест пропущен.")
@@ -39,9 +41,7 @@ import Foundation
         }
 
         // Каталог записи-источника (содержит mic.wav + system.wav с реальной речью)
-        let srcDefault = FileManager.default.homeDirectoryForCurrentUser
-            .appendingPathComponent("Library/Application Support/golos-meet/meetings/2026-06-23_09-44-58")
-        let srcDir = env["GOLOS_MEET_E2E_SRC"].map { URL(fileURLWithPath: $0) } ?? srcDefault
+        let srcDir = URL(fileURLWithPath: source)
 
         // Временная папка встречи
         let tempDir = FileManager.default.temporaryDirectory

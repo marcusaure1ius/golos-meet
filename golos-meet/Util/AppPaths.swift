@@ -4,6 +4,7 @@ import Foundation
 enum AppPaths {
     /// `~/Library/Application Support/golos-meet/`
     static var appSupport: URL {
+        if AppRuntime.isTestHost { return AppRuntime.testStorage }
         let base = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
         let dir = base.appendingPathComponent("golos-meet", isDirectory: true)
         try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
