@@ -5,10 +5,15 @@ import os
 @MainActor
 protocol AudioTrack: AnyObject {
     var onFailure: (() -> Void)? { get set }
+    var failureMessage: String? { get }
     /// Returns only after the capture backend is ready. Silence is valid audio.
     func start(into writer: WavWriter) async throws
     /// Must stop accepting buffers and drain queued writes before returning.
     func stop() async throws
+}
+
+extension AudioTrack {
+    var failureMessage: String? { nil }
 }
 
 /// Метаданные одной встречи, ложатся рядом с дорожками как `meta.json`.
@@ -65,6 +70,7 @@ final class Recorder: MeetingDetectorDelegate {
         let startedAt: Date
         let manual: Bool
         var failed = false
+        var failureMessage: String?
         var ending = false
         var startTask: Task<Void, Never>?
         var timeoutTask: Task<Void, Never>?
@@ -191,6 +197,8 @@ final class Recorder: MeetingDetectorDelegate {
     private func captureFailed(_ a: Active, track: RecordingState.Track?) {
         guard active === a, !a.failed else { return }
         a.failed = true
+        if track == .system { a.failureMessage = a.sysTrack.failureMessage }
+        else if track == .microphone { a.failureMessage = a.micTrack.failureMessage }
         Log.recorder.error("Ошибка дорожки захвата")
         state.trackFailed(track)
         if a.ending { return }
@@ -227,7 +235,7 @@ final class Recorder: MeetingDetectorDelegate {
         active = nil
         finalization = nil
         if a.failed {
-            state.fail("Запись прервана. Проверьте разрешения и свободное место.")
+            state.fail(a.failureMessage ?? "Запись прервана. Проверьте разрешения и свободное место.")
         } else { state.end() }
         Log.recorder.info("Финализация захвата завершена; ошибка: \(a.failed)")
         return folder
@@ -267,6 +275,7 @@ final class Recorder: MeetingDetectorDelegate {
             state.stopped(kind)
         } catch {
             session.failed = true
+            if let message = track.failureMessage { session.failureMessage = message }
             state.trackFailed(kind)
             Log.recorder.error("Не удалось подтвердить остановку дорожки захвата")
         }
