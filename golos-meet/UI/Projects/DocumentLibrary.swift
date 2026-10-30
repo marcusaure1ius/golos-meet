@@ -51,4 +51,10 @@ final class DocumentLibrary: ObservableObject {
             }
         }
     }
+
+    /// A persisted update must keep its source identity after restart. Never
+    /// replace a missing target with nil: the store will reject that update.
+    func retryImport(_ attempt: DocumentImportAttempt, selecting url: URL) async {
+        await queue.enqueue(urls: [url], projectIDs: [], targetID: attempt.targetID)
+    }
 }

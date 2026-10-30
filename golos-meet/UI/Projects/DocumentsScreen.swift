@@ -97,12 +97,9 @@ private struct DocumentListContent: View {
                                 let jobIDs = Set(queue.jobs.map(\.id))
                                 let interrupted = documents.attempts.filter { !jobIDs.contains($0.id) && [.interrupted, .failed, .cancelled].contains($0.state) }
                                 if scope == .all, !interrupted.isEmpty {
-                                    GSectionHeader("Предыдущие попытки импорта", desc: "Для повтора выберите файл через «Импортировать».")
+                                    GSectionHeader("Предыдущие попытки импорта", desc: "Выберите файл для повтора нужной попытки.")
                                     ForEach(interrupted) { attempt in
-                                        VStack(alignment: .leading, spacing: 4) {
-                                            Text(attempt.filename).font(.system(size: 13, weight: .semibold))
-                                            Text(attempt.message).font(.system(size: 12)).foregroundStyle(p.muted)
-                                        }
+                                        SavedImportAttemptRow(attempt: attempt)
                                     }
                                 }
                             }.padding(.horizontal, 56).padding(.bottom, 32)
@@ -123,6 +120,42 @@ private struct DocumentListContent: View {
         DocumentFilePicker.choose(multiple: true) { urls in
             Task { await queue.enqueue(urls: urls, projectIDs: owners) }
         }
+    }
+}
+
+private struct SavedImportAttemptRow: View {
+    let attempt: DocumentImportAttempt
+    @EnvironmentObject private var documents: DocumentLibrary
+    @Environment(\.palette) private var p
+
+    private var target: LibraryDocument? { documents.documents.first { $0.id == attempt.targetID } }
+    private var targetMissing: Bool { attempt.targetID != nil && target == nil }
+
+    var body: some View {
+        HStack(alignment: .top, spacing: 16) {
+            VStack(alignment: .leading, spacing: 4) {
+                Text(attempt.filename).font(.system(size: 13, weight: .semibold)).foregroundStyle(p.ink)
+                if let target {
+                    Text("Обновление «\(target.title)»").font(.system(size: 13)).foregroundStyle(p.ink)
+                } else if targetMissing {
+                    Text("Исходный документ недоступен. Повтор обновления невозможен.")
+                        .font(.system(size: 12)).foregroundStyle(p.danger)
+                } else {
+                    Text("Новый документ · Во Входящие").font(.system(size: 12)).foregroundStyle(p.muted)
+                }
+                Text(attempt.message).font(.system(size: 12)).foregroundStyle(p.muted)
+            }
+            Spacer()
+            Button(attempt.targetID == nil ? "Выбрать файл" : "Повторить обновление") {
+                guard !targetMissing else { return }
+                DocumentFilePicker.choose(multiple: false, updating: attempt.targetID != nil, updatingDocumentTitle: target?.title) { urls in
+                    guard let url = urls.first else { return }
+                    Task { await documents.retryImport(attempt, selecting: url) }
+                }
+            }
+            .disabled(targetMissing || !documents.isLoaded || documents.error != nil)
+            .accessibilityLabel(target.map { "Выбрать файл для обновления «\($0.title)»" } ?? "Выбрать файл для повтора импорта «\(attempt.filename)»")
+        }.padding(.vertical, 6)
     }
 }
 
@@ -154,14 +187,14 @@ struct ImportJobRow: View {
 
 @MainActor
 enum DocumentFilePicker {
-    static func choose(multiple: Bool, updating: Bool = false, onChoose: @escaping ([URL]) -> Void) {
+    static func choose(multiple: Bool, updating: Bool = false, updatingDocumentTitle: String? = nil, onChoose: @escaping ([URL]) -> Void) {
         let panel = NSOpenPanel()
         panel.canChooseDirectories = false
         panel.allowsMultipleSelection = multiple
         panel.allowedContentTypes = DocumentImporter.supportedExtensions.compactMap { UTType(filenameExtension: $0) }
         panel.prompt = updating ? "Обновить файл" : "Импортировать"
         panel.message = updating
-            ? "Новая версия будет доступна во всех проектах этого документа. Прежняя копия сохранится в истории."
+            ? (updatingDocumentTitle.map { "Обновление «\($0)». " } ?? "") + "Новая версия будет доступна во всех проектах этого документа. Прежняя копия сохранится в истории."
             : "В библиотеку Golos Meet будет сохранена локальная копия. Исходный файл останется без изменений."
         panel.begin { response in
             if response == .OK { onChoose(panel.urls) }

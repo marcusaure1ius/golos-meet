@@ -23,7 +23,7 @@ struct DocumentDetailView: View {
                 .font(.system(size: 13)).foregroundStyle(p.muted)
             HStack {
                 Button("Обновить файл") {
-                    DocumentFilePicker.choose(multiple: false, updating: true) { urls in
+                    DocumentFilePicker.choose(multiple: false, updating: true, updatingDocumentTitle: document.title) { urls in
                         Task { await documents.queue.enqueue(urls: urls, projectIDs: [], targetID: document.id) }
                     }
                 }.buttonStyle(GhostButton())
