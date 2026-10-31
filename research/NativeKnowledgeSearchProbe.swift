@@ -17,9 +17,34 @@ private func require(_ condition: Bool, _ message: String) throws {
 }
 
 @main struct NativeKnowledgeSearchProbe {
+    private static func median(_ sortedValues: [Double]) throws -> Double {
+        try require(!sortedValues.isEmpty, "Median requires a nonempty sample")
+        let middle = sortedValues.count / 2
+        return sortedValues.count.isMultiple(of: 2)
+            ? (sortedValues[middle - 1] + sortedValues[middle]) / 2
+            : sortedValues[middle]
+    }
+
+    /// Exercises the production report calculation without loading a model.
+    private static func checkStatistics(_ reportURL: URL) throws {
+        for (sample, expected) in [([3.0], 3.0), ([9.0, 1.0, 3.0], 3.0),
+                                   ([9.0, 1.0, 3.0, 5.0], 4.0), ([2.0, 8.0], 5.0)] {
+            try require(try median(sample.sorted()) == expected, "Odd/even median self-check failed")
+        }
+        guard let report = try JSONSerialization.jsonObject(with: Data(contentsOf: reportURL)) as? [String: Any],
+              let samples = report["query_ms_including_reconcile_and_freshness"] as? [Double],
+              let stored = report["query_median_ms"] as? Double else { throw SearchProbeError.invariant("Missing statistics") }
+        let computed = try median(samples.sorted())
+        try require(abs(computed - stored) < 1e-9, "Stored median differs from raw measurements")
+        print("Median checks passed: odd/even samples; \(samples.count) saved timings → \(computed) ms.")
+    }
+
     static func main() async throws {
+        if CommandLine.arguments.count == 3, CommandLine.arguments[1] == "--check-statistics" {
+            try checkStatistics(URL(fileURLWithPath: CommandLine.arguments[2])); return
+        }
         guard CommandLine.arguments.count == 4 else {
-            fputs("Usage: native-search-probe MODEL_FOLDER SYNTHETIC_CORPUS_JSON REPORT_JSON\n", stderr); exit(2)
+            fputs("Usage: native-search-probe MODEL_FOLDER SYNTHETIC_CORPUS_JSON REPORT_JSON\n       native-search-probe --check-statistics REPORT_JSON\n", stderr); exit(2)
         }
         let weights = URL(fileURLWithPath: CommandLine.arguments[1])
         try await EmbeddingModelInstaller(root: weights).verifyFolder(weights)
@@ -95,7 +120,7 @@ private func require(_ condition: Bool, _ message: String) throws {
             "corpus_sha256": SHA256.hash(data: corpusBytes).map { String(format: "%02x", $0) }.joined(),
             "sources": jobs.count, "documents": 24, "meetings": 24, "queries": corpus.queries.count,
             "index_with_cold_runtime_seconds": indexSeconds, "sources_per_second_including_cold_start": 48 / indexSeconds,
-            "query_ms_including_reconcile_and_freshness": times, "query_median_ms": values[values.count / 2],
+            "query_ms_including_reconcile_and_freshness": times, "query_median_ms": try median(values),
             "query_p95_ms": values[min(values.count - 1, Int(ceil(Double(values.count) * 0.95)) - 1)],
             "top1_hits": top1, "recall_at_5_macro": recall / Double(corpus.queries.count),
             "peak_cli_rss_bytes": usage.ru_maxrss,

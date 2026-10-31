@@ -8,7 +8,7 @@
   "peak_cli_rss_bytes" : 1543143424,
   "project_scope_checked" : true,
   "queries" : 20,
-  "query_median_ms" : 48.328041681088507,
+  "query_median_ms" : 47.742395850946195,
   "query_ms_including_reconcile_and_freshness" : [
     45.801000000210479,
     45.522125001298264,
