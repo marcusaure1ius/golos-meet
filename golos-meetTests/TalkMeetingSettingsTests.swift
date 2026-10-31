@@ -33,7 +33,7 @@ private actor SettingsLookup {
     }
     @Test func normalizesPersistsEditsDeletesAndReopensWithoutSecret() throws {
         let store = SettingsPreferences(), credential = credential
-        let model = TalkMeetingSettingsModel(preferences: store)
+        let model = TalkMeetingSettingsModel(preferences: store, credentials: SettingsCredentials(credential))
         model.bind(credential)
         model.rooms = [.init(input: " beta "), .init(input: "https://SETTINGS.example:443/alpha/"), .init(input: "alpha")]
         #expect(model.saveRooms())
@@ -44,19 +44,20 @@ private actor SettingsLookup {
         model.rooms[0].input = "edited"
         model.removeRoom(model.rooms[1].id)
         #expect(model.saveRooms())
-        let reopened = TalkMeetingSettingsModel(preferences: store)
+        let reopened = TalkMeetingSettingsModel(preferences: store, credentials: SettingsCredentials(credential))
         reopened.bind(credential)
         #expect(reopened.rooms.map(\.input) == ["edited"])
         reopened.rooms = []; #expect(reopened.saveRooms())
         #expect(store.value?.rooms == [])
     }
     @Test func invalidElementNeverPartiallySavesAndFileFailureIsVisible() {
-        let store = SettingsPreferences(), model = TalkMeetingSettingsModel(preferences: SettingsPreferences())
+        let credential = credential
+        let store = SettingsPreferences(), model = TalkMeetingSettingsModel(preferences: SettingsPreferences(), credentials: SettingsCredentials(credential))
         model.bind(credential)
         model.rooms = [.init(input: "valid"), .init(input: "https://other.example/room")]
         #expect(model.roomError(model.rooms[1].input) != nil)
         #expect(!model.saveRooms())
-        let failing = TalkMeetingSettingsModel(preferences: store)
+        let failing = TalkMeetingSettingsModel(preferences: store, credentials: SettingsCredentials(credential))
         failing.bind(credential); failing.rooms = [.init(input: "valid")]
         store.fail = true
         #expect(!failing.saveRooms()); #expect(failing.message != nil)
@@ -64,7 +65,7 @@ private actor SettingsLookup {
     }
     @Test func lookupRequiresExplicitSelectionAndDoesNotCommitUnsavedRooms() async throws {
         let store = SettingsPreferences(), credential = credential, account = account
-        let model = TalkMeetingSettingsModel(preferences: store, lookup: { _, email in
+        let model = TalkMeetingSettingsModel(preferences: store, credentials: SettingsCredentials(credential), lookup: { _, email in
             #expect(email == "me@example.ru")
             return [account, TalkUserAccount(key: "other", login: "other", firstname: "Тест", surname: "Пользователь", email: "other@example.ru")]
         })
@@ -76,7 +77,7 @@ private actor SettingsLookup {
         #expect(model.confirm(account))
         #expect(store.value?.account?.key == "owner-key")
         #expect(store.value?.rooms == ["saved"])
-        let reopened = TalkMeetingSettingsModel(preferences: store)
+        let reopened = TalkMeetingSettingsModel(preferences: store, credentials: SettingsCredentials(credential))
         reopened.bind(credential)
         #expect(reopened.confirmed == account)
         #expect(reopened.rooms.map(\.input) == ["saved"])
@@ -136,8 +137,8 @@ private actor SettingsLookup {
         #expect(connection.meetingSettings.isBound)
     }
     @Test func noKeyEmptyFailureAndUnlistedConfirmationAreSafe() async {
-        let account = account, prefs = SettingsPreferences()
-        let model = TalkMeetingSettingsModel(preferences: prefs, lookup: { _, _ in [] })
+        let account = account, prefs = SettingsPreferences(), credential = credential
+        let model = TalkMeetingSettingsModel(preferences: prefs, credentials: SettingsCredentials(credential), lookup: { _, _ in [] })
         model.email = "me@example.ru"; model.findAccount()
         if case .failed = model.search {} else { Issue.record("Нет ключа") }
         model.bind(credential); model.email = "invalid"; model.findAccount()
@@ -145,7 +146,7 @@ private actor SettingsLookup {
         model.email = "me@example.ru"; model.findAccount()
         await wait { model.search == .results([]) }
         #expect(!model.confirm(account))
-        let failure = TalkMeetingSettingsModel(preferences: prefs, lookup: { _, _ in
+        let failure = TalkMeetingSettingsModel(preferences: prefs, credentials: SettingsCredentials(credential), lookup: { _, _ in
             throw NSError(domain: "synthetic", code: 1, userInfo: [NSLocalizedDescriptionKey: "private-body talkusr.synthetic"])
         })
         failure.bind(credential); failure.email = "me@example.ru"; failure.findAccount()

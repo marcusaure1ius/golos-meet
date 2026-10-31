@@ -77,7 +77,7 @@ import SwiftUI
                 VStack(alignment: .leading, spacing: 10) {
                     Toggle("Автозапись по API Толка", isOn: Binding(get: { model.apiEnabled }, set: { model.setAPIEnabled($0) }))
                         .toggleStyle(.switch).accessibilityLabel("Автозапись по API Толка")
-                    Text(model.modeError != nil ? "Режим не подтверждён. Исправьте ошибку и сохраните выбор заново." : model.apiEnabled ? "Включена для сохранённых комнат и подтверждённого аккаунта. При отсутствии настройки API будет ждать; эвристика не подменяет его." : "Выключена. Автозапись использует прежнюю эвристику аудио и окон Толка.")
+                    Text(modeDescription)
                         .fixedSize(horizontal: false, vertical: true)
                     if let error = model.modeError { Text(error).foregroundStyle(p.danger).fixedSize(horizontal: false, vertical: true) }
                 }.padding(17)
@@ -86,6 +86,15 @@ import SwiftUI
                 .foregroundStyle(p.muted).fixedSize(horizontal: false, vertical: true)
         }
         .font(.system(size: 13)).foregroundStyle(p.ink)
+    }
+
+    private var modeDescription: String {
+        if model.modeError != nil { return "Режим не подтверждён. Исправьте ошибку и сохраните выбор заново." }
+        if !model.apiEnabled { return "Выключена. Автозапись использует прежнюю эвристику аудио и окон Толка." }
+        if !model.isReadyForAPI {
+            return "API-режим выбран, но сохранённые комнаты или аккаунт недоступны. Откройте настройки заново и проверьте подключение. Эвристика не используется."
+        }
+        return "Включена для сохранённых комнат и подтверждённого аккаунта. При отсутствии настройки API будет ждать; эвристика не подменяет его."
     }
 
     private var canSaveRooms: Bool { model.isBound && !model.rooms.contains { model.roomError($0.input) != nil } }

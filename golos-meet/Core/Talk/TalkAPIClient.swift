@@ -11,6 +11,7 @@ nonisolated enum TalkAPIError: LocalizedError, Equatable {
     case redirectRefused
     case invalidRoom
     case invalidEmail
+    case connectionChanged
 
     var errorDescription: String? {
         switch self {
@@ -22,6 +23,7 @@ nonisolated enum TalkAPIError: LocalizedError, Equatable {
         case .http(let status): return "Толк вернул ошибку HTTP \(status)."
         case .invalidResponse: return "Не удалось прочитать ответ API Толка."
         case .redirectRefused: return "Адрес Толка перенаправляет запрос. Проверьте адрес пространства."
+        case .connectionChanged: return "Подключение изменено или недоступно. Откройте настройки заново и повторите действие."
         case .invalidEmail: return "Укажите рабочую почту целиком, например name@example.ru."
         case .invalidRoom: return "Некорректный идентификатор комнаты Толка."
         }
