@@ -70,5 +70,76 @@
       "name": "joined"
     }
   ],
-  "interpretation": "Fixture released its own reserved lock after the first connection exhausted the unchanged 2000ms SQLite busy timeout; older undiagnosed run remains unproven."
+  "interpretation": "Fixture released its own reserved lock after the first connection exhausted the unchanged 2000ms SQLite busy timeout; older undiagnosed run remains unproven.",
+  "scheduler_watchdog_run": {
+    "diagnosed_run": "2026-10-31_09-52-28-+0300",
+    "events": [
+      {
+        "name": "acquire",
+        "result": 0,
+        "extended": 0,
+        "milliseconds": 0.14491667388938367
+      },
+      {
+        "name": "first-task-start",
+        "milliseconds": 0.24933333043009043
+      },
+      {
+        "name": "first-sqlite-begin",
+        "connection": "832E6F40-A3BF-425C-8A62-969281057512",
+        "milliseconds": 0.4586666764225811
+      },
+      {
+        "name": "second-task-start",
+        "milliseconds": 3784.2590833315626
+      },
+      {
+        "name": "sqlite-entry-timeout",
+        "milliseconds": 5005.318416660884
+      },
+      {
+        "name": "schedule",
+        "scheduledMilliseconds": 5005.383541662013,
+        "milliseconds": 5005.383666662965
+      },
+      {
+        "name": "release-start",
+        "milliseconds": 5005.470708332723
+      },
+      {
+        "name": "first-sqlite-entry-barrier-timeout",
+        "milliseconds": 5005.5414583475795,
+        "connection": "832E6F40-A3BF-425C-8A62-969281057512"
+      },
+      {
+        "name": "commit-result",
+        "milliseconds": 5005.95295833773,
+        "result": 0,
+        "extended": 0
+      },
+      {
+        "name": "close-result",
+        "milliseconds": 5005.993791681249,
+        "result": 0
+      },
+      {
+        "name": "first-success",
+        "milliseconds": 5008.204708341509
+      },
+      {
+        "name": "second-sqlite-begin",
+        "milliseconds": 6310.480499989353,
+        "connection": "19E1FC8B-19D2-4707-B486-37BC9D00F03A"
+      },
+      {
+        "name": "second-success",
+        "milliseconds": 6310.7733333308715
+      },
+      {
+        "name": "joined",
+        "milliseconds": 6310.809791670181
+      }
+    ],
+    "interpretation": "Multiple concurrent blocking fixtures delayed the second Task start to 3784ms and its SQLite entry to 6310ms; watchdog correctly rejected contention. Suite scenarios are now serialized while both real connections within each scenario remain concurrent."
+  }
 }

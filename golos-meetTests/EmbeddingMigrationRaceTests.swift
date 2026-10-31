@@ -195,7 +195,11 @@ private nonisolated enum MigrationRace {
     }
 }
 
-@MainActor @Suite struct EmbeddingMigrationRaceTests {
+// Each scenario already creates two concurrent real connections. Running
+// several blocking SQLite/barrier scenarios at once exhausts cooperative
+// threads before delayed peers can start, testing executor capacity instead
+// of migration. Keep scenarios separate, not their two competing connections.
+@MainActor @Suite(.serialized) struct EmbeddingMigrationRaceTests {
     @Test(arguments: [0, 2])
     func concurrentConnectionsReadSchemaOnlyAfterAcquiringMigrationLock(version: Int) async throws {
         let root = FileManager.default.temporaryDirectory.appendingPathComponent("migration-race-\(UUID())")

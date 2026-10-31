@@ -21,7 +21,7 @@ sandbox-exec -p '(version 1)(allow default)(deny network*)' \
   /tmp/golos-embedding-native/e5-small /tmp/native-queue-report.json
 ```
 
-Полный `make check`: **264 теста / 299 параметризованных запусков прошли, 0 ошибок, 2 gated skips**. Реальный ASR E2E исключён штатной командой. Xcode сообщил предупреждение priority inversion в существующем `LocalDocumentExtractorTests`; это не ошибка проверки очереди.
+Полный `make check`: **264 теста / 299 параметризованных запусков прошли, 0 ошибок, 2 gated skips**. Реальный ASR E2E исключён штатной командой. В одном промежуточном прогоне Xcode сообщил предупреждение priority inversion в существующем `LocalDocumentExtractorTests`; в финальном успешном прогоне runtime warnings отсутствуют.
 
 - `LocalIndexingServiceTests`: отсутствие модели не блокирует импорт; установка догоняет источники; свежие байты и round robin; поздние loader/query и A→B→A; cancel/retry/failure/restart; отказ новой модели сохраняет старую; cancelAll/retryAll и новый источник после завершения worker. Здесь двухмерный encoder — явная синтетическая lifecycle fixture.
 - `IndexingProductionHooksTests`: реальные производители импорта и pipeline с подставными ASR/LLM не ждут удерживаемую индексацию; удаление убирает каталог. Отдельный тест использует настоящий FSEvents: создание, запись на месте с восстановленным mtime, повреждение JSON, удаление папки. Нормализация события учитывает `/private/var` и отсутствующий конечный элемент; symlink не уводит событие из наблюдаемой папки.
@@ -42,7 +42,11 @@ sandbox-exec -p '(version 1)(allow default)(deny network*)' \
 
 После включения #31 полный прогон с E5 воспроизвёл отказ fixture (v2). Трасса (`sqlite-fixture-queue-2026-10-31.json`) показала: первое SQLite BEGIN в 652 мс, второе в 1992 мс, назначение освобождения lock в 2374 мс, фактический release/успешный COMMIT в 2879 мс. Первое соединение получило SQLITE_BUSY/extended=5 на `step / beginImmediate` через 2100 мс. Тест сам удержал reserved lock дольше двухсекундного busy_timeout первого соединения из-за задержек входа второго соединения и возобновления Swift-задачи после SQLite callback. Другой cleanup-сценарий тоже получил BUSY.
 
-Исправлена только fixture: callback SQLITE_TRACE_STMT удерживает первое соединение до реального входа второго до начала busy handler; независимый Thread назначает освобождение до возобновления Swift executor. Оба результата и COMMIT по-прежнему ожидаются перед teardown, watchdog и negative control сохранены. Добавлен сценарий с задержкой второго соединения на 2500 мс — дольше production busy_timeout. Targeted suite и полный прогон с E5 прошли. Production SQLite timeout, schema, retry и миграция не изменены. Это объясняет наблюдённый диагностированный запуск; не приписывает старому запуску отсутствующую трассу.
+Исправлена только fixture: callback SQLITE_TRACE_STMT удерживает первое соединение до реального входа второго до начала busy handler; независимый Thread назначает освобождение до возобновления Swift executor. Оба результата и COMMIT по-прежнему ожидаются перед teardown, watchdog и negative control сохранены. Добавлен сценарий с задержкой второго соединения на 2500 мс — дольше production busy_timeout.
+
+Первый полный прогон этого исправления прошёл; повторный выявил исчерпание cooperative threads несколькими одновременно запущенными блокирующими fixture: в двух сценариях Task-start задержался на 3777/3784 мс, SQLite entry появился после 5-секундного watchdog. Теперь сценарии suite выполняются последовательно; **два настоящих соединения внутри каждого сценария по-прежнему работают параллельно** и должны подтвердить конкуренцию. Сам таймаут не принимается за успешное доказательство. Production SQLite timeout, schema, retry и миграция не изменены. Трассы объясняют наблюдённые диагностированные запуски; не приписывают старому запуску отсутствующую трассу.
+
+После изоляции fixture два последовательных полных прогона с E5 прошли: xcresult `Test-golos-meet-2026.10.31_09-53-53-+0300.xcresult` и `Test-golos-meet-2026.10.31_09-55-09-+0300.xcresult` в собственном `.build/xcode/Logs/Test`. Логи `/tmp/golos-queue-final-isolated-check.log` и `/tmp/golos-queue-final-repeat-check.log`. Оба включают все миграционные сценарии и настоящий native queue test.
 
 ## Пределы результата
 
