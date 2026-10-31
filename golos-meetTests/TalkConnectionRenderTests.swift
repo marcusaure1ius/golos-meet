@@ -47,12 +47,12 @@ private struct RenderTalkStore: TalkCredentialStoring {
         let palette = dark ? Palette.dark : Palette.light
         let content = TalkConnectionSettings(model: model)
             .padding(24)
-            .frame(width: 700, height: 560, alignment: .top)
+            .frame(width: 700, height: 1150, alignment: .top)
             .background(palette.content)
             .environment(\.palette, palette)
             .environment(\.colorScheme, dark ? .dark : .light)
         let view = NSHostingView(rootView: content)
-        view.frame = NSRect(x: 0, y: 0, width: 700, height: 560)
+        view.frame = NSRect(x: 0, y: 0, width: 700, height: 1150)
         let window = NSWindow(contentRect: view.frame, styleMask: [.borderless], backing: .buffered, defer: false)
         window.appearance = NSAppearance(named: dark ? .darkAqua : .aqua)
         window.contentView = view
