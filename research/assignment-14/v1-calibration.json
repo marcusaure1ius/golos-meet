@@ -1,0 +1,199 @@
+{
+  "algorithm" : "explicit-name-e5-v1",
+  "auto_threshold" : 0.90000000000000002,
+  "cases" : [
+    {
+      "actual" : [
+        "amber"
+      ],
+      "expected" : [
+        "amber"
+      ],
+      "id" : "c-amber",
+      "milliseconds" : 7.7844583429396152,
+      "scores" : [
+        {
+          "context_kind" : "meeting",
+          "context_text" : "Проект Орбита: запускаем спутниковую связь для судов. Проверяем антенну, радиоканал и покрытие в северных морях.",
+          "explicit_name" : false,
+          "meeting_text" : "Проект Янтарь: переносим складской учёт в новую систему. Проверяем остатки товаров, маркировку и обмен с кассами.",
+          "project" : "orbit",
+          "similarity" : 0.86652365942961906
+        },
+        {
+          "context_kind" : "document",
+          "context_text" : "Проект Платформа: строим конвейер аналитики платежей и витрины данных.",
+          "explicit_name" : false,
+          "meeting_text" : "Проект Янтарь: переносим складской учёт в новую систему. Проверяем остатки товаров, маркировку и обмен с кассами.",
+          "project" : "platform-b",
+          "similarity" : 0.8708219874588129
+        },
+        {
+          "context_kind" : "document",
+          "context_text" : "Проект Платформа: строим конвейер аналитики платежей и витрины данных.",
+          "explicit_name" : false,
+          "meeting_text" : "Проект Янтарь: переносим складской учёт в новую систему. Проверяем остатки товаров, маркировку и обмен с кассами.",
+          "project" : "platform-a",
+          "similarity" : 0.8708219874588129
+        },
+        {
+          "context_kind" : "document",
+          "context_text" : "Проект Янтарь: переносим складской учёт в новую систему. Проверяем остатки товаров, маркировку и обмен с кассами.",
+          "explicit_name" : true,
+          "meeting_text" : "Проект Янтарь: переносим складской учёт в новую систему. Проверяем остатки товаров, маркировку и обмен с кассами.",
+          "project" : "amber",
+          "similarity" : 0.99999999893536751
+        }
+      ],
+      "suggested_topic" : null
+    },
+    {
+      "actual" : [
+        "orbit"
+      ],
+      "expected" : [
+        "orbit"
+      ],
+      "id" : "c-orbit",
+      "milliseconds" : 7.6369166781660169,
+      "scores" : [
+        {
+          "context_kind" : "meeting",
+          "context_text" : "Проект Орбита: запускаем спутниковую связь для судов. Проверяем антенну, радиоканал и покрытие в северных морях.",
+          "explicit_name" : true,
+          "meeting_text" : "Орбита: запуск спутниковой связи для судов. Проверка антенны, радиоканала и покрытия в северных морях.",
+          "project" : "orbit",
+          "similarity" : 0.97576224450480709
+        },
+        {
+          "context_kind" : "document",
+          "context_text" : "Проект Платформа: строим конвейер аналитики платежей и витрины данных.",
+          "explicit_name" : false,
+          "meeting_text" : "Орбита: запуск спутниковой связи для судов. Проверка антенны, радиоканала и покрытия в северных морях.",
+          "project" : "platform-b",
+          "similarity" : 0.83181515817279017
+        },
+        {
+          "context_kind" : "document",
+          "context_text" : "Проект Платформа: строим конвейер аналитики платежей и витрины данных.",
+          "explicit_name" : false,
+          "meeting_text" : "Орбита: запуск спутниковой связи для судов. Проверка антенны, радиоканала и покрытия в северных морях.",
+          "project" : "platform-a",
+          "similarity" : 0.83181515817279017
+        },
+        {
+          "context_kind" : "document",
+          "context_text" : "Проект Янтарь: переносим складской учёт в новую систему. Проверяем остатки товаров, маркировку и обмен с кассами.",
+          "explicit_name" : false,
+          "meeting_text" : "Орбита: запуск спутниковой связи для судов. Проверка антенны, радиоканала и покрытия в северных морях.",
+          "project" : "amber",
+          "similarity" : 0.8435856997964355
+        }
+      ],
+      "suggested_topic" : null
+    },
+    {
+      "actual" : [
+
+      ],
+      "expected" : [
+
+      ],
+      "id" : "c-generic",
+      "milliseconds" : 7.1940833295229822,
+      "scores" : [
+        {
+          "context_kind" : "meeting",
+          "context_text" : "Проект Орбита: запускаем спутниковую связь для судов. Проверяем антенну, радиоканал и покрытие в северных морях.",
+          "explicit_name" : false,
+          "meeting_text" : "Обсуждаем сроки проекта, бюджет и распределение задач между коллегами.",
+          "project" : "orbit",
+          "similarity" : 0.8409760517273297
+        },
+        {
+          "context_kind" : "document",
+          "context_text" : "Проект Платформа: строим конвейер аналитики платежей и витрины данных.",
+          "explicit_name" : false,
+          "meeting_text" : "Обсуждаем сроки проекта, бюджет и распределение задач между коллегами.",
+          "project" : "platform-b",
+          "similarity" : 0.88267828584713326
+        },
+        {
+          "context_kind" : "document",
+          "context_text" : "Проект Платформа: строим конвейер аналитики платежей и витрины данных.",
+          "explicit_name" : false,
+          "meeting_text" : "Обсуждаем сроки проекта, бюджет и распределение задач между коллегами.",
+          "project" : "platform-a",
+          "similarity" : 0.88267828584713326
+        },
+        {
+          "context_kind" : "document",
+          "context_text" : "Проект Янтарь: переносим складской учёт в новую систему. Проверяем остатки товаров, маркировку и обмен с кассами.",
+          "explicit_name" : false,
+          "meeting_text" : "Обсуждаем сроки проекта, бюджет и распределение задач между коллегами.",
+          "project" : "amber",
+          "similarity" : 0.85421674052459728
+        }
+      ],
+      "suggested_topic" : null
+    },
+    {
+      "actual" : [
+
+      ],
+      "expected" : [
+
+      ],
+      "id" : "c-duplicate",
+      "milliseconds" : 7.5592500215861946,
+      "scores" : [
+        {
+          "context_kind" : "meeting",
+          "context_text" : "Проект Орбита: запускаем спутниковую связь для судов. Проверяем антенну, радиоканал и покрытие в северных морях.",
+          "explicit_name" : false,
+          "meeting_text" : "Проект Платформа: строим конвейер аналитики платежей и витрины данных.",
+          "project" : "orbit",
+          "similarity" : 0.85998106269806607
+        },
+        {
+          "context_kind" : "document",
+          "context_text" : "Проект Платформа: строим конвейер аналитики платежей и витрины данных.",
+          "explicit_name" : false,
+          "meeting_text" : "Проект Платформа: строим конвейер аналитики платежей и витрины данных.",
+          "project" : "platform-b",
+          "similarity" : 1
+        },
+        {
+          "context_kind" : "document",
+          "context_text" : "Проект Платформа: строим конвейер аналитики платежей и витрины данных.",
+          "explicit_name" : false,
+          "meeting_text" : "Проект Платформа: строим конвейер аналитики платежей и витрины данных.",
+          "project" : "platform-a",
+          "similarity" : 1
+        },
+        {
+          "context_kind" : "document",
+          "context_text" : "Проект Янтарь: переносим складской учёт в новую систему. Проверяем остатки товаров, маркировку и обмен с кассами.",
+          "explicit_name" : false,
+          "meeting_text" : "Проект Платформа: строим конвейер аналитики платежей и витрины данных.",
+          "project" : "amber",
+          "similarity" : 0.8708219874588129
+        }
+      ],
+      "suggested_topic" : null
+    }
+  ],
+  "cold_index_seconds" : 1.3093408333370462,
+  "corpus_sha256" : "12e772b3777f2c87115962bc63d43a41ae7b3243ae812b8bff9373a74977fbc7",
+  "false_positive_links" : 0,
+  "idempotence_checked" : true,
+  "manual_inbox_restart_checked" : true,
+  "missed_links" : 0,
+  "model_id" : "multilingual-e5-small@fd1525a9fd15316a2d503bf26ab031a61d056e98\/unigram-v1\/mean-l2\/512\/overlap64",
+  "partition" : "calibration",
+  "peak_cli_rss_bytes" : 1852882944,
+  "production_wiring" : false,
+  "proposal_threshold" : 0.78000000000000003,
+  "synthetic_only" : true,
+  "true_positive_links" : 2
+}

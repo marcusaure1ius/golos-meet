@@ -301,8 +301,8 @@ actor ProjectStore {
         let db = try open()
         try db.transaction {
             for id in projectIDs { try requireProject(id, db: db) }
-            try db.execute("INSERT INTO meeting_decisions (meeting_id, origin) VALUES (?, 'manual') ON CONFLICT(meeting_id) DO UPDATE SET origin = 'manual'",
-                           bindings: [meetingID])
+            try db.execute("INSERT INTO meeting_decisions (meeting_id, origin, generation, payload) VALUES (?, 'manual', ?, '') ON CONFLICT(meeting_id) DO UPDATE SET origin = 'manual', generation = excluded.generation, payload = ''",
+                           bindings: [meetingID, UUID().uuidString])
             try db.execute("DELETE FROM meeting_projects WHERE meeting_id = ?", bindings: [meetingID])
             for id in projectIDs.sorted(by: { $0.uuidString < $1.uuidString }) {
                 try db.execute("INSERT INTO meeting_projects (meeting_id, project_id) VALUES (?, ?)", bindings: [meetingID, id.uuidString])
@@ -324,7 +324,7 @@ actor ProjectStore {
         // waiting behind another migrator must observe its committed version.
         try db.transaction {
             let version = Int(try db.rows("PRAGMA user_version").first?.first ?? "") ?? -1
-            guard version <= 4 else { throw ProjectStoreError.newerSchema(version) }
+            guard version <= 5 else { throw ProjectStoreError.newerSchema(version) }
             guard version >= 0 else { throw ProjectStoreError.database("Invalid schema version") }
             if version == 0 {
                 try db.execute("CREATE TABLE projects (id TEXT PRIMARY KEY NOT NULL, name TEXT NOT NULL CHECK(length(trim(name)) BETWEEN 1 AND 200), parent_id TEXT REFERENCES projects(id), cloud_policy TEXT NOT NULL DEFAULT 'localOnly')")
@@ -367,6 +367,30 @@ actor ProjectStore {
                 try db.execute("CREATE TRIGGER knowledge_model_update AFTER UPDATE ON embedding_active_model WHEN old.model_id != new.model_id OR old.dimensions != new.dimensions BEGIN UPDATE knowledge_model_epoch SET generation = hex(randomblob(16)) WHERE slot = 1; END")
                 try db.execute("CREATE TRIGGER knowledge_model_delete AFTER DELETE ON embedding_active_model BEGIN UPDATE knowledge_model_epoch SET generation = hex(randomblob(16)) WHERE slot = 1; END")
                 try db.execute("PRAGMA user_version = 4")
+            }
+            if version < 5 {
+                // Rebuild the parent and its M:N child together with FKs ON.
+                // A real manual zero-selection remains a row, never inferred
+                // from the absence of meeting_projects.
+                try db.execute("CREATE TABLE meeting_decisions_v5 (meeting_id TEXT PRIMARY KEY NOT NULL, origin TEXT NOT NULL CHECK(origin IN ('manual','automatic','proposal')), generation TEXT NOT NULL, payload TEXT NOT NULL)")
+                try db.execute("INSERT INTO meeting_decisions_v5 SELECT meeting_id, origin, hex(randomblob(16)), '' FROM meeting_decisions")
+                try db.execute("CREATE TABLE meeting_projects_v5 (meeting_id TEXT NOT NULL REFERENCES meeting_decisions_v5(meeting_id), project_id TEXT NOT NULL REFERENCES projects(id), PRIMARY KEY(meeting_id, project_id))")
+                try db.execute("INSERT INTO meeting_projects_v5 SELECT meeting_id, project_id FROM meeting_projects")
+                try db.execute("DROP TABLE meeting_projects")
+                try db.execute("DROP TABLE meeting_decisions")
+                try db.execute("ALTER TABLE meeting_decisions_v5 RENAME TO meeting_decisions")
+                try db.execute("ALTER TABLE meeting_projects_v5 RENAME TO meeting_projects")
+                try db.execute("CREATE INDEX meeting_projects_by_project ON meeting_projects(project_id)")
+                try db.execute("CREATE TABLE assignment_epoch (slot INTEGER PRIMARY KEY CHECK(slot = 1), generation TEXT NOT NULL)")
+                try db.execute("INSERT INTO assignment_epoch VALUES (1, hex(randomblob(16)))")
+                // Includes name/parent/policy changes, manual ABA and owners of
+                // context documents. The epoch also serializes competing plans.
+                for table in ["projects", "meeting_decisions", "meeting_projects", "document_projects"] {
+                    for action in ["INSERT", "UPDATE", "DELETE"] {
+                        try db.execute("CREATE TRIGGER assignment_\(table)_\(action) AFTER \(action) ON \(table) BEGIN UPDATE assignment_epoch SET generation = hex(randomblob(16)) WHERE slot = 1; END")
+                    }
+                }
+                try db.execute("PRAGMA user_version = 5")
             }
         }
         database = db
@@ -963,5 +987,62 @@ extension ProjectStore {
         let rows = try db.rows("SELECT s.revision FROM embedding_jobs j JOIN embedding_sources s ON s.source_key = j.source_key WHERE j.source_key = ? AND j.generation = ? AND j.attempt = ? AND j.model_id = ? AND j.state = 'running'",
                               bindings: [lease.job.source.rawValue, lease.job.generation, lease.attempt, lease.model.id])
         return rows.first?.first == lease.snapshot.revision
+    }
+}
+
+
+extension ProjectStore {
+    func meetingAssignmentCheckpoint() throws -> MeetingAssignmentCheckpoint {
+        let db = try open()
+        return try db.transaction { try assignmentCheckpoint(db) }
+    }
+
+    private func assignmentCheckpoint(_ db: ProjectDatabase) throws -> MeetingAssignmentCheckpoint {
+        let projects = try db.rows("SELECT id, name, parent_id, cloud_policy FROM projects ORDER BY id").map { row in
+            guard let id = UUID(uuidString: row[0]), let policy = ProjectCloudPolicy(rawValue: row[3]) else { throw EmbeddingIndexError.corruptIndex }
+            return KnowledgeProject(id: id, name: row[1], parentID: UUID(uuidString: row[2]), cloudPolicy: policy)
+        }
+        var decisions: [String: MeetingAssignmentDecision] = [:]
+        for row in try db.rows("SELECT meeting_id, origin, generation, payload FROM meeting_decisions") {
+            guard let origin = MeetingAssignmentOrigin(rawValue: row[1]) else { throw EmbeddingIndexError.corruptIndex }
+            decisions[row[0]] = .init(origin: origin, generation: row[2], result: row[3].isEmpty ? nil :
+                try JSONDecoder().decode(MeetingAssignmentResult.self, from: Data(row[3].utf8)))
+        }
+        guard let epoch = try db.rows("SELECT generation FROM assignment_epoch WHERE slot = 1").first?.first else { throw EmbeddingIndexError.corruptIndex }
+        // Links survive a missing/invalid transcript. Do not let its removal
+        // from the searchable catalog silently shrink classification context.
+        let contextKeys = try Set(db.rows("SELECT 'meeting', p.meeting_id FROM meeting_projects p JOIN meeting_decisions d ON d.meeting_id=p.meeting_id WHERE d.origin='manual' UNION SELECT 'document', p.document_id FROM document_projects p JOIN documents d ON d.id=p.document_id WHERE d.current_version IS NOT NULL").map { row in
+            guard let kind = EmbeddingSourceKind(rawValue: row[0]) else { throw EmbeddingIndexError.corruptIndex }
+            return EmbeddingSourceKey(kind: kind, externalID: row[1])
+        })
+        return .init(epoch: epoch, projects: projects, model: try searchModelStamp(db), sources: try searchSources(db), decisions: decisions, contextKeys: contextKeys)
+    }
+
+    /// One transaction checks the WHOLE context, not just the target's owners.
+    /// The service separately fences filesystem changes before entering here.
+    func commitMeetingAssignment(_ result: MeetingAssignmentResult, meetingID: String,
+                                 checkpoint: MeetingAssignmentCheckpoint) throws -> MeetingAssignmentCommit {
+        let db = try open()
+        return try db.transaction {
+            let current = try assignmentCheckpoint(db)
+            if current.decisions[meetingID]?.origin == .manual { return .manual }
+            guard current == checkpoint, current.sources.contains(where: { $0.key == .init(kind: .meeting, externalID: meetingID) && $0.job.state == .ready }) else { return .superseded }
+            guard result.modelID == checkpoint.model.model?.id, result.dimensions == checkpoint.model.model?.dimensions,
+                  result.modelGeneration == checkpoint.model.generation,
+                  result.assignedProjectIDs == Set(result.evidence.filter { $0.explicitName && $0.similarity >= 0.90 && $0.similarity - $0.competingSimilarity >= 0.04 }.map(\.projectID)),
+                  result.assignedProjectIDs.isSubset(of: Set(current.projects.map(\.id))),
+                  result.assignedProjectIDs.isSubset(of: Set(result.evidence.filter { $0.explicitName }.map(\.projectID))) else { throw MeetingAssignmentError.stale }
+            let origin: MeetingAssignmentOrigin = result.assignedProjectIDs.isEmpty ? .proposal : .automatic
+            if current.decisions[meetingID]?.origin == origin, current.decisions[meetingID]?.result == result { return .unchanged }
+            let encoder = JSONEncoder(); encoder.outputFormatting = [.sortedKeys]
+            let payload = String(decoding: try encoder.encode(result), as: UTF8.self)
+            try db.execute("INSERT INTO meeting_decisions (meeting_id, origin, generation, payload) VALUES (?, ?, ?, ?) ON CONFLICT(meeting_id) DO UPDATE SET origin=excluded.origin, generation=excluded.generation, payload=excluded.payload",
+                           bindings: [meetingID, origin.rawValue, UUID().uuidString, payload])
+            try db.execute("DELETE FROM meeting_projects WHERE meeting_id = ?", bindings: [meetingID])
+            for id in result.assignedProjectIDs.sorted(by: { $0.uuidString < $1.uuidString }) {
+                try db.execute("INSERT INTO meeting_projects (meeting_id, project_id) VALUES (?, ?)", bindings: [meetingID, id.uuidString])
+            }
+            return .applied
+        }
     }
 }

@@ -213,6 +213,7 @@ private nonisolated enum MigrationRace {
         #expect(sqlite3_open_v2(url.path, &db, SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE | SQLITE_OPEN_FULLMUTEX, nil) == SQLITE_OK)
         defer { sqlite3_exec(db, "ROLLBACK", nil, nil, nil); sqlite3_close(db) }
         if version == 2 {
+            try removeAssignmentMigrationObjects(url)
             #expect(sqlite3_exec(db, "DROP TABLE knowledge_fts; DROP TABLE knowledge_model_epoch; DROP TABLE embedding_vectors; DROP TABLE embedding_jobs; DROP TABLE embedding_chunks; DROP TABLE embedding_sources; DROP TABLE embedding_source_epochs; DROP TABLE embedding_active_model; DROP TABLE embedding_models; PRAGMA user_version=2", nil, nil, nil) == SQLITE_OK)
         }
         let trace = MigrationTrace(version: version)
@@ -262,7 +263,7 @@ private nonisolated enum MigrationRace {
         let writer = try ProjectDatabase(url: url)
         try writer.execute("BEGIN EXCLUSIVE")
         try writer.execute("ROLLBACK")
-        #expect(try writer.rows("PRAGMA user_version") == [["4"]])
+        #expect(try writer.rows("PRAGMA user_version") == [["5"]])
         #expect(try await ProjectStore(url: url).snapshot().projects == [sentinel])
     }
 
@@ -304,7 +305,7 @@ private nonisolated enum MigrationRace {
         let writer = try ProjectDatabase(url: url)
         try writer.execute("BEGIN EXCLUSIVE")
         try writer.execute("ROLLBACK")
-        #expect(try writer.rows("PRAGMA user_version") == [["4"]])
+        #expect(try writer.rows("PRAGMA user_version") == [["5"]])
     }
 
     @Test func delayedPeerDoesNotSpendFirstConnectionsSQLiteBusyTimeoutBeforeContention() async throws {
