@@ -9,6 +9,21 @@ private struct RenderTalkStore: TalkCredentialStoring {
     func save(_ credential: TalkCredential?) throws {}
 }
 
+@MainActor private final class RenderWindowCredentials: TalkCredentialStoring {
+    var value = TalkCredential(server: URL(string: "https://render.example")!, token: "talkusr.synthetic", version: UUID())
+    func load() throws -> TalkCredential? { value }
+    func save(_ value: TalkCredential?) throws { if let value { self.value = value } }
+}
+@MainActor private final class RenderWindowPreferences: TalkPreferencesStoring {
+    var value: TalkMeetingPreferences?
+    func load() throws -> TalkMeetingPreferences? { value }
+    func save(_ value: TalkMeetingPreferences?) throws { self.value = value }
+}
+@MainActor private struct RenderWindowMode: TalkRecordingModeStoring {
+    func load() throws -> Bool { true }
+    func save(_ value: Bool) throws {}
+}
+
 /// Opt-in native renders, with an in-memory store and synthetic transport only.
 /// TEST_RUNNER_GOLOS_MEET_RENDER_TALK_SETTINGS=1 make check
 @MainActor
@@ -39,6 +54,22 @@ private struct RenderTalkStore: TalkCredentialStoring {
             try render(loading, name: "loading", dark: dark, root: root)
             task.cancel()
             await task.value
+            let credentials = RenderWindowCredentials(), preferences = RenderWindowPreferences()
+            preferences.value = .init(schemaVersion: 1, origin: credentials.value.server, connectionVersion: credentials.value.version!,
+                                      rooms: ["syntheticroom"], account: .init(key: "synthetic-owner", login: "owner", firstname: "Тест", surname: "Аккаунт", email: "owner@example.ru"))
+            let first = TalkConnectionModel(store: credentials, preferences: preferences, mode: RenderWindowMode())
+            let stale = TalkConnectionModel(store: credentials, preferences: preferences, mode: RenderWindowMode())
+            #expect(stale.meetingSettings.isReadyForAPI)
+            first.newToken = "talkusr.replacement"; #expect(first.save())
+            #expect(stale.meetingSettings.apiEnabled && !stale.meetingSettings.isReadyForAPI)
+            #expect(stale.meetingSettings.confirmed == nil)
+            try render(stale, name: "stale-window", dark: dark, root: root)
+        }
+        // Only synthetic artifacts, stable handoff path for visual inspection.
+        let handoff = FileManager.default.temporaryDirectory.appendingPathComponent("golos41-stale-window-renders")
+        try FileManager.default.createDirectory(at: handoff, withIntermediateDirectories: true)
+        for name in ["stale-window-light.png", "stale-window-dark.png"] {
+            try Data(contentsOf: root.appendingPathComponent(name)).write(to: handoff.appendingPathComponent(name))
         }
         print("Talk settings renders: \(root.path)")
     }
@@ -47,12 +78,12 @@ private struct RenderTalkStore: TalkCredentialStoring {
         let palette = dark ? Palette.dark : Palette.light
         let content = TalkConnectionSettings(model: model)
             .padding(24)
-            .frame(width: 700, height: 1150, alignment: .top)
+            .frame(width: 700, height: 1350, alignment: .top)
             .background(palette.content)
             .environment(\.palette, palette)
             .environment(\.colorScheme, dark ? .dark : .light)
         let view = NSHostingView(rootView: content)
-        view.frame = NSRect(x: 0, y: 0, width: 700, height: 1150)
+        view.frame = NSRect(x: 0, y: 0, width: 700, height: 1350)
         let window = NSWindow(contentRect: view.frame, styleMask: [.borderless], backing: .buffered, defer: false)
         window.appearance = NSAppearance(named: dark ? .darkAqua : .aqua)
         window.contentView = view

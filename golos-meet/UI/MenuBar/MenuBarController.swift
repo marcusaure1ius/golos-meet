@@ -8,6 +8,7 @@ final class MenuBarController {
     private var statusLineItem: NSMenuItem?
     private var startStopItem: NSMenuItem?
     private var tracksItem: NSMenuItem?
+    private var detectionItem: NSMenuItem?
     private let target: MenuBarTarget
 
     init(onToggleRecording: @escaping () -> Void,
@@ -78,6 +79,8 @@ final class MenuBarController {
     }
 
     func render(_ model: MenuBarModel) {
+        detectionItem?.title = model.detectionLine
+        detectionItem?.isHidden = model.detectionLine.isEmpty || model.detectionLine == model.statusLine
         statusLineItem?.title = model.statusLine
         startStopItem?.title = model.startStopTitle
         startStopItem?.isEnabled = model.canToggle
@@ -101,6 +104,9 @@ final class MenuBarController {
         let tracks = NSMenuItem(title: "", action: nil, keyEquivalent: "")
         tracks.isEnabled = false
         menu.addItem(tracks); tracksItem = tracks
+        let detection = NSMenuItem(title: "", action: nil, keyEquivalent: "")
+        detection.isEnabled = false
+        menu.addItem(detection); detectionItem = detection
 
         menu.addItem(.separator())
 

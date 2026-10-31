@@ -37,26 +37,47 @@ nonisolated struct TalkMeetingPreferences: Codable, Equatable {
     @Published private(set) var search: SearchState = .idle
     @Published private(set) var confirmed: TalkUserAccount?
     @Published private(set) var isBound = false
+    @Published private(set) var isReadyForAPI = false
+    @Published private(set) var apiEnabled = false
+    @Published private(set) var modeError: String?
     @Published private(set) var message: String?
+    private let credentials: any TalkCredentialStoring
+    private let mode: any TalkRecordingModeStoring
     private let store: any TalkPreferencesStoring
     private let lookup: Lookup
     private var credential: TalkCredential?
     private var revision: UInt64 = 0
+    private var bindingInvalidated = false
     private var task: Task<Void, Never>?
+    private var modeListener: UUID?
 
-    init(preferences: any TalkPreferencesStoring, lookup: Lookup? = nil) {
+    init(preferences: any TalkPreferencesStoring, credentials: any TalkCredentialStoring, mode: (any TalkRecordingModeStoring)? = nil, lookup: Lookup? = nil) {
+        self.credentials = credentials
         store = preferences
+        self.mode = mode ?? TalkRecordingModeFileStore()
+        do { apiEnabled = try self.mode.load() }
+        catch { modeError = "Не удалось прочитать режим автозаписи. Выберите и сохраните режим заново." }
         let testHost = AppRuntime.isTestHost
         self.lookup = lookup ?? { credential, email in
             guard !testHost else { throw TalkAPIError.invalidResponse }
             return try await TalkAPIClient(server: credential.server, token: credential.token).users(email: email)
         }
+        modeListener = TalkSettingsChanges.observe { [weak self] in
+            guard let self else { return }
+            do { self.apiEnabled = try self.mode.load(); self.modeError = nil }
+            catch { self.modeError = "Не удалось прочитать режим автозаписи. Сохраните выбор заново." }
+            self.refreshBinding()
+        }
     }
-    deinit { task?.cancel() }
+    deinit {
+        task?.cancel()
+        let listener = modeListener
+        Task { @MainActor in if let listener { TalkSettingsChanges.remove(listener) } }
+    }
 
     func unbind() {
         cancelSearch(); email = ""; credential = nil; isBound = false
-        confirmed = nil; rooms = []; message = nil
+        confirmed = nil; rooms = []; message = nil; isReadyForAPI = false; bindingInvalidated = false
     }
     func bind(_ credential: TalkCredential) {
         unbind()
@@ -65,6 +86,7 @@ nonisolated struct TalkMeetingPreferences: Codable, Equatable {
         }
         self.credential = credential; isBound = true
         do {
+            _ = try requireCurrentCredential()
             if let value = try store.load(), value.schemaVersion == 1,
                value.origin == credential.server, value.connectionVersion == credential.version {
                 // Revalidate persisted data; never trust an edited file as runtime configuration.
@@ -75,13 +97,59 @@ nonisolated struct TalkMeetingPreferences: Codable, Equatable {
                     _ = try TalkRoomConfiguration(credential: credential, rooms: ["validation"], userKey: account.key)
                     confirmed = account
                 }
+                isReadyForAPI = configurationReady(value, credential: credential)
             }
-        } catch { message = "Не удалось прочитать настройки комнат. Проверьте и сохраните их заново." }
+        } catch { message = bindingInvalidated ? TalkAPIError.connectionChanged.localizedDescription : "Не удалось прочитать настройки комнат. Проверьте и сохраните их заново." }
+    }
+
+    /// A notification is only a display refresh; every mutation independently
+    /// checks the authoritative credential again, even if no notification arrived.
+    private func requireCurrentCredential() throws -> TalkCredential {
+        if bindingInvalidated { throw TalkAPIError.connectionChanged }
+        guard let credential else { throw TalkAPIError.noToken }
+        do {
+            guard let current = try credentials.load(), current == credential, current.version != nil else {
+                throw TalkAPIError.connectionChanged
+            }
+            return current
+        } catch {
+            unbind(); bindingInvalidated = true
+            message = TalkAPIError.connectionChanged.localizedDescription
+            throw TalkAPIError.connectionChanged
+        }
+    }
+    private func savedPreferences(for credential: TalkCredential) throws -> TalkMeetingPreferences? {
+        guard let value = try store.load(), value.schemaVersion == 1, value.origin == credential.server,
+              value.connectionVersion == credential.version else { return nil }
+        return value
+    }
+    private func configurationReady(_ preferences: TalkMeetingPreferences?, credential: TalkCredential) -> Bool {
+        guard let preferences, let account = preferences.account else { return false }
+        return (try? TalkRoomConfiguration(credential: credential, rooms: preferences.rooms, userKey: account.key)) != nil
+    }
+    private func refreshBinding() {
+        guard credential != nil else { return }
+        do {
+            let current = try requireCurrentCredential()
+            let preferences = try savedPreferences(for: current)
+            let account = preferences?.account
+            if let account { _ = try TalkRoomConfiguration(credential: current, rooms: ["validation"], userKey: account.key) }
+            confirmed = account // Keep room drafts only for the same connection.
+            isReadyForAPI = configurationReady(preferences, credential: current)
+        } catch {
+            if !bindingInvalidated { confirmed = nil; isReadyForAPI = false; message = "Не удалось обновить настройки аккаунта. Повторите открытие настроек." }
+        }
     }
     func removePreferences() {
-        unbind()
-        do { try store.save(nil) }
-        catch { message = "PAT удалён, но файл настроек удалить не удалось. Прежнее подтверждение больше не действует." }
+        do {
+            // Called after connection deletion, never by a still-bound old window.
+            guard try credentials.load() == nil else { throw TalkAPIError.connectionChanged }
+            unbind()
+            try store.save(nil)
+        } catch {
+            unbind(); bindingInvalidated = true
+            message = "Настройки не удалены: подключение изменено или хранилище недоступно. Откройте настройки заново."
+        }
     }
     func normalized(_ input: String) throws -> String {
         guard let credential else { throw TalkAPIError.noToken }
@@ -96,13 +164,17 @@ nonisolated struct TalkMeetingPreferences: Codable, Equatable {
 
     @discardableResult func saveRooms() -> Bool {
         do {
+            let current = try requireCurrentCredential()
+            let account = try savedPreferences(for: current)?.account
             let normalized = try Set(rooms.map { try self.normalized($0.input) }).sorted()
             guard normalized.count <= 10 else { throw TalkRoomConfigurationError.invalidRooms }
-            try persist(rooms: normalized, account: confirmed)
+            try persist(rooms: normalized, account: account)
+            confirmed = account
             rooms = normalized.map { Room(input: $0) }
             message = normalized.isEmpty ? "Список комнат очищен." : "Комнаты сохранены."
             return true
         } catch {
+            if bindingInvalidated { message = TalkAPIError.connectionChanged.localizedDescription; return false }
             message = "Комнаты не сохранены. Исправьте адреса; допустимо до 10 разных комнат. При повторной ошибке проверьте доступ к файлу настроек."
             return false
         }
@@ -112,7 +184,9 @@ nonisolated struct TalkMeetingPreferences: Codable, Equatable {
     }
     func findAccount() {
         cancelSearch()
-        guard let credential else { search = .failed("Сначала сохраните PAT для этого пространства."); return }
+        let credential: TalkCredential
+        do { credential = try requireCurrentCredential() }
+        catch { search = .failed(TalkConnectionModel.safeMessage(error)); return }
         let query: String
         do { query = try TalkAPIClient.validatedEmail(email) }
         catch { search = .failed(TalkAPIError.invalidEmail.localizedDescription); return }
@@ -122,30 +196,60 @@ nonisolated struct TalkMeetingPreferences: Codable, Equatable {
             do {
                 let users = try await lookup(credential, query)
                 guard !Task.isCancelled, self?.revision == current else { return }
-                self?.search = .results(users)
+                guard let self else { return }
+                _ = try self.requireCurrentCredential()
+                self.search = .results(users)
             } catch {
                 guard !Task.isCancelled, self?.revision == current else { return }
-                self?.search = .failed(TalkConnectionModel.safeMessage(error))
+                guard let self else { return }
+                do { _ = try self.requireCurrentCredential() }
+                catch { return } // Binding invalidation already clears the late reply.
+                self.search = .failed(TalkConnectionModel.safeMessage(error))
             }
             self?.task = nil
         }
     }
     @discardableResult func confirm(_ account: TalkUserAccount) -> Bool {
-        guard case .results(let users) = search, users.contains(account), let credential else { return false }
+        guard case .results(let users) = search, users.contains(account) else { return false }
         do {
+            let credential = try requireCurrentCredential()
             _ = try TalkRoomConfiguration(credential: credential, rooms: ["validation"], userKey: account.key)
             // Identity confirmation must not silently commit unsaved room edits.
-            let old = try store.load()
-            let boundRooms = old?.origin == credential.server && old?.connectionVersion == credential.version ? old!.rooms : []
+            let boundRooms = try savedPreferences(for: credential)?.rooms ?? []
             try persist(rooms: boundRooms, account: account)
             confirmed = account; cancelSearch(); message = "Аккаунт подтверждён."
             return true
-        } catch { message = "Не удалось сохранить подтверждение. Повторите попытку."; return false }
+        } catch { message = bindingInvalidated ? TalkAPIError.connectionChanged.localizedDescription : "Не удалось сохранить подтверждение. Повторите попытку."; return false }
     }
+    @discardableResult func setAPIEnabled(_ enabled: Bool) -> Bool {
+        do {
+            if credential != nil || bindingInvalidated { _ = try requireCurrentCredential() }
+            if enabled {
+                let credential = try requireCurrentCredential()
+                guard let value = try savedPreferences(for: credential), let account = value.account else { throw TalkAPIError.noToken }
+                _ = try TalkRoomConfiguration(credential: credential, rooms: value.rooms, userKey: account.key)
+            }
+            try mode.save(enabled)
+            apiEnabled = enabled
+            modeError = nil
+            message = enabled ? "API-автозапись включена для сохранённых комнат и аккаунта." : "API-режим выключен. Автозапись использует эвристику аудио и окон."
+            TalkSettingsChanges.post()
+            return true
+        } catch {
+            if bindingInvalidated { message = TalkAPIError.connectionChanged.localizedDescription }
+            else if error is TalkAPIError || error is TalkRoomConfigurationError {
+                message = "Сначала сохраните комнаты и подтвердите аккаунт для этого PAT."
+            } else { modeError = "Не удалось сохранить режим автозаписи. Повторите попытку." }
+            return false
+        }
+    }
+
     private func persist(rooms: [String], account: TalkUserAccount?) throws {
-        guard let credential, let version = credential.version else { throw TalkAPIError.noToken }
+        let credential = try requireCurrentCredential()
+        guard let version = credential.version else { throw TalkAPIError.noToken }
         if !rooms.isEmpty { _ = try TalkRoomConfiguration(credential: credential, rooms: rooms, userKey: account?.key ?? "validation") }
         try store.save(TalkMeetingPreferences(schemaVersion: 1, origin: credential.server,
                                              connectionVersion: version, rooms: rooms, account: account))
+        TalkSettingsChanges.post()
     }
 }
