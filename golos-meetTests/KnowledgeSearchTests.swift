@@ -190,11 +190,13 @@ private actor SearchFixtureEncoder: LocalPassageEmbedding {
             let id = try await f.document("Релиз сохраняется при миграции")
             let url = f.root.appendingPathComponent("knowledge.sqlite")
             let downgrade = "DROP TRIGGER knowledge_fts_insert; DROP TRIGGER knowledge_fts_delete; DROP TRIGGER knowledge_fts_update; DROP TABLE knowledge_fts; DROP TRIGGER knowledge_model_insert; DROP TRIGGER knowledge_model_update; DROP TRIGGER knowledge_model_delete; DROP TABLE knowledge_model_epoch; PRAGMA user_version=3"
+            try removeAssignmentMigrationObjects(url)
             try sql(url, downgrade)
             let migrated = ProjectStore(url: url)
             let search = KnowledgeSearchService(store: migrated, meetingsRoot: f.root.appendingPathComponent("meetings"), documentsRoot: f.root.appendingPathComponent("copies"), queryEmbedding: { _ in throw LocalIndexingError.missingModel })
             #expect(try await search.search("релиз", scope: .all).hits.first?.source.key.externalID == id.uuidString)
             #expect(try await migrated.documents().first?.currentVersion.contentHash == f.store.documents().first?.currentVersion.contentHash)
+            try removeAssignmentMigrationObjects(url)
             try sql(url, downgrade + "; CREATE TABLE knowledge_fts(sentinel TEXT); INSERT INTO knowledge_fts VALUES('keep')")
             await #expect(throws: ProjectStoreError.self) { try await ProjectStore(url: url).snapshot() }
             var db: OpaquePointer?
