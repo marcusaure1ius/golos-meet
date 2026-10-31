@@ -1,38 +1,40 @@
-# Макеты рабочей области — #18
+# Golos Meet — новая внешность выбранного варианта A
 
-**Для обсуждения, не согласованы. Все данные синтетические.**
+**Архитектура A выбрана пользователем. Предыдущее оформление отклонено. Визуальная итерация v2 — предложение для просмотра, ещё не согласована.** Production UI не изменялся, #19 не запущен.
 
-Пользователь попросил показать оба варианта и выберет после просмотра макетов. Для Constance разрешены только выбранные поля задачи/подзадач и ссылка на встречу; transcript, документы и автоцитаты не отправляются. Ссылки на фрагменты в макетах — локальная навигация Golos Meet.
+[Brief и правила поведения](BRIEF.md) · [Исследование и первичные источники](RESEARCH.md) · [Проверки и пределы](CHECKS.md)
 
-[Исследование и первичные источники](RESEARCH.md) · [Brief, поведение и вопросы выбора](BRIEF.md)
+## Обзор проекта
 
-## Два варианта
+Нативная рамка/toolbar, компактное дерево слева, единая поверхность проекта, материалы и открытые вопросы рядом, постоянный диалог справа.
 
-**A — проект в центре, чат справа.** Предварительная рекомендация для обзора проекта и проверки источников. Риск: при длительном диалоге чат теснее.
+![A2 — обзор, широкое светлое окно](renders/A2-overview-wide-light.png)
 
-![A — проект в центре](renders/A-overview-wide-light.png)
+## Встреча и источник
 
-**B — чат в центре, материалы справа.** Равноправный кандидат для работы от вопроса. Риск: чтение большого документа требует расширения панели.
+Расшифровка с выбранным фрагментом, нативный segmented control и плеер, контекст открытой цитаты рядом с ответом.
 
-![B — чат в центре](renders/B-overview-wide-light.png)
+![A2 — встреча, полноэкранная тёмная композиция](renders/A2-meeting-fullscreen-dark.png)
 
-## Сопоставимые экраны
+## Документ
 
-Оба варианта используют один проект, одну встречу, один документ и один ответ. Ширина основного viewport 1440×900 pt; PNG экспортированы в Retina 2×.
+Отдельная читаемая страница, номер/версия, выделенный фрагмент. Это текстовый макет PDF-страницы, не интеграция PDF viewer.
 
-| Сценарий | A | B |
+![A2 — документ, широкое светлое окно](renders/A2-document-wide-light.png)
+
+## Все семь PNG
+
+Viewport указан в pt, PNG — Retina 2×. Fullscreen здесь означает композицию, не проверенный системный переход.
+
+| Экран | 1440×900 light | 1920×1080 dark |
 |---|---|---|
-| Обзор проекта | [Открыть](renders/A-overview-wide-light.png) | [Открыть](renders/B-overview-wide-light.png) |
-| Локальный поиск с источниками | [Открыть](renders/A-search-wide-light.png) | [Открыть](renders/B-search-wide-light.png) |
-| Встреча / расшифровка | [Открыть](renders/A-meeting-wide-light.png) | [Открыть](renders/B-meeting-wide-light.png) |
-| Документ / страница 7 | [Открыть](renders/A-document-wide-light.png) | [Открыть](renders/B-document-wide-light.png) |
-| Память / конфликт версий | [Открыть](renders/A-memory-wide-light.png) | [Открыть](renders/B-memory-wide-light.png) |
-| Задачи / подзадачи Constance | [Открыть](renders/A-tasks-wide-light.png) | [Открыть](renders/B-tasks-wide-light.png) |
-| Предлагаемый редактор задачи | [Открыть](renders/A-taskEdit-wide-light.png) | [Открыть](renders/B-taskEdit-wide-light.png) |
-| Fullscreen 1920×1080, тёмная тема | [Открыть](renders/A-meeting-fullscreen-dark.png) | [Открыть](renders/B-meeting-fullscreen-dark.png) |
-| Непрозрачная версия, без движения | [Открыть](renders/A-overview-reduced.png) | [Открыть](renders/B-overview-reduced.png) |
+| Обзор проекта | [Открыть](renders/A2-overview-wide-light.png) | [Открыть](renders/A2-overview-fullscreen-dark.png) |
+| Встреча / расшифровка | [Открыть](renders/A2-meeting-wide-light.png) | [Открыть](renders/A2-meeting-fullscreen-dark.png) |
+| Документ / источник | [Открыть](renders/A2-document-wide-light.png) | [Открыть](renders/A2-document-fullscreen-dark.png) |
 
-Общие экраны: [empty/loading/error/permissions/conflict/offline](renders/shared-states.png), [запись и menu bar](renders/shared-recording.png), [настройки и разрешения](renders/shared-settings.png).
+[Встреча: непрозрачная навигация, без движения](renders/A2-meeting-reduced.png).
+
+Первоначальные A/B сохранены в истории Git до `db39eeaf066316425022bf08f4cb037648bc3104`. Они больше не выставлены как актуальные или одобренные экраны.
 
 ## Повторение
 
@@ -42,14 +44,10 @@
 research/ui18/native/render.sh
 ```
 
-Скрипт собирает отдельный host в `.build/ui18-native/GolosUI18Research.app`, bundle `com.golos.research.ui18.synthetic`, и экспортирует PNG. Он не собирает и не запускает production app. NSApplication используется только для offscreen NSHostingView; серверов, аудиозахвата, запросов разрешений, Keychain, UserDefaults и сетевых вызовов в host нет. Временный каталог уникален и удаляется при завершении. Скрипт не требует моделей или данных.
+Скрипт собирает отдельный native host в `.build/ui18-native/GolosUI18Research.app`, bundle `com.golos.research.ui18.synthetic`, и экспортирует семь PNG. Снимок собственной offscreen рамки NSWindow включает настоящий NSToolbar; внутри — NSHostingView. В host нет production AppDelegate, импорта Golos, чтения библиотеки/Keychain, микрофона, моделей, recovery или сети. Окна не выводятся на рабочий стол. Без `--export` host только печатает usage. Происхождение, размеры и hashes — `renders/manifest.json`.
 
-Обычный запуск host без `--export` только печатает usage. Стекло в экспорте схематично: offscreen capture не доказывает оптику Liquid Glass. Элементы интерфейса показывают композицию и будущие действия, живые интеграции отсутствуют. Реальные accessibility/resize/fullscreen-переходы/производительность ещё требуют интерактивного прототипа после выбора.
+PNG не доказывают optical Liquid Glass, resize/restore, fullscreen/Spaces, VoiceOver и производительность. AppKit window в экспорте неактивен. Controls без описанной локальной навигации — визуальные заглушки; отправка запроса не работает. Actual OS accessibility settings не менялись. Минимальная macOS остаётся 14.4, запуск на этой ОС не проверен.
 
-## Нужно выбрать
+Constance: только выбранные видимые поля задачи/подзадач и ссылка на встречу; без transcript, документов и автоцитат. Цитаты в диалоге/документе — только локальная навигация Golos Meet.
 
-1. A — проект/материал или B — диалог как постоянный центр?
-2. Контекстная панель открыта по умолчанию или появляется по запросу с запоминанием?
-3. Для Constance достаточно списка и редактора рядом, или нужна закрепляемая панель задач во время встречи?
-
-До ответов и согласования этот каталог не является указанием запускать production-редизайн #19.
+Следующий шаг — просмотр и согласование внешности A. Самопроверка автора не заменяет независимого ревью обновлённого SHA; старый вердикт на новые экраны не распространяется.

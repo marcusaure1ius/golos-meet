@@ -9,7 +9,7 @@ import zlib
 root = Path(__file__).resolve().parents[3]
 output = Path(sys.argv[1]).resolve()
 source = root / "research/ui18/native/MockHost.swift"
-origin = b"Origin\x00Native NSHostingView/cacheDisplay; research/ui18/native/MockHost.swift; synthetic data; no ImageGen"
+origin = b"Origin\x00Native AppKit window-frame + NSHostingView/cacheDisplay; research/ui18/native/MockHost.swift; synthetic data; no ImageGen"
 chunk_type = b"tEXt"
 chunk = struct.pack(">I", len(origin)) + chunk_type + origin + struct.pack(">I", zlib.crc32(chunk_type + origin))
 manifest = {
@@ -18,7 +18,7 @@ manifest = {
     "source_sha256": hashlib.sha256(source.read_bytes()).hexdigest(),
     "command": "research/ui18/native/render.sh",
     "checked_environment": "macOS 27.0.1; Xcode 27.1 (27A9275); SDK 27.0; arm64; target 14.4",
-    "optical_glass": "not validated; exports use opaque conceptual control backing",
+    "optical_glass": "not validated; native NSToolbar and NSVisualEffectView sidebar; offscreen inactive window",
     "images": [],
 }
 for path in sorted(output.glob("*.png")):
