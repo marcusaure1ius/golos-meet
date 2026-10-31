@@ -1038,9 +1038,9 @@ extension ProjectStore {
             guard current == checkpoint, current.sources.contains(where: { $0.key == .init(kind: .meeting, externalID: meetingID) && $0.job.state == .ready }) else { return .superseded }
             guard result.modelID == checkpoint.model.model?.id, result.dimensions == checkpoint.model.model?.dimensions,
                   result.modelGeneration == checkpoint.model.generation,
-                  result.assignedProjectIDs == Set(result.evidence.filter { $0.explicitName && $0.similarity >= 0.90 && $0.similarity - $0.competingSimilarity >= 0.04 }.map(\.projectID)),
-                  result.assignedProjectIDs.isSubset(of: Set(current.projects.map(\.id))),
-                  result.assignedProjectIDs.isSubset(of: Set(result.evidence.filter { $0.explicitName }.map(\.projectID))) else { throw MeetingAssignmentError.stale }
+                  result.algorithm == MeetingAssignmentPolicy.algorithm,
+                  result.assignedProjectIDs == Set(result.evidence.filter(MeetingAssignmentPolicy.confident).map(\.projectID)),
+                  result.assignedProjectIDs.isSubset(of: Set(current.projects.map(\.id))) else { throw MeetingAssignmentError.stale }
             let origin: MeetingAssignmentOrigin = result.assignedProjectIDs.isEmpty ? .proposal : .automatic
             if current.decisions[meetingID]?.origin == origin, current.decisions[meetingID]?.result == result,
                current.sources.first(where: { $0.key == .init(kind: .meeting, externalID: meetingID) })?.owners == result.assignedProjectIDs {

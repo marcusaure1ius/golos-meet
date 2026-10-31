@@ -61,7 +61,7 @@ actor PreviewQueryGate {
                 try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
                 if try await store.documents().isEmpty {
                     let texts = [("Янтарь", "Проект Янтарь: переносим складской учёт в новую систему. Проверяем остатки товаров, маркировку и обмен с кассами."),
-                                 ("Орбита", "Проект Орбита: запускаем спутниковую связь для судов. Проверяем антенну, радиоканал и покрытие в северных морях.")]
+                                 ("ИИ", "Проект ИИ: размечаем обращения клиентов для классификации. Проверяем датасет, качество разметки и согласие экспертов.")]
                     let importer = DocumentImporter(store: store, root: root.appendingPathComponent("copies"))
                     for (name, text) in texts {
                         let p = try await store.createProject(name: name)
@@ -69,12 +69,13 @@ actor PreviewQueryGate {
                         try Data(text.utf8).write(to: file)
                         _ = try await importer.importFile(id: UUID(), url: file, projectIDs: [p.id]) { _ in }
                     }
-                    try write("target", texts.map { $0.1 })
+                    try write("target", ["Для Янтаря переносим складской учёт. Проверяем остатки товаров и обмен с кассами.", "Размечаем обращения клиентов для классификации. Проверяем датасет, качество разметки и согласие экспертов."])
                     try write("proposal", ["Переносим складской учёт в новую систему. Проверяем остатки товаров, маркировку и обмен с кассами."])
+                    try write("caution", ["Проект Янтарь не обсуждаем: складской учёт, маркировка товаров, остатки и обмен с кассами вне повестки."])
                     try write("novel", ["Открываем новую пекарню, выбираем рецепты хлеба, оборудование для теста и график доставки муки."])
                 }
                 await projects.reload(); indexing.start(); assignments.start()
-                notice = "Изолированный стенд · три синтетические встречи · без записи, Keychain и облака"
+                notice = "Изолированный стенд · четыре синтетические встречи · без записи, Keychain и облака"
             } catch { notice = error.localizedDescription }
         }
     }
@@ -129,8 +130,9 @@ struct AssignmentPreview: App {
                     Button("Продолжить расчёт") { Task { await state.gate.release() } }
                 }
                 Picker("Синтетическая встреча", selection: $selected) {
-                    Text("Два проекта").tag("target")
+                    Text("Склонение + короткое имя · M:N").tag("target")
                     Text("Без буквального имени").tag("proposal")
+                    Text("Отрицание").tag("caution")
                     Text("Новая тема").tag("novel")
                 }.pickerStyle(.segmented)
                 Divider()

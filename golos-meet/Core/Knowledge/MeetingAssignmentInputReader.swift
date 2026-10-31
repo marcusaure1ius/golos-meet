@@ -34,7 +34,7 @@ actor MeetingAssignmentInputReader {
         }
         let encoder = JSONEncoder(); encoder.outputFormatting = [.sortedKeys]
         let projectData = try encoder.encode(checkpoint.projects)
-        let common = [checkpoint.model.generation, checkpoint.model.model?.id ?? "", String(checkpoint.model.model?.dimensions ?? 0), String(decoding: projectData, as: UTF8.self)]
+        let common = [MeetingAssignmentPolicy.algorithm, MeetingAssignmentPolicy.lexicalProfile, checkpoint.model.generation, checkpoint.model.model?.id ?? "", String(checkpoint.model.model?.dimensions ?? 0), String(decoding: projectData, as: UTF8.self)]
         var fingerprints: [String: String] = [:]
         for id in ids {
             let key = EmbeddingSourceKey(kind: .meeting, externalID: id)

@@ -229,10 +229,17 @@ import Testing
         do {
             let p = try await f.seed()
             bridge.start()
-            try await wait { try await f.store.assignmentRuntimeSnapshot().work["a"]?.state == .current && f.projects.projectIDs(for: "a") == [p.id] && f.projects.isReady }
-            #expect(f.projects.projectIDs(for: "a") == [p.id])
             let generations = try await f.store.embeddingJobs().map(\.generation)
-            try await f.projects.assign(meetingID: "a", projectIDs: [])
+            try await wait {
+                guard try await f.store.assignmentRuntimeSnapshot().work["a"]?.state == .current,
+                      f.projects.projectIDs(for: "a") == [p.id], f.projects.isReady else { return false }
+                #expect(f.projects.projectIDs(for: "a") == [p.id])
+                // Check readiness and enter assign in the same MainActor turn.
+                // Returning from wait first lets an unrelated .projects event
+                // start a reload between this check and the assignment guard.
+                try await f.projects.assign(meetingID: "a", projectIDs: [])
+                return true
+            }
             try await wait { bridge.snapshot.work["a"]?.state == .manual }
             #expect(try await f.store.embeddingJobs().map(\.generation) == generations)
             #expect(f.projects.projectIDs(for: "a").isEmpty)

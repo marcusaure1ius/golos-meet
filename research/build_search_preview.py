@@ -24,7 +24,7 @@ if not (prod / "Tokenizers.o").exists():
 weights = args.weights.resolve()
 if not weights.is_dir():
     parser.error("The explicitly selected weights folder does not exist")
-qa = Path(tempfile.mkdtemp(prefix="golos-assignment-preview14-" if args.assignment else "golos-search-preview14-"))
+qa = Path(tempfile.mkdtemp(prefix="golos-assignment-preview45-" if args.assignment else "golos-search-preview14-"))
 app_name = "Golos Assignment Preview" if args.assignment else "Golos Search Preview"
 executable = "AssignmentPreview" if args.assignment else "SearchPreview"
 app = qa / (app_name + ".app/Contents")
@@ -36,7 +36,7 @@ with (app / "Info.plist").open("wb") as output:
 names = ["LocalTextEmbedding", "EmbeddingModelManifest", "EmbeddingModelInstaller", "E5TextEmbedding", "LocalIndexingRuntime",
          "LocalIndexingService", "KnowledgeModels", "KnowledgeChunker", "DocumentModels", "DocumentImporter", "LocalDocumentExtractor",
          "ProjectStore", "MeetingAssignmentModels", "MeetingAssignmentRuntimeModels", "MeetingEmbeddingSnapshot", "EmbeddingIndexModels", "DocumentImportQueue", "KnowledgeIndexEvents", "KnowledgeFileMonitor",
-         "KnowledgeSearchModels", "KnowledgeSearchService", "KnowledgeSearchSourceReader", "MeetingAssignmentService", "MeetingAssignmentInputReader", "MeetingAssignmentWorker"]
+         "KnowledgeSearchModels", "KnowledgeSearchService", "KnowledgeSearchSourceReader", "MeetingAssignmentPolicy", "MeetingAssignmentService", "MeetingAssignmentInputReader", "MeetingAssignmentWorker"]
 sources = [repo / "golos-meet/Core/Knowledge" / (name + ".swift") for name in names]
 sources += [repo / "golos-meet" / name for name in ["Util/AppRuntime.swift", "UI/Projects/KnowledgeIndexing.swift", "UI/Projects/ProjectLibrary.swift",
             "UI/Projects/KnowledgeSearchModel.swift", "UI/Projects/KnowledgeSearchScreen.swift", "UI/Projects/KnowledgeSourceView.swift",
