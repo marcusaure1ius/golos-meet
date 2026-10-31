@@ -1,0 +1,1593 @@
+{
+  "implementation_base": "0179499e73cd720989363d7d15accf552e4a2ea6",
+  "reports": [
+    {
+      "xcresult": "Test-golos-meet-2026.10.31_22-39-11-+0300.xcresult",
+      "result": "Passed",
+      "tests_passed": 5,
+      "runs_passed": 7,
+      "failed": 0,
+      "skipped": 0,
+      "runtime_warning_files": [],
+      "cases": [
+        {
+          "scenario": "474719A1-DAD1-4499-A5E4-BE5AFF1A9A77",
+          "kind": "concurrent-v0",
+          "fixture_version_label": 0,
+          "strict_pool_received": true,
+          "sqlite_entries": [
+            {
+              "connection": "65086516-4DD2-4035-803A-260F2D08D741",
+              "executor": "1C8A2571-36DA-4F52-A883-9089F0DA449D",
+              "name": "second-sqlite-begin",
+              "milliseconds": 0.9670416475273669
+            },
+            {
+              "milliseconds": 1.0929999989457428,
+              "connection": "92DFEFF2-56EC-4BF0-BB74-69EDB02C7EC9",
+              "name": "first-sqlite-begin",
+              "executor": "57D19A0B-55A2-4825-B882-D23FD63BA5B1"
+            }
+          ],
+          "release_milliseconds": 507.7538749901578,
+          "executors_joined_milliseconds": 545.1881249900907,
+          "timeouts": [],
+          "task_and_sqlite_executor_match": true,
+          "contention_evidence": true,
+          "commit": 0,
+          "close": 0,
+          "events": [
+            {
+              "milliseconds": 0.4012499994132668,
+              "strictPool": true,
+              "extended": 0,
+              "name": "acquire",
+              "result": 0
+            },
+            {
+              "strictPool": true,
+              "executor": "57D19A0B-55A2-4825-B882-D23FD63BA5B1",
+              "name": "first-task-start",
+              "milliseconds": 0.6300833192653954
+            },
+            {
+              "milliseconds": 0.6400833372026682,
+              "strictPool": true,
+              "name": "second-task-start",
+              "executor": "1C8A2571-36DA-4F52-A883-9089F0DA449D"
+            },
+            {
+              "strictPool": true,
+              "connection": "65086516-4DD2-4035-803A-260F2D08D741",
+              "executor": "1C8A2571-36DA-4F52-A883-9089F0DA449D",
+              "name": "second-sqlite-begin",
+              "milliseconds": 0.9670416475273669
+            },
+            {
+              "milliseconds": 1.0929999989457428,
+              "connection": "92DFEFF2-56EC-4BF0-BB74-69EDB02C7EC9",
+              "strictPool": true,
+              "name": "first-sqlite-begin",
+              "executor": "57D19A0B-55A2-4825-B882-D23FD63BA5B1"
+            },
+            {
+              "milliseconds": 2.852874982636422,
+              "strictPool": true,
+              "name": "schedule",
+              "scheduledMilliseconds": 502.85179165075533
+            },
+            {
+              "milliseconds": 507.7538749901578,
+              "name": "release-start",
+              "strictPool": true
+            },
+            {
+              "milliseconds": 509.1694583243225,
+              "strictPool": true,
+              "extended": 0,
+              "name": "commit-result",
+              "result": 0
+            },
+            {
+              "result": 0,
+              "milliseconds": 509.4567500054836,
+              "name": "close-result",
+              "strictPool": true
+            },
+            {
+              "milliseconds": 530.6352500047069,
+              "strictPool": true,
+              "name": "second-success",
+              "executor": "1C8A2571-36DA-4F52-A883-9089F0DA449D"
+            },
+            {
+              "strictPool": true,
+              "milliseconds": 544.1867916670162,
+              "name": "first-success",
+              "executor": "57D19A0B-55A2-4825-B882-D23FD63BA5B1"
+            },
+            {
+              "milliseconds": 545.1881249900907,
+              "name": "executors-joined",
+              "strictPool": true
+            },
+            {
+              "milliseconds": 545.3959166479763,
+              "name": "joined",
+              "strictPool": true
+            }
+          ]
+        },
+        {
+          "scenario": "FC838083-3096-47D8-A787-671754F2568C",
+          "kind": "concurrent-v2",
+          "fixture_version_label": 2,
+          "strict_pool_received": true,
+          "sqlite_entries": [
+            {
+              "name": "first-sqlite-begin",
+              "milliseconds": 0.9817083191592246,
+              "connection": "3E138DC8-1F05-47A1-A7D2-0FC22CDDA521",
+              "executor": "A4DF0235-0081-4E96-BBE0-E42FC80A13B1"
+            },
+            {
+              "executor": "628AD9C1-20A5-434E-9146-56884E037E25",
+              "name": "second-sqlite-begin",
+              "connection": "9523C5DD-FB94-4B12-94D2-D77352653B04",
+              "milliseconds": 1.1048750020563602
+            }
+          ],
+          "release_milliseconds": 502.9075416678097,
+          "executors_joined_milliseconds": 555.9970833128318,
+          "timeouts": [],
+          "task_and_sqlite_executor_match": true,
+          "contention_evidence": true,
+          "commit": 0,
+          "close": 0,
+          "events": [
+            {
+              "result": 0,
+              "strictPool": true,
+              "name": "acquire",
+              "extended": 0,
+              "milliseconds": 0.43054166599176824
+            },
+            {
+              "name": "first-task-start",
+              "strictPool": true,
+              "milliseconds": 0.690208311425522,
+              "executor": "A4DF0235-0081-4E96-BBE0-E42FC80A13B1"
+            },
+            {
+              "executor": "628AD9C1-20A5-434E-9146-56884E037E25",
+              "name": "second-task-start",
+              "strictPool": true,
+              "milliseconds": 0.7279999845195562
+            },
+            {
+              "name": "first-sqlite-begin",
+              "strictPool": true,
+              "milliseconds": 0.9817083191592246,
+              "connection": "3E138DC8-1F05-47A1-A7D2-0FC22CDDA521",
+              "executor": "A4DF0235-0081-4E96-BBE0-E42FC80A13B1"
+            },
+            {
+              "executor": "628AD9C1-20A5-434E-9146-56884E037E25",
+              "name": "second-sqlite-begin",
+              "connection": "9523C5DD-FB94-4B12-94D2-D77352653B04",
+              "strictPool": true,
+              "milliseconds": 1.1048750020563602
+            },
+            {
+              "name": "schedule",
+              "scheduledMilliseconds": 502.0292499975767,
+              "strictPool": true,
+              "milliseconds": 2.0300000032875687
+            },
+            {
+              "strictPool": true,
+              "name": "release-start",
+              "milliseconds": 502.9075416678097
+            },
+            {
+              "name": "commit-result",
+              "result": 0,
+              "strictPool": true,
+              "extended": 0,
+              "milliseconds": 503.6122916499153
+            },
+            {
+              "result": 0,
+              "strictPool": true,
+              "name": "close-result",
+              "milliseconds": 504.0752916538622
+            },
+            {
+              "name": "second-success",
+              "strictPool": true,
+              "milliseconds": 553.1102499808185,
+              "executor": "628AD9C1-20A5-434E-9146-56884E037E25"
+            },
+            {
+              "executor": "A4DF0235-0081-4E96-BBE0-E42FC80A13B1",
+              "name": "first-success",
+              "strictPool": true,
+              "milliseconds": 555.2162916574161
+            },
+            {
+              "name": "executors-joined",
+              "strictPool": true,
+              "milliseconds": 555.9970833128318
+            },
+            {
+              "strictPool": true,
+              "name": "joined",
+              "milliseconds": 556.1914999852888
+            }
+          ]
+        },
+        {
+          "scenario": "2D11C83D-F34A-4281-AF32-A0A7948D7CB6",
+          "kind": "delayed-actors",
+          "fixture_version_label": 0,
+          "strict_pool_received": true,
+          "sqlite_entries": [
+            {
+              "executor": "4263537E-4379-4BD3-B2B6-05426D7C4742",
+              "name": "first-sqlite-begin",
+              "milliseconds": 716.0222500097007,
+              "connection": "426B2780-4CE0-4732-AE9E-FC524E903199"
+            },
+            {
+              "executor": "97573C30-0886-4C53-B202-6012330C118B",
+              "name": "second-sqlite-begin",
+              "milliseconds": 912.8264166647568,
+              "connection": "6638188E-B3EB-4CE7-A50D-3DDBF825FC4D"
+            }
+          ],
+          "release_milliseconds": 1419.1888333298266,
+          "executors_joined_milliseconds": 1526.2264583434444,
+          "timeouts": [],
+          "task_and_sqlite_executor_match": true,
+          "contention_evidence": true,
+          "commit": 0,
+          "close": 0,
+          "events": [
+            {
+              "result": 0,
+              "extended": 0,
+              "strictPool": true,
+              "name": "acquire",
+              "milliseconds": 1.173041673609987
+            },
+            {
+              "strictPool": true,
+              "milliseconds": 1.6180000093299896,
+              "name": "first-task-start",
+              "executor": "4263537E-4379-4BD3-B2B6-05426D7C4742"
+            },
+            {
+              "executor": "97573C30-0886-4C53-B202-6012330C118B",
+              "strictPool": true,
+              "name": "second-task-start",
+              "milliseconds": 1.663208327954635
+            },
+            {
+              "strictPool": true,
+              "milliseconds": 714.7749583236873,
+              "name": "first-snapshot-call",
+              "executor": "4263537E-4379-4BD3-B2B6-05426D7C4742"
+            },
+            {
+              "executor": "4263537E-4379-4BD3-B2B6-05426D7C4742",
+              "strictPool": true,
+              "name": "first-sqlite-begin",
+              "milliseconds": 716.0222500097007,
+              "connection": "426B2780-4CE0-4732-AE9E-FC524E903199"
+            },
+            {
+              "strictPool": true,
+              "milliseconds": 911.7741250083782,
+              "name": "second-snapshot-call",
+              "executor": "97573C30-0886-4C53-B202-6012330C118B"
+            },
+            {
+              "executor": "97573C30-0886-4C53-B202-6012330C118B",
+              "strictPool": true,
+              "name": "second-sqlite-begin",
+              "milliseconds": 912.8264166647568,
+              "connection": "6638188E-B3EB-4CE7-A50D-3DDBF825FC4D"
+            },
+            {
+              "strictPool": true,
+              "milliseconds": 914.1317083267495,
+              "name": "schedule",
+              "scheduledMilliseconds": 1414.1291250125505
+            },
+            {
+              "strictPool": true,
+              "name": "release-start",
+              "milliseconds": 1419.1888333298266
+            },
+            {
+              "extended": 0,
+              "strictPool": true,
+              "milliseconds": 1420.5392916628625,
+              "name": "commit-result",
+              "result": 0
+            },
+            {
+              "result": 0,
+              "strictPool": true,
+              "name": "close-result",
+              "milliseconds": 1420.8514166530222
+            },
+            {
+              "strictPool": true,
+              "milliseconds": 1451.3018333236687,
+              "name": "second-success",
+              "executor": "97573C30-0886-4C53-B202-6012330C118B"
+            },
+            {
+              "executor": "4263537E-4379-4BD3-B2B6-05426D7C4742",
+              "strictPool": true,
+              "name": "first-success",
+              "milliseconds": 1525.5546666739974
+            },
+            {
+              "strictPool": true,
+              "milliseconds": 1526.2264583434444,
+              "name": "executors-joined"
+            },
+            {
+              "strictPool": true,
+              "name": "joined",
+              "milliseconds": 1526.393416657811
+            }
+          ]
+        },
+        {
+          "scenario": "345FA763-488F-43A8-BCA2-7C1E555294ED",
+          "kind": "delayed-peer",
+          "fixture_version_label": null,
+          "strict_pool_received": true,
+          "sqlite_entries": [
+            {
+              "name": "first-sqlite-begin",
+              "executor": "2D791E75-2973-42EF-A40E-4F968DB674A8",
+              "connection": "037BC17A-D88A-42ED-BCFB-DDEA320D749F",
+              "milliseconds": 1.2935416598338634
+            },
+            {
+              "executor": "B39E94D4-3BA5-4F02-A25E-12C4EE4C4205",
+              "name": "second-sqlite-begin",
+              "milliseconds": 2524.803125008475,
+              "connection": "3CAF6B66-6266-492D-B0B2-A2BD9853E2CE"
+            }
+          ],
+          "release_milliseconds": 3030.9490416548215,
+          "executors_joined_milliseconds": 3073.71091665118,
+          "timeouts": [],
+          "task_and_sqlite_executor_match": true,
+          "contention_evidence": true,
+          "commit": 0,
+          "close": 0,
+          "events": [
+            {
+              "result": 0,
+              "extended": 0,
+              "strictPool": true,
+              "name": "acquire",
+              "milliseconds": 0.6427083280868828
+            },
+            {
+              "name": "second-task-start",
+              "executor": "B39E94D4-3BA5-4F02-A25E-12C4EE4C4205",
+              "milliseconds": 0.9278333163820207,
+              "strictPool": true
+            },
+            {
+              "executor": "2D791E75-2973-42EF-A40E-4F968DB674A8",
+              "strictPool": true,
+              "name": "first-task-start",
+              "milliseconds": 0.9284999978262931
+            },
+            {
+              "name": "first-sqlite-begin",
+              "executor": "2D791E75-2973-42EF-A40E-4F968DB674A8",
+              "connection": "037BC17A-D88A-42ED-BCFB-DDEA320D749F",
+              "milliseconds": 1.2935416598338634,
+              "strictPool": true
+            },
+            {
+              "executor": "B39E94D4-3BA5-4F02-A25E-12C4EE4C4205",
+              "strictPool": true,
+              "name": "second-sqlite-begin",
+              "milliseconds": 2524.803125008475,
+              "connection": "3CAF6B66-6266-492D-B0B2-A2BD9853E2CE"
+            },
+            {
+              "name": "schedule",
+              "scheduledMilliseconds": 3027.069166651927,
+              "milliseconds": 2527.0740416599438,
+              "strictPool": true
+            },
+            {
+              "strictPool": true,
+              "name": "release-start",
+              "milliseconds": 3030.9490416548215
+            },
+            {
+              "name": "commit-result",
+              "extended": 0,
+              "result": 0,
+              "milliseconds": 3032.222666661255,
+              "strictPool": true
+            },
+            {
+              "result": 0,
+              "strictPool": true,
+              "name": "close-result",
+              "milliseconds": 3032.5099999899976
+            },
+            {
+              "name": "second-success",
+              "executor": "B39E94D4-3BA5-4F02-A25E-12C4EE4C4205",
+              "milliseconds": 3052.4680000089575,
+              "strictPool": true
+            },
+            {
+              "executor": "2D791E75-2973-42EF-A40E-4F968DB674A8",
+              "strictPool": true,
+              "name": "first-success",
+              "milliseconds": 3072.875624988228
+            },
+            {
+              "name": "executors-joined",
+              "milliseconds": 3073.71091665118,
+              "strictPool": true
+            },
+            {
+              "strictPool": true,
+              "name": "joined",
+              "milliseconds": 3073.85625000461
+            }
+          ]
+        },
+        {
+          "scenario": "0D710459-F243-4E2C-87EA-53A88EDEFF5A",
+          "kind": "first-failure-cleanup",
+          "fixture_version_label": 4,
+          "strict_pool_received": true,
+          "sqlite_entries": [
+            {
+              "executor": "C64B61A4-AA05-4BBE-AA74-3294C4A8F5F2",
+              "name": "second-sqlite-begin",
+              "milliseconds": 1.564333331771195,
+              "connection": "E4D9BEAA-C42F-42EB-B15E-D0E16024479A"
+            }
+          ],
+          "release_milliseconds": 507.0832916535437,
+          "executors_joined_milliseconds": 633.1699166621547,
+          "timeouts": [],
+          "task_and_sqlite_executor_match": true,
+          "contention_evidence": true,
+          "commit": 0,
+          "close": 0,
+          "events": [
+            {
+              "name": "acquire",
+              "result": 0,
+              "strictPool": true,
+              "extended": 0,
+              "milliseconds": 0.7004166545812041
+            },
+            {
+              "executor": "87A34CDD-6286-4DF8-B8B1-F27E9A241A8F",
+              "name": "first-task-start",
+              "strictPool": true,
+              "milliseconds": 1.1067499872297049
+            },
+            {
+              "name": "second-task-start",
+              "strictPool": true,
+              "milliseconds": 1.1284583306405693,
+              "executor": "C64B61A4-AA05-4BBE-AA74-3294C4A8F5F2"
+            },
+            {
+              "executor": "C64B61A4-AA05-4BBE-AA74-3294C4A8F5F2",
+              "strictPool": true,
+              "name": "second-sqlite-begin",
+              "milliseconds": 1.564333331771195,
+              "connection": "E4D9BEAA-C42F-42EB-B15E-D0E16024479A"
+            },
+            {
+              "name": "first-failure",
+              "strictPool": true,
+              "milliseconds": 1.620166643988341,
+              "executor": "87A34CDD-6286-4DF8-B8B1-F27E9A241A8F"
+            },
+            {
+              "strictPool": true,
+              "name": "schedule",
+              "scheduledMilliseconds": 502.9252499807626,
+              "milliseconds": 2.9290833335835487
+            },
+            {
+              "name": "release-start",
+              "strictPool": true,
+              "milliseconds": 507.0832916535437
+            },
+            {
+              "result": 0,
+              "extended": 0,
+              "strictPool": true,
+              "name": "commit-result",
+              "milliseconds": 507.6932916417718
+            },
+            {
+              "name": "close-result",
+              "result": 0,
+              "strictPool": true,
+              "milliseconds": 507.9263333173003
+            },
+            {
+              "executor": "C64B61A4-AA05-4BBE-AA74-3294C4A8F5F2",
+              "strictPool": true,
+              "name": "second-success",
+              "milliseconds": 632.510541647207
+            },
+            {
+              "name": "executors-joined",
+              "strictPool": true,
+              "milliseconds": 633.1699166621547
+            },
+            {
+              "strictPool": true,
+              "name": "joined",
+              "milliseconds": 633.4599583351519
+            }
+          ]
+        },
+        {
+          "scenario": "F289F80F-0F7C-48BC-A5A5-2CFAE064B704",
+          "kind": "premature-release-negative",
+          "fixture_version_label": 0,
+          "strict_pool_received": true,
+          "sqlite_entries": [
+            {
+              "executor": "6EB0DAE5-7C2F-4320-876C-5D30155BE0E3",
+              "name": "first-sqlite-begin",
+              "milliseconds": 1214.228708355222,
+              "connection": "28414A72-992F-478E-A358-E2FE1A7AEDEB"
+            },
+            {
+              "executor": "16CA5265-E060-4A55-A811-E7FFF96E36E7",
+              "name": "second-sqlite-begin",
+              "milliseconds": 1416.028041683603,
+              "connection": "0C5974D1-AC3A-4488-B878-0B5214D518E8"
+            }
+          ],
+          "release_milliseconds": 502.77800002368167,
+          "executors_joined_milliseconds": 1429.9732083454728,
+          "timeouts": [],
+          "task_and_sqlite_executor_match": true,
+          "contention_evidence": false,
+          "commit": 0,
+          "close": 0,
+          "events": [
+            {
+              "result": 0,
+              "extended": 0,
+              "strictPool": true,
+              "name": "acquire",
+              "milliseconds": 0.8033750054892153
+            },
+            {
+              "name": "schedule",
+              "scheduledMilliseconds": 501.11862501944415,
+              "milliseconds": 1.120250002713874,
+              "strictPool": true
+            },
+            {
+              "executor": "6EB0DAE5-7C2F-4320-876C-5D30155BE0E3",
+              "strictPool": true,
+              "name": "first-task-start",
+              "milliseconds": 1.5332916809711605
+            },
+            {
+              "name": "second-task-start",
+              "executor": "16CA5265-E060-4A55-A811-E7FFF96E36E7",
+              "milliseconds": 1.6204999992623925,
+              "strictPool": true
+            },
+            {
+              "strictPool": true,
+              "name": "release-start",
+              "milliseconds": 502.77800002368167
+            },
+            {
+              "name": "commit-result",
+              "extended": 0,
+              "result": 0,
+              "milliseconds": 504.0195833425969,
+              "strictPool": true
+            },
+            {
+              "result": 0,
+              "strictPool": true,
+              "name": "close-result",
+              "milliseconds": 504.3067500228062
+            },
+            {
+              "name": "first-snapshot-call",
+              "executor": "6EB0DAE5-7C2F-4320-876C-5D30155BE0E3",
+              "milliseconds": 1213.1198333518114,
+              "strictPool": true
+            },
+            {
+              "executor": "6EB0DAE5-7C2F-4320-876C-5D30155BE0E3",
+              "strictPool": true,
+              "name": "first-sqlite-begin",
+              "milliseconds": 1214.228708355222,
+              "connection": "28414A72-992F-478E-A358-E2FE1A7AEDEB"
+            },
+            {
+              "name": "second-snapshot-call",
+              "executor": "16CA5265-E060-4A55-A811-E7FFF96E36E7",
+              "milliseconds": 1414.811083348468,
+              "strictPool": true
+            },
+            {
+              "executor": "16CA5265-E060-4A55-A811-E7FFF96E36E7",
+              "strictPool": true,
+              "name": "second-sqlite-begin",
+              "milliseconds": 1416.028041683603,
+              "connection": "0C5974D1-AC3A-4488-B878-0B5214D518E8"
+            },
+            {
+              "name": "second-success",
+              "executor": "16CA5265-E060-4A55-A811-E7FFF96E36E7",
+              "milliseconds": 1425.3105833486188,
+              "strictPool": true
+            },
+            {
+              "executor": "6EB0DAE5-7C2F-4320-876C-5D30155BE0E3",
+              "strictPool": true,
+              "name": "first-success",
+              "milliseconds": 1429.4780416821595
+            },
+            {
+              "name": "executors-joined",
+              "milliseconds": 1429.9732083454728,
+              "strictPool": true
+            },
+            {
+              "strictPool": true,
+              "name": "joined",
+              "milliseconds": 1430.1315833581612
+            }
+          ]
+        },
+        {
+          "scenario": "A3A81AC7-6F85-4D49-B1F2-843612BF152A",
+          "kind": "shared-lane-negative",
+          "fixture_version_label": null,
+          "strict_pool_received": true,
+          "sqlite_entries": [
+            {
+              "executor": "20E1C5BD-EC19-42B8-8B53-6F2C7DD61945",
+              "name": "first-sqlite-begin",
+              "milliseconds": 1.9191250030416995,
+              "connection": "B888DB1D-804D-45D8-9514-36180F3BED54"
+            },
+            {
+              "name": "second-sqlite-begin",
+              "executor": "20E1C5BD-EC19-42B8-8B53-6F2C7DD61945",
+              "connection": "7A4E911D-91D1-443A-8D1A-D5A91E48FD9E",
+              "milliseconds": 5017.761958326446
+            }
+          ],
+          "release_milliseconds": 5006.332791672321,
+          "executors_joined_milliseconds": 5019.706874998519,
+          "timeouts": [
+            "first-sqlite-entry-barrier-timeout",
+            "sqlite-entry-timeout"
+          ],
+          "task_and_sqlite_executor_match": true,
+          "contention_evidence": false,
+          "commit": 0,
+          "close": 0,
+          "events": [
+            {
+              "name": "acquire",
+              "extended": 0,
+              "result": 0,
+              "milliseconds": 0.7150416786316782,
+              "strictPool": true
+            },
+            {
+              "executor": "20E1C5BD-EC19-42B8-8B53-6F2C7DD61945",
+              "strictPool": true,
+              "name": "first-task-start",
+              "milliseconds": 1.1550000053830445
+            },
+            {
+              "name": "second-task-start",
+              "executor": "20E1C5BD-EC19-42B8-8B53-6F2C7DD61945",
+              "milliseconds": 1.300208328757435,
+              "strictPool": true
+            },
+            {
+              "executor": "20E1C5BD-EC19-42B8-8B53-6F2C7DD61945",
+              "strictPool": true,
+              "name": "first-sqlite-begin",
+              "milliseconds": 1.9191250030416995,
+              "connection": "B888DB1D-804D-45D8-9514-36180F3BED54"
+            },
+            {
+              "name": "first-sqlite-entry-barrier-timeout",
+              "executor": "20E1C5BD-EC19-42B8-8B53-6F2C7DD61945",
+              "connection": "B888DB1D-804D-45D8-9514-36180F3BED54",
+              "milliseconds": 5002.7343750116415,
+              "strictPool": true
+            },
+            {
+              "strictPool": true,
+              "name": "sqlite-entry-timeout",
+              "milliseconds": 5005.856916686753
+            },
+            {
+              "name": "schedule",
+              "scheduledMilliseconds": 5006.104833330028,
+              "milliseconds": 5006.105458334787,
+              "strictPool": true
+            },
+            {
+              "strictPool": true,
+              "name": "release-start",
+              "milliseconds": 5006.332791672321
+            },
+            {
+              "name": "commit-result",
+              "extended": 0,
+              "result": 0,
+              "milliseconds": 5007.43008335121,
+              "strictPool": true
+            },
+            {
+              "result": 0,
+              "strictPool": true,
+              "name": "close-result",
+              "milliseconds": 5007.609333348228
+            },
+            {
+              "name": "second-sqlite-begin",
+              "executor": "20E1C5BD-EC19-42B8-8B53-6F2C7DD61945",
+              "connection": "7A4E911D-91D1-443A-8D1A-D5A91E48FD9E",
+              "milliseconds": 5017.761958326446,
+              "strictPool": true
+            },
+            {
+              "executor": "20E1C5BD-EC19-42B8-8B53-6F2C7DD61945",
+              "strictPool": true,
+              "name": "first-success",
+              "milliseconds": 5019.02445833548
+            },
+            {
+              "name": "second-success",
+              "executor": "20E1C5BD-EC19-42B8-8B53-6F2C7DD61945",
+              "milliseconds": 5019.2306250100955,
+              "strictPool": true
+            },
+            {
+              "strictPool": true,
+              "name": "executors-joined",
+              "milliseconds": 5019.706874998519
+            },
+            {
+              "name": "joined",
+              "milliseconds": 5019.896541663911,
+              "strictPool": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "xcresult": "Test-golos-meet-2026.10.31_22-40-06-+0300.xcresult",
+      "result": "Passed",
+      "tests_passed": 310,
+      "runs_passed": 374,
+      "failed": 0,
+      "skipped": 2,
+      "runtime_warning_files": [
+        "LocalDocumentExtractorTests.swift"
+      ],
+      "cases": [
+        {
+          "scenario": "1308C496-984B-4D84-A0F7-B400170E8632",
+          "kind": "concurrent-v0",
+          "fixture_version_label": 0,
+          "strict_pool_received": false,
+          "sqlite_entries": [
+            {
+              "executor": "E3DF8BE3-906E-4A0D-B182-256459E27DF5",
+              "milliseconds": 2.6413750019855797,
+              "name": "first-sqlite-begin",
+              "connection": "A208CE13-F985-4A9D-BD92-2DC22F4E2DE6"
+            },
+            {
+              "name": "second-sqlite-begin",
+              "milliseconds": 6.8099166674073786,
+              "connection": "99E65720-DE15-4CED-88B4-F38B34A81764",
+              "executor": "D55D3498-7034-4939-933E-0AAEA92CBADA"
+            }
+          ],
+          "release_milliseconds": 515.4941249929834,
+          "executors_joined_milliseconds": 2113.6633749993052,
+          "timeouts": [],
+          "task_and_sqlite_executor_match": true,
+          "contention_evidence": true,
+          "commit": 0,
+          "close": 0,
+          "events": [
+            {
+              "result": 0,
+              "milliseconds": 0.5110416677780449,
+              "extended": 0,
+              "strictPool": false,
+              "name": "acquire"
+            },
+            {
+              "executor": "E3DF8BE3-906E-4A0D-B182-256459E27DF5",
+              "milliseconds": 2.1316250204108655,
+              "name": "first-task-start",
+              "strictPool": false
+            },
+            {
+              "executor": "D55D3498-7034-4939-933E-0AAEA92CBADA",
+              "milliseconds": 2.1392916678451,
+              "name": "second-task-start",
+              "strictPool": false
+            },
+            {
+              "strictPool": false,
+              "executor": "E3DF8BE3-906E-4A0D-B182-256459E27DF5",
+              "milliseconds": 2.6413750019855797,
+              "name": "first-sqlite-begin",
+              "connection": "A208CE13-F985-4A9D-BD92-2DC22F4E2DE6"
+            },
+            {
+              "strictPool": false,
+              "name": "second-sqlite-begin",
+              "milliseconds": 6.8099166674073786,
+              "connection": "99E65720-DE15-4CED-88B4-F38B34A81764",
+              "executor": "D55D3498-7034-4939-933E-0AAEA92CBADA"
+            },
+            {
+              "scheduledMilliseconds": 510.80920835374855,
+              "milliseconds": 10.81012500799261,
+              "strictPool": false,
+              "name": "schedule"
+            },
+            {
+              "strictPool": false,
+              "name": "release-start",
+              "milliseconds": 515.4941249929834
+            },
+            {
+              "name": "commit-result",
+              "result": 0,
+              "strictPool": false,
+              "extended": 0,
+              "milliseconds": 515.7634583301842
+            },
+            {
+              "strictPool": false,
+              "name": "close-result",
+              "milliseconds": 515.8436666824855,
+              "result": 0
+            },
+            {
+              "name": "second-success",
+              "strictPool": false,
+              "executor": "D55D3498-7034-4939-933E-0AAEA92CBADA",
+              "milliseconds": 665.7189166580793
+            },
+            {
+              "executor": "E3DF8BE3-906E-4A0D-B182-256459E27DF5",
+              "strictPool": false,
+              "name": "first-success",
+              "milliseconds": 837.5296666636132
+            },
+            {
+              "milliseconds": 2113.6633749993052,
+              "strictPool": false,
+              "name": "executors-joined"
+            },
+            {
+              "strictPool": false,
+              "milliseconds": 2113.7349999917205,
+              "name": "joined"
+            }
+          ]
+        },
+        {
+          "scenario": "318C201D-8C68-4279-8A17-BC36E3FDA41A",
+          "kind": "concurrent-v2",
+          "fixture_version_label": 2,
+          "strict_pool_received": false,
+          "sqlite_entries": [
+            {
+              "name": "second-sqlite-begin",
+              "executor": "614AB4B0-FF62-49EF-A79F-9231ABED12AB",
+              "connection": "0D24FCC4-AA98-4482-8EEF-9B3F813191B6",
+              "milliseconds": 0.5585000035353005
+            },
+            {
+              "name": "first-sqlite-begin",
+              "connection": "E3C94A7E-EC13-4A2F-8C9E-D5894C23C756",
+              "milliseconds": 0.6340000254567713,
+              "executor": "F21F8473-77AD-47D2-8144-1D2A617B9263"
+            }
+          ],
+          "release_milliseconds": 506.4736250205897,
+          "executors_joined_milliseconds": 657.2077500168234,
+          "timeouts": [],
+          "task_and_sqlite_executor_match": true,
+          "contention_evidence": true,
+          "commit": 0,
+          "close": 0,
+          "events": [
+            {
+              "name": "acquire",
+              "extended": 0,
+              "milliseconds": 0.2108333574142307,
+              "strictPool": false,
+              "result": 0
+            },
+            {
+              "strictPool": false,
+              "name": "first-task-start",
+              "executor": "F21F8473-77AD-47D2-8144-1D2A617B9263",
+              "milliseconds": 0.3465000190772116
+            },
+            {
+              "name": "second-task-start",
+              "milliseconds": 0.369583343854174,
+              "executor": "614AB4B0-FF62-49EF-A79F-9231ABED12AB",
+              "strictPool": false
+            },
+            {
+              "strictPool": false,
+              "name": "second-sqlite-begin",
+              "executor": "614AB4B0-FF62-49EF-A79F-9231ABED12AB",
+              "connection": "0D24FCC4-AA98-4482-8EEF-9B3F813191B6",
+              "milliseconds": 0.5585000035353005
+            },
+            {
+              "name": "first-sqlite-begin",
+              "connection": "E3C94A7E-EC13-4A2F-8C9E-D5894C23C756",
+              "milliseconds": 0.6340000254567713,
+              "executor": "F21F8473-77AD-47D2-8144-1D2A617B9263",
+              "strictPool": false
+            },
+            {
+              "name": "schedule",
+              "milliseconds": 1.3634166680276394,
+              "scheduledMilliseconds": 501.362875016639,
+              "strictPool": false
+            },
+            {
+              "name": "release-start",
+              "milliseconds": 506.4736250205897,
+              "strictPool": false
+            },
+            {
+              "strictPool": false,
+              "extended": 0,
+              "result": 0,
+              "name": "commit-result",
+              "milliseconds": 506.63375001749955
+            },
+            {
+              "name": "close-result",
+              "result": 0,
+              "milliseconds": 506.71683333348483,
+              "strictPool": false
+            },
+            {
+              "strictPool": false,
+              "name": "second-success",
+              "milliseconds": 642.7597916917875,
+              "executor": "614AB4B0-FF62-49EF-A79F-9231ABED12AB"
+            },
+            {
+              "name": "first-success",
+              "milliseconds": 657.0269583608024,
+              "strictPool": false,
+              "executor": "F21F8473-77AD-47D2-8144-1D2A617B9263"
+            },
+            {
+              "strictPool": false,
+              "name": "executors-joined",
+              "milliseconds": 657.2077500168234
+            },
+            {
+              "name": "joined",
+              "milliseconds": 657.2539166954812,
+              "strictPool": false
+            }
+          ]
+        },
+        {
+          "scenario": "22B67865-B201-4ECE-9202-6A60ACFF33E7",
+          "kind": "delayed-actors",
+          "fixture_version_label": 0,
+          "strict_pool_received": false,
+          "sqlite_entries": [
+            {
+              "name": "first-sqlite-begin",
+              "milliseconds": 651.3782083347905,
+              "connection": "DA86098C-5C40-4C09-BCD3-9232DC6B3E8F",
+              "executor": "D71BD5AE-8C7D-4C1D-B733-6012B2957266"
+            },
+            {
+              "name": "second-sqlite-begin",
+              "milliseconds": 913.3778749965131,
+              "connection": "10191572-B1A7-40D9-856B-A890FCDD0E10",
+              "executor": "F45A485C-A0AB-4E3F-8A27-53FBB64A9A73"
+            }
+          ],
+          "release_milliseconds": 1419.016375002684,
+          "executors_joined_milliseconds": 1520.2663333329838,
+          "timeouts": [],
+          "task_and_sqlite_executor_match": true,
+          "contention_evidence": true,
+          "commit": 0,
+          "close": 0,
+          "events": [
+            {
+              "name": "acquire",
+              "result": 0,
+              "milliseconds": 0.26787500246427953,
+              "strictPool": false,
+              "extended": 0
+            },
+            {
+              "name": "first-task-start",
+              "milliseconds": 0.4349166702013463,
+              "strictPool": false,
+              "executor": "D71BD5AE-8C7D-4C1D-B733-6012B2957266"
+            },
+            {
+              "milliseconds": 0.44537498615682125,
+              "executor": "F45A485C-A0AB-4E3F-8A27-53FBB64A9A73",
+              "strictPool": false,
+              "name": "second-task-start"
+            },
+            {
+              "milliseconds": 651.1006249929778,
+              "executor": "D71BD5AE-8C7D-4C1D-B733-6012B2957266",
+              "strictPool": false,
+              "name": "first-snapshot-call"
+            },
+            {
+              "name": "first-sqlite-begin",
+              "milliseconds": 651.3782083347905,
+              "connection": "DA86098C-5C40-4C09-BCD3-9232DC6B3E8F",
+              "strictPool": false,
+              "executor": "D71BD5AE-8C7D-4C1D-B733-6012B2957266"
+            },
+            {
+              "strictPool": false,
+              "milliseconds": 913.0625416582916,
+              "name": "second-snapshot-call",
+              "executor": "F45A485C-A0AB-4E3F-8A27-53FBB64A9A73"
+            },
+            {
+              "name": "second-sqlite-begin",
+              "milliseconds": 913.3778749965131,
+              "connection": "10191572-B1A7-40D9-856B-A890FCDD0E10",
+              "strictPool": false,
+              "executor": "F45A485C-A0AB-4E3F-8A27-53FBB64A9A73"
+            },
+            {
+              "strictPool": false,
+              "milliseconds": 913.8952083303593,
+              "name": "schedule",
+              "scheduledMilliseconds": 1413.8945833256003
+            },
+            {
+              "milliseconds": 1419.016375002684,
+              "name": "release-start",
+              "strictPool": false
+            },
+            {
+              "name": "commit-result",
+              "result": 0,
+              "milliseconds": 1419.5897500030696,
+              "strictPool": false,
+              "extended": 0
+            },
+            {
+              "result": 0,
+              "milliseconds": 1419.704833329888,
+              "name": "close-result",
+              "strictPool": false
+            },
+            {
+              "name": "second-success",
+              "milliseconds": 1474.8770833248273,
+              "strictPool": false,
+              "executor": "F45A485C-A0AB-4E3F-8A27-53FBB64A9A73"
+            },
+            {
+              "strictPool": false,
+              "milliseconds": 1519.970374996774,
+              "name": "first-success",
+              "executor": "D71BD5AE-8C7D-4C1D-B733-6012B2957266"
+            },
+            {
+              "name": "executors-joined",
+              "milliseconds": 1520.2663333329838,
+              "strictPool": false
+            },
+            {
+              "milliseconds": 1520.35325000179,
+              "name": "joined",
+              "strictPool": false
+            }
+          ]
+        },
+        {
+          "scenario": "E9079E7B-7491-44CA-A3FB-693567ED0B74",
+          "kind": "delayed-peer",
+          "fixture_version_label": 0,
+          "strict_pool_received": false,
+          "sqlite_entries": [
+            {
+              "connection": "D0C9F8C5-8D16-47E2-B680-95554CAC056A",
+              "milliseconds": 1.0119583457708359,
+              "name": "first-sqlite-begin",
+              "executor": "0BDE76DE-4334-42AA-94BE-0727719BDA39"
+            },
+            {
+              "name": "second-sqlite-begin",
+              "connection": "1C340028-B84F-43CC-8253-1AC20B9D31C2",
+              "milliseconds": 2583.032666676445,
+              "executor": "DD7E1E65-4206-4EB1-AA2F-3432C86E04A7"
+            }
+          ],
+          "release_milliseconds": 3087.363666680176,
+          "executors_joined_milliseconds": 3186.955625016708,
+          "timeouts": [],
+          "task_and_sqlite_executor_match": true,
+          "contention_evidence": true,
+          "commit": 0,
+          "close": 0,
+          "events": [
+            {
+              "name": "acquire",
+              "extended": 0,
+              "milliseconds": 0.35266668419353664,
+              "strictPool": false,
+              "result": 0
+            },
+            {
+              "strictPool": false,
+              "milliseconds": 0.7108749996405095,
+              "name": "first-task-start",
+              "executor": "0BDE76DE-4334-42AA-94BE-0727719BDA39"
+            },
+            {
+              "name": "second-task-start",
+              "milliseconds": 0.7173750200308859,
+              "executor": "DD7E1E65-4206-4EB1-AA2F-3432C86E04A7",
+              "strictPool": false
+            },
+            {
+              "strictPool": false,
+              "connection": "D0C9F8C5-8D16-47E2-B680-95554CAC056A",
+              "milliseconds": 1.0119583457708359,
+              "name": "first-sqlite-begin",
+              "executor": "0BDE76DE-4334-42AA-94BE-0727719BDA39"
+            },
+            {
+              "name": "second-sqlite-begin",
+              "connection": "1C340028-B84F-43CC-8253-1AC20B9D31C2",
+              "milliseconds": 2583.032666676445,
+              "executor": "DD7E1E65-4206-4EB1-AA2F-3432C86E04A7",
+              "strictPool": false
+            },
+            {
+              "strictPool": false,
+              "milliseconds": 2585.3060416702647,
+              "name": "schedule",
+              "scheduledMilliseconds": 3085.3007916884962
+            },
+            {
+              "name": "release-start",
+              "milliseconds": 3087.363666680176,
+              "strictPool": false
+            },
+            {
+              "result": 0,
+              "milliseconds": 3089.5844166807365,
+              "extended": 0,
+              "name": "commit-result",
+              "strictPool": false
+            },
+            {
+              "name": "close-result",
+              "milliseconds": 3089.9570000183303,
+              "strictPool": false,
+              "result": 0
+            },
+            {
+              "strictPool": false,
+              "milliseconds": 3104.9095833441243,
+              "name": "first-success",
+              "executor": "0BDE76DE-4334-42AA-94BE-0727719BDA39"
+            },
+            {
+              "name": "second-success",
+              "milliseconds": 3186.0908333328553,
+              "executor": "DD7E1E65-4206-4EB1-AA2F-3432C86E04A7",
+              "strictPool": false
+            },
+            {
+              "milliseconds": 3186.955625016708,
+              "name": "executors-joined",
+              "strictPool": false
+            },
+            {
+              "name": "joined",
+              "milliseconds": 3187.187333329348,
+              "strictPool": false
+            }
+          ]
+        },
+        {
+          "scenario": "80002908-57DD-4EE2-9533-D939F3AADBFF",
+          "kind": "first-failure-cleanup",
+          "fixture_version_label": 4,
+          "strict_pool_received": false,
+          "sqlite_entries": [
+            {
+              "connection": "2906BC2B-B126-4845-AD9A-8FCB95F23260",
+              "name": "second-sqlite-begin",
+              "milliseconds": 0.5237916484475136,
+              "executor": "E2D0682E-B4CA-4627-9E5A-74E797652EAF"
+            }
+          ],
+          "release_milliseconds": 502.0425416587386,
+          "executors_joined_milliseconds": 517.7414999925531,
+          "timeouts": [],
+          "task_and_sqlite_executor_match": true,
+          "contention_evidence": true,
+          "commit": 0,
+          "close": 0,
+          "events": [
+            {
+              "strictPool": false,
+              "extended": 0,
+              "result": 0,
+              "name": "acquire",
+              "milliseconds": 0.20662500173784792
+            },
+            {
+              "strictPool": false,
+              "name": "second-task-start",
+              "milliseconds": 0.3299583331681788,
+              "executor": "E2D0682E-B4CA-4627-9E5A-74E797652EAF"
+            },
+            {
+              "name": "first-task-start",
+              "milliseconds": 0.3299999807495624,
+              "strictPool": false,
+              "executor": "DF5CC632-FE04-45E3-AE5A-D0BB15469651"
+            },
+            {
+              "name": "first-failure",
+              "milliseconds": 0.40962500497698784,
+              "strictPool": false,
+              "executor": "DF5CC632-FE04-45E3-AE5A-D0BB15469651"
+            },
+            {
+              "strictPool": false,
+              "connection": "2906BC2B-B126-4845-AD9A-8FCB95F23260",
+              "name": "second-sqlite-begin",
+              "milliseconds": 0.5237916484475136,
+              "executor": "E2D0682E-B4CA-4627-9E5A-74E797652EAF"
+            },
+            {
+              "name": "schedule",
+              "milliseconds": 1.044874981744215,
+              "scheduledMilliseconds": 501.0446250089444,
+              "strictPool": false
+            },
+            {
+              "name": "release-start",
+              "milliseconds": 502.0425416587386,
+              "strictPool": false
+            },
+            {
+              "result": 0,
+              "milliseconds": 502.1549583179876,
+              "extended": 0,
+              "strictPool": false,
+              "name": "commit-result"
+            },
+            {
+              "name": "close-result",
+              "result": 0,
+              "milliseconds": 502.22270833910443,
+              "strictPool": false
+            },
+            {
+              "name": "second-success",
+              "milliseconds": 517.3305833304767,
+              "strictPool": false,
+              "executor": "E2D0682E-B4CA-4627-9E5A-74E797652EAF"
+            },
+            {
+              "milliseconds": 517.7414999925531,
+              "strictPool": false,
+              "name": "executors-joined"
+            },
+            {
+              "name": "joined",
+              "milliseconds": 517.8171666630078,
+              "strictPool": false
+            }
+          ]
+        },
+        {
+          "scenario": "302EFEF4-2C2F-49C6-97F4-9140B10949A3",
+          "kind": "premature-release-negative",
+          "fixture_version_label": 0,
+          "strict_pool_received": false,
+          "sqlite_entries": [
+            {
+              "connection": "5F3263C9-A441-412E-956D-F61C988799D4",
+              "milliseconds": 1209.9571250146255,
+              "name": "first-sqlite-begin",
+              "executor": "6BC75928-5CEB-413A-9B93-07BCFCAC94E5"
+            },
+            {
+              "name": "second-sqlite-begin",
+              "connection": "978AF842-03E4-4CB0-A038-1DDE0A16014E",
+              "milliseconds": 1407.5791666691657,
+              "executor": "3B5B90DF-FD0B-46C1-8319-4FFD59DD72A3"
+            }
+          ],
+          "release_milliseconds": 503.4646666608751,
+          "executors_joined_milliseconds": 1420.7039999892004,
+          "timeouts": [],
+          "task_and_sqlite_executor_match": true,
+          "contention_evidence": false,
+          "commit": 0,
+          "close": 0,
+          "events": [
+            {
+              "result": 0,
+              "milliseconds": 0.2678333257790655,
+              "extended": 0,
+              "name": "acquire",
+              "strictPool": false
+            },
+            {
+              "name": "schedule",
+              "milliseconds": 0.38116666837595403,
+              "scheduledMilliseconds": 500.3807916655205,
+              "strictPool": false
+            },
+            {
+              "strictPool": false,
+              "milliseconds": 0.3971666737925261,
+              "name": "first-task-start",
+              "executor": "6BC75928-5CEB-413A-9B93-07BCFCAC94E5"
+            },
+            {
+              "name": "second-task-start",
+              "milliseconds": 0.4230833437759429,
+              "executor": "3B5B90DF-FD0B-46C1-8319-4FFD59DD72A3",
+              "strictPool": false
+            },
+            {
+              "milliseconds": 503.4646666608751,
+              "name": "release-start",
+              "strictPool": false
+            },
+            {
+              "name": "commit-result",
+              "extended": 0,
+              "milliseconds": 504.2447499872651,
+              "strictPool": false,
+              "result": 0
+            },
+            {
+              "result": 0,
+              "milliseconds": 504.34733333531767,
+              "name": "close-result",
+              "strictPool": false
+            },
+            {
+              "name": "first-snapshot-call",
+              "milliseconds": 1209.549874998629,
+              "executor": "6BC75928-5CEB-413A-9B93-07BCFCAC94E5",
+              "strictPool": false
+            },
+            {
+              "strictPool": false,
+              "connection": "5F3263C9-A441-412E-956D-F61C988799D4",
+              "milliseconds": 1209.9571250146255,
+              "name": "first-sqlite-begin",
+              "executor": "6BC75928-5CEB-413A-9B93-07BCFCAC94E5"
+            },
+            {
+              "strictPool": false,
+              "milliseconds": 1406.926833325997,
+              "name": "second-snapshot-call",
+              "executor": "3B5B90DF-FD0B-46C1-8319-4FFD59DD72A3"
+            },
+            {
+              "name": "second-sqlite-begin",
+              "connection": "978AF842-03E4-4CB0-A038-1DDE0A16014E",
+              "milliseconds": 1407.5791666691657,
+              "executor": "3B5B90DF-FD0B-46C1-8319-4FFD59DD72A3",
+              "strictPool": false
+            },
+            {
+              "strictPool": false,
+              "milliseconds": 1411.3082916592248,
+              "name": "second-success",
+              "executor": "3B5B90DF-FD0B-46C1-8319-4FFD59DD72A3"
+            },
+            {
+              "name": "first-success",
+              "milliseconds": 1420.480625005439,
+              "executor": "6BC75928-5CEB-413A-9B93-07BCFCAC94E5",
+              "strictPool": false
+            },
+            {
+              "milliseconds": 1420.7039999892004,
+              "name": "executors-joined",
+              "strictPool": false
+            },
+            {
+              "name": "joined",
+              "milliseconds": 1420.7598750072066,
+              "strictPool": false
+            }
+          ]
+        },
+        {
+          "scenario": "8DC05DEC-3E0D-426D-8197-F75380C13245",
+          "kind": "shared-lane-negative",
+          "fixture_version_label": 0,
+          "strict_pool_received": false,
+          "sqlite_entries": [
+            {
+              "name": "first-sqlite-begin",
+              "connection": "06F4F190-52E0-4389-841B-C0B7809E56ED",
+              "milliseconds": 0.5801666702609509,
+              "executor": "E03BAA9D-1B30-4F5A-BBF5-B33ECACF6F1E"
+            },
+            {
+              "connection": "819A2E77-71CD-46B2-A091-EDB21027C4E3",
+              "milliseconds": 5056.865958322305,
+              "name": "second-sqlite-begin",
+              "executor": "E03BAA9D-1B30-4F5A-BBF5-B33ECACF6F1E"
+            }
+          ],
+          "release_milliseconds": 5006.294749997323,
+          "executors_joined_milliseconds": 5057.473916676827,
+          "timeouts": [
+            "sqlite-entry-timeout",
+            "first-sqlite-entry-barrier-timeout"
+          ],
+          "task_and_sqlite_executor_match": true,
+          "contention_evidence": false,
+          "commit": 0,
+          "close": 0,
+          "events": [
+            {
+              "result": 0,
+              "milliseconds": 0.2535833336878568,
+              "extended": 0,
+              "name": "acquire",
+              "strictPool": false
+            },
+            {
+              "name": "first-task-start",
+              "milliseconds": 0.3772916679736227,
+              "executor": "E03BAA9D-1B30-4F5A-BBF5-B33ECACF6F1E",
+              "strictPool": false
+            },
+            {
+              "strictPool": false,
+              "milliseconds": 0.44512501335702837,
+              "name": "second-task-start",
+              "executor": "E03BAA9D-1B30-4F5A-BBF5-B33ECACF6F1E"
+            },
+            {
+              "name": "first-sqlite-begin",
+              "connection": "06F4F190-52E0-4389-841B-C0B7809E56ED",
+              "milliseconds": 0.5801666702609509,
+              "executor": "E03BAA9D-1B30-4F5A-BBF5-B33ECACF6F1E",
+              "strictPool": false
+            },
+            {
+              "milliseconds": 5005.451250006445,
+              "name": "sqlite-entry-timeout",
+              "strictPool": false
+            },
+            {
+              "name": "schedule",
+              "milliseconds": 5005.997500004014,
+              "scheduledMilliseconds": 5005.996458348818,
+              "strictPool": false
+            },
+            {
+              "milliseconds": 5006.294749997323,
+              "name": "release-start",
+              "strictPool": false
+            },
+            {
+              "name": "commit-result",
+              "extended": 0,
+              "milliseconds": 5007.255791657371,
+              "strictPool": false,
+              "result": 0
+            },
+            {
+              "strictPool": false,
+              "connection": "06F4F190-52E0-4389-841B-C0B7809E56ED",
+              "milliseconds": 5049.766208336223,
+              "name": "first-sqlite-entry-barrier-timeout",
+              "executor": "E03BAA9D-1B30-4F5A-BBF5-B33ECACF6F1E"
+            },
+            {
+              "name": "close-result",
+              "milliseconds": 5052.007708349265,
+              "strictPool": false,
+              "result": 0
+            },
+            {
+              "strictPool": false,
+              "connection": "819A2E77-71CD-46B2-A091-EDB21027C4E3",
+              "milliseconds": 5056.865958322305,
+              "name": "second-sqlite-begin",
+              "executor": "E03BAA9D-1B30-4F5A-BBF5-B33ECACF6F1E"
+            },
+            {
+              "name": "first-success",
+              "milliseconds": 5057.252500002505,
+              "executor": "E03BAA9D-1B30-4F5A-BBF5-B33ECACF6F1E",
+              "strictPool": false
+            },
+            {
+              "strictPool": false,
+              "milliseconds": 5057.337958336575,
+              "name": "second-success",
+              "executor": "E03BAA9D-1B30-4F5A-BBF5-B33ECACF6F1E"
+            },
+            {
+              "name": "executors-joined",
+              "milliseconds": 5057.473916676827,
+              "strictPool": false
+            },
+            {
+              "milliseconds": 5057.588249997934,
+              "name": "joined",
+              "strictPool": false
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
