@@ -11,7 +11,7 @@ private final class TalkStubProtocol: URLProtocol {
         let status = Int(token) ?? (token == "expected-test-token" ? 200 : 401)
         let body: String
         if request.url?.path.contains("online-users") == true {
-            body = "{\"onlineUsers\":[{\"uniqueId\":\"u1\",\"isAnonymous\":false}]}"
+            body = "{\"onlineUsers\":[{\"uniqueId\":\"u1\",\"isAnonymous\":false,\"userInfo\":{\"key\":\"owner\"}}]}"
         } else {
             body = "{\"firstname\":\"Тест\",\"surname\":\"Пользователь\",\"domainTitle\":\"Проект\"}"
         }
@@ -29,7 +29,8 @@ private final class TalkStubProtocol: URLProtocol {
         let config = URLSessionConfiguration.ephemeral
         config.protocolClasses = [TalkStubProtocol.self]
         return try TalkAPIClient(server: URL(string: "https://talk.example/")!, token: token,
-                                 session: URLSession(configuration: config))
+                                 session: URLSession(configuration: config),
+                                 budget: TalkRequestBudget())
     }
 
     @Test func authenticatesAndDecodesProfile() async throws {
