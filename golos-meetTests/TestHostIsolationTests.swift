@@ -11,6 +11,7 @@ import Testing
         #expect(AppRuntime.isTestHost(environment: ["XCTestConfigurationFilePath": "/tmp/test.xctestconfiguration"]))
         #expect(AppRuntime.isTestHost)
         #expect(AppLibraryState().library == nil)
+        #expect(ProductionIndexing.shared == nil)
     }
 
     @Test func defaultPathsAndLibraryUseTemporaryStorage() throws {

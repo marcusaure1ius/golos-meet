@@ -10,9 +10,12 @@ import subprocess
 parser = argparse.ArgumentParser()
 parser.add_argument("--derived-data", type=Path)
 parser.add_argument("--output", type=Path)
-parser.add_argument("--index", action="store_true", help="Build synthetic import/native/SQLite persistence probe")
+mode = parser.add_mutually_exclusive_group()
+mode.add_argument("--index", action="store_true", help="Build synthetic import/native/SQLite persistence probe")
+mode.add_argument("--queue", action="store_true", help="Build native serial worker/runtime/reconciliation probe")
 args = parser.parse_args()
-args.output = args.output or Path("/tmp/golos-native-embedding-index-probe" if args.index else "/tmp/golos-native-embedding-probe")
+args.output = args.output or Path("/tmp/golos-native-indexing-queue-probe" if args.queue else
+                                "/tmp/golos-native-embedding-index-probe" if args.index else "/tmp/golos-native-embedding-probe")
 repo = Path(__file__).resolve().parents[1]
 derived = (args.derived_data or repo / ".build/xcode").resolve()
 products = derived / "Build/Products/Debug"
@@ -20,11 +23,13 @@ maps = derived / "Build/Intermediates.noindex/GeneratedModuleMaps"
 artifacts = derived / "SourcePackages/artifacts/onnxruntime-swift-package-manager/onnxruntime/Headers"
 sources = [repo / "golos-meet/Core/Knowledge" / name for name in
            ["LocalTextEmbedding.swift", "EmbeddingModelManifest.swift", "EmbeddingModelInstaller.swift", "E5TextEmbedding.swift"]]
-if args.index:
+if args.index or args.queue:
     sources += [repo / "golos-meet/Core/Knowledge" / name for name in
                 ["KnowledgeModels.swift", "KnowledgeChunker.swift", "DocumentModels.swift", "DocumentImporter.swift",
                  "LocalDocumentExtractor.swift", "ProjectStore.swift", "EmbeddingIndexModels.swift", "MeetingEmbeddingSnapshot.swift"]]
-probe = "NativeEmbeddingIndexProbe.swift" if args.index else "NativeEmbeddingProbe.swift"
+if args.queue:
+    sources += [repo / "golos-meet/Core/Knowledge" / name for name in ["LocalIndexingRuntime.swift", "LocalIndexingService.swift"]]
+probe = "NativeIndexingQueueProbe.swift" if args.queue else "NativeEmbeddingIndexProbe.swift" if args.index else "NativeEmbeddingProbe.swift"
 objects = [products / (name + ".o") for name in ["Crypto", "EventSource", "Hub", "HuggingFace",
            "InternalCollectionsUtilities", "Jinja", "OnnxRuntimeBindings", "OrderedCollections", "Tokenizers", "yyjson"]]
 for required in sources + objects:

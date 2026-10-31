@@ -53,9 +53,15 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                                             id: dir.lastPathComponent, folder: dir)
         }
         coordinator.start()
+        ProductionIndexing.shared?.start()
         if ProcessInfo.processInfo.environment["GOLOS_MEET_BACKFILL"] == "1" {
             Backfill.run()
         }
+    }
+
+    func applicationWillTerminate(_ notification: Notification) {
+        guard !AppRuntime.isTestHost else { return }
+        ProductionIndexing.shared?.stop()
     }
 
     /// Клик по значку в Dock при закрытом окне — воссоздать окно WindowGroup.

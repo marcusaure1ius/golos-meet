@@ -47,6 +47,10 @@ struct SettingsScreen: View {
                     .padding(.top, 12)
                 EmbeddingModelSettings()
                     .padding(.top, 12)
+                if let indexing = ProductionIndexing.shared {
+                    IndexingSettings(indexing: indexing)
+                        .padding(.top, 12)
+                }
                 GCard {
                     GSettingRow("Генерировать автоматически",
                                 desc: "Заголовок, конспект и задачи через OpenRouter после расшифровки.",

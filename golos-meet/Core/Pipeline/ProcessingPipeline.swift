@@ -14,15 +14,18 @@ final class ProcessingPipeline {
     /// Идентификатор ASR-модели; пишется в meta.asrModel и шапку транскрипта.
     private let modelId: String
     private let insightsGenerator: InsightsGenerator?
+    private let onTranscriptCommitted: @Sendable (String) -> Void
 
     init(asrFactory: @escaping () -> ASRClient,
          config: PipelineConfig = .init(),
          modelId: String = "gigaam-v3",
-         insightsGenerator: InsightsGenerator? = nil) {
+         insightsGenerator: InsightsGenerator? = nil,
+         onTranscriptCommitted: @escaping @Sendable (String) -> Void = { KnowledgeIndexEvents.post(.meeting($0)) }) {
         self.asrFactory = asrFactory
         self.config = config
         self.modelId = modelId
         self.insightsGenerator = insightsGenerator
+        self.onTranscriptCommitted = onTranscriptCommitted
     }
 
     func process(folder: URL) async {
@@ -57,6 +60,7 @@ final class ProcessingPipeline {
             let title = "Встреча \(meta.id)"
             try TranscriptMerger.renderJSON(transcript)
                 .write(to: folder.appendingPathComponent("transcript.json"), options: .atomic)
+            onTranscriptCommitted(meta.id)
             try Data(TranscriptMerger.renderMarkdown(transcript, title: title).utf8)
                 .write(to: folder.appendingPathComponent("transcript.md"), options: .atomic)
             meta.asrModel = modelId

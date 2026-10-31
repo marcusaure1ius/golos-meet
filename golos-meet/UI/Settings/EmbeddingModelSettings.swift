@@ -10,17 +10,30 @@ final class EmbeddingModelSettingsModel: ObservableObject {
     @Published private(set) var fraction: Double?
     @Published private(set) var failed = false
     private let installer: EmbeddingModelInstaller
+    private let indexing: KnowledgeIndexing?
+    private var subscription: AnyCancellable?
+    private var preserveInstallationMessage = false
     private var operation: Task<Void, Never>?
     private var operationID = UUID()
     private var restored = false
 
-    init(installer: EmbeddingModelInstaller? = nil) {
-        self.installer = installer ?? EmbeddingModelInstaller(root: AppPaths.appSupport.appendingPathComponent("embedding-models"))
+    init(installer: EmbeddingModelInstaller? = nil, indexing: KnowledgeIndexing? = nil) {
+        self.indexing = indexing
+        self.installer = installer ?? indexing?.installer ?? EmbeddingModelInstaller(root: AppPaths.appSupport.appendingPathComponent("embedding-models"))
+        subscription = indexing?.$snapshot.sink { [weak self] snapshot in
+            guard let self, !self.busy else { return }
+            self.ready = snapshot.hasWorkingModel
+            if !self.preserveInstallationMessage {
+                self.message = snapshot.modelMessage
+                self.failed = snapshot.modelState == .failed
+            }
+        }
     }
 
     func restore() {
         guard !restored, !busy else { return }
         restored = true
+        if let indexing { indexing.start(); return }
         run { installer in
             guard let folder = try await installer.installedFolder() else { return false }
             let encoder = try await E5TextEmbedding(folder: folder)
@@ -32,6 +45,9 @@ final class EmbeddingModelSettingsModel: ObservableObject {
     func install(from folder: URL? = nil) {
         guard !busy else { return }
         let id = UUID()
+        let installed: @Sendable () -> Void = { [weak indexing] in
+            Task { @MainActor in indexing?.receive(.model) }
+        }
         operationID = id
         let report: @Sendable (EmbeddingInstallProgress) -> Void = { [weak self] progress in
             Task { @MainActor [weak self] in
@@ -44,6 +60,7 @@ final class EmbeddingModelSettingsModel: ObservableObject {
             _ = try await installer.install(from: folder) { progress in
                 report(progress)
             }
+            installed()
             return true
         }
     }
@@ -55,7 +72,7 @@ final class EmbeddingModelSettingsModel: ObservableObject {
 
     private func run(id: UUID = UUID(), _ work: @escaping @Sendable (EmbeddingModelInstaller) async throws -> Bool) {
         operationID = id
-        busy = true; failed = false; fraction = nil
+        busy = true; failed = false; fraction = nil; preserveInstallationMessage = false
         message = "Проверяем модель…"
         let wasReady = ready
         operation = Task { [installer] in
@@ -63,6 +80,7 @@ final class EmbeddingModelSettingsModel: ObservableObject {
                 ready = try await work(installer)
                 message = ready ? "Модель проверена и готова к локальному расчёту." : "Модель ещё не установлена."
             } catch {
+                preserveInstallationMessage = true
                 ready = wasReady
                 if error is CancellationError || (error as? URLError)?.code == .cancelled {
                     message = wasReady ? "Установка отменена. Рабочая модель сохранена." : "Установка отменена. Можно повторить загрузку."
@@ -83,7 +101,7 @@ struct EmbeddingModelSettings: View {
     @Environment(\.palette) private var p
     @StateObject private var model: EmbeddingModelSettingsModel
     init(model: EmbeddingModelSettingsModel? = nil) {
-        _model = StateObject(wrappedValue: model ?? EmbeddingModelSettingsModel())
+        _model = StateObject(wrappedValue: model ?? EmbeddingModelSettingsModel(indexing: ProductionIndexing.shared))
     }
 
     var body: some View {

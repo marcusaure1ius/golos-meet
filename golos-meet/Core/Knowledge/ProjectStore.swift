@@ -568,11 +568,12 @@ extension ProjectStore {
 
     /// A lease is exclusive even when multiple queue instances share a database.
     /// Its generation also protects A→B→A source/model changes and cancellation.
-    func claimEmbeddingJob() throws -> EmbeddingIndexLease? {
+    func claimEmbeddingJob(after sourceKey: String? = nil) throws -> EmbeddingIndexLease? {
         let db = try open()
         return try db.transaction {
             guard let model = try embeddingModel(db),
-                  let job = try readEmbeddingJobs(db, queuedFor: model.id).first else { return nil }
+                  let job = try (readEmbeddingJobs(db, queuedFor: model.id, after: sourceKey).first
+                    ?? readEmbeddingJobs(db, queuedFor: model.id).first) else { return nil }
             let snapshot = try embeddingSnapshot(job.source, db: db)
             let attempt = UUID().uuidString
             try db.execute("UPDATE embedding_jobs SET state = 'running', attempt = ?, completed = 0 WHERE source_key = ?",
@@ -610,6 +611,10 @@ extension ProjectStore {
                        bindings: [UUID().uuidString, key.rawValue])
     }
 
+    func cancelPendingEmbeddingJobs() throws {
+        try open().execute("UPDATE embedding_jobs SET state = 'cancelled', generation = hex(randomblob(16)), attempt = '', message = 'Индексирование отменено.' WHERE state IN ('queued','running','waitingForModel')")
+    }
+
     func retryEmbeddingJob(_ key: EmbeddingSourceKey) throws {
         let db = try open()
         try db.transaction {
@@ -636,6 +641,36 @@ extension ProjectStore {
                 try resetEmbeddingJob(row[0], db: db)
             }
         }
+    }
+
+    /// Release only this live attempt, e.g. on worker shutdown/supersession.
+    /// A user's cancel or a new source/model generation must remain untouched.
+    func interruptEmbeddingJob(_ lease: EmbeddingIndexLease) throws {
+        let db = try open()
+        try db.transaction {
+            guard try embeddingLeaseIsCurrent(lease, db: db) else { return }
+            try resetEmbeddingJob(lease.job.source.rawValue, db: db)
+        }
+    }
+
+    func embeddingQueueSummary() throws -> (jobs: [EmbeddingIndexJob], counts: [EmbeddingIndexState: Int]) {
+        let db = try open()
+        return try db.transaction {
+            var counts: [EmbeddingIndexState: Int] = [:]
+            for row in try db.rows("SELECT state, COUNT(*) FROM embedding_jobs GROUP BY state") {
+                guard let state = EmbeddingIndexState(rawValue: row[0]), let count = Int(row[1]) else { throw EmbeddingIndexError.corruptIndex }
+                counts[state] = count
+            }
+            return (try readEmbeddingJobs(db, uiLimit: 30), counts)
+        }
+    }
+
+    func embeddingDocumentTitles() throws -> [EmbeddingSourceKey: String] {
+        var titles: [EmbeddingSourceKey: String] = [:]
+        for row in try open().rows("SELECT id, title FROM documents") {
+            titles[.init(kind: .document, externalID: row[0])] = row[1]
+        }
+        return titles
     }
 
     /// All chunks and windows publish atomically, never one partial chunk at a
@@ -761,15 +796,18 @@ extension ProjectStore {
         return .init(id: row[0], dimensions: dimensions)
     }
 
-    private func readEmbeddingJobs(_ db: ProjectDatabase, sourceKey: String? = nil, queuedFor modelID: String? = nil) throws -> [EmbeddingIndexJob] {
+    private func readEmbeddingJobs(_ db: ProjectDatabase, sourceKey: String? = nil, queuedFor modelID: String? = nil,
+                                   after: String? = nil, uiLimit: Int? = nil) throws -> [EmbeddingIndexJob] {
         var sql = "SELECT s.kind, s.external_id, s.revision, j.generation, j.model_id, j.state, j.completed, j.total, j.message FROM embedding_jobs j JOIN embedding_sources s ON s.source_key = j.source_key"
         var bindings: [String] = []
         var predicates: [String] = []
         if let sourceKey { predicates.append("s.source_key = ?"); bindings.append(sourceKey) }
         if let modelID { predicates.append("j.state = 'queued' AND j.model_id = ?"); bindings.append(modelID) }
+        if let after { predicates.append("s.source_key > ?"); bindings.append(after) }
         if !predicates.isEmpty { sql += " WHERE " + predicates.joined(separator: " AND ") }
-        sql += " ORDER BY s.source_key"
+        sql += uiLimit == nil ? " ORDER BY s.source_key" : " ORDER BY CASE j.state WHEN 'running' THEN 0 WHEN 'failed' THEN 1 WHEN 'queued' THEN 2 WHEN 'waitingForModel' THEN 3 WHEN 'cancelled' THEN 4 ELSE 5 END, s.source_key"
         if modelID != nil { sql += " LIMIT 1" }
+        if let uiLimit { sql += " LIMIT \(uiLimit)" }
         return try db.rows(sql, bindings: bindings).map { row in
             guard let kind = EmbeddingSourceKind(rawValue: row[0]), let state = EmbeddingIndexState(rawValue: row[5]),
                   let completed = Int(row[6]), let total = Int(row[7]) else { throw EmbeddingIndexError.corruptIndex }

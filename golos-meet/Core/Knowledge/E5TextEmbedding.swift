@@ -10,8 +10,9 @@ nonisolated struct EmbeddedPassageWindow: Sendable {
 
 /// CPU inference is actor-isolated and serial, never on the UI executor. Only
 /// local files are opened; the Hub's remote model loader is deliberately unused.
-actor E5TextEmbedding: LocalTextEmbedding {
+actor E5TextEmbedding: LocalPassageEmbedding {
     nonisolated let modelID = EmbeddingModelManifest.e5Small.modelID
+    nonisolated let dimensions = 384
     private let environment: ORTEnv
     private let session: ORTSession
     private let tokenizer: any Tokenizer
