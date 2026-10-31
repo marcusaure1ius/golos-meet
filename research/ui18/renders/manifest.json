@@ -1,0 +1,178 @@
+{
+  "kind": "conceptual native offscreen renders, not production screenshots",
+  "source": "research/ui18/native/MockHost.swift",
+  "source_sha256": "450ef4540d0749344bd5ff784acc90f21642c438088e9c5066a243a1259418b4",
+  "command": "research/ui18/native/render.sh",
+  "checked_environment": "macOS 27.0.1; Xcode 27.1 (27A9275); SDK 27.0; arm64; target 14.4",
+  "optical_glass": "not validated; exports use opaque conceptual control backing",
+  "images": [
+    {
+      "file": "A-document-wide-light.png",
+      "pixels": [
+        2880,
+        1800
+      ],
+      "sha256": "15370ca4f90bba31489d8ba2d89c8dd3e24d37a0fd7f89b64df5292d060a05e6"
+    },
+    {
+      "file": "A-meeting-fullscreen-dark.png",
+      "pixels": [
+        3840,
+        2160
+      ],
+      "sha256": "64bc958db078d40c0fedd532fddfc0226a9a2ab54f08264870c9dcaac95f8fdb"
+    },
+    {
+      "file": "A-meeting-wide-light.png",
+      "pixels": [
+        2880,
+        1800
+      ],
+      "sha256": "70a61a9bee943b2a9af85d5b08a2f24d866c10e6eeb69557831769aa3a4411ca"
+    },
+    {
+      "file": "A-memory-wide-light.png",
+      "pixels": [
+        2880,
+        1800
+      ],
+      "sha256": "bc7d9654a27e02d9745115e0332e0639b512f7557cd670e132b91cfd7b090c8f"
+    },
+    {
+      "file": "A-overview-reduced.png",
+      "pixels": [
+        2880,
+        1800
+      ],
+      "sha256": "6bb0805032854698627c695b4c6e6e3da647bb750228f2454c2dc95c9e9adfc8"
+    },
+    {
+      "file": "A-overview-wide-light.png",
+      "pixels": [
+        2880,
+        1800
+      ],
+      "sha256": "7ebb9fb8a645f51a620ca6e6bf79480564613f68023d4aed67ceef4cfadbb6be"
+    },
+    {
+      "file": "A-search-wide-light.png",
+      "pixels": [
+        2880,
+        1800
+      ],
+      "sha256": "c4e0c40db7d28accc5bc0e8376ef25737c3a12005adb979dd9d02aa0a5b0f940"
+    },
+    {
+      "file": "A-taskEdit-wide-light.png",
+      "pixels": [
+        2880,
+        1800
+      ],
+      "sha256": "6011f801f567bef373315d75a68713ba00029e14e275601b2b0a609ec5ba34c5"
+    },
+    {
+      "file": "A-tasks-wide-light.png",
+      "pixels": [
+        2880,
+        1800
+      ],
+      "sha256": "04e945dba5bfdd3fcda2aca0573b09e5e9cb9dcf51dd42207449c91a8370c0bd"
+    },
+    {
+      "file": "B-document-wide-light.png",
+      "pixels": [
+        2880,
+        1800
+      ],
+      "sha256": "275062ccdf0e1871e0b4fa451ad132eb27b741bc33b1820a2196f7feb6a65e29"
+    },
+    {
+      "file": "B-meeting-fullscreen-dark.png",
+      "pixels": [
+        3840,
+        2160
+      ],
+      "sha256": "560c76144e9c51a1fda79779134ef1d1ac7b3a2c47ea13531bfad60c5c17f99f"
+    },
+    {
+      "file": "B-meeting-wide-light.png",
+      "pixels": [
+        2880,
+        1800
+      ],
+      "sha256": "9ca8d7914849f0d3e21118c8b1c38270aa979a0ac49e1810a7acc5a74d7f670a"
+    },
+    {
+      "file": "B-memory-wide-light.png",
+      "pixels": [
+        2880,
+        1800
+      ],
+      "sha256": "e13647f3165e926de18ae57fb47f7c91bfd4e23878778f4786caa0a7a3b9c77c"
+    },
+    {
+      "file": "B-overview-reduced.png",
+      "pixels": [
+        2880,
+        1800
+      ],
+      "sha256": "db44199acd5d04bbb472912944c61c7a60d039dcaa2951eabce06659434c0b50"
+    },
+    {
+      "file": "B-overview-wide-light.png",
+      "pixels": [
+        2880,
+        1800
+      ],
+      "sha256": "f03999028d8c29ea5f48d77b9bcf39887c7c5a4ce55a7c52590225eb9489a698"
+    },
+    {
+      "file": "B-search-wide-light.png",
+      "pixels": [
+        2880,
+        1800
+      ],
+      "sha256": "5d96d947a28b57a4c25444de0844459d265686c0862056b8b856e2c5f1d5fe4b"
+    },
+    {
+      "file": "B-taskEdit-wide-light.png",
+      "pixels": [
+        2880,
+        1800
+      ],
+      "sha256": "2f4ebf414ff561425fe091eb88d68ddcf799e49d4585b86d355fe8b0f0badbe0"
+    },
+    {
+      "file": "B-tasks-wide-light.png",
+      "pixels": [
+        2880,
+        1800
+      ],
+      "sha256": "c406bf915195ab6f6a1a6b31cb53376d3dd0b6d6748e0a1b9e95cb1dca6a8825"
+    },
+    {
+      "file": "shared-recording.png",
+      "pixels": [
+        2880,
+        1800
+      ],
+      "sha256": "239ee3e72b1f37180e5423ab5e44583a00d65a51bd6dd909e30406c54cdc7024"
+    },
+    {
+      "file": "shared-settings.png",
+      "pixels": [
+        2880,
+        1800
+      ],
+      "sha256": "a32d5f8967537f8a7c096569bc68b43f06fd883e0c309cb8ae095cb4419950e1"
+    },
+    {
+      "file": "shared-states.png",
+      "pixels": [
+        2880,
+        2000
+      ],
+      "sha256": "66ac589fb5422c5800002a129e3c66f513f35961f8be06d2292de90fdd4f5681"
+    }
+  ]
+}
