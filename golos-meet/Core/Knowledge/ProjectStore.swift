@@ -324,7 +324,7 @@ actor ProjectStore {
         // waiting behind another migrator must observe its committed version.
         try db.transaction {
             let version = Int(try db.rows("PRAGMA user_version").first?.first ?? "") ?? -1
-            guard version <= 3 else { throw ProjectStoreError.newerSchema(version) }
+            guard version <= 4 else { throw ProjectStoreError.newerSchema(version) }
             guard version >= 0 else { throw ProjectStoreError.database("Invalid schema version") }
             if version == 0 {
                 try db.execute("CREATE TABLE projects (id TEXT PRIMARY KEY NOT NULL, name TEXT NOT NULL CHECK(length(trim(name)) BETWEEN 1 AND 200), parent_id TEXT REFERENCES projects(id), cloud_policy TEXT NOT NULL DEFAULT 'localOnly')")
@@ -355,6 +355,19 @@ actor ProjectStore {
                 try db.execute("CREATE TABLE embedding_vectors (chunk_id TEXT NOT NULL REFERENCES embedding_chunks(id) ON DELETE CASCADE, model_id TEXT NOT NULL, token_start INTEGER NOT NULL CHECK(token_start >= 0), token_count INTEGER NOT NULL CHECK(token_count > 0), dimensions INTEGER NOT NULL CHECK(dimensions BETWEEN 1 AND 4096), vector BLOB NOT NULL CHECK(length(vector) = dimensions * 4), PRIMARY KEY(chunk_id, model_id, token_start))")
                 try db.execute("PRAGMA user_version = 3")
             }
+            if version < 4 {
+                try db.execute("CREATE VIRTUAL TABLE knowledge_fts USING fts5(text, content='embedding_chunks', content_rowid='rowid', tokenize='unicode61 remove_diacritics 2')")
+                try db.execute("CREATE TRIGGER knowledge_fts_insert AFTER INSERT ON embedding_chunks BEGIN INSERT INTO knowledge_fts(rowid, text) VALUES (new.rowid, new.text); END")
+                try db.execute("CREATE TRIGGER knowledge_fts_delete AFTER DELETE ON embedding_chunks BEGIN INSERT INTO knowledge_fts(knowledge_fts, rowid, text) VALUES ('delete', old.rowid, old.text); END")
+                try db.execute("CREATE TRIGGER knowledge_fts_update AFTER UPDATE OF text ON embedding_chunks BEGIN INSERT INTO knowledge_fts(knowledge_fts, rowid, text) VALUES ('delete', old.rowid, old.text); INSERT INTO knowledge_fts(rowid, text) VALUES (new.rowid, new.text); END")
+                try db.execute("INSERT INTO knowledge_fts(knowledge_fts) VALUES ('rebuild')")
+                try db.execute("CREATE TABLE knowledge_model_epoch (slot INTEGER PRIMARY KEY CHECK(slot = 1), generation TEXT NOT NULL)")
+                try db.execute("INSERT INTO knowledge_model_epoch VALUES (1, hex(randomblob(16)))")
+                try db.execute("CREATE TRIGGER knowledge_model_insert AFTER INSERT ON embedding_active_model BEGIN UPDATE knowledge_model_epoch SET generation = hex(randomblob(16)) WHERE slot = 1; END")
+                try db.execute("CREATE TRIGGER knowledge_model_update AFTER UPDATE ON embedding_active_model WHEN old.model_id != new.model_id OR old.dimensions != new.dimensions BEGIN UPDATE knowledge_model_epoch SET generation = hex(randomblob(16)) WHERE slot = 1; END")
+                try db.execute("CREATE TRIGGER knowledge_model_delete AFTER DELETE ON embedding_active_model BEGIN UPDATE knowledge_model_epoch SET generation = hex(randomblob(16)) WHERE slot = 1; END")
+                try db.execute("PRAGMA user_version = 4")
+            }
         }
         database = db
         return db
@@ -362,6 +375,122 @@ actor ProjectStore {
 }
 
 extension ProjectStore {
+    func knowledgeSearchCatalog(scope: KnowledgeSearchScope) throws -> KnowledgeSearchCatalog {
+        let db = try open()
+        return try db.transaction {
+            if case .project(let id) = scope,
+               try db.rows("SELECT id FROM projects WHERE id = ?", bindings: [id.uuidString]).isEmpty {
+                throw KnowledgeSearchError.scopeUnavailable
+            }
+            return .init(model: try searchModelStamp(db), sources: try searchSources(db).filter { scope.contains($0.owners) })
+        }
+    }
+
+    func knowledgeSearchModel() throws -> KnowledgeSearchModelStamp { try searchModelStamp(open()) }
+
+    /// Invalid transcripts have been removed from the searchable catalog, but
+    /// their warning still belongs to the current project/Inbox, not all scopes.
+    func knowledgeInvalidSourceCount(_ keys: [EmbeddingSourceKey], scope: KnowledgeSearchScope) throws -> Int {
+        let db = try open()
+        return try db.transaction {
+            try Set(keys).filter { key in
+                if scope == .all { return true }
+                let sql = key.kind == .meeting ? "SELECT project_id FROM meeting_projects WHERE meeting_id = ?" : "SELECT project_id FROM document_projects WHERE document_id = ?"
+                let owners = try Set(db.rows(sql, bindings: [key.externalID]).map { row in
+                    guard let id = UUID(uuidString: row[0]) else { throw EmbeddingIndexError.corruptIndex }; return id
+                })
+                return scope.contains(owners)
+            }.count
+        }
+    }
+
+    func knowledgeLexicalSearch(expression: String, scope: KnowledgeSearchScope) throws -> [KnowledgeSearchChunk] {
+        let db = try open()
+        var predicate = "", bindings = [expression]
+        switch scope {
+        case .all: break
+        case .inbox:
+            predicate = " AND ((s.kind = 'meeting' AND NOT EXISTS (SELECT 1 FROM meeting_projects p WHERE p.meeting_id = s.external_id)) OR (s.kind = 'document' AND NOT EXISTS (SELECT 1 FROM document_projects p WHERE p.document_id = s.external_id)))"
+        case .project(let id):
+            predicate = " AND ((s.kind = 'meeting' AND EXISTS (SELECT 1 FROM meeting_projects p WHERE p.meeting_id = s.external_id AND p.project_id = ?)) OR (s.kind = 'document' AND EXISTS (SELECT 1 FROM document_projects p WHERE p.document_id = s.external_id AND p.project_id = ?)))"
+            bindings += [id.uuidString, id.uuidString]
+        }
+        let sql = "SELECT s.kind, s.external_id, c.id, c.source_id, c.revision, c.ordinal, c.text, c.location FROM knowledge_fts JOIN embedding_chunks c ON c.rowid = knowledge_fts.rowid JOIN embedding_sources s ON s.source_key = c.source_key LEFT JOIN documents d ON s.kind = 'document' AND d.id = s.external_id WHERE knowledge_fts MATCH ? AND (s.kind != 'document' OR d.current_version = s.revision)" + predicate + " ORDER BY bm25(knowledge_fts), c.id LIMIT 100"
+        return try db.rows(sql, bindings: bindings).map { row in
+            guard let kind = EmbeddingSourceKind(rawValue: row[0]), let id = UUID(uuidString: row[3]), let ordinal = Int(row[5]) else { throw EmbeddingIndexError.corruptIndex }
+            return .init(source: .init(kind: kind, externalID: row[1]),
+                         chunk: .init(id: row[2], sourceID: id, revision: row[4], ordinal: ordinal, text: row[6],
+                                      location: try JSONDecoder().decode(KnowledgeLocation.self, from: Data(row[7].utf8))))
+        }
+    }
+
+    func knowledgeVectorCount(for key: EmbeddingSourceKey) throws -> Int {
+        Int(try open().rows("SELECT COUNT(*) FROM embedding_vectors v JOIN embedding_chunks c ON c.id = v.chunk_id WHERE c.source_key = ?", bindings: [key.rawValue]).first?.first ?? "") ?? 0
+    }
+
+    /// A late corrupt read may only requeue the exact generation it read.
+    /// It must not reset a replacement source/model or a user's cancellation.
+    func reindexCorruptSearchSource(_ source: KnowledgeSearchSource, model: KnowledgeSearchModelStamp) throws -> Bool {
+        let db = try open()
+        return try db.transaction {
+            guard try searchModelStamp(db) == model,
+                  let current = try searchSources(db, key: source.key).first,
+                  source.hasSameIdentity(as: current, requiresVectors: true) else { return false }
+            try resetEmbeddingJob(source.key.rawValue, db: db)
+            return true
+        }
+    }
+
+    func validateKnowledgeSearchHit(_ hit: KnowledgeSearchHit) throws {
+        try validateKnowledgeSearchHits([hit], model: hit.model)
+    }
+
+    func validateKnowledgeSearchHits(_ hits: [KnowledgeSearchHit], model: KnowledgeSearchModelStamp) throws {
+        let db = try open()
+        try db.transaction {
+            guard try searchModelStamp(db) == model else { throw KnowledgeSearchError.modelChanged }
+            for hit in hits {
+                guard hit.model == model,
+                      let source = try searchSources(db, key: hit.source.key).first,
+                      hit.source.hasSameIdentity(as: source, requiresVectors: hit.matchedMeaning), hit.scope.contains(source.owners),
+                      let row = try db.rows("SELECT source_id, revision, ordinal, text, location FROM embedding_chunks WHERE id = ? AND source_key = ?", bindings: [hit.id, source.key.rawValue]).first,
+                      let id = UUID(uuidString: row[0]), let ordinal = Int(row[2]) else { throw KnowledgeSearchError.sourceChanged }
+                let chunk = KnowledgeChunk(id: hit.id, sourceID: id, revision: row[1], ordinal: ordinal, text: row[3],
+                                          location: try JSONDecoder().decode(KnowledgeLocation.self, from: Data(row[4].utf8)))
+                guard chunk == hit.chunk else { throw KnowledgeSearchError.sourceChanged }
+            }
+        }
+    }
+
+    private func searchModelStamp(_ db: ProjectDatabase) throws -> KnowledgeSearchModelStamp {
+        guard let epoch = try db.rows("SELECT generation FROM knowledge_model_epoch WHERE slot = 1").first?.first, !epoch.isEmpty else { throw EmbeddingIndexError.corruptIndex }
+        return .init(model: try embeddingModel(db), generation: epoch)
+    }
+
+    private func searchSources(_ db: ProjectDatabase, key: EmbeddingSourceKey? = nil) throws -> [KnowledgeSearchSource] {
+        var sql = "SELECT s.kind, s.external_id, s.revision, e.generation, j.generation, j.model_id, j.state, j.completed, j.total, j.message, COALESCE(d.title, '') FROM embedding_sources s JOIN embedding_source_epochs e ON e.source_key = s.source_key JOIN embedding_jobs j ON j.source_key = s.source_key LEFT JOIN documents d ON s.kind = 'document' AND d.id = s.external_id WHERE (s.kind != 'document' OR d.current_version = s.revision)"
+        if key != nil { sql += " AND s.source_key = ?" }
+        sql += " ORDER BY s.source_key"
+        return try db.rows(sql, bindings: key.map { [$0.rawValue] } ?? []).map { row in
+            guard let kind = EmbeddingSourceKind(rawValue: row[0]), let state = EmbeddingIndexState(rawValue: row[6]),
+                  let completed = Int(row[7]), let total = Int(row[8]) else { throw EmbeddingIndexError.corruptIndex }
+            let source = EmbeddingSourceKey(kind: kind, externalID: row[1])
+            let ownerSQL = kind == .meeting ? "SELECT project_id FROM meeting_projects WHERE meeting_id = ?" : "SELECT project_id FROM document_projects WHERE document_id = ?"
+            let owners = try Set(db.rows(ownerSQL, bindings: [source.externalID]).map { owner in
+                guard let id = UUID(uuidString: owner[0]) else { throw EmbeddingIndexError.corruptIndex }; return id
+            })
+            let version: DocumentVersion?
+            if kind == .document {
+                guard let id = UUID(uuidString: source.externalID),
+                      let current = try readVersions(id, db: db).first(where: { $0.id.uuidString == row[2] }) else { throw EmbeddingIndexError.corruptIndex }
+                version = current
+            } else { version = nil }
+            return .init(observation: .init(key: source, generation: row[3], revision: row[2]),
+                         job: .init(source: source, revision: row[2], generation: row[4], modelID: row[5], state: state, completed: completed, total: total, message: row[9]),
+                         owners: owners, title: kind == .document ? row[10] : "Встреча \(source.externalID)", document: version)
+        }
+    }
+
     func documents() throws -> [LibraryDocument] {
         let db = try open()
         return try db.transaction {

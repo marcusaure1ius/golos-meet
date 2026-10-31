@@ -1,0 +1,348 @@
+{
+  "corpus_sha256" : "1e1173bfa57d645539117f3752ba54b00c82670980c88b5026a42aa764eeb5a0",
+  "documents" : 24,
+  "filesystem_aba_rejected" : true,
+  "index_with_cold_runtime_seconds" : 1.6483353333314881,
+  "meetings" : 24,
+  "model_id" : "multilingual-e5-small@fd1525a9fd15316a2d503bf26ab031a61d056e98\/unigram-v1\/mean-l2\/512\/overlap64",
+  "peak_cli_rss_bytes" : 1543143424,
+  "project_scope_checked" : true,
+  "queries" : 20,
+  "query_median_ms" : 47.742395850946195,
+  "query_ms_including_reconcile_and_freshness" : [
+    45.801000000210479,
+    45.522125001298264,
+    47.156750020803884,
+    50.789541652193293,
+    48.931750003248453,
+    45.543791668023914,
+    44.860124995466322,
+    44.829041667981073,
+    44.562833354575559,
+    44.197041657753289,
+    43.405041651567444,
+    45.543291664216667,
+    54.704708338249475,
+    52.597166679333895,
+    48.328041681088507,
+    48.502541641937569,
+    48.83166667423211,
+    48.716208315454423,
+    49.373041663784534,
+    51.092000008793548
+  ],
+  "query_p95_ms" : 52.597166679333895,
+  "ranking" : "FTS5 BM25 + max-window cosine >= 0.70, RRF k=60; semantic weight 2 for >=4 words, otherwise 1; max 3\/source, 30 hits",
+  "recall_at_5_macro" : 0.92500000000000004,
+  "results" : [
+    {
+      "query_id" : "s1",
+      "recall_at_5" : 1,
+      "relevant_ids" : [
+        "sever-01",
+        "sever-02"
+      ],
+      "top5" : [
+        "sever-05",
+        "sever-02",
+        "sever-08",
+        "sever-01",
+        "sever-06"
+      ]
+    },
+    {
+      "query_id" : "s2",
+      "recall_at_5" : 1,
+      "relevant_ids" : [
+        "sever-03",
+        "sever-04"
+      ],
+      "top5" : [
+        "sever-01",
+        "sever-03",
+        "sever-08",
+        "sever-02",
+        "sever-04"
+      ]
+    },
+    {
+      "query_id" : "s3",
+      "recall_at_5" : 1,
+      "relevant_ids" : [
+        "sever-05",
+        "sever-06"
+      ],
+      "top5" : [
+        "sever-05",
+        "sever-06",
+        "sever-04",
+        "sever-03",
+        "sever-08"
+      ]
+    },
+    {
+      "query_id" : "l1",
+      "recall_at_5" : 1,
+      "relevant_ids" : [
+        "lira-01",
+        "lira-02"
+      ],
+      "top5" : [
+        "lira-02",
+        "lira-01",
+        "lira-03",
+        "lira-06",
+        "lira-04"
+      ]
+    },
+    {
+      "query_id" : "l2",
+      "recall_at_5" : 0.5,
+      "relevant_ids" : [
+        "lira-03",
+        "lira-04"
+      ],
+      "top5" : [
+        "lira-04",
+        "lira-08",
+        "lira-07",
+        "mayak-08",
+        "lira-06"
+      ]
+    },
+    {
+      "query_id" : "l3",
+      "recall_at_5" : 0.5,
+      "relevant_ids" : [
+        "lira-05",
+        "lira-06"
+      ],
+      "top5" : [
+        "lira-05",
+        "lira-01",
+        "lira-02",
+        "lira-08",
+        "lira-04"
+      ]
+    },
+    {
+      "query_id" : "m1",
+      "recall_at_5" : 1,
+      "relevant_ids" : [
+        "mayak-01",
+        "mayak-02"
+      ],
+      "top5" : [
+        "mayak-02",
+        "mayak-01",
+        "mayak-06",
+        "mayak-07",
+        "mayak-04"
+      ]
+    },
+    {
+      "query_id" : "m2",
+      "recall_at_5" : 1,
+      "relevant_ids" : [
+        "mayak-03",
+        "mayak-04"
+      ],
+      "top5" : [
+        "mayak-04",
+        "mayak-08",
+        "mayak-03",
+        "mayak-01",
+        "mayak-07"
+      ]
+    },
+    {
+      "query_id" : "m3",
+      "recall_at_5" : 1,
+      "relevant_ids" : [
+        "mayak-05",
+        "mayak-06"
+      ],
+      "top5" : [
+        "mayak-05",
+        "mayak-01",
+        "mayak-06",
+        "mayak-02",
+        "mayak-03"
+      ]
+    },
+    {
+      "query_id" : "o1",
+      "recall_at_5" : 1,
+      "relevant_ids" : [
+        "orbita-01",
+        "orbita-02"
+      ],
+      "top5" : [
+        "orbita-02",
+        "orbita-01",
+        "orbita-05",
+        "orbita-04",
+        "sever-05"
+      ]
+    },
+    {
+      "query_id" : "o2",
+      "recall_at_5" : 1,
+      "relevant_ids" : [
+        "orbita-03",
+        "orbita-04"
+      ],
+      "top5" : [
+        "orbita-04",
+        "orbita-03",
+        "lira-06",
+        "orbita-07",
+        "orbita-01"
+      ]
+    },
+    {
+      "query_id" : "o3",
+      "recall_at_5" : 1,
+      "relevant_ids" : [
+        "orbita-05",
+        "orbita-06"
+      ],
+      "top5" : [
+        "orbita-05",
+        "orbita-06",
+        "orbita-04",
+        "orbita-01",
+        "sever-05"
+      ]
+    },
+    {
+      "query_id" : "a1",
+      "recall_at_5" : 1,
+      "relevant_ids" : [
+        "atlas-01",
+        "atlas-02"
+      ],
+      "top5" : [
+        "atlas-07",
+        "atlas-06",
+        "atlas-02",
+        "atlas-03",
+        "atlas-01"
+      ]
+    },
+    {
+      "query_id" : "a2",
+      "recall_at_5" : 1,
+      "relevant_ids" : [
+        "atlas-03",
+        "atlas-04"
+      ],
+      "top5" : [
+        "atlas-04",
+        "atlas-03",
+        "atlas-08",
+        "atlas-07",
+        "atlas-06"
+      ]
+    },
+    {
+      "query_id" : "a3",
+      "recall_at_5" : 1,
+      "relevant_ids" : [
+        "atlas-05",
+        "atlas-06"
+      ],
+      "top5" : [
+        "atlas-06",
+        "atlas-07",
+        "atlas-02",
+        "atlas-03",
+        "atlas-05"
+      ]
+    },
+    {
+      "query_id" : "v1",
+      "recall_at_5" : 1,
+      "relevant_ids" : [
+        "vektor-01",
+        "vektor-02"
+      ],
+      "top5" : [
+        "vektor-01",
+        "vektor-02",
+        "vektor-03",
+        "vektor-05",
+        "vektor-07"
+      ]
+    },
+    {
+      "query_id" : "v2",
+      "recall_at_5" : 1,
+      "relevant_ids" : [
+        "vektor-03",
+        "vektor-04"
+      ],
+      "top5" : [
+        "vektor-03",
+        "vektor-08",
+        "vektor-05",
+        "vektor-06",
+        "vektor-04"
+      ]
+    },
+    {
+      "query_id" : "v3",
+      "recall_at_5" : 1,
+      "relevant_ids" : [
+        "vektor-05",
+        "vektor-06"
+      ],
+      "top5" : [
+        "vektor-06",
+        "vektor-05",
+        "vektor-03",
+        "vektor-02",
+        "orbita-02"
+      ]
+    },
+    {
+      "query_id" : "x1",
+      "recall_at_5" : 0.75,
+      "relevant_ids" : [
+        "lira-05",
+        "lira-06",
+        "orbita-03",
+        "orbita-04"
+      ],
+      "top5" : [
+        "lira-06",
+        "orbita-04",
+        "orbita-02",
+        "lira-05",
+        "lira-04"
+      ]
+    },
+    {
+      "query_id" : "x2",
+      "recall_at_5" : 0.75,
+      "relevant_ids" : [
+        "sever-05",
+        "sever-06",
+        "vektor-03",
+        "vektor-04"
+      ],
+      "top5" : [
+        "vektor-08",
+        "sever-06",
+        "sever-05",
+        "vektor-04",
+        "vektor-06"
+      ]
+    }
+  ],
+  "sources" : 48,
+  "sources_per_second_including_cold_start" : 29.120288226174285,
+  "sqlite_bytes" : 376832,
+  "synthetic_only" : true,
+  "top1_hits" : 16
+}

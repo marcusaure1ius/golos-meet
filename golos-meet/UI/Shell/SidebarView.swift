@@ -1,7 +1,7 @@
 import SwiftUI
 
 enum SidebarSection: Hashable {
-    case meetings, documents, inbox, project(UUID), settings
+    case meetings, documents, search, inbox, project(UUID), settings
 }
 
 struct SidebarView: View {
@@ -18,6 +18,7 @@ struct SidebarView: View {
                 groupHeader("Golos Meet")
                 navRow("Встречи", icon: "waveform", destination: .meetings)
                 navRow("Документы", icon: "doc.text", destination: .documents)
+                navRow("Поиск", icon: "magnifyingglass", destination: .search)
                 navRow("Входящие", icon: "tray", destination: .inbox)
                 HStack {
                     groupHeader("Проекты")
