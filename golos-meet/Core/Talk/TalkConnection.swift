@@ -5,6 +5,10 @@ import Combine
 nonisolated struct TalkCredential: Codable, Equatable, Sendable {
     let server: URL
     let token: String
+    let version: UUID?
+    init(server: URL, token: String, version: UUID? = nil) {
+        self.server = server; self.token = token; self.version = version
+    }
 }
 
 @MainActor
@@ -46,28 +50,34 @@ final class TalkConnectionModel: ObservableObject {
         }
     }
 
-    @Published var serverAddress = "https://alfabank.ktalk.ru" { didSet { invalidate() } }
+    @Published var serverAddress = "https://alfabank.ktalk.ru" { didSet { if oldValue != serverAddress { invalidate() } } }
     // Always blank on opening: the saved secret is never populated back into the UI.
-    @Published var newToken = "" { didSet { invalidate() } }
+    @Published var newToken = "" { didSet { if oldValue != newToken { invalidate() } } }
     @Published private(set) var hasSavedCredential = false
     @Published private(set) var diagnostic: Diagnostic = .unchecked
     @Published private(set) var storageMessage: String?
+
+    let meetingSettings: TalkMeetingSettingsModel
 
     private let store: any TalkCredentialStoring
     private let checkProfile: @Sendable (TalkCredential) async throws -> Void
     private var revision = 0
 
     init(store: (any TalkCredentialStoring)? = nil,
+         preferences: (any TalkPreferencesStoring)? = nil,
+         lookup: TalkMeetingSettingsModel.Lookup? = nil,
          checkProfile: @escaping @Sendable (TalkCredential) async throws -> Void = { credential in
              _ = try await TalkAPIClient(server: credential.server, token: credential.token).profile()
          }) {
         let store = store ?? TalkKeychainStore()
         self.store = store
+        self.meetingSettings = TalkMeetingSettingsModel(preferences: preferences ?? TalkPreferencesFileStore(), lookup: lookup)
         self.checkProfile = checkProfile
         do {
             if let credential = try store.load() {
                 serverAddress = credential.server.absoluteString
                 hasSavedCredential = true
+                meetingSettings.bind(credential)
             }
         } catch { storageMessage = Keychain.Failure.operationFailed.localizedDescription }
     }
@@ -76,6 +86,7 @@ final class TalkConnectionModel: ObservableObject {
         revision += 1
         diagnostic = .unchecked
         storageMessage = nil
+        meetingSettings.unbind()
     }
 
     private func candidate() throws -> TalkCredential {
@@ -97,11 +108,16 @@ final class TalkConnectionModel: ObservableObject {
     @discardableResult
     func save() -> Bool {
         do {
-            let credential = try candidate()
+            let candidate = try candidate()
+            let old = try store.load()
+            let unchanged = old?.server == candidate.server && old?.token == candidate.token
+            let credential = TalkCredential(server: candidate.server, token: candidate.token,
+                                            version: unchanged ? (old?.version ?? UUID()) : UUID())
             try store.save(credential)
             serverAddress = credential.server.absoluteString
             newToken = ""
             hasSavedCredential = true
+            meetingSettings.bind(credential)
             storageMessage = "PAT сохранён в Keychain для этого адреса."
             return true
         } catch {
@@ -116,6 +132,7 @@ final class TalkConnectionModel: ObservableObject {
             try store.save(nil)
             newToken = ""
             hasSavedCredential = false
+            meetingSettings.removePreferences()
             storageMessage = "Сохранённый PAT удалён с этого Mac."
         } catch { diagnostic = .failed(Self.safeMessage(error)) }
     }
@@ -138,7 +155,7 @@ final class TalkConnectionModel: ObservableObject {
         }
     }
 
-    private static func safeMessage(_ error: Error) -> String {
+    static func safeMessage(_ error: Error) -> String {
         if let error = error as? TalkAPIError { return error.localizedDescription }
         if error is Keychain.Failure { return Keychain.Failure.operationFailed.localizedDescription }
         // Do not display arbitrary server/transport error descriptions or response bodies.

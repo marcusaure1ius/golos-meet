@@ -36,7 +36,9 @@ private actor PendingTalkCheck {
         model.serverAddress = "https://talk.example/"
         model.newToken = " talkusr.synthetic \n"
         #expect(model.save())
-        #expect(store.credential == original)
+        #expect(store.credential?.server == original.server)
+        #expect(store.credential?.token == original.token)
+        #expect(store.credential?.version != nil)
         #expect(model.newToken.isEmpty)
         let reopened = TalkConnectionModel(store: store)
         #expect(reopened.serverAddress == "https://talk.example")
