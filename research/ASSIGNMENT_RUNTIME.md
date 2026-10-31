@@ -56,7 +56,7 @@ Native CLI `--runtime` использует настоящую public pinned E5 
 
 В ходе разработки исправлены: смешение UUID версии документа с hash фрагмента в evidence guard; лишняя перезагрузка ProjectLibrary во время ручного выбора; стартовая CAS-гонка выше. Ранние прогоны до этих исправлений не выдаются за passed. Swift frontend также аварийно завершил диагностику некорректного обращения к error-state в catch; исправлено обращение self.error, обходных compiler flags нет.
 
-Независимый полный прогон исходного SHA 0179499 затем завершился 308 passed / 372 запуска / 1 failure / 2 skips из-за блокирующей migration fixture. Исправление выполнения fixture, сохранённые отрицательные контроли, точные новые результаты и ограничение macOS 15+ для этой suite описаны в [MIGRATION_FIXTURE_46.md](MIGRATION_FIXTURE_46.md). Прежний авторский passed выше не отменяет независимый failure. Production busy timeout/retry при исправлении не менялись.
+Независимый полный прогон исходного SHA 0179499 затем завершился 308 passed / 372 запуска / 1 failure / 2 skips из-за блокирующей migration fixture. Исправление выполнения fixture, сохранённые отрицательные контроли, точные новые результаты и ограничение macOS 15+ для этой suite описаны в [MIGRATION_FIXTURE_46.md](MIGRATION_FIXTURE_46.md). Прежний авторский passed выше не отменяет независимый failure. Production busy timeout/retry при исправлении не менялись. После отдельного включения принятого preview 8f04bb8 (PR #44) полный E5 make check с opt-in settings/menu на a8dbbc7: 349 passed / 444 запуска / 0 failures / 0 skips. Точный combined отчёт и JSON по ссылке выше; последующая публикация отчёта не меняет исходники.
 
 ## Реальное изолированное окно
 

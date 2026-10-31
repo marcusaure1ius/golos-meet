@@ -35,4 +35,19 @@ TEST_RUNNER_GOLOS_MEET_MIGRATION_TRACE_DIR=/tmp/golos46-full-fixture-traces make
 
 Полные sanitized events всех семи сценариев каждого прогона сохранены в [migration-fixture-46.json](migration-fixture-46.json). Cleanup использует текущую схему; исторический `fixture_version_label:4` не является тестом миграции из v4. Opt-in `GOLOS_MEET_MIGRATION_TRACE_DIR` пишет отдельный UUID.jsonl: только фиксированные названия, clocks, коды, UUID и strict flag; SQL/bindings/пути/содержимое не пишутся. По умолчанию файлов нет. Ошибка записи делает тест неуспешным. Action log xcresult сохранил лишь пять из семи stdout traces, поэтому полнота проверена по отдельным JSONL.
 
-Rust/production timeout/данные/модели не менялись, новых загрузок и облачных вызовов нет. Новый SHA требует независимой delta-проверки. Это не закрывает семантический остаток #45 и весь #14/#4.
+## Интеграция принятого PR #44
+
+Fixture-коммит `8e8f4031507204d5c583fc972abd931ebbc15d03` отделён от merge `a8dbbc74a826f78ff150949e65bcef19f2753594`. Включён `origin/codex/product-preview` **8f04bb85258c25142c06599e38fc64c2d3075702**, содержащий принятый head #44 **1005554fe1c4c1163bcce332cfa40e6f3ca9f175** и ранее принятый #42. PR metadata/ancestry проверены после fetch. Единственный конфликт `applicationWillTerminate` разрешён порядком test-host guard → coordinator.prepareForTermination → assignments.stop → indexing.stop. `applicationShouldTerminate`, preserveAudio и остальная принятая логика #44 сохранены. Относительно preview AppDelegate добавляет только assignments.start/stop.
+
+```sh
+TEST_RUNNER_GOLOS_MEET_E5_FOLDER=/tmp/golos-embedding-native/e5-small \
+TEST_RUNNER_GOLOS_MEET_RENDER_TALK_SETTINGS=1 \
+TEST_RUNNER_GOLOS_MEET_MENU_PREVIEW=1 \
+TEST_RUNNER_GOLOS_MEET_MIGRATION_TRACE_DIR=/tmp/golos46-combined-preview-traces make check
+```
+
+Совмещённый SHA **a8dbbc74a826f78ff150949e65bcef19f2753594**: **349 passed / 444 запуска / 0 failures / 0 skipped**. `Test-golos-meet-2026.10.31_22-45-21-+0300.xcresult`, лог `/tmp/golos46-combined-preview-check.log`. Оба opt-in settings/menu теста выполнены. Это NSHostingView renders и проверки native menu, новый CUA-pass/живой звонок не выполнялись. Настоящий ASR E2E исключён. Единственный runtimeWarning — прежний QoS в LocalDocumentExtractorTests; compile warnings существующих ASR/Sidecar Swift 6 isolation и AppIntents metadata сохраняются.
+
+Все семь combined JSONL сверены: положительные реальные lock/executor/connection доказательства есть, оба negative control отвергнуты, COMMIT/close успешны, tasks/executors joined. В combined v0 BEGIN 1,467/24,999 мс → release 532,510; delayed peer 2,640/2557,974 → 3063,648. Полные events добавлены третьим отчётом в JSON. Последующие изменения касаются только этих исследовательских отчётов.
+
+При исправлении fixture production timeout/retry/данные/модели не менялись, новых загрузок и облачных вызовов нет. Новый SHA требует независимой delta-проверки fixture и merge-resolution. Это не закрывает семантический остаток #45 и весь #14/#4. Автор не сливает PR в preview/main.
