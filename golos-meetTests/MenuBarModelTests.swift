@@ -60,4 +60,15 @@ import Foundation
         #expect(model.buttonTitle == "01:05")
         #expect(model.tracksLine == "Микрофон: готов · Системный звук: готов")
     }
+    @Test func apiUnknownIsSeparateFromActualRecordingAndIdleHasCurrentMode() {
+        let line = "API Толка: сеть недоступна, участие неизвестно"
+        let live = RecordingState.Live(id: "synthetic", startedAt: t0, isManual: false)
+        let recording = MenuBarModel.from(live: live, now: t0.addingTimeInterval(65), phase: .recording, detectionLine: line)
+        #expect(recording.isRecording)
+        #expect(recording.statusLine == "Запись (авто) · 01:05")
+        #expect(recording.detectionLine == line)
+        let idle = MenuBarModel.from(live: nil, now: t0, phase: .idle, detectionLine: line)
+        #expect(idle.statusLine == line && !idle.isRecording)
+    }
+
 }

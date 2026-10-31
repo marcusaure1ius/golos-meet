@@ -61,6 +61,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationWillTerminate(_ notification: Notification) {
         guard !AppRuntime.isTestHost else { return }
+        coordinator?.prepareForTermination()
         ProductionIndexing.shared?.stop()
     }
 
@@ -73,6 +74,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     /// потом отпустить приложение. Если финализация не уложилась в ~3 с (зависший диск) —
     /// отпускаем всё равно: недописанную запись спасёт StartupRescue при следующем запуске.
     func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
+        coordinator?.prepareForTermination()
         guard let coordinator, coordinator.recorder.isRecording else { return .terminateNow }
         let recorder = coordinator.recorder
         Task { @MainActor in
@@ -81,7 +83,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             await withCheckedContinuation { (cont: CheckedContinuation<Void, Never>) in
                 let resumeGuard = ResumeOnceGuard(continuation: cont)
                 Task { @MainActor in
-                    await recorder.finalizeActive(endedAt: Date())
+                    await recorder.finalizeActive(endedAt: Date(), preserveAudio: true)
                     resumeGuard.resume()
                 }
                 Task { @MainActor in

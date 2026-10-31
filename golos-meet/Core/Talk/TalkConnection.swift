@@ -65,13 +65,14 @@ final class TalkConnectionModel: ObservableObject {
 
     init(store: (any TalkCredentialStoring)? = nil,
          preferences: (any TalkPreferencesStoring)? = nil,
+         mode: (any TalkRecordingModeStoring)? = nil,
          lookup: TalkMeetingSettingsModel.Lookup? = nil,
          checkProfile: @escaping @Sendable (TalkCredential) async throws -> Void = { credential in
              _ = try await TalkAPIClient(server: credential.server, token: credential.token).profile()
          }) {
         let store = store ?? TalkKeychainStore()
         self.store = store
-        self.meetingSettings = TalkMeetingSettingsModel(preferences: preferences ?? TalkPreferencesFileStore(), lookup: lookup)
+        self.meetingSettings = TalkMeetingSettingsModel(preferences: preferences ?? TalkPreferencesFileStore(), mode: mode, lookup: lookup)
         self.checkProfile = checkProfile
         do {
             if let credential = try store.load() {
@@ -119,6 +120,7 @@ final class TalkConnectionModel: ObservableObject {
             hasSavedCredential = true
             meetingSettings.bind(credential)
             storageMessage = "PAT сохранён в Keychain для этого адреса."
+            TalkSettingsChanges.post()
             return true
         } catch {
             diagnostic = .failed(Self.safeMessage(error))
@@ -134,6 +136,7 @@ final class TalkConnectionModel: ObservableObject {
             hasSavedCredential = false
             meetingSettings.removePreferences()
             storageMessage = "Сохранённый PAT удалён с этого Mac."
+            TalkSettingsChanges.post()
         } catch { diagnostic = .failed(Self.safeMessage(error)) }
     }
 

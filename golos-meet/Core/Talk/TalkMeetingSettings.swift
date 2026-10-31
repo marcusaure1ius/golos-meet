@@ -37,22 +37,38 @@ nonisolated struct TalkMeetingPreferences: Codable, Equatable {
     @Published private(set) var search: SearchState = .idle
     @Published private(set) var confirmed: TalkUserAccount?
     @Published private(set) var isBound = false
+    @Published private(set) var apiEnabled = false
+    @Published private(set) var modeError: String?
     @Published private(set) var message: String?
+    private let mode: any TalkRecordingModeStoring
     private let store: any TalkPreferencesStoring
     private let lookup: Lookup
     private var credential: TalkCredential?
     private var revision: UInt64 = 0
     private var task: Task<Void, Never>?
+    private var modeListener: UUID?
 
-    init(preferences: any TalkPreferencesStoring, lookup: Lookup? = nil) {
+    init(preferences: any TalkPreferencesStoring, mode: (any TalkRecordingModeStoring)? = nil, lookup: Lookup? = nil) {
         store = preferences
+        self.mode = mode ?? TalkRecordingModeFileStore()
+        do { apiEnabled = try self.mode.load() }
+        catch { modeError = "Не удалось прочитать режим автозаписи. Выберите и сохраните режим заново." }
         let testHost = AppRuntime.isTestHost
         self.lookup = lookup ?? { credential, email in
             guard !testHost else { throw TalkAPIError.invalidResponse }
             return try await TalkAPIClient(server: credential.server, token: credential.token).users(email: email)
         }
+        modeListener = TalkSettingsChanges.observe { [weak self] in
+            guard let self else { return }
+            do { self.apiEnabled = try self.mode.load(); self.modeError = nil }
+            catch { self.modeError = "Не удалось прочитать режим автозаписи. Сохраните выбор заново." }
+        }
     }
-    deinit { task?.cancel() }
+    deinit {
+        task?.cancel()
+        let listener = modeListener
+        Task { @MainActor in if let listener { TalkSettingsChanges.remove(listener) } }
+    }
 
     func unbind() {
         cancelSearch(); email = ""; credential = nil; isBound = false
@@ -142,10 +158,32 @@ nonisolated struct TalkMeetingPreferences: Codable, Equatable {
             return true
         } catch { message = "Не удалось сохранить подтверждение. Повторите попытку."; return false }
     }
+    @discardableResult func setAPIEnabled(_ enabled: Bool) -> Bool {
+        do {
+            if enabled {
+                guard let credential, let value = try store.load(), value.origin == credential.server,
+                      value.connectionVersion == credential.version, let account = value.account else { throw TalkAPIError.noToken }
+                _ = try TalkRoomConfiguration(credential: credential, rooms: value.rooms, userKey: account.key)
+            }
+            try mode.save(enabled)
+            apiEnabled = enabled
+            modeError = nil
+            message = enabled ? "API-автозапись включена для сохранённых комнат и аккаунта." : "API-режим выключен. Автозапись использует эвристику аудио и окон."
+            TalkSettingsChanges.post()
+            return true
+        } catch {
+            if error is TalkAPIError || error is TalkRoomConfigurationError {
+                message = "Сначала сохраните комнаты и подтвердите аккаунт для этого PAT."
+            } else { modeError = "Не удалось сохранить режим автозаписи. Повторите попытку." }
+            return false
+        }
+    }
+
     private func persist(rooms: [String], account: TalkUserAccount?) throws {
         guard let credential, let version = credential.version else { throw TalkAPIError.noToken }
         if !rooms.isEmpty { _ = try TalkRoomConfiguration(credential: credential, rooms: rooms, userKey: account?.key ?? "validation") }
         try store.save(TalkMeetingPreferences(schemaVersion: 1, origin: credential.server,
                                              connectionVersion: version, rooms: rooms, account: account))
+        TalkSettingsChanges.post()
     }
 }

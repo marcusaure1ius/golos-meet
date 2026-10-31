@@ -73,7 +73,16 @@ import SwiftUI
                 Text(message).accessibilityIdentifier("talk-settings-message")
                     .fixedSize(horizontal: false, vertical: true)
             }
-            Text("Эти настройки пока не включают API-автозапись. В выбранном сценарии звонки проходят только на этом Mac; активность микрофона не будет условием старта.")
+            GCard {
+                VStack(alignment: .leading, spacing: 10) {
+                    Toggle("Автозапись по API Толка", isOn: Binding(get: { model.apiEnabled }, set: { model.setAPIEnabled($0) }))
+                        .toggleStyle(.switch).accessibilityLabel("Автозапись по API Толка")
+                    Text(model.modeError != nil ? "Режим не подтверждён. Исправьте ошибку и сохраните выбор заново." : model.apiEnabled ? "Включена для сохранённых комнат и подтверждённого аккаунта. При отсутствии настройки API будет ждать; эвристика не подменяет его." : "Выключена. Автозапись использует прежнюю эвристику аудио и окон Толка.")
+                        .fixedSize(horizontal: false, vertical: true)
+                    if let error = model.modeError { Text(error).foregroundStyle(p.danger).fixedSize(horizontal: false, vertical: true) }
+                }.padding(17)
+            }
+            Text("API видит участие аккаунта. Этот режим рассчитан на звонки только с этого Mac. Вход с выключенным микрофоном запускает запись; mute и тишина её не останавливают. Обнаружение входа/выхода занимает время опроса: обычно 10–30 секунд, при задержках дольше.")
                 .foregroundStyle(p.muted).fixedSize(horizontal: false, vertical: true)
         }
         .font(.system(size: 13)).foregroundStyle(p.ink)
