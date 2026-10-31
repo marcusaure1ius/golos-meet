@@ -10,6 +10,11 @@ struct CreateProjectSheet: View {
     @FocusState private var focused: Bool
     let onCreated: (KnowledgeProject) -> Void
 
+    init(initialName: String = "", onCreated: @escaping (KnowledgeProject) -> Void) {
+        _name = State(initialValue: initialName)
+        self.onCreated = onCreated
+    }
+
     var body: some View {
         VStack(alignment: .leading, spacing: 18) {
             Text("Новый проект").font(.system(size: 22, weight: .semibold)).foregroundStyle(p.ink)

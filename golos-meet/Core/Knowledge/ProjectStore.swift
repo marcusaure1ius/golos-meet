@@ -324,7 +324,7 @@ actor ProjectStore {
         // waiting behind another migrator must observe its committed version.
         try db.transaction {
             let version = Int(try db.rows("PRAGMA user_version").first?.first ?? "") ?? -1
-            guard version <= 5 else { throw ProjectStoreError.newerSchema(version) }
+            guard version <= 6 else { throw ProjectStoreError.newerSchema(version) }
             guard version >= 0 else { throw ProjectStoreError.database("Invalid schema version") }
             if version == 0 {
                 try db.execute("CREATE TABLE projects (id TEXT PRIMARY KEY NOT NULL, name TEXT NOT NULL CHECK(length(trim(name)) BETWEEN 1 AND 200), parent_id TEXT REFERENCES projects(id), cloud_policy TEXT NOT NULL DEFAULT 'localOnly')")
@@ -391,6 +391,11 @@ actor ProjectStore {
                     }
                 }
                 try db.execute("PRAGMA user_version = 5")
+            }
+            if version < 6 {
+                try db.execute("CREATE TABLE assignment_work (meeting_id TEXT PRIMARY KEY NOT NULL, input TEXT NOT NULL, generation TEXT NOT NULL, state TEXT NOT NULL CHECK(state IN ('pending','running','current','waiting','failed','cancelled','manual')), message TEXT NOT NULL)")
+                try db.execute("CREATE INDEX assignment_work_by_state ON assignment_work(state, meeting_id)")
+                try db.execute("PRAGMA user_version = 6")
             }
         }
         database = db
@@ -1021,10 +1026,14 @@ extension ProjectStore {
     /// One transaction checks the WHOLE context, not just the target's owners.
     /// The service separately fences filesystem changes before entering here.
     func commitMeetingAssignment(_ result: MeetingAssignmentResult, meetingID: String,
-                                 checkpoint: MeetingAssignmentCheckpoint) throws -> MeetingAssignmentCommit {
+                                 checkpoint: MeetingAssignmentCheckpoint, runtimeLease: MeetingAssignmentLease? = nil) throws -> MeetingAssignmentCommit {
+        try Task.checkCancellation()
         let db = try open()
         return try db.transaction {
             let current = try assignmentCheckpoint(db)
+            if let runtimeLease {
+                guard runtimeLease.work.meetingID == meetingID, try assignmentLeaseIsCurrent(runtimeLease, db: db) else { return .superseded }
+            }
             if current.decisions[meetingID]?.origin == .manual { return .manual }
             guard current == checkpoint, current.sources.contains(where: { $0.key == .init(kind: .meeting, externalID: meetingID) && $0.job.state == .ready }) else { return .superseded }
             guard result.modelID == checkpoint.model.model?.id, result.dimensions == checkpoint.model.model?.dimensions,
@@ -1033,7 +1042,11 @@ extension ProjectStore {
                   result.assignedProjectIDs.isSubset(of: Set(current.projects.map(\.id))),
                   result.assignedProjectIDs.isSubset(of: Set(result.evidence.filter { $0.explicitName }.map(\.projectID))) else { throw MeetingAssignmentError.stale }
             let origin: MeetingAssignmentOrigin = result.assignedProjectIDs.isEmpty ? .proposal : .automatic
-            if current.decisions[meetingID]?.origin == origin, current.decisions[meetingID]?.result == result { return .unchanged }
+            if current.decisions[meetingID]?.origin == origin, current.decisions[meetingID]?.result == result,
+               current.sources.first(where: { $0.key == .init(kind: .meeting, externalID: meetingID) })?.owners == result.assignedProjectIDs {
+                if let runtimeLease { try finishAssignmentWork(runtimeLease, state: .current, message: "", db: db) }
+                return .unchanged
+            }
             let encoder = JSONEncoder(); encoder.outputFormatting = [.sortedKeys]
             let payload = String(decoding: try encoder.encode(result), as: UTF8.self)
             try db.execute("INSERT INTO meeting_decisions (meeting_id, origin, generation, payload) VALUES (?, ?, ?, ?) ON CONFLICT(meeting_id) DO UPDATE SET origin=excluded.origin, generation=excluded.generation, payload=excluded.payload",
@@ -1042,7 +1055,126 @@ extension ProjectStore {
             for id in result.assignedProjectIDs.sorted(by: { $0.uuidString < $1.uuidString }) {
                 try db.execute("INSERT INTO meeting_projects (meeting_id, project_id) VALUES (?, ?)", bindings: [meetingID, id.uuidString])
             }
+            if let runtimeLease { try finishAssignmentWork(runtimeLease, state: .current, message: "", db: db) }
             return .applied
+        }
+    }
+}
+
+
+extension ProjectStore {
+    func assignmentRuntimeSnapshot() throws -> MeetingAssignmentRuntimeSnapshot {
+        let db = try open()
+        return try db.transaction {
+            let checkpoint = try assignmentCheckpoint(db)
+            let work = try readAssignmentWork(db).map { item -> MeetingAssignmentWork in
+                if checkpoint.decisions[item.meetingID]?.origin == .manual {
+                    return .init(meetingID: item.meetingID, input: item.input, generation: item.generation, state: .manual, message: "")
+                }
+                return item
+            }
+            return .init(work: Dictionary(uniqueKeysWithValues: work.map { ($0.meetingID, $0) }), decisions: checkpoint.decisions)
+        }
+    }
+
+    func reconcileAssignmentWork(_ inputs: MeetingAssignmentInputs) throws -> Bool {
+        let db = try open()
+        return try db.transaction {
+            guard try assignmentCheckpoint(db) == inputs.checkpoint else { return false }
+            let old = Dictionary(uniqueKeysWithValues: try readAssignmentWork(db).map { ($0.meetingID, $0) })
+            for (id, input) in inputs.fingerprints.sorted(by: { $0.key < $1.key }) {
+                let manual = inputs.checkpoint.decisions[id]?.origin == .manual
+                let previous = old[id]
+                let state: MeetingAssignmentWorkState = manual ? .manual : previous?.state == .cancelled ? .cancelled : .pending
+                if previous?.input != input || (manual && previous?.state != .manual) {
+                    try db.execute("INSERT INTO assignment_work VALUES (?, ?, ?, ?, '') ON CONFLICT(meeting_id) DO UPDATE SET input=excluded.input, generation=excluded.generation, state=excluded.state, message=''",
+                        bindings: [id, input, UUID().uuidString, state.rawValue])
+                    if !manual { try clearAutomaticLinks(id, db: db) }
+                } else if previous?.state != .current && !manual { try clearAutomaticLinks(id, db: db) }
+            }
+            return true
+        }
+    }
+
+    func validateAssignmentEvidence(_ work: MeetingAssignmentWork, decision: MeetingAssignmentDecision,
+                                    checkpoint: MeetingAssignmentCheckpoint) throws {
+        let db = try open()
+        try db.transaction {
+            guard try assignmentCheckpoint(db) == checkpoint,
+                  checkpoint.decisions[work.meetingID] == decision,
+                  try readAssignmentWork(db).first(where: { $0.meetingID == work.meetingID }) == work,
+                  work.state == .current else { throw MeetingAssignmentError.stale }
+        }
+    }
+
+    func assignmentIndexUnavailable() throws {
+        let db = try open()
+        try db.transaction {
+            try db.execute("UPDATE assignment_work SET state='waiting', input=substr(input,1,64)||'|runtime-unavailable', generation=hex(randomblob(16)), message='Для распределения нужна работающая локальная модель индексирования.' WHERE state NOT IN ('cancelled','manual') AND NOT EXISTS (SELECT 1 FROM meeting_decisions d WHERE d.meeting_id=assignment_work.meeting_id AND d.origin='manual')")
+            try db.execute("DELETE FROM meeting_projects WHERE EXISTS (SELECT 1 FROM meeting_decisions d WHERE d.meeting_id=meeting_projects.meeting_id AND d.origin='automatic')")
+        }
+    }
+
+    func recoverAssignmentWork() throws {
+        let db = try open()
+        try db.execute("UPDATE assignment_work SET state='pending', generation=hex(randomblob(16)), message='' WHERE state='running'")
+    }
+
+    func claimAssignmentWork(after cursor: String?, excluding: Set<String> = []) throws -> MeetingAssignmentLease? {
+        let db = try open()
+        return try db.transaction {
+            let pending = try readAssignmentWork(db).filter { $0.state == .pending && !excluding.contains($0.meetingID) }
+            guard let next = pending.first(where: { $0.meetingID > (cursor ?? "") }) ?? pending.first else { return nil }
+            try db.execute("UPDATE assignment_work SET state='running' WHERE meeting_id=? AND generation=? AND state='pending'", bindings: [next.meetingID, next.generation])
+            return .init(work: .init(meetingID: next.meetingID, input: next.input, generation: next.generation, state: .running, message: ""))
+        }
+    }
+
+    func cancelAssignment(_ id: String) throws {
+        let db = try open()
+        try db.transaction {
+            guard try db.rows("SELECT origin FROM meeting_decisions WHERE meeting_id=?", bindings: [id]).first?.first != "manual" else { return }
+            try db.execute("UPDATE assignment_work SET state='cancelled', generation=hex(randomblob(16)), message='' WHERE meeting_id=?", bindings: [id])
+            try clearAutomaticLinks(id, db: db)
+        }
+    }
+
+    func retryAssignment(_ id: String) throws {
+        let db = try open()
+        try db.transaction {
+            guard try db.rows("SELECT origin FROM meeting_decisions WHERE meeting_id=?", bindings: [id]).first?.first != "manual" else { return }
+            try db.execute("UPDATE assignment_work SET state='pending', generation=hex(randomblob(16)), message='' WHERE meeting_id=?", bindings: [id])
+            try clearAutomaticLinks(id, db: db)
+        }
+    }
+
+    func interruptAssignment(_ lease: MeetingAssignmentLease, message: String = "") throws {
+        let db = try open()
+        try db.execute("UPDATE assignment_work SET state='pending', generation=hex(randomblob(16)), message=? WHERE meeting_id=? AND generation=? AND state='running'", bindings: [message, lease.work.meetingID, lease.work.generation])
+    }
+
+    func failAssignment(_ lease: MeetingAssignmentLease, state: MeetingAssignmentWorkState, message: String) throws {
+        let db = try open()
+        try db.transaction {
+            guard try assignmentLeaseIsCurrent(lease, db: db) else { return }
+            try finishAssignmentWork(lease, state: state, message: message, db: db)
+            try clearAutomaticLinks(lease.work.meetingID, db: db)
+        }
+    }
+
+    private func clearAutomaticLinks(_ id: String, db: ProjectDatabase) throws {
+        try db.execute("DELETE FROM meeting_projects WHERE meeting_id=? AND EXISTS (SELECT 1 FROM meeting_decisions WHERE meeting_id=? AND origin='automatic')", bindings: [id, id])
+    }
+    private func assignmentLeaseIsCurrent(_ lease: MeetingAssignmentLease, db: ProjectDatabase) throws -> Bool {
+        try db.rows("SELECT input FROM assignment_work WHERE meeting_id=? AND generation=? AND state='running'", bindings: [lease.work.meetingID, lease.work.generation]).first?.first == lease.work.input
+    }
+    private func finishAssignmentWork(_ lease: MeetingAssignmentLease, state: MeetingAssignmentWorkState, message: String, db: ProjectDatabase) throws {
+        try db.execute("UPDATE assignment_work SET state=?, message=? WHERE meeting_id=? AND generation=? AND state='running'", bindings: [state.rawValue, message, lease.work.meetingID, lease.work.generation])
+    }
+    private func readAssignmentWork(_ db: ProjectDatabase) throws -> [MeetingAssignmentWork] {
+        try db.rows("SELECT meeting_id, input, generation, state, message FROM assignment_work ORDER BY meeting_id").map { row in
+            guard let state = MeetingAssignmentWorkState(rawValue: row[3]) else { throw EmbeddingIndexError.corruptIndex }
+            return .init(meetingID: row[0], input: row[1], generation: row[2], state: state, message: row[4])
         }
     }
 }

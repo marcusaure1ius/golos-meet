@@ -1,4 +1,5 @@
 import Foundation
+import Darwin
 import SQLite3
 import Testing
 @testable import golos_meet
@@ -13,13 +14,28 @@ private nonisolated final class MigrationTrace: @unchecked Sendable {
         let scheduledMilliseconds: Double?
         let diagnostic: ProjectDatabase.Diagnostic?
         let connection: UUID?
+        let executor: UUID?
+        let strictPool: Bool
     }
     let scenario = UUID()
     let version: Int
     private let started = ProcessInfo.processInfo.systemUptime
     private let mutex = NSLock()
     private var entries: [Event] = []
-    init(version: Int) { self.version = version }
+    private let diagnosticFile: FileHandle?
+    private var diagnosticWriteFailed = false
+    init(version: Int) throws {
+        self.version = version
+        if let path = ProcessInfo.processInfo.environment["GOLOS_MEET_MIGRATION_TRACE_DIR"], !path.isEmpty {
+            let folder = URL(fileURLWithPath: path, isDirectory: true)
+            try FileManager.default.createDirectory(at: folder, withIntermediateDirectories: true)
+            let file = folder.appendingPathComponent(scenario.uuidString + ".jsonl")
+            try Data().write(to: file, options: .withoutOverwriting)
+            diagnosticFile = try FileHandle(forWritingTo: file)
+        } else { diagnosticFile = nil }
+    }
+    deinit { try? diagnosticFile?.close() }
+    var diagnosticsSucceeded: Bool { mutex.lock(); defer { mutex.unlock() }; return !diagnosticWriteFailed }
     var milliseconds: Double { (ProcessInfo.processInfo.systemUptime - started) * 1000 }
     func record(_ name: String, result: Int32? = nil, extended: Int32? = nil,
                 scheduledMilliseconds: Double? = nil, error: (any Error)? = nil, connection: UUID? = nil) {
@@ -28,10 +44,16 @@ private nonisolated final class MigrationTrace: @unchecked Sendable {
             diagnostic = try? JSONDecoder().decode(ProjectDatabase.Diagnostic.self, from: Data(message.utf8))
         } else { diagnostic = nil }
         let entry = Event(name: name, milliseconds: milliseconds, result: result,
-                          extended: extended, scheduledMilliseconds: scheduledMilliseconds, diagnostic: diagnostic, connection: connection)
-        mutex.lock(); entries.append(entry); mutex.unlock()
+                          extended: extended, scheduledMilliseconds: scheduledMilliseconds, diagnostic: diagnostic, connection: connection, executor: MigrationExecutionIdentity.current,
+                          strictPool: ProcessInfo.processInfo.environment["LIBDISPATCH_COOPERATIVE_POOL_STRICT"] == "1")
         let data = try! JSONEncoder().encode(entry)
+        mutex.lock(); entries.append(entry)
+        do { try diagnosticFile?.write(contentsOf: data + Data([0x0a])) }
+        catch { diagnosticWriteFailed = true }
+        mutex.unlock()
         print("SQLITE_MIGRATION_FIXTURE scenario=\(scenario) version=\(version) \(String(decoding: data, as: UTF8.self))")
+        // XCTest may close captured stdout before buffered tail events flush.
+        fflush(stdout)
     }
     var events: [Event] { mutex.lock(); defer { mutex.unlock() }; return entries }
     var summary: String {
@@ -98,8 +120,75 @@ private nonisolated final class MigrationReservedLock: @unchecked Sendable {
     }
 }
 
+/// Test-owned OS threads, not Dispatch.global or Swift's cooperative pool.
+/// TaskExecutor preference also follows calls into default actors (SE-0417).
+/// Each SQLite-entry barrier therefore has a peer with an independent thread.
+private nonisolated enum MigrationExecutorSupport {
+    static var available: Bool {
+        if #available(macOS 15.0, *) { return true }
+        return false
+    }
+}
+
+private nonisolated enum MigrationExecutionIdentity {
+    static let key = "golos.migration-fixture.executor"
+    static var current: UUID? {
+        (Thread.current.threadDictionary[key] as? String).flatMap(UUID.init(uuidString:))
+    }
+}
+
+@available(macOS 15.0, *)
+private nonisolated final class MigrationTaskExecutor: TaskExecutor, @unchecked Sendable {
+    private final class Queue: @unchecked Sendable {
+        private let condition = NSCondition()
+        private var jobs: [UnownedJob] = []
+        private var stopping = false
+        private var finished = false
+        private var waiters: [CheckedContinuation<Void, Never>] = []
+        func enqueue(_ job: UnownedJob) {
+            condition.lock(); defer { condition.unlock() }
+            precondition(!stopping)
+            jobs.append(job); condition.signal()
+        }
+        func next() -> UnownedJob? {
+            condition.lock(); defer { condition.unlock() }
+            while jobs.isEmpty && !stopping { condition.wait() }
+            return jobs.isEmpty ? nil : jobs.removeFirst()
+        }
+        func complete() {
+            condition.lock(); finished = true
+            let pending = waiters; waiters.removeAll(); condition.unlock()
+            pending.forEach { $0.resume() }
+        }
+        func close() async {
+            await withCheckedContinuation { continuation in
+                condition.lock(); stopping = true
+                if finished { condition.unlock(); continuation.resume() }
+                else { waiters.append(continuation); condition.broadcast(); condition.unlock() }
+            }
+        }
+    }
+    let id = UUID()
+    private let queue = Queue()
+    init() {
+        let queue = queue, id = id, executor = asUnownedTaskExecutor()
+        let thread = Thread {
+            Thread.current.threadDictionary[MigrationExecutionIdentity.key] = id.uuidString
+            while let job = queue.next() { job.runSynchronously(on: executor) }
+            queue.complete()
+        }
+        thread.name = "golos-migration-fixture-task"
+        thread.qualityOfService = .utility
+        thread.start()
+    }
+    func enqueue(_ job: consuming ExecutorJob) { queue.enqueue(UnownedJob(job)) }
+    func close() async { await queue.close() }
+}
+
+@available(macOS 15.0, *)
 private nonisolated enum MigrationRace {
     enum ReleasePolicy { case afterSQLiteEntries, prematureNegativeControl }
+    enum Execution { case independentThreads, sharedLaneNegativeControl }
 
     /// Signals only from SQLite's statement callback, never from Task/actor entry.
     private nonisolated final class Entries: @unchecked Sendable {
@@ -156,6 +245,12 @@ private nonisolated enum MigrationRace {
               let release = events.first(where: { $0.name == "release-start" }) else { return false }
         let entries = expected.compactMap { label in events.first { $0.name == label + "-sqlite-begin" } }
         return entries.count == expected.count && Set(entries.compactMap(\.connection)).count == expected.count
+            && Set(entries.compactMap(\.executor)).count == expected.count
+            && expected.allSatisfy { label in
+                let task = events.first { $0.name == label + "-task-start" }
+                let sql = events.first { $0.name == label + "-sqlite-begin" }
+                return task?.executor != nil && task?.executor == sql?.executor
+            }
             && entries.allSatisfy { acquired.milliseconds < $0.milliseconds && $0.milliseconds < release.milliseconds }
     }
 
@@ -172,16 +267,19 @@ private nonisolated enum MigrationRace {
     }
     static func run(lock: MigrationReservedLock, trace: MigrationTrace,
                     expected: Set<String> = ["first", "second"], policy: ReleasePolicy = .afterSQLiteEntries,
+                    execution: Execution = .independentThreads,
                     first: @escaping @Sendable () async throws -> ProjectSnapshot,
                     second: @escaping @Sendable () async throws -> ProjectSnapshot) async -> (Result<ProjectSnapshot, any Error>, Result<ProjectSnapshot, any Error>) {
         let entries = Entries(expected: expected, trace: trace)
-        let one = Task.detached { await capture("first", trace: trace, entries: entries, work: first) }
-        let two = Task.detached { await capture("second", trace: trace, entries: entries, work: second) }
+        let firstExecutor = MigrationTaskExecutor()
+        let secondExecutor = execution == .independentThreads ? MigrationTaskExecutor() : firstExecutor
+        let one = Task.detached(executorPreference: firstExecutor, priority: .utility) { await capture("first", trace: trace, entries: entries, work: first) }
+        let two = Task.detached(executorPreference: secondExecutor, priority: .utility) { await capture("second", trace: trace, entries: entries, work: second) }
         switch policy {
         case .afterSQLiteEntries:
             let entered = await entries.waitAndRelease(lock)
             // On timeout, release immediately and STILL join both children before teardown.
-            #expect(entered, Comment(rawValue: trace.summary))
+            #expect(entered == (execution == .independentThreads), Comment(rawValue: trace.summary))
         case .prematureNegativeControl:
             // Reproduce the old false positive: release before delayed snapshot calls.
             lock.releaseAfterDelay()
@@ -189,19 +287,23 @@ private nonisolated enum MigrationRace {
         let firstResult = await one.value
         let secondResult = await two.value
         let release = await lock.waitForRelease()
+        await firstExecutor.close()
+        if secondExecutor !== firstExecutor { await secondExecutor.close() }
+        trace.record("executors-joined")
         trace.record("joined")
+        #expect(trace.diagnosticsSucceeded, "Diagnostic trace write failed")
         #expect(release.commit == SQLITE_OK && release.close == SQLITE_OK, Comment(rawValue: trace.summary))
         return (firstResult, secondResult)
     }
 }
 
-// Each scenario already creates two concurrent real connections. Running
-// several blocking SQLite/barrier scenarios at once exhausts cooperative
-// threads before delayed peers can start, testing executor capacity instead
-// of migration. Keep scenarios separate, not their two competing connections.
-@MainActor @Suite(.serialized) struct EmbeddingMigrationRaceTests {
+// Serialize scenarios to bound test-owned threads. Each real actor/database
+// call runs on its own preferred TaskExecutor, including its SQLite callback.
+@MainActor @Suite(.serialized, .enabled(if: MigrationExecutorSupport.available,
+    "TaskExecutor preference requires macOS 15+; application deployment is unchanged")) struct EmbeddingMigrationRaceTests {
     @Test(arguments: [0, 2])
     func concurrentConnectionsReadSchemaOnlyAfterAcquiringMigrationLock(version: Int) async throws {
+        guard #available(macOS 15.0, *) else { return }
         let root = FileManager.default.temporaryDirectory.appendingPathComponent("migration-race-\(UUID())")
         try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
         defer { try? FileManager.default.removeItem(at: root) }
@@ -216,7 +318,7 @@ private nonisolated enum MigrationRace {
             try removeAssignmentMigrationObjects(url)
             #expect(sqlite3_exec(db, "DROP TABLE knowledge_fts; DROP TABLE knowledge_model_epoch; DROP TABLE embedding_vectors; DROP TABLE embedding_jobs; DROP TABLE embedding_chunks; DROP TABLE embedding_sources; DROP TABLE embedding_source_epochs; DROP TABLE embedding_active_model; DROP TABLE embedding_models; PRAGMA user_version=2", nil, nil, nil) == SQLITE_OK)
         }
-        let trace = MigrationTrace(version: version)
+        let trace = try MigrationTrace(version: version)
         let heldLock = try MigrationReservedLock(url: url, trace: trace)
         let first = ProjectStore(url: url), second = ProjectStore(url: url)
         let (one, two) = await MigrationRace.run(lock: heldLock, trace: trace,
@@ -237,13 +339,14 @@ private nonisolated enum MigrationRace {
     }
 
     @Test func firstFailureStillWaitsForSecondConnectionAndReleaseBeforeTeardown() async throws {
+        guard #available(macOS 15.0, *) else { return }
         enum SyntheticFailure: Error, Equatable { case first }
         let root = FileManager.default.temporaryDirectory.appendingPathComponent("migration-cleanup-\(UUID())")
         try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
         defer { try? FileManager.default.removeItem(at: root) }
         let url = root.appendingPathComponent("knowledge.sqlite")
         let sentinel = try await ProjectStore(url: url).createProject(name: "Сохранить")
-        let trace = MigrationTrace(version: 4)
+        let trace = try MigrationTrace(version: 4)
         let heldLock = try MigrationReservedLock(url: url, trace: trace)
         let second = ProjectStore(url: url)
         let (one, two) = await MigrationRace.run(lock: heldLock, trace: trace, expected: ["second"],
@@ -263,19 +366,20 @@ private nonisolated enum MigrationRace {
         let writer = try ProjectDatabase(url: url)
         try writer.execute("BEGIN EXCLUSIVE")
         try writer.execute("ROLLBACK")
-        #expect(try writer.rows("PRAGMA user_version") == [["5"]])
+        #expect(try writer.rows("PRAGMA user_version") == [["6"]])
         #expect(try await ProjectStore(url: url).snapshot().projects == [sentinel])
     }
 
     @Test(arguments: [false, true])
     func delayedActorExecutionRequiresRealSQLiteEntries(prematureRelease: Bool) async throws {
+        guard #available(macOS 15.0, *) else { return }
         let root = FileManager.default.temporaryDirectory.appendingPathComponent("migration-delayed-\(UUID())")
         try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
         defer { try? FileManager.default.removeItem(at: root) }
         let url = root.appendingPathComponent("knowledge.sqlite")
         // Create an actual v0 file, not a pre-migrated store.
         do { _ = try ProjectDatabase(url: url) }
-        let trace = MigrationTrace(version: 0)
+        let trace = try MigrationTrace(version: 0)
         let heldLock = try MigrationReservedLock(url: url, trace: trace)
         let first = ProjectStore(url: url), second = ProjectStore(url: url)
         let (one, two) = await MigrationRace.run(lock: heldLock, trace: trace,
@@ -305,16 +409,40 @@ private nonisolated enum MigrationRace {
         let writer = try ProjectDatabase(url: url)
         try writer.execute("BEGIN EXCLUSIVE")
         try writer.execute("ROLLBACK")
-        #expect(try writer.rows("PRAGMA user_version") == [["5"]])
+        #expect(try writer.rows("PRAGMA user_version") == [["6"]])
+    }
+
+    @Test func singleExecutionLaneReproducesBarrierStarvationAndIsRejected() async throws {
+        guard #available(macOS 15.0, *) else { return }
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent("migration-shared-lane-\(UUID())")
+        try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: root) }
+        let url = root.appendingPathComponent("knowledge.sqlite")
+        do { _ = try ProjectDatabase(url: url) }
+        let trace = try MigrationTrace(version: 0)
+        let heldLock = try MigrationReservedLock(url: url, trace: trace)
+        let first = ProjectStore(url: url), second = ProjectStore(url: url)
+        let (one, two) = await MigrationRace.run(lock: heldLock, trace: trace,
+            execution: .sharedLaneNegativeControl,
+            first: { try await first.snapshot() }, second: { try await second.snapshot() })
+        #expect(try one.get() == two.get())
+        let events = trace.events
+        let timeout = try #require(events.first { $0.name == "sqlite-entry-timeout" })
+        let latePeer = try #require(events.first { $0.name == "second-sqlite-begin" })
+        #expect(latePeer.milliseconds >= timeout.milliseconds, Comment(rawValue: trace.summary))
+        #expect(!MigrationRace.hasContentionEvidence(trace), Comment(rawValue: trace.summary))
+        let writer = try ProjectDatabase(url: url)
+        try writer.execute("BEGIN EXCLUSIVE"); try writer.execute("ROLLBACK")
     }
 
     @Test func delayedPeerDoesNotSpendFirstConnectionsSQLiteBusyTimeoutBeforeContention() async throws {
+        guard #available(macOS 15.0, *) else { return }
         let root = FileManager.default.temporaryDirectory.appendingPathComponent("migration-scheduler-\(UUID())")
         try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
         defer { try? FileManager.default.removeItem(at: root) }
         let url = root.appendingPathComponent("knowledge.sqlite")
         do { _ = try ProjectDatabase(url: url) }
-        let trace = MigrationTrace(version: 0)
+        let trace = try MigrationTrace(version: 0)
         let heldLock = try MigrationReservedLock(url: url, trace: trace)
         let first = ProjectStore(url: url), second = ProjectStore(url: url)
         let (one, two) = await MigrationRace.run(lock: heldLock, trace: trace,

@@ -1,7 +1,7 @@
 import Foundation
 
 nonisolated enum KnowledgeIndexChange: Sendable {
-    case document(UUID), meeting(String), removedMeeting(String), model
+    case document(UUID), meeting(String), removedMeeting(String), model, projects
 }
 
 /// Process-local, fire-and-forget metadata signals. No text, audio or network.

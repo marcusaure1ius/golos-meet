@@ -4,6 +4,7 @@ import PDFKit
 struct KnowledgeSourceView: View {
     let destination: KnowledgeSearchDestination
     let onBack: () -> Void
+    var backTitle = "Результаты поиска"
     @Environment(\.palette) private var p
     @State private var showText = false
     @State private var pdfError = false
@@ -11,7 +12,7 @@ struct KnowledgeSourceView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 14) {
-            Button(action: onBack) { Label("Результаты поиска", systemImage: "chevron.left") }
+            Button(action: onBack) { Label(backTitle, systemImage: "chevron.left") }
                 .buttonStyle(.plain).foregroundStyle(p.link)
             Text(hit.source.title).font(.system(size: 26, weight: .semibold)).foregroundStyle(p.ink).lineLimit(2)
             Text(KnowledgeSearchLocation.label(hit.chunk)).font(.system(size: 14, weight: .semibold)).foregroundStyle(p.link)

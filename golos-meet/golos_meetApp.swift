@@ -54,6 +54,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         }
         coordinator.start()
         ProductionIndexing.shared?.start()
+        ProductionAssignments.shared?.start()
         if ProcessInfo.processInfo.environment["GOLOS_MEET_BACKFILL"] == "1" {
             Backfill.run()
         }
@@ -62,6 +63,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationWillTerminate(_ notification: Notification) {
         guard !AppRuntime.isTestHost else { return }
         coordinator?.prepareForTermination()
+        ProductionAssignments.shared?.stop()
         ProductionIndexing.shared?.stop()
     }
 

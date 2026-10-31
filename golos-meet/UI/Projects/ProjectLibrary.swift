@@ -10,6 +10,7 @@ final class ProjectLibrary: ObservableObject {
     @Published private(set) var isSaving = false
     @Published private(set) var isLoaded = false
     @Published private(set) var loadError: String?
+    private var reloadPending = false
     let store: ProjectStore
 
     var isReady: Bool { isLoaded && loadError == nil && !isLoading && !isSaving }
@@ -21,9 +22,9 @@ final class ProjectLibrary: ObservableObject {
     }
 
     func reload() async {
-        guard !isLoading && !isSaving else { return }
+        guard !isLoading && !isSaving else { reloadPending = true; return }
         isLoading = true
-        defer { isLoading = false }
+        defer { isLoading = false; finishReloadIfNeeded() }
         do {
             snapshot = try await store.snapshot()
             sortProjects()
@@ -35,21 +36,23 @@ final class ProjectLibrary: ObservableObject {
     func create(name: String, parentID: UUID?) async throws -> KnowledgeProject {
         guard isReady else { throw ProjectStoreError.database("Library unavailable") }
         isSaving = true
-        defer { isSaving = false }
+        defer { isSaving = false; finishReloadIfNeeded() }
         let project = try await store.createProject(name: name, parentID: parentID)
         // Mutation is already committed. Do not claim failure or invite duplicate
         // creation if a separate refresh fails afterwards.
         snapshot.projects.append(project)
         sortProjects()
+        KnowledgeIndexEvents.post(.projects)
         return project
     }
 
     func assign(meetingID: String, projectIDs: Set<UUID>) async throws {
         guard isReady else { throw ProjectStoreError.database("Library unavailable") }
         isSaving = true
-        defer { isSaving = false }
+        defer { isSaving = false; finishReloadIfNeeded() }
         try await store.assignMeeting(meetingID, to: projectIDs)
         snapshot.meetingProjects[meetingID] = projectIDs.isEmpty ? nil : projectIDs
+        KnowledgeIndexEvents.post(.projects)
     }
 
     func projectIDs(for meetingID: String) -> Set<UUID> {
@@ -68,6 +71,11 @@ final class ProjectLibrary: ObservableObject {
             current = project.parentID
         }
         return parts.joined(separator: " / ")
+    }
+
+    private func finishReloadIfNeeded() {
+        guard reloadPending else { return }; reloadPending = false
+        Task { await reload() }
     }
 
     private func sortProjects() {
