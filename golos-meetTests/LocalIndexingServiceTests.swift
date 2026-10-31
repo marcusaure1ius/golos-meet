@@ -170,4 +170,50 @@ actor CandidateSource {
         #expect(try await restartedStore.embeddingJobs().first?.generation != crashed.job.generation)
         await restarted.stop()
     }
+
+    @Test func failedReplacementKeepsWorkingModelReadyVectorsAndQueryAvailable() async throws {
+        let root = try root(); defer { try? FileManager.default.removeItem(at: root) }
+        try meeting(root, id: "a", text: "Стабильный источник")
+        let store = ProjectStore(url: root.appendingPathComponent("knowledge.sqlite"))
+        let source = CandidateSource(), encoder = LifecycleEncoder()
+        await source.set(candidate(encoder, source: source))
+        let service = service(root, store: store, source: source)
+        await service.start(); await service.waitUntilIdle()
+        let ready = try #require(try await store.embeddingJobs().first)
+        await source.set(.init(model: .init(id: "broken-replacement", dimensions: 2), folder: nil,
+                               load: { throw EmbeddingIndexError.invalidModel }))
+        await service.modelChanged(); await service.waitUntilIdle()
+        let state = await service.snapshot()
+        #expect(state.modelState == .failed && state.hasWorkingModel)
+        #expect(try await store.embeddingJobs().first?.generation == ready.generation)
+        #expect(try await store.embeddingWindows(for: ready.source, model: .init(id: encoder.modelID, dimensions: 2)).count == 1)
+        #expect(try await service.embedQuery("Рабочий запрос").modelID == encoder.modelID)
+        try meeting(root, id: "b", text: "Новый источник после ошибки модели")
+        await service.changed(); await service.waitUntilIdle()
+        #expect(try await store.embeddingJobs().count == 2)
+        #expect(try await store.embeddingJobs().allSatisfy { $0.state == .ready })
+        await service.stop()
+    }
+
+    @Test func cancelAllAndRetryAllCoverActiveAndQueuedSourcesWithoutLosingWakeup() async throws {
+        let root = try root(); defer { try? FileManager.default.removeItem(at: root) }
+        try meeting(root, id: "a", text: "Первый источник")
+        try meeting(root, id: "b", text: "Второй источник")
+        let store = ProjectStore(url: root.appendingPathComponent("knowledge.sqlite"))
+        let source = CandidateSource(), entered = IndexGate(), release = IndexGate()
+        let encoder = LifecycleEncoder(entered: entered, release: release)
+        await source.set(candidate(encoder, source: source))
+        let service = service(root, store: store, source: source)
+        await service.start(); await entered.wait()
+        await service.cancelAll(); await release.signal(); await service.waitUntilIdle()
+        #expect(try await store.embeddingJobs().allSatisfy { $0.state == .cancelled })
+        await service.retryAll(); await service.waitUntilIdle()
+        #expect(try await store.embeddingJobs().allSatisfy { $0.state == .ready })
+        // A source arriving after drain completion must start a fresh worker.
+        try meeting(root, id: "c", text: "Источник после завершения очереди")
+        await service.changed(); await service.waitUntilIdle()
+        #expect(try await store.embeddingJobs().count == 3)
+        #expect(try await store.embeddingJobs().allSatisfy { $0.state == .ready })
+        await service.stop()
+    }
 }

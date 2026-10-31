@@ -1,0 +1,10 @@
+{
+  "encoder_loads" : 1,
+  "external_reconciliation" : true,
+  "model_id" : "multilingual-e5-small@fd1525a9fd15316a2d503bf26ab031a61d056e98\/unigram-v1\/mean-l2\/512\/overlap64",
+  "process_local_event_delivery_tested_in_xctest" : true,
+  "query_dimensions" : 384,
+  "same_id_cache_preserved" : true,
+  "sources_ready" : 2,
+  "synthetic_temp_only" : true
+}
