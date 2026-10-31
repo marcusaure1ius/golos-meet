@@ -9,6 +9,11 @@ nonisolated protocol LocalTextEmbedding: Sendable {
     func embed(_ texts: [String], purpose: EmbeddingPurpose) async throws -> [KnowledgeVector]
 }
 
+nonisolated protocol LocalPassageEmbedding: LocalTextEmbedding {
+    var dimensions: Int { get }
+    func passageWindows(_ text: String) async throws -> [EmbeddedPassageWindow]
+}
+
 nonisolated enum KnowledgeVectorError: Error, Equatable {
     case invalidVector
     case incompatibleModels

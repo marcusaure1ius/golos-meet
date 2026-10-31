@@ -20,12 +20,15 @@ final class DocumentImportQueue: ObservableObject {
     @Published private(set) var completedCount = 0
     private let importer: DocumentImporter
     private let store: ProjectStore
+    private let onImported: @Sendable (UUID) -> Void
     private var activeID: UUID?
     private var activeTask: Task<Void, Never>?
 
-    init(importer: DocumentImporter, store: ProjectStore) {
+    init(importer: DocumentImporter, store: ProjectStore,
+         onImported: @escaping @Sendable (UUID) -> Void = { KnowledgeIndexEvents.post(.document($0)) }) {
         self.importer = importer
         self.store = store
+        self.onImported = onImported
     }
 
     func enqueue(urls: [URL], projectIDs: Set<UUID>, targetID: UUID? = nil) async {
@@ -70,6 +73,7 @@ final class DocumentImportQueue: ObservableObject {
                     $0.message = result.reused ? "Уже в библиотеке. Повторная копия не добавлена." : "Документ и фрагменты сохранены локально."
                 }
                 completedCount += 1
+                onImported(result.documentID)
             } catch {
                 update(job.id) {
                     $0.state = error is CancellationError ? .cancelled : .failed

@@ -107,6 +107,7 @@ private nonisolated enum MigrationRace {
         private let expected: Set<String>
         private var connections: [String: UUID] = [:]
         private let ready = DispatchSemaphore(value: 0)
+        private let mayStep = DispatchSemaphore(value: 0)
         private let trace: MigrationTrace
         init(expected: Set<String>, trace: MigrationTrace) { self.expected = expected; self.trace = trace }
         func observe(_ label: String, connection: UUID) {
@@ -117,12 +118,27 @@ private nonisolated enum MigrationRace {
             connections[label] = connection
             let complete = Set(connections.keys) == expected && Set(connections.values).count == expected.count
             mutex.unlock()
-            if complete { ready.signal() }
+            if complete {
+                ready.signal()
+                for _ in expected { mayStep.signal() }
+            }
+            // SQLITE_TRACE_STMT runs before the statement's busy handler. Hold
+            // the first connection here until its peer has really entered
+            // SQLite, so executor scheduling cannot consume its busy_timeout.
+            if mayStep.wait(timeout: .now() + 5) != .success {
+                trace.record(label + "-sqlite-entry-barrier-timeout", connection: connection)
+            }
         }
-        func wait() async -> Bool {
+        func waitAndRelease(_ lock: MigrationReservedLock) async -> Bool {
             await withCheckedContinuation { continuation in
                 let watchdog = Thread { [self] in
-                    continuation.resume(returning: ready.wait(timeout: .now() + 5) == .success)
+                    let entered = ready.wait(timeout: .now() + 5) == .success
+                    if !entered { trace.record("sqlite-entry-timeout") }
+                    // Schedule release on this thread BEFORE resuming Swift.
+                    // A saturated cooperative executor must not prolong the
+                    // reserved lock beyond the production busy timeout.
+                    lock.releaseAfterDelay(entered ? 0.5 : 0)
+                    continuation.resume(returning: entered)
                 }
                 watchdog.name = "golos-migration-fixture-sqlite-watchdog"
                 watchdog.qualityOfService = .userInitiated
@@ -135,7 +151,8 @@ private nonisolated enum MigrationRace {
     /// reserved lock was held. Successful snapshots or Task markers are insufficient.
     static func hasContentionEvidence(_ trace: MigrationTrace, expected: Set<String> = ["first", "second"]) -> Bool {
         let events = trace.events
-        guard let acquired = events.first(where: { $0.name == "acquire" }), acquired.result == SQLITE_OK,
+        guard !events.contains(where: { $0.name.contains("timeout") }),
+              let acquired = events.first(where: { $0.name == "acquire" }), acquired.result == SQLITE_OK,
               let release = events.first(where: { $0.name == "release-start" }) else { return false }
         let entries = expected.compactMap { label in events.first { $0.name == label + "-sqlite-begin" } }
         return entries.count == expected.count && Set(entries.compactMap(\.connection)).count == expected.count
@@ -162,10 +179,8 @@ private nonisolated enum MigrationRace {
         let two = Task.detached { await capture("second", trace: trace, entries: entries, work: second) }
         switch policy {
         case .afterSQLiteEntries:
-            let entered = await entries.wait()
-            if !entered { trace.record("sqlite-entry-timeout") }
+            let entered = await entries.waitAndRelease(lock)
             // On timeout, release immediately and STILL join both children before teardown.
-            lock.releaseAfterDelay(entered ? 0.5 : 0)
             #expect(entered, Comment(rawValue: trace.summary))
         case .prematureNegativeControl:
             // Reproduce the old false positive: release before delayed snapshot calls.
@@ -180,7 +195,11 @@ private nonisolated enum MigrationRace {
     }
 }
 
-@MainActor @Suite struct EmbeddingMigrationRaceTests {
+// Each scenario already creates two concurrent real connections. Running
+// several blocking SQLite/barrier scenarios at once exhausts cooperative
+// threads before delayed peers can start, testing executor capacity instead
+// of migration. Keep scenarios separate, not their two competing connections.
+@MainActor @Suite(.serialized) struct EmbeddingMigrationRaceTests {
     @Test(arguments: [0, 2])
     func concurrentConnectionsReadSchemaOnlyAfterAcquiringMigrationLock(version: Int) async throws {
         let root = FileManager.default.temporaryDirectory.appendingPathComponent("migration-race-\(UUID())")
@@ -286,6 +305,26 @@ private nonisolated enum MigrationRace {
         try writer.execute("BEGIN EXCLUSIVE")
         try writer.execute("ROLLBACK")
         #expect(try writer.rows("PRAGMA user_version") == [["3"]])
+    }
+
+    @Test func delayedPeerDoesNotSpendFirstConnectionsSQLiteBusyTimeoutBeforeContention() async throws {
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent("migration-scheduler-\(UUID())")
+        try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: root) }
+        let url = root.appendingPathComponent("knowledge.sqlite")
+        do { _ = try ProjectDatabase(url: url) }
+        let trace = MigrationTrace(version: 0)
+        let heldLock = try MigrationReservedLock(url: url, trace: trace)
+        let first = ProjectStore(url: url), second = ProjectStore(url: url)
+        let (one, two) = await MigrationRace.run(lock: heldLock, trace: trace,
+            first: { try await first.snapshot() }, second: {
+                // Longer than the unchanged production busy_timeout (2000 ms).
+                try await Task.sleep(for: .milliseconds(2500))
+                return try await second.snapshot()
+            })
+        #expect(try one.get() == two.get())
+        #expect(MigrationRace.hasContentionEvidence(trace), Comment(rawValue: trace.summary))
+        #expect(!trace.events.contains { $0.name.contains("timeout") }, Comment(rawValue: trace.summary))
     }
 
 }

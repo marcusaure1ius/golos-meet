@@ -1,0 +1,145 @@
+{
+  "diagnosed_run": "2026-10-31_09-46-33-+0300",
+  "schema_version": 2,
+  "events": [
+    {
+      "milliseconds": 0.1260416756849736,
+      "result": 0,
+      "extended": 0,
+      "name": "acquire"
+    },
+    {
+      "milliseconds": 652.1390416601207,
+      "name": "first-task-start"
+    },
+    {
+      "milliseconds": 652.3286666779313,
+      "name": "first-sqlite-begin",
+      "connection": "9E81144C-EB6B-4425-A5A0-6CB213B8FEDE"
+    },
+    {
+      "milliseconds": 1991.864625015296,
+      "name": "second-task-start"
+    },
+    {
+      "milliseconds": 1992.135041655274,
+      "name": "second-sqlite-begin",
+      "connection": "B9833807-C77F-46D9-9590-834DA1D3BDC1"
+    },
+    {
+      "milliseconds": 2374.2004166706465,
+      "name": "schedule",
+      "scheduledMilliseconds": 2874.2002916696947
+    },
+    {
+      "diagnostic": {
+        "extended": 5,
+        "phase": "step",
+        "transaction": "617A5069-3A4D-4340-A295-B56CA037D1CE",
+        "elapsedMilliseconds": 2100.052166671958,
+        "transactionElapsedMilliseconds": 2100.0550416647457,
+        "result": 5,
+        "operation": "beginImmediate",
+        "connection": "9E81144C-EB6B-4425-A5A0-6CB213B8FEDE",
+        "transactionPhase": "begin"
+      },
+      "milliseconds": 2752.5543333322275,
+      "name": "first-failure"
+    },
+    {
+      "milliseconds": 2879.2609999945853,
+      "name": "release-start"
+    },
+    {
+      "milliseconds": 2879.3567499960773,
+      "result": 0,
+      "extended": 0,
+      "name": "commit-result"
+    },
+    {
+      "milliseconds": 2879.4120000093244,
+      "result": 0,
+      "name": "close-result"
+    },
+    {
+      "milliseconds": 2965.2042083325796,
+      "name": "second-success"
+    },
+    {
+      "milliseconds": 2965.27279165457,
+      "name": "joined"
+    }
+  ],
+  "interpretation": "Fixture released its own reserved lock after the first connection exhausted the unchanged 2000ms SQLite busy timeout; older undiagnosed run remains unproven.",
+  "scheduler_watchdog_run": {
+    "diagnosed_run": "2026-10-31_09-52-28-+0300",
+    "events": [
+      {
+        "name": "acquire",
+        "result": 0,
+        "extended": 0,
+        "milliseconds": 0.14491667388938367
+      },
+      {
+        "name": "first-task-start",
+        "milliseconds": 0.24933333043009043
+      },
+      {
+        "name": "first-sqlite-begin",
+        "connection": "832E6F40-A3BF-425C-8A62-969281057512",
+        "milliseconds": 0.4586666764225811
+      },
+      {
+        "name": "second-task-start",
+        "milliseconds": 3784.2590833315626
+      },
+      {
+        "name": "sqlite-entry-timeout",
+        "milliseconds": 5005.318416660884
+      },
+      {
+        "name": "schedule",
+        "scheduledMilliseconds": 5005.383541662013,
+        "milliseconds": 5005.383666662965
+      },
+      {
+        "name": "release-start",
+        "milliseconds": 5005.470708332723
+      },
+      {
+        "name": "first-sqlite-entry-barrier-timeout",
+        "milliseconds": 5005.5414583475795,
+        "connection": "832E6F40-A3BF-425C-8A62-969281057512"
+      },
+      {
+        "name": "commit-result",
+        "milliseconds": 5005.95295833773,
+        "result": 0,
+        "extended": 0
+      },
+      {
+        "name": "close-result",
+        "milliseconds": 5005.993791681249,
+        "result": 0
+      },
+      {
+        "name": "first-success",
+        "milliseconds": 5008.204708341509
+      },
+      {
+        "name": "second-sqlite-begin",
+        "milliseconds": 6310.480499989353,
+        "connection": "19E1FC8B-19D2-4707-B486-37BC9D00F03A"
+      },
+      {
+        "name": "second-success",
+        "milliseconds": 6310.7733333308715
+      },
+      {
+        "name": "joined",
+        "milliseconds": 6310.809791670181
+      }
+    ],
+    "interpretation": "Multiple concurrent blocking fixtures delayed the second Task start to 3784ms and its SQLite entry to 6310ms; watchdog correctly rejected contention. Suite scenarios are now serialized while both real connections within each scenario remain concurrent."
+  }
+}
