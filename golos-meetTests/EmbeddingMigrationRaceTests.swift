@@ -263,7 +263,7 @@ private nonisolated enum MigrationRace {
         let writer = try ProjectDatabase(url: url)
         try writer.execute("BEGIN EXCLUSIVE")
         try writer.execute("ROLLBACK")
-        #expect(try writer.rows("PRAGMA user_version") == [["5"]])
+        #expect(try writer.rows("PRAGMA user_version") == [["6"]])
         #expect(try await ProjectStore(url: url).snapshot().projects == [sentinel])
     }
 
@@ -305,7 +305,7 @@ private nonisolated enum MigrationRace {
         let writer = try ProjectDatabase(url: url)
         try writer.execute("BEGIN EXCLUSIVE")
         try writer.execute("ROLLBACK")
-        #expect(try writer.rows("PRAGMA user_version") == [["5"]])
+        #expect(try writer.rows("PRAGMA user_version") == [["6"]])
     }
 
     @Test func delayedPeerDoesNotSpendFirstConnectionsSQLiteBusyTimeoutBeforeContention() async throws {

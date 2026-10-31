@@ -12,6 +12,7 @@ import Testing
         #expect(AppRuntime.isTestHost)
         #expect(AppLibraryState().library == nil)
         #expect(ProductionIndexing.shared == nil)
+        #expect(ProductionAssignments.shared == nil)
         #expect(ProductionKnowledgeSearch.service == nil)
     }
 

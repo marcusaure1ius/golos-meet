@@ -28,13 +28,13 @@ sources = [repo / "golos-meet/Core/Knowledge" / name for name in
 if args.index or args.queue or args.search or args.assignment:
     sources += [repo / "golos-meet/Core/Knowledge" / name for name in
                 ["KnowledgeModels.swift", "KnowledgeChunker.swift", "DocumentModels.swift", "DocumentImporter.swift",
-                 "LocalDocumentExtractor.swift", "ProjectStore.swift", "EmbeddingIndexModels.swift", "MeetingEmbeddingSnapshot.swift", "KnowledgeSearchModels.swift", "MeetingAssignmentModels.swift"]]
+                 "LocalDocumentExtractor.swift", "ProjectStore.swift", "EmbeddingIndexModels.swift", "MeetingEmbeddingSnapshot.swift", "KnowledgeSearchModels.swift", "MeetingAssignmentModels.swift", "MeetingAssignmentRuntimeModels.swift"]]
 if args.queue or args.search or args.assignment:
     sources += [repo / "golos-meet/Core/Knowledge" / name for name in ["LocalIndexingRuntime.swift", "LocalIndexingService.swift"]]
 if args.search or args.assignment:
     sources += [repo / "golos-meet/Core/Knowledge" / name for name in ["KnowledgeSearchService.swift", "KnowledgeSearchSourceReader.swift"]]
 if args.assignment:
-    sources += [repo / "golos-meet/Core/Knowledge/MeetingAssignmentService.swift"]
+    sources += [repo / "golos-meet/Core/Knowledge" / name for name in ["MeetingAssignmentService.swift", "MeetingAssignmentInputReader.swift", "MeetingAssignmentWorker.swift"]]
 probe = "NativeMeetingAssignmentProbe.swift" if args.assignment else "NativeKnowledgeSearchProbe.swift" if args.search else "NativeIndexingQueueProbe.swift" if args.queue else "NativeEmbeddingIndexProbe.swift" if args.index else "NativeEmbeddingProbe.swift"
 objects = [products / (name + ".o") for name in ["Crypto", "EventSource", "Hub", "HuggingFace",
            "InternalCollectionsUtilities", "Jinja", "OnnxRuntimeBindings", "OrderedCollections", "Tokenizers", "yyjson"]]

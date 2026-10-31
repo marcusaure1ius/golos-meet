@@ -202,6 +202,9 @@ struct MeetingDetailView: View {
             }
             actions
             MeetingProjectButton(meetingID: meeting.id, meetingTitle: liveMeeting.title)
+            if let assignments = ProductionAssignments.shared {
+                MeetingAssignmentPanel(assignments: assignments, meetingID: meeting.id, meetingTitle: liveMeeting.title).id(meeting.id)
+            }
         }
     }
 

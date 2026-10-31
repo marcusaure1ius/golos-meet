@@ -77,6 +77,7 @@ import Combine
             case .document(let id): await service.changed(source: .init(kind: .document, externalID: id.uuidString))
             case .meeting(let id), .removedMeeting(let id): await service.changed(source: .init(kind: .meeting, externalID: id))
             case .model: await service.modelChanged()
+            case .projects: break
             }
         }
     }

@@ -114,11 +114,11 @@ actor MeetingAssignmentService {
         return plan
     }
 
-    func commit(_ plan: MeetingAssignmentPlan) async throws -> MeetingAssignmentCommit {
+    func commit(_ plan: MeetingAssignmentPlan, runtimeLease: MeetingAssignmentLease? = nil) async throws -> MeetingAssignmentCommit {
         try Task.checkCancellation()
         try await validate(plan)
         try Task.checkCancellation()
-        return try await store.commitMeetingAssignment(plan.result, meetingID: plan.meetingID, checkpoint: plan.checkpoint)
+        return try await store.commitMeetingAssignment(plan.result, meetingID: plan.meetingID, checkpoint: plan.checkpoint, runtimeLease: runtimeLease)
     }
 
     private func validate(_ plan: MeetingAssignmentPlan) async throws {

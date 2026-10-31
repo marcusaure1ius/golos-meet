@@ -7,4 +7,5 @@ nonisolated func removeAssignmentMigrationObjects(_ url: URL) throws {
         try db.execute("DROP TRIGGER \(row[0])")
     }
     try db.execute("DROP TABLE assignment_epoch")
+    try db.execute("DROP TABLE assignment_work")
 }

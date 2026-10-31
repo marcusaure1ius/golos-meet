@@ -9,9 +9,10 @@ import Darwin
         let projects: [Project]; let cases: [Sample]
     }
     static func main() async throws {
-        guard CommandLine.arguments.count == 5 else {
-            fputs("Usage: probe MODEL_FOLDER CORPUS_JSON PARTITION REPORT_JSON\n", stderr); exit(2)
+        guard [5, 6].contains(CommandLine.arguments.count) else {
+            fputs("Usage: probe MODEL_FOLDER CORPUS_JSON PARTITION REPORT_JSON [--runtime]\n", stderr); exit(2)
         }
+        let useWorker = CommandLine.arguments.last == "--runtime"
         let weights = URL(fileURLWithPath: CommandLine.arguments[1])
         try await EmbeddingModelInstaller(root: weights).verifyFolder(weights)
         let bytes = try Data(contentsOf: URL(fileURLWithPath: CommandLine.arguments[2]))
@@ -53,14 +54,43 @@ import Darwin
         let indexSeconds = ProcessInfo.processInfo.systemUptime - indexStart
         guard try await store.embeddingJobs().allSatisfy({ $0.state == .ready }) else { throw MeetingAssignmentError.notReady }
         let service = MeetingAssignmentService(store: store, meetingsRoot: meetings, documentsRoot: copies)
+        let worker = MeetingAssignmentWorker(store: store, meetingsRoot: meetings, documentsRoot: copies, indexAvailable: true)
+        let evidenceReader = MeetingAssignmentEvidenceReader(store: store, meetingsRoot: meetings, documentsRoot: copies)
+        let drainStart = ProcessInfo.processInfo.systemUptime
+        if useWorker { await worker.start(); await worker.waitUntilIdle() }
+        let drainSeconds = ProcessInfo.processInfo.systemUptime - drainStart
+        var staleChecked = false
+        if useWorker, let id = samples.first(where: { !$0.expected.isEmpty && $0.id.contains("literal") })?.id ?? samples.first(where: { !$0.expected.isEmpty })?.id,
+           let decision = try await store.assignmentRuntimeSnapshot().decisions[id], decision.origin == .automatic,
+           let first = decision.result?.evidence.first {
+            _ = try await evidenceReader.open(meetingID: id, projectID: first.projectID, context: true)
+            try await store.requestEmbeddingReindex(.init(kind: .meeting, externalID: id))
+            await worker.changed(); await worker.waitUntilIdle()
+            guard try await store.snapshot().meetingProjects[id] == nil,
+                  try await store.assignmentRuntimeSnapshot().work[id]?.state == .waiting else { throw MeetingAssignmentError.stale }
+            do { _ = try await evidenceReader.open(meetingID: id, projectID: first.projectID, context: false); throw EmbeddingIndexError.invalidSource }
+            catch is MeetingAssignmentError { staleChecked = true }
+            await runtime.changed(); await runtime.waitUntilIdle()
+            await worker.changed(); await worker.waitUntilIdle()
+            guard try await store.assignmentRuntimeSnapshot().work[id]?.state == .current else { throw MeetingAssignmentError.stale }
+        }
         var rows: [[String: Any]] = [], truePositive = 0, falsePositive = 0, missed = 0
         for sample in samples {
             let start = ProcessInfo.processInfo.systemUptime
             guard let plan = try await service.prepare(meetingID: sample.id) else { throw MeetingAssignmentError.stale }
             let outcome = try await service.commit(plan)
-            guard outcome == .applied else { throw MeetingAssignmentError.stale }
+            guard useWorker ? outcome == .unchanged : outcome == .applied else { throw MeetingAssignmentError.stale }
+            if useWorker {
+                guard let saved = try await store.assignmentRuntimeSnapshot().decisions[sample.id], saved.result == plan.result else { throw MeetingAssignmentError.stale }
+                for item in plan.result.evidence {
+                    _ = try await evidenceReader.open(meetingID: sample.id, projectID: item.projectID, context: false)
+                    _ = try await evidenceReader.open(meetingID: sample.id, projectID: item.projectID, context: true)
+                }
+            }
             let elapsed = (ProcessInfo.processInfo.systemUptime - start) * 1000
-            let actual = Set(projects.compactMap { plan.result.assignedProjectIDs.contains($0.value) ? $0.key : nil })
+            let persisted = try await store.snapshot().meetingProjects[sample.id] ?? []
+            guard persisted == plan.result.assignedProjectIDs else { throw MeetingAssignmentError.stale }
+            let actual = Set(projects.compactMap { persisted.contains($0.value) ? $0.key : nil })
             let expected = Set(sample.expected)
             truePositive += actual.intersection(expected).count
             falsePositive += actual.subtracting(expected).count
@@ -79,14 +109,21 @@ import Darwin
                          "milliseconds": elapsed, "scores": scores, "suggested_topic": plan.result.suggestedTopic as Any? ?? NSNull()])
             // Explicit Inbox on a new connection fences further classification.
             try await store.assignMeeting(sample.id, to: [])
+            if useWorker { await worker.changed(); await worker.waitUntilIdle() }
             let reopened = ProjectStore(url: root.appendingPathComponent("knowledge.sqlite"))
             guard try await reopened.meetingAssignmentCheckpoint().decisions[sample.id]?.origin == .manual,
                   try await service.prepare(meetingID: sample.id) == nil else { throw MeetingAssignmentError.stale }
         }
+        if useWorker {
+            await worker.stop(); await worker.start(); await worker.waitUntilIdle()
+            let restarted = try await store.assignmentRuntimeSnapshot()
+            guard samples.allSatisfy({ restarted.work[$0.id]?.state == .manual }) else { throw MeetingAssignmentError.stale }
+        }
+        await worker.stop()
         var usage = rusage(); getrusage(RUSAGE_SELF, &usage)
         let report: [String: Any] = ["partition": partition, "algorithm": MeetingAssignmentService.algorithm,
             "corpus_sha256": SHA256.hash(data: bytes).map { String(format: "%02x", $0) }.joined(),
-            "synthetic_only": true, "production_wiring": false, "model_id": EmbeddingIndexModel.e5Small.id,
+            "synthetic_only": true, "production_wiring": false, "serial_worker": useWorker, "worker_initial_drain_seconds": drainSeconds, "stale_evidence_reindex_recovery": staleChecked, "timing_scope": useWorker ? "prepare+unchanged commit+evidence opens after automatic drain" : "prepare+commit", "model_id": EmbeddingIndexModel.e5Small.id,
             "auto_threshold": 0.90, "proposal_threshold": 0.90, "required_margin": 0.04, "cold_index_seconds": indexSeconds,
             "peak_cli_rss_bytes": usage.ru_maxrss, "true_positive_links": truePositive,
             "false_positive_links": falsePositive, "missed_links": missed, "cases": rows,
