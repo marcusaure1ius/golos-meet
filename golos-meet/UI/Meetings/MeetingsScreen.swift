@@ -14,6 +14,7 @@ struct MeetingsScreen: View {
     @State private var period: MeetingPeriod = .all
     @State private var refreshPulse = false   // разовый оборот, когда догонять нечего
     @State private var showingDocuments = false
+    @State private var showingSearch = false
 
     private enum Mode: String, CaseIterable { case feed = "Лента", calendar = "Календарь" }
 
@@ -29,7 +30,9 @@ struct MeetingsScreen: View {
 
     var body: some View {
         Group {
-            if let m = selected {
+            if showingSearch {
+                KnowledgeSearchEntry(initialScope: searchScope, onBack: { showingSearch = false })
+            } else if let m = selected {
                 MeetingDetailView(backTitle: screenTitle, meeting: m) { selected = nil }
             } else {
                 VStack(spacing: 0) {
@@ -94,6 +97,8 @@ struct MeetingsScreen: View {
                     .lineLimit(2)
                 Spacer()
                 if scope != .all {
+                    Button { showingSearch = true } label: { Label("Поиск", systemImage: "magnifyingglass") }
+                        .buttonStyle(GhostButton())
                     Picker("Содержимое", selection: $showingDocuments) {
                         Text("Встречи").tag(false)
                         Text("Документы").tag(true)
@@ -135,6 +140,14 @@ struct MeetingsScreen: View {
         case .all: return "Встречи"
         case .inbox: return "Входящие"
         case .project(let id): return projects.project(id)?.name ?? "Проект недоступен"
+        }
+    }
+
+    private var searchScope: KnowledgeSearchScope {
+        switch scope {
+        case .all: .all
+        case .inbox: .inbox
+        case .project(let id): .project(id)
         }
     }
 

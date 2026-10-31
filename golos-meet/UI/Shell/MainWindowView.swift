@@ -49,6 +49,7 @@ struct MainWindowView: View {
         switch selection {
         case .meetings: MeetingsScreen()
         case .documents: DocumentsScreen()
+        case .search: KnowledgeSearchEntry()
         case .inbox: MeetingsScreen(scope: .inbox)
         case .project(let id): MeetingsScreen(scope: .project(id)).id(id)
         case .settings: SettingsScreen()

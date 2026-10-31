@@ -135,6 +135,14 @@ actor LocalIndexingService {
     func waitUntilIdle() async { while let current = worker { await current.value } }
     func snapshot() -> LocalIndexingSnapshot { state }
 
+    /// Refresh catalog bytes before retrieval, without waiting for inference of
+    /// the whole queue. CAS/leases fence an overlapping active index attempt.
+    func synchronizeForSearch() async throws -> [EmbeddingSourceKey] {
+        try await reconcile()
+        if started { launch() }
+        return Array(state.sourceErrors.keys)
+    }
+
     /// Consumers cannot activate a model. A query which outlives any model
     /// request, including A→B→A, is explicitly superseded instead of restoring A.
     func embedQuery(_ text: String) async throws -> KnowledgeVector {
