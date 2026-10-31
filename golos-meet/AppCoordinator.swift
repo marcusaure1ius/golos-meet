@@ -4,100 +4,223 @@ import Combine
 import os
 
 @MainActor
-final class AppCoordinator {
-    // grace-окно спада можно укоротить через env (для e2e); по умолчанию 30 c.
-    // Оконный сигнал держит активность сквозь тишину, поэтому длинный grace больше не нужен
-    // (см. docs/plans/2026-06-18-window-aware-detection.md).
-    private static var graceSeconds: TimeInterval {
-        if let raw = ProcessInfo.processInfo.environment["GM_GRACE_SECONDS"],
-           let v = TimeInterval(raw) { return v }
-        return 30
+final class AppCoordinator: MeetingDetectorDelegate {
+    struct Dependencies {
+        let recorder: Recorder
+        let state: RecordingState
+        let observer: TalkRoomObserver
+        let selection: () -> TalkRuntimeSelection
+        let now: () -> Date
+        var startLegacy: (@escaping (Bool?, Bool?) -> Void) -> Void = { _ in }
+        var stopLegacy: () -> Void = {}
     }
-
-    let detector = MeetingDetector(graceSeconds: AppCoordinator.graceSeconds)
-    private let audioMonitor = AudioProcessMonitor()
-    private let windowMonitor = WindowMonitor()
-    let recorder = Recorder()
-
-    // Последние значения каждого сигнала; встреча активна, если активен ХОТЯ БЫ ОДИН
-    // (аудио ловит захват микрофона Толком; окно ловит присутствие в звонке независимо от тишины/фокуса).
+    private enum Owner { case api, legacy, manual }
+    let detector: MeetingDetector
+    let recorder: Recorder
+    private let state: RecordingState
+    private let observer: TalkRoomObserver
+    private let loadSelection: () -> TalkRuntimeSelection
+    private let now: () -> Date
+    private let startLegacy: (@escaping (Bool?, Bool?) -> Void) -> Void
+    private let stopLegacy: () -> Void
+    private let synthetic: Bool
+    private var selection: TalkRuntimeSelection = .unavailable
+    private var running = false
+    private var hasLoadedSelection = false
+    private var sleeping = false
+    private var quitting = false
+    private var owner: Owner?
+    private var suppressed = false
     private var lastAudioActive = false
     private var lastWindowActive = false
-
+    private var boundary: Task<Void, Never>?
     private var menuBar: MenuBarController?
-    private var liveCancellable: AnyCancellable?
-    private var tickTimer: Timer?
+    private var stateCancellable: AnyCancellable?
+    private var timer: Timer?
+    private var settingsListener: UUID?
+    private var sleepTokens: [NSObjectProtocol] = []
+    private(set) var detectionLine = "Автозапись: ожидание настройки"
+
+    /// Injecting dependencies explicitly opts into synthetic coordinator execution;
+    /// the default constructor/start path is blocked before real stores/monitors.
+    init(dependencies: Dependencies? = nil, graceSeconds: TimeInterval = 30) {
+        synthetic = dependencies != nil
+        detector = MeetingDetector(graceSeconds: graceSeconds)
+        if let dependencies {
+            recorder = dependencies.recorder; state = dependencies.state; observer = dependencies.observer
+            loadSelection = dependencies.selection; now = dependencies.now
+            startLegacy = dependencies.startLegacy; stopLegacy = dependencies.stopLegacy
+        } else {
+            recorder = Recorder(); state = .shared; observer = TalkRoomObserver()
+            loadSelection = { TalkRuntimeSettings.production() }; now = { Date() }
+            let audio = AudioProcessMonitor(), window = WindowMonitor()
+            startLegacy = { callback in
+                audio.onActive = { callback($0, nil) }; window.onActive = { callback(nil, $0) }
+                audio.start(); window.start()
+            }
+            stopLegacy = { audio.stop(); window.stop() }
+        }
+    }
 
     func start() {
-        detector.delegate = recorder
-        recorder.onCaptureFailure = { [weak self] in self?.detector.captureFailed() }
-        audioMonitor.onActive = { [weak self] active in self?.update(audio: active) }
-        windowMonitor.onActive = { [weak self] active in self?.update(window: active) }
-        audioMonitor.start()
-        windowMonitor.start()
-        installMenuBar()
-        Log.recorder.info("golos-meet запущен")
+        guard !running, !quitting, !AppRuntime.isTestHost || synthetic else { return }
+        running = true; quitting = false
+        detector.delegate = self
+        recorder.onCaptureFailure = { [weak self] in
+            guard let self else { return }
+            self.owner = nil; self.suppressed = true; self.detector.captureFailed(); self.renderMenu()
+        }
+        reloadConfiguration()
+        if !synthetic {
+            installMenuBar()
+            settingsListener = TalkSettingsChanges.observe { [weak self] in self?.reloadConfiguration() }
+            let center = NSWorkspace.shared.notificationCenter
+            sleepTokens.append(center.addObserver(forName: NSWorkspace.willSleepNotification, object: nil, queue: .main) { [weak self] _ in
+                MainActor.assumeIsolated { self?.willSleep() }
+            })
+            sleepTokens.append(center.addObserver(forName: NSWorkspace.didWakeNotification, object: nil, queue: .main) { [weak self] _ in
+                MainActor.assumeIsolated { self?.didWake() }
+            })
+            let timer = Timer(timeInterval: 1, repeats: true) { [weak self] _ in
+                MainActor.assumeIsolated { self?.pulse() }
+            }
+            RunLoop.main.add(timer, forMode: .common); self.timer = timer
+            stateCancellable = state.objectWillChange.sink { [weak self] in
+                Task { @MainActor [weak self] in self?.renderMenu() }
+            }
+        }
+        pulse()
     }
 
+    func reloadConfiguration() {
+        guard running, !quitting else { return }
+        let next = loadSelection()
+        guard !hasLoadedSelection || next != selection else { return }
+        hasLoadedSelection = true
+        stopLegacy(); observer.stop(); detector.reset()
+        lastAudioActive = false; lastWindowActive = false
+        // A manual recording belongs to the user, not to a changing API config.
+        if owner != .manual { interruptSegment() }
+        selection = next
+        applySelection()
+    }
+
+    private func applySelection() {
+        guard running, !quitting, !sleeping else { return }
+        switch selection {
+        case .legacy:
+            detectionLine = "Автодетект: эвристика аудио и окон Толка"
+            startLegacy { [weak self] audio, window in self?.update(audio: audio, window: window) }
+        case .api(let config):
+            if let config { observer.configure(config); observer.resume(); observer.start(); detectionLine = observer.observation.presence.statusText }
+            else { detectionLine = "API Толка: сохраните PAT, комнаты и подтвердите аккаунт" }
+        case .unavailable: detectionLine = "Автозапись недоступна: не удалось прочитать настройки"
+        }
+        renderMenu()
+    }
+
+    /// One production timer reads the freshness-checked getter, even while idle.
+    /// Tests drive this same entry point with an injected monotonic clock.
+    func pulse() {
+        guard running, !quitting, !sleeping else { return }
+        if case .api(.some) = selection {
+            let presence = observer.observation.presence
+            detectionLine = presence.statusText
+            switch presence {
+            case .present:
+                if suppressed { detectionLine += " · автостарт приостановлен до следующей встречи" }
+                if !suppressed, owner == nil, !recorder.isRecording, boundary == nil {
+                    owner = .api
+                    if !recorder.meetingStarted(at: now(), manual: false) { owner = nil; suppressed = true }
+                }
+            case .absent:
+                suppressed = false
+                if owner == .api { owner = nil; recorder.meetingEnded(at: now()) }
+            case .unknown: break // Never call legacy false/MeetingDetector on unknown.
+            }
+        }
+        renderMenu()
+    }
+
+    /// Stale legacy callbacks cannot influence API/manual sessions.
     func update(audio: Bool? = nil, window: Bool? = nil) {
+        guard running, !quitting, !sleeping, selection == .legacy, boundary == nil, owner != .manual else { return }
         if let audio { lastAudioActive = audio }
         if let window { lastWindowActive = window }
-        detector.handle(active: lastAudioActive || lastWindowActive, at: Date())
+        let active = lastAudioActive || lastWindowActive
+        if suppressed { if !active { suppressed = false }; return }
+        detector.handle(active: active, at: now())
     }
 
-    // MARK: - Menu bar
-
-    private func installMenuBar() {
-        let mb = MenuBarController(
-            onToggleRecording: { [weak self] in self?.toggleRecording() },
-            onOpenWindow: { AppCoordinator.openMainWindow() },
-            onQuit: { NSApp.terminate(nil) })
-        mb.install()
-        menuBar = mb
-        liveCancellable = RecordingState.shared.objectWillChange.sink { [weak self] in
-            Task { @MainActor in self?.onLiveChanged(RecordingState.shared.live) }
-        }
-        renderMenu()
+    func meetingStarted(at date: Date, manual: Bool) -> Bool {
+        guard running, !quitting, !sleeping, boundary == nil, owner == nil else { return false }
+        let accepted = recorder.meetingStarted(at: date, manual: manual)
+        if accepted { owner = manual ? .manual : .legacy }
+        return accepted
     }
+    func meetingEnded(at date: Date) { owner = nil; recorder.meetingEnded(at: date) }
 
-    private func toggleRecording() {
-        guard RecordingState.shared.phase != .stopping else { return }
-        if !recorder.isRecording {
-            detector.forceStart(at: Date())
+    func toggleRecording() {
+        guard running, !quitting, !sleeping, state.phase != .stopping, boundary == nil else { return }
+        if recorder.isRecording {
+            suppressed = true; owner = nil; detector.reset()
+            // Preserve manually stopped short audio and retain normal processing.
+            recorder.end(at: now(), preserveAudio: true)
         } else {
-            detector.forceStop(at: Date())
+            detector.reset()
+            _ = meetingStarted(at: now(), manual: true)
         }
-    }
-
-    private func onLiveChanged(_ live: RecordingState.Live?) {
         renderMenu()
-        if live == nil { stopTick() } else { startTick() }
     }
 
-    private func renderMenu() {
-        let state = RecordingState.shared
-        menuBar?.render(.from(live: state.live, now: Date(), phase: state.phase,
-                             microphone: state.microphone, system: state.system))
-    }
-
-    private func startTick() {
-        guard tickTimer == nil else { return }
-        // .common — чтобы «Запись · MM:SS» тикала и при открытом меню (event-tracking mode).
-        let t = Timer(timeInterval: 1, repeats: true) { [weak self] _ in
-            Task { @MainActor in self?.renderMenu() }
+    private func interruptSegment() {
+        owner = nil
+        guard recorder.isRecording, boundary == nil else { return }
+        let recorder = recorder, date = now()
+        boundary = Task { [weak self] in
+            _ = await recorder.finalizeActive(endedAt: date, preserveAudio: true)
+            self?.boundary = nil
         }
-        RunLoop.main.add(t, forMode: .common)
-        tickTimer = t
     }
 
-    private func stopTick() { tickTimer?.invalidate(); tickTimer = nil }
+    func willSleep() {
+        guard running, !quitting else { return }
+        sleeping = true; observer.pause(); stopLegacy(); detector.reset()
+        detectionLine = "Автозапись: пауза на время сна"
+        interruptSegment(); renderMenu()
+    }
+    func didWake() {
+        guard running, !quitting, sleeping else { return }
+        sleeping = false
+        // Force a fresh configure, even if saved configuration is identical.
+        selection = loadSelection()
+        applySelection(); pulse()
+    }
 
-    /// Поднять/сфокусировать окно приложения из меню-бара.
+    /// Called before AppDelegate's existing 3-second termination race.
+    /// Pollers/settings callbacks are disabled synchronously, no new capture can win.
+    func prepareForTermination() {
+        guard running else { return }
+        quitting = true; running = false
+        observer.stop(); stopLegacy(); detector.reset()
+        timer?.invalidate(); timer = nil
+        if let settingsListener { TalkSettingsChanges.remove(settingsListener) }; settingsListener = nil
+        sleepTokens.forEach { NSWorkspace.shared.notificationCenter.removeObserver($0) }; sleepTokens = []
+        stateCancellable = nil; menuBar?.uninstall(); menuBar = nil
+    }
+
+    var menuModel: MenuBarModel {
+        .from(live: state.live, now: now(), phase: state.phase,
+              microphone: state.microphone, system: state.system, detectionLine: detectionLine)
+    }
+    private func installMenuBar() {
+        let menu = MenuBarController(onToggleRecording: { [weak self] in self?.toggleRecording() },
+                                     onOpenWindow: { Self.openMainWindow() }, onQuit: { NSApp.terminate(nil) })
+        menu.install(); menuBar = menu; renderMenu()
+    }
+    private func renderMenu() { menuBar?.render(menuModel) }
     static func openMainWindow() {
         NSApp.activate(ignoringOtherApps: true)
-        for w in NSApp.windows where w.canBecomeMain {
-            w.makeKeyAndOrderFront(nil)
-            return
-        }
+        for window in NSApp.windows where window.canBecomeMain { window.makeKeyAndOrderFront(nil); return }
     }
 }

@@ -13,8 +13,8 @@ nonisolated struct TalkRoomObservation: Equatable, Sendable {
     let checkedAt: TimeInterval?
 }
 
-/// Service only: no Recorder, windows, Keychain or OS sleep hooks. The future
-/// runtime owner pauses before sleep/resumes on wake and reads `observation`,
+/// Service only: no Recorder, windows, Keychain or OS sleep hooks. AppCoordinator
+/// pauses before sleep/resumes on wake and reads `observation`,
 /// whose freshness check prevents returning stale positive/negative state.
 @MainActor
 final class TalkRoomObserver {

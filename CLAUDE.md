@@ -24,7 +24,7 @@
 Поток: `MeetingDetector` → `Recorder` → (`meetingEnded`) → очередь `MeetingProcessor` → `ProcessingPipeline` → `LocalASR`↔sidecar → `TranscriptMerger` → файлы + статус.
 
 Swift (`golos-meet/`):
-- `AppCoordinator` — сводит сигналы (аудио `AudioProcessMonitor` ИЛИ окно `WindowMonitor`) в `MeetingDetector.handle(active:at:)` (OR-логика).
+- `AppCoordinator` — выбирает явно сохранённый режим. API: `TalkRoomObserver.observation` (с проверкой свежести) → Recorder; present без mic/window gate, absent завершает, unknown сохраняет текущую запись. Legacy: аудио `AudioProcessMonitor` ИЛИ `WindowMonitor` → `MeetingDetector` с grace. В API fallback отсутствует. `TalkRuntimeSettings` проверяет origin/version/key/комнаты; режим хранится отдельно от PAT. Sleep/config/quit инвалидируют polling, прерванные сегменты защищены.
 - `Core/MeetingDetector` — grace-машина: started/ended. `Core/Recorder` — пишет 2 дорожки + meta, по `meetingEnded` финализирует запись (`finalizeActive`, идемпотентно) и ставит задачу в очередь `MeetingProcessor`.
 - `Core/ASR/` — `SidecarProtocol` (JSON-lines), `LocalASR` (actor: spawn sidecar, load, transcribe_file; **неблокирующий** reader через `readabilityHandler`), `ModelManager` (download-on-first-run; **пока не подключён**), `ASRModel` (выбор Скорость/Качество + `ASRSettings`).
 - `Core/Transcript/` — `TranscriptModels`, `TranscriptMerger` (мерж двух дорожек по `start`, метки me/participants).

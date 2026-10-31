@@ -22,12 +22,18 @@ import Testing
             MenuBarModel.from(live: nil, now: now, phase: .failed("Запись прервана. Проверьте разрешения и свободное место."),
                               microphone: .stopped, system: .failed),
         ]
-        for model in states {
+        let apiStates = [
+            MenuBarModel.from(live: live, now: now, phase: .recording, detectionLine: "API Толка: сеть недоступна, участие неизвестно"),
+            MenuBarModel.from(live: nil, now: now, phase: .idle, detectionLine: "API Толка: ожидаем свежий ответ…"),
+        ]
+        for model in states + apiStates {
             controller.render(model)
-            #expect(controller.statusItem?.button?.title == " \(model.buttonTitle)")
+            #expect(controller.statusItem?.button?.title == (model.buttonTitle.isEmpty ? "" : " \(model.buttonTitle)"))
             #expect(controller.statusItem?.menu?.items[0].title == model.statusLine)
             #expect(controller.statusItem?.menu?.items[1].title == model.tracksLine)
-            #expect(controller.statusItem?.menu?.items[3].isEnabled == model.canToggle)
+            #expect(controller.statusItem?.menu?.items[2].title == model.detectionLine)
+            #expect(controller.statusItem?.menu?.items[2].isHidden == (model.detectionLine.isEmpty || model.detectionLine == model.statusLine))
+            #expect(controller.statusItem?.menu?.items[4].isEnabled == model.canToggle)
         }
         let menu = try #require(controller.statusItem?.menu)
         #expect(menu.size.width > 0)

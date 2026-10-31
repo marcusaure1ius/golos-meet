@@ -9,11 +9,22 @@ struct MenuBarModel: Equatable {
     var buttonTitle: String = ""
     var tracksLine: String = ""
     var canToggle: Bool = true
+    var detectionLine: String = ""
 
     static func from(live: RecordingState.Live?, now: Date,
                      phase: RecordingState.Phase? = nil,
                      microphone: RecordingState.TrackStatus = .ready,
-                     system: RecordingState.TrackStatus = .ready) -> MenuBarModel {
+                     system: RecordingState.TrackStatus = .ready,
+                     detectionLine: String = "") -> MenuBarModel {
+        var model = captureModel(live: live, now: now, phase: phase, microphone: microphone, system: system)
+        model.detectionLine = detectionLine
+        if live == nil, phase == nil || phase == .idle, !detectionLine.isEmpty { model = MenuBarModel(isRecording: false, startStopTitle: "Начать запись", statusLine: detectionLine, iconRecording: false) }
+        model.detectionLine = detectionLine
+        return model
+    }
+
+    private static func captureModel(live: RecordingState.Live?, now: Date, phase: RecordingState.Phase?,
+                                     microphone: RecordingState.TrackStatus, system: RecordingState.TrackStatus) -> MenuBarModel {
         let phase = phase ?? (live == nil ? .idle : .recording)
         let tracksLine = "Микрофон: \(trackText(microphone)) · Системный звук: \(trackText(system))"
         switch phase {

@@ -70,6 +70,12 @@ final class MeetingDetector {
         delegate?.meetingEnded(at: date)
     }
 
+    /// Discard legacy latches when changing mode/sleeping. Capture is finalized
+    /// by the coordinator independently; reset never starts or stops a backend.
+    func reset() {
+        isMeeting = false; manualSession = false; suppressUntilInactive = false; lastActiveAt = nil
+    }
+
     /// An asynchronous capture failure releases manual/meeting state. Avoid
     /// repeated permission/start failures until inactivity or a new manual start.
     func captureFailed() {

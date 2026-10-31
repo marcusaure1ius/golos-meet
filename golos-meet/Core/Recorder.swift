@@ -72,6 +72,7 @@ final class Recorder: MeetingDetectorDelegate {
         var failed = false
         var failureMessage: String?
         var ending = false
+        var preserveAudio = false
         var startTask: Task<Void, Never>?
         var timeoutTask: Task<Void, Never>?
 
@@ -208,6 +209,11 @@ final class Recorder: MeetingDetectorDelegate {
     }
 
     func meetingEnded(at date: Date) {
+        end(at: date, preserveAudio: false)
+    }
+
+    func end(at date: Date, preserveAudio: Bool) {
+        if preserveAudio { active?.preserveAudio = true }
         guard let active else { return }
         active.startTask?.cancel()
         state.stopping()
@@ -222,7 +228,8 @@ final class Recorder: MeetingDetectorDelegate {
     /// Coalesces concurrent termination/stop. Later callers await cleanup but do
     /// not receive a second folder to enqueue. New starts wait until all drains end.
     @discardableResult
-    func finalizeActive(endedAt: Date) async -> MeetingFolder? {
+    func finalizeActive(endedAt: Date, preserveAudio: Bool = false) async -> MeetingFolder? {
+        if preserveAudio { active?.preserveAudio = true }
         if let finalization { _ = await finalization.value; return nil }
         guard let a = active else { return nil }
         a.ending = true
@@ -259,7 +266,7 @@ final class Recorder: MeetingDetectorDelegate {
                                status: a.failed ? .failed : .recording, asrModel: nil,
                                title: current?.title ?? Self.placeholderTitle(for: a.startedAt),
                                titleManual: current?.titleManual, schemaVersion: currentMetaSchemaVersion,
-                               preserveAudio: a.manual || a.failed || state.live == nil)
+                               preserveAudio: a.manual || a.failed || a.preserveAudio || state.live == nil)
         do { try meta.write(to: a.folder.url.appendingPathComponent("meta.json")) }
         catch {
             a.failed = true

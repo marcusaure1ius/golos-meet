@@ -36,7 +36,9 @@ private actor PendingTalkCheck {
         model.serverAddress = "https://talk.example/"
         model.newToken = " talkusr.synthetic \n"
         #expect(model.save())
-        #expect(store.credential == original)
+        #expect(store.credential?.server == original.server)
+        #expect(store.credential?.token == original.token)
+        #expect(store.credential?.version != nil)
         #expect(model.newToken.isEmpty)
         let reopened = TalkConnectionModel(store: store)
         #expect(reopened.serverAddress == "https://talk.example")
@@ -142,4 +144,15 @@ private actor PendingTalkCheck {
         try store.save(nil)
         #expect(try store.load() == nil)
     }
+    @Test func profileReplyForReplacedPATDoesNotClaimCurrentConnectionVerified() async {
+        let pending = PendingTalkCheck(), store = MemoryTalkStore(original)
+        let first = TalkConnectionModel(store: store)
+        let second = TalkConnectionModel(store: store, checkProfile: { _ in await pending.check() })
+        let request = Task { await second.verify() }
+        await pending.waitForStart()
+        first.newToken = "talkusr.replaced"; #expect(first.save())
+        await pending.finish(); await request.value
+        #expect(second.diagnostic == .unchecked)
+    }
+
 }

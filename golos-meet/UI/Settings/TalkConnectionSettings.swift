@@ -60,9 +60,9 @@ struct TalkConnectionSettings: View {
                         Text(model.diagnostic.text).foregroundStyle(diagnosticColor)
                     }
                     .accessibilityElement(children: .combine)
-                    Text("Проверка отправляет запрос к профилю по указанному адресу. Она не включает автозапись через API и не подтверждает права на вебхуки.")
+                    Text("Проверка отправляет запрос к профилю по указанному адресу. Она не включает автозапись. Режим выбирается ниже после настройки комнат и аккаунта.")
                         .foregroundStyle(p.muted)
-                    Text("Сейчас автозапись использует прежний детектор: аудиосессию и окна Толка. API-режим будет доступен после настройки способа определения комнаты.")
+                    Text("В API-режиме участие определяется без окон и активности микрофона. Ошибка API не считается выходом.")
                         .foregroundStyle(p.muted)
                 }
                 .font(.system(size: 13))
@@ -71,6 +71,7 @@ struct TalkConnectionSettings: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .overlay(alignment: .top) { p.borderSoft.frame(height: 1) }
             }
+            TalkMeetingSettingsView(model: model.meetingSettings).padding(.top, 8)
         }
     }
 

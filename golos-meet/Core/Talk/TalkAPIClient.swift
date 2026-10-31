@@ -10,6 +10,8 @@ nonisolated enum TalkAPIError: LocalizedError, Equatable {
     case invalidResponse
     case redirectRefused
     case invalidRoom
+    case invalidEmail
+    case connectionChanged
 
     var errorDescription: String? {
         switch self {
@@ -21,6 +23,8 @@ nonisolated enum TalkAPIError: LocalizedError, Equatable {
         case .http(let status): return "Толк вернул ошибку HTTP \(status)."
         case .invalidResponse: return "Не удалось прочитать ответ API Толка."
         case .redirectRefused: return "Адрес Толка перенаправляет запрос. Проверьте адрес пространства."
+        case .connectionChanged: return "Подключение изменено или недоступно. Откройте настройки заново и повторите действие."
+        case .invalidEmail: return "Укажите рабочую почту целиком, например name@example.ru."
         case .invalidRoom: return "Некорректный идентификатор комнаты Толка."
         }
     }
@@ -54,6 +58,18 @@ nonisolated struct TalkOnlineUsers: Decodable, Sendable {
         struct Identity: Decodable, Sendable { let key: String }
     }
 }
+
+nonisolated struct TalkUserAccount: Codable, Equatable, Identifiable, Sendable {
+    let key: String
+    let login: String?
+    let firstname: String?
+    let surname: String?
+    let email: String?
+    var id: String { key }
+    var name: String { [firstname, surname].compactMap { $0 }.filter { !$0.isEmpty }.joined(separator: " ") }
+}
+
+nonisolated struct TalkUserSearch: Decodable, Sendable { let users: [TalkUserAccount] }
 
 /// Never forward a credential across an HTTP redirect, even to another HTTPS
 /// host. Error response bodies are not logged: they can contain private data.
@@ -121,10 +137,38 @@ nonisolated struct TalkAPIClient: Sendable {
         return result
     }
 
-    private func get<T: Decodable>(path: String) async throws -> T {
+    static func validatedEmail(_ value: String) throws -> String {
+        let email = value.trimmingCharacters(in: .whitespacesAndNewlines)
+        let parts = email.split(separator: "@", omittingEmptySubsequences: false)
+        guard email.utf8.count <= 254, parts.count == 2, !parts[0].isEmpty, parts[1].contains("."),
+              !parts[1].hasPrefix("."), !parts[1].hasSuffix("."),
+              !email.unicodeScalars.contains(where: { CharacterSet.whitespacesAndNewlines.contains($0) || CharacterSet.controlCharacters.contains($0) }) else {
+            throw TalkAPIError.invalidEmail
+        }
+        return email
+    }
+
+    func users(email: String) async throws -> [TalkUserAccount] {
+        let email = try Self.validatedEmail(email)
+        let result: TalkUserSearch = try await get(path: "api/Users", query: [URLQueryItem(name: "email", value: email)])
+        guard result.users.count <= 1000,
+              Set(result.users.map(\.key)).count == result.users.count,
+              result.users.allSatisfy({ !$0.key.isEmpty && $0.key == $0.key.trimmingCharacters(in: .whitespacesAndNewlines)
+                  && !$0.key.unicodeScalars.contains(where: CharacterSet.controlCharacters.contains) }) else { throw TalkAPIError.invalidResponse }
+        return result.users
+    }
+
+    private func get<T: Decodable>(path: String, query: [URLQueryItem] = []) async throws -> T {
         try await budget.acquire(origin: server)
         try Task.checkCancellation()
-        var request = URLRequest(url: server.appendingPathComponent(path))
+        var components = URLComponents(url: server.appendingPathComponent(path), resolvingAgainstBaseURL: false)!
+        if !query.isEmpty {
+            components.queryItems = query
+            // Preserve plus-addressed email through form-style query decoders.
+            components.percentEncodedQuery = components.percentEncodedQuery?.replacingOccurrences(of: "+", with: "%2B")
+        }
+        guard let url = components.url else { throw TalkAPIError.invalidResponse }
+        var request = URLRequest(url: url)
         request.httpMethod = "GET"
         request.timeoutInterval = 20
         request.cachePolicy = .reloadIgnoringLocalCacheData
