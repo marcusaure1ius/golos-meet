@@ -426,6 +426,30 @@ extension ProjectStore {
         }
     }
 
+    /// Snapshot only the journal's bounded, explicitly consumed sources. Reuses
+    /// the accepted catalog and validation; no parallel index or archive scan.
+    func memoryUpdateInputs(_ lease: MemoryLease) throws -> MemoryUpdateGuard {
+        try memoryTransaction { db in
+            try MemorySQL.validate(lease, db: db)
+            let model = try searchModelStamp(db)
+            guard model.model != nil else { throw MemoryUpdateError.notReady }
+            let hits = try lease.sources.map { ref in
+                guard var source = try searchSources(db, key: ref.key).first,
+                      source.job.state == .ready, source.job.modelID == model.model?.id else { throw MemoryUpdateError.notReady }
+                // Preserve the immutable historical display/import metadata;
+                // readiness/epoch/owners are fresh, identity is checked below.
+                source = .init(observation: source.observation, job: source.job, owners: source.owners,
+                               title: ref.title, document: ref.readerHit().source.document)
+                return KnowledgeSearchHit(source: source, chunk: ref.chunk, model: model, scope: .all,
+                    matchedWords: false, matchedMeaning: true, fileStamp: ref.fileStamp)
+            }
+            try validateKnowledgeSearchHits(hits, model: model, db: db)
+            let value = MemoryUpdateGuard(hits: hits, checkpoint: try MemorySQL.updateCheckpoint(lease, db: db))
+            try MemorySQL.validateUpdate(lease, expected: value, db: db)
+            return value
+        }
+    }
+
     func knowledgeSearchModel() throws -> KnowledgeSearchModelStamp { try searchModelStamp(open()) }
 
     /// Invalid transcripts have been removed from the searchable catalog, but

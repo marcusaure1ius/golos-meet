@@ -39,12 +39,13 @@ extension ProjectStore {
         try memoryTransaction { db in try MemorySQL.validate(lease, db: db) }
     }
 
-    func publishMemory(_ drafts: [MemoryDraft], lease: MemoryLease, extractedAt: Date) throws -> MemoryPublication {
+    func publishMemory(_ drafts: [MemoryDraft], lease: MemoryLease, extractedAt: Date, updateGuard: MemoryUpdateGuard? = nil) throws -> MemoryPublication {
         guard !drafts.isEmpty, drafts.count <= 32, extractedAt.timeIntervalSince1970.isFinite,
               lease.origin != .manual || drafts.count == 1 else { throw ProjectMemoryError.invalid }
-        return try memoryTransaction { db in
+        return try memoryTransaction(validating: updateGuard?.hits ?? []) { db in
             try Task.checkCancellation()
             try MemorySQL.validate(lease, db: db)
+            if let updateGuard { try MemorySQL.validateUpdate(lease, expected: updateGuard, db: db) }
             let batchBindings = [lease.projectID.uuidString, lease.producerKey, lease.fingerprint]
             if let row = try db.rows("SELECT event_ids FROM memory_batches WHERE project_id=? AND producer_key=? AND fingerprint=?", bindings: batchBindings).first {
                 return .unchanged(try MemoryEncoding.decode([UUID].self, row[0]))

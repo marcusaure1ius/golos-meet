@@ -29,13 +29,13 @@ actor ProjectMemoryHistoryService {
         try await store.validateMemoryLease(lease)
         return lease
     }
-    func publish(_ drafts: [MemoryDraft], lease: MemoryLease, extractedAt: Date = Date()) async throws -> MemoryPublication {
+    func publish(_ drafts: [MemoryDraft], lease: MemoryLease, extractedAt: Date = Date(), updateGuard: MemoryUpdateGuard? = nil) async throws -> MemoryPublication {
         try await validateFiles(lease.sources)
         try Task.checkCancellation()
         // Final SQLite CAS/source/owner check and append in ONE transaction.
         // Files and SQLite are not atomic; mutations after the last file check
         // cannot be prevented by this local contract. Every read checks again.
-        return try await store.publishMemory(drafts, lease: lease, extractedAt: extractedAt)
+        return try await store.publishMemory(drafts, lease: lease, extractedAt: extractedAt, updateGuard: updateGuard)
     }
     func history(projectID: UUID, beforeSequence: Int64? = nil, limit: Int = 100) async throws -> MemoryHistoryPage {
         let fetched = try await store.memoryHistoryRows(projectID: projectID, before: beforeSequence, limit: limit)
