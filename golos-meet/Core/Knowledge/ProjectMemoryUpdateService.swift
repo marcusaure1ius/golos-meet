@@ -62,14 +62,17 @@ nonisolated struct MemoryUpdateConsent: Sendable {
                   hits.allSatisfy({ $0.scope == .project(projectID) && $0.source.owners.contains(projectID) }),
                   !model.isEmpty, model.count <= 256 else { throw MemoryUpdateError.invalidContext }
             guard hits.reduce(0, { $0 + $1.chunk.text.count + $1.source.title.count }) <= 16_000 else { throw MemoryUpdateError.contextTooLarge }
-            let producer = MemoryFactExtractor.version + ":" + MemoryEncoding.hash(model)
-            let lease = try await history.begin(projectID: projectID, producerKey: producer, hits: hits, parentEventIDs: parentEventIDs)
+            // Reserve/fence provenance first. This provisional key is never
+            // queried or published; bind the actual selected input below.
+            let provenance = try await history.begin(projectID: projectID, producerKey: "memory-update-preparing", hits: hits, parentEventIDs: parentEventIDs)
             try requireCurrent(id)
-            guard lease.ownerProjectIDs.count <= 128 else { throw MemoryUpdateError.contextTooLarge }
-            let validation = try await store.memoryUpdateInputs(lease)
+            guard provenance.ownerProjectIDs.count <= 128 else { throw MemoryUpdateError.contextTooLarge }
+            let validation = try await store.memoryUpdateInputs(provenance)
             try requireCurrent(id)
             guard let project = validation.checkpoint.projects.first(where: { $0.id == projectID }) else { throw MemoryUpdateError.stale }
-            let payload = try MemoryFactExtractor.payload(project: project, hits: hits, parents: lease.parents)
+            let payload = try MemoryFactExtractor.payload(project: project, hits: hits, parents: provenance.parents)
+            let key = try MemoryFactExtractor.producerKey(model: model, payload: payload, hits: hits, parents: provenance.parents)
+            let lease = provenance.bindingUpdateInput(key)
             let request = MemoryUpdateRequest(id: id, projectID: projectID, fragments: hits, lease: lease, validation: validation, payload: payload)
             try await validate(request)
             pending = request
@@ -116,9 +119,8 @@ nonisolated struct MemoryUpdateConsent: Sendable {
         }
         guard KnowledgeEgress.permitsGeneration(ownerProjectIDs: request.ownerProjectIDs,
             projects: request.checkpoint.projects, approvedProjectIDs: request.approvalProjectIDs) else { throw KnowledgeAnswerError.cloudNotAllowed }
-        let raw = try await client.complete(model: model, messages: [
-            .init(role: "system", content: MemoryFactExtractor.instructions), .init(role: "user", content: request.payload)
-        ], responseFormat: MemoryFactExtractor.responseFormat, beforeSending: { [self] in try await self.validate(request) })
+        let raw = try await client.complete(model: model, messages: MemoryFactExtractor.messages(payload: request.payload),
+            responseFormat: MemoryFactExtractor.responseFormat, beforeSending: { [self] in try await self.validate(request) })
         try await validate(request)
         let drafts = try MemoryFactExtractor.decode(raw, hits: request.fragments, parents: request.parents)
         guard let drafts else { return .insufficientEvidence }

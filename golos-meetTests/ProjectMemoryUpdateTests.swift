@@ -388,4 +388,103 @@ import Testing
         #expect(proof.events.count == 3 && proof.events.contains { $0.id == original })
     }
 
+
+    @Test(arguments: ["selection", "order", "location", "binding"])
+    func selectedInputChangesWithinSameFullClosureProduceNewFactsAndExactReplayAfterRestart(_ mode: String) async throws {
+        let f = try UpdateFixture(); defer { f.cleanup() }
+        let p = try await f.project("Родитель"), r = try await f.project("Получатель", policy: .askEveryTime)
+        let aText = mode == "location" || mode == "binding" ? "Релиз SAME_QUOTE" : "Релиз RAW_A_SELECTED"
+        let bText = mode == "location" || mode == "binding" ? aText : "Релиз RAW_B_PREVIOUSLY_HIDDEN"
+        // Distinct meeting IDs retain distinct source/chunk identities even
+        // when title/text/location happen to be byte-for-byte equal.
+        try await f.meeting("a", text: aText, owners: [p, r])
+        try await f.meeting("b", text: bText, owners: [p, r])
+        if mode == "location" || mode == "binding" {
+            for id in ["a", "b"] {
+                try JSONSerialization.data(withJSONObject: ["title": "Одинаковое название"]).write(to: f.root.appendingPathComponent("meetings/\(id)/meta.json"))
+            }
+        }
+        if mode == "location" {
+            let file = f.root.appendingPathComponent("meetings/b/transcript.json")
+            try JSONSerialization.data(withJSONObject: ["meetingId": "b", "segments": [["start": 80, "end": 90, "text": bText]]]).write(to: file)
+            _ = try await MeetingEmbeddingSnapshotReader(root: f.root.appendingPathComponent("meetings")).synchronize(meetingID: "b", store: f.store)
+            try await f.finishIndex()
+        }
+        let pa = try await f.hit("a", project: p), pb = try await f.hit("b", project: p)
+        let a = try await f.hit("a", project: r), b = try await f.hit("b", project: r)
+        let parentLease = try await f.history.begin(projectID: p, producerKey: "both-consumed", hits: [pa, pb])
+        let parent = try #require(try await f.history.publish([.init(statement: .init(subject: "parent-summary", kind: .agreement, conditions: [:], text: "DERIVED_SUMMARY"), evidenceChunkIDs: [pa.id])], lease: parentLease).eventIDs.first)
+        let firstHits = mode == "order" ? [a, b] : [a], secondHits = mode == "order" ? [b, a] : [b]
+        var factA = f.fact(mode == "selection" || mode == "order" ? "RAW_A_SELECTED" : "SAME_QUOTE", kind: "agreement")
+        factA["subject"] = "result-A"; factA["text"] = "Получено из A"
+        f.spy.reply = try f.response([factA])
+        let first = try await f.service.prepare(projectID: r, hits: firstHits, parentEventIDs: [parent])
+        let firstConsent = try await f.service.approve(first)
+        let firstOutcome = try await f.service.update(first, consent: firstConsent)
+        guard case .published(let firstPublication) = firstOutcome else { Issue.record("Missing A publication"); return }
+        #expect(f.spy.calls == 1)
+        if mode == "selection" { #expect(!f.spy.payload.contains("RAW_B_PREVIOUSLY_HIDDEN")) }
+        func reopened(_ model: String = "fake-only") -> ProjectMemoryUpdateService {
+            .init(store: ProjectStore(url: f.root.appendingPathComponent("knowledge.sqlite")), meetingsRoot: f.root.appendingPathComponent("meetings"), documentsRoot: f.root.appendingPathComponent("copies"), client: f.spy, model: model)
+        }
+        let next = reopened()
+        var factB = f.fact(mode == "selection" || mode == "order" ? "RAW_B_PREVIOUSLY_HIDDEN" : "SAME_QUOTE", kind: "agreement")
+        factB["subject"] = "result-B"; factB["text"] = "Получено из B"
+        f.spy.reply = try f.response([factB])
+        let second = try await next.prepare(projectID: r, hits: secondHits, parentEventIDs: [parent])
+        #expect(first.consumedSources == second.consumedSources && first.parents == second.parents)
+        #expect((first.payload == second.payload) == (mode == "binding"))
+        let secondConsent = try await next.approve(second)
+        let secondOutcome = try await next.update(second, consent: secondConsent)
+        guard case .published(let secondPublication) = secondOutcome else { Issue.record("Missing B publication"); return }
+        #expect(f.spy.calls == 2 && Set(firstPublication.eventIDs).isDisjoint(with: secondPublication.eventIDs))
+        let aEvent = try await f.store.memoryEvent(try #require(firstPublication.eventIDs.first))
+        let bEvent = try await f.store.memoryEvent(try #require(secondPublication.eventIDs.first))
+        #expect(aEvent.statement.text == "Получено из A" && bEvent.statement.text == "Получено из B")
+        #expect(aEvent.evidenceChunkIDs == [a.id] && bEvent.evidenceChunkIDs == [b.id])
+        let proof = try await f.history.provenance(eventID: bEvent.id)
+        #expect(proof.sources.count == 2 && proof.ownerProjectIDs == [p, r])
+        let db = try ProjectDatabase(url: f.root.appendingPathComponent("knowledge.sqlite"))
+        let batches = try db.rows("SELECT producer_key,fingerprint FROM memory_batches WHERE project_id=?", bindings: [r.uuidString])
+        #expect(batches.count == 2 && Set(batches.map { $0[0] }).count == 2 && Set(batches.map { $0[1] }).count == 1)
+        // Exact input is first-wins, including an attempted different result
+        // after a new store/service/session. No extra transport is permitted.
+        let replayService = reopened()
+        let replay = try await replayService.prepare(projectID: r, hits: secondHits, parentEventIDs: [parent])
+        #expect(replay.payload == second.payload && replay.id != second.id)
+        let replayConsent = try await replayService.approve(replay)
+        f.spy.reply = try f.response([factA])
+        #expect(try await replayService.update(replay, consent: replayConsent) == .published(.unchanged(secondPublication.eventIDs)))
+        #expect(f.spy.calls == 2)
+        // Extraction-model changes distinguish identical payloads without
+        // touching index model/readiness or the full provenance fingerprint.
+        let otherModel = reopened("other-extraction-model")
+        let differentModel = try await otherModel.prepare(projectID: r, hits: secondHits, parentEventIDs: [parent])
+        #expect(differentModel.payload == second.payload)
+        let modelConsent = try await otherModel.approve(differentModel)
+        f.spy.reply = try f.response([factB])
+        guard case .published(let modelPublication) = try await otherModel.update(differentModel, consent: modelConsent) else { Issue.record("Missing changed-model publication"); return }
+        #expect(f.spy.calls == 3 && Set(modelPublication.eventIDs).isDisjoint(with: secondPublication.eventIDs))
+    }
+
+    @Test func ambiguousLegacyServiceBatchIsRetainedButCannotAuthorizeSelectedInputReplay() async throws {
+        let f = try UpdateFixture(); defer { f.cleanup() }; let p = try await f.project()
+        let doc = try await f.document(owners: [p]), h = try await f.hit(doc.uuidString, project: p)
+        let oldProducer = MemoryFactExtractor.version + ":" + MemoryEncoding.hash("fake-only")
+        let oldLease = try await f.history.begin(projectID: p, producerKey: oldProducer, hits: [h])
+        let legacy = try #require(try await f.history.publish([.init(statement: .init(subject: "legacy", kind: .agreement, conditions: [:], text: "Старый результат без exact payload identity"), evidenceChunkIDs: [h.id])], lease: oldLease).eventIDs.first)
+        f.spy.reply = try f.response([f.fact()])
+        let request = try await f.service.prepare(projectID: p, hits: [h])
+        guard case .published(let publication) = try await f.service.update(request) else { Issue.record("Missing v2 publication"); return }
+        #expect(f.spy.calls == 1 && !publication.eventIDs.contains(legacy))
+        #expect(try await f.store.memoryEvent(legacy).statement.text == "Старый результат без exact payload identity")
+        let db = try ProjectDatabase(url: f.root.appendingPathComponent("knowledge.sqlite"))
+        let producers = try db.rows("SELECT producer_key FROM memory_batches WHERE project_id=?", bindings: [p.uuidString]).map { $0[0] }
+        #expect(producers.contains(oldProducer) && producers.contains { $0.hasPrefix("memory-update-input-v2:") })
+        #expect(try db.rows("PRAGMA user_version") == [["7"]])
+        let replay = try await f.service.prepare(projectID: p, hits: [h])
+        #expect(try await f.service.update(replay) == .published(.unchanged(publication.eventIDs)))
+        #expect(f.spy.calls == 1)
+    }
+
 }

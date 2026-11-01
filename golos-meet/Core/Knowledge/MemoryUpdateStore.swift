@@ -58,3 +58,15 @@ extension MemorySQL {
               try updateCheckpoint(lease, db: db) == expected.checkpoint else { throw MemoryUpdateError.stale }
     }
 }
+
+/// Only the service's batch identity changes after the bounded payload is built.
+/// Keep the original provenance fingerprint, generation/revision and policy CAS;
+/// no extra begin(), epoch change, table migration or legacy caller change.
+extension MemoryLease {
+    func bindingUpdateInput(_ producerKey: String) -> MemoryLease {
+        .init(projectID: projectID, producerKey: producerKey, fingerprint: fingerprint,
+              generation: generation, baseRevision: baseRevision, assignmentEpoch: assignmentEpoch,
+              origin: origin, manualTargetID: manualTargetID, parents: parents,
+              sources: sources, ownerProjectIDs: ownerProjectIDs)
+    }
+}

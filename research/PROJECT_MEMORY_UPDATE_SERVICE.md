@@ -128,10 +128,26 @@ InsufficientEvidence=true допускает только facts=[]; резуль
 insufficient результата journal batch не создаётся; его durable disposition
 должна хранить следующая очередь, автоматического retry здесь нет.
 
-Идемпотентность — принятый batch по полному входу + фиксированному version/model
-ключу extractor. После restart такой же проверенный вход возвращает прежние IDs
-без нового облачного вызова; fresh consent по-прежнему обязателен для askEveryTime.
-Изменённый parent/context — другой вход, не пропускается под старым согласием.
+Идемпотентность разделяет полное provenance и фактически выбранный вход генерации.
+Legacy journal fingerprint полного closure/parents сохраняется, а producer key
+сервиса — `memory-update-input-v2:` + SHA256 канонического JSON: extractor version,
+модель генерации, фактические system/user messages, полный responseFormat/schema,
+упорядоченные S-label → source/revision/chunk bindings и M-label → parent event IDs.
+Текст/название/location/метки и порядок выбранных fragments/derived statements
+находятся в фактическом user payload; для сообщений используется одна функция
+как при вычислении ключа, так и при вызове ChatCompleter. Одного payload недостаточно:
+у разных sources могут совпасть title/text/location, но S1 должен вести к другому
+chunk. Source epoch/file identity и полный inherited ownership остаются в прежнем
+journal fingerprint и актуальных guards, не заменяются новым ключом.
+
+После restart такой же проверенный вход возвращает прежние IDs без нового облачного
+вызова; fresh consent по-прежнему обязателен для askEveryTime. Changed selection
+при том же full closure — другой batch. Другой generator model/version/messages/
+schema также меняет identity. В stable key нет request/session/consent UUID, времени
+prepare, CAS-generation или credential; durable parent/source IDs — это привязка
+к доказательствам, не эфемерная сессия. Смена index job/model сама по себе проверяется
+актуальными guards, но не требует нового извлечения при том же exact selected input.
+Изменённый parent/context не пропускается под старым согласием.
 Отдельная очередь должна учитывать завершённые source revisions и не планировать
 обновление заново лишь из-за собственной публикации в журнал.
 
@@ -190,3 +206,63 @@ Production app/Keychain/OpenRouter/ASR/capture/пользовательские 
 #37/#5 остаются открыты, общий QA реальных проектов сохраняется; main и draft
 PR #8 не меняются. Следующий шаг после независимого принятия этого SHA — отдельный
 PR durable incremental worker, затем panel/runtime UI от принятой worker-основы.
+
+## P2 independent review PR52: selected input против full closure
+
+На `7981d450c8cd363051804cf9d52e2119c705674e` reviewer воспроизвёл actual service/
+SQLite: M потребил A+B, первый запрос отправил A+M, следующий после restart B+M.
+Full closure и родители совпали, но payload был другим. Прежний producer key
+учитывал только extractor version/model, journal fingerprint — полный closure;
+поэтому B молча получил unchanged IDs A и не вызвал генерацию. Старый SHA не принят.
+Оригинальные `/tmp/Review52Driver.swift`, `/tmp/review52-driver.log` и DB
+`/tmp/review52-38615DAF-9944-410D-8D57-317BFA8E8A9A/knowledge.sqlite` не изменяются.
+
+Исправление привязывает producer key к exact bounded input только после получения
+канонической ancestry и построения payload. Начальный `memory-update-preparing`
+lease резервирует поколение; до привязки не выполняются batch lookup/publish.
+`bindingUpdateInput` меняет только producerKey копии immutable lease: fingerprint,
+полный provenance, поколения/revision/assignment epoch и все guards остаются теми же.
+Existing lookup и final publish используют один связанный lease. DDL/схема v7,
+legacy journal/manual callers, timeout/retry/fixture не меняются.
+
+Новый namespace v2 намеренно не переиспользует неоднозначные service batches вида
+`memory-facts-v1:<model hash>`: по ним нельзя восстановить, какой selected payload
+был отправлен. Они остаются неизменяемой локальной историей. Первое допустимое
+обновление нового контракта создаёт новый batch после обычного all-owner/consent
+gate. Внутри нового exact key сохраняется durable first-wins: даже иной предлагаемый
+ответ при том же входе после restart возвращает старые IDs без новой сети. Изменение
+decoder-контракта, не отражённое в messages/schema, требует bump extractor version.
+
+Actual service + temporary SQLite регрессии: A+M → B+M; [A,B]+M → [B,A]+M;
+одинаковые title/text с разными таймкодами; полностью одинаковый wire payload с
+разным S1 → source/chunk. Во всех случаях full closure/parents и journal fingerprint
+одинаковы, producer keys/IDs различаются и новый факт действительно публикуется.
+Затем exact B replay после нового store/service/request даёт 0 дополнительных
+вызовов; смена extraction model при том же payload даёт новый batch. Проверены
+точные evidence IDs, обе версии фактов, полный provenance и one-time consent.
+Отдельный compatibility сценарий сохраняет старый service batch, не считает его
+exact replay, создаёт v2 batch и затем переиспользует только этот v2 результат.
+
+Отдельный native probe использует копию действительной reviewer DB с уже сохранённым
+unsafe batch. В конце исходного driver index model намеренно заменён: синтетическая
+готовность восстанавливается **только в копии**. Original source-файлы читаются
+по прежнему пути, чтобы file stamps оставались достоверными; все DB записи идут
+в копию. SHA256 original DB до/после проверяется. Probe/log и новые checks находятся
+в `memory-update-service-37/input-key-fix/` и `input-key-fix-checks.json`.
+
+Повторное независимое ревью нового SHA обязательно; очередь/hooks/UI пока не
+запускаются. Независимый full предыдущего SHA: 398/557/0 ошибок/0 пропусков,
+1 known QoS warning; это не вердикт на исправленный код. Все прежние all-owner,
+ancestor-change, privacy/cancel и final atomic guard сценарии входят в новый прогон.
+
+Финальный fix full `make check` с installed E5/settings/menu/traces:
+**400 тестов / 562 запуска / 0 ошибок / 0 пропусков / 0 runtime warnings**.
+Targeted: **14 / 38 / 0 / 0 / 0**. Все 7 migration traces сохранены, параметры
+SQLite/fixture/retry прежние. Native copy probe: A+M и B+M — 2 вызова, разные
+публикации; exact B после restart — 0 новых вызовов; old legacy row сохранён.
+Original reviewer DB SHA256 до/после:
+`78b3996d68e07eb184e8d4f233f8d0d3619668733952814ed1590704d95e1ee2`.
+Первый targeted обнаружил ошибку fixture равных payloads: fallback titles были
+«Встреча a»/«Встреча b». Метаданные обоих источников сделаны действительно равными;
+production fix для этого не менялся. Прежние failed full/race артефакты PR52 и
+независимый QoS warning сохранены, новый успешный прогон их не отменяет.

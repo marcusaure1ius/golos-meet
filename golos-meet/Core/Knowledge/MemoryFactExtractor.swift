@@ -36,6 +36,37 @@ struct MemoryFactExtractor {
         guard data.count <= 64_000, let text = String(data: data, encoding: .utf8), text.count <= 24_000 else { throw MemoryUpdateError.contextTooLarge }
         return text
     }
+    static func messages(payload: String) -> [ChatMessage] {
+        [.init(role: "system", content: instructions), .init(role: "user", content: payload)]
+    }
+    /// Namespace v2 intentionally does not replay the legacy closure-only key.
+    /// Bind the actual wire input AND label destinations; two equal payloads
+    /// can still map S1 to different chunks of the same inherited closure.
+    static func producerKey(model: String, payload: String, hits: [KnowledgeSearchHit], parents: [MemoryEvent]) throws -> String {
+        struct RawBinding: Encodable {
+            let label: String
+            let source: EmbeddingSourceKey
+            let sourceRevision: String?
+            let chunkID: String
+            let chunkSourceID: UUID
+            let chunkRevision: String
+        }
+        struct Input: Encodable {
+            let extractorVersion: String
+            let model: String
+            let messages: [ChatMessage]
+            let responseFormat: ResponseFormat
+            let rawBindings: [RawBinding]
+            let parentBindings: [UUID]
+        }
+        let bindings = hits.enumerated().map { i, hit in
+            RawBinding(label: "S\(i + 1)", source: hit.source.key, sourceRevision: hit.source.observation.revision,
+                chunkID: hit.chunk.id, chunkSourceID: hit.chunk.sourceID, chunkRevision: hit.chunk.revision)
+        }
+        let input = Input(extractorVersion: version, model: model, messages: messages(payload: payload),
+            responseFormat: responseFormat, rawBindings: bindings, parentBindings: parents.map(\.id))
+        return "memory-update-input-v2:" + MemoryEncoding.hash(try MemoryEncoding.encode(input))
+    }
     private struct Evidence: Decodable { let source: String; let quote: String }
     private struct Link: Decodable { let target: String; let kind: MemoryLinkKind }
     private struct Range: Decodable { let earliest: String; let latest: String }
