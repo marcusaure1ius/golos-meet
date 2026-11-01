@@ -334,7 +334,7 @@ actor ProjectStore {
         // waiting behind another migrator must observe its committed version.
         try db.transaction {
             let version = Int(try db.rows("PRAGMA user_version").first?.first ?? "") ?? -1
-            guard version <= ProjectMemorySchema.version else { throw ProjectStoreError.newerSchema(version) }
+            guard version <= MemoryQueueSchema.version else { throw ProjectStoreError.newerSchema(version) }
             guard version >= 0 else { throw ProjectStoreError.database("Invalid schema version") }
             if version == 0 {
                 try db.execute("CREATE TABLE projects (id TEXT PRIMARY KEY NOT NULL, name TEXT NOT NULL CHECK(length(trim(name)) BETWEEN 1 AND 200), parent_id TEXT REFERENCES projects(id), cloud_policy TEXT NOT NULL DEFAULT 'localOnly')")
@@ -408,6 +408,7 @@ actor ProjectStore {
                 try db.execute("PRAGMA user_version = 6")
             }
             if version < 7 { try ProjectMemorySchema.migrate(db) }
+            if version < 8 { try MemoryQueueSchema.migrate(db) }
         }
         database = db
         return db

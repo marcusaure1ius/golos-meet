@@ -48,7 +48,9 @@ extension ProjectStore {
             if let updateGuard { try MemorySQL.validateUpdate(lease, expected: updateGuard, db: db) }
             let batchBindings = [lease.projectID.uuidString, lease.producerKey, lease.fingerprint]
             if let row = try db.rows("SELECT event_ids FROM memory_batches WHERE project_id=? AND producer_key=? AND fingerprint=?", bindings: batchBindings).first {
-                return .unchanged(try MemoryEncoding.decode([UUID].self, row[0]))
+                let ids = try MemoryEncoding.decode([UUID].self, row[0])
+                if let queue = updateGuard?.queue { try MemoryQueueSQL.finish(queue, selectedKey: lease.producerKey, outcome: "unchanged", ids: ids, db: db) }
+                return .unchanged(ids)
             }
             var eventIDs: [UUID] = []
             for draft in drafts {
@@ -97,6 +99,7 @@ extension ProjectStore {
             }
             try db.execute("INSERT INTO memory_batches VALUES (?, ?, ?, ?)", bindings: batchBindings + [try MemoryEncoding.encode(eventIDs)])
             try db.execute("UPDATE memory_state SET revision=revision+1, generation=? WHERE project_id=?", bindings: [UUID().uuidString, lease.projectID.uuidString])
+            if let queue = updateGuard?.queue { try MemoryQueueSQL.finish(queue, selectedKey: lease.producerKey, outcome: "completed", ids: eventIDs, db: db) }
             try Task.checkCancellation()
             return .inserted(eventIDs)
         }

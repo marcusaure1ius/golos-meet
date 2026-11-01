@@ -2,7 +2,7 @@ import Foundation
 import Testing
 @testable import golos_meet
 
-@MainActor private final class MemoryTransportSpy: ChatCompleter {
+@MainActor final class MemoryTransportSpy: ChatCompleter {
     var calls = 0
     var attempts = 1
     var payload = ""
@@ -27,7 +27,7 @@ import Testing
     }
 }
 
-@MainActor private final class UpdateFixture {
+@MainActor final class UpdateFixture {
     let root: URL
     let store: ProjectStore
     let history: ProjectMemoryHistoryService
@@ -481,7 +481,7 @@ import Testing
         let db = try ProjectDatabase(url: f.root.appendingPathComponent("knowledge.sqlite"))
         let producers = try db.rows("SELECT producer_key FROM memory_batches WHERE project_id=?", bindings: [p.uuidString]).map { $0[0] }
         #expect(producers.contains(oldProducer) && producers.contains { $0.hasPrefix("memory-update-input-v2:") })
-        #expect(try db.rows("PRAGMA user_version") == [["7"]])
+        #expect(try db.rows("PRAGMA user_version") == [["8"]])
         let replay = try await f.service.prepare(projectID: p, hits: [h])
         #expect(try await f.service.update(replay) == .published(.unchanged(publication.eventIDs)))
         #expect(f.spy.calls == 1)

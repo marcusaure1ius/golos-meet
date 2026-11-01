@@ -37,7 +37,8 @@ names = ["LocalTextEmbedding", "EmbeddingModelManifest", "EmbeddingModelInstalle
          "LocalIndexingService", "KnowledgeModels", "KnowledgeChunker", "DocumentModels", "DocumentImporter", "LocalDocumentExtractor",
          "ProjectStore", "MeetingAssignmentModels", "MeetingAssignmentRuntimeModels", "MeetingEmbeddingSnapshot", "EmbeddingIndexModels", "DocumentImportQueue", "KnowledgeIndexEvents", "KnowledgeFileMonitor",
          "ProjectMemoryModels", "ProjectMemorySchema", "ProjectMemoryStore", "ProjectMemoryHistoryService",
-         "MemoryUpdateModels", "MemoryUpdateStore", "MemoryFactExtractor", "ProjectMemoryUpdateService", "KnowledgeAnswerGenerator", "KnowledgeQuestionService", "KnowledgeSearchModels", "KnowledgeSearchService", "KnowledgeSearchSourceReader", "MeetingAssignmentPolicy", "MeetingAssignmentService", "MeetingAssignmentInputReader", "MeetingAssignmentWorker"]
+         "MemoryUpdateModels", "MemoryUpdateStore", "MemoryFactExtractor", "ProjectMemoryUpdateService",
+         "MemoryQueueModels", "MemoryQueueSchema", "MemoryQueueStore", "ProjectMemoryQueueWorker", "KnowledgeAnswerGenerator", "KnowledgeQuestionService", "KnowledgeSearchModels", "KnowledgeSearchService", "KnowledgeSearchSourceReader", "MeetingAssignmentPolicy", "MeetingAssignmentService", "MeetingAssignmentInputReader", "MeetingAssignmentWorker"]
 sources = [repo / "golos-meet/Core/Knowledge" / (name + ".swift") for name in names]
 sources += [repo / "golos-meet/Core/Insights/ChatCompleter.swift"]
 sources += [repo / "golos-meet" / name for name in ["Util/AppRuntime.swift", "UI/Projects/KnowledgeIndexing.swift", "UI/Projects/ProjectLibrary.swift",

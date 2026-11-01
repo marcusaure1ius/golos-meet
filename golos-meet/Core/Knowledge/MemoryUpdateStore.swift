@@ -12,13 +12,15 @@ extension ProjectStore {
             try MemorySQL.validate(lease, db: db)
             try MemorySQL.validateUpdate(lease, expected: expected, db: db)
             guard let row = try db.rows("SELECT event_ids FROM memory_batches WHERE project_id=? AND producer_key=? AND fingerprint=?", bindings: [lease.projectID.uuidString, lease.producerKey, lease.fingerprint]).first else { return nil }
-            return .unchanged(try MemoryEncoding.decode([UUID].self, row[0]))
+            let ids = try MemoryEncoding.decode([UUID].self, row[0])
+            if let queue = expected.queue { try MemoryQueueSQL.finish(queue, selectedKey: lease.producerKey, outcome: "unchanged", ids: ids, db: db) }
+            return .unchanged(ids)
         }
     }
 }
 
 extension MemorySQL {
-    static func updateCheckpoint(_ lease: MemoryLease, db: ProjectDatabase) throws -> MemoryUpdateCheckpoint {
+    nonisolated static func updateCheckpoint(_ lease: MemoryLease, db: ProjectDatabase) throws -> MemoryUpdateCheckpoint {
         let projects = try lease.ownerProjectIDs.map { id in
             guard let value = try project(id, db: db) else { throw MemoryUpdateError.stale }; return value
         }
@@ -51,7 +53,8 @@ extension MemorySQL {
         }
         return .init(projects: projects, parentVersions: versions)
     }
-    static func validateUpdate(_ lease: MemoryLease, expected: MemoryUpdateGuard, db: ProjectDatabase) throws {
+    nonisolated static func validateUpdate(_ lease: MemoryLease, expected: MemoryUpdateGuard, db: ProjectDatabase) throws {
+        if let queue = expected.queue { try MemoryQueueSQL.validate(queue, db: db) }
         guard !expected.hits.isEmpty, expected.hits.count == lease.sources.count,
               expected.hits.allSatisfy({ $0.matchedMeaning && $0.model.model != nil && $0.source.job.state == .ready }),
               try sources(expected.hits.map { try MemorySourceReference(hit: $0) }) == lease.sources,

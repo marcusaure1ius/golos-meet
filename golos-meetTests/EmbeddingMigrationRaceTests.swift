@@ -386,7 +386,7 @@ private nonisolated enum MigrationRace {
         let writer = try ProjectDatabase(url: url)
         try writer.execute("BEGIN EXCLUSIVE")
         try writer.execute("ROLLBACK")
-        #expect(try writer.rows("PRAGMA user_version") == [["7"]])
+        #expect(try writer.rows("PRAGMA user_version") == [["8"]])
         #expect(try await ProjectStore(url: url).snapshot().projects == [sentinel])
     }
 
@@ -429,7 +429,7 @@ private nonisolated enum MigrationRace {
         let writer = try ProjectDatabase(url: url)
         try writer.execute("BEGIN EXCLUSIVE")
         try writer.execute("ROLLBACK")
-        #expect(try writer.rows("PRAGMA user_version") == [["7"]])
+        #expect(try writer.rows("PRAGMA user_version") == [["8"]])
     }
 
     @Test func singleExecutionLaneReproducesBarrierStarvationAndIsRejected() async throws {
@@ -513,7 +513,7 @@ private nonisolated enum MigrationRace {
         #expect(sqlite3_exec(reader, "ROLLBACK", nil, nil, nil) == SQLITE_OK)
         let writer = try ProjectDatabase(url: url)
         try writer.execute("BEGIN EXCLUSIVE"); try writer.execute("ROLLBACK")
-        #expect(try writer.rows("PRAGMA user_version") == [["7"]])
+        #expect(try writer.rows("PRAGMA user_version") == [["8"]])
         #expect(try await ProjectStore(url: url).snapshot().projects == [sentinel])
         #expect(trace.diagnosticsSucceeded)
     }

@@ -35,4 +35,8 @@ nonisolated enum MemoryUpdateOutcome: Equatable, Sendable {
 nonisolated struct MemoryUpdateGuard: Sendable {
     let hits: [KnowledgeSearchHit]
     let checkpoint: MemoryUpdateCheckpoint
+    let queue: MemoryQueueLease?
+    init(hits: [KnowledgeSearchHit], checkpoint: MemoryUpdateCheckpoint, queue: MemoryQueueLease? = nil) {
+        self.hits = hits; self.checkpoint = checkpoint; self.queue = queue
+    }
 }
