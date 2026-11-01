@@ -34,7 +34,7 @@ if args.queue or args.search or args.assignment:
 if args.search or args.assignment:
     sources += [repo / "golos-meet/Core/Knowledge" / name for name in ["KnowledgeSearchService.swift", "KnowledgeSearchSourceReader.swift"]]
 if args.assignment:
-    sources += [repo / "golos-meet/Core/Knowledge" / name for name in ["MeetingAssignmentService.swift", "MeetingAssignmentInputReader.swift", "MeetingAssignmentWorker.swift"]]
+    sources += [repo / "golos-meet/Core/Knowledge" / name for name in ["MeetingAssignmentPolicy.swift", "MeetingAssignmentService.swift", "MeetingAssignmentInputReader.swift", "MeetingAssignmentWorker.swift"]]
 probe = "NativeMeetingAssignmentProbe.swift" if args.assignment else "NativeKnowledgeSearchProbe.swift" if args.search else "NativeIndexingQueueProbe.swift" if args.queue else "NativeEmbeddingIndexProbe.swift" if args.index else "NativeEmbeddingProbe.swift"
 objects = [products / (name + ".o") for name in ["Crypto", "EventSource", "Hub", "HuggingFace",
            "InternalCollectionsUtilities", "Jinja", "OnnxRuntimeBindings", "OrderedCollections", "Tokenizers", "yyjson"]]

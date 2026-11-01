@@ -18,6 +18,7 @@ nonisolated struct MeetingAssignmentEvidence: Codable, Equatable, Sendable {
     let similarity: Double
     let explicitName: Bool
     let competingSimilarity: Double
+    var support: MeetingAssignmentSupport? = nil
 }
 
 nonisolated struct MeetingAssignmentResult: Codable, Equatable, Sendable {

@@ -23,12 +23,12 @@ private actor AssignmentFixtureEncoder: LocalPassageEmbedding {
         let service: MeetingAssignmentService
         let encoder = AssignmentFixtureEncoder()
         var url: URL { root.appendingPathComponent("knowledge.sqlite") }
-        init(budget: Int = 2_000) throws {
+        init(budget: Int = 2_000, comparisons: Int = 100_000) throws {
             root = FileManager.default.temporaryDirectory.appendingPathComponent("assignment-fixture-\(UUID())")
             try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
             store = ProjectStore(url: root.appendingPathComponent("knowledge.sqlite"))
             importer = DocumentImporter(store: store, root: root.appendingPathComponent("copies"))
-            service = MeetingAssignmentService(store: store, meetingsRoot: root.appendingPathComponent("meetings"), documentsRoot: root.appendingPathComponent("copies"), windowBudget: budget)
+            service = MeetingAssignmentService(store: store, meetingsRoot: root.appendingPathComponent("meetings"), documentsRoot: root.appendingPathComponent("copies"), windowBudget: budget, comparisonBudget: comparisons)
             let encoder = self.encoder
             indexer = LocalIndexingService(store: store, meetingsRoot: root.appendingPathComponent("meetings"), inspect: {
                 .init(model: .init(id: encoder.modelID, dimensions: encoder.dimensions), folder: nil, load: { encoder })
@@ -145,7 +145,7 @@ private actor AssignmentFixtureEncoder: LocalPassageEmbedding {
         await f.cleanup()
     }
 
-    @Test func ambiguousNamesAndSemanticOnlyMatchesAreProposalsNotAutomaticContext() async throws {
+    @Test func ambiguousNamesAndGenericMatchesAreProposalsNotAutomaticContext() async throws {
         let f = try Fixture()
         do {
             let p = try await f.seed()
@@ -166,6 +166,75 @@ private actor AssignmentFixtureEncoder: LocalPassageEmbedding {
             let unanchored = try #require(try await f.service.prepare(meetingID: "topic"))
             #expect(unanchored.result.evidence.isEmpty && unanchored.result.suggestedTopic != nil)
             #expect(try await f.store.snapshot().projects.count == 2) // Never creates projects.
+        } catch { await f.cleanup(); throw error }
+        await f.cleanup()
+    }
+
+    @Test(arguments: ["Без имени", "ИИ", "Переименованный проект"])
+    func semanticEvidenceDoesNotRequireProjectNameAndSurvivesRename(name: String) async throws {
+        let f = try Fixture()
+        do {
+            let p = try await f.store.createProject(name: name)
+            try await f.document("Датчики давления и пульса передают тревоги врачу в медицинскую карту.", project: p.id)
+            try await f.meeting(texts: ["Врач проверяет давление, пульс и тревоги датчиков в медицинской карте."])
+            await f.indexer.start(); await f.indexer.waitUntilIdle()
+            let plan = try #require(try await f.service.prepare(meetingID: "target"))
+            #expect(plan.result.assignedProjectIDs == [p.id])
+            #expect(plan.result.evidence.first?.explicitName == false)
+            #expect((plan.result.evidence.first?.support?.distinctiveTerms.count ?? 0) >= 2)
+            #expect(try await f.service.commit(plan) == .applied)
+            try ProjectDatabase(url: f.url).execute("UPDATE projects SET name=? WHERE id=?", bindings: ["Совсем новое название", p.id.uuidString])
+            let renamed = try #require(try await f.service.prepare(meetingID: "target"))
+            #expect(renamed.result.assignedProjectIDs == [p.id])
+            #expect(try await f.service.commit(renamed) == .applied)
+            try await f.store.assignMeeting("target", to: [])
+            let reopened = ProjectStore(url: f.url)
+            #expect(try await reopened.meetingAssignmentCheckpoint().decisions["target"]?.origin == .manual)
+            #expect(try await f.service.prepare(meetingID: "target") == nil)
+        } catch { await f.cleanup(); throw error }
+        await f.cleanup()
+    }
+
+    @Test func negatedSeparateChunkCannotBeOverriddenByTemptingPositiveEvidence() async throws {
+        let f = try Fixture()
+        do {
+            _ = try await f.seed()
+            try await f.meeting(texts: ["Атлас: строим мост через реку.", "Этот проект не относится к нашей встрече."])
+            await f.indexer.changed(); await f.indexer.waitUntilIdle()
+            let plan = try #require(try await f.service.prepare(meetingID: "target"))
+            #expect(plan.result.assignedProjectIDs.isEmpty)
+            #expect(plan.result.evidence.allSatisfy { $0.support?.blocked == true })
+        } catch { await f.cleanup(); throw error }
+        await f.cleanup()
+    }
+
+    @Test func oldPayloadDecodesButCannotPublishUnderNewPolicy() async throws {
+        let f = try Fixture()
+        do {
+            _ = try await f.seed()
+            let plan = try #require(try await f.service.prepare(meetingID: "target"))
+            var json = try #require(JSONSerialization.jsonObject(with: JSONEncoder().encode(plan.result)) as? [String: Any])
+            json["algorithm"] = "explicit-name-margin-e5-v2"
+            var evidence = try #require(json["evidence"] as? [[String: Any]])
+            for i in evidence.indices { evidence[i].removeValue(forKey: "support") }
+            json["evidence"] = evidence
+            let old = try JSONDecoder().decode(MeetingAssignmentResult.self, from: JSONSerialization.data(withJSONObject: json))
+            #expect(old.evidence.allSatisfy { $0.support == nil })
+            await #expect(throws: MeetingAssignmentError.self) {
+                try await f.store.commitMeetingAssignment(old, meetingID: "target", checkpoint: plan.checkpoint)
+            }
+            #expect(try await f.store.snapshot().meetingProjects["target"] == nil)
+        } catch { await f.cleanup(); throw error }
+        await f.cleanup()
+    }
+
+    @Test func lexicalPreparationCannotPublishAConfidentPartialResultOverBudget() async throws {
+        let f = try Fixture(comparisons: 1)
+        do {
+            _ = try await f.seed()
+            await #expect(throws: MeetingAssignmentError.self) { try await f.service.prepare(meetingID: "target") }
+            #expect(try await f.store.meetingAssignmentCheckpoint().decisions["target"] == nil)
+            #expect(try await f.store.snapshot().meetingProjects["target"] == nil)
         } catch { await f.cleanup(); throw error }
         await f.cleanup()
     }

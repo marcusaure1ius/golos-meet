@@ -43,8 +43,12 @@ struct MeetingAssignmentPanel: View {
                         Text(item.meetingChunk.text).font(.system(size: 13)).foregroundStyle(p.muted).lineLimit(3)
                         Text("Близость \(item.similarity.formatted(.number.precision(.fractionLength(2)))) · преимущество \((item.similarity - item.competingSimilarity).formatted(.number.precision(.fractionLength(2)))). Эвристика, не вероятность.")
                             .font(.system(size: 12)).foregroundStyle(p.muted)
+                        if let support = item.support, !support.sharedTerms.isEmpty {
+                            Text("Общие предметные термины: \(support.sharedTerms.joined(separator: ", ")).")
+                                .font(.system(size: 12)).foregroundStyle(p.muted)
+                        }
                         if !result.assignedProjectIDs.contains(item.projectID) {
-                            Text(item.explicitName ? "Фрагмент близок нескольким проектам. Выберите подходящие вручную." : "Название проекта не подтверждено однозначно в реплике. Проверьте предложение вручную.")
+                            Text(item.support?.blocked == true ? "Есть отрицание, чужое название или контекст примера. Проверьте предложение вручную." : "Предметных совпадений или преимущества перед другими проектами недостаточно. Проверьте предложение вручную.")
                                 .font(.system(size: 13)).foregroundStyle(p.muted)
                         }
                         HStack {
@@ -101,7 +105,7 @@ struct MeetingAssignmentPanel: View {
         if decision?.origin == .manual {
             return projects.projectIDs(for: meetingID).isEmpty ? "Встреча оставлена во Входящих вручную. Автоматика не изменит этот выбор." : "Автоматика не изменит выбранные проекты, включая после переиндексации."
         }
-        if current { return "Сравнение выполнено на этом Mac. Автоматический выбор требует явного названия и преимущества перед другими проектами." }
+        if current { return "Сравнение выполнено на этом Mac по содержимому доверенных источников и преимуществу перед другими проектами. Буквальное название необязательно." }
         if let message = work?.message, !message.isEmpty { return message }
         return "Прежние автоматические связи не используются до успешной проверки. Ручной выбор проектов доступен в любой момент."
     }

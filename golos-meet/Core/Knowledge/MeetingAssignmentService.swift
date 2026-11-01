@@ -7,15 +7,14 @@ nonisolated struct MeetingAssignmentPlan: Sendable {
     let checkedHits: [KnowledgeSearchHit]
 }
 
-/// Explicit-name rule + local passage similarity. Semantic closeness alone is
-/// only a proposal. Auto-linked meetings NEVER become project training context.
-/// No runtime hooks/UI yet: callers must explicitly prepare and commit a plan.
+/// Compare only complete, verified trusted context; automatic/proposed meetings
+/// never become training context. Publication preserves the accepted CAS fence.
 actor MeetingAssignmentService {
     private let store: ProjectStore
     private let reader: KnowledgeSearchSourceReader
     private let windowBudget: Int
     private let comparisonBudget: Int
-    static let algorithm = "explicit-name-margin-e5-v2"
+    static let algorithm = MeetingAssignmentPolicy.algorithm
 
     init(store: ProjectStore, meetingsRoot: URL, documentsRoot: URL,
          windowBudget: Int = 2_000, comparisonBudget: Int = 100_000) {
@@ -56,10 +55,60 @@ actor MeetingAssignmentService {
             loaded[source.key] = windows; hits.append(hit)
         }
         let targetWindows = loaded[target.key] ?? []
-        let names = Dictionary(grouping: checkpoint.projects, by: { Self.words($0.name) })
+        var preparations = 0
+        func spend(_ count: Int) throws {
+            try Task.checkCancellation()
+            guard count <= comparisonBudget - preparations else { throw MeetingAssignmentError.limited }
+            preparations += count
+        }
+        var aliases = Dictionary(uniqueKeysWithValues: checkpoint.projects.map { ($0.id, [$0.name]) })
+        for anchor in anchors {
+            for window in loaded[anchor.key] ?? [] {
+                try spend(1 + anchor.owners.count)
+                if let alias = MeetingAssignmentPolicy.trustedAlias(in: window.chunk.text) {
+                    for id in anchor.owners { aliases[id, default: []].append(alias) }
+                }
+            }
+        }
+        try spend(aliases.values.reduce(0) { $0 + $1.count })
+        let aliasTokens = aliases.mapValues { names in names.flatMap { [MeetingAssignmentPolicy.tokens($0), MeetingAssignmentPolicy.words($0)] } }
+        let excluded = MeetingAssignmentPolicy.nameTerms(aliases.values.flatMap { $0 })
+        var terms: [String: Set<String>] = [:]
+        var projectTerms: [UUID: Set<String>] = [:]
+        for source in [target] + anchors {
+            for window in loaded[source.key] ?? [] {
+                try spend(1 + source.owners.count)
+                let content = MeetingAssignmentPolicy.terms(window.chunk.text, excluding: excluded)
+                terms[window.chunk.id] = content
+                if source.key != target.key {
+                    for id in source.owners { projectTerms[id, default: []].formUnion(content) }
+                }
+            }
+        }
+        var termOwners: [String: Set<UUID>] = [:]
+        for (id, content) in projectTerms {
+            for term in content { termOwners[term, default: []].insert(id) }
+        }
+        var mentions: [String: Set<UUID>] = [:]
+        for window in loaded.values.flatMap({ $0 }) {
+            try spend(aliasTokens.values.reduce(0) { $0 + $1.count })
+            let tokens = MeetingAssignmentPolicy.tokens(window.chunk.text)
+            let raw = MeetingAssignmentPolicy.words(window.chunk.text)
+            mentions[window.chunk.id] = Set(checkpoint.projects.filter { project in
+                (aliasTokens[project.id] ?? []).contains {
+                    MeetingAssignmentPolicy.contains($0, in: tokens) || MeetingAssignmentPolicy.contains($0, in: raw)
+                }
+            }.map(\.id))
+        }
+        // Conservative abstention across the entire meeting, including a negated
+        // chunk separate from a tempting positive chunk. No entailment is claimed.
+        let meetingBlocked = targetWindows.contains { MeetingAssignmentPolicy.blocked($0.chunk.text) }
+        let contextBlocked = Set(anchors.flatMap { loaded[$0.key] ?? [] }.filter {
+            MeetingAssignmentPolicy.blocked($0.chunk.text)
+        }.map { $0.chunk.id })
         var candidates: [MeetingAssignmentEvidence] = []
         var scores: [String: [UUID: Double]] = [:]
-        var comparisons = 0
+        var comparisons = preparations
         for anchor in anchors {
             for context in loaded[anchor.key] ?? [] {
                 for meeting in targetWindows {
@@ -70,16 +119,21 @@ actor MeetingAssignmentService {
                     for id in anchor.owners.sorted(by: { $0.uuidString < $1.uuidString }) {
                         comparisons += 1
                         guard comparisons <= comparisonBudget else { throw MeetingAssignmentError.limited }
-                        guard let project = checkpoint.projects.first(where: { $0.id == id }) else { throw MeetingAssignmentError.stale }
+                        guard checkpoint.projects.contains(where: { $0.id == id }) else { throw MeetingAssignmentError.stale }
                         scores[meeting.chunk.id, default: [:]][id] = max(scores[meeting.chunk.id]?[id] ?? -1, score)
-                        guard score >= 0.90 else { continue }
-                        let name = Self.words(project.name)
-                        let explicit = !name.isEmpty && name.joined().count >= 5 && names[name]?.count == 1
-                            && Self.contains(name, in: meeting.chunk.text) && Self.contains(name, in: context.chunk.text)
-                            && !Self.words(meeting.chunk.text).contains(where: { ["не", "нет", "чужой", "отменён", "отменен"].contains($0) })
+                        guard score >= MeetingAssignmentPolicy.proposalThreshold else { continue }
+                        let declared = mentions[meeting.chunk.id] ?? []
+                        let explicit = declared == [id]
+                            && mentions[context.chunk.id]?.contains(id) == true
+                        let shared = (terms[meeting.chunk.id] ?? []).intersection(terms[context.chunk.id] ?? [])
+                        let support = MeetingAssignmentSupport(sharedTerms: shared.sorted(),
+                            distinctiveTerms: shared.filter { termOwners[$0] == [id] }.sorted(),
+                            meetingTermCount: terms[meeting.chunk.id]?.count ?? 0,
+                            blocked: meetingBlocked || contextBlocked.contains(context.chunk.id)
+                                || !declared.subtracting([id]).isEmpty)
                         candidates.append(.init(projectID: id, meetingChunk: meeting.chunk,
                             contextSource: anchor.key, contextChunk: context.chunk, similarity: score,
-                            explicitName: explicit, competingSimilarity: 0))
+                            explicitName: explicit, competingSimilarity: 0, support: support))
                     }
                 }
             }
@@ -88,14 +142,12 @@ actor MeetingAssignmentService {
         // stronger evidence that the actual subject belongs to another project.
         var best: [UUID: MeetingAssignmentEvidence] = [:]
         var automatic: Set<UUID> = []
-        func confident(_ item: MeetingAssignmentEvidence) -> Bool {
-            item.explicitName && item.similarity >= 0.90 && item.similarity - item.competingSimilarity >= 0.04
-        }
+        let confident = MeetingAssignmentPolicy.confident
         for candidate in candidates {
             let competitor = scores[candidate.meetingChunk.id]?.filter { $0.key != candidate.projectID }.map(\.value).max() ?? 0
             let item = MeetingAssignmentEvidence(projectID: candidate.projectID, meetingChunk: candidate.meetingChunk,
                 contextSource: candidate.contextSource, contextChunk: candidate.contextChunk,
-                similarity: candidate.similarity, explicitName: candidate.explicitName, competingSimilarity: competitor)
+                similarity: candidate.similarity, explicitName: candidate.explicitName, competingSimilarity: competitor, support: candidate.support)
             if confident(item) { automatic.insert(item.projectID) }
             if let previous = best[item.projectID] {
                 if (confident(item) && !confident(previous)) || (confident(item) == confident(previous) && item.similarity > previous.similarity) { best[item.projectID] = item }
@@ -135,13 +187,4 @@ actor MeetingAssignmentService {
         guard try await store.meetingAssignmentCheckpoint() == plan.checkpoint else { throw MeetingAssignmentError.stale }
     }
 
-    private static func words(_ text: String) -> [String] {
-        text.lowercased().components(separatedBy: CharacterSet.alphanumerics.inverted).filter { !$0.isEmpty }
-    }
-
-    private static func contains(_ phrase: [String], in text: String) -> Bool {
-        let tokens = words(text)
-        guard !phrase.isEmpty, tokens.count >= phrase.count else { return false }
-        return (0...(tokens.count - phrase.count)).contains { Array(tokens[$0..<($0 + phrase.count)]) == phrase }
-    }
 }
