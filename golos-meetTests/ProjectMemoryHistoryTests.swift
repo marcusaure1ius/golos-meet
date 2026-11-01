@@ -42,6 +42,47 @@ import Testing
         return .init(statement:.init(subject:"release:sever",kind:kind,conditions:conditions,text:text,
                                     deadline:kind == .deadline ? .init(earliest:start,latest:end) : nil), evidenceChunkIDs:[hit.id])
     }
+    func seedCandidates(_ count: Int, project: UUID, hit: KnowledgeSearchHit) async throws -> [UUID] {
+        var ids: [UUID] = []
+        for offset in stride(from: 0, to: count, by: 32) {
+            let lease = try await service.begin(projectID: project, producerKey: "budget-seed-\(offset)", hits: [hit])
+            let drafts = (offset..<min(offset + 32, count)).map { draft(hit, text: "Договорённость \($0)", kind: .agreement) }
+            ids += try await service.publish(drafts, lease: lease).eventIDs
+        }
+        return ids
+    }
+    func activeCandidates() throws -> Int {
+        let db = try ProjectDatabase(url: root.appendingPathComponent("knowledge.sqlite"))
+        let value = try #require(db.rows("SELECT COUNT(*) FROM memory_events e WHERE json_extract(e.body,'$.action')='assertion' AND NOT EXISTS (SELECT 1 FROM memory_links l WHERE l.target_id=e.id AND l.kind IN ('replaces','retracts','corrects'))").first?.first)
+        return try #require(Int(value))
+    }
+    func journalSnapshot() throws -> [String: [[String]]] {
+        let db = try ProjectDatabase(url: root.appendingPathComponent("knowledge.sqlite"))
+        return try Dictionary(uniqueKeysWithValues: ["memory_state", "memory_events", "memory_links", "memory_head_versions", "memory_batches", "sqlite_sequence"].map { table in
+            (table, try db.rows("SELECT * FROM \(table)").sorted { $0.joined(separator: "|") < $1.joined(separator: "|") })
+        })
+    }
+    /// Synthetic reproduction of the exact v7 state admitted by the old API.
+    /// Only append: keep the journal immutable and all provenance intact.
+    func appendLegacy257th(copying id: UUID) async throws -> UUID {
+        let old = try await store.memoryEvent(id)
+        let event = MemoryEvent(id: UUID(), projectID: old.projectID, origin: .model, action: .assertion,
+            statement: old.statement, evidenceChunkIDs: old.evidenceChunkIDs, parentEventIDs: old.parentEventIDs,
+            sources: old.sources, ownerProjectIDs: old.ownerProjectIDs, decisionDate: old.decisionDate, extractedAt: Date())
+        let slot = try MemoryEncoding.slot(event.statement)
+        let db = try ProjectDatabase(url: root.appendingPathComponent("knowledge.sqlite"))
+        try db.execute("PRAGMA foreign_keys=ON")
+        try db.transaction {
+            let active = try db.rows("SELECT e.id FROM memory_events e WHERE e.project_id=? AND e.slot=? AND NOT EXISTS (SELECT 1 FROM memory_links l WHERE l.target_id=e.id AND l.kind IN ('replaces','retracts','corrects'))", bindings: [old.projectID.uuidString, slot])
+            try #require(active.count == 256)
+            try db.execute("INSERT INTO memory_events(id,project_id,slot,body) VALUES (?,?,?,?)", bindings: [event.id.uuidString, event.projectID.uuidString, slot, try MemoryEncoding.encode(event)])
+            for row in active { try db.execute("INSERT INTO memory_links VALUES (?,?,'related')", bindings: [event.id.uuidString, row[0]]) }
+            try db.execute("INSERT INTO memory_head_versions(project_id,slot,event_id,manual) VALUES (?,?,?,0)", bindings: [event.projectID.uuidString, slot, event.id.uuidString])
+            try db.execute("INSERT INTO memory_batches VALUES (?,?,?,?)", bindings: [event.projectID.uuidString, "legacy-257", "synthetic-old-api-state", try MemoryEncoding.encode([event.id])])
+            try db.execute("UPDATE memory_state SET revision=revision+1,generation=? WHERE project_id=?", bindings: [UUID().uuidString, event.projectID.uuidString])
+        }
+        return event.id
+    }
     static func day(_ value: String) -> Date { ISO8601DateFormatter().date(from:value+"T00:00:00Z")! }
 }
 
@@ -242,6 +283,86 @@ import Testing
         let history = try await f.service.history(projectID:p)
         let heads = try await f.service.heads(projectID:p)
         #expect(history.entries.isEmpty && heads.heads.isEmpty)
+    }
+
+    @Test func finalCandidateBudgetAllows256Rejects257AndRollsBackAnOverflowLateInBatch() async throws {
+        let f = try MemoryFixture(); defer { f.cleanup() }; let p = try await f.project()
+        _ = try await f.meeting("one", text: "Релиз в ноябре", owners: [p]); let h = try await f.hit("one", project: p)
+        _ = try await f.seedCandidates(255, project: p, hit: h)
+        #expect(try f.activeCandidates() == 255)
+        let lease = try await f.service.begin(projectID: p, producerKey: "overflow-batch", hits: [h])
+        let before = try f.journalSnapshot()
+        let candidate = f.draft(h, text: "Новый кандидат", kind: .agreement)
+        // First draft reaches 256; second must roll back its predecessor's
+        // event, links, selection and AUTOINCREMENT, not only reject itself.
+        await #expect(throws: ProjectMemoryError.limited) { try await f.service.publish([candidate, candidate], lease: lease) }
+        #expect(try f.journalSnapshot() == before)
+        let last = try await f.service.publish([candidate], lease: lease).eventIDs
+        #expect(try f.activeCandidates() == 256)
+        let replay = try await f.service.begin(projectID: p, producerKey: "overflow-batch", hits: [h])
+        #expect(try await f.service.publish([candidate], lease: replay) == .unchanged(last))
+        let full = try await f.service.begin(projectID: p, producerKey: "257th", hits: [h])
+        let fullSnapshot = try f.journalSnapshot()
+        await #expect(throws: ProjectMemoryError.limited) { try await f.service.publish([candidate], lease: full) }
+        #expect(try f.journalSnapshot() == fullSnapshot)
+    }
+
+    @Test func manualCorrectionAndRetractionWorkAt256WithoutLosingPrecedenceOrBudget() async throws {
+        let f = try MemoryFixture(); defer { f.cleanup() }; let p = try await f.project()
+        _ = try await f.meeting("one", text: "Релиз в ноябре", owners: [p]); let h = try await f.hit("one", project: p)
+        let ids = try await f.seedCandidates(256, project: p, hit: h), original = try #require(ids.last)
+        let correcting = try await f.service.beginCorrection(eventID: original, intentID: UUID())
+        let manual = try #require(try await f.service.publish([f.draft(h, text: "Ручной выбор", kind: .agreement)], lease: correcting).eventIDs.first)
+        #expect(try f.activeCandidates() == 256)
+        #expect(try await f.service.heads(projectID: p).heads.first?.entry.event.id == manual)
+        let automatic = try await f.service.begin(projectID: p, producerKey: "cannot-retire-manual", hits: [h])
+        var forbidden = f.draft(h, kind: .agreement); forbidden.links = [.init(targetID: manual, kind: .replaces)]
+        await #expect(throws: ProjectMemoryError.invalid) { try await f.service.publish([forbidden], lease: automatic) }
+        let retracting = try await f.service.beginCorrection(eventID: manual, intentID: UUID())
+        let retraction = MemoryDraft(statement: .init(subject: "release:sever", kind: .agreement, conditions: ["environment": "production"], text: "Пользователь отменил утверждение"), evidenceChunkIDs: [h.id], links: [.init(targetID: manual, kind: .retracts)], action: .retraction)
+        let withdrawn = try #require(try await f.service.publish([retraction], lease: retracting).eventIDs.first)
+        #expect(try f.activeCandidates() == 255)
+        let refill = try await f.service.begin(projectID: p, producerKey: "refill", hits: [h])
+        _ = try await f.service.publish([f.draft(h, kind: .agreement)], lease: refill)
+        #expect(try f.activeCandidates() == 256)
+        let head = try #require(try await f.service.heads(projectID: p).heads.first)
+        #expect(head.entry.event.id == withdrawn && head.manualSelection && !head.usableAsCurrent)
+        #expect(try await f.store.memoryEvent(original).statement.text == "Договорённость 255")
+    }
+
+    @Test(arguments: ["correction", "retraction"])
+    func legacy257CanRecoverByExplicitManualRetirementsWithoutDiscardingHistory(_ mode: String) async throws {
+        let f = try MemoryFixture(); defer { f.cleanup() }; let p = try await f.project()
+        _ = try await f.meeting("one", text: "Релиз в ноябре", owners: [p]); let h = try await f.hit("one", project: p)
+        let ids = try await f.seedCandidates(256, project: p, hit: h)
+        let legacy = try await f.appendLegacy257th(copying: try #require(ids.last))
+        #expect(try f.activeCandidates() == 257)
+        let lease = try await f.service.beginCorrection(eventID: legacy, intentID: UUID())
+        let before = try f.journalSnapshot()
+        let corrected = f.draft(h, text: "Явное уточнение", kind: .agreement)
+        await #expect(throws: ProjectMemoryError.limited) { try await f.service.publish([corrected], lease: lease) }
+        #expect(try f.journalSnapshot() == before)
+        var recovery = corrected
+        if mode == "correction" {
+            // Duplicate labels must not be counted as extra retirements.
+            recovery.links = [.init(targetID: legacy, kind: .replaces), .init(targetID: legacy, kind: .replaces)]
+            await #expect(throws: ProjectMemoryError.limited) { try await f.service.publish([recovery], lease: lease) }
+            #expect(try f.journalSnapshot() == before)
+            recovery.links = [.init(targetID: try #require(ids.first), kind: .replaces)]
+        } else {
+            recovery = MemoryDraft(statement: .init(subject: "release:sever", kind: .agreement, conditions: ["environment": "production"], text: "Явная отмена"), evidenceChunkIDs: [h.id], links: [.init(targetID: legacy, kind: .retracts)], action: .retraction)
+        }
+        let result = try #require(try await f.service.publish([recovery], lease: lease).eventIDs.first)
+        #expect(try f.activeCandidates() == 256)
+        let db = try ProjectDatabase(url: f.root.appendingPathComponent("knowledge.sqlite"))
+        #expect(try db.rows("SELECT COUNT(*) FROM memory_events") == [["258"]])
+        #expect(try await f.store.memoryEvent(legacy).id == legacy)
+        let history = try await f.service.history(projectID: p)
+        #expect(history.entries.first?.event.id == result)
+        #expect(history.entries.first(where: { $0.event.id == legacy })?.supersededBy.contains(result) == true)
+        let head = try #require(try await f.service.heads(projectID: p).heads.first)
+        #expect(head.manualSelection && head.entry.event.id == result && head.usableAsCurrent == (mode == "correction"))
+        #expect(try db.rows("PRAGMA foreign_key_check").isEmpty)
     }
 
     @Test func invalidBatchRollsBackAllRowsAndImmutableJournalAndPaginationAreReal() async throws {

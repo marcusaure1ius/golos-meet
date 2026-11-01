@@ -1,0 +1,2 @@
+PASS actual previous-API 257 recovery: correction, active assertions=256, original history retained, manual head valid, FK clean. Copy: /var/folders/f6/hwzbqsn10fn6p6gx8d5vmnfm0000gn/T/golos36-actual-legacy-correction-1E9463FB-B82F-4CDA-B69F-E6BD115F14E9
+PASS actual previous-API 257 recovery: retraction, active assertions=256, original history retained, manual head valid, FK clean. Copy: /var/folders/f6/hwzbqsn10fn6p6gx8d5vmnfm0000gn/T/golos36-actual-legacy-retraction-23AD5F04-3C75-476D-85D9-DC4D861910CB

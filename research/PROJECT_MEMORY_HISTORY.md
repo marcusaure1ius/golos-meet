@@ -90,8 +90,12 @@ SQLite и файловая система не образуют общей ат�
 
 Лимиты явные: до 32 прямых hits/родителей/событий за операцию, 128 потреблённых
 source refs и 128 000 символов исходного текста; до 256 активных кандидатов в slot
-и 256 событий в provenance traversal. История — страницы до 200 элементов;
-heads сообщает `limited`, если slots больше запрошенного лимита (максимум 200).
+и 256 событий в provenance traversal. Бюджет кандидатов проверяется после
+планируемых supersessions плюс новое assertion, отдельно для каждого draft внутри
+общей атомарной транзакции batch. Отменённые утверждения и события `retraction`
+не входят в набор положительных кандидатов; они остаются в неизменяемом журнале.
+Запрос выбирает не более 257 оставшихся кандидатов, а связи имеют прежний лимит 32.
+История — страницы до 200 элементов; heads сообщает `limited`, если slots больше запрошенного лимита (максимум 200).
 Превышение не обрезает публикуемые факты молча, а отклоняет всю транзакцию.
 
 ## Настоящая миграция v6 → v7 и откат
@@ -123,7 +127,7 @@ busy_timeout=2000, SQLite retry/handler и execution lanes не менялись
 
 ## Проверки
 
-Итоговая сводка `memory-history-36/check-summary.json` и trace-файлы относятся
+Первичная сводка `memory-history-36/check-summary.json` и trace-файлы относятся
 к обязательному `make check` с установленным публичным E5:
 
 ```sh
@@ -141,3 +145,101 @@ native E5-сценарии; это не проверка семантическ�
 новые веса не скачивались. Rust не менялся. UI не менялся и для storage-PR не
 проверялся через CUA. Полная ручная QA реальных проектов остаётся отдельным этапом.
 Независимое ревью точного SHA требуется перед принятием в preview.
+
+## Исправление P2 после независимого ревью PR #50
+
+Reviewer на `1b8817d9e4ba2e34e4617bbf95e25a1d9354e5b9` воспроизвёл через
+реальный сервис off-by-one: восемь batch по 32 assertions дают 256 кандидатов,
+следующая публикация допускала 257-го; после этого ручные исправления/отмены
+блокировались до применения retire links. Старый SHA не принят в preview.
+
+Исправление проверяет итоговый положительный набор: из SQL-выборки заранее
+исключаются действительно заменяемые активные события, затем учитывается новое
+assertion. Цели связей проверяются прежними правилами проекта/slot/manual precedence;
+повторяющиеся ссылки или ссылки на уже retired событие не освобождают лишних мест.
+Retraction сохраняется как историческое действие и выбранная ручная версия,
+но не как новый положительный кандидат; `usableAsCurrent` остаётся false.
+
+На 256 кандидатах correction/replacement одного на один сохраняет 256, retraction
+уменьшает до 255. Новое независимое assertion отклоняется. Превышение в позднем
+draft откатывает весь batch, включая предыдущие event/link/head, state/batch и
+AUTOINCREMENT; этот же lease после rollback пригоден для допустимой публикации.
+Промежуточное превышение внутри batch не разрешается ради последующей отмены.
+
+Для уже сохранённого старым API состояния 257 лимит не повышается: явная ручная
+отмена одного утверждения даёт 256, либо ручная правка заменяет два явно выбранных
+утверждения одним (implicit corrects цели и explicit replaces второго). Обычная
+правка одного на один всё ещё оставляет 257 и отклоняется целиком. Ничего не
+отменяется автоматически, история и исходники не удаляются. Обе операции
+восстановления проходят через обычные beginCorrection/publish с прежними CAS,
+проверкой файлов, полным происхождением и защитой ручного выбора.
+
+Boundary-тесты используют настоящий service/SQLite и public API для набора 255/256;
+legacy-состояние 257 дополнительно воспроизводится синтетическим append-only seed
+старого v7-контракта. Проверяются rollback позднего превышения, replay на лимите,
+ручная правка/отмена/refill, duplicate retirement labels, восстановление обоими
+способами, сохранность истории/FK и manual precedence. Отдельный native probe
+проверяет оба recovery на копиях **действительной базы reviewer**, где прежний
+public API создал 257 кандидатов. Оригинальные driver/DB reviewer не изменяются;
+проверяется SHA256 оригинального DB до/после. Исходные synthetic source-файлы
+читаются по прежнему пути, чтобы сохранённый file stamp оставался истинным;
+все записи идут исключительно в копии SQLite.
+
+Авторский прогон первоначального SHA имел 0 runtime warnings, независимый прогон
+того же SHA — один QoS warning в DocumentFormatImportTests (383/520, 0 ошибок и
+пропусков). Эти результаты не следует обобщать до отсутствия предупреждений во всех
+прогонах. Итог исправленного кода и отдельного targeted прогона сохранён в
+`memory-history-36/cap-fix-summary.json`; требуется повторное независимое ревью SHA.
+
+### Проверки cap fix и отдельный failed migration trace
+
+- Targeted `ProjectMemoryHistoryTests`: 13 тестов / 23 запуска / 0 ошибок,
+  пропусков и runtime warnings.
+- Первый полный `make check`: 386 / 524, 1 ошибка в
+  `EmbeddingMigrationRaceTests/concurrentConnectionsReadSchemaOnlyAfterAcquiringMigrationLock(version:)`,
+  параметр version=0; 0 пропусков, 1 QoS warning LocalDocumentExtractorTests.
+- Повторный полный `make check` на том же коде: **386 / 524, 0 ошибок, 0 пропусков**;
+  1 QoS warning LocalDocumentExtractorTests. Повтор использовал тот же installed E5,
+  settings/menu и отдельный каталог migration traces. Fixture/production timeout,
+  retry/handler и параметры исполнения не менялись.
+- Native probe на двух отдельных копиях действительной reviewer DB: correction
+  и retraction уменьшают 257 до 256 assertions, исходная история остаётся,
+  manual head соответствует действию, FK clean; SHA256 исходной DB до/после
+  `c8748b5b19445bc55fadcf10448c64b90f9a6d25456bbb150401d37f73524d78`.
+
+Failed trace — scenario `A5C7E4ED-F2A9-415D-9603-68941EFD4563`, version=0:
+
+| Фаза | Время от acquire start, мс | Результат |
+| --- | ---: | --- |
+| acquire `BEGIN IMMEDIATE` test lock | 0.528 | OK=0, extended=0 |
+| first SQLite BEGIN entry | 15.148 | connection `36C79C25-576F-4FE1-BEFB-05200EB61757`, executor `A47A1A83-628D-475D-AD98-CCA81C3620E0` |
+| second SQLite BEGIN entry | 18.382 | connection `1C5FCA6E-8021-4557-A64E-D0A396CD2370`, executor `8A3885DF-CBFC-4844-BFA6-E9780A10250B` |
+| release schedule | 22.706 | target 522.703 мс |
+| release-start | 524.099 | dedicated test release thread |
+| test lock COMMIT | 524.340 | BUSY=5, extended=5 |
+| cleanup ROLLBACK | 524.827 | OK=0 |
+| close | 524.927 | OK=0 |
+| first snapshot success | 675.337 | успешно после cleanup release |
+| second snapshot success | 925.223 | успешно после cleanup release |
+| executors joined / joined | 3784.726 / 3784.838 | оба потока завершены до teardown |
+
+Подтверждённый механизм ошибки проверки: assert требует успешный COMMIT test lock,
+а SQLite вернул BUSY непосредственно в этой фазе. Оба независимых BEGIN вошли при
+удерживаемом reserved lock; entry timeout не было. Release стартовал через ~501 мс
+после schedule, поэтому trace не указывает на исчерпание production busy_timeout
+или голодание executor. Cleanup действительно освободил lock, оба мигратора прошли.
+Trace не содержит lock-state/владельца конкурирующей блокировки во время COMMIT:
+первопричина BUSY не установлена, исчезновение сбоя в повторе её не доказывает.
+Cap fix не изменяет и не объявляется исправлением этого неизменённого race fixture;
+дополнительная правка fixture в этот PR не подмешана.
+
+Сохранены исходные артефакты первого сбоя:
+`/tmp/golos36-cap-failed-full.xcresult`, `/tmp/golos36-cap-failed-full.log`,
+первичный xcresult `Test-golos-meet-2026.11.01_22-12-14-+0300.xcresult` в worktree.
+Полный raw JSONL trace есть в репозитории:
+`memory-history-36/cap-fix/failed-migration-traces/A5C7E4ED-F2A9-415D-9603-68941EFD4563.jsonl`.
+Все 7 failed-run traces и 7 successful-repeat traces сохранены отдельно; negative
+controls намеренно содержат timeout/first-failure и сами проходят свои критерии.
+Итоговый xcresult: `Test-golos-meet-2026.11.01_22-13-52-+0300.xcresult`,
+raw log `/tmp/golos36-cap-final-check.log`. Эти результаты, диагностическая граница
+и delta требуют оценки независимым reviewer на новом SHA.

@@ -62,8 +62,15 @@ extension ProjectStore {
                           try MemoryEncoding.slot(target.statement) == slot,
                           link.kind != .corrects || link.targetID == lease.manualTargetID else { throw ProjectMemoryError.invalid }
                 }
-                let active = try db.rows("SELECT e.body FROM memory_events e WHERE e.project_id=? AND e.slot=? AND NOT EXISTS (SELECT 1 FROM memory_links l WHERE l.target_id=e.id AND l.kind IN ('replaces','retracts','corrects')) ORDER BY e.sequence LIMIT 257", bindings: [lease.projectID.uuidString, slot])
-                guard active.count <= 256 else { throw ProjectMemoryError.limited }
+                // Bound the resulting assertion set, after planned retirements.
+                // Retractions are historical actions, not positive candidates.
+                // Filtering before LIMIT also permits recovery of the legacy
+                // 257-candidate state without decoding an oversized input set.
+                let retired = Set(supersessions.map(\.targetID)).sorted { $0.uuidString < $1.uuidString }
+                let excluding = retired.isEmpty ? "" : " AND e.id NOT IN (" + Array(repeating: "?", count: retired.count).joined(separator: ",") + ")"
+                let active = try db.rows("SELECT e.body FROM memory_events e WHERE e.project_id=? AND e.slot=? AND json_extract(e.body,'$.action')='assertion' AND NOT EXISTS (SELECT 1 FROM memory_links l WHERE l.target_id=e.id AND l.kind IN ('replaces','retracts','corrects'))" + excluding + " ORDER BY e.sequence LIMIT 257", bindings: [lease.projectID.uuidString, slot] + retired.map(\.uuidString))
+                let addedCandidates = draft.action == .assertion ? 1 : 0
+                guard active.count + addedCandidates <= 256 else { throw ProjectMemoryError.limited }
                 let event = MemoryEvent(id: UUID(), projectID: lease.projectID, origin: lease.origin, action: draft.action,
                     statement: draft.statement, evidenceChunkIDs: draft.evidenceChunkIDs.sorted(),
                     parentEventIDs: lease.parents.map(\.id), sources: lease.sources,
@@ -72,10 +79,11 @@ extension ProjectStore {
                     bindings: [event.id.uuidString, lease.projectID.uuidString, slot, try MemoryEncoding.encode(event)])
                 for parent in lease.parents { try MemorySQL.link(event.id, parent.id, .derivedFrom, db: db) }
                 for link in supersessions { try MemorySQL.link(event.id, link.targetID, link.kind, db: db) }
-                let retired = Set(supersessions.map(\.targetID))
-                for row in active {
-                    let old = try MemoryEncoding.decode(MemoryEvent.self, row[0])
-                    if !retired.contains(old.id) { try MemorySQL.link(event.id, old.id, MemoryEncoding.relation(event.statement, old.statement), db: db) }
+                if draft.action == .assertion {
+                    for row in active {
+                        let old = try MemoryEncoding.decode(MemoryEvent.self, row[0])
+                        try MemorySQL.link(event.id, old.id, MemoryEncoding.relation(event.statement, old.statement), db: db)
+                    }
                 }
                 let manualHead = try db.rows("SELECT manual FROM memory_head_versions WHERE project_id=? AND slot=? ORDER BY sequence DESC LIMIT 1", bindings: [lease.projectID.uuidString, slot]).first?.first == "1"
                 // Automatic publications append evidence but never replace a
