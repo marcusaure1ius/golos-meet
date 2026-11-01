@@ -476,18 +476,50 @@ extension ProjectStore {
 
     func validateKnowledgeSearchHits(_ hits: [KnowledgeSearchHit], model: KnowledgeSearchModelStamp) throws {
         let db = try open()
-        try db.transaction {
-            guard try searchModelStamp(db) == model else { throw KnowledgeSearchError.modelChanged }
-            for hit in hits {
-                guard hit.model == model,
-                      let source = try searchSources(db, key: hit.source.key).first,
-                      hit.source.hasSameIdentity(as: source, requiresVectors: hit.matchedMeaning), hit.scope.contains(source.owners),
-                      let row = try db.rows("SELECT source_id, revision, ordinal, text, location FROM embedding_chunks WHERE id = ? AND source_key = ?", bindings: [hit.id, source.key.rawValue]).first,
-                      let id = UUID(uuidString: row[0]), let ordinal = Int(row[2]) else { throw KnowledgeSearchError.sourceChanged }
-                let chunk = KnowledgeChunk(id: hit.id, sourceID: id, revision: row[1], ordinal: ordinal, text: row[3],
-                                          location: try JSONDecoder().decode(KnowledgeLocation.self, from: Data(row[4].utf8)))
-                guard chunk == hit.chunk else { throw KnowledgeSearchError.sourceChanged }
+        try db.transaction { try validateKnowledgeSearchHits(hits, model: model, db: db) }
+    }
+
+    private func validateKnowledgeSearchHits(_ hits: [KnowledgeSearchHit], model: KnowledgeSearchModelStamp,
+                                             db: ProjectDatabase) throws {
+        guard try searchModelStamp(db) == model else { throw KnowledgeSearchError.modelChanged }
+        for hit in hits {
+            guard hit.model == model,
+                  let source = try searchSources(db, key: hit.source.key).first,
+                  hit.source.hasSameIdentity(as: source, requiresVectors: hit.matchedMeaning), hit.scope.contains(source.owners),
+                  let row = try db.rows("SELECT source_id, revision, ordinal, text, location FROM embedding_chunks WHERE id = ? AND source_key = ?", bindings: [hit.id, source.key.rawValue]).first,
+                  let id = UUID(uuidString: row[0]), let ordinal = Int(row[2]) else { throw KnowledgeSearchError.sourceChanged }
+            let chunk = KnowledgeChunk(id: hit.id, sourceID: id, revision: row[1], ordinal: ordinal, text: row[3],
+                                      location: try JSONDecoder().decode(KnowledgeLocation.self, from: Data(row[4].utf8)))
+            guard chunk == hit.chunk else { throw KnowledgeSearchError.sourceChanged }
+        }
+    }
+
+    /// Policies, owners, model and selected chunks are read in ONE transaction.
+    /// The existing assignment epoch fences policy/owner ABA as well as project
+    /// recreation. Unrelated assignment changes conservatively invalidate too.
+    func questionCheckpoint(projectID: UUID, hits: [KnowledgeSearchHit]) throws -> KnowledgeQuestionCheckpoint {
+        let db = try open()
+        return try db.transaction {
+            if let first = hits.first {
+                guard hits.allSatisfy({ $0.scope == .project(projectID) }) else { throw KnowledgeAnswerError.foreignContext }
+                try validateKnowledgeSearchHits(hits, model: first.model, db: db)
             }
+            let ids = hits.reduce(into: Set([projectID])) { $0.formUnion($1.source.owners) }
+            let projects = try ids.sorted(by: { $0.uuidString < $1.uuidString }).map { id in
+                guard let row = try db.rows("SELECT name, parent_id, cloud_policy FROM projects WHERE id = ?", bindings: [id.uuidString]).first,
+                      let policy = ProjectCloudPolicy(rawValue: row[2]) else { throw KnowledgeAnswerError.cloudNotAllowed }
+                return KnowledgeProject(id: id, name: row[0], parentID: UUID(uuidString: row[1]), cloudPolicy: policy)
+            }
+            guard let epoch = try db.rows("SELECT generation FROM assignment_epoch WHERE slot = 1").first?.first else { throw EmbeddingIndexError.corruptIndex }
+            return .init(epoch: epoch, projects: projects)
+        }
+    }
+
+    func setCloudPolicy(_ policy: ProjectCloudPolicy, for projectID: UUID) throws {
+        let db = try open()
+        try db.transaction {
+            try requireProject(projectID, db: db)
+            try db.execute("UPDATE projects SET cloud_policy = ? WHERE id = ?", bindings: [policy.rawValue, projectID.uuidString])
         }
     }
 
