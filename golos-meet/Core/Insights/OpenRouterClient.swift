@@ -65,15 +65,25 @@ struct OpenRouterClient {
 
     /// Один не-стриминговый chat-completions. Возвращает content ассистента.
     nonisolated func complete(model: String, messages: [ChatMessage], responseFormat: ResponseFormat?) async throws -> String {
+        try await complete(model: model, messages: messages, responseFormat: responseFormat, beforeSending: {})
+    }
+
+    nonisolated func complete(model: String, messages: [ChatMessage], responseFormat: ResponseFormat?,
+                              beforeSending: @escaping @Sendable () async throws -> Void) async throws -> String {
         guard !apiKey.isEmpty else { throw LLMError.noAPIKey }
         let body = try buildBody(model: model, messages: messages, responseFormat: responseFormat)
 
         var lastError: Error = LLMError.emptyResponse
         for attempt in 1...Self.maxAttempts {
+            try Task.checkCancellation()
+            // Outside the retry catch: a rejected egress gate must never retry.
+            try await beforeSending()
+            try Task.checkCancellation()
             do {
                 let content = try await send(body: body)
                 return content
-            } catch let LLMError.http(status, bodyText) {
+            } catch is CancellationError { throw CancellationError() }
+            catch let LLMError.http(status, bodyText) {
                 // 4xx (кроме 429) — детерминированно, не ретраим.
                 if status != 429 && (400..<500).contains(status) {
                     throw LLMError.http(status: status, body: bodyText)
@@ -84,7 +94,7 @@ struct OpenRouterClient {
             }
             if attempt < Self.maxAttempts {
                 let backoff = min(30.0, pow(2.0, Double(attempt - 1))) + Double.random(in: 0...0.5)
-                try? await Task.sleep(nanoseconds: UInt64(backoff * 1_000_000_000))
+                try await Task.sleep(nanoseconds: UInt64(backoff * 1_000_000_000))
             }
         }
         throw lastError

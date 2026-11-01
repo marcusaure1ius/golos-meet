@@ -7,6 +7,20 @@ protocol ChatCompleter {
     // Необходимо при SWIFT_DEFAULT_ACTOR_ISOLATION=MainActor, иначе
     // OpenRouterClient не удовлетворяет требованию (@MainActor vs nonisolated).
     nonisolated func complete(model: String, messages: [ChatMessage], responseFormat: ResponseFormat?) async throws -> String
+    /// Retrying transports must run this gate before EVERY outbound attempt.
+    nonisolated func complete(model: String, messages: [ChatMessage], responseFormat: ResponseFormat?,
+                              beforeSending: @escaping @Sendable () async throws -> Void) async throws -> String
+}
+
+extension ChatCompleter {
+    /// Single-attempt adapters can use the default. Retrying adapters override it.
+    nonisolated func complete(model: String, messages: [ChatMessage], responseFormat: ResponseFormat?,
+                              beforeSending: @escaping @Sendable () async throws -> Void) async throws -> String {
+        try Task.checkCancellation()
+        try await beforeSending()
+        try Task.checkCancellation()
+        return try await complete(model: model, messages: messages, responseFormat: responseFormat)
+    }
 }
 
 extension OpenRouterClient: ChatCompleter {}

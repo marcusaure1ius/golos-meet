@@ -41,6 +41,19 @@ import Testing
             let opened = try await search.open(page)
             let data = try #require(opened.pdf), document = try #require(PDFDocument(data: data))
             #expect(document.pageCount == 3 && document.page(at: 1)?.string?.contains("26 ноября") == true)
+            // Actual offline E5 + SQLite + service + page snapshot. Only the
+            // generative response is synthetic; this is not a live LLM check.
+            try await store.setCloudPolicy(.allowSelectedContext, for: project.id)
+            try await store.setCloudPolicy(.allowSelectedContext, for: other.id)
+            let questions = KnowledgeQuestionService(store: store, search: search, meetingsRoot: meetings,
+                documentsRoot: documents, client: NativeSearchPageCompleter(), model: "synthetic-only")
+            let request = try await questions.prepare(question: "На какую дату перенесли релиз?", projectID: project.id)
+            let result = try await questions.answer(request)
+            let citation = try #require(result.answer.citations.first)
+            #expect(citation.location.page == 2 && citation.sourceID == page.chunk.sourceID)
+            let answerPage = try await questions.openCitation(citation.label, in: result)
+            #expect(PDFDocument(data: try #require(answerPage.pdf))?.page(at: 1)?.string?.contains("26 ноября") == true)
+            questions.cancel()
             #expect(try await search.search("релиз", scope: .project(other.id)).hits.allSatisfy { $0.source.key.externalID != imported.documentID.uuidString })
             let meeting = try #require(try await search.search("Пилот Север", scope: .project(project.id)).hits.first { $0.source.key.kind == .meeting })
             #expect(try await search.open(meeting).hit.chunk.location.startSeconds == 42.5)
@@ -77,5 +90,19 @@ import Testing
         }
         context.closePDF()
         return data as Data
+    }
+}
+
+/// A deterministic response over the actual selected input; never calls cloud.
+private nonisolated struct NativeSearchPageCompleter: ChatCompleter {
+    func complete(model: String, messages: [ChatMessage], responseFormat: ResponseFormat?) async throws -> String {
+        guard let input = messages.last?.content,
+              let payload = try JSONSerialization.jsonObject(with: Data(input.utf8)) as? [String: Any],
+              let fragments = payload["fragments"] as? [[String: Any]],
+              let page = fragments.first(where: { ($0["location"] as? [String: Any])?["page"] as? Int == 2 }),
+              let label = page["label"] as? String else { throw KnowledgeAnswerError.noContext }
+        return String(decoding: try JSONSerialization.data(withJSONObject: [
+            "answer": "Релиз перенесён на 26 ноября [\(label)].", "sources": [label], "insufficientEvidence": false
+        ]), as: UTF8.self)
     }
 }
