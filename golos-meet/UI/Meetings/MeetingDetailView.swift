@@ -6,12 +6,14 @@ import os
 /// действия (переобработать, открыть папку) + транскрипт.
 struct MeetingDetailView: View {
     var backTitle: String = "Встречи"
+    var onSettings: (() -> Void)?
     @Environment(\.palette) var p
     @EnvironmentObject var library: MeetingLibrary
     @EnvironmentObject var processor: MeetingProcessor
     let meeting: MeetingSummary
     let onBack: () -> Void
 
+    @State private var showingMemory = false
     @State private var transcript: Transcript?
     @State private var insights: MeetingInsights?
     @State private var player: MeetingPlayer?
@@ -70,6 +72,10 @@ struct MeetingDetailView: View {
                 }
                 .padding(.horizontal, 56).padding(.vertical, 24)
             }
+        }
+        .inspector(isPresented:$showingMemory) {
+            ProjectMemoryEntry(meetingID:meeting.id,onSettings:onSettings).id(meeting.id)
+                .inspectorColumnWidth(min:380,ideal:460,max:600)
         }
         .task(id: meeting.id) {
             transcript = library.transcript(for: meeting.id)
@@ -201,7 +207,11 @@ struct MeetingDetailView: View {
                 headerBadge
             }
             actions
-            MeetingProjectButton(meetingID: meeting.id, meetingTitle: liveMeeting.title)
+            HStack {
+                MeetingProjectButton(meetingID: meeting.id, meetingTitle: liveMeeting.title)
+                Button { showingMemory.toggle() } label: { Label("Контекст проекта",systemImage:"sidebar.right") }
+                    .buttonStyle(GhostButton()).accessibilityIdentifier("meeting.memory")
+            }
             if let assignments = ProductionAssignments.shared {
                 MeetingAssignmentPanel(assignments: assignments, meetingID: meeting.id, meetingTitle: liveMeeting.title).id(meeting.id)
             }

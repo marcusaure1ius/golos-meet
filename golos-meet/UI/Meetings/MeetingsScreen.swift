@@ -17,6 +17,7 @@ struct MeetingsScreen: View {
     @State private var showingDocuments = false
     @State private var showingSearch = false
     @State private var showingQuestions = false
+    @State private var showingMemory = false
 
     private enum Mode: String, CaseIterable { case feed = "Лента", calendar = "Календарь" }
 
@@ -32,12 +33,14 @@ struct MeetingsScreen: View {
 
     var body: some View {
         Group {
-            if showingQuestions {
+            if showingMemory {
+                ProjectMemoryEntry(projectID:questionProjectID,onBack:{ showingMemory = false },onSettings:onSettings)
+            } else if showingQuestions {
                 KnowledgeQuestionEntry(initialProjectID: questionProjectID, onBack: { showingQuestions = false }, onSettings: onSettings)
             } else if showingSearch {
                 KnowledgeSearchEntry(initialScope: searchScope, onBack: { showingSearch = false })
             } else if let m = selected {
-                MeetingDetailView(backTitle: screenTitle, meeting: m) { selected = nil }
+                MeetingDetailView(backTitle: screenTitle, onSettings:onSettings, meeting: m) { selected = nil }
             } else {
                 VStack(spacing: 0) {
                     header
@@ -102,6 +105,7 @@ struct MeetingsScreen: View {
                 Spacer()
                 if scope != .all {
                     if questionProjectID != nil {
+                        Button { showingMemory = true } label: { Label("Память",systemImage:"text.book.closed") }.buttonStyle(GhostButton())
                         Button { showingQuestions = true } label: { Label("Вопросы", systemImage: "text.bubble") }.buttonStyle(GhostButton())
                     }
                     Button { showingSearch = true } label: { Label("Поиск", systemImage: "magnifyingglass") }

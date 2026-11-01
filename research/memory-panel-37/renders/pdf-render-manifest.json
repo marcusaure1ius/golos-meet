@@ -1,0 +1,22 @@
+[
+  {
+    "fake_calls" : 0,
+    "file" : "conflicts-claims-light.png",
+    "sha256" : "1a4cbc79924ea2810a66f2a7ea1bc34064ea21df2b62c1000433254f0819bd67"
+  },
+  {
+    "fake_calls" : 0,
+    "file" : "conflicts-claims-dark.png",
+    "sha256" : "80ed3da91841db6383b7435cbca8534fe1093b1dd4f542bb815776cf410ad0ba"
+  },
+  {
+    "fake_calls" : 0,
+    "file" : "pdf-page2-light.png",
+    "sha256" : "5a37a3c2950621bbba3a2f8686585d2bdad3348a24b970544b586b78c7e6b4dd"
+  },
+  {
+    "fake_calls" : 0,
+    "file" : "pdf-page2-dark.png",
+    "sha256" : "0411504e7ecd28ac5bd99085e65210f30d1415e165681cd5424194ae4be6e15f"
+  }
+]

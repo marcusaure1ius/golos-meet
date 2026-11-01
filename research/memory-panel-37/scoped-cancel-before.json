@@ -1,0 +1,17 @@
+{
+  "result": "Failed",
+  "totalTestCount": 17,
+  "failedTests": 1,
+  "skippedTests": 0,
+  "runtimeWarnings": [],
+  "testFailures": [
+    {
+      "failureText": "Expectation failed: stillNewer.generation == newer.generation && stillNewer.state != .cancelled\nstillNewer.generation == newer.generation → false\nstillNewer.state != .cancelled → <not evaluated>",
+      "targetName": "golos-meetTests",
+      "testIdentifier": 8,
+      "testIdentifierString": "ProjectMemoryPanelTests/closingOldSenderCannotCancelNewerRetryOfSameSource()",
+      "testIdentifierURL": "test://com.apple.xcode/golos-meet/golos-meetTests/ProjectMemoryPanelTests/closingOldSenderCannotCancelNewerRetryOfSameSource()",
+      "testName": "closingOldSenderCannotCancelNewerRetryOfSameSource()"
+    }
+  ]
+}
