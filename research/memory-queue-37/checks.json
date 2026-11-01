@@ -1,0 +1,57 @@
+{
+  "date": "2026-11-02",
+  "base": "b118fccda792bd3fcef7f2169e103cdcaa77d909",
+  "accepted_service_head": "6b73f35743a26998551efdc4097884bfb9246783",
+  "accepted_test_fixture_head": "440bb844143ad76ef1206f57b06e4c66aa93413e",
+  "scope": "Durable serial queue, incremental batching, migration v8 and production lifecycle/settings/index hooks. Panel pending. Refs #37, #5.",
+  "full": {
+    "xcresult": "/Users/alfa/.codex/worktrees/project-memory-queue/golos-meet/.build/xcode/Logs/Test/Test-golos-meet-2026.11.02_00-23-37-+0300.xcresult",
+    "result": "Passed",
+    "tests": 425,
+    "runs": 596,
+    "failed": 0,
+    "skipped": 0,
+    "runtime_warnings": []
+  },
+  "targeted": {
+    "xcresult": "/Users/alfa/.codex/worktrees/project-memory-queue/golos-meet/.build/xcode/Logs/Test/Test-golos-meet-2026.11.02_00-25-17-+0300.xcresult",
+    "result": "Passed",
+    "tests": 24,
+    "runs": 32,
+    "failed": 0,
+    "skipped": 0,
+    "runtime_warnings": []
+  },
+  "full_command": "TEST_RUNNER_GOLOS_MEET_E5_FOLDER=/tmp/golos-embedding-native/e5-small TEST_RUNNER_GOLOS_MEET_RENDER_TALK_SETTINGS=1 TEST_RUNNER_GOLOS_MEET_MENU_PREVIEW=1 TEST_RUNNER_GOLOS_MEET_MIGRATION_TRACE_DIR=/tmp/golos37-queue-final-traces make check",
+  "targeted_command": "xcodebuild test -scheme golos-meet -destination 'platform=macOS' -derivedDataPath .build/xcode -only-testing:golos-meetTests/ProjectMemoryQueueTests -only-testing:golos-meetTests/MemoryQueueMigrationTests CODE_SIGNING_ALLOWED=NO",
+  "native_build": {
+    "command": "python3 research/build_search_preview.py --weights /tmp/golos-embedding-native/e5-small",
+    "result": "Passed",
+    "build_only": true,
+    "launched": false,
+    "log": "/tmp/golos37-queue-final-native-build.log"
+  },
+  "full_log": "/tmp/golos37-queue-final-check.log",
+  "targeted_log": "/tmp/golos37-queue-final-targeted.log",
+  "migration_traces": {
+    "1C5FA900-D4C5-4E86-B929-22F8D9265F69.jsonl": "21f62c8b849be73dbee6ac3137f51a95a7a1dae35652866ab1547f0e60eddc41",
+    "1F43137F-F308-44C5-9082-489028034E8C.jsonl": "5d8a209d7ba153652e5fc7716d2df39fa713546e9bc058632b01e1837f35e408",
+    "248A5A69-03D0-4CA3-BF47-4D9CA3A8785A.jsonl": "f34ea0f361ac8b0d0ae17865aed0b8591af9df4c983763af4f655e5c15afa5e8",
+    "5383CE9A-218E-4BA3-BF28-A004C5C24C8F.jsonl": "23c16890aa5b0373dcddc1b986afa315fa22b00b015dd4b543af0b52e6091bc3",
+    "6698075E-F806-417A-A5E1-26577A332501.jsonl": "782b0855c382c85962af0a31db401974ac3b22fe10449545bdb98c053b5b64f0",
+    "767477CA-A148-473D-A0A0-0F45BF3DBAD9.jsonl": "1fe0daa338479bbde3e118d343c5a33aaa1748fa35661e9363d5ba46c6a0abd3",
+    "76F8DED4-1BE1-4DA1-92CD-78A1D4D0D56E.jsonl": "76b0109a13a12fbfea900cd1de544411a614b1824f06755747b5e7088875fd75",
+    "9E989BD1-3D00-4DC6-BD91-DFE334D9622A.jsonl": "0ba354d66640b53d9476e95682de8c3d13de7608c3aae04b715eaf397704ee5a",
+    "E7188EE2-8957-4534-B68B-B26769027471.jsonl": "b7454a4053bade5f9e8da829552ae72882575c8c453345c11b770a21af290c76"
+  },
+  "synthetic_queue_transport": true,
+  "real_openrouter": false,
+  "user_materials": false,
+  "production_app_launched": false,
+  "keychain_access": false,
+  "new_model_download": false,
+  "recording_capture_asr": false,
+  "rust_changed": false,
+  "compiler_warnings": "Existing Swift warnings outside queue remain; two synchronous SQLite-only MemorySQL helpers now explicitly nonisolated, removing their isolation warnings. runtime_warnings are reported separately by xcresult.",
+  "iterations": "Before final checks: invalid draft state mapped stale instead of failed; two new-test compile errors corrected; settings enable/disable race fixed and regression added. Earlier targeted/full results are superseded by final checks."
+}

@@ -13,6 +13,7 @@ import Testing
         #expect(AppLibraryState().library == nil)
         #expect(ProductionIndexing.shared == nil)
         #expect(ProductionAssignments.shared == nil)
+        #expect(ProductionMemoryQueue.shared == nil)
         #expect(ProductionKnowledgeSearch.service == nil)
         #expect(ProductionKnowledgeQuestions.makeModel() == nil)
     }

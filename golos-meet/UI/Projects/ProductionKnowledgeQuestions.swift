@@ -15,9 +15,9 @@ import SwiftUI
     }
 }
 
-/// Credentials are resolved only on the explicit send action. Neither a render
+/// Credentials are resolved only when a permitted send starts. Neither a render
 /// nor local retrieval reads Keychain. Tests/isolated hosts inject a fake client.
-private struct QuestionOpenRouterClient: ChatCompleter {
+struct QuestionOpenRouterClient: ChatCompleter {
     nonisolated func complete(model: String, messages: [ChatMessage], responseFormat: ResponseFormat?) async throws -> String {
         try await complete(model: model, messages: messages, responseFormat: responseFormat, beforeSending: {})
     }

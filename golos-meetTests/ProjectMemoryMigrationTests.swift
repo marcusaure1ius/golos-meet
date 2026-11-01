@@ -55,7 +55,7 @@ import Testing
         #expect(values["assignment_work"]?.isEmpty == false && values["knowledge_fts"]?.isEmpty == false)
         let store = ProjectStore(url:url), snapshot = try await store.snapshot()
         let after = try ProjectDatabase(url:url)
-        #expect(try after.rows("PRAGMA user_version") == [["7"]])
+        #expect(try after.rows("PRAGMA user_version") == [["8"]])
         #expect(try contents(after,tables:tables) == values)
         #expect(try originalFiles(root) == files)
         let newSchema = try objects(after)
@@ -90,7 +90,7 @@ import Testing
         #expect(try after.rows("SELECT sentinel FROM memory_links") == [["keep-original"]])
         try after.execute("DROP TABLE memory_links")
         _ = try await ProjectStore(url:url).snapshot()
-        #expect(try after.rows("PRAGMA user_version") == [["7"]])
+        #expect(try after.rows("PRAGMA user_version") == [["8"]])
         #expect(try contents(after,tables:tables.filter { $0 != "memory_links" }) == values.filter { $0.key != "memory_links" })
     }
 }

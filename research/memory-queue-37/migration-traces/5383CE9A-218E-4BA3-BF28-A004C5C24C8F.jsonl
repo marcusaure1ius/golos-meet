@@ -1,0 +1,8 @@
+{"extended":0,"strictPool":false,"milliseconds":0.6805833545513451,"result":0,"name":"acquire"}
+{"scheduledMilliseconds":1.6024166834540665,"milliseconds":1.6030416591092944,"strictPool":false,"name":"schedule"}
+{"strictPool":false,"milliseconds":1.849583350121975,"name":"release-start"}
+{"result":0,"strictPool":false,"milliseconds":2.011791686527431,"name":"release-lock-before","lockState":2}
+{"extended":5,"strictPool":false,"milliseconds":2.1237499895505607,"result":5,"name":"commit-result"}
+{"result":0,"strictPool":false,"milliseconds":2.2161250235512853,"name":"release-lock-after","lockState":3}
+{"strictPool":false,"milliseconds":2.3182500153779984,"result":0,"name":"cleanup-rollback"}
+{"result":0,"strictPool":false,"milliseconds":2.445541671477258,"name":"close-result"}

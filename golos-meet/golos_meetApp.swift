@@ -55,6 +55,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         coordinator.start()
         ProductionIndexing.shared?.start()
         ProductionAssignments.shared?.start()
+        ProductionMemoryQueue.shared?.start()
         if ProcessInfo.processInfo.environment["GOLOS_MEET_BACKFILL"] == "1" {
             Backfill.run()
         }
@@ -63,6 +64,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationWillTerminate(_ notification: Notification) {
         guard !AppRuntime.isTestHost else { return }
         coordinator?.prepareForTermination()
+        ProductionMemoryQueue.shared?.stop()
         ProductionAssignments.shared?.stop()
         ProductionIndexing.shared?.stop()
     }
@@ -76,6 +78,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     /// потом отпустить приложение. Если финализация не уложилась в ~3 с (зависший диск) —
     /// отпускаем всё равно: недописанную запись спасёт StartupRescue при следующем запуске.
     func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
+        ProductionMemoryQueue.shared?.stop()
         coordinator?.prepareForTermination()
         guard let coordinator, coordinator.recorder.isRecording else { return .terminateNow }
         let recorder = coordinator.recorder
