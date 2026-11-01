@@ -1,0 +1,30 @@
+Window: "Golos Questions Preview · Synthetic", App: Golos Questions Preview.
+0 standard window Golos Questions Preview · Synthetic, ID: SwiftUI.WindowGroup<QuestionsPreview.QuestionPreviewRoot>-1-AppWindow-1, Secondary Actions: Raise
+	1 container
+		2 text Настоящая E5 с диска · synthetic источники · генератор по-прежнему подставной
+		3 pop up button Fake LLM, Value: Ответ
+		4 button Удержать ответ
+		5 button Отпустить
+		6 text Вызовов fake: 7
+		7 switch Тёмная, Value: on
+		8 button Включить E5 с диска
+		9 button Изменить источники
+		10 button Восстановить источники
+		11 button Вернуться к ответу
+		12 text Встреча synthetic Реплика 00:42–00:55 Проверенный снимок на 1 нояб. 2026 г., 16:03. Изменения источника после открытия здесь не отображаются.
+		13 scroll area
+			14 list Secondary Actions: AXScrollToTop, AXScrollToBottom
+				15 text Реплика 00:42–00:55 Релиз перенесли на конец ноября после проверки нагрузки.
+	16 close button
+	17 full screen button Help: this button also has an action to zoom the window, Secondary Actions: zoom the window
+	18 minimize button
+	19 text Golos Questions Preview · Synthetic
+20 menu bar
+	21 Golos Questions Preview
+	22 File
+	23 Edit
+	24 View
+	25 Window
+	26 Help
+
+The focused UI element is 0 standard window Golos Questions Preview · Synthetic, ID: SwiftUI.WindowGroup<QuestionsPreview.QuestionPreviewRoot>-1-AppWindow-1, Secondary Actions: Raise

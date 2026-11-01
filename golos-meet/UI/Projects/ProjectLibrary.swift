@@ -55,6 +55,15 @@ final class ProjectLibrary: ObservableObject {
         KnowledgeIndexEvents.post(.projects)
     }
 
+    func setCloudPolicy(_ policy: ProjectCloudPolicy, for projectID: UUID) async throws {
+        guard isReady else { throw ProjectStoreError.database("Library unavailable") }
+        isSaving = true
+        defer { isSaving = false; finishReloadIfNeeded() }
+        try await store.setCloudPolicy(policy, for: projectID)
+        if let index = snapshot.projects.firstIndex(where: { $0.id == projectID }) { snapshot.projects[index].cloudPolicy = policy }
+        KnowledgeIndexEvents.post(.projects)
+    }
+
     func projectIDs(for meetingID: String) -> Set<UUID> {
         snapshot.meetingProjects[meetingID] ?? []
     }

@@ -1,0 +1,162 @@
+{
+  "base": "a68e62d8a8d9c9ae21cb77f08a1b4cdef1195f6b",
+  "service_checked_head": "944350911e8de79f1782625f1d1157975f068b8b",
+  "swift": {
+    "passed_tests": 371,
+    "test_runs": 499,
+    "failures": 0,
+    "skipped": 0,
+    "xcresult": "Test-golos-meet-2026.11.01_16-08-04-+0300.xcresult",
+    "runtime_warnings": [],
+    "previous_full_run": "Test-golos-meet-2026.11.01_15-36-08-+0300.xcresult",
+    "previous_runtime_warning": "LocalDocumentExtractorTests QoS priority inversion"
+  },
+  "host": {
+    "bundle": "com.golos.questions-preview35.f34fd47c931a4c30a20990e521ef19d0",
+    "logical_window": [
+      1080,
+      880
+    ],
+    "source": "research/KnowledgeQuestionPreview.swift",
+    "production_app_delegate": false,
+    "production_capture": false,
+    "production_asr": false,
+    "production_keychain": false,
+    "live_openrouter": false,
+    "actual_public_e5_used": true,
+    "new_weights_downloaded": false,
+    "first_cua_bind_seconds": 1062.3413,
+    "review_restart_bind_seconds": 1.4803,
+    "host_stopped_process_absent": true
+  },
+  "native_probe": {
+    "search_compile": true,
+    "cli_run": false,
+    "first_dependency_build_failed": true,
+    "dependency_failure": "ProjectStore current assignment policy dependency was absent from the old search allowlist; synchronized to local Knowledge sources"
+  },
+  "isolated_host_rebuild": {
+    "first_reuse_build_failed": true,
+    "cause": "Swift PCM module cache used both /var and /private/var aliases (signal 11); preserved original module-cache spelling; same host rebuilt successfully"
+  },
+  "ui_review": {
+    "independent_visual_agent": "questions_ui_finish",
+    "initial": "fix",
+    "resolved": [
+      "Send after complete selected context/owner disclosure",
+      "Visible disabled Prepare and footer cancel"
+    ],
+    "final": "ship at the scope of the two fixes and denied/settings/long-question coverage",
+    "independent_code_review_final_sha": "pending coordinator"
+  },
+  "captures": [
+    {
+      "file": "preview-light.png",
+      "sha256": "853b1a91553eb80204567410ea304039373cb41129d87dea3cb19150c6a794c2",
+      "captured_at_utc": "2026-11-01T12:59:28.009289+00:00",
+      "stage": "before_ui_fix"
+    },
+    {
+      "file": "answer-light.png",
+      "sha256": "1c2d100962d745e91639cb493fd2e88c5f05943a320e3f072dadb3c4c1afc965",
+      "captured_at_utc": "2026-11-01T12:59:34.825381+00:00",
+      "stage": "before_ui_fix"
+    },
+    {
+      "file": "source-page2.png",
+      "sha256": "c2f6a9b8efc915ba30e9a8eb72c633e5d71d85de4668fc27b37f20c9612d85fd",
+      "captured_at_utc": "2026-11-01T12:59:43.076046+00:00",
+      "stage": "before_ui_fix"
+    },
+    {
+      "file": "network-error.png",
+      "sha256": "dcfec96e738d7dd4b13386f12ba38c8a2a1c28bb868011fc4aff9534fe3d38d1",
+      "captured_at_utc": "2026-11-01T13:00:15.975466+00:00",
+      "stage": "before_ui_fix"
+    },
+    {
+      "file": "no-key.png",
+      "sha256": "fb3670800198f54914579a066025bb80e576634fd2517f63c189ade8487f5130",
+      "captured_at_utc": "2026-11-01T13:00:33.327072+00:00",
+      "stage": "before_ui_fix"
+    },
+    {
+      "file": "stale-source.png",
+      "sha256": "2edea597bc34e21b9536538496c94a8475f5c164c0d3a94bece15e43683713b8",
+      "captured_at_utc": "2026-11-01T12:59:57.991878+00:00",
+      "stage": "before_ui_fix"
+    },
+    {
+      "file": "generating.png",
+      "sha256": "bfbf35a442f23e0af1e3134fb20865b74e48b1a210ac5dfe7cd79557c7c2b28d",
+      "captured_at_utc": "2026-11-01T13:00:52.931890+00:00",
+      "stage": "before_ui_fix"
+    },
+    {
+      "file": "cancel-dark.png",
+      "sha256": "338bcbab45e0cc9d8fbafbb98619db03f1c3bd65458d9ab2913bc3d21ef792cf",
+      "captured_at_utc": "2026-11-01T13:01:43.660532+00:00",
+      "stage": "before_ui_fix"
+    },
+    {
+      "file": "empty-after-switch.png",
+      "sha256": "160776775ca8f8ef610ddb285b6cd15b93a23edc26c5efdc6b83dccbf198e964",
+      "captured_at_utc": "2026-11-01T13:02:49.191322+00:00",
+      "stage": "before_ui_fix"
+    },
+    {
+      "file": "invalid-answer.png",
+      "sha256": "b3772a45b045ce0a376085b71c45c177fafbca2ad3682a893c24f602ad4ca15b",
+      "captured_at_utc": "2026-11-01T13:03:10.052512+00:00",
+      "stage": "before_ui_fix"
+    },
+    {
+      "file": "source-replica-dark.png",
+      "sha256": "5bb887ddc1aea71fe0cccb60f26d759f42d1ee80bbe68b8b558b1b36d27da9e1",
+      "captured_at_utc": "2026-11-01T13:03:33.285609+00:00",
+      "stage": "before_ui_fix"
+    },
+    {
+      "file": "long-question-preview-dark.png",
+      "sha256": "9cb41134ee5ac62f381e1c58406d3e7d9ed9f7e62083a919df3bb1a1f795199b",
+      "captured_at_utc": "2026-11-01T13:04:01.086128+00:00",
+      "stage": "before_ui_fix"
+    },
+    {
+      "file": "final-denied.png",
+      "sha256": "3ce06510e7d79b2c3fd89bb5b6a64410a0cf40df8e24b9a3187da76716e838ba",
+      "captured_at_utc": "2026-11-01T13:08:59.524749+00:00",
+      "stage": "after_ui_fix"
+    },
+    {
+      "file": "final-owner-settings.png",
+      "sha256": "2afbbdb02220fa3b499f016679e00ad7b32e0668a65e7bfd4bb92290dcdeb033",
+      "captured_at_utc": "2026-11-01T13:09:13.187930+00:00",
+      "stage": "after_ui_fix"
+    },
+    {
+      "file": "final-consent-after-context.png",
+      "sha256": "1cf08e8a81f90119560204e62fb305acfa23d257388e2741eb1ed554b235a177",
+      "captured_at_utc": "2026-11-01T13:09:43.750619+00:00",
+      "stage": "after_ui_fix"
+    },
+    {
+      "file": "final-generating-footer.png",
+      "sha256": "274569394e7dea55684dbe143ed95000d0430063e8274ac983814c013d1bac16",
+      "captured_at_utc": "2026-11-01T13:10:05.557790+00:00",
+      "stage": "after_ui_fix"
+    },
+    {
+      "file": "final-disabled-prepare.png",
+      "sha256": "9548f2192ba2469c375df04238e9d6ceea93ee9acdab770d7d9f01ad743ca93e",
+      "captured_at_utc": "2026-11-01T13:10:21.124064+00:00",
+      "stage": "after_ui_fix"
+    },
+    {
+      "file": "final-long-question-dark.png",
+      "sha256": "32dd797019f233f035a483fffa21465dd26f17fb74d93c7c48420315429e0bde",
+      "captured_at_utc": "2026-11-01T13:10:43.340135+00:00",
+      "stage": "after_ui_fix"
+    }
+  ]
+}

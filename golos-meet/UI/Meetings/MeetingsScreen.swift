@@ -2,6 +2,7 @@ import SwiftUI
 
 struct MeetingsScreen: View {
     var scope: ProjectMeetingScope = .all
+    var onSettings: (() -> Void)?
     @Environment(\.palette) var p
     @EnvironmentObject var library: MeetingLibrary
     @EnvironmentObject var processor: MeetingProcessor
@@ -15,6 +16,7 @@ struct MeetingsScreen: View {
     @State private var refreshPulse = false   // разовый оборот, когда догонять нечего
     @State private var showingDocuments = false
     @State private var showingSearch = false
+    @State private var showingQuestions = false
 
     private enum Mode: String, CaseIterable { case feed = "Лента", calendar = "Календарь" }
 
@@ -30,7 +32,9 @@ struct MeetingsScreen: View {
 
     var body: some View {
         Group {
-            if showingSearch {
+            if showingQuestions {
+                KnowledgeQuestionEntry(initialProjectID: questionProjectID, onBack: { showingQuestions = false }, onSettings: onSettings)
+            } else if showingSearch {
                 KnowledgeSearchEntry(initialScope: searchScope, onBack: { showingSearch = false })
             } else if let m = selected {
                 MeetingDetailView(backTitle: screenTitle, meeting: m) { selected = nil }
@@ -97,6 +101,9 @@ struct MeetingsScreen: View {
                     .lineLimit(2)
                 Spacer()
                 if scope != .all {
+                    if questionProjectID != nil {
+                        Button { showingQuestions = true } label: { Label("Вопросы", systemImage: "text.bubble") }.buttonStyle(GhostButton())
+                    }
                     Button { showingSearch = true } label: { Label("Поиск", systemImage: "magnifyingglass") }
                         .buttonStyle(GhostButton())
                     Picker("Содержимое", selection: $showingDocuments) {
@@ -142,6 +149,8 @@ struct MeetingsScreen: View {
         case .project(let id): return projects.project(id)?.name ?? "Проект недоступен"
         }
     }
+
+    private var questionProjectID: UUID? { if case .project(let id) = scope { id } else { nil } }
 
     private var searchScope: KnowledgeSearchScope {
         switch scope {
