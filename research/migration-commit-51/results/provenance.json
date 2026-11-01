@@ -1,0 +1,11 @@
+{
+  "base_preview_sha": "75b17ace1d44b712bca9dbb7ffa51fc1eb45311d",
+  "original": {
+    "git_sha": "c9ba025ec72b8dc6a23254d3cd6526145308e8a4",
+    "git_path": "research/memory-history-36/cap-fix/failed-migration-traces/A5C7E4ED-F2A9-415D-9603-68941EFD4563.jsonl",
+    "copied_sha256": "ddda41610ac7c75e95e90ad1877794e67ccb77082ca892e25347225a5804989e",
+    "exact_original_shared_holder_observed": false
+  },
+  "fixture_fix": "release reserved-only test transaction with ROLLBACK; retain COMMIT BUSY as explicit negative control",
+  "production_changes": false
+}

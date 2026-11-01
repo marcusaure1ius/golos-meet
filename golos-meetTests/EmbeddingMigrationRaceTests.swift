@@ -16,6 +16,7 @@ private nonisolated final class MigrationTrace: @unchecked Sendable {
         let connection: UUID?
         let executor: UUID?
         let strictPool: Bool
+        let lockState: Int32?
     }
     let scenario = UUID()
     let version: Int
@@ -38,14 +39,14 @@ private nonisolated final class MigrationTrace: @unchecked Sendable {
     var diagnosticsSucceeded: Bool { mutex.lock(); defer { mutex.unlock() }; return !diagnosticWriteFailed }
     var milliseconds: Double { (ProcessInfo.processInfo.systemUptime - started) * 1000 }
     func record(_ name: String, result: Int32? = nil, extended: Int32? = nil,
-                scheduledMilliseconds: Double? = nil, error: (any Error)? = nil, connection: UUID? = nil) {
+                scheduledMilliseconds: Double? = nil, error: (any Error)? = nil, connection: UUID? = nil, lockState: Int32? = nil) {
         let diagnostic: ProjectDatabase.Diagnostic?
         if let error = error as? ProjectStoreError, case .database(let message) = error {
             diagnostic = try? JSONDecoder().decode(ProjectDatabase.Diagnostic.self, from: Data(message.utf8))
         } else { diagnostic = nil }
         let entry = Event(name: name, milliseconds: milliseconds, result: result,
                           extended: extended, scheduledMilliseconds: scheduledMilliseconds, diagnostic: diagnostic, connection: connection, executor: MigrationExecutionIdentity.current,
-                          strictPool: ProcessInfo.processInfo.environment["LIBDISPATCH_COOPERATIVE_POOL_STRICT"] == "1")
+                          strictPool: ProcessInfo.processInfo.environment["LIBDISPATCH_COOPERATIVE_POOL_STRICT"] == "1", lockState: lockState)
         let data = try! JSONEncoder().encode(entry)
         mutex.lock(); entries.append(entry)
         do { try diagnosticFile?.write(contentsOf: data + Data([0x0a])) }
@@ -65,7 +66,14 @@ private nonisolated final class MigrationTrace: @unchecked Sendable {
 /// A dedicated Thread releases the real reserved lock. It does not share the
 /// Swift cooperative executor or the global Dispatch queue with blocking SQLite.
 private nonisolated final class MigrationReservedLock: @unchecked Sendable {
-    struct Release: Sendable { let commit: Int32; let extended: Int32; let close: Int32 }
+    enum Action: String, Sendable { case rollback, commit }
+    struct Release: Sendable {
+        let action: Action
+        let result: Int32
+        let extended: Int32
+        let cleanup: Int32?
+        let close: Int32
+    }
     private let handle: OpaquePointer
     private let trace: MigrationTrace
     private let mutex = NSLock()
@@ -88,22 +96,34 @@ private nonisolated final class MigrationReservedLock: @unchecked Sendable {
     deinit {
         if completed == nil { sqlite3_exec(handle, "ROLLBACK", nil, nil, nil); sqlite3_close(handle) }
     }
-    func releaseAfterDelay(_ seconds: TimeInterval = 0.5) {
+    private func recordLockState(_ name: String) {
+        var state: Int32 = -1
+        let result = sqlite3_file_control(handle, "main", SQLITE_FCNTL_LOCKSTATE, &state)
+        trace.record(name, result: result, lockState: result == SQLITE_OK ? state : nil)
+    }
+    func releaseAfterDelay(_ seconds: TimeInterval = 0.5, action: Action = .rollback) {
         mutex.lock(); precondition(!scheduled); scheduled = true; mutex.unlock()
         trace.record("schedule", scheduledMilliseconds: trace.milliseconds + seconds * 1000)
         let thread = Thread { [self] in
             Thread.sleep(forTimeInterval: seconds)
             trace.record("release-start")
-            let result = sqlite3_exec(handle, "COMMIT", nil, nil, nil)
+            recordLockState("release-lock-before")
+            // The fixture owns only a reserved lock and has no data to commit.
+            // COMMIT requests EXCLUSIVE even here and can race a contender's
+            // transient SHARED lock. ROLLBACK releases this test-only transaction.
+            let result = sqlite3_exec(handle, action == .rollback ? "ROLLBACK" : "COMMIT", nil, nil, nil)
             let extended = sqlite3_extended_errcode(handle)
-            trace.record("commit-result", result: result, extended: extended)
-            if result != SQLITE_OK {
-                trace.record("cleanup-rollback", result: sqlite3_exec(handle, "ROLLBACK", nil, nil, nil))
+            trace.record(action.rawValue + "-result", result: result, extended: extended)
+            recordLockState("release-lock-after")
+            var cleanup: Int32?
+            if result != SQLITE_OK && action == .commit {
+                cleanup = sqlite3_exec(handle, "ROLLBACK", nil, nil, nil)
+                trace.record("cleanup-rollback", result: cleanup)
             }
             let close = sqlite3_close(handle)
             if close != SQLITE_OK { sqlite3_close_v2(handle) }
             trace.record("close-result", result: close)
-            let outcome = Release(commit: result, extended: extended, close: close)
+            let outcome = Release(action: action, result: result, extended: extended, cleanup: cleanup, close: close)
             mutex.lock(); completed = outcome; let pending = waiters; waiters.removeAll(); mutex.unlock()
             for waiter in pending { waiter.resume(returning: outcome) }
         }
@@ -292,7 +312,7 @@ private nonisolated enum MigrationRace {
         trace.record("executors-joined")
         trace.record("joined")
         #expect(trace.diagnosticsSucceeded, "Diagnostic trace write failed")
-        #expect(release.commit == SQLITE_OK && release.close == SQLITE_OK, Comment(rawValue: trace.summary))
+        #expect(release.action == .rollback && release.result == SQLITE_OK && release.close == SQLITE_OK, Comment(rawValue: trace.summary))
         return (firstResult, secondResult)
     }
 }
@@ -454,6 +474,48 @@ private nonisolated enum MigrationRace {
         #expect(try one.get() == two.get())
         #expect(MigrationRace.hasContentionEvidence(trace), Comment(rawValue: trace.summary))
         #expect(!trace.events.contains { $0.name.contains("timeout") }, Comment(rawValue: trace.summary))
+    }
+
+    @Test(arguments: [MigrationReservedLock.Action.commit, .rollback])
+    private func testLockReleaseWithAnActualSharedReader(action: MigrationReservedLock.Action) async throws {
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent("migration-release-\(UUID())")
+        try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: root) }
+        let url = root.appendingPathComponent("knowledge.sqlite")
+        let sentinel = try await ProjectStore(url: url).createProject(name: "Сохранить после release")
+        let trace = try MigrationTrace(version: 7)
+        let heldLock = try MigrationReservedLock(url: url, trace: trace)
+        var reader: OpaquePointer?
+        try #require(sqlite3_open_v2(url.path, &reader, SQLITE_OPEN_READWRITE | SQLITE_OPEN_FULLMUTEX, nil) == SQLITE_OK)
+        defer { sqlite3_exec(reader, "ROLLBACK", nil, nil, nil); sqlite3_close(reader) }
+        try #require(sqlite3_exec(reader, "BEGIN; SELECT count(*) FROM sqlite_schema", nil, nil, nil) == SQLITE_OK)
+        var readerState: Int32 = -1
+        try #require(sqlite3_file_control(reader, "main", SQLITE_FCNTL_LOCKSTATE, &readerState) == SQLITE_OK)
+        #expect(readerState == SQLITE_LOCK_SHARED)
+        heldLock.releaseAfterDelay(0, action: action)
+        let release = await heldLock.waitForRelease()
+        #expect(release.close == SQLITE_OK)
+        if action == .commit {
+            // Negative control: an actual reader makes the old COMMIT fail,
+            // while cleanup still frees the writer. Success of later snapshots
+            // alone must never be reported as a successful COMMIT.
+            #expect(release.result == SQLITE_BUSY && release.extended == SQLITE_BUSY)
+            #expect(release.cleanup == SQLITE_OK)
+            #expect(trace.events.first { $0.name == "release-lock-after" }?.lockState == SQLITE_LOCK_PENDING)
+        } else {
+            #expect(release.result == SQLITE_OK && release.extended == SQLITE_OK)
+            #expect(release.cleanup == nil)
+            #expect(trace.events.first { $0.name == "release-lock-after" }?.lockState == SQLITE_LOCK_NONE)
+        }
+        #expect(trace.events.first { $0.name == "release-lock-before" }?.lockState == SQLITE_LOCK_RESERVED)
+        #expect(sqlite3_file_control(reader, "main", SQLITE_FCNTL_LOCKSTATE, &readerState) == SQLITE_OK)
+        #expect(readerState == SQLITE_LOCK_SHARED) // Still held throughout release.
+        #expect(sqlite3_exec(reader, "ROLLBACK", nil, nil, nil) == SQLITE_OK)
+        let writer = try ProjectDatabase(url: url)
+        try writer.execute("BEGIN EXCLUSIVE"); try writer.execute("ROLLBACK")
+        #expect(try writer.rows("PRAGMA user_version") == [["7"]])
+        #expect(try await ProjectStore(url: url).snapshot().projects == [sentinel])
+        #expect(trace.diagnosticsSucceeded)
     }
 
 }
