@@ -47,11 +47,12 @@ struct MainWindowView: View {
 
     @ViewBuilder private var paneView: some View {
         switch selection {
-        case .meetings: MeetingsScreen()
+        case .meetings: MeetingsScreen(onSettings: { selection = .settings })
         case .documents: DocumentsScreen()
         case .search: KnowledgeSearchEntry()
-        case .inbox: MeetingsScreen(scope: .inbox)
-        case .project(let id): MeetingsScreen(scope: .project(id)).id(id)
+        case .questions: KnowledgeQuestionEntry(onSettings: { selection = .settings })
+        case .inbox: MeetingsScreen(scope: .inbox, onSettings: { selection = .settings })
+        case .project(let id): MeetingsScreen(scope: .project(id), onSettings: { selection = .settings }).id(id)
         case .settings: SettingsScreen()
         }
     }

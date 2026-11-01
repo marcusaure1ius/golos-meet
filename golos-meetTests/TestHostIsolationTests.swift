@@ -14,6 +14,7 @@ import Testing
         #expect(ProductionIndexing.shared == nil)
         #expect(ProductionAssignments.shared == nil)
         #expect(ProductionKnowledgeSearch.service == nil)
+        #expect(ProductionKnowledgeQuestions.makeModel() == nil)
     }
 
     @Test func defaultPathsAndLibraryUseTemporaryStorage() throws {

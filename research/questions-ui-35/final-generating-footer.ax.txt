@@ -1,0 +1,47 @@
+Window: "Golos Questions Preview · Synthetic", App: Golos Questions Preview.
+0 standard window Golos Questions Preview · Synthetic, ID: SwiftUI.WindowGroup<QuestionsPreview.QuestionPreviewRoot>-1-AppWindow-1, Secondary Actions: Raise
+	1 container
+		2 text Изолированный стенд · только synthetic PDF/встреча · fake LLM · без Keychain, записи и облака
+		3 pop up button Fake LLM, Value: Ответ
+		4 button Удержать ответ
+		5 button Отпустить
+		6 text Вызовов fake: 1
+		7 switch Тёмная, Value: off
+		8 button Включить E5 с диска
+		9 button Изменить источники
+		10 button Восстановить источники
+		11 scroll area Secondary Actions: Scroll Up, Scroll Down
+			12 text Вопросы по проекту
+			13 button Разрешения
+			14 text Найдём материалы на этом Mac. Для ответа можно отправить выбранные фрагменты в подставной генератор · без сети.
+			15 pop up button Проект, Value: Север, ID: question.project
+			16 text field (settable) Description: Вопрос по проекту, Value: Когда релиз?, Placeholder: Например: на какую дату перенесли релиз?, ID: question.text
+			17 text Полный вопрос: 12 из 4000 символов
+			18 button (disabled) Description: Подготовить контекст, ID: question.prepare
+			19 button Description: Отменить, ID: question.cancel
+			20 busy indicator Description: Получаем ответ…, Value: 0
+			21 text Проверяем актуальность перед каждой попыткой отправки. Уже отправленные данные нельзя отозвать отменой. Выбрано 2 из 2 найденных фрагментов · 197 символов текста и заголовков Также передадим полный вопрос, имя проекта, ссылки и метаданные этих фрагментов. Остальные результаты останутся на Mac. Для поиска по смыслу установите модель в настройках. Сейчас ищем совпадения слов.
+			22 button Открыть настройки
+			23 text Поиск по смыслу охватывает не весь проект. Ожидают обработки: 2, ошибки/отмены: 0. Ответ сможет опереться только на выбранные фрагменты. [S1] План релиза Страница 2 · Фрагмент 2 Дата источника неизвестна · Импорт: 1 нояб. 2026 г. Релиз согласован на 26 ноября. Перед запусĸом нужна пров
+Релиз согласован на 26 ноября. Перед запуском нужна пров Владельцы: Север — Спрашивать каждый раз [S2] Встреча synthetic Реплика 00:42–00:55 Дата источника неизвестна Релиз перенесли на конец ноября после проверки нагрузки. Владельцы: Лира — Спрашивать каждый раз; Север — Спрашивать каждый раз
+			24 busy indicator Description: Получаем ответ…, Value: 0
+			25 button Отменить запрос
+			26 scroll bar (settable, float) 1
+				27 value indicator (settable, float) 1
+				28 increment arrow button
+				29 decrement arrow button
+				30 increment page button
+				31 decrement page button
+	32 close button
+	33 full screen button Help: this button also has an action to zoom the window, Secondary Actions: zoom the window
+	34 minimize button
+	35 text Golos Questions Preview · Synthetic
+36 menu bar
+	37 Golos Questions Preview
+	38 File
+	39 Edit
+	40 View
+	41 Window
+	42 Help
+
+The focused UI element is 16 text field (settable) Description: Вопрос по проекту, Value: Когда релиз?, Placeholder: Например: на какую дату перенесли релиз?, ID: question.text

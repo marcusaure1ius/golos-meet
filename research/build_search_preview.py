@@ -36,8 +36,9 @@ with (app / "Info.plist").open("wb") as output:
 names = ["LocalTextEmbedding", "EmbeddingModelManifest", "EmbeddingModelInstaller", "E5TextEmbedding", "LocalIndexingRuntime",
          "LocalIndexingService", "KnowledgeModels", "KnowledgeChunker", "DocumentModels", "DocumentImporter", "LocalDocumentExtractor",
          "ProjectStore", "MeetingAssignmentModels", "MeetingAssignmentRuntimeModels", "MeetingEmbeddingSnapshot", "EmbeddingIndexModels", "DocumentImportQueue", "KnowledgeIndexEvents", "KnowledgeFileMonitor",
-         "KnowledgeSearchModels", "KnowledgeSearchService", "KnowledgeSearchSourceReader", "MeetingAssignmentPolicy", "MeetingAssignmentService", "MeetingAssignmentInputReader", "MeetingAssignmentWorker"]
+         "KnowledgeAnswerGenerator", "KnowledgeQuestionService", "KnowledgeSearchModels", "KnowledgeSearchService", "KnowledgeSearchSourceReader", "MeetingAssignmentPolicy", "MeetingAssignmentService", "MeetingAssignmentInputReader", "MeetingAssignmentWorker"]
 sources = [repo / "golos-meet/Core/Knowledge" / (name + ".swift") for name in names]
+sources += [repo / "golos-meet/Core/Insights/ChatCompleter.swift"]
 sources += [repo / "golos-meet" / name for name in ["Util/AppRuntime.swift", "UI/Projects/KnowledgeIndexing.swift", "UI/Projects/ProjectLibrary.swift",
             "UI/Projects/KnowledgeSearchModel.swift", "UI/Projects/KnowledgeSearchScreen.swift", "UI/Projects/KnowledgeSourceView.swift",
             "UI/DesignSystem/Palette.swift", "UI/DesignSystem/Components.swift"]]
