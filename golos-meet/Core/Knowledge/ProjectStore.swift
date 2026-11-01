@@ -316,6 +316,16 @@ actor ProjectStore {
         }
     }
 
+    /// Synchronous nonescaping work stays on ProjectStore's executor and
+    /// connection. Memory extensions never receive a handle across an await.
+    func memoryTransaction<T>(validating hits: [KnowledgeSearchHit] = [], _ work: (ProjectDatabase) throws -> T) throws -> T {
+        let db = try open()
+        return try db.transaction {
+            if let hit = hits.first { try validateKnowledgeSearchHits(hits, model: hit.model, db: db) }
+            return try work(db)
+        }
+    }
+
     private func open() throws -> ProjectDatabase {
         if let database { return database }
         let db = try ProjectDatabase(url: url)
@@ -324,7 +334,7 @@ actor ProjectStore {
         // waiting behind another migrator must observe its committed version.
         try db.transaction {
             let version = Int(try db.rows("PRAGMA user_version").first?.first ?? "") ?? -1
-            guard version <= 6 else { throw ProjectStoreError.newerSchema(version) }
+            guard version <= ProjectMemorySchema.version else { throw ProjectStoreError.newerSchema(version) }
             guard version >= 0 else { throw ProjectStoreError.database("Invalid schema version") }
             if version == 0 {
                 try db.execute("CREATE TABLE projects (id TEXT PRIMARY KEY NOT NULL, name TEXT NOT NULL CHECK(length(trim(name)) BETWEEN 1 AND 200), parent_id TEXT REFERENCES projects(id), cloud_policy TEXT NOT NULL DEFAULT 'localOnly')")
@@ -397,6 +407,7 @@ actor ProjectStore {
                 try db.execute("CREATE INDEX assignment_work_by_state ON assignment_work(state, meeting_id)")
                 try db.execute("PRAGMA user_version = 6")
             }
+            if version < 7 { try ProjectMemorySchema.migrate(db) }
         }
         database = db
         return db

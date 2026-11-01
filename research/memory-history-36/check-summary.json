@@ -1,0 +1,34 @@
+{
+  "base_sha": "8efd4be56d77a34184e4955f54373bac2f7a8f64",
+  "command": "make check",
+  "environment": {
+    "E5_FOLDER": "/tmp/golos-embedding-native/e5-small",
+    "RENDER_TALK_SETTINGS": true,
+    "MENU_PREVIEW": true,
+    "MIGRATION_TRACE_DIR": "/tmp/golos36-final-migration-traces"
+  },
+  "result": "Passed",
+  "tests": 383,
+  "runs": 520,
+  "failed": 0,
+  "skipped": 0,
+  "runtime_warnings": [],
+  "xcresult": "Test-golos-meet-2026.11.01_17-21-50-+0300.xcresult",
+  "prior_run": {
+    "tests": 382,
+    "runs": 519,
+    "failed": 0,
+    "skipped": 0,
+    "runtime_warnings": [
+      {
+        "source": "LocalDocumentExtractorTests.swift",
+        "message": "Thread Performance Checker priority inversion warning"
+      }
+    ]
+  },
+  "rust_changed": false,
+  "production_app_launched": false,
+  "cloud_requests": false,
+  "new_model_downloads": false,
+  "migration_trace_files": 7
+}

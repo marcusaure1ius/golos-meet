@@ -239,7 +239,7 @@ import Testing
         try sql(url, "DROP TABLE embedding_sources")
         let migrated = ProjectStore(url: url)
         try await migrated.synchronizeEmbeddingDocuments()
-        #expect(try scalar(url, "PRAGMA user_version") == 6)
+        #expect(try scalar(url, "PRAGMA user_version") == 7)
         #expect(try await migrated.documents().first?.currentVersion == doc.currentVersion)
         #expect(try await migrated.embeddingJobs().first?.state == .waitingForModel)
         #expect(try Data(contentsOf: await importer(root, migrated).fileURL(for: doc.currentVersion)) == Data(textA.utf8))
