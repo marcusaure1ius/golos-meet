@@ -1,7 +1,7 @@
 """Build-only synthetic UI host; never launches the app or downloads weights.
 
 Fresh bundle id + temp library every run. Only the declared source subset is
-linked: no AppDelegate, recording, ASR, Keychain or cloud-generation classes.
+linked: no AppDelegate, recording, ASR, Keychain or concrete cloud clients.
 """
 import argparse
 from pathlib import Path
@@ -36,7 +36,8 @@ with (app / "Info.plist").open("wb") as output:
 names = ["LocalTextEmbedding", "EmbeddingModelManifest", "EmbeddingModelInstaller", "E5TextEmbedding", "LocalIndexingRuntime",
          "LocalIndexingService", "KnowledgeModels", "KnowledgeChunker", "DocumentModels", "DocumentImporter", "LocalDocumentExtractor",
          "ProjectStore", "MeetingAssignmentModels", "MeetingAssignmentRuntimeModels", "MeetingEmbeddingSnapshot", "EmbeddingIndexModels", "DocumentImportQueue", "KnowledgeIndexEvents", "KnowledgeFileMonitor",
-         "ProjectMemoryModels", "ProjectMemorySchema", "ProjectMemoryStore", "ProjectMemoryHistoryService", "KnowledgeAnswerGenerator", "KnowledgeQuestionService", "KnowledgeSearchModels", "KnowledgeSearchService", "KnowledgeSearchSourceReader", "MeetingAssignmentPolicy", "MeetingAssignmentService", "MeetingAssignmentInputReader", "MeetingAssignmentWorker"]
+         "ProjectMemoryModels", "ProjectMemorySchema", "ProjectMemoryStore", "ProjectMemoryHistoryService",
+         "MemoryUpdateModels", "MemoryUpdateStore", "MemoryFactExtractor", "ProjectMemoryUpdateService", "KnowledgeAnswerGenerator", "KnowledgeQuestionService", "KnowledgeSearchModels", "KnowledgeSearchService", "KnowledgeSearchSourceReader", "MeetingAssignmentPolicy", "MeetingAssignmentService", "MeetingAssignmentInputReader", "MeetingAssignmentWorker"]
 sources = [repo / "golos-meet/Core/Knowledge" / (name + ".swift") for name in names]
 sources += [repo / "golos-meet/Core/Insights/ChatCompleter.swift"]
 sources += [repo / "golos-meet" / name for name in ["Util/AppRuntime.swift", "UI/Projects/KnowledgeIndexing.swift", "UI/Projects/ProjectLibrary.swift",
