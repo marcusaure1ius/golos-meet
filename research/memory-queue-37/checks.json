@@ -53,5 +53,6 @@
   "recording_capture_asr": false,
   "rust_changed": false,
   "compiler_warnings": "Existing Swift warnings outside queue remain; two synchronous SQLite-only MemorySQL helpers now explicitly nonisolated, removing their isolation warnings. runtime_warnings are reported separately by xcresult.",
-  "iterations": "Before final checks: invalid draft state mapped stale instead of failed; two new-test compile errors corrected; settings enable/disable race fixed and regression added. Earlier targeted/full results are superseded by final checks."
+  "iterations": "Before final checks: invalid draft state mapped stale instead of failed; two new-test compile errors corrected; settings enable/disable race fixed and regression added. Earlier targeted/full results are superseded by final checks.",
+  "review_status": "Initial aa4ac4b checks predate independently confirmed P2 ancestry retirement; superseded by ancestor-retirement/checks.json. Original results retained."
 }

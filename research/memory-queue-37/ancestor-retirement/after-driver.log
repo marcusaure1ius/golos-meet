@@ -1,0 +1,2 @@
+FIXED actual reviewer scenario: a-parent replaced by c-replacement; dependent newcycle/recomputed complete; own replacer stays samecycle; history+old batch preserved; repeat events/restart quiet; old derivedevent still rejected as stale; calls 3 oldcycle A386AAAE-7BE8-4EC6-BAD1-21A1D20AA912 aftercycle 3A2215B8-9B28-4B22-9543-767320057F17 ROOT /tmp/review54-AA00E62D-07BC-4608-A8FA-333B90AAFB47
+Build log: /tmp/golos54-ancestor-build-ouv8_p0i/build.log

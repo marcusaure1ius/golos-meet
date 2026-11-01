@@ -493,3 +493,178 @@ private actor QueueDeadlineClock {
     }
 
 }
+
+@MainActor extension ProjectMemoryQueueTests {
+    @Test(arguments:["completed","partial"],["replaces","retracts"])
+    func externalModelRetirementResetsOnlyDependentCoverageAndKeepsOwnBatchHistory(_ coverage:String, _ relation:String) async throws {
+        let f = try QueueFixture(), partial = coverage == "partial"
+        let p = try await f.base.project(policy:partial ? .askEveryTime : .allowSelectedContext)
+        try await f.meeting("a-parent",count:1,owners:[p])
+        let hp = try await f.base.hit("a-parent",project:p)
+        let seed = try await f.base.history.begin(projectID:p,producerKey:"parent-seed",hits:[hp])
+        let original = try #require(try await f.base.history.publish([.init(statement:.init(subject:"plan",kind:.agreement,conditions:[:],text:"PARENT_OLD"),evidenceChunkIDs:[hp.id])],lease:seed).eventIDs.first)
+        try await f.meeting("b-dependent",count:partial ? 13 : 1,owners:[p])
+        f.onCall = { _ in
+            let object = try #require(try JSONSerialization.jsonObject(with:Data(f.base.spy.payload.utf8)) as? [String:Any])
+            let fragments = try #require(object["fragments"] as? [[String:Any]])
+            if f.base.spy.payload.contains("c-retirement_MARKER") {
+                let memories = try #require(object["memories"] as? [[String:Any]])
+                let target = try #require(memories.first { ($0["statement"] as? [String:Any])?["subject"] as? String == "plan" }?["label"] as? String)
+                let fact: [String:Any] = ["subject":"plan","kind":"agreement","conditions":[:],"text":"PARENT_NEW","action":relation == "retracts" ? "retraction" : "assertion","deadline":NSNull(),"decisionDate":NSNull(),"evidence":[["source":"S1","quote":try #require(fragments.first?["text"] as? String)]],"links":[["target":target,"kind":relation]]]
+                f.base.spy.reply = try f.base.response([fact])
+            } else {
+                // One output per batch keeps the consumed parent visible in the
+                // bounded head selection while still visiting all 12 inputs.
+                let response = try #require(try JSONSerialization.jsonObject(with:Data(f.base.spy.reply.utf8)) as? [String:Any])
+                let facts = try #require(response["facts"] as? [[String:Any]])
+                f.base.spy.reply = try f.base.response(Array(facts.prefix(1)))
+            }
+        }
+        await f.worker.changed(); try await f.base.store.cancelMemoryQueue(try await f.job("a-parent").sequence)
+        await f.worker.start(); await f.worker.waitUntilIdle()
+        if partial {
+            let preview = try await f.worker.preparePreview(try await f.job("b-dependent").sequence)
+            await f.worker.waitUntilIdle(); try await f.worker.approvePreview(preview.id); await f.worker.waitUntilIdle()
+        }
+        let before = try await f.job("b-dependent")
+        #expect(before.completedChunks == (partial ? 12 : 1) && before.completeCoverage == !partial)
+        let db = try ProjectDatabase(url:f.base.root.appendingPathComponent("knowledge.sqlite"))
+        let oldBatches = try db.rows("SELECT * FROM memory_queue_batches WHERE cycle=?",bindings:[before.cycle])
+        let oldEvents = try db.rows("SELECT id,body FROM memory_events ORDER BY sequence")
+        let beforeDeps = try MemoryEncoding.decode(MemoryQueueDependencies.self,try #require(try db.rows("SELECT dependencies FROM memory_queue_work WHERE sequence=?",bindings:[String(before.sequence)]).first?.first))
+        #expect(beforeDeps.memories?.contains(original) == true)
+        await f.worker.stop(); await f.worker.waitUntilIdle()
+        let worker = f.replacementWorker(); await worker.start(); await worker.waitUntilIdle()
+        #expect(f.base.spy.calls == 1)
+        try await f.meeting("c-retirement",count:1,owners:[p]); await worker.changed(); await worker.waitUntilIdle()
+        if partial {
+            let preview = try await worker.preparePreview(try await f.job("c-retirement").sequence)
+            await worker.waitUntilIdle(); try await worker.approvePreview(preview.id); await worker.waitUntilIdle()
+        }
+        let reset = try await f.job("b-dependent"), own = try await f.job("c-retirement")
+        #expect(reset.cycle != before.cycle && reset.input == before.input)
+        #expect(own.completeCoverage && f.base.spy.calls == (partial ? 2 : 3))
+        #expect(try db.rows("SELECT * FROM memory_queue_batches WHERE cycle=?",bindings:[before.cycle]) == oldBatches)
+        #expect(try db.rows("SELECT id,body FROM memory_events ORDER BY sequence").starts(with:oldEvents))
+        #expect(try db.rows("SELECT COUNT(*) FROM memory_events WHERE json_extract(body,'$.origin')='manual'") == [["0"]])
+        let ownDeps = try MemoryEncoding.decode(MemoryQueueDependencies.self,try #require(try db.rows("SELECT dependencies FROM memory_queue_work WHERE sequence=?",bindings:[String(own.sequence)]).first?.first))
+        #expect(ownDeps.ownRetirements?.count == 1)
+        if partial {
+            #expect(reset.completedChunks == 0 && reset.state == .needsConsent && !reset.completeCoverage)
+            // The previous batch approval is not a permission for reset input.
+            let preview = try await worker.preparePreview(reset.sequence)
+            #expect(preview.fragments.count == 12 && f.base.spy.calls == 2)
+            await worker.waitUntilIdle(); try await worker.approvePreview(preview.id); await worker.waitUntilIdle()
+            let next = try await worker.preparePreview(reset.sequence)
+            #expect(next.fragments.count == 1 && next.id != preview.id)
+            await worker.waitUntilIdle(); try await worker.approvePreview(next.id); await worker.waitUntilIdle()
+        }
+        let finished = try await f.job("b-dependent"), calls = f.base.spy.calls
+        #expect(finished.completeCoverage && finished.completedChunks == (partial ? 13 : 1))
+        // New unrelated model head must not re-enqueue B or its own replacer C.
+        let unrelated = try await f.base.history.begin(projectID:p,producerKey:"unrelated-head",hits:[hp])
+        _ = try await f.base.history.publish([.init(statement:.init(subject:"unrelated",kind:.agreement,conditions:[:],text:"UNRELATED"),evidenceChunkIDs:[hp.id])],lease:unrelated)
+        for _ in 0..<3 { await worker.changed(); await worker.waitUntilIdle() }
+        #expect(try await f.job("b-dependent").cycle == finished.cycle)
+        #expect(try await f.job("c-retirement").cycle == own.cycle)
+        #expect(f.base.spy.calls == calls)
+        await worker.stop(); await worker.waitUntilIdle()
+        let restart = f.replacementWorker(); await restart.start(); await restart.waitUntilIdle()
+        #expect(f.base.spy.calls == calls)
+        #expect(try db.rows("SELECT * FROM memory_queue_batches WHERE cycle=?",bindings:[before.cycle]) == oldBatches)
+        await restart.stop(); await f.cleanup()
+    }
+
+    @Test func retirementOfTransitiveAncestorResetsCoverageEvenWhenItWasNotSelectedAsMemory() async throws {
+        let f = try QueueFixture(), p = try await f.base.project(), q = try await f.base.project("Предок")
+        try await f.meeting("a",count:1,owners:[q]); let a = try await f.base.hit("a",project:q)
+        let seed = try await f.base.history.begin(projectID:q,producerKey:"a",hits:[a])
+        let ancestor = try #require(try await f.base.history.publish([.init(statement:.init(subject:"plan",kind:.agreement,conditions:[:],text:"ANCESTOR"),evidenceChunkIDs:[a.id])],lease:seed).eventIDs.first)
+        try await f.meeting("d",count:1,owners:[p]); let d = try await f.base.hit("d",project:p)
+        let middle = try await f.base.history.begin(projectID:p,producerKey:"d",hits:[d],parentEventIDs:[ancestor])
+        let parent = try #require(try await f.base.history.publish([.init(statement:.init(subject:"middle",kind:.agreement,conditions:[:],text:"MIDDLE"),evidenceChunkIDs:[d.id])],lease:middle).eventIDs.first)
+        try await f.meeting("b",count:1,owners:[p]); await f.worker.changed()
+        for id in ["a","d"] { try await f.base.store.cancelMemoryQueue(try await f.job(id).sequence) }
+        await f.worker.start(); await f.worker.waitUntilIdle(); let before = try await f.job("b")
+        #expect(before.completeCoverage && f.payloads[0].contains("MIDDLE") && !f.payloads[0].contains("ANCESTOR"))
+        let db = try ProjectDatabase(url:f.base.root.appendingPathComponent("knowledge.sqlite"))
+        let deps = try MemoryEncoding.decode(MemoryQueueDependencies.self,try #require(try db.rows("SELECT dependencies FROM memory_queue_work WHERE sequence=?",bindings:[String(before.sequence)]).first?.first))
+        #expect(Set(deps.memories ?? []) == [parent,ancestor])
+        try await f.meeting("c",count:1,owners:[q])
+        f.onCall = { _ in
+            let fact:[String:Any] = ["subject":"plan","kind":"agreement","conditions":[:],"text":"RETRACTED","action":"retraction","deadline":NSNull(),"decisionDate":NSNull(),"evidence":[["source":"S1","quote":"c_MARKER_0"]],"links":[["target":"M1","kind":"retracts"]]]
+            f.base.spy.reply = try f.base.response([fact])
+        }
+        await f.worker.changed(); await f.worker.waitUntilIdle()
+        let reset = try await f.job("b")
+        #expect(reset.cycle != before.cycle && reset.completedChunks == 0 && !reset.completeCoverage)
+        // The old intermediate head itself is stale; fail before sending it.
+        #expect(reset.state == .stale && f.base.spy.calls == 2)
+        #expect(try await f.job("c").completeCoverage)
+        await f.cleanup()
+    }
+
+    @Test func ownRetirementExemptionDoesNotHideLaterExternalRetirementOfItsPublisher() async throws {
+        let f = try QueueFixture(), p = try await f.base.project()
+        try await f.meeting("a",count:1,owners:[p]); let a = try await f.base.hit("a",project:p)
+        let seed = try await f.base.history.begin(projectID:p,producerKey:"seed",hits:[a])
+        let ancestor = try #require(try await f.base.history.publish([.init(statement:.init(subject:"plan",kind:.agreement,conditions:[:],text:"OLD"),evidenceChunkIDs:[a.id])],lease:seed).eventIDs.first)
+        try await f.meeting("c",count:1,owners:[p])
+        f.onCall = { _ in
+            guard f.base.spy.calls <= 2 else { return }
+            let external = f.base.spy.payload.contains("d_MARKER_0")
+            let fact:[String:Any] = ["subject":"plan","kind":"agreement","conditions":[:],"text":"NEW","action":external ? "retraction" : "assertion","deadline":NSNull(),"decisionDate":NSNull(),"evidence":[["source":"S1","quote":external ? "d_MARKER_0" : "c_MARKER_0"]],"links":[["target":"M1","kind":external ? "retracts" : "replaces"]]]
+            f.base.spy.reply = try f.base.response([fact])
+        }
+        await f.worker.changed(); try await f.base.store.cancelMemoryQueue(try await f.job("a").sequence)
+        await f.worker.start(); await f.worker.waitUntilIdle(); let before = try await f.job("c")
+        #expect(before.completeCoverage && f.base.spy.calls == 1)
+        let own = try #require(try await f.base.history.history(projectID:p).entries.first { $0.event.parentEventIDs.contains(ancestor) }?.event.id)
+        await f.worker.stop(); await f.worker.waitUntilIdle()
+        try await f.meeting("d",count:1,owners:[p]); let d = try await f.base.hit("d",project:p)
+        let request = try await f.base.service.prepare(projectID:p,hits:[d],parentEventIDs:[own])
+        _ = try await f.base.service.update(request)
+        await f.worker.changed()
+        try await f.base.store.cancelMemoryQueue(try await f.job("d").sequence)
+        let reset = try await f.job("c")
+        #expect(reset.cycle != before.cycle && reset.completedChunks == 0 && !reset.completeCoverage)
+        await f.worker.start(); await f.worker.waitUntilIdle()
+        #expect(try await f.job("c").completeCoverage)
+        #expect(f.base.spy.calls == 3)
+        let db = try ProjectDatabase(url:f.base.root.appendingPathComponent("knowledge.sqlite"))
+        #expect(try db.rows("SELECT COUNT(*) FROM memory_queue_batches WHERE cycle=?",bindings:[before.cycle]) == [["1"]])
+        await f.cleanup()
+    }
+
+    @Test func changedAncestorInvalidatesPendingExactConsentAndLegacyCoverageIsResetOnce() async throws {
+        let f = try QueueFixture(), p = try await f.base.project(policy:.askEveryTime)
+        try await f.meeting("a",count:1,owners:[p]); let a = try await f.base.hit("a",project:p)
+        let seed = try await f.base.history.begin(projectID:p,producerKey:"a",hits:[a])
+        let ancestor = try #require(try await f.base.history.publish([.init(statement:.init(subject:"plan",kind:.agreement,conditions:[:],text:"ANCESTOR"),evidenceChunkIDs:[a.id])],lease:seed).eventIDs.first)
+        try await f.meeting("b",count:1,owners:[p]); await f.worker.changed()
+        try await f.base.store.cancelMemoryQueue(try await f.job("a").sequence)
+        await f.worker.start(); await f.worker.waitUntilIdle()
+        let job = try await f.job("b"), preview = try await f.worker.preparePreview(try await f.job("b").sequence)
+        // An external model publication retires A while this exact preview waits.
+        let lease = try await f.base.history.begin(projectID:p,producerKey:"external",hits:[a],parentEventIDs:[ancestor])
+        _ = try await f.base.history.publish([.init(statement:.init(subject:"plan",kind:.agreement,conditions:[:],text:"NEW"),evidenceChunkIDs:[a.id],links:[.init(targetID:ancestor,kind:.replaces)])],lease:lease)
+        await f.worker.changed(); await f.worker.waitUntilIdle()
+        await #expect(throws:MemoryUpdateError.invalidConsent) { try await f.worker.approvePreview(preview.id) }
+        #expect(f.base.spy.calls == 0)
+        let after = try await f.job("b")
+        #expect(after.cycle != job.cycle && after.completedChunks == 0 && after.state == .needsConsent)
+        let fresh = try await f.worker.preparePreview(after.sequence)
+        #expect(fresh.id != preview.id)
+        await f.worker.discardPreview()
+        // v8 before the fix has no memory proof; never trust that coverage.
+        let db = try ProjectDatabase(url:f.base.root.appendingPathComponent("knowledge.sqlite"))
+        try db.execute("UPDATE memory_queue_work SET dependencies=? WHERE sequence=?",bindings:["{\"sources\":[],\"projects\":[],\"manual\":[]}",String(after.sequence)])
+        await f.worker.changed(); await f.worker.waitUntilIdle()
+        let legacyReset = try await f.job("b")
+        #expect(legacyReset.cycle != after.cycle && legacyReset.completedChunks == 0)
+        await f.worker.changed(); await f.worker.waitUntilIdle()
+        #expect(try await f.job("b").cycle == legacyReset.cycle)
+        #expect(f.base.spy.calls == 0)
+        await f.cleanup()
+    }
+}

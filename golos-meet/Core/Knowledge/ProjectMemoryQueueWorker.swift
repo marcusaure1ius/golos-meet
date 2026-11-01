@@ -127,6 +127,9 @@ import Foundation
         try await store.resumeMemoryQueueConsent(pending.lease)
         preview = nil
         await process(pending.lease, service: pending.service, prepared: pending.request, consent: token)
+        // Explicitly approved batches can retire another job's consumed memory
+        // just like background batches. Reconcile before claiming more work.
+        refreshPending = true
         if started { launch() }
     }
     func discardPreview() async {

@@ -44,6 +44,10 @@ nonisolated struct MemoryQueueDependencies: Codable, Equatable, Sendable {
     var sources: [MemoryQueueSourceDependency] = []
     var projects: [KnowledgeProject] = []
     var manual: [MemoryQueueManualVersion] = []
+    // nil marks a pre-fix v8 row whose consumed ancestry was not recorded.
+    // Reconcile resets it rather than claiming that its coverage is current.
+    var memories: [UUID]? = []
+    var ownRetirements: [UUID]? = []
 }
 nonisolated enum MemoryQueueError: Error, LocalizedError, Equatable {
     case stale, busy, budget, notReady

@@ -16,7 +16,7 @@ extension ProjectStore {
             return .init(jobs: try rows.prefix(limit).map(MemoryQueueSQL.job), backpressured: rows.count > limit || rows.contains(where: { $0[6] == "backpressured" }))
         }
     }
-    /// Metadata-only reconciliation; identities came from local lstat, not text.
+    /// Catalog + bounded consumed-proof reconciliation; file identities use lstat.
     /// Completed rows do not depend on automatically changing journal heads.
     func reconcileMemoryQueue(catalog: KnowledgeSearchCatalog, identities: [EmbeddingSourceKey: String], generatorModel: String, contract: String, run: String? = nil) throws {
         guard !generatorModel.isEmpty, generatorModel.count <= 256 else { throw MemoryQueueError.budget }
@@ -114,6 +114,13 @@ extension ProjectStore {
             deps.projects = Array(Dictionary((deps.projects + expected.checkpoint.projects).map { ($0.id,$0) }, uniquingKeysWith: { _, latest in latest }).values).sorted { $0.id.uuidString < $1.id.uuidString }
             let ids = Set(deps.manual.map(\.projectID)).union(expected.checkpoint.parentVersions.map(\.projectID)).union([memory.projectID])
             deps.manual = try ids.sorted { $0.uuidString < $1.uuidString }.map { .init(projectID: $0, sequence: try MemoryQueueSQL.manualVersion($0, db: db)) }
+            var closure = Set(deps.memories ?? []), pending = memory.parents.map(\.id)
+            while let id = pending.popLast() {
+                guard closure.insert(id).inserted else { continue }
+                guard closure.count <= 256 else { throw MemoryQueueError.budget }
+                pending += try MemorySQL.event(id, db: db).parentEventIDs
+            }
+            deps.memories = closure.sorted { $0.uuidString < $1.uuidString }
             guard deps.sources.count <= 128, deps.sources.reduce(0, { $0 + $1.source.chunk.text.count }) <= 128_000, deps.projects.count <= 128 else { throw MemoryQueueError.budget }
             try db.execute("UPDATE memory_queue_work SET dependencies=?,selected_key=? WHERE sequence=?", bindings: [try MemoryEncoding.encode(deps), memory.producerKey, String(lease.job.sequence)])
         }
@@ -192,7 +199,17 @@ nonisolated enum MemoryQueueSQL {
         guard let body = try db.rows("SELECT dependencies FROM memory_queue_work WHERE sequence=?", bindings: [String(lease.job.sequence)]).first?.first else { throw MemoryQueueError.stale }
         return try MemoryEncoding.decode(MemoryQueueDependencies.self, body)
     }
-    static func dependenciesCurrent(_ value: MemoryQueueDependencies, identities: [EmbeddingSourceKey: String]? = nil, db: ProjectDatabase) throws -> Bool {
+    static func dependenciesCurrent(_ value: MemoryQueueDependencies, identities: [EmbeddingSourceKey: String]? = nil, publishing: Set<UUID> = [], db: ProjectDatabase) throws -> Bool {
+        guard let memories = value.memories, let ownRetirements = value.ownRetirements else { return false }
+        let closure = Set(memories)
+        let allowed = closure.union(ownRetirements).union(publishing)
+        let events = try closure.union(ownRetirements).sorted { $0.uuidString < $1.uuidString }.map { try MemorySQL.event($0, db: db) }
+        for status in try MemorySQL.readStatus(events, db: db) {
+            // Same rule as the accepted service's consumed ancestry, with an
+            // exemption only for retirements actually published by this cycle.
+            // Unrelated automatic heads never enter this comparison.
+            if status.state != .current || !Set(status.superseded).isSubset(of: allowed) { return false }
+        }
         for project in value.projects { if try MemorySQL.project(project.id, db: db) != project { return false } }
         for version in value.manual { if try manualVersion(version.projectID, db: db) != version.sequence { return false } }
         for item in value.sources {
@@ -205,23 +222,35 @@ nonisolated enum MemoryQueueSQL {
     static func matches(_ lease: MemoryQueueLease, db: ProjectDatabase) throws -> Bool {
         try db.rows("SELECT generation FROM memory_queue_runtime WHERE slot=1").first?.first == lease.runID && db.rows("SELECT generation,input,attempt,cursor FROM memory_queue_work WHERE sequence=?", bindings: [String(lease.job.sequence)]).first == [lease.job.generation,lease.job.input,lease.attempt,String(lease.job.completedChunks)]
     }
-    static func validate(_ lease: MemoryQueueLease, db: ProjectDatabase) throws {
+    static func validate(_ lease: MemoryQueueLease, publishing: Set<UUID> = [], db: ProjectDatabase) throws {
         guard try matches(lease, db: db),
               let row = try db.rows("SELECT state,generator_model,identity,generator_contract FROM memory_queue_work WHERE sequence=?", bindings: [String(lease.job.sequence)]).first,
               ["running","needsConsent"].contains(row[0]),
               try input(project: lease.job.projectID, source: lease.job.source, model: row[1], contract: row[3], identity: row[2], db: db).hash == lease.job.input,
-              try dependenciesCurrent(dependencies(lease, db: db), db: db) else { throw MemoryQueueError.stale }
+              try dependenciesCurrent(dependencies(lease, db: db), publishing: publishing, db: db) else { throw MemoryQueueError.stale }
     }
     static func finish(_ lease: MemoryQueueLease, selectedKey: String, outcome: String, ids: [UUID], db: ProjectDatabase) throws {
         try Task.checkCancellation()
-        try validate(lease, db: db)
+        // Journal rows/links may already have been appended in this SAME
+        // transaction. Allow precisely their IDs while validating, then retain
+        // only IDs which actually retire a consumed ancestor (bounded proof).
+        try validate(lease, publishing: Set(ids), db: db)
+        var deps = try dependencies(lease, db: db)
+        var ownRetirements = Set(deps.ownRetirements ?? [])
+        let closure = Set(deps.memories ?? [])
+        for id in ids {
+            let targets = try db.rows("SELECT target_id FROM memory_links WHERE event_id=? AND kind IN ('replaces','retracts','corrects')", bindings: [id.uuidString]).compactMap { UUID(uuidString: $0[0]) }
+            if !closure.isDisjoint(with: targets) { ownRetirements.insert(id) }
+        }
+        guard ownRetirements.count <= 256 else { throw MemoryQueueError.budget }
+        deps.ownRetirements = ownRetirements.sorted { $0.uuidString < $1.uuidString }
         guard try db.rows("SELECT state FROM memory_queue_work WHERE sequence=?", bindings: [String(lease.job.sequence)]).first?.first == "running" else { throw MemoryQueueError.stale }
         try db.execute("INSERT INTO memory_queue_batches VALUES (?,?,?,?,?,?,?,?,?)", bindings: [lease.job.projectID.uuidString,lease.job.source.rawValue,lease.job.input,lease.job.cycle,String(lease.job.completedChunks),String(lease.count),selectedKey,outcome,try MemoryEncoding.encode(ids)])
         let cursor = lease.job.completedChunks + lease.count
         let insufficient = try db.rows("SELECT 1 FROM memory_queue_batches WHERE project_id=? AND source_key=? AND input=? AND cycle=? AND outcome='insufficient' LIMIT 1", bindings: [lease.job.projectID.uuidString,lease.job.source.rawValue,lease.job.input,lease.job.cycle]).isEmpty == false
         let otherPending = Int(try db.rows("SELECT COUNT(*) FROM memory_queue_work WHERE state IN ('queued','partial','running') AND sequence!=?", bindings: [String(lease.job.sequence)]).first?.first ?? "") ?? 0
         let state: MemoryQueueState = cursor < lease.job.totalChunks ? (otherPending >= 128 ? .backpressured : .partial) : insufficient ? .insufficient : .completed
-        try db.execute("UPDATE memory_queue_work SET cursor=?,state=?,generation=?,selected_key=?,attempt=NULL,message=? WHERE sequence=?", bindings: [String(cursor),state.rawValue,UUID().uuidString,selectedKey,insufficient ? "Часть фрагментов не дала достаточных оснований; факты не выдуманы." : "",String(lease.job.sequence)])
+        try db.execute("UPDATE memory_queue_work SET cursor=?,state=?,generation=?,selected_key=?,dependencies=?,attempt=NULL,message=? WHERE sequence=?", bindings: [String(cursor),state.rawValue,UUID().uuidString,selectedKey,try MemoryEncoding.encode(deps),insufficient ? "Часть фрагментов не дала достаточных оснований; факты не выдуманы." : "",String(lease.job.sequence)])
         try Task.checkCancellation()
     }
 }
