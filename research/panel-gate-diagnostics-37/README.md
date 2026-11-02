@@ -2,6 +2,8 @@
 
 Это отдельная host-only часть той же feature PR55, base `24b49b067fcda107e397ed4f2461f9bb23de322f`, accepted preview `23b1da158304a2c0c596752d9150e489b1884fb4`. Новый managed worktree/branch `codex/37-panel-gate-diagnostics`. Production, Swift-тесты, Rust, Makefile, deadlines и privacy guards должны оставаться побайтово равными24b. Старые worktrees, reviewer app, completed seed и evidence не изменяются.
 
+**Текущий source исправляет подтверждённый review43 P2 на prepared `049ff242643240a8bd57006fa1b1ad8ee240fb1b` и ещё не собран.** Старый build ниже относится к checkpoint `fcdd8837`, содержит этот startup blocker и остаётся незапущенным. Его Passed означает только успешную компиляцию. Старые receipts и static assessment сохранены без изменений; исходный review verdict не переносится на новый source. Сейчас разрешены только source fix и статическая оценка, новая сборка ожидает final review049ff и решения root.
+
 **Никакого запуска host/CUA/held-case в этой подготовке нет.** Разрешена одна сборка≤180s, output≤1GiB, fresh reserve6GiB+forecast1GiB, STOP<6GiB. После сборки code/report/receipt передаются независимому review43. Root отдельно решает публикацию exact SHA и один actual UI case. Remote PR55 до нового root guard не обновлять; новый feature PR не создавать.
 
 Утверждённый [план](SELF_RECORDING_GATE_PLAN.md), SHA256 `ddeee469bd5ce06b0fc0f02b0a55083ea6f00ed2f358c3ec148f8161bbae64ed`.
@@ -12,7 +14,9 @@
 
 1. Model `send`: busy=true → sending=requestUUID → request=nil → operation Task. Direct `$request.sink` не добавляет scheduler/Task/await и сохраняет marker синхронно; использует опубликованное новое значение. Cancel/invalidate выставляет busy=false раньше request=nil и не считается consent.
 2. Worker approve → `resumeMemoryQueueConsent` с завершением транзакции → process → active task/timer. Время fake-call не является началом production30s budget.
-3. Последний полный needsConsent SQL sample с non-null attempt замораживается в observed send marker. Консервативная нижняя граница — **начало его READ**, строго до marker/operation; read END/first running отдельно timestamped. First running обязан иметь ту же job/input/cycle/generation/attempt/run.
+3. Fresh reconciliation создаёт needsConsent с SQL NULL attempt и selected_key. Это отдельный `fresh-initial-baseline` до открытия actual UI. После actual UI prepare worker получает lease, service привязывает selected key и worker возвращает job в needsConsent. `prepared-request` сохраняет публичные поля actual request и expected producer key, вычисленный штатным extractor из exact payload/fragments/parents с тем же fake-only model. Lease/validation request имеют fileprivate доступ и diagnostic их не открывает. Отдельный `prepared-lease-receipt` требует начавшийся после этой публикации SQL read с неизменными initial job/input/cycle/generation/run/identity, непустым non-null attempt, exact expected selected key, теми же project/source/file stamp и видимым request UUID. Только такой свежий sample можно заморозить в observed send marker. Консервативная нижняя граница — **начало его READ**, строго до marker/operation; read END/first running отдельно timestamped. First running обязан сохранить identity, attempt, selected key, generation и run. Армирование diagnostic actor не меняет job и не заменяет prepared receipt.
+
+Исходный [prepare.py](prepare.py) и его saved assessment относятся к старой подготовке. Текущий [p2-initial-attempt/assess.py](p2-initial-attempt/assess.py) проверяет границы delta, фактический source order и сохранность старых receipts без компилятора или runtime. Проверка по исходникам не доказывает успешный actual case.
 
 Apple описывает публикацию `@Published` в willSet, до присвоения хранимому свойству: [официальная документация](https://developer.apple.com/documentation/combine/published?changes=la__7_1_3). Поэтому project sink использует emitted value, пропускает initial emission и для verdict требует последующее чтение фактического model.projectID. Marker — наблюдённый send-state, не mouse click. SQL anchor не зависит от позднего adapter timestamp.
 
@@ -30,9 +34,9 @@ Apple описывает публикацию `@Published` в willSet, до пр
 - Logger≤512events/2MiB, монотонные sequence/clock+UTC, append+sync, явный overflow/error. Final manifest не появляется под final.json до успешных write/sync/close. Snapshot атомарен только внутри своего SQL transaction; общая UI/actor/SQL картина неатомарна, observer может влиять на scheduling.
 - Любой сбой красный INCONCLUSIVE. Cleanup отдельно маркирован и не считается project-cancel proof; снимает только собственную continuation, закрывает observation и read-only sensor, не force-close production DB и не удаляет библиотеку.
 
-## Единственный build: результат
+## Исторический единственный build: результат
 
-**Build Passed, actual case NOT RUN.** Скомпилирован code checkpoint `fcdd8837d3163bf9aba9274b0c66449e14a11940`. После него изменены только отчёт/receipts/offline validator; helper и builder не менялись.
+**Old build Passed, actual case NOT RUN.** Скомпилирован code checkpoint `fcdd8837d3163bf9aba9274b0c66449e14a11940`; helper и builder оставались такими же до prepared `049ff242`. Последующее P2-исправление helper не входит в этот бинарь. Он не пригоден для нового case без отдельно разрешённых rebuild и review.
 
 | Проверка | Фактический результат |
 |---|---|
@@ -52,13 +56,15 @@ Output root: `/private/var/folders/f6/hwzbqsn10fn6p6gx8d5vmnfm0000gn/T/golos-mem
 Offline audit без compiler/launch:
 
 ```sh
-python3 -B research/panel-gate-diagnostics-37/validate.py
+python3 -B research/panel-gate-diagnostics-37/p2-initial-attempt/assess.py --check
 ```
 
-Он проверяет защищённые source bytes, compiled checkpoint hashes, manifest/Info/binary, output file hashes, budgets и отсутствие созданной runtime library. Он не проверяет поведение неисполненного case. Перед actual launch нужны независимый review43 этого exact prepared SHA и отдельное решение root; текущий build не является таким разрешением.
+Он проверяет защищённые source bytes, delta и порядок переходов по фактическому source, сохранность старых build receipts, hash старого бинаря и отсутствие runtime library. Исходный `validate.py` сохранён для frozen049ff и намеренно требует равенства working source старому compiled checkpoint; на исправленном source это условие больше не выполняется. Ни одна статическая оценка не проверяет поведение неисполненного case. Перед новой сборкой нужны final review049ff и решение root, а перед actual launch — независимый delta-review нового exact SHA и отдельное разрешение.
 
 ## Статус и передача
 
 Static assessment: [results/static-assessment.json.gz](results/static-assessment.json.gz). Результат единственного build сохранён в results/build-receipt.json и raw build.log. Meaningful compile failure не исправляется с новым автоматическим build; incomplete не выдаётся за Passed.
+
+P2 delta: [отчёт](p2-initial-attempt/README.md), [отдельная статическая оценка](p2-initial-attempt/static-assessment.json). Fix не изменяет production, tests, privacy, deadline, transport count или автоматические действия пользователя. Новый source UNBUILT / case NOT RUN; независимое ревью продолжается на frozen049ff, затем требуется delta-review актуального SHA.
 
 Normal singleton composition и width-extrema не проверяются этим диагностическим case. Прежние FINAL24b/noP1P2 и старые inconclusive/0call captures сохраняют свои исходы. Не требуется от человека повторять старый неинструментированный путь или ждать команды чата между timed действиями.

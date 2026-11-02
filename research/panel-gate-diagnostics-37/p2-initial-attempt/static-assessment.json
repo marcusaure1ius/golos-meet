@@ -1,0 +1,49 @@
+{
+  "frozen_prepared_head": "049ff242643240a8bd57006fa1b1ad8ee240fb1b",
+  "production_base": "24b49b067fcda107e397ed4f2461f9bb23de322f",
+  "diagnostic_source_sha256": "7c2ff146a126fdaded2fd9e6ffd90dc8d9cbdd9ae093d5ef3009e6f657dc8dba",
+  "assessment_script_sha256": "d2dadd30642e86cdc86066dbd0da13e5623995438c5f68e31a442378e51b1cd8",
+  "protected_source_file_count": 257,
+  "historical_file_sha256": {
+    "research/build_memory_panel_preview.py": "9e90d076959c7da631953d77b9ef80a19c5422720de5f570f4aa3f4db9be8c23",
+    "research/panel-gate-diagnostics-37/SELF_RECORDING_GATE_PLAN.md": "ddeee469bd5ce06b0fc0f02b0a55083ea6f00ed2f358c3ec148f8161bbae64ed",
+    "research/panel-gate-diagnostics-37/build_once.py": "25363e0ee0b4bac61a0003082f27d4f63b6001bd42c323d3c4a4635d801db65d",
+    "research/panel-gate-diagnostics-37/prepare.py": "58d91bf3f1df89a708ba090619777600018e7626c7a80f656440eb4f5b8d11c9",
+    "research/panel-gate-diagnostics-37/results/READ-BEFORE-ONE-AUTHORIZED-RUN.txt": "2e6a8532fe21a1ed155c4464f50732f10e5ffc116307098edffd6988be7733bc",
+    "research/panel-gate-diagnostics-37/results/artifact-sha256.json": "3b109fd2892a2d7a768c6c62490b9ab6bffb6b2ab16b70c64301966b06d4677e",
+    "research/panel-gate-diagnostics-37/results/build-driver.log": "04c3c438d26d523b23022e883f90c2d00da20b93bcfd3841f6d61c81279bdbb0",
+    "research/panel-gate-diagnostics-37/results/build-output-files.json.gz": "2026fac1e154d930b82a92ca6db6d5e0b55f9fa44f7fb8a09baf9d368dcdb4c8",
+    "research/panel-gate-diagnostics-37/results/build-receipt.json": "b60f1311e343c33bda5dd3a40179baf258d96679eb62e6a7ffc115bdea1f5975",
+    "research/panel-gate-diagnostics-37/results/build-summary.json": "be254ee899763a07c2105e86237d60ffffa03903418c13ccbdd4f6bbb4564b86",
+    "research/panel-gate-diagnostics-37/results/build-telemetry.jsonl": "edd0c05866b69e6624fe63f2b7ee040eeee11259c1d81e096a4b87812b225dbd",
+    "research/panel-gate-diagnostics-37/results/build.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "research/panel-gate-diagnostics-37/results/compile-command.json": "06cea73e403d04fddb644b389be6fd81a29032c8888d09a0247dba4f23c38aa6",
+    "research/panel-gate-diagnostics-37/results/linked-inputs-postbuild.json": "8125f6d7001703bd4bb9ec61e0534b12beeb22ded65ec26dbe57370207477700",
+    "research/panel-gate-diagnostics-37/results/source-allowlist.txt": "313fee7f1e0aacf8fe1a60ce0c1f721d5b748845671c44971f9c350fd813e181",
+    "research/panel-gate-diagnostics-37/results/source-manifest.json": "f163707e9972b480a60dc44318f661fa293d06c17612ee5591ef5c0d01e85ace",
+    "research/panel-gate-diagnostics-37/results/static-assessment.json.gz": "b3480c44a5c51c0a2b6b90678ecdf4c90a01743597a2a3280fcd984553f992ca",
+    "research/panel-gate-diagnostics-37/validate.py": "ed6ee879c6f3db065bf96705a0e2fbd72dbd257dd8dd209293753cda5ccda0ac"
+  },
+  "old_binary_sha256": "3fe0e3b68bcbbd08c8f73e7f8a928994f73e2b6c04eddf62a328a148b0f4980c",
+  "old_compiled_source_head": "fcdd8837d3163bf9aba9274b0c66449e14a11940",
+  "compiled_manifest_sha256": "f163707e9972b480a60dc44318f661fa293d06c17612ee5591ef5c0d01e85ace",
+  "source_order": [
+    "fresh needsConsent INSERT omits attempt/selected_key; initial SQL NULL baseline before UI",
+    "explicit UI prepare: claim -> service bind selected key -> pause needsConsent -> return request",
+    "published actual request -> separate readonly SQL READ BEGIN -> prepared lease receipt",
+    "fresh matching prepared receipt/sample required before synchronous send marker/anchor",
+    "first running preserves non-null attempt, selected key, identity, generation and run"
+  ],
+  "current_source_built": false,
+  "host_launched": false,
+  "actual_case_executed": false,
+  "protected_source_changed": false,
+  "old_receipts_changed": false,
+  "limits": [
+    "Static source/API assessment; no Swift typecheck/build or runtime proof",
+    "Frozen049ff review remains on its own SHA; new delta requires independent review",
+    "No new build until final049ff review and root assessment",
+    "A click before a fresh prepared SQL receipt fails INCONCLUSIVE; no automatic consent or UI retry"
+  ],
+  "utc": "2026-11-02T14:00:56.664786+00:00"
+}

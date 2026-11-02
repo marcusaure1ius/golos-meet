@@ -1,0 +1,16 @@
+# P2 · Fresh needsConsent до actual UI prepare
+
+Independent review43 на frozen prepared `049ff242643240a8bd57006fa1b1ad8ee240fb1b` подтвердил startup blocker: setup требовал непустой attempt до открытия UI, хотя fresh reconciliation создаёт needsConsent без attempt. Background worker такие строки не claim-ит. Поэтому старый host неизбежно завершил бы подготовку INCONCLUSIVE. Старый бинарь не запускался; runtime failure этого case не заявляется.
+
+Исправление затрагивает только diagnostic host:
+
+- До actual UI сохраняется отдельный `fresh-initial-baseline`. Guard требует SQL NULL attempt и selected_key, единственную ожидаемую job и history0/calls0. JSON содержит исходные строковые значения и отдельные признаки SQL NULL, поэтому пустая строка не подменяет NULL.
+- Actual request publication сохраняет публичные request UUID/project/payload hash/source/file stamp и expected producer key, вычисленный штатной `MemoryFactExtractor.producerKey` из exact payload/fragments/parents с тем же fake-only model. Lease и validation у request имеют fileprivate доступ; diagnostic не расширяет его и не утверждает, что прочитал их поля. Claim, bind и pause выполняет существующий production путь явного UI prepare. DTO не удерживает panel model.
+- Первый readonly sample, начавшийся после публикации request, должен сохранить initial sequence/project/source/input/generation/cycle/run/identity и содержать непустой non-null attempt. Selected key должен быть non-null и точно совпадать с вычисленным key actual request; project/source/file stamp и видимый UUID request также должны совпадать. SQL lease сохраняется отдельным `prepared-lease-receipt`. Read, начавшийся до публикации, не используется для этого receipt.
+- Send marker требует receipt того же entry/request, SQL needsConsent не старше секунды и совпадение lease. Только затем sample становится frozen anchor. First running дополнительно сохраняет непустые non-null attempt и selected key. Arm actor остаётся отдельным ACK и job не изменяет.
+
+Нет force claim, перевода в queued, automatic consent, подмены request, изменения deadline/privacy или production/test source. Свежий prepared receipt не расширяет бюджет: он по-прежнему начинается в READ BEGIN anchor. Если человек отправит до записи свежего receipt, диагностический результат будет INCONCLUSIVE; скрытого согласия или retry нет.
+
+Статическая оценка сопоставляет source order с фактическими `MemoryQueueStore`, `ProjectMemoryQueueWorker` и `ProjectMemoryUpdateService`, сверяет защищённое дерево с24b, старые receipts с049ff, старый manifest с compiled checkpoint и SHA незапущенного бинаря. Она не запускает compiler, app, model, SQL library, OCR или CUA. Generated report описывает source hashes, а не исполненные runtime snapshots.
+
+Текущий source **UNBUILT**, actual case **NOT RUN**. Единственная прежняя сборка checkpoint `fcdd8837` сохранена с исходными receipts и startup blocker; её Passed не относится к исправленному source. `prepare.py`, `validate.py` и `results/` не переписывались. Перед новым build нужны final review049ff и решение root; новый SHA требует независимого delta-review, затем отдельного разрешения на один actual case. Main, remote PR55 и чужие worktrees не менялись.

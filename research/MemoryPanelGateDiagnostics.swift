@@ -35,6 +35,7 @@ nonisolated enum GateClock {
 nonisolated struct GateJob: Codable, Equatable, Sendable {
     let sequence, project, source, input, generation, cycle, state, cursor, total: String
     let attempt, selected, identity, model, contract, message: String
+    let attemptIsNull, selectedIsNull: Bool
     func sameIdentity(as other: GateJob) -> Bool {
         sequence == other.sequence && project == other.project && source == other.source && input == other.input && cycle == other.cycle &&
         cursor == other.cursor && total == other.total && identity == other.identity && model == other.model && contract == other.contract
@@ -79,10 +80,10 @@ actor GateSQLReader {
         do {
             let run = try rows("SELECT generation FROM memory_queue_runtime WHERE slot=1").first?.first ?? ""
             let projects = try rows("SELECT id,name,cloud_policy FROM projects ORDER BY id LIMIT 3")
-            let raw = try rows("SELECT sequence,project_id,source_key,input,generation,cycle,state,cursor,total,COALESCE(attempt,''),COALESCE(selected_key,''),identity,generator_model,generator_contract,message FROM memory_queue_work ORDER BY sequence LIMIT 3")
+            let raw = try rows("SELECT sequence,project_id,source_key,input,generation,cycle,state,cursor,total,COALESCE(attempt,''),COALESCE(selected_key,''),identity,generator_model,generator_contract,message,attempt IS NULL,selected_key IS NULL FROM memory_queue_work ORDER BY sequence LIMIT 3")
             let jobs = try raw.map { r -> GateJob in
-                guard r.count == 15 else { throw GateFault.invalid("job shape") }
-                return GateJob(sequence:r[0],project:r[1],source:r[2],input:r[3],generation:r[4],cycle:r[5],state:r[6],cursor:r[7],total:r[8],attempt:r[9],selected:r[10],identity:r[11],model:r[12],contract:r[13],message:r[14])
+                guard r.count == 17, ["0","1"].contains(r[15]), ["0","1"].contains(r[16]) else { throw GateFault.invalid("job shape") }
+                return GateJob(sequence:r[0],project:r[1],source:r[2],input:r[3],generation:r[4],cycle:r[5],state:r[6],cursor:r[7],total:r[8],attempt:r[9],selected:r[10],identity:r[11],model:r[12],contract:r[13],message:r[14],attemptIsNull:r[15] == "1",selectedIsNull:r[16] == "1")
             }
             let count = Int(try rows("SELECT COUNT(*) FROM memory_events").first?.first ?? "") ?? -1
             let history = try rows("SELECT id,body FROM memory_events ORDER BY sequence LIMIT 2")
@@ -191,7 +192,16 @@ actor DiagnosticHoldGate {
     }
 }
 
-nonisolated struct GatePrepared: Codable, Sendable { let request, project:UUID; let payloadHash:String }
+nonisolated struct GatePrepared: Codable, Sendable {
+    let request, project: UUID
+    let payloadHash, selected, source, fileStamp: String
+    func matches(_ sample: GateSQLSample) -> Bool {
+        guard let job = sample.job else { return false }
+        return !job.attempt.isEmpty && !selected.isEmpty && !job.attemptIsNull && !job.selectedIsNull &&
+            project.uuidString == job.project && source == job.source &&
+            selected == job.selected && fileStamp == job.identity
+    }
+}
 nonisolated struct GateVisible: Sendable { let alive:Bool; let project:UUID?; let busy,loading,canSend:Bool; let request:UUID? }
 @MainActor final class GateModelObservation {
     let entry: UUID
@@ -217,7 +227,10 @@ nonisolated struct GateVisible: Sendable { let alive:Bool; let project:UUID?; le
         // No scheduler, Task or await between this sink and the saved send-state marker.
         guard let owner else { return }
         if let value {
-            let prepared = GatePrepared(request:value.id,project:value.projectID,payloadHash:GateClock.hash(value.payload))
+            // Request lease/validation are fileprivate. Recompute the public exact
+            // selected-input contract from this actual request, never open access.
+            let selected = (try? MemoryFactExtractor.producerKey(model:"fake-only",payload:value.payload,hits:value.fragments,parents:value.parents)) ?? ""
+            let prepared = GatePrepared(request:value.id,project:value.projectID,payloadHash:GateClock.hash(value.payload),selected:selected,source:value.fragments.first?.source.key.rawValue ?? "",fileStamp:value.fragments.first?.fileStamp ?? "")
             previousRequest = prepared
             owner.prepared(entry:entry,value:prepared,valid:value.fragments.count == 1 && value.parents.isEmpty && !value.denied && value.approvalProjectIDs == Set([value.projectID]))
         } else if let old = previousRequest {
@@ -284,6 +297,8 @@ nonisolated struct GateVisible: Sendable { let alive:Bool; let project:UUID?; le
     private var arm: GateArm?, call: UUID?
     private var heldAt: Double?, sendMarker: Double?, projectMarker: Double?
     private var anchor: GateSQLSample?, running: GateSQLSample?, latestNeedsConsent: GateSQLSample?
+    private var initialBaseline: GateSQLSample?
+    private var preparedEntry: UUID?, preparedObservedAt: Double?, preparedReceipt: GateLogReceipt?
     private var baselineProjects: [[String]]?
     private var proof: GateLogReceipt?, releaseReceipt: GateRelease?
     private var physicalReturn = false
@@ -332,7 +347,9 @@ nonisolated struct GateVisible: Sendable { let alive:Bool; let project:UUID?; le
             await projects.reload()
             await worker.start(); await worker.waitUntilIdle() // Setup only, never approval completion proof.
             let sample = try await reader!.read(); baselineProjects = sample.projects
-            guard sample.historyCount == 0, sample.jobs.count == 1, sample.job?.project == n.id.uuidString, sample.job?.source == "meeting:current", sample.job?.cursor == "0", sample.job?.total == "1", sample.job?.state == "needsConsent", sample.job?.attempt.isEmpty == false, client.calls == 0 else { throw GateFault.invalid("fresh seed/needsConsent baseline") }
+            try record("fresh-initial-baseline",["meaning":"before actual UI prepare; SQL NULL flags preserved"],sample:sample)
+            guard sample.historyCount == 0, sample.jobs.count == 1, sample.job?.project == n.id.uuidString, sample.job?.source == "meeting:current", sample.job?.cursor == "0", sample.job?.total == "1", sample.job?.state == "needsConsent", sample.job?.attemptIsNull == true, sample.job?.selectedIsNull == true, sample.job?.attempt.isEmpty == true, sample.job?.selected.isEmpty == true, !sample.run.isEmpty, client.calls == 0 else { throw GateFault.invalid("fresh seed/needsConsent baseline") }
+            initialBaseline = sample
             try record("setup-complete",["workerIdleMeaning":"setup only"],sample:sample)
             phase = .ready; status = "1. Откройте «Память». 2. Подготовьте контроль удержания. 3. В очереди просмотрите контекст и прочитайте его до согласия."
             monitor = Task { [weak self] in
@@ -389,18 +406,21 @@ nonisolated struct GateVisible: Sendable { let alive:Bool; let project:UUID?; le
     }
     func prepared(entry:UUID,value:GatePrepared,valid:Bool) {
         guard !terminal, route == entry else { return }
-        guard valid, value.project == north else { fail("prepared request boundary"); return }
-        preparedValue = value
-        do { try record("prepared-request",["entry":entry.uuidString,"request":value.request.uuidString,"payloadSHA256":value.payloadHash]) }
+        guard valid, value.project == north, !value.selected.isEmpty, value.source == "meeting:current", !value.fileStamp.isEmpty else { fail("prepared request boundary"); return }
+        preparedValue = value; preparedEntry = entry; preparedObservedAt = GateClock.mono
+        preparedReceipt = nil; latestNeedsConsent = nil
+        do { try record("prepared-request",["entry":entry.uuidString,"request":value.request.uuidString,"payloadSHA256":value.payloadHash,"selectedInputKey":value.selected,"source":value.source,"fileStamp":value.fileStamp]) }
         catch { fail("prepared log: \(error)") }
     }
     func requestCleared(entry:UUID,previous:GatePrepared,busy:Bool,mainThread:Bool) {
         guard !terminal, busy else { return } // invalidate/cancel clears busy first; it is not consent.
         guard phase == .armed, let arm, route == entry, observations[entry]?.appeared == true, mainThread,
-              let fresh = latestNeedsConsent, fresh.job?.state == "needsConsent", GateClock.mono - fresh.began < 1 else { fail("send marker without armed/visible/fresh needsConsent proof"); return }
+              preparedEntry == entry, preparedValue?.request == previous.request, let preparedReceipt, let observed = preparedObservedAt,
+              let fresh = latestNeedsConsent, fresh.began >= observed, previous.matches(fresh),
+              fresh.job?.state == "needsConsent", GateClock.mono - fresh.began < 1 else { fail("send marker without armed/visible/prepared lease/fresh needsConsent proof"); return }
         do {
             originalRequest = previous; sendMarker = GateClock.mono; anchor = fresh
-            try record("observed-send-state-before-operation-task",["entry":entry.uuidString,"request":previous.request.uuidString,"token":arm.token.uuidString,"markerKind":"Published request nil with busy already true; not mouse click"],sample:fresh)
+            try record("observed-send-state-before-operation-task",["entry":entry.uuidString,"request":previous.request.uuidString,"token":arm.token.uuidString,"preparedReceipt":try GateClock.json(preparedReceipt),"markerKind":"Published request nil with busy already true; not mouse click"],sample:fresh)
             phase = .recordingRunning; status = "Фиксируем первый running. Не меняйте проект до ACK удержанного вызова."
         } catch { fail("send marker log: \(error)") }
     }
@@ -460,10 +480,21 @@ nonisolated struct GateVisible: Sendable { let alive:Bool; let project:UUID?; le
                 if GateClock.mono-launched > 300 { throw GateFault.invalid("preparation5min budget exceeded") }
             }
             if GateClock.mono-lastHeartbeat >= 5 { try record("bounded-heartbeat",["phase":phase.rawValue]); lastHeartbeat = GateClock.mono }
-            if sendMarker == nil, sample.job?.state == "needsConsent", preparedValue != nil { latestNeedsConsent = sample }
+            if sendMarker == nil, let prepared = preparedValue, let observed = preparedObservedAt,
+               sample.began >= observed, sample.job?.state == "needsConsent" {
+                guard let initial = initialBaseline, let before = initial.job, let now = sample.job,
+                      before.sameIdentity(as:now), before.generation == now.generation, initial.run == sample.run,
+                      prepared.matches(sample), preparedEntry == route,
+                      route.flatMap({ observations[$0]?.read().request }) == prepared.request else { throw GateFault.invalid("prepared needsConsent lease/request mismatch") }
+                if preparedReceipt == nil {
+                    preparedReceipt = try record("prepared-lease-receipt",["entry":preparedEntry!.uuidString,"request":prepared.request.uuidString,"payloadSHA256":prepared.payloadHash,"preparedObservedAt":String(observed),"meaning":"after actual UI prepare; before send marker/anchor"],sample:sample)
+                }
+                latestNeedsConsent = sample
+            }
             if phase == .recordingRunning, sample.job?.state == "running" {
                 guard let previous = anchor, let before = previous.job, let now = sample.job,
-                      before.sameIdentity(as:now), !before.attempt.isEmpty, before.attempt == now.attempt, before.generation == now.generation, previous.run == sample.run,
+                      before.sameIdentity(as:now), !before.attemptIsNull, !now.attemptIsNull, !before.selectedIsNull, !now.selectedIsNull,
+                      !before.attempt.isEmpty, before.attempt == now.attempt, !before.selected.isEmpty, before.selected == now.selected, before.generation == now.generation, previous.run == sample.run,
                       previous.ended <= sendMarker!, sample.ended >= sendMarker! else { throw GateFault.invalid("missing/mismatched first running or anchor") }
                 anchor = previous; running = sample
                 try record("first-running-freeze",["needsConsentAnchor":try GateClock.json(previous),"budgetAnchor":"needsConsent READ BEGIN; not fake entry"],sample:sample)
