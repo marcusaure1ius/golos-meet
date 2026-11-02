@@ -1,0 +1,46 @@
+[
+  {
+    "stage" : "scope-created",
+    "test" : "actualPDFPageTwoAndConflictingClaimsRenderThenOldVersionIsRejected()",
+    "uptime" : "335881.96926420834"
+  },
+  {
+    "root" : "memory-update-BFA764A6-81D5-4B8E-A810-0708D247A46C",
+    "stage" : "root-owned",
+    "uptime" : "335881.97103041667"
+  },
+  {
+    "stage" : "store-owned",
+    "uptime" : "335881.97104979167"
+  },
+  {
+    "connection" : "97675A57-0C68-4D80-BB06-40E22FDD8178",
+    "root" : "memory-update-BFA764A6-81D5-4B8E-A810-0708D247A46C",
+    "stage" : "opened",
+    "uptime" : "335881.97128033335"
+  },
+  {
+    "stage" : "update-callbacks-released",
+    "uptime" : "335908.511007125"
+  },
+  {
+    "connection" : "97675A57-0C68-4D80-BB06-40E22FDD8178",
+    "result" : "0",
+    "stage" : "closed",
+    "uptime" : "335908.5111461667"
+  },
+  {
+    "stage" : "body-finished",
+    "uptime" : "335908.5111800833"
+  },
+  {
+    "stage" : "panel-scope-stop-requested",
+    "uptime" : "335908.51119291666"
+  },
+  {
+    "exists" : "false",
+    "root" : "memory-update-BFA764A6-81D5-4B8E-A810-0708D247A46C",
+    "stage" : "root-removed",
+    "uptime" : "335908.5124669584"
+  }
+]

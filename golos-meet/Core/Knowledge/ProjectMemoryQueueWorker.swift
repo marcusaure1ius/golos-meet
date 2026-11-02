@@ -41,6 +41,7 @@ import Foundation
     private var active: (lease: MemoryQueueLease, service: ProjectMemoryUpdateService, task: Task<Void,Error>)?
     private var preview: (lease: MemoryQueueLease, service: ProjectMemoryUpdateService, request: MemoryUpdateRequest)?
     private var loadingPreview = false
+    private var approvingPreview: (id: UUID, lease: MemoryQueueLease, service: ProjectMemoryUpdateService)?
     private var refreshPending = false
     private var cursor: Int64?
     private var state = MemoryQueueSnapshot()
@@ -155,11 +156,16 @@ import Foundation
             service.cancel(); await emit(); throw error
         }
     }
+    func hasPreview(_ requestID: UUID) -> Bool { started && preview?.request.id == requestID }
+    func canApprovePreview(_ requestID: UUID) -> Bool {
+        started && active == nil && worker == nil && !loadingPreview && preview?.request.id == requestID
+    }
     func approvePreview(_ requestID: UUID) async throws {
         guard started, active == nil, worker == nil, !loadingPreview else { throw MemoryQueueError.busy }
         let approvingRun = run
         guard let pending = preview, pending.request.id == requestID else { throw MemoryUpdateError.invalidConsent }
-        loadingPreview = true; defer { loadingPreview = false; if started { launch() } }
+        loadingPreview = true; approvingPreview = (requestID,pending.lease,pending.service)
+        defer { if approvingPreview?.id == requestID { approvingPreview = nil }; loadingPreview = false; if started { launch() } }
         // Keep this project paused while issuing exact consent and starting the
         // serial operation. The token is never written to SQLite.
         let token = try await pending.service.approve(pending.request)
@@ -172,7 +178,17 @@ import Foundation
         refreshPending = true
         if started { launch() }
     }
-    func discardPreview() async {
+    /// Closing an old UI sender must never cancel a newer retry of the same
+    /// source. Both the request identity and durable attempt/CAS remain scoped.
+    func cancelApproval(_ requestID: UUID) async {
+        if preview?.request.id == requestID { await discardPreview(requestID); return }
+        guard let approving = approvingPreview, approving.id == requestID else { return }
+        let task = active?.lease.attempt == approving.lease.attempt ? active?.task : nil
+        try? await store.setMemoryQueueState(approving.lease,state:.cancelled,message:"Отменено пользователем.")
+        approving.service.cancel(); task?.cancel(); await emit()
+    }
+    func discardPreview(_ requestID: UUID? = nil) async {
+        if let requestID, preview?.request.id != requestID { return }
         if let preview {
             preview.service.cancel(); try? await store.setMemoryQueueState(preview.lease, state: .needsConsent, message: "Нужно новое разовое разрешение."); self.preview = nil
         }

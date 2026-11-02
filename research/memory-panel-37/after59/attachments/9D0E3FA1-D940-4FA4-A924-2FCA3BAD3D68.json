@@ -1,0 +1,74 @@
+[
+  {
+    "stage" : "scope-created",
+    "test" : "durableQueueFenceRejectsLateTransportWithoutRelyingOnTaskCancellation(_:)",
+    "uptime" : "336002.2632177917"
+  },
+  {
+    "root" : "memory-update-2C2B7E1C-6ABB-40EA-AD91-1819CECC4A00",
+    "stage" : "root-owned",
+    "uptime" : "336002.72249345836"
+  },
+  {
+    "stage" : "store-owned",
+    "uptime" : "336002.7225135417"
+  },
+  {
+    "connection" : "A18AC8C1-DC4B-4804-A291-0A1B1544364F",
+    "root" : "memory-update-2C2B7E1C-6ABB-40EA-AD91-1819CECC4A00",
+    "stage" : "opened",
+    "uptime" : "336002.7432998334"
+  },
+  {
+    "connection" : "40C7D22A-F7CF-4EEC-BBE4-A24E57739E99",
+    "root" : "memory-update-2C2B7E1C-6ABB-40EA-AD91-1819CECC4A00",
+    "stage" : "opened",
+    "uptime" : "336004.8883725417"
+  },
+  {
+    "connection" : "40C7D22A-F7CF-4EEC-BBE4-A24E57739E99",
+    "result" : "0",
+    "stage" : "closed",
+    "uptime" : "336004.889475375"
+  },
+  {
+    "connection" : "1933F91F-E4FE-4A07-9B68-A7D64D70BC0E",
+    "root" : "memory-update-2C2B7E1C-6ABB-40EA-AD91-1819CECC4A00",
+    "stage" : "opened",
+    "uptime" : "336005.0190217917"
+  },
+  {
+    "stage" : "queue-stop-requested",
+    "uptime" : "336005.02146404167"
+  },
+  {
+    "stage" : "queue-idle",
+    "uptime" : "336005.05793820834"
+  },
+  {
+    "stage" : "update-callbacks-released",
+    "uptime" : "336005.05795287504"
+  },
+  {
+    "connection" : "1933F91F-E4FE-4A07-9B68-A7D64D70BC0E",
+    "result" : "0",
+    "stage" : "closed",
+    "uptime" : "336005.0580232917"
+  },
+  {
+    "connection" : "A18AC8C1-DC4B-4804-A291-0A1B1544364F",
+    "result" : "0",
+    "stage" : "closed",
+    "uptime" : "336005.05812220834"
+  },
+  {
+    "stage" : "body-finished",
+    "uptime" : "336005.0581517917"
+  },
+  {
+    "exists" : "false",
+    "root" : "memory-update-2C2B7E1C-6ABB-40EA-AD91-1819CECC4A00",
+    "stage" : "root-removed",
+    "uptime" : "336005.0841301667"
+  }
+]

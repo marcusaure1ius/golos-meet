@@ -1,0 +1,15 @@
+{"result":0,"name":"acquire","extended":0,"strictPool":false,"milliseconds":0.8236666908487678}
+{"executor":"42EF945B-0A5D-4F74-8946-59CDB5EA00D6","name":"first-task-start","strictPool":false,"milliseconds":1.3759583816863596}
+{"executor":"8ABF0111-B8C8-4B48-A62D-9374E8DF1BA5","name":"second-task-start","strictPool":false,"milliseconds":1.376166706904769}
+{"connection":"C1D2482C-220D-4BFF-B305-F22D588C39AC","executor":"42EF945B-0A5D-4F74-8946-59CDB5EA00D6","name":"first-sqlite-begin","strictPool":false,"milliseconds":1.8948333454318345}
+{"connection":"DF631698-9408-42AD-AE45-BD5A253E9CDF","executor":"8ABF0111-B8C8-4B48-A62D-9374E8DF1BA5","name":"second-sqlite-begin","strictPool":false,"milliseconds":2522.4692500196397}
+{"name":"schedule","scheduledMilliseconds":3025.734458351508,"strictPool":false,"milliseconds":2525.737375020981}
+{"name":"release-start","strictPool":false,"milliseconds":3029.2249167105183}
+{"result":0,"name":"release-lock-before","strictPool":false,"lockState":2,"milliseconds":3029.692250012886}
+{"result":0,"name":"rollback-result","extended":0,"strictPool":false,"milliseconds":3030.5189166683704}
+{"result":0,"name":"release-lock-after","strictPool":false,"lockState":0,"milliseconds":3030.780291708652}
+{"result":0,"name":"close-result","strictPool":false,"milliseconds":3031.0760000138544}
+{"milliseconds":3071.432500029914,"name":"second-success","executor":"8ABF0111-B8C8-4B48-A62D-9374E8DF1BA5","strictPool":false}
+{"milliseconds":3113.1283750291914,"name":"first-success","executor":"42EF945B-0A5D-4F74-8946-59CDB5EA00D6","strictPool":false}
+{"milliseconds":3113.6245416710153,"name":"executors-joined","strictPool":false}
+{"milliseconds":3113.951541716233,"name":"joined","strictPool":false}

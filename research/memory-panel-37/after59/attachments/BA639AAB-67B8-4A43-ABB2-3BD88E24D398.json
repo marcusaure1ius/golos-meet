@@ -1,0 +1,50 @@
+[
+  {
+    "stage" : "scope-created",
+    "test" : "latestDisabledConfigurationWinsQueuedEnableAndBridgeStop()",
+    "uptime" : "336002.264966625"
+  },
+  {
+    "root" : "memory-update-8CE6F724-60F1-4AD1-852E-35909DEF3F66",
+    "stage" : "root-owned",
+    "uptime" : "336002.7263030417"
+  },
+  {
+    "stage" : "store-owned",
+    "uptime" : "336002.7263229167"
+  },
+  {
+    "connection" : "47D3DB90-D089-416D-A381-D3A945D922CB",
+    "root" : "memory-update-8CE6F724-60F1-4AD1-852E-35909DEF3F66",
+    "stage" : "opened",
+    "uptime" : "336002.7573247917"
+  },
+  {
+    "stage" : "queue-stop-requested",
+    "uptime" : "336005.1094915417"
+  },
+  {
+    "stage" : "queue-idle",
+    "uptime" : "336005.1152115833"
+  },
+  {
+    "stage" : "update-callbacks-released",
+    "uptime" : "336005.1152196667"
+  },
+  {
+    "stage" : "body-finished",
+    "uptime" : "336005.12292545836"
+  },
+  {
+    "connection" : "47D3DB90-D089-416D-A381-D3A945D922CB",
+    "result" : "0",
+    "stage" : "closed",
+    "uptime" : "336005.12317033333"
+  },
+  {
+    "exists" : "false",
+    "root" : "memory-update-8CE6F724-60F1-4AD1-852E-35909DEF3F66",
+    "stage" : "root-removed",
+    "uptime" : "336005.13137200003"
+  }
+]

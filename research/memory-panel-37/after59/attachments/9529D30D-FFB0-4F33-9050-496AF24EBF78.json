@@ -1,0 +1,42 @@
+[
+  {
+    "stage" : "scope-created",
+    "test" : "control",
+    "uptime" : "336002.2360235417"
+  },
+  {
+    "root" : "fixture-lifecycle-B16FE3CA-5EC8-4D72-997C-F0C7C1620B19",
+    "stage" : "root-owned",
+    "uptime" : "336002.236162875"
+  },
+  {
+    "stage" : "store-owned",
+    "uptime" : "336002.2361839167"
+  },
+  {
+    "connection" : "5725A207-BBBC-4D70-BAF6-9B3A6DAEC5D7",
+    "root" : "fixture-lifecycle-B16FE3CA-5EC8-4D72-997C-F0C7C1620B19",
+    "stage" : "opened",
+    "uptime" : "336002.27938608336"
+  },
+  {
+    "stage" : "body-finished",
+    "uptime" : "336003.6910474583"
+  },
+  {
+    "stage" : "late-write-finished",
+    "uptime" : "336004.0872534167"
+  },
+  {
+    "connection" : "5725A207-BBBC-4D70-BAF6-9B3A6DAEC5D7",
+    "result" : "0",
+    "stage" : "closed",
+    "uptime" : "336004.087358875"
+  },
+  {
+    "exists" : "false",
+    "root" : "fixture-lifecycle-B16FE3CA-5EC8-4D72-997C-F0C7C1620B19",
+    "stage" : "root-removed",
+    "uptime" : "336004.13500712503"
+  }
+]

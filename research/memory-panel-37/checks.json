@@ -1,0 +1,126 @@
+{
+  "base_sha": "24b75f63bad8429aec00331c4968d6963a09bc09",
+  "branch": "codex/37-project-memory-panel",
+  "full_final": {
+    "result": "Failed",
+    "tests": 447,
+    "passed": 446,
+    "failed": 1,
+    "runs": 621,
+    "skipped": 0,
+    "runtime_warnings": 0,
+    "summary": "checks/full-final-failed.json",
+    "xcresult": ".build/xcode/Logs/Test/Test-golos-meet-2026.11.02_02-39-00-+0300.xcresult",
+    "command": "TEST_RUNNER_GOLOS_MEET_E5_FOLDER=/tmp/golos-embedding-native/e5-small TEST_RUNNER_GOLOS_MEET_RENDER_TALK_SETTINGS=1 TEST_RUNNER_GOLOS_MEET_MENU_PREVIEW=1 TEST_RUNNER_GOLOS_MEET_RENDER_MEMORY_PANEL=/tmp/golos37-panel-proof-renders TEST_RUNNER_GOLOS_MEET_MIGRATION_TRACE_DIR=/tmp/golos37-panel-proof-traces make check"
+  },
+  "targeted_final": {
+    "result": "Passed",
+    "tests": 50,
+    "runs": 64,
+    "failed": 0,
+    "skipped": 0,
+    "runtime_warnings": 0,
+    "summary": "checks/targeted-final-passed.json",
+    "xcresult": ".build/xcode/Logs/Test/Test-golos-meet-2026.11.02_02-42-13-+0300.xcresult",
+    "command": "TEST_RUNNER_GOLOS_MEET_E5_FOLDER=/tmp/golos-embedding-native/e5-small TEST_RUNNER_GOLOS_MEET_RENDER_MEMORY_PANEL=/tmp/golos37-panel-final-renders TEST_RUNNER_GOLOS_MEET_MIGRATION_TRACE_DIR=/tmp/golos37-panel-final-traces xcodebuild test -scheme golos-meet -destination platform=macOS -derivedDataPath .build/xcode -only-testing:golos-meetTests/ProjectMemoryPanelTests -only-testing:golos-meetTests/ProjectMemoryQueueTests -only-testing:golos-meetTests/EmbeddingMigrationRaceTests CODE_SIGNING_ALLOWED=NO"
+  },
+  "previous_full": {
+    "result": "Failed",
+    "tests": 446,
+    "passed": 445,
+    "failed": 1,
+    "runs": 620,
+    "runtime_warnings": 1,
+    "summary": "checks/full-previous-failed.json",
+    "xcresult_retention": "Xcode pruned old bundle on next run; summary and activities exported before pruning; raw runner log retained, full diagnostic stdout not exported in time."
+  },
+  "historical_full": {
+    "result": "Passed",
+    "tests": 441,
+    "runs": 615,
+    "runtime_warnings": 1,
+    "note": "Earlier source before later regression/date tests. QoS warning in LocalDocumentExtractorTests; does not cover final source. Raw runner log retained; no final readiness inferred."
+  },
+  "scoped_cancel": {
+    "before": "scoped-cancel-before.json",
+    "after": "logs/golos37-panel-scoped-final2-check.log.gz",
+    "intermediate": "logs/golos37-panel-scoped-final-check.log.gz",
+    "note": "Before: old sender cancelled newer durable generation. Production scoped request ID + lease CAS fixed it. First after-run passed newer-generation assertion but sampled needsConsent too early; fixture now awaits durable state after gate release, bounded 8s, no production timeout increase. Final 50/64 includes this test."
+  },
+  "native_host": {
+    "build": "Passed",
+    "launched": false,
+    "app": "/var/folders/f6/hwzbqsn10fn6p6gx8d5vmnfm0000gn/T/golos-memory-panel-preview37-37mr3rm4/Golos Memory Panel Preview.app",
+    "bundle": "com.golos.memory-panel-preview37.f39e03184c5c439d9ca6edcc674351b9",
+    "root": "/var/folders/f6/hwzbqsn10fn6p6gx8d5vmnfm0000gn/T/golos-memory-panel-preview37-37mr3rm4/library",
+    "source_allowlist": "native-host/source-allowlist.txt",
+    "log": "native-host/build.log.gz",
+    "command": "python3 research/build_memory_panel_preview.py --weights /tmp/golos-embedding-native/e5-small"
+  },
+  "renders": {
+    "count": 44,
+    "manifests": 4,
+    "kind": "NSHostingView/AppKit offscreen test-host renders; not interactive CUA proof"
+  },
+  "migration_raw_traces": 9,
+  "interactive": "checks/cua-blocked.json",
+  "cloud": "Fake transport only; no OpenRouter request, credentials or user data. Full suite E5 native tests use explicitly installed public weights; panel fixtures use synthetic 2D vectors.",
+  "rust": "unchanged; check-rust not required",
+  "source_sha256": {
+    "golos-meet/Core/Knowledge/MemoryQueueStore.swift": "47e64dcfb39b381c582f8ed19ec1f55e262f07c890bda9ebc1d70377cae3ac65",
+    "golos-meet/Core/Knowledge/ProjectMemoryQueueWorker.swift": "aa3ed2d30cb36ee1c10b31cedc56fd5d04d829e8e881bd27eff6dcbcd5bf43ac",
+    "golos-meet/Core/Knowledge/MemoryPanelReadStore.swift": "216c71801b8b65a31f4203c8f98bbf6e6ee7ac4384a184ba5ae9700325340bef",
+    "golos-meet/UI/Meetings/MeetingDetailView.swift": "3f17f3188eb48f7f5ebe4421a2314fcce611cf7bed2cb1f1000fa206392be059",
+    "golos-meet/UI/Meetings/MeetingsScreen.swift": "edab3d5f50ace1909c542e8ea060fb489b3a667ffac328765b74c8a886d45339",
+    "golos-meet/UI/Projects/ProductionMemoryPanel.swift": "31471c271436790a1dba8338521775a792516c08b0761965923d9edff708a21e",
+    "golos-meet/UI/Projects/ProjectMemoryPanel.swift": "c8aa0c2b22370e85d2c10b0a893854ad1b1bde4d824e3dbbf3954de32a834ddc",
+    "golos-meet/UI/Projects/ProjectMemoryPanelModel.swift": "3410f615319797b8eb9dbb36df21d0c06786a1c1a6d853d771bfaaa3b8f693d0",
+    "golos-meetTests/ProjectMemoryPanelTests.swift": "eced48062ee1290960e0de2090eb35da069b71ca100c8f63412dc2ddca052e2a",
+    "golos-meetTests/TestHostIsolationTests.swift": "ea94ba21bfa3b227945f4f4b125d1eed69b3cb2a8b1e37c84203b5ad2e032b19",
+    "research/MemoryPanelPreview.swift": "f3d61d4c6b452d6e08b3b758d8664db0662e339ba4456bdad8d1aef1c021cc9f",
+    "research/build_memory_panel_preview.py": "c31bba2d442d69e03090a076b7f777b039781ceda447fefeac9efe90018d4d67"
+  },
+  "raw_log_files": {
+    "logs/golos37-panel-final-native.log": {
+      "sha256": "bd5845789bb7b351e7761400c1049ee9847c15082893cf6398988f21ec0ad8e3",
+      "bytes": 527
+    },
+    "logs/golos37-panel-scoped-final2-check.log": {
+      "sha256": "9faae9132ed6b5e59557186e2f3a8b7943d56a1c4a5eb5bb5014644d8774bc97",
+      "bytes": 58294
+    },
+    "logs/golos37-panel-full-check.log": {
+      "sha256": "b165368739250295bca4d400ff4b5da3cbcbbbc3962c944a7410db6583ec0f4f",
+      "bytes": 192961
+    },
+    "logs/golos37-panel-delivery-check.log": {
+      "sha256": "6bd6a2ca2405c498efd9b66b9da7c5269c68a757639fe3210aa9096ed3b391f9",
+      "bytes": 116760
+    },
+    "logs/full-final-test-stdout.txt": {
+      "sha256": "ba70ebd4754dcb2979a7b98a23614cdb40244ddce2a2b9a943228a438abc0d40",
+      "bytes": 273630
+    },
+    "logs/golos37-panel-proof-check.log": {
+      "sha256": "7b8a7304dcbc49b2542baa590d7faa0e7f116f5e0f993db9b8a0220301fad93d",
+      "bytes": 189271
+    },
+    "logs/golos37-panel-scoped-retry-before-suite.log": {
+      "sha256": "66ee583e67a19763a8c618b7e648e065a98f371f1fea48fd48096632db0da5f6",
+      "bytes": 17765
+    },
+    "logs/golos37-panel-scoped-final-check.log": {
+      "sha256": "48aa58b45cfbd5d1b4c780253b4d83f81aab225791e5841fab335692b2fdd9ae",
+      "bytes": 108454
+    },
+    "logs/golos37-panel-final-targeted.log": {
+      "sha256": "5d8b6b14cb7aafca14b138ccdef7edd8f89105359f047bf03924188be072ba89",
+      "bytes": 29648
+    },
+    "native-host/build.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    }
+  },
+  "log_compression": "gzip; decompression preserves exact original bytes, including compiler trailing whitespace."
+}

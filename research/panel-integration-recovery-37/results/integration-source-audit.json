@@ -1,0 +1,8 @@
+{
+  "default_production_factory_byte_unchanged_from_frozen55": true,
+  "accepted63_bridge_test_byte_unchanged": true,
+  "accepted": "23b1da158304a2c0c596752d9150e489b1884fb4",
+  "frozen55": "50e22e00504ec2f87628464c9ed68fa8c4bb09e7",
+  "head": "74dbf7e8aa0031faf709f76ff738a850a23fb940",
+  "default_factory_sha256": "74567953b8b52cccabcb2b48fd69501f16c5cf0f5b2abdab3fd42d5fee49861a"
+}

@@ -1,0 +1,11 @@
+{
+  "targeted_head": "e2ba5b5e7b5d9f31d8a603f605a136d8f487334d",
+  "full_head": "74dbf7e8aa0031faf709f76ff738a850a23fb940",
+  "changed_paths": [
+    "golos-meet/UI/Meetings/MeetingsScreen.swift",
+    "golos-meet/UI/Projects/ProductionMemoryPanel.swift",
+    "golos-meet/UI/Projects/ProjectMemoryEntry.swift",
+    "golos-meet/UI/Projects/ProjectMemoryNavigation.swift"
+  ],
+  "explanation": "Only UI entry/factory/navigation extraction after targeted; final full and final safeDI host compile/interaction cover it. No worker/service/test changes after targeted."
+}

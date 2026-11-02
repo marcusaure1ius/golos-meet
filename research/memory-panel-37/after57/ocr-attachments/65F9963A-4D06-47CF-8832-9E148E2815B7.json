@@ -1,0 +1,19 @@
+{
+  "blocks" : [
+    "2026\n26"
+  ],
+  "elapsedSeconds" : 57.113993083301466,
+  "id" : "0D3522E3-DC7B-4558-A51B-62B3C1DE9C03",
+  "inputBytes" : 21549,
+  "inputSHA256" : "449961f511fd2ef852e2c9893ca8150791359f9d8947d49b4e7dda9fca8b9ddc",
+  "lines" : [
+    "2026",
+    "26"
+  ],
+  "stage" : "extract-returned",
+  "test" : "mixedPDFExtractsScanAndDoesNotDuplicateTextLayer(native:scanned:duplicateNative:)",
+  "wallStart" : 1793582771.759939,
+  "warnings" : [
+
+  ]
+}

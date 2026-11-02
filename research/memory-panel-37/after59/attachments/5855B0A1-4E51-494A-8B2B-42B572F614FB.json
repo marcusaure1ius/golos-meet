@@ -1,0 +1,13 @@
+{
+  "elapsedSeconds" : 0.68132162501569837,
+  "error" : "invalidDocument",
+  "errorCode" : 2,
+  "errorDescription" : "Не удалось прочитать документ. Проверьте, что файл открывается.",
+  "errorDomain" : "golos_meet.DocumentExtractionError",
+  "id" : "5720E1BF-41AC-4872-983E-FE6FD5803EB9",
+  "inputBytes" : 4,
+  "inputSHA256" : "054edec1d0211f624fed0cbca9d4f9400b0e491c43742af2c5b0abebf0c990d8",
+  "stage" : "extract-threw",
+  "test" : "extractionErrorStillAttachesExactInputAndOriginalError()",
+  "wallStart" : 1793585737.7472501
+}

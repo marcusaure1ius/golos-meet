@@ -1,0 +1,19 @@
+{
+  "blocks" : [
+    "Not approved\nApproved"
+  ],
+  "elapsedSeconds" : 57.159564541652799,
+  "id" : "0F398BA7-4DF1-43B0-AEA0-4035BF734D11",
+  "inputBytes" : 24231,
+  "inputSHA256" : "6aad6c1ce5464ce26bd56da0f76ffb8d58662d91de9e6c306d4fbfb5300b62f6",
+  "lines" : [
+    "Not approved",
+    "Approved"
+  ],
+  "stage" : "extract-returned",
+  "test" : "mixedPDFExtractsScanAndDoesNotDuplicateTextLayer(native:scanned:duplicateNative:)",
+  "wallStart" : 1793582771.7794709,
+  "warnings" : [
+
+  ]
+}
