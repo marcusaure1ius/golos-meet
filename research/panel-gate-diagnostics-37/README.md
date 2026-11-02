@@ -1,6 +1,6 @@
 # #37 · Self-recording diagnostic gate: подготовка до запуска
 
-**Актуальное продолжение после actual startup crash acfe: [path-alias fix](path-alias-fix/README.md).** Root назначил узкое host-only исправление подтверждённого AppPaths P2, один bounded Foundation-only validator и при его успехе одну addressed build. Новый host не открывать. Исторические static/build receipts ниже сохранены; они не доказывали startup и не отменяют actual crash.
+**Актуальное продолжение после actual startup crash acfe: [path-alias fix](path-alias-fix/README.md).** Source checkpoint35c4da6, единственный Foundation-only validator Passed16/16. Addressed build остановлена на собственном preflight guard ДО compiler: INCOMPLETE, новых app/binary/manifest нет. Failure receipt сохранён, retry/source changes после STOP не выполнялись; нужна root assessment. Host не открывать. Исторические static/build receipts ниже сохранены; они не доказывали startup и не отменяют actual crash.
 
 Это отдельная host-only часть той же feature PR55, base `24b49b067fcda107e397ed4f2461f9bb23de322f`, accepted preview `23b1da158304a2c0c596752d9150e489b1884fb4`. Новый managed worktree/branch `codex/37-panel-gate-diagnostics`. Production, Swift-тесты, Rust, Makefile, deadlines и privacy guards должны оставаться побайтово равными24b. Старые worktrees, reviewer app, completed seed и evidence не изменяются.
 

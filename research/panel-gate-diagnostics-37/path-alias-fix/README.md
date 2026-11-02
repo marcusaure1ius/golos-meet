@@ -1,5 +1,7 @@
 # #37 · Diagnostic path aliases: addressed startup fix
 
+**Текущий статус: INCOMPLETE — addressed build остановлена на preflight, compiler НЕ запускался.** Source checkpoint `35c4da62abe23c4de90656525617676d75fbdcf7`; один Foundation-only validator Passed16/16. Повторных controls/build/launch нет. Failure receipt сохранён; до оценки root driver и source не исправляются повторно. Нового app/bundle/binary/manifest нет, runtime case NOT RUN.
+
 Independent43 подтвердил P2 на exact `acfe44fb379a9ba8de3c0aa5de7fefb9c93bd28f`: actual startup assertion в diagnostic AppPaths, без вывода о production panel/service/privacy. [Точный review report](review-acfe/FINAL_STARTUP_CRASH_REVIEW.md), SHA256 `715047f155aa2c5c3214660871b7b36db60d925acfda1b00c39ea970d3cd5450`; [receipt](review-acfe/startup-crash-review-receipt.json), SHA256 `39ab23c360e0876c5c31c33456e1233f56bb322069343f438e7265b285ebc023`. [Foundation reproduction stdout](review-acfe/foundation-stdout.txt), SHA256 `d716cff77797248c06eaf3f2b8d9d72d67e7ae20e95b801357067ebe0a0efb89`.
 
 Configured nonexistent library оставалась `/private/var/...`, существующий NSTemporaryDirectory после URL transform становился `/var/...`, поэтому string prefix comparison был false. Trailing-slash hypothesis отвергнута воспроизведением. IPS подтверждают AppPaths assertion, но не содержат path values среды LaunchServices; CLI значения не выдаются за captured LS environment. Более ранний same-bundle crash сохранён в review metadata без установленной связи с CUA. Raw IPS и root launch receipts не копируются в git; они остаются локальными у root/reviewer.
@@ -15,3 +17,21 @@ Root разрешил: source checkpoint, один Foundation-only validator ≤
 Сначала code checkpoint и source hashes, затем control receipt и единственная fresh build/signature/output/11-input receipts. После неё только docs/evidence final SHA для independent43 delta-review. Никакого launch/actual case/full/OCR/reset/push/newPR. Старое human «Да» не разрешает новый case. PR55 остаётся наacfe до нового root guard; main/preview/PR8draft не меняются.
 
 Границы: filesystem checks — последовательные снимки, не атомарный openat capability и не доказательство против конкурентной подмены каталога. Успешные CLI controls/compile/signature не доказывают startup в LaunchServices или project-cancel UI gate. Исторический actual crash acfe не отменяется новой подготовкой.
+
+## Результат одного Foundation-only validator
+
+Code checkpoint зафиксирован до запуска: `35c4da62abe23c4de90656525617676d75fbdcf7`. Exact helper SHA256 `17e72c66e142e379517bb38d596329d8cf682465b3b719675e03a7712c645c15`, host SHA256 `1628d3b018d5f72cc671d4fc034303f392ab0c4954399506e6f4d499572dec4e`, builder SHA256 `1ec090093a376a0b61f82981d7840890f79e9019c476ae79e20e9b413bbfd570`.
+
+[Точная команда и timing/hash receipt](controls/receipt.json): один `/usr/bin/sandbox-exec` deny-network → `/usr/bin/swift -swift-version 5 -module-cache-path <own root> <combined exact helper+harness> <own root>`. Exit0, **2.543869084s**, stderr0 B, free before85067485184 B/after85034102784 B. Guards60s/256MiB/reserve6GiB не сработали. Module cache/fixtures остались в новых task-owned temp directories; app/SQLite/models не запускались.
+
+[Все16 адресных controls](controls/control-results.json) прошли. Три positive native/private-root-var-temp/var-root-private-temp дали одинаковые temp/output device+inode+owner и library URL. Тринадцать negative проверили missing config, wrong leaf/name, suffix-prefix attack, outside/nested, traversal, broad tmp, missing output directory, existing library, output symlink, dangling library symlink и symlink на другой owned fixture. Это один заранее заданный bounded набор в одном процессе, без повторных запусков. [Raw stdout](controls/stdout.txt), [stderr](controls/stderr.txt), [точный combined source](controls/check.swift), [telemetry](controls/telemetry.jsonl). CLI environment не считается captured LaunchServices environment.
+
+## Addressed build: preflight STOP
+
+Один запуск `python3 -B research/panel-gate-diagnostics-37/path-alias-fix/build_once.py` вернул exit1 **до compiler/process creation**. [Exclusive failure receipt](results/build-receipt.json): `build_started=false`, причина `AssertionError('STOP: only saved control receipts may be untracked')`. Guard принадлежит build driver, не host и не production. Remote/process/space/compile/signature этапы этого driver ещё не выполнялись; elapsed/build output/binary не выдумываются.
+
+[Read-only post-stop inspection](results/post-stop-inspection.json) сохраняет status и строку guard. Git porcelain сообщает relative paths; guard сопоставляет их со `str(Path(__file__).parent)`, который при обычном выполнении Python может быть absolute. Исходное значение `checkpoint_status` и evaluated `__file__` не вошли в failure receipt, поэтому post-stop snapshot не выдаётся за captured original preflight values. Он также уже включает новый failure receipt. Этот отказ требует отдельной root assessment; формат guard после отказа не менялся и retry не выполнялся.
+
+Текущий host source остаётся **UNBUILT**. Успешный standalone compile/helper controls не заменяет сборку всего diagnostic host. Ни новая подпись, ни новый binary/source-manifest receipt не получены. Старые049ff/acfe bundles/evidence не переиспользовались; новый actual case не разрешён старым human consent.
+
+Следующий шаг: root оценивает сохранённый preflight failure и отдельно назначает дальнейшее действие. Любая новая сборка/исправление driver после STOP требует этого назначения. Main/preview/remote PR55 не обновлялись, protected source и code checkpoint paths остаются неизменными.

@@ -1,0 +1,194 @@
+[
+  {
+    "actual" : "accepted",
+    "configuredPath" : "\/var\/folders\/f6\/hwzbqsn10fn6p6gx8d5vmnfm0000gn\/T\/golos-memory-gate37-a1c157f8302d41dcbc912207e3991ef2\/library",
+    "expected" : "accepted",
+    "name" : "native aliases",
+    "passed" : true,
+    "resolution" : {
+      "canonicalOutput" : "\/var\/folders\/f6\/hwzbqsn10fn6p6gx8d5vmnfm0000gn\/T\/golos-memory-gate37-a1c157f8302d41dcbc912207e3991ef2",
+      "canonicalTemporary" : "\/var\/folders\/f6\/hwzbqsn10fn6p6gx8d5vmnfm0000gn\/T",
+      "configuredPath" : "\/var\/folders\/f6\/hwzbqsn10fn6p6gx8d5vmnfm0000gn\/T\/golos-memory-gate37-a1c157f8302d41dcbc912207e3991ef2\/library",
+      "library" : "file:\/\/\/var\/folders\/f6\/hwzbqsn10fn6p6gx8d5vmnfm0000gn\/T\/golos-memory-gate37-a1c157f8302d41dcbc912207e3991ef2\/library\/",
+      "outputIdentity" : {
+        "device" : 16777234,
+        "inode" : 58330224,
+        "owner" : 501
+      },
+      "temporaryIdentity" : {
+        "device" : 16777234,
+        "inode" : 265117,
+        "owner" : 501
+      },
+      "temporaryPath" : "\/var\/folders\/f6\/hwzbqsn10fn6p6gx8d5vmnfm0000gn\/T"
+    },
+    "temporaryPath" : "\/var\/folders\/f6\/hwzbqsn10fn6p6gx8d5vmnfm0000gn\/T"
+  },
+  {
+    "actual" : "accepted",
+    "configuredPath" : "\/private\/var\/folders\/f6\/hwzbqsn10fn6p6gx8d5vmnfm0000gn\/T\/golos-memory-gate37-a1c157f8302d41dcbc912207e3991ef2\/library",
+    "expected" : "accepted",
+    "name" : "private root with var temp",
+    "passed" : true,
+    "resolution" : {
+      "canonicalOutput" : "\/var\/folders\/f6\/hwzbqsn10fn6p6gx8d5vmnfm0000gn\/T\/golos-memory-gate37-a1c157f8302d41dcbc912207e3991ef2",
+      "canonicalTemporary" : "\/var\/folders\/f6\/hwzbqsn10fn6p6gx8d5vmnfm0000gn\/T",
+      "configuredPath" : "\/private\/var\/folders\/f6\/hwzbqsn10fn6p6gx8d5vmnfm0000gn\/T\/golos-memory-gate37-a1c157f8302d41dcbc912207e3991ef2\/library",
+      "library" : "file:\/\/\/var\/folders\/f6\/hwzbqsn10fn6p6gx8d5vmnfm0000gn\/T\/golos-memory-gate37-a1c157f8302d41dcbc912207e3991ef2\/library\/",
+      "outputIdentity" : {
+        "device" : 16777234,
+        "inode" : 58330224,
+        "owner" : 501
+      },
+      "temporaryIdentity" : {
+        "device" : 16777234,
+        "inode" : 265117,
+        "owner" : 501
+      },
+      "temporaryPath" : "\/var\/folders\/f6\/hwzbqsn10fn6p6gx8d5vmnfm0000gn\/T"
+    },
+    "temporaryPath" : "\/var\/folders\/f6\/hwzbqsn10fn6p6gx8d5vmnfm0000gn\/T"
+  },
+  {
+    "actual" : "accepted",
+    "configuredPath" : "\/var\/folders\/f6\/hwzbqsn10fn6p6gx8d5vmnfm0000gn\/T\/golos-memory-gate37-a1c157f8302d41dcbc912207e3991ef2\/library",
+    "expected" : "accepted",
+    "name" : "var root with private temp",
+    "passed" : true,
+    "resolution" : {
+      "canonicalOutput" : "\/var\/folders\/f6\/hwzbqsn10fn6p6gx8d5vmnfm0000gn\/T\/golos-memory-gate37-a1c157f8302d41dcbc912207e3991ef2",
+      "canonicalTemporary" : "\/var\/folders\/f6\/hwzbqsn10fn6p6gx8d5vmnfm0000gn\/T",
+      "configuredPath" : "\/var\/folders\/f6\/hwzbqsn10fn6p6gx8d5vmnfm0000gn\/T\/golos-memory-gate37-a1c157f8302d41dcbc912207e3991ef2\/library",
+      "library" : "file:\/\/\/var\/folders\/f6\/hwzbqsn10fn6p6gx8d5vmnfm0000gn\/T\/golos-memory-gate37-a1c157f8302d41dcbc912207e3991ef2\/library\/",
+      "outputIdentity" : {
+        "device" : 16777234,
+        "inode" : 58330224,
+        "owner" : 501
+      },
+      "temporaryIdentity" : {
+        "device" : 16777234,
+        "inode" : 265117,
+        "owner" : 501
+      },
+      "temporaryPath" : "\/private\/var\/folders\/f6\/hwzbqsn10fn6p6gx8d5vmnfm0000gn\/T"
+    },
+    "temporaryPath" : "\/private\/var\/folders\/f6\/hwzbqsn10fn6p6gx8d5vmnfm0000gn\/T"
+  },
+  {
+    "actual" : "invalidConfiguration",
+    "detail" : "invalidConfiguration: SyntheticRoot missing or not a string",
+    "expected" : "invalidConfiguration",
+    "name" : "missing config",
+    "passed" : true,
+    "temporaryPath" : "\/var\/folders\/f6\/hwzbqsn10fn6p6gx8d5vmnfm0000gn\/T"
+  },
+  {
+    "actual" : "invalidLeaf",
+    "configuredPath" : "\/var\/folders\/f6\/hwzbqsn10fn6p6gx8d5vmnfm0000gn\/T\/golos-memory-gate37-a1c157f8302d41dcbc912207e3991ef2\/other",
+    "detail" : "invalidLeaf: library leaf required",
+    "expected" : "invalidLeaf",
+    "name" : "wrong leaf",
+    "passed" : true,
+    "temporaryPath" : "\/var\/folders\/f6\/hwzbqsn10fn6p6gx8d5vmnfm0000gn\/T"
+  },
+  {
+    "actual" : "invalidOutputName",
+    "configuredPath" : "\/var\/folders\/f6\/hwzbqsn10fn6p6gx8d5vmnfm0000gn\/T\/foreign-output\/library",
+    "detail" : "invalidOutputName: unique diagnostic UUID directory required",
+    "expected" : "invalidOutputName",
+    "name" : "wrong name prefix",
+    "passed" : true,
+    "temporaryPath" : "\/var\/folders\/f6\/hwzbqsn10fn6p6gx8d5vmnfm0000gn\/T"
+  },
+  {
+    "actual" : "invalidOutputName",
+    "configuredPath" : "\/var\/folders\/f6\/hwzbqsn10fn6p6gx8d5vmnfm0000gn\/T\/golos-memory-gate37-a1c157f8302d41dcbc912207e3991ef2extra\/library",
+    "detail" : "invalidOutputName: unique diagnostic UUID directory required",
+    "expected" : "invalidOutputName",
+    "name" : "prefix suffix attack",
+    "passed" : true,
+    "temporaryPath" : "\/var\/folders\/f6\/hwzbqsn10fn6p6gx8d5vmnfm0000gn\/T"
+  },
+  {
+    "actual" : "outsideTemporary",
+    "configuredPath" : "\/private\/var\/folders\/f6\/hwzbqsn10fn6p6gx8d5vmnfm0000gn\/T\/golos-path-controls37-4a6d878145bb4ac2ba80782d3840a8ca\/golos-memory-gate37-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\/library",
+    "detail" : "outsideTemporary: different temp parent",
+    "expected" : "outsideTemporary",
+    "name" : "outside current temp",
+    "passed" : true,
+    "temporaryPath" : "\/var\/folders\/f6\/hwzbqsn10fn6p6gx8d5vmnfm0000gn\/T"
+  },
+  {
+    "actual" : "outsideTemporary",
+    "configuredPath" : "\/var\/folders\/f6\/hwzbqsn10fn6p6gx8d5vmnfm0000gn\/T\/golos-memory-gate37-a1c157f8302d41dcbc912207e3991ef2\/nested\/library",
+    "detail" : "outsideTemporary: different temp parent",
+    "expected" : "outsideTemporary",
+    "name" : "nested output",
+    "passed" : true,
+    "temporaryPath" : "\/var\/folders\/f6\/hwzbqsn10fn6p6gx8d5vmnfm0000gn\/T"
+  },
+  {
+    "actual" : "invalidConfiguration",
+    "configuredPath" : "\/var\/folders\/f6\/hwzbqsn10fn6p6gx8d5vmnfm0000gn\/T\/golos-memory-gate37-a1c157f8302d41dcbc912207e3991ef2\/..\/other\/library",
+    "detail" : "invalidConfiguration: absolute path without dot traversal required",
+    "expected" : "invalidConfiguration",
+    "name" : "dot traversal",
+    "passed" : true,
+    "temporaryPath" : "\/var\/folders\/f6\/hwzbqsn10fn6p6gx8d5vmnfm0000gn\/T"
+  },
+  {
+    "actual" : "invalidTemporary",
+    "configuredPath" : "\/var\/folders\/f6\/hwzbqsn10fn6p6gx8d5vmnfm0000gn\/T\/golos-memory-gate37-a1c157f8302d41dcbc912207e3991ef2\/library",
+    "detail" : "invalidTemporary: current per-user \/var\/folders\/...\/T required",
+    "expected" : "invalidTemporary",
+    "name" : "broad tmp forbidden",
+    "passed" : true,
+    "temporaryPath" : "\/private\/tmp"
+  },
+  {
+    "actual" : "missingDirectory",
+    "configuredPath" : "\/var\/folders\/f6\/hwzbqsn10fn6p6gx8d5vmnfm0000gn\/T\/golos-memory-gate37-997175c155074357bccd634105be38c0\/library",
+    "detail" : "missingDirectory: \/var\/folders\/f6\/hwzbqsn10fn6p6gx8d5vmnfm0000gn\/T\/golos-memory-gate37-997175c155074357bccd634105be38c0: Error Domain=NSCocoaErrorDomain Code=260 \"The file “golos-memory-gate37-997175c155074357bccd634105be38c0” couldn’t be opened because there is no such file.\" UserInfo={NSFilePath=\/var\/folders\/f6\/hwzbqsn10fn6p6gx8d5vmnfm0000gn\/T\/golos-memory-gate37-997175c155074357bccd634105be38c0, NSURL=file:\/\/\/var\/folders\/f6\/hwzbqsn10fn6p6gx8d5vmnfm0000gn\/T\/golos-memory-gate37-997175c155074357bccd634105be38c0, NSUnderlyingError=0x7b44940150 {Error Domain=NSPOSIXErrorDomain Code=2 \"No such file or directory\"}}",
+    "expected" : "missingDirectory",
+    "name" : "missing output directory",
+    "passed" : true,
+    "temporaryPath" : "\/var\/folders\/f6\/hwzbqsn10fn6p6gx8d5vmnfm0000gn\/T"
+  },
+  {
+    "actual" : "reusedLibrary",
+    "configuredPath" : "\/var\/folders\/f6\/hwzbqsn10fn6p6gx8d5vmnfm0000gn\/T\/golos-memory-gate37-41a478bf050848d78dd878adcba80878\/library",
+    "detail" : "reusedLibrary: \/var\/folders\/f6\/hwzbqsn10fn6p6gx8d5vmnfm0000gn\/T\/golos-memory-gate37-41a478bf050848d78dd878adcba80878\/library",
+    "expected" : "reusedLibrary",
+    "name" : "existing library",
+    "passed" : true,
+    "temporaryPath" : "\/var\/folders\/f6\/hwzbqsn10fn6p6gx8d5vmnfm0000gn\/T"
+  },
+  {
+    "actual" : "symlink",
+    "configuredPath" : "\/var\/folders\/f6\/hwzbqsn10fn6p6gx8d5vmnfm0000gn\/T\/golos-memory-gate37-4f50399d55f04f2f91b99fa5b0675514\/library",
+    "detail" : "symlink: \/var\/folders\/f6\/hwzbqsn10fn6p6gx8d5vmnfm0000gn\/T\/golos-memory-gate37-4f50399d55f04f2f91b99fa5b0675514",
+    "expected" : "symlink",
+    "name" : "output symlink",
+    "passed" : true,
+    "temporaryPath" : "\/var\/folders\/f6\/hwzbqsn10fn6p6gx8d5vmnfm0000gn\/T"
+  },
+  {
+    "actual" : "symlink",
+    "configuredPath" : "\/var\/folders\/f6\/hwzbqsn10fn6p6gx8d5vmnfm0000gn\/T\/golos-memory-gate37-6afcaae3ad1d4c6da33ab3dfc15fab15\/library",
+    "detail" : "symlink: \/var\/folders\/f6\/hwzbqsn10fn6p6gx8d5vmnfm0000gn\/T\/golos-memory-gate37-6afcaae3ad1d4c6da33ab3dfc15fab15\/library",
+    "expected" : "symlink",
+    "name" : "dangling library symlink",
+    "passed" : true,
+    "temporaryPath" : "\/var\/folders\/f6\/hwzbqsn10fn6p6gx8d5vmnfm0000gn\/T"
+  },
+  {
+    "actual" : "symlink",
+    "configuredPath" : "\/var\/folders\/f6\/hwzbqsn10fn6p6gx8d5vmnfm0000gn\/T\/golos-memory-gate37-8dea6d58cd024162aa01993e7bac85b9\/library",
+    "detail" : "symlink: \/var\/folders\/f6\/hwzbqsn10fn6p6gx8d5vmnfm0000gn\/T\/golos-memory-gate37-8dea6d58cd024162aa01993e7bac85b9",
+    "expected" : "symlink",
+    "name" : "output symlink outside temp direct child",
+    "passed" : true,
+    "temporaryPath" : "\/var\/folders\/f6\/hwzbqsn10fn6p6gx8d5vmnfm0000gn\/T"
+  }
+]
+Foundation-only controls: 16; allPassed=true; aliasIdentitiesMatch=true. Not a LaunchServices environment capture.

@@ -1,0 +1,9 @@
+{
+  "utc": "2026-11-02T19:51:40.184189+00:00",
+  "authorization": "Root confirmed acfe path-alias startup P2: ONE addressed diagnostic build after controls; no launch",
+  "status": "STOP INCOMPLETE/FAILED; no retry; root assessment required",
+  "build_started": false,
+  "host_launched": false,
+  "actual_case_executed": false,
+  "failure": "AssertionError('STOP: only saved control receipts may be untracked')"
+}

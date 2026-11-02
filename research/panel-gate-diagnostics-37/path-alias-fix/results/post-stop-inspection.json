@@ -1,0 +1,12 @@
+{
+  "kind": "read-only post-stop preflight inspection; NOT a driver retry",
+  "git_status_after_stop": "?? research/panel-gate-diagnostics-37/path-alias-fix/controls/\n?? research/panel-gate-diagnostics-37/path-alias-fix/results/\n",
+  "driver_folder_absolute": "/Users/alfa/.codex/worktrees/37-panel-gate-diagnostics/golos-meet/research/panel-gate-diagnostics-37/path-alias-fix",
+  "git_porcelain_paths": "relative to repository",
+  "guard_source": "all(line == '?? '+str(folder)+'/controls/' for line in checkpoint_status.splitlines())",
+  "limitation": "Original checkpoint_status and evaluated __file__ were not captured in failure receipt. Absolute-versus-relative formatting is source-level explanation; current snapshot also includes the new failure receipt.",
+  "compiler_started": false,
+  "build_started": false,
+  "new_app_created": false,
+  "host_launched": false
+}
