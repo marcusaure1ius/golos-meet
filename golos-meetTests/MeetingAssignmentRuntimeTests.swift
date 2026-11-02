@@ -3,7 +3,7 @@ import Testing
 @testable import golos_meet
 
 /// Production worker/SQLite/reader with tiny lifecycle vectors, not real E5.
-@MainActor @Suite struct MeetingAssignmentRuntimeTests {
+@MainActor @Suite(SQLiteFixtureTrait()) struct MeetingAssignmentRuntimeTests {
     private struct Fixture {
         let root: URL
         let store: ProjectStore
@@ -17,7 +17,10 @@ import Testing
         @MainActor init() throws {
             root = FileManager.default.temporaryDirectory.appendingPathComponent("assignment-runtime-\(UUID())")
             try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
+            let scope = try #require(SQLiteFixtureScope.current)
+            scope.register(root: root)
             store = ProjectStore(url: root.appendingPathComponent("knowledge.sqlite"))
+            scope.register(store: store)
             projects = ProjectLibrary(store: store)
             let encoder = LifecycleEncoder(id: "assignment-runtime-fixture")
             indexer = LocalIndexingService(store: store, meetingsRoot: root.appendingPathComponent("meetings"), inspect: {
@@ -44,7 +47,7 @@ import Testing
             _ = try await MeetingEmbeddingSnapshotReader(root: meetings).synchronize(meetingID: id, store: store)
             return file
         }
-        func cleanup() async { await worker.stop(); await worker.waitUntilIdle(); await indexer.stop(); try? FileManager.default.removeItem(at: root) }
+        func cleanup() async { await worker.stop(); await worker.waitUntilIdle(); await indexer.stop() }
     }
 
     @Test func readyIndexIsAutomaticallyAssignedWithoutMeetingScreenAndStaleLinksAreRemovedUntilRecovery() async throws {

@@ -64,6 +64,13 @@ nonisolated final class ProjectDatabase: @unchecked Sendable {
     #if DEBUG
     // Opt-in, task-scoped test observation. No global hook or busy-handler replacement.
     // Capture at connection creation so callbacks remain tied to that connection.
+    enum LifecycleEvent: Sendable {
+        case opened(UUID, URL)
+        case closed(UUID, Int32)
+        case failure(Diagnostic)
+    }
+    @TaskLocal static var lifecycleObserver: (@Sendable (LifecycleEvent) -> Void)?
+    private let capturedLifecycleObserver = ProjectDatabase.lifecycleObserver
     @TaskLocal static var beginObserver: (@Sendable (UUID) -> Void)?
     private let capturedBeginObserver = ProjectDatabase.beginObserver
     #endif
@@ -80,6 +87,9 @@ nonisolated final class ProjectDatabase: @unchecked Sendable {
             throw error
         }
         handle = db
+        #if DEBUG
+        capturedLifecycleObserver?(.opened(connection, url))
+        #endif
         sqlite3_busy_timeout(db, 2000)
         #if DEBUG
         if capturedBeginObserver != nil {
@@ -97,7 +107,12 @@ nonisolated final class ProjectDatabase: @unchecked Sendable {
         #if DEBUG
         if capturedBeginObserver != nil { sqlite3_trace_v2(handle, 0, nil, nil) }
         #endif
+        #if DEBUG
+        let result = sqlite3_close(handle)
+        capturedLifecycleObserver?(.closed(connection, result))
+        #else
         sqlite3_close(handle)
+        #endif
     }
 
     #if DEBUG
@@ -236,8 +251,17 @@ nonisolated final class ProjectDatabase: @unchecked Sendable {
     }
 
     private func failure(phase: Diagnostic.Phase, operation: Diagnostic.Operation, result: Int32, started: TimeInterval) -> ProjectStoreError {
-        Self.error(handle: handle, connection: connection, context: context,
-                   phase: phase, operation: operation, result: result, started: started)
+        #if DEBUG
+        // Notification callbacks can run in another test's task context. Errors
+        // belong to the observer captured by this connection, just like close.
+        return Self.$lifecycleObserver.withValue(capturedLifecycleObserver) {
+            Self.error(handle: handle, connection: connection, context: context,
+                       phase: phase, operation: operation, result: result, started: started)
+        }
+        #else
+        return Self.error(handle: handle, connection: connection, context: context,
+                          phase: phase, operation: operation, result: result, started: started)
+        #endif
     }
     private static func error(handle: OpaquePointer?, connection: UUID, context: TransactionContext?,
                               phase: Diagnostic.Phase, operation: Diagnostic.Operation,
@@ -248,6 +272,9 @@ nonisolated final class ProjectDatabase: @unchecked Sendable {
             operation: operation, result: result, extended: extended,
             elapsedMilliseconds: max(0, (now - started) * 1000), transactionPhase: context?.phase,
             transactionElapsedMilliseconds: context.map { max(0, (now - $0.started) * 1000) })
+        #if DEBUG
+        lifecycleObserver?(.failure(diagnostic))
+        #endif
         let message = diagnostic.message
         logger.error("SQLite failure \(message, privacy: .public)")
         return .database(message)

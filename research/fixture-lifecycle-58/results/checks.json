@@ -1,0 +1,114 @@
+{
+  "before": {
+    "result": "Passed",
+    "passed_tests": 43,
+    "failed_tests": 0,
+    "skipped_tests": 0,
+    "passed_runs": 78,
+    "failures": [],
+    "runtime_warnings": []
+  },
+  "retain": {
+    "result": "Passed",
+    "passed_tests": 43,
+    "failed_tests": 0,
+    "skipped_tests": 0,
+    "passed_runs": 78,
+    "failures": [],
+    "runtime_warnings": []
+  },
+  "targeted-third": {
+    "summary_available": false,
+    "xcresult": "/tmp/golos58-derived/Logs/Test/Test-golos-meet-2026.11.02_04-16-36-+0300.xcresult",
+    "limit": "Xcode retention; full xcodebuild log preserved"
+  },
+  "controls": {
+    "summary_available": false,
+    "xcresult": "/tmp/golos58-derived/Logs/Test/Test-golos-meet-2026.11.02_04-17-54-+0300.xcresult",
+    "limit": "Xcode retention; full xcodebuild log preserved"
+  },
+  "final-targeted": {
+    "result": "Passed",
+    "passed_tests": 45,
+    "failed_tests": 0,
+    "skipped_tests": 0,
+    "passed_runs": 80,
+    "failures": [],
+    "runtime_warnings": []
+  },
+  "full": {
+    "result": "Failed",
+    "passed_tests": 427,
+    "failed_tests": 4,
+    "skipped_tests": 0,
+    "passed_runs": 598,
+    "failures": [
+      {
+        "failureText": "Caught error: .e5rtError(\"e5rt_execution_stream_operation_create_precompiled_compute_operation_with_options call failed\", 13)",
+        "targetName": "golos-meetTests",
+        "testIdentifier": 252,
+        "testIdentifierString": "DocumentFormatImportTests/actualLocalExtractorFeedsPersistedChunks(ext:)",
+        "testIdentifierURL": "test://com.apple.xcode/golos-meet/golos-meetTests/DocumentFormatImportTests/actualLocalExtractorFeedsPersistedChunks(ext:)",
+        "testName": "actualLocalExtractorFeedsPersistedChunks(ext:)"
+      },
+      {
+        "failureText": "Caught error: .sqliteFailures",
+        "targetName": "golos-meetTests",
+        "testIdentifier": 42,
+        "testIdentifierString": "IndexingProductionHooksTests/defaultProducerHooksRunWithoutViewsAndTranscriptDoesNotWaitForLLMOrIndexing()",
+        "testIdentifierURL": "test://com.apple.xcode/golos-meet/golos-meetTests/IndexingProductionHooksTests/defaultProducerHooksRunWithoutViewsAndTranscriptDoesNotWaitForLLMOrIndexing()",
+        "testName": "defaultProducerHooksRunWithoutViewsAndTranscriptDoesNotWaitForLLMOrIndexing()"
+      },
+      {
+        "failureText": "Caught error: .e5rtError(\"e5rt_execution_stream_operation_create_precompiled_compute_operation_with_options call failed\", 13)",
+        "targetName": "golos-meetTests",
+        "testIdentifier": 200,
+        "testIdentifierString": "LocalDocumentExtractorTests/extractsTextFromPNGUsingLocalOCR(text:)",
+        "testIdentifierURL": "test://com.apple.xcode/golos-meet/golos-meetTests/LocalDocumentExtractorTests/extractsTextFromPNGUsingLocalOCR(text:)",
+        "testName": "extractsTextFromPNGUsingLocalOCR(text:)"
+      },
+      {
+        "failureText": "Expectation failed: lines.filter { $0 == scanned }.count == 1\nlines.filter { $0 == scanned }.count → 0",
+        "targetName": "golos-meetTests",
+        "testIdentifier": 202,
+        "testIdentifierString": "LocalDocumentExtractorTests/mixedPDFExtractsScanAndDoesNotDuplicateTextLayer(native:scanned:duplicateNative:)",
+        "testIdentifierURL": "test://com.apple.xcode/golos-meet/golos-meetTests/LocalDocumentExtractorTests/mixedPDFExtractsScanAndDoesNotDuplicateTextLayer(native:scanned:duplicateNative:)",
+        "testName": "mixedPDFExtractsScanAndDoesNotDuplicateTextLayer(native:scanned:duplicateNative:)"
+      }
+    ],
+    "runtime_warnings": [
+      {
+        "issueType": "Runtime Warning",
+        "message": "[Internal] Thread running at User-initiated quality-of-service class waiting on a thread without a QoS class specified (base priority 0). Investigate ways to avoid priority inversions",
+        "sourceURL": "file://<user-home>/.codex/worktrees/58-test-fixture-lifecycle/golos-meet/golos-meetTests/LocalDocumentExtractorTests.swift"
+      }
+    ]
+  },
+  "combined-full": {
+    "result": "Failed",
+    "passed_tests": 433,
+    "failed_tests": 1,
+    "skipped_tests": 0,
+    "passed_runs": 607,
+    "failures": [
+      {
+        "failureText": "Issue recorded: Timed out waiting for synthetic worker state",
+        "targetName": "golos-meetTests",
+        "testIdentifier": 115,
+        "testIdentifierString": "ProjectMemoryQueueTests/concreteMetadataBridgeReceivesReadyEventWithoutLaunchingApplication()",
+        "testIdentifierURL": "test://com.apple.xcode/golos-meet/golos-meetTests/ProjectMemoryQueueTests/concreteMetadataBridgeReceivesReadyEventWithoutLaunchingApplication()",
+        "testName": "concreteMetadataBridgeReceivesReadyEventWithoutLaunchingApplication()"
+      }
+    ],
+    "runtime_warnings": []
+  },
+  "combined-final": {
+    "result": "Passed",
+    "passed_tests": 434,
+    "failed_tests": 0,
+    "skipped_tests": 0,
+    "passed_runs": 608,
+    "failures": [],
+    "runtime_warnings": []
+  }
+}

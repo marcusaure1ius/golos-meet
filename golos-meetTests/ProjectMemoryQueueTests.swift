@@ -25,8 +25,17 @@ import Testing
             base.spy.reply = try base.response(insufficient ? [] : facts, insufficient: insufficient)
             try await onCall?(base.spy.calls)
         }
+        SQLiteFixtureScope.current?.onFinish { @MainActor [weak self] in
+            guard let self else { return }
+            onCall = nil; base.cleanup(); await worker.stop()
+        }
     }
-    func cleanup() async { await worker.stop(); base.cleanup() }
+    func cleanup() async {
+        SQLiteFixtureScope.current?.note("queue-stop-requested")
+        await worker.stop(); await worker.waitUntilIdle()
+        SQLiteFixtureScope.current?.note("queue-idle")
+        onCall = nil; base.cleanup()
+    }
     func meeting(_ id: String, count: Int, owners: Set<UUID>) async throws {
         let folder = base.root.appendingPathComponent("meetings/\(id)")
         try FileManager.default.createDirectory(at: folder, withIntermediateDirectories: true)
@@ -41,10 +50,10 @@ import Testing
     func job(_ id: String) async throws -> MemoryQueueJob {
         try #require(try await base.store.memoryQueueSnapshot().jobs.first { $0.source.externalID == id })
     }
-    func until(_ condition: () async throws -> Bool) async throws {
+    func until(_ label: String = "synthetic worker state", _ condition: () async throws -> Bool) async throws {
         let deadline = ContinuousClock.now.advanced(by:.seconds(5))
         while try await !condition() {
-            if ContinuousClock.now > deadline { Issue.record("Timed out waiting for synthetic worker state"); throw MemoryQueueError.busy }
+            if ContinuousClock.now > deadline { Issue.record("Timed out waiting for \(label)"); throw MemoryQueueError.busy }
             try await Task.sleep(for:.milliseconds(5))
         }
     }
@@ -61,7 +70,7 @@ private actor QueueDeadlineClock {
     }
 }
 
-@MainActor @Suite struct ProjectMemoryQueueTests {
+@MainActor @Suite(SQLiteFixtureTrait()) struct ProjectMemoryQueueTests {
     @Test func longSourceCoversEveryChunkWithDurableBatchesAndNoSelfRegeneration() async throws {
         let f = try QueueFixture(); let p = try await f.base.project()
         try await f.meeting("long",count:25,owners:[p])
@@ -238,10 +247,13 @@ private actor QueueDeadlineClock {
         let f = try QueueFixture(); let p = try await f.base.project()
         let center = NotificationCenter()
         let bridge = KnowledgeMemoryQueue(worker:f.worker,center:center,model:"fake-only")
-        bridge.start(); try await f.until { f.worker.snapshot().revision > 0 }
+        SQLiteFixtureScope.current?.note("metadata-bridge-start")
+        bridge.start(); try await f.until("metadata bridge initial snapshot") { f.worker.snapshot().revision > 0 }
+        SQLiteFixtureScope.current?.note("metadata-bridge-initial-snapshot")
         try await f.meeting("late",count:1,owners:[p])
         KnowledgeIndexEvents.post(.meeting("late"),center:center)
-        try await f.until { try await f.base.store.memoryQueueSnapshot().jobs.first { $0.source.externalID == "late" }?.completeCoverage == true }
+        try await f.until("metadata bridge ready-source coverage") { try await f.base.store.memoryQueueSnapshot().jobs.first { $0.source.externalID == "late" }?.completeCoverage == true }
+        SQLiteFixtureScope.current?.note("metadata-bridge-complete")
         #expect(f.base.spy.calls == 1)
         bridge.stop(); await f.cleanup()
     }
@@ -568,7 +580,9 @@ private actor QueueDeadlineClock {
         #expect(try await f.job("b-dependent").cycle == finished.cycle)
         #expect(try await f.job("c-retirement").cycle == own.cycle)
         #expect(f.base.spy.calls == calls)
+        SQLiteFixtureScope.current?.note("queue-stop-requested")
         await worker.stop(); await worker.waitUntilIdle()
+        SQLiteFixtureScope.current?.note("queue-idle")
         let restart = f.replacementWorker(); await restart.start(); await restart.waitUntilIdle()
         #expect(f.base.spy.calls == calls)
         #expect(try db.rows("SELECT * FROM memory_queue_batches WHERE cycle=?",bindings:[before.cycle]) == oldBatches)

@@ -1,0 +1,38 @@
+[
+  {
+    "stage" : "scope-created",
+    "test" : "indexUpdateBridgeRunsWhileNoScreenIsOpenAndManualEventsDoNotReindex()",
+    "uptime" : "333293.5547910417"
+  },
+  {
+    "root" : "assignment-runtime-410A1D76-6FF3-44DD-80AF-A51E28EC0E1B",
+    "stage" : "root-owned",
+    "uptime" : "333293.62990266667"
+  },
+  {
+    "stage" : "store-owned",
+    "uptime" : "333293.62992154167"
+  },
+  {
+    "connection" : "C59A831F-3276-4CA9-84E8-C443A6579180",
+    "root" : "assignment-runtime-410A1D76-6FF3-44DD-80AF-A51E28EC0E1B",
+    "stage" : "opened",
+    "uptime" : "333293.71404195833"
+  },
+  {
+    "stage" : "body-finished",
+    "uptime" : "333295.9856712917"
+  },
+  {
+    "connection" : "C59A831F-3276-4CA9-84E8-C443A6579180",
+    "result" : "0",
+    "stage" : "closed",
+    "uptime" : "333296.00927720836"
+  },
+  {
+    "exists" : "false",
+    "root" : "assignment-runtime-410A1D76-6FF3-44DD-80AF-A51E28EC0E1B",
+    "stage" : "root-removed",
+    "uptime" : "333296.0158695417"
+  }
+]
