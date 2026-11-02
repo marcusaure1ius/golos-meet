@@ -33,9 +33,7 @@ struct MeetingsScreen: View {
 
     var body: some View {
         Group {
-            if showingMemory {
-                ProjectMemoryEntry(projectID:questionProjectID,onBack:{ showingMemory = false },onSettings:onSettings)
-            } else if showingQuestions {
+            if showingQuestions {
                 KnowledgeQuestionEntry(initialProjectID: questionProjectID, onBack: { showingQuestions = false }, onSettings: onSettings)
             } else if showingSearch {
                 KnowledgeSearchEntry(initialScope: searchScope, onBack: { showingSearch = false })
@@ -70,6 +68,9 @@ struct MeetingsScreen: View {
                     }
                 }
             }
+        }
+        .projectMemoryRoute(isPresented:showingMemory) {
+            ProjectMemoryEntry(projectID:questionProjectID,onBack:{ showingMemory = false },onSettings:onSettings)
         }
         .onAppear { library.reload() }
         .onChange(of: scenePhase) { _, phase in

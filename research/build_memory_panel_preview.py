@@ -15,6 +15,7 @@ import uuid
 parser = argparse.ArgumentParser()
 parser.add_argument('--weights', required=True, type=Path)
 parser.add_argument('--derived-data', type=Path)
+parser.add_argument('--resume-library', action='store_true', help='Keep this stopped task-owned host library for remaining UI gates')
 parser.add_argument('--reuse-root', type=Path, help='Rebuild the same stopped task-owned temporary host for a review fix')
 args = parser.parse_args()
 repo = Path(__file__).resolve().parents[1]
@@ -35,7 +36,11 @@ if args.reuse_root:
 app = qa / 'Golos Memory Panel Preview.app/Contents'
 (app / 'MacOS').mkdir(parents=True, exist_ok=True)
 bundle = old['CFBundleIdentifier'] if args.reuse_root else 'com.golos.memory-panel-preview37.' + uuid.uuid4().hex
-synthetic_root = qa / ('library-' + uuid.uuid4().hex) if args.reuse_root else qa / 'library'
+if args.resume_library and not args.reuse_root:
+    parser.error('--resume-library requires a stopped task-owned --reuse-root')
+synthetic_root = Path(old['SyntheticRoot']) if args.resume_library else qa / ('library-' + uuid.uuid4().hex) if args.reuse_root else qa / 'library'
+if args.resume_library and (not synthetic_root.resolve().is_relative_to(qa.resolve()) or not (synthetic_root / 'knowledge.sqlite').is_file()):
+    parser.error('Resume is restricted to the existing task-owned synthetic library')
 with (app / 'Info.plist').open('wb') as out:
     plistlib.dump({'CFBundleExecutable': 'MemoryPanelPreview', 'CFBundleIdentifier': bundle,
                   'CFBundleName': 'Golos Memory Panel Preview', 'NSHighResolutionCapable': True,
@@ -44,7 +49,7 @@ sources = sorted((repo / 'golos-meet/Core/Knowledge').glob('*.swift'))
 sources += [repo / 'golos-meet/Core/Insights/ChatCompleter.swift']
 sources += [repo / 'golos-meet' / p for p in ['Util/AppRuntime.swift', 'UI/DesignSystem/Palette.swift', 'UI/DesignSystem/Components.swift']]
 sources += [repo / 'golos-meet/UI/Projects' / (p + '.swift') for p in ['ProjectLibrary', 'KnowledgeIndexing', 'KnowledgeSearchModel',
-    'KnowledgeSearchScreen', 'KnowledgeSourceView', 'KnowledgeQuestionModel', 'KnowledgeQuestionScreen', 'ProjectCloudSettings', 'ProjectMemoryPanelModel', 'ProjectMemoryPanel', 'ProjectMemoryNavigation']]
+    'KnowledgeSearchScreen', 'KnowledgeSourceView', 'KnowledgeQuestionModel', 'KnowledgeQuestionScreen', 'ProjectCloudSettings', 'ProjectMemoryPanelModel', 'ProjectMemoryPanel', 'ProjectMemoryNavigation', 'ProjectMemoryEntry']]
 sources += [repo / 'research/MemoryPanelPreview.swift']
 for name in ['OpenRouterClient.swift', 'Keychain.swift', 'golos_meetApp.swift', 'ProductionKnowledgeMemory Panel.swift']:
     assert all(p.name != name for p in sources)

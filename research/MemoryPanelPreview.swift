@@ -65,6 +65,14 @@ actor PanelPreviewGate {
         Task {
             do {
                 try FileManager.default.createDirectory(at:root,withIntermediateDirectories:true)
+                let existing = try await store.snapshot()
+                if let p = existing.projects.first(where: { $0.name == "Север" }) {
+                    project = p.id
+                    counter = existing.meetingProjects.keys.compactMap { $0.hasPrefix("new-") ? Int($0.dropFirst(4)) : nil }.max() ?? 0
+                    await projects.reload(); await worker.start(); await worker.waitUntilIdle(); model.projectID = p.id
+                    notice = "Synthetic host · продолжение task-owned библиотеки · fake LLM · без записи и сети"
+                    return
+                }
                 let p = try await store.createProject(name:"Север"), q = try await store.createProject(name:"Приватный"), _ = try await store.createProject(name:"Без материалов")
                 project = p.id; try await store.setCloudPolicy(.askEveryTime,for:p.id); try await store.setCloudPolicy(.localOnly,for:q.id)
                 try await meeting("current","Релиз 2026-11-26. Проверим готовность нагрузки.",count:1,owner:p.id)
@@ -90,6 +98,13 @@ actor PanelPreviewGate {
                 notice = "Synthetic host · temp SQLite · реальные service/worker/UI · fake LLM · без записи и сети"
             } catch { notice = "Ошибка synthetic setup: \(error)" }
         }
+    }
+    func panelModel(projectID: UUID?, meetingID: String?) -> ProjectMemoryPanelModel? {
+        let selected = projectID ?? (meetingID == nil ? project : nil)
+        client.trace(["action":"entry-factory","project":selected?.uuidString ?? "nil","meeting":meetingID ?? "nil"])
+        return .init(store:store,worker:worker,meetingsRoot:AppPaths.meetingsRoot,
+            documentsRoot:AppPaths.appSupport.appendingPathComponent("copies"),projectID:selected,meetingID:meetingID,
+            provider:"Fake · без сети",center:.default)
     }
     func meeting(_ id:String,_ text:String,count:Int,owner:UUID) async throws {
         let folder = AppPaths.meetingsRoot.appendingPathComponent(id)
@@ -136,6 +151,7 @@ actor PanelPreviewGate {
 }
 struct PanelPreviewRoot: View {
     @State private var showingMemory = false
+    @State private var showingProjectMemory = false
     @ObservedObject var state: PanelPreviewState
     @ObservedObject var model: ProjectMemoryPanelModel
     @ObservedObject var client: PanelPreviewClient
@@ -163,13 +179,18 @@ struct PanelPreviewRoot: View {
                     Text("Текущая встреча").font(.title2)
                     Text("Синтетическая расшифровка").font(.caption)
                     ProjectMemoryOpenButton { showingMemory.toggle() }
+                    ProjectMemoryOpenButton(title:"Память",systemImage:"text.book.closed",identifier:"project.memory") { showingProjectMemory = true }
                     Text("00:42 · Участник\nРелиз 2026-11-26. Проверим готовность нагрузки.")
                     Spacer()
                     Text("Захват и ASR отсутствуют в этом host.").font(.caption)
                 }.padding(24).frame(width:290)
+            }.projectMemoryRoute(isPresented:showingProjectMemory) {
+                ProjectMemoryEntry(projectID:model.projectID,meetingID:nil,onBack:{ showingProjectMemory = false },onSettings:nil,makeModel:state.panelModel)
+                    .environmentObject(state.projects)
             }
         }.projectMemoryInspector(isPresented:$showingMemory) {
-            ProjectMemoryPanel(model:model).environmentObject(state.projects)
+            ProjectMemoryEntry(projectID:nil,meetingID:"current",onBack:nil,onSettings:nil,makeModel:state.panelModel)
+                .id("current").environmentObject(state.projects)
         }.task { model.start() }.onDisappear { model.close() }
             .frame(minWidth:920,minHeight:740)
             .environment(\.palette,Palette.of(state.dark ? .dark : .light)).preferredColorScheme(state.dark ? .dark : .light)

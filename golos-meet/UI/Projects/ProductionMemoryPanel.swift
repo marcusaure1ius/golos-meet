@@ -14,21 +14,11 @@ import Combine
     }
 }
 
-struct ProjectMemoryEntry: View {
-    var projectID: UUID?
-    var meetingID: String?
-    var onBack: (() -> Void)?
-    var onSettings: (() -> Void)?
-    @State private var model: ProjectMemoryPanelModel?
-    @State private var loaded = false
-    var body: some View {
-        Group {
-            if let model { ProjectMemoryPanel(model:model,onBack:onBack,onSettings:onSettings) }
-            else if loaded { ContentUnavailableView("Память недоступна в тестовом host",systemImage:"text.book.closed") }
-            else { ProgressView("Открываем память проекта…") }
-        }.task {
-            if !loaded { model = ProductionMemoryPanel.makeModel(projectID:projectID,meetingID:meetingID); loaded = true }
-            model?.start()
-        }.onDisappear { model?.close() }
+extension ProjectMemoryEntry {
+    /// Normal application entry retains the guarded production factory.
+    init(projectID: UUID? = nil, meetingID: String? = nil,
+         onBack: (() -> Void)? = nil, onSettings: (() -> Void)? = nil) {
+        self.init(projectID: projectID, meetingID: meetingID, onBack: onBack,
+                  onSettings: onSettings, makeModel: ProductionMemoryPanel.makeModel)
     }
 }

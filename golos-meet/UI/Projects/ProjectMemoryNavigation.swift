@@ -15,6 +15,11 @@ struct ProjectMemoryOpenButton: View {
 }
 
 extension View {
+    @ViewBuilder
+    func projectMemoryRoute<Memory: View>(isPresented: Bool, @ViewBuilder memory: () -> Memory) -> some View {
+        if isPresented { memory() } else { self }
+    }
+
     func projectMemoryInspector<Panel: View>(isPresented: Binding<Bool>, @ViewBuilder panel: () -> Panel) -> some View {
         inspector(isPresented: isPresented) {
             panel().inspectorColumnWidth(min: 380, ideal: 460, max: 600)
