@@ -1,0 +1,42 @@
+[
+  {
+    "stage" : "scope-created",
+    "test" : "actualFileMonitorReconcilesExternalAtomicAndInPlaceTranscriptChangesWithoutUI()",
+    "uptime" : "333293.538416"
+  },
+  {
+    "root" : "index-hooks-3AB72B17-FC06-4737-BB2A-2C8F49AE6497",
+    "stage" : "root-owned",
+    "uptime" : "333293.55595191667"
+  },
+  {
+    "stage" : "store-owned",
+    "uptime" : "333293.5559950417"
+  },
+  {
+    "connection" : "D430B53F-A2C8-4387-B823-149F7E15189C",
+    "root" : "index-hooks-3AB72B17-FC06-4737-BB2A-2C8F49AE6497",
+    "stage" : "opened",
+    "uptime" : "333293.5825617917"
+  },
+  {
+    "stage" : "index-stop-requested",
+    "uptime" : "333296.15875395836"
+  },
+  {
+    "stage" : "body-finished",
+    "uptime" : "333296.1645214167"
+  },
+  {
+    "connection" : "D430B53F-A2C8-4387-B823-149F7E15189C",
+    "result" : "0",
+    "stage" : "closed",
+    "uptime" : "333296.19455895835"
+  },
+  {
+    "exists" : "false",
+    "root" : "index-hooks-3AB72B17-FC06-4737-BB2A-2C8F49AE6497",
+    "stage" : "root-removed",
+    "uptime" : "333296.2176227917"
+  }
+]

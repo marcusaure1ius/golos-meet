@@ -1,0 +1,38 @@
+[
+  {
+    "stage" : "scope-created",
+    "test" : "rawAndDerivedOwnersBlockCloudAndOnlyExplicitPayloadLeavesAfterPolicyChange()",
+    "uptime" : "332466.48817591666"
+  },
+  {
+    "root" : "memory-update-13641F69-3612-472D-860D-B786493EB36A",
+    "stage" : "root-owned",
+    "uptime" : "332466.4952632917"
+  },
+  {
+    "stage" : "store-owned",
+    "uptime" : "332466.4952865834"
+  },
+  {
+    "connection" : "442182B8-090E-4934-8BB8-1AFA6DF0A5D7",
+    "root" : "memory-update-13641F69-3612-472D-860D-B786493EB36A",
+    "stage" : "opened",
+    "uptime" : "332466.5038405"
+  },
+  {
+    "connection" : "442182B8-090E-4934-8BB8-1AFA6DF0A5D7",
+    "result" : "0",
+    "stage" : "closed",
+    "uptime" : "332466.90705420834"
+  },
+  {
+    "stage" : "body-finished",
+    "uptime" : "332466.9077220833"
+  },
+  {
+    "exists" : "false",
+    "root" : "memory-update-13641F69-3612-472D-860D-B786493EB36A",
+    "stage" : "root-removed",
+    "uptime" : "332466.9089796667"
+  }
+]

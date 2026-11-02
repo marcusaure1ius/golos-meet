@@ -1,0 +1,42 @@
+[
+  {
+    "stage" : "scope-created",
+    "test" : "defaultProducerHooksRunWithoutViewsAndTranscriptDoesNotWaitForLLMOrIndexing()",
+    "uptime" : "333293.539564625"
+  },
+  {
+    "root" : "index-hooks-3FEC98F8-852A-4243-A56F-46CD143943E5",
+    "stage" : "root-owned",
+    "uptime" : "333293.5580409167"
+  },
+  {
+    "stage" : "store-owned",
+    "uptime" : "333293.55805600004"
+  },
+  {
+    "connection" : "885149A4-4F88-4CCF-A606-F0B4D1D42FD4",
+    "root" : "index-hooks-3FEC98F8-852A-4243-A56F-46CD143943E5",
+    "stage" : "opened",
+    "uptime" : "333293.73642358335"
+  },
+  {
+    "stage" : "index-stop-requested",
+    "uptime" : "333296.10947716667"
+  },
+  {
+    "stage" : "body-finished",
+    "uptime" : "333296.1161026667"
+  },
+  {
+    "connection" : "885149A4-4F88-4CCF-A606-F0B4D1D42FD4",
+    "result" : "0",
+    "stage" : "closed",
+    "uptime" : "333296.13879"
+  },
+  {
+    "exists" : "false",
+    "root" : "index-hooks-3FEC98F8-852A-4243-A56F-46CD143943E5",
+    "stage" : "root-removed",
+    "uptime" : "333296.1491840417"
+  }
+]

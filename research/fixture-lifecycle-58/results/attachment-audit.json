@@ -1,0 +1,475 @@
+{
+  "verified": 94,
+  "scopes": [
+    {
+      "scope": "6809B25F-393C-4605-8C4B-98C0A6016A8C",
+      "test": "SQLiteFixtureLifecycleTests/cleanupWaitsForLateTaskWriteAndNativeCloseBeforeUnlink()",
+      "sha256": "a1c365919e8dc495856c2bbf091914f4d895d0df0ec7b069a2571717138bc55d"
+    },
+    {
+      "scope": "943C462A-6B60-4D6B-B5D7-07A1B4F53374",
+      "test": "SQLiteFixtureLifecycleTests/throwingBodyReleasesStoreAndPreservesOriginalFailure()",
+      "sha256": "d38b96be43ad01e99a698aad85282afa0442465165b81cd0f014869bc032c24a"
+    },
+    {
+      "scope": "C991CC2A-709C-4B57-8D79-10782BBA9A32",
+      "test": "ProjectMemoryQueueTests/restartMidSourceKeepsCompletedCursorAndFencesNoncooperativeOldRun()",
+      "sha256": "0d5f302bba9ee62788d0be1a0908dad6ef4d3a7206c26108b5c78984ccd80d07"
+    },
+    {
+      "scope": "CE4D0299-C7EE-4F89-9DA4-D9B0963CC39A",
+      "test": "ProjectMemoryQueueTests/externalModelRetirementResetsOnlyDependentCoverageAndKeepsOwnBatchHistory(_:_:)",
+      "sha256": "8b9a458375fecbc51d746df69954ccad9370a4ac3d3bed9d865ade9dcade1011"
+    },
+    {
+      "scope": "182CFB50-4337-4C03-93A5-B10E697DF785",
+      "test": "ProjectMemoryQueueTests/externalModelRetirementResetsOnlyDependentCoverageAndKeepsOwnBatchHistory(_:_:)",
+      "sha256": "025b6503bed6b1d892daffe096d9308de085715e9ce1a431b62b4189a9c0563a"
+    },
+    {
+      "scope": "1136566A-B7CC-4FF2-973F-E935E0E60A63",
+      "test": "ProjectMemoryQueueTests/externalModelRetirementResetsOnlyDependentCoverageAndKeepsOwnBatchHistory(_:_:)",
+      "sha256": "bc5f6fca4629589052c6974f7992626dbdbfd3d98a4431acb555dbd69b5c516f"
+    },
+    {
+      "scope": "C7EA31C5-B793-417A-B105-AE8F4DA20496",
+      "test": "ProjectMemoryQueueTests/externalModelRetirementResetsOnlyDependentCoverageAndKeepsOwnBatchHistory(_:_:)",
+      "sha256": "5ca678182dbe233864774c2caa7a6538670a64de6002a1485af1af6b2b773000"
+    },
+    {
+      "scope": "C3A49ED4-DA19-4AE1-818E-C2CDFFD39CC4",
+      "test": "ProjectMemoryQueueTests/roundRobinDoesNotStarveShortSourceBehindManyBatches()",
+      "sha256": "6d89b969ae4fb4af45c096b3bf3e785e71ec2096939ae0c2d6b98dc09916ed46"
+    },
+    {
+      "scope": "C4036945-4E6D-496C-AD24-A27B4D9E6201",
+      "test": "ProjectMemoryQueueTests/discoveryHasBoundedHotWindowAndDeferredJobIsClaimableWithoutDroppingMetadata()",
+      "sha256": "d9ff164492043978487d0e1e5f6abc8e860215bd0838e5323df2e1fb88dadf8a"
+    },
+    {
+      "scope": "AE584760-A0D3-47A7-9BE4-53522431E79F",
+      "test": "ProjectMemoryQueueTests/queueFenceRejectsSkippedChunksEvenIfCallerClaimsWholeBatch()",
+      "sha256": "6af36ceeb57d9c72a7b56268c8150f9e11796e458f3d340825a324b89f5a9908"
+    },
+    {
+      "scope": "771ACB06-C206-4F46-94B5-5B81CB48F43C",
+      "test": "ProjectMemoryQueueTests/ownRetirementExemptionDoesNotHideLaterExternalRetirementOfItsPublisher()",
+      "sha256": "a5186918ef1a9d24c5deb47c4dc1ab636ec9fa91a2230cd3aad9089ec8adf749"
+    },
+    {
+      "scope": "70275026-E868-48BA-9732-1839F67BD6F2",
+      "test": "ProjectMemoryQueueTests/workerRechecksAllOwnersBeforeEveryTransportAttempt()",
+      "sha256": "7b532d4de74eeaa1738c2a8d3bd7d761944c29b1afd70a2b9eae6c63894b4165"
+    },
+    {
+      "scope": "1E59A4BC-2125-4E7C-AF2F-4B084953D779",
+      "test": "ProjectMemoryQueueTests/adaptiveJSONBudgetProcessesLongQuotedSourceWithoutSilentSkip()",
+      "sha256": "50dba32a3b68091e0e851ce3e741dc12e8661836987a496292666ba9c7159613"
+    },
+    {
+      "scope": "779C25E4-FA5E-4221-86C9-4E7AC72B3C8A",
+      "test": "ProjectMemoryQueueTests/rawAndDerivedPrivateOwnersDenyWorkerWithoutReadingKeysOrCallingTransport()",
+      "sha256": "46bd1ff341a13f26dcc35f35a6ef2c98c918319cc3f021a8e4a003ba106c3a8f"
+    },
+    {
+      "scope": "960C6BEF-3110-4E21-9FE6-6E090BBD08A8",
+      "test": "ProjectMemoryQueueTests/changeBetweenBatchesStartsNewCycleAndNeverReportsOldPartialAsComplete(_:)",
+      "sha256": "71cd9c4343d095a1bceb421c1e2d6fd431cf180fbbaf28d488c8eb88d5f527bf"
+    },
+    {
+      "scope": "7A56E88E-92D1-47FC-B7EC-7E4BC26D89F8",
+      "test": "ProjectMemoryQueueTests/changeBetweenBatchesStartsNewCycleAndNeverReportsOldPartialAsComplete(_:)",
+      "sha256": "6766c5240f3770cf78fd99ae63be135e0a36c004271933d5812459c47a6819fd"
+    },
+    {
+      "scope": "72EE57F4-599A-49B8-B910-439F30CDFAF8",
+      "test": "ProjectMemoryQueueTests/cancelRetryDrainsNoncooperativeAdapterBeforeStartingNextAttempt()",
+      "sha256": "ab13ceb61c7adec6843c6759665be8dd5b0da388bb119766538f8c2e136bfdf7"
+    },
+    {
+      "scope": "B0DB5F44-B2FB-43FE-9AE5-2DEEFC2C2345",
+      "test": "ProjectMemoryQueueTests/changedAncestorInvalidatesPendingExactConsentAndLegacyCoverageIsResetOnce()",
+      "sha256": "c0edd394a452cd628f90d45e53291e7464448404d703dca3f8da74af60102518"
+    },
+    {
+      "scope": "FB44F833-23AE-4F06-8076-B39603512723",
+      "test": "ProjectMemoryQueueTests/durableQueueFenceRejectsLateTransportWithoutRelyingOnTaskCancellation(_:)",
+      "sha256": "4fc5466436e66e489c5567de8723e9894f1514a4ec0e0b7e458e4c170a3ba195"
+    },
+    {
+      "scope": "20B47A74-3DB9-4CC6-8F13-24A4430DCDB1",
+      "test": "ProjectMemoryQueueTests/durableQueueFenceRejectsLateTransportWithoutRelyingOnTaskCancellation(_:)",
+      "sha256": "d528c66d5763a4914712ba8a705b54c015826046b2c5af47b10a1bf48dc481b3"
+    },
+    {
+      "scope": "11E7E018-73D3-4C65-8F2A-2A1956BA1CAB",
+      "test": "ProjectMemoryQueueTests/durableQueueFenceRejectsLateTransportWithoutRelyingOnTaskCancellation(_:)",
+      "sha256": "47e2e13a2f99b7b0f15540897387b08fb87598ce7f2843169903d69a46706a0a"
+    },
+    {
+      "scope": "01A57E73-8D0E-4ED5-B18E-4F1454338B43",
+      "test": "ProjectMemoryQueueTests/durableQueueFenceRejectsLateTransportWithoutRelyingOnTaskCancellation(_:)",
+      "sha256": "c74bff420d66f1fbe4f262cd1bd7ff08070b3dab8b3837ce10d0f320ea4ee2de"
+    },
+    {
+      "scope": "34E3A43B-3000-4C1C-90D6-E77C79026487",
+      "test": "ProjectMemoryQueueTests/durableQueueFenceRejectsLateTransportWithoutRelyingOnTaskCancellation(_:)",
+      "sha256": "8bd46e0cdeac59f88b8768cb8a132de90dab680e46db6ae7a2598c31d4d488eb"
+    },
+    {
+      "scope": "7C318FA7-3B12-4225-B92D-54C79E507B07",
+      "test": "ProjectMemoryQueueTests/durableQueueFenceRejectsLateTransportWithoutRelyingOnTaskCancellation(_:)",
+      "sha256": "e352a549137c80ae149d7091620e59a96f4ae0f8fbbe5d71dfefb6f936b1dc13"
+    },
+    {
+      "scope": "332FABE5-2AB5-4472-9D3A-DF58459FD857",
+      "test": "ProjectMemoryQueueTests/durableQueueFenceRejectsLateTransportWithoutRelyingOnTaskCancellation(_:)",
+      "sha256": "9fc05eaf5eafe2f6e42205cb5af8dcde0983294e7787b6b6bc7fbed164871311"
+    },
+    {
+      "scope": "181D71D3-3E0D-4656-B9FF-5136DC71D62F",
+      "test": "ProjectMemoryQueueTests/durableQueueFenceRejectsLateTransportWithoutRelyingOnTaskCancellation(_:)",
+      "sha256": "4db28d8a0eedb1375171a5180f9ef6fadc1acbfd1124693314aca4013ee1bed5"
+    },
+    {
+      "scope": "3C24D0FF-B2FA-4ED2-878A-7A73990EB190",
+      "test": "ProjectMemoryQueueTests/retirementOfTransitiveAncestorResetsCoverageEvenWhenItWasNotSelectedAsMemory()",
+      "sha256": "d55a04232cea97943ec8656c2d25c5182c2d19cb5aa11df771db896ff638a410"
+    },
+    {
+      "scope": "51791C0F-989B-46B6-A240-E1EAAE3FE45F",
+      "test": "ProjectMemoryQueueTests/metadataAndIndexSubscriptionsCoalesceAndSettingsCanStopThenResumeSameWorker()",
+      "sha256": "b5cf327689cb31e6c0f48d3f7088d9710e68be73c87cf5007970a32d6033844d"
+    },
+    {
+      "scope": "83A2485F-E20C-44AF-80E3-67400D38E560",
+      "test": "ProjectMemoryQueueTests/longSourceCoversEveryChunkWithDurableBatchesAndNoSelfRegeneration()",
+      "sha256": "4f75b2519bb386ff102b07cd201beaa833aba6e63fa1b435ab63037d0a04c3ad"
+    },
+    {
+      "scope": "474967BE-0372-47B2-BF45-665A463AF779",
+      "test": "ProjectMemoryQueueTests/manualHeadSurvivesQueuedExtractionAndOnlyAffectedJobStartsNewCycle()",
+      "sha256": "4e2d416061ab7bc9b670c8bebdd44f605da6739ab2dc484a6b58fd13c20d9185"
+    },
+    {
+      "scope": "356C9D7C-C708-416C-9FC6-91820EE95517",
+      "test": "ProjectMemoryQueueTests/injectedDeadlineFencesLateReplyAndDoesNotStartOverlappingAttempt()",
+      "sha256": "555efcd5ed6fb216ccfccd80becda8e86f18a3e50e8f2a384b529979aa02db0a"
+    },
+    {
+      "scope": "796DA417-D92A-4600-8807-F5AB107CD302",
+      "test": "ProjectMemoryQueueTests/preexistingExactJournalBatchRecordsUnchangedDispositionWithoutSendingAgain()",
+      "sha256": "098b426d5788a5e30a32fed1e9f5627864e13a2043a499eadc074f627f6153a4"
+    },
+    {
+      "scope": "090C29BF-04A8-4B0C-8F1F-75C1C35B1080",
+      "test": "ProjectMemoryQueueTests/oneTimeConsentIsFreshForEachBatchAndNotRestoredAsBackgroundPermission()",
+      "sha256": "593b2cd21cacfb7abc0cc641563d038cf3e6c1b76db508ed6917a5dd6f823cef"
+    },
+    {
+      "scope": "A9AF8D9D-2577-46B3-8E71-6443E6E1BDD8",
+      "test": "ProjectMemoryQueueTests/insufficientCoveragePersistsAndRestartDoesNotAskModelAgain()",
+      "sha256": "66255103d069cc0311e9a0b1a2bc140a49d42805d168d0f975fb113efe829bff"
+    },
+    {
+      "scope": "7FD9380A-FD85-4A42-BC18-307CC888B848",
+      "test": "ProjectMemoryQueueTests/concreteMetadataBridgeReceivesReadyEventWithoutLaunchingApplication()",
+      "sha256": "f8760d34f5f68f4c6fe9b5d279346f00e451b8ba6cb0f32b2c2660b05561fd50"
+    },
+    {
+      "scope": "58E3D6D6-57F8-4FEE-936D-7F93F20ECC53",
+      "test": "ProjectMemoryQueueTests/latestDisabledConfigurationWinsQueuedEnableAndBridgeStop()",
+      "sha256": "c1e5cefc11cd678ed54410d5e6898d77dc228274cfe45087a88715386df431d5"
+    },
+    {
+      "scope": "721C4DE9-6E91-429A-958D-E23C45772ED8",
+      "test": "ProjectMemoryQueueTests/sequentialWorkerUpdatesKeepConflictingDeadlinesAndCompletionAsClaim()",
+      "sha256": "eb14092728093c2e270217a705425cd6159af32af3f5a320a9b43d6499518d8e"
+    },
+    {
+      "scope": "F03F6D1B-10A7-4428-8B8A-5DDAB0C71AC0",
+      "test": "ProjectMemoryQueueTests/capAndInvalidReplyLeaveCursorUnchangedAndDoNotRetryOnDuplicateEvents()",
+      "sha256": "2acb0e6e742d54d147b73d3a83e8ca12f6b154bec6a57b197b9f6fce3cb7064e"
+    },
+    {
+      "scope": "BC6133F3-6203-424D-BB7C-34E76BC9EA55",
+      "test": "ProjectMemoryQueueTests/invalidBatchRollsBackJournalAndCursorWhileErrorWaitsForExplicitRetry()",
+      "sha256": "22d42e49c484dcb0f02da6876a2bec62330313d195a1dceecc831e5171440f2b"
+    },
+    {
+      "scope": "E654588D-8A76-4B7D-86FE-8EA416DF3414",
+      "test": "IndexingProductionHooksTests/actualFileMonitorReconcilesExternalAtomicAndInPlaceTranscriptChangesWithoutUI()",
+      "sha256": "9719cfdf07b0b5139c62f47331f86713fc43996eb5fa0e3ebf50a4b5ab51b1f9"
+    },
+    {
+      "scope": "87FAD1DF-C7BB-459E-BCDD-9EC105B2E8C9",
+      "test": "IndexingProductionHooksTests/defaultProducerHooksRunWithoutViewsAndTranscriptDoesNotWaitForLLMOrIndexing()",
+      "sha256": "9c38afc8047850a145ad646cd1ebf3a4c1f36d9ebac90dc11fb578e81286bff1"
+    },
+    {
+      "scope": "A152DDFC-C208-441E-841B-654E75962568",
+      "test": "IndexingProductionHooksTests/eventPathKeepsDeletedAliasesAndFinalSymlinkInsideWatchedPrefix()",
+      "sha256": "ca635f49d3a964a02639bcbd25739d6d35a2ac6481e261f0bfa0cb3aa07d6d2c"
+    },
+    {
+      "scope": "B10356F1-FDFC-4717-A7EB-A71712F701B2",
+      "test": "LocalIndexingNativeTests/nativeQueueResumesAfterInstallationWatchesTranscriptAndKeepsSameModelCache()",
+      "sha256": "15919b06f45750ef09895f18abd2e6ac863f8331b156578fffad6db34d499f2b"
+    },
+    {
+      "scope": "7274E114-F15A-4CE1-977C-0E6526772566",
+      "test": "MeetingAssignmentRuntimeTests/readyIndexIsAutomaticallyAssignedWithoutMeetingScreenAndStaleLinksAreRemovedUntilRecovery()",
+      "sha256": "a98d4662366077d08eba5a66789082f9c9620bf2389fae3ebcd920de4f5773d5"
+    },
+    {
+      "scope": "EDFD183A-77C5-48D1-B9C5-6E695713BB7C",
+      "test": "MeetingAssignmentRuntimeTests/deadlineFencesAnUncooperativeCalculationBeforeRetry()",
+      "sha256": "d01c90fe4fdcf33a6d602e511c20209b51fe11566a4381665cd7e3f67c7938d1"
+    },
+    {
+      "scope": "F8317699-3FBD-4B09-9BCE-9B576C8FB166",
+      "test": "MeetingAssignmentRuntimeTests/stopRestartDoesNotOverlapOldCalculationAndManualInboxWinsItsLateResult()",
+      "sha256": "a895f80c5ab243bb16a7333c52138266f7580b78e524a7e25a18df463ed9770b"
+    },
+    {
+      "scope": "62787B11-80C4-4673-A8D5-029C45A01C5C",
+      "test": "MeetingAssignmentRuntimeTests/unrelatedIndexCompletionAutomaticallyRetriesSupersededPlanWithoutUserAction()",
+      "sha256": "23f1b1856c807d8aae407ce09122821f89dfb1b954409f024583efb73d148977"
+    },
+    {
+      "scope": "211F5CE2-EDCE-40DE-8248-BAD57CED91DE",
+      "test": "MeetingAssignmentRuntimeTests/cancellationSurvivesRestartAndLateNoncooperativePublisherCannotRestoreLinks()",
+      "sha256": "940f1cd3450219d9d5f8edfc5f5d4a40b74cd2639a16e75e37284e50606b282c"
+    },
+    {
+      "scope": "36A9846C-0C82-463A-9282-4763AD87584A",
+      "test": "MeetingAssignmentRuntimeTests/failureDoesNotStarveFollowingMeetingsAndChangedSourceAutomaticallyRetries()",
+      "sha256": "a95a1c923c8882bab11b0f2f84670b544d1c9243132f5d5bccccb2f955e73325"
+    },
+    {
+      "scope": "7D79995A-9C05-4C27-BFAE-57C2824E6658",
+      "test": "MeetingAssignmentRuntimeTests/missingRuntimeRemovesAutomaticLinksAndRecoverySchedulesSameReadyVectorsAgain()",
+      "sha256": "edbf64da81574ee3734a95aae645c9363fd2eb4a66bb555a9628b48b861b156f"
+    },
+    {
+      "scope": "56D41CC5-1A91-4528-A563-48CBC81E3336",
+      "test": "MeetingAssignmentRuntimeTests/openingSavedEvidenceRequiresCurrentRuntimeAndBothSourceRevisions(change:)",
+      "sha256": "7332e1716138833acc1abae70158b25b21bf2767424e4c00505ae686c5a24f47"
+    },
+    {
+      "scope": "426A9CE8-5172-40A1-B894-F2B4492FB05E",
+      "test": "MeetingAssignmentRuntimeTests/openingSavedEvidenceRequiresCurrentRuntimeAndBothSourceRevisions(change:)",
+      "sha256": "6cd5397e2d97c7140c06fc0f923628144ad49df24e75c8f2abc80747ecbc0188"
+    },
+    {
+      "scope": "511A257D-CCE4-4A2C-B7DB-DF7C9ED4F547",
+      "test": "MeetingAssignmentRuntimeTests/openingSavedEvidenceRequiresCurrentRuntimeAndBothSourceRevisions(change:)",
+      "sha256": "936d17f70c9e26de44caf180f0442fa3c8f7795241ebaa2bd880f51781957918"
+    },
+    {
+      "scope": "527C4DD7-CB6B-4E20-98E2-C882AF0A83F8",
+      "test": "MeetingAssignmentRuntimeTests/openingSavedEvidenceRequiresCurrentRuntimeAndBothSourceRevisions(change:)",
+      "sha256": "0ea360dde6be6ba6a65e97c106796e80abcc0924f8875d0f8aa64332dfdc3285"
+    },
+    {
+      "scope": "9DC51F7F-387E-4154-A98C-3EEFE2DFEF52",
+      "test": "MeetingAssignmentRuntimeTests/openingSavedEvidenceRequiresCurrentRuntimeAndBothSourceRevisions(change:)",
+      "sha256": "07c7b44587ac81888d4501d7d45822076954feec6ec6351dc7b2fb89d7dec5f7"
+    },
+    {
+      "scope": "A88E31CC-03CC-4683-8EAC-740370FB3879",
+      "test": "MeetingAssignmentRuntimeTests/indexUpdateBridgeRunsWhileNoScreenIsOpenAndManualEventsDoNotReindex()",
+      "sha256": "f8055ebad3f9da27ebefc8fca0a455069c713098a58c9b03d61009d455b4ae07"
+    },
+    {
+      "scope": "443D1165-10FF-4515-A68C-CD537DC88388",
+      "test": "ProjectMemoryUpdateTests/cancellationOfNoncooperativeTransportCannotAppendAndNewSessionRequiresNewConsent()",
+      "sha256": "2fd65ab3b8b0990f179d4d5ae635c07c560a0245efbb2af449ecc50e7178358e"
+    },
+    {
+      "scope": "DE758FFC-C39D-45C1-8195-8B2BF9AD39CE",
+      "test": "ProjectMemoryUpdateTests/finalJournalTransactionRechecksModelAndForeignMemoryEvenAfterEarlierValidation(_:)",
+      "sha256": "06b0cae003c6dd8ea6b1128b621f1d361ef54115f7ddbf71c9e04048f1edbed5"
+    },
+    {
+      "scope": "AAEB18B4-1CC0-4CD2-A9D3-E05E9BFCB863",
+      "test": "ProjectMemoryUpdateTests/finalJournalTransactionRechecksModelAndForeignMemoryEvenAfterEarlierValidation(_:)",
+      "sha256": "96e97292e6198f50e0fc80bca916d07a17b36629f50fb1c46e5944bf4713a4bb"
+    },
+    {
+      "scope": "461C48AE-B5CD-4C75-B29E-142F94ED694B",
+      "test": "ProjectMemoryUpdateTests/rawAndDerivedOwnersBlockCloudAndOnlyExplicitPayloadLeavesAfterPolicyChange()",
+      "sha256": "17b07dce7490325e573c4257d56dede7019bf5ca63c45315df7f4296472a3833"
+    },
+    {
+      "scope": "1D81C7AF-3FCB-4FD4-9BC7-8B7AD7BCB822",
+      "test": "ProjectMemoryUpdateTests/explicitReplacementRetractionAndManualPrecedenceKeepHistoryThroughActualExtractor()",
+      "sha256": "ed090f14b699de63a88f661dc798205eeebc65f20c6a29edd04b55fc9cd207ed"
+    },
+    {
+      "scope": "489F30E9-0522-4EC1-863A-74D9BEDAEF71",
+      "test": "ProjectMemoryUpdateTests/sequentialReadyMeetingsUpdateJournalKeepConflictDatesAndCompletionAsClaim()",
+      "sha256": "01f75754d89407a617651e06733245f0dca036617a3ecc7689d2ba5491d7810a"
+    },
+    {
+      "scope": "CBE53748-A965-4B08-8990-0F1C0ECA71D8",
+      "test": "ProjectMemoryUpdateTests/everyRetryAndLateReplyRecheckAllOwnersAndForeignParentMemory()",
+      "sha256": "480b712aef9bace22c8db6a682868fb13507fde72063a1c91c76e897e229e6e5"
+    },
+    {
+      "scope": "22D4C00C-E4AC-431A-94EB-4A5B0043787B",
+      "test": "ProjectMemoryUpdateTests/consentIsRequestSessionScopedConsumedOnFailureAndReplaySurvivesRestartWithoutExtraCloud()",
+      "sha256": "935d6d9bfc865aa591ce3d38f54edf778b506097232ff7ae502e0c06a44208ac"
+    },
+    {
+      "scope": "CB559A62-690B-4740-A586-F0E9117175DD",
+      "test": "ProjectMemoryUpdateTests/insufficientEvidenceNotReadyAndBudgetHaveExplicitStatesAndZeroHistory()",
+      "sha256": "6137fd97e3b4f84e4ed512261bcbd3ce988afd9c0c39a4bcb2757617a211cf30"
+    },
+    {
+      "scope": "04B190FE-43F4-49E9-A611-A0BAAADD13FA",
+      "test": "ProjectMemoryUpdateTests/changesAtTransportBoundaryPreventSendingOrPublishing(_:)",
+      "sha256": "57bf0e605827ad3a33ef9f3e600f5d846086f4fd7ad383aee12948c45c53eef6"
+    },
+    {
+      "scope": "A18B0E42-CD0A-41AE-B394-0EB33BE0BA09",
+      "test": "ProjectMemoryUpdateTests/changesAtTransportBoundaryPreventSendingOrPublishing(_:)",
+      "sha256": "54e3e477ee3738c8b6509c14143adb4d0a57f6a2b82c3f2c6a375830b59d2db1"
+    },
+    {
+      "scope": "B8019C1B-F08C-4F00-A714-B0C7C3CD5CDE",
+      "test": "ProjectMemoryUpdateTests/changesAtTransportBoundaryPreventSendingOrPublishing(_:)",
+      "sha256": "f9d88a3e4f3412f28447178540c8f32ccb6f953bb97ed94b799be5c5205d8334"
+    },
+    {
+      "scope": "C2F174AF-0FC5-436F-8698-47E463283A94",
+      "test": "ProjectMemoryUpdateTests/changesAtTransportBoundaryPreventSendingOrPublishing(_:)",
+      "sha256": "51b1fabf335fef68b765d83918e1115930520eb69fea4ab4bea6d8e95c397797"
+    },
+    {
+      "scope": "939418BC-3D5B-4950-816C-A45602116A2F",
+      "test": "ProjectMemoryUpdateTests/changesAtTransportBoundaryPreventSendingOrPublishing(_:)",
+      "sha256": "4f96cf23f968827f8f9dca780ec10dce2fb7c93d8df841722641b73e60172c0c"
+    },
+    {
+      "scope": "476F987D-964E-472D-9CF8-9EF3E975C1DD",
+      "test": "ProjectMemoryUpdateTests/changesAtTransportBoundaryPreventSendingOrPublishing(_:)",
+      "sha256": "f870ea961cef99065993e3a4437fb548bd351c093cc09735ba4d6807351dfaa7"
+    },
+    {
+      "scope": "B13145E8-FCD4-47C6-948E-39EBFF565A20",
+      "test": "ProjectMemoryUpdateTests/changesAtTransportBoundaryPreventSendingOrPublishing(_:)",
+      "sha256": "5905d9b6227ee1534c766f6e15261b3947386aa2470f068679320fea8c1632e8"
+    },
+    {
+      "scope": "9C6909BC-8F0D-4B05-879F-B7BC19D878F1",
+      "test": "ProjectMemoryUpdateTests/changesAtTransportBoundaryPreventSendingOrPublishing(_:)",
+      "sha256": "c78169824731d9bac6330dfddce886ca274ca951b1105254fc4aa1ecf7b8e683"
+    },
+    {
+      "scope": "936A42BA-217C-4C8D-BB47-5B7669E94D69",
+      "test": "ProjectMemoryUpdateTests/changesAtTransportBoundaryPreventSendingOrPublishing(_:)",
+      "sha256": "9c22a121f14664c627be198a1b7da746b1355295d6a685aba3d5b4a78ead8831"
+    },
+    {
+      "scope": "F657DDD5-E7B3-43D9-B1C3-23F1579B5192",
+      "test": "ProjectMemoryUpdateTests/changesAtTransportBoundaryPreventSendingOrPublishing(_:)",
+      "sha256": "edd8c1a4322e8fd9f996041bc92d72405cbb72f8802c91149907ceb1d068ccb5"
+    },
+    {
+      "scope": "4DD49F1B-BAE9-4381-B6A9-53571B133C10",
+      "test": "ProjectMemoryUpdateTests/changesAtTransportBoundaryPreventSendingOrPublishing(_:)",
+      "sha256": "fe03a559e558b8307d1bfe31cd8fe6784b65ad79047ec83b800c679c4c995f36"
+    },
+    {
+      "scope": "C4991C33-7C2F-400E-83DA-A2451485BAF3",
+      "test": "ProjectMemoryUpdateTests/changesAtTransportBoundaryPreventSendingOrPublishing(_:)",
+      "sha256": "37536a64088486f1da2f5807dfe5ff68247445df5d6fc748aa825b1ce019685e"
+    },
+    {
+      "scope": "432F5000-A04E-4086-A3D8-F0EDD90EBBD0",
+      "test": "ProjectMemoryUpdateTests/limitedJournalHasExplicitTerminalStateWithoutDeletionOrAutomaticRetry()",
+      "sha256": "680942ec7ef8f096f1f96f6126893d98d8107b880164efbebfffdc552bfac2c2"
+    },
+    {
+      "scope": "B0B2E39D-C6ED-43A8-99BA-7A8CD6E859CE",
+      "test": "ProjectMemoryUpdateTests/selectedInputChangesWithinSameFullClosureProduceNewFactsAndExactReplayAfterRestart(_:)",
+      "sha256": "c40c79e6d13e39bd34bd06753bacec2eff2de5d5a7dc4cd7f12130abb4561c8d"
+    },
+    {
+      "scope": "14F93A7C-447F-422F-8F00-8B5977A4B8EC",
+      "test": "ProjectMemoryUpdateTests/selectedInputChangesWithinSameFullClosureProduceNewFactsAndExactReplayAfterRestart(_:)",
+      "sha256": "04192722f73943849637f6fe6a91df3ffcf9da3f89b5f1f6c445f4b0e4f1ed59"
+    },
+    {
+      "scope": "EA196A49-4342-4F5B-8002-CBE4D1E4F9AA",
+      "test": "ProjectMemoryUpdateTests/selectedInputChangesWithinSameFullClosureProduceNewFactsAndExactReplayAfterRestart(_:)",
+      "sha256": "ec1b30adfb7f522212a74d1cb5ced85a3b1458f288e09f6e6450aef3b1407ab2"
+    },
+    {
+      "scope": "FDDD7F1E-DB28-4F3B-84D2-C1823A0464B1",
+      "test": "ProjectMemoryUpdateTests/selectedInputChangesWithinSameFullClosureProduceNewFactsAndExactReplayAfterRestart(_:)",
+      "sha256": "9a1f7f9cc3d4a6a17984ea6b1ca3f0ea435a7907fccddc0da9fbe7751efab7a2"
+    },
+    {
+      "scope": "B8D4FB23-E82F-4864-93CD-165B46BEB0E1",
+      "test": "ProjectMemoryUpdateTests/ambiguousLegacyServiceBatchIsRetainedButCannotAuthorizeSelectedInputReplay()",
+      "sha256": "be3319aa8e96ebb73b824318d135b0499ce771f58e9db990eff4ad14248508ef"
+    },
+    {
+      "scope": "92863FBC-A3BD-4849-9B07-E04E31BDABD8",
+      "test": "ProjectMemoryUpdateTests/ancestorManualEditFencesDeepDerivedContextButCurrentCorrectionRetainsItsOwnHistory()",
+      "sha256": "74ff0580a3dbac145a4fafd460e6bfed9cccda6c7eb1cce339e056a0ad5b36c0"
+    },
+    {
+      "scope": "21847C4E-24AA-4B21-BC21-BD961AB6CB94",
+      "test": "ProjectMemoryUpdateTests/invalidStructuredResponseNeverPartiallyPublishes(_:)",
+      "sha256": "d0db41a85c49580a54c657b0ec49dbfa3adc38ba8413bd8a23165222ab9d0575"
+    },
+    {
+      "scope": "2307612F-E1E6-4A23-BE76-1C2B1197DF9E",
+      "test": "ProjectMemoryUpdateTests/invalidStructuredResponseNeverPartiallyPublishes(_:)",
+      "sha256": "69f8dfccaa950922ca54d6031c8a8926151bc741a0b524d124d1c9f005f83607"
+    },
+    {
+      "scope": "BBEA0B33-4E5A-49D9-8ADA-AA59608496FE",
+      "test": "ProjectMemoryUpdateTests/invalidStructuredResponseNeverPartiallyPublishes(_:)",
+      "sha256": "b53403b1e646b0d2910dbd573ded10efe407c91f711cce0dce633c682102f829"
+    },
+    {
+      "scope": "25B265B0-88E6-4DFC-B35B-C0DF9E941470",
+      "test": "ProjectMemoryUpdateTests/invalidStructuredResponseNeverPartiallyPublishes(_:)",
+      "sha256": "15b03905b545c1cf5e3b39171bd278374011ba1f753a6ea73d4b2afac403c17e"
+    },
+    {
+      "scope": "FABE54E7-D40C-414D-B240-8331C4B7B04D",
+      "test": "ProjectMemoryUpdateTests/invalidStructuredResponseNeverPartiallyPublishes(_:)",
+      "sha256": "05d232360e58228750a30c5f8d6a0a1e579e19f5d3b5decf9a75396813347318"
+    },
+    {
+      "scope": "FEA24327-3FD5-48CF-AA57-7C7CC6963390",
+      "test": "ProjectMemoryUpdateTests/invalidStructuredResponseNeverPartiallyPublishes(_:)",
+      "sha256": "d89e016fa1de837a1a9ecbf051abd4f299bd2e189465b8f935f79bc3eb76f700"
+    },
+    {
+      "scope": "D73BA46B-DFCC-4C4A-81AE-9A12507CB438",
+      "test": "ProjectMemoryUpdateTests/invalidStructuredResponseNeverPartiallyPublishes(_:)",
+      "sha256": "a9bacab4954e297c9db8caf96ed6628c3bb6bfed78fb5c0828be341e1b128247"
+    },
+    {
+      "scope": "47596E57-F724-4F61-98EB-4A324C679CA3",
+      "test": "ProjectMemoryUpdateTests/invalidStructuredResponseNeverPartiallyPublishes(_:)",
+      "sha256": "dd64028e85964364d7aa8a8e73b65339c6a33aa929326b9b30248f0ac4b19afa"
+    },
+    {
+      "scope": "216EAEA4-BBAA-47B8-BABC-54BFF5D6E483",
+      "test": "ProjectMemoryUpdateTests/invalidStructuredResponseNeverPartiallyPublishes(_:)",
+      "sha256": "48bb103568ea94c5451e63f78f89659039ce151fbe869855b8bdd72410668459"
+    },
+    {
+      "scope": "7871E2CC-0596-4C96-ADAC-64E5B4901A24",
+      "test": "ProjectMemoryUpdateTests/invalidStructuredResponseNeverPartiallyPublishes(_:)",
+      "sha256": "eded3070b53d7989e92599ed6caf3f97d258e647a7f1e02ac39f60c6753327b8"
+    }
+  ]
+}

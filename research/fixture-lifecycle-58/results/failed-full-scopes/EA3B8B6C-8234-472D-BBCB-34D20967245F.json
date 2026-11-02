@@ -1,0 +1,54 @@
+[
+  {
+    "stage" : "scope-created",
+    "test" : "changesAtTransportBoundaryPreventSendingOrPublishing(_:)",
+    "uptime" : "332776.53813533334"
+  },
+  {
+    "root" : "memory-update-1446EE2D-4075-4812-96E6-D4DCB4976617",
+    "stage" : "root-owned",
+    "uptime" : "332776.55895508337"
+  },
+  {
+    "stage" : "store-owned",
+    "uptime" : "332776.5589687083"
+  },
+  {
+    "connection" : "3CBECC5B-D14C-4CEB-BD18-11CF95714C5C",
+    "root" : "memory-update-1446EE2D-4075-4812-96E6-D4DCB4976617",
+    "stage" : "opened",
+    "uptime" : "332776.62526087504"
+  },
+  {
+    "connection" : "43E2736A-975E-4E06-AC45-F979B5AE3EA9",
+    "root" : "memory-update-1446EE2D-4075-4812-96E6-D4DCB4976617",
+    "stage" : "opened",
+    "uptime" : "332791.4291986667"
+  },
+  {
+    "connection" : "43E2736A-975E-4E06-AC45-F979B5AE3EA9",
+    "result" : "0",
+    "stage" : "closed",
+    "uptime" : "332791.43054229167"
+  },
+  {
+    "stage" : "update-callbacks-released",
+    "uptime" : "332794.61496437504"
+  },
+  {
+    "connection" : "3CBECC5B-D14C-4CEB-BD18-11CF95714C5C",
+    "result" : "0",
+    "stage" : "closed",
+    "uptime" : "332794.615125"
+  },
+  {
+    "stage" : "body-finished",
+    "uptime" : "332794.65710762504"
+  },
+  {
+    "exists" : "false",
+    "root" : "memory-update-1446EE2D-4075-4812-96E6-D4DCB4976617",
+    "stage" : "root-removed",
+    "uptime" : "332794.6579504167"
+  }
+]

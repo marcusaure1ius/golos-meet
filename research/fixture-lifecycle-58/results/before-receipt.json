@@ -1,0 +1,96 @@
+{
+  "ref": "24b75f63bad8429aec00331c4968d6963a09bc09",
+  "patches": [
+    {
+      "path": "golos-meet/Core/Knowledge/ProjectStore.swift",
+      "before_sha256": "aecfd1ab6dd3c4a40c36c45a9c605bf89c073ed52bfdb193f3dd436b0bc8ae9a",
+      "old": "init(url: URL) { self.url = url }",
+      "new": "init(url: URL) { self.url = url; FixtureBefore58.owner(self, url: url.deletingLastPathComponent()) }"
+    },
+    {
+      "path": "golos-meet/Core/Knowledge/ProjectStore.swift",
+      "before_sha256": "fbb2633ad6329565a5e91e37a7edc70236301465cd0ae7a6533221a85aa43e57",
+      "old": "        handle = db\n",
+      "new": "        handle = db\n        FixtureBefore58.connection(connection, url)\n"
+    },
+    {
+      "path": "golos-meet/Core/Knowledge/ProjectStore.swift",
+      "before_sha256": "1d4a9c4593c802123cb9b45356ff3b945ede087b7c7942eaf951f80a00c94554",
+      "old": "        sqlite3_close(handle)\n",
+      "new": "        let closeResult = sqlite3_close(handle)\n        FixtureBefore58.close(connection, result: closeResult)\n"
+    },
+    {
+      "path": "golos-meet/Core/Knowledge/ProjectStore.swift",
+      "before_sha256": "906f9a6e24f003909ec3f7ed6f23e11890ae76da994feeed52770b07039e5b9a",
+      "old": "        let message = diagnostic.message",
+      "new": "        FixtureBefore58.failure(connection, result: result, extended: extended, operation: operation.rawValue)\n        let message = diagnostic.message"
+    },
+    {
+      "path": "golos-meet/Core/Knowledge/ProjectMemoryQueueWorker.swift",
+      "before_sha256": "5a601a60c0aed2355f2aa01e23544141da78e3b6d528b932339d79df70b33454",
+      "old": "        history = .init(store: store, meetingsRoot: meetingsRoot, documentsRoot: documentsRoot)",
+      "new": "        history = .init(store: store, meetingsRoot: meetingsRoot, documentsRoot: documentsRoot)\n        FixtureBefore58.child(self, of: store)"
+    },
+    {
+      "path": "golos-meet/Core/Knowledge/ProjectMemoryQueueWorker.swift",
+      "before_sha256": "6ccd73c398b1d74f75589950d4d70abba7253053515f16a1b15d242828e61573",
+      "old": "    func stop() async {",
+      "new": "    func stop() async {\n        FixtureBefore58.mark(\"memory-worker-stop-enter\", self)\n        defer { FixtureBefore58.mark(\"memory-worker-stop-exit\", self) }"
+    },
+    {
+      "path": "golos-meet/Core/Knowledge/LocalIndexingService.swift",
+      "before_sha256": "98d1f720f83b339053f197debc30c558bab52fa42a93515563b2f07c658ab016",
+      "old": "        self.inspect = inspect",
+      "new": "        self.inspect = inspect\n        FixtureBefore58.child(self, of: store)"
+    },
+    {
+      "path": "golos-meet/Core/Knowledge/LocalIndexingService.swift",
+      "before_sha256": "cdaa958fafa98299c2028f1401263f801a02b0a12337b4e413d2e9918c70ddaf",
+      "old": "    func stop() async {",
+      "new": "    func stop() async {\n        FixtureBefore58.mark(\"index-service-stop-enter\", self)\n        defer { FixtureBefore58.mark(\"index-service-stop-exit\", self) }"
+    },
+    {
+      "path": "golos-meet/UI/Projects/KnowledgeMemoryQueue.swift",
+      "before_sha256": "ced729982fd63992094d224ff38fc48f20641a9eb52b9e4b35b7efde3be18d06",
+      "old": "        let worker = worker; Task { @MainActor in await worker.stop() }",
+      "new": "        let worker = worker; Task { @MainActor in FixtureBefore58.mark(\"memory-bridge-deinit-task\", worker); await worker.stop() }"
+    },
+    {
+      "path": "golos-meet/UI/Projects/KnowledgeMemoryQueue.swift",
+      "before_sha256": "155539af788c17f27c9737113a64f26242b8ae3eca310a24c16a615c0cc051e9",
+      "old": "guard !Task.isCancelled else { return }; await worker.stop()",
+      "new": "guard !Task.isCancelled else { return }; FixtureBefore58.mark(\"memory-bridge-stop-task\", worker); await worker.stop()"
+    },
+    {
+      "path": "golos-meet/UI/Projects/KnowledgeIndexing.swift",
+      "before_sha256": "f24750b61a209076e0b1742d25c64f76921322c0ed3f62f06e3ee42846b45f26",
+      "old": "        Task { await service.stop() }",
+      "new": "        Task { FixtureBefore58.mark(\"index-controller-stop-task\", service); await service.stop() }"
+    },
+    {
+      "path": "golos-meetTests/ProjectMemoryUpdateTests.swift",
+      "before_sha256": "c1671405305fc70c7bb9434876e3e0a6d6eba0de0ca03503e786bcb32efa6014",
+      "old": "        store = ProjectStore(url: root.appendingPathComponent(\"knowledge.sqlite\"))",
+      "new": "        FixtureBefore58.fixture(root, test: Test.current?.name ?? \"unknown\")\n        store = ProjectStore(url: root.appendingPathComponent(\"knowledge.sqlite\"))"
+    },
+    {
+      "path": "golos-meetTests/ProjectMemoryUpdateTests.swift",
+      "before_sha256": "c4af66021f447c0960e45df7a2d5d57e0cf194a2f287944de59f2e054d7e1220",
+      "old": "    func cleanup() { service.cancel(); try? FileManager.default.removeItem(at: root) }",
+      "new": "    func cleanup() { service.cancel(); try? FileManager.default.removeItem(at: root); FixtureBefore58.removed(root) }"
+    },
+    {
+      "path": "golos-meetTests/IndexingProductionHooksTests.swift",
+      "before_sha256": "a064ccc15afe18abaad1dc64961f2f2fe348f716c47aee6c584717fed32d6780",
+      "old": "        return root\n",
+      "new": "        FixtureBefore58.fixture(root, test: Test.current?.name ?? \"unknown\")\n        return root\n"
+    },
+    {
+      "path": "golos-meetTests/IndexingProductionHooksTests.swift",
+      "before_sha256": "964ca5f2b30b077e314773c68a291a65bbdecba202631359901c694f53f3389d",
+      "old": "defer { try? FileManager.default.removeItem(at: root) }",
+      "new": "defer { try? FileManager.default.removeItem(at: root); FixtureBefore58.removed(root) }"
+    }
+  ],
+  "helper_sha256": "b6b7bc2ff315b99f9b79ddfb780de74c9248d11aee9d349801317cc9ae658ec6"
+}

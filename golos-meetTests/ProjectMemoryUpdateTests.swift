@@ -39,7 +39,10 @@ import Testing
     init() throws {
         root = FileManager.default.temporaryDirectory.appendingPathComponent("memory-update-\(UUID())")
         try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
+        let scope = try #require(SQLiteFixtureScope.current)
+        scope.register(root: root)
         store = ProjectStore(url: root.appendingPathComponent("knowledge.sqlite"))
+        scope.register(store: store)
         let meetings = root.appendingPathComponent("meetings"), copies = root.appendingPathComponent("copies")
         importer = DocumentImporter(store: store, root: copies)
         search = KnowledgeSearchService(store: store, meetingsRoot: meetings, documentsRoot: copies, queryEmbedding: { _ in throw LocalIndexingError.missingModel })
@@ -47,7 +50,12 @@ import Testing
         service = .init(store: store, meetingsRoot: meetings, documentsRoot: copies, client: spy, model: "fake-only",
             now: { ISO8601DateFormatter().date(from: "2026-11-01T12:00:00Z")! })
     }
-    func cleanup() { service.cancel(); try? FileManager.default.removeItem(at: root) }
+    func cleanup() {
+        service.cancel()
+        // Callbacks may capture this fixture. Release them before scope teardown.
+        spy.beforeAttempt = nil; spy.afterAttempt = nil
+        SQLiteFixtureScope.current?.note("update-callbacks-released")
+    }
     func project(_ name: String = "Север", policy: ProjectCloudPolicy = .allowSelectedContext) async throws -> UUID {
         let p = try await store.createProject(name: name); try await store.setCloudPolicy(policy, for: p.id); return p.id
     }
@@ -91,7 +99,7 @@ import Testing
     func day(_ value: String) -> Date { ISO8601DateFormatter().date(from: value + "T00:00:00Z")! }
 }
 
-@MainActor @Suite struct ProjectMemoryUpdateTests {
+@MainActor @Suite(SQLiteFixtureTrait()) struct ProjectMemoryUpdateTests {
     @Test func sequentialReadyMeetingsUpdateJournalKeepConflictDatesAndCompletionAsClaim() async throws {
         let f = try UpdateFixture(); defer { f.cleanup() }; let p = try await f.project()
         try await f.meeting("one", text: "Релиз 2026-11-26", owners: [p]); let h1 = try await f.hit("one", project: p)
