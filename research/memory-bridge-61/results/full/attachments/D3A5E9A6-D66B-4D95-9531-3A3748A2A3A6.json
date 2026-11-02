@@ -1,0 +1,54 @@
+[
+  {
+    "stage" : "scope-created",
+    "test" : "delayedPublicationCannotReplaceNewStateAndStoredHistoryBecomesNoncurrent(_:)",
+    "uptime" : "344923.4400571667"
+  },
+  {
+    "root" : "memory-history-C82F520C-9361-4697-89F1-B13BC9FB9F48",
+    "stage" : "root-owned",
+    "uptime" : "344923.92139208334"
+  },
+  {
+    "stage" : "store-owned",
+    "uptime" : "344923.92141837504"
+  },
+  {
+    "connection" : "D6B4DB45-07CB-407F-B8F0-54B55BB6D3C8",
+    "root" : "memory-history-C82F520C-9361-4697-89F1-B13BC9FB9F48",
+    "stage" : "opened",
+    "uptime" : "344924.038706125"
+  },
+  {
+    "connection" : "ADB10687-7DD3-44AD-A544-C2A527A2869C",
+    "root" : "memory-history-C82F520C-9361-4697-89F1-B13BC9FB9F48",
+    "stage" : "opened",
+    "uptime" : "344925.8856787917"
+  },
+  {
+    "connection" : "ADB10687-7DD3-44AD-A544-C2A527A2869C",
+    "result" : "0",
+    "stage" : "closed",
+    "uptime" : "344925.8876442083"
+  },
+  {
+    "stage" : "history-fixture-body-cleanup",
+    "uptime" : "344926.2279624167"
+  },
+  {
+    "connection" : "D6B4DB45-07CB-407F-B8F0-54B55BB6D3C8",
+    "result" : "0",
+    "stage" : "closed",
+    "uptime" : "344926.228164875"
+  },
+  {
+    "stage" : "body-finished",
+    "uptime" : "344926.4257736667"
+  },
+  {
+    "exists" : "false",
+    "root" : "memory-history-C82F520C-9361-4697-89F1-B13BC9FB9F48",
+    "stage" : "root-removed",
+    "uptime" : "344926.4277801667"
+  }
+]

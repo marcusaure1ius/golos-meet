@@ -1,0 +1,3733 @@
+{
+  "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+  "dropped" : 0,
+  "rows" : [
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "bridgeID" : "E144C6BB-99F4-4199-9ED2-7C70BDDEEA21",
+          "transportID" : "95FEA0E3-5578-4B85-8323-A1F9677630BA",
+          "workerID" : "BBC6BFDA-0682-4BA9-BDD1-5C222CEC0970"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "owners.bound",
+        "uptime" : 344661.546915
+      },
+      "sequence" : 0
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "test.start.request",
+        "uptime" : 344661.56623237504
+      },
+      "sequence" : 1
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "bridgeID" : "E144C6BB-99F4-4199-9ED2-7C70BDDEEA21",
+          "configurationID" : "",
+          "dirty" : "false",
+          "enabled" : "true",
+          "model" : "fake-only",
+          "revision" : "0",
+          "startReturnedConfigurationID" : "",
+          "started" : "false",
+          "workerID" : "BBC6BFDA-0682-4BA9-BDD1-5C222CEC0970",
+          "workerRunID" : "",
+          "workerStarted" : "false"
+        },
+        "ownerID" : "E144C6BB-99F4-4199-9ED2-7C70BDDEEA21",
+        "ownerKind" : "bridge",
+        "stage" : "start.request",
+        "uptime" : 344661.56636833336
+      },
+      "sequence" : 2
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "bridgeID" : "E144C6BB-99F4-4199-9ED2-7C70BDDEEA21",
+          "configurationID" : "D448222D-2413-44D7-A175-DE36BD4F83B4",
+          "dirty" : "false",
+          "enabled" : "true",
+          "model" : "fake-only",
+          "revision" : "0",
+          "startReturnedConfigurationID" : "",
+          "started" : "true",
+          "workerID" : "BBC6BFDA-0682-4BA9-BDD1-5C222CEC0970",
+          "workerRunID" : "",
+          "workerStarted" : "false"
+        },
+        "ownerID" : "E144C6BB-99F4-4199-9ED2-7C70BDDEEA21",
+        "ownerKind" : "bridge",
+        "stage" : "configuration.request",
+        "uptime" : 344661.56640995835
+      },
+      "sequence" : 3
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "phase" : "initial snapshot"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "wait.begin",
+        "uptime" : 344661.56641720835
+      },
+      "sequence" : 4
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "1",
+          "phase" : "initial snapshot"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344661.56641908333
+      },
+      "sequence" : 5
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "1",
+          "phase" : "initial snapshot"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344661.56643245835
+      },
+      "sequence" : 6
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "bridgeID" : "E144C6BB-99F4-4199-9ED2-7C70BDDEEA21",
+          "configurationID" : "D448222D-2413-44D7-A175-DE36BD4F83B4",
+          "dirty" : "false",
+          "enabled" : "true",
+          "model" : "fake-only",
+          "revision" : "0",
+          "startReturnedConfigurationID" : "",
+          "started" : "true",
+          "workerID" : "BBC6BFDA-0682-4BA9-BDD1-5C222CEC0970",
+          "workerRunID" : "",
+          "workerStarted" : "false"
+        },
+        "ownerID" : "E144C6BB-99F4-4199-9ED2-7C70BDDEEA21",
+        "ownerKind" : "bridge",
+        "stage" : "configuration.changed.begin",
+        "uptime" : 344661.5665315834
+      },
+      "sequence" : 7
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "draining" : "false",
+          "loadingPreview" : "false",
+          "model" : "fake-only",
+          "refreshPending" : "false",
+          "revision" : "0",
+          "runID" : "",
+          "started" : "false",
+          "workerID" : "BBC6BFDA-0682-4BA9-BDD1-5C222CEC0970"
+        },
+        "ownerID" : "BBC6BFDA-0682-4BA9-BDD1-5C222CEC0970",
+        "ownerKind" : "worker",
+        "stage" : "changed.begin",
+        "uptime" : 344661.5665435
+      },
+      "sequence" : 8
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "draining" : "false",
+          "loadingPreview" : "false",
+          "model" : "fake-only",
+          "refreshPending" : "true",
+          "revision" : "0",
+          "runID" : "",
+          "started" : "false",
+          "workerID" : "BBC6BFDA-0682-4BA9-BDD1-5C222CEC0970"
+        },
+        "ownerID" : "BBC6BFDA-0682-4BA9-BDD1-5C222CEC0970",
+        "ownerKind" : "worker",
+        "stage" : "discovery.begin",
+        "uptime" : 344661.5665480417
+      },
+      "sequence" : 9
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "draining" : "false",
+          "loadingPreview" : "false",
+          "model" : "fake-only",
+          "refreshPending" : "false",
+          "revision" : "0",
+          "runID" : "",
+          "started" : "false",
+          "workerID" : "BBC6BFDA-0682-4BA9-BDD1-5C222CEC0970"
+        },
+        "ownerID" : "BBC6BFDA-0682-4BA9-BDD1-5C222CEC0970",
+        "ownerKind" : "worker",
+        "stage" : "discovery.return",
+        "uptime" : 344661.6210090417
+      },
+      "sequence" : 10
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "2",
+          "phase" : "initial snapshot"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344661.62894295837
+      },
+      "sequence" : 11
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "2",
+          "phase" : "initial snapshot"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344661.6289462917
+      },
+      "sequence" : 12
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "phase" : "initial snapshot"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "wait.return",
+        "uptime" : 344661.62894720834
+      },
+      "sequence" : 13
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "draining" : "false",
+          "loadingPreview" : "false",
+          "model" : "fake-only",
+          "refreshPending" : "false",
+          "revision" : "1",
+          "runID" : "",
+          "started" : "false",
+          "workerID" : "BBC6BFDA-0682-4BA9-BDD1-5C222CEC0970"
+        },
+        "ownerID" : "BBC6BFDA-0682-4BA9-BDD1-5C222CEC0970",
+        "ownerKind" : "worker",
+        "stage" : "changed.return",
+        "uptime" : 344661.6300717917
+      },
+      "sequence" : 14
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "bridgeID" : "E144C6BB-99F4-4199-9ED2-7C70BDDEEA21",
+          "configurationID" : "D448222D-2413-44D7-A175-DE36BD4F83B4",
+          "dirty" : "false",
+          "enabled" : "true",
+          "model" : "fake-only",
+          "revision" : "0",
+          "startReturnedConfigurationID" : "",
+          "started" : "true",
+          "workerID" : "BBC6BFDA-0682-4BA9-BDD1-5C222CEC0970",
+          "workerRunID" : "",
+          "workerStarted" : "false"
+        },
+        "ownerID" : "E144C6BB-99F4-4199-9ED2-7C70BDDEEA21",
+        "ownerKind" : "bridge",
+        "stage" : "configuration.changed.return",
+        "uptime" : 344661.63008900004
+      },
+      "sequence" : 15
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "bridgeID" : "E144C6BB-99F4-4199-9ED2-7C70BDDEEA21",
+          "configurationID" : "D448222D-2413-44D7-A175-DE36BD4F83B4",
+          "dirty" : "false",
+          "enabled" : "true",
+          "model" : "fake-only",
+          "revision" : "0",
+          "startReturnedConfigurationID" : "",
+          "started" : "true",
+          "workerID" : "BBC6BFDA-0682-4BA9-BDD1-5C222CEC0970",
+          "workerRunID" : "",
+          "workerStarted" : "false"
+        },
+        "ownerID" : "E144C6BB-99F4-4199-9ED2-7C70BDDEEA21",
+        "ownerKind" : "bridge",
+        "stage" : "configuration.start.begin",
+        "uptime" : 344661.630093
+      },
+      "sequence" : 16
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "draining" : "false",
+          "loadingPreview" : "false",
+          "model" : "fake-only",
+          "refreshPending" : "false",
+          "revision" : "1",
+          "runID" : "",
+          "started" : "false",
+          "workerID" : "BBC6BFDA-0682-4BA9-BDD1-5C222CEC0970"
+        },
+        "ownerID" : "BBC6BFDA-0682-4BA9-BDD1-5C222CEC0970",
+        "ownerKind" : "worker",
+        "stage" : "start.request",
+        "uptime" : 344661.63009425
+      },
+      "sequence" : 17
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "draining" : "false",
+          "loadingPreview" : "false",
+          "model" : "fake-only",
+          "refreshPending" : "false",
+          "revision" : "1",
+          "runID" : "6FF6B58C-D9A9-4EAD-BE87-F2048FAC015F",
+          "started" : "true",
+          "workerID" : "BBC6BFDA-0682-4BA9-BDD1-5C222CEC0970"
+        },
+        "ownerID" : "BBC6BFDA-0682-4BA9-BDD1-5C222CEC0970",
+        "ownerKind" : "worker",
+        "stage" : "run.started",
+        "uptime" : 344661.63898287504
+      },
+      "sequence" : 18
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "draining" : "false",
+          "loadingPreview" : "false",
+          "model" : "fake-only",
+          "refreshPending" : "false",
+          "revision" : "1",
+          "runID" : "6FF6B58C-D9A9-4EAD-BE87-F2048FAC015F",
+          "started" : "true",
+          "workerID" : "BBC6BFDA-0682-4BA9-BDD1-5C222CEC0970"
+        },
+        "ownerID" : "BBC6BFDA-0682-4BA9-BDD1-5C222CEC0970",
+        "ownerKind" : "worker",
+        "stage" : "changed.begin",
+        "uptime" : 344661.638987125
+      },
+      "sequence" : 19
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "draining" : "false",
+          "loadingPreview" : "false",
+          "model" : "fake-only",
+          "refreshPending" : "true",
+          "revision" : "1",
+          "runID" : "6FF6B58C-D9A9-4EAD-BE87-F2048FAC015F",
+          "started" : "true",
+          "workerID" : "BBC6BFDA-0682-4BA9-BDD1-5C222CEC0970"
+        },
+        "ownerID" : "BBC6BFDA-0682-4BA9-BDD1-5C222CEC0970",
+        "ownerKind" : "worker",
+        "stage" : "discovery.begin",
+        "uptime" : 344661.638988625
+      },
+      "sequence" : 20
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "draining" : "false",
+          "loadingPreview" : "false",
+          "model" : "fake-only",
+          "refreshPending" : "false",
+          "revision" : "1",
+          "runID" : "6FF6B58C-D9A9-4EAD-BE87-F2048FAC015F",
+          "started" : "true",
+          "workerID" : "BBC6BFDA-0682-4BA9-BDD1-5C222CEC0970"
+        },
+        "ownerID" : "BBC6BFDA-0682-4BA9-BDD1-5C222CEC0970",
+        "ownerKind" : "worker",
+        "stage" : "discovery.return",
+        "uptime" : 344661.65400158335
+      },
+      "sequence" : 21
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "draining" : "true",
+          "loadingPreview" : "false",
+          "model" : "fake-only",
+          "refreshPending" : "false",
+          "revision" : "2",
+          "runID" : "6FF6B58C-D9A9-4EAD-BE87-F2048FAC015F",
+          "started" : "true",
+          "workerID" : "BBC6BFDA-0682-4BA9-BDD1-5C222CEC0970"
+        },
+        "ownerID" : "BBC6BFDA-0682-4BA9-BDD1-5C222CEC0970",
+        "ownerKind" : "worker",
+        "stage" : "changed.return",
+        "uptime" : 344661.65811433335
+      },
+      "sequence" : 22
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "draining" : "true",
+          "loadingPreview" : "false",
+          "model" : "fake-only",
+          "refreshPending" : "false",
+          "revision" : "2",
+          "runID" : "6FF6B58C-D9A9-4EAD-BE87-F2048FAC015F",
+          "started" : "true",
+          "workerID" : "BBC6BFDA-0682-4BA9-BDD1-5C222CEC0970"
+        },
+        "ownerID" : "BBC6BFDA-0682-4BA9-BDD1-5C222CEC0970",
+        "ownerKind" : "worker",
+        "stage" : "start.return",
+        "uptime" : 344661.65811758337
+      },
+      "sequence" : 23
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "bridgeID" : "E144C6BB-99F4-4199-9ED2-7C70BDDEEA21",
+          "configurationID" : "D448222D-2413-44D7-A175-DE36BD4F83B4",
+          "dirty" : "false",
+          "enabled" : "true",
+          "model" : "fake-only",
+          "revision" : "1",
+          "startReturnedConfigurationID" : "D448222D-2413-44D7-A175-DE36BD4F83B4",
+          "started" : "true",
+          "workerID" : "BBC6BFDA-0682-4BA9-BDD1-5C222CEC0970",
+          "workerRunID" : "6FF6B58C-D9A9-4EAD-BE87-F2048FAC015F",
+          "workerStarted" : "true"
+        },
+        "ownerID" : "E144C6BB-99F4-4199-9ED2-7C70BDDEEA21",
+        "ownerKind" : "bridge",
+        "stage" : "configuration.start.return",
+        "uptime" : 344661.658132
+      },
+      "sequence" : 24
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "input.ready",
+        "uptime" : 344661.68629670836
+      },
+      "sequence" : 25
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "event.post.begin",
+        "uptime" : 344661.686298125
+      },
+      "sequence" : 26
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "workerID" : "BBC6BFDA-0682-4BA9-BDD1-5C222CEC0970"
+        },
+        "ownerID" : "E144C6BB-99F4-4199-9ED2-7C70BDDEEA21",
+        "ownerKind" : "bridge",
+        "stage" : "event.received",
+        "uptime" : 344661.68632775004
+      },
+      "sequence" : 27
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "event.post.end",
+        "uptime" : 344661.686335625
+      },
+      "sequence" : 28
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "wait.begin",
+        "uptime" : 344661.68633883336
+      },
+      "sequence" : 29
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "1",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344661.68633991666
+      },
+      "sequence" : 30
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "bridgeID" : "E144C6BB-99F4-4199-9ED2-7C70BDDEEA21",
+          "configurationID" : "D448222D-2413-44D7-A175-DE36BD4F83B4",
+          "dirty" : "false",
+          "enabled" : "true",
+          "model" : "fake-only",
+          "revision" : "3",
+          "startReturnedConfigurationID" : "D448222D-2413-44D7-A175-DE36BD4F83B4",
+          "started" : "true",
+          "workerID" : "BBC6BFDA-0682-4BA9-BDD1-5C222CEC0970",
+          "workerRunID" : "6FF6B58C-D9A9-4EAD-BE87-F2048FAC015F",
+          "workerStarted" : "true"
+        },
+        "ownerID" : "E144C6BB-99F4-4199-9ED2-7C70BDDEEA21",
+        "ownerKind" : "bridge",
+        "stage" : "event.main",
+        "uptime" : 344661.6864219167
+      },
+      "sequence" : 31
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "bridgeID" : "E144C6BB-99F4-4199-9ED2-7C70BDDEEA21",
+          "configurationID" : "D448222D-2413-44D7-A175-DE36BD4F83B4",
+          "dirty" : "false",
+          "enabled" : "true",
+          "model" : "fake-only",
+          "revision" : "3",
+          "startReturnedConfigurationID" : "D448222D-2413-44D7-A175-DE36BD4F83B4",
+          "started" : "true",
+          "workerID" : "BBC6BFDA-0682-4BA9-BDD1-5C222CEC0970",
+          "workerRunID" : "6FF6B58C-D9A9-4EAD-BE87-F2048FAC015F",
+          "workerStarted" : "true"
+        },
+        "ownerID" : "E144C6BB-99F4-4199-9ED2-7C70BDDEEA21",
+        "ownerKind" : "bridge",
+        "stage" : "changed.request",
+        "uptime" : 344661.6864255834
+      },
+      "sequence" : 32
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "1",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344661.68701595836
+      },
+      "sequence" : 33
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "2",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344661.7087858333
+      },
+      "sequence" : 34
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "2",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344661.7114101667
+      },
+      "sequence" : 35
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "3",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344661.72587258334
+      },
+      "sequence" : 36
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "3",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344661.72981962503
+      },
+      "sequence" : 37
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "4",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344661.74158950004
+      },
+      "sequence" : 38
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "4",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344661.7433646667
+      },
+      "sequence" : 39
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "5",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344661.75947495835
+      },
+      "sequence" : 40
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "5",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344661.762931375
+      },
+      "sequence" : 41
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "6",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344661.7762395417
+      },
+      "sequence" : 42
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "6",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344661.77925283334
+      },
+      "sequence" : 43
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "7",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344661.78926883335
+      },
+      "sequence" : 44
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "7",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344661.7911706667
+      },
+      "sequence" : 45
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "draining" : "false",
+          "loadingPreview" : "false",
+          "model" : "fake-only",
+          "refreshPending" : "false",
+          "revision" : "3",
+          "runID" : "6FF6B58C-D9A9-4EAD-BE87-F2048FAC015F",
+          "started" : "true",
+          "workerID" : "BBC6BFDA-0682-4BA9-BDD1-5C222CEC0970"
+        },
+        "ownerID" : "BBC6BFDA-0682-4BA9-BDD1-5C222CEC0970",
+        "ownerKind" : "worker",
+        "stage" : "changed.begin",
+        "uptime" : 344661.79471658333
+      },
+      "sequence" : 46
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "draining" : "false",
+          "loadingPreview" : "false",
+          "model" : "fake-only",
+          "refreshPending" : "true",
+          "revision" : "3",
+          "runID" : "6FF6B58C-D9A9-4EAD-BE87-F2048FAC015F",
+          "started" : "true",
+          "workerID" : "BBC6BFDA-0682-4BA9-BDD1-5C222CEC0970"
+        },
+        "ownerID" : "BBC6BFDA-0682-4BA9-BDD1-5C222CEC0970",
+        "ownerKind" : "worker",
+        "stage" : "discovery.begin",
+        "uptime" : 344661.79472095834
+      },
+      "sequence" : 47
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "8",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344661.80025820836
+      },
+      "sequence" : 48
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "draining" : "false",
+          "loadingPreview" : "false",
+          "model" : "fake-only",
+          "refreshPending" : "false",
+          "revision" : "3",
+          "runID" : "6FF6B58C-D9A9-4EAD-BE87-F2048FAC015F",
+          "started" : "true",
+          "workerID" : "BBC6BFDA-0682-4BA9-BDD1-5C222CEC0970"
+        },
+        "ownerID" : "BBC6BFDA-0682-4BA9-BDD1-5C222CEC0970",
+        "ownerKind" : "worker",
+        "stage" : "discovery.return",
+        "uptime" : 344661.80447129166
+      },
+      "sequence" : 49
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "8",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344661.80471508333
+      },
+      "sequence" : 50
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "draining" : "true",
+          "loadingPreview" : "false",
+          "model" : "fake-only",
+          "refreshPending" : "false",
+          "revision" : "4",
+          "runID" : "6FF6B58C-D9A9-4EAD-BE87-F2048FAC015F",
+          "started" : "true",
+          "workerID" : "BBC6BFDA-0682-4BA9-BDD1-5C222CEC0970"
+        },
+        "ownerID" : "BBC6BFDA-0682-4BA9-BDD1-5C222CEC0970",
+        "ownerKind" : "worker",
+        "stage" : "changed.return",
+        "uptime" : 344661.80488745833
+      },
+      "sequence" : 51
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "9",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344661.8145447917
+      },
+      "sequence" : 52
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "9",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344661.8164285
+      },
+      "sequence" : 53
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "attemptID" : "839F173A-92B8-47C4-A41A-E9EF340E3F75",
+          "count" : "1",
+          "cursor" : "0",
+          "cycleID" : "748C8A04-33EA-41B7-86C7-498E0E164D7F",
+          "draining" : "true",
+          "jobGeneration" : "45867788-9EAC-4427-80BE-C153340BF183",
+          "loadingPreview" : "false",
+          "model" : "fake-only",
+          "refreshPending" : "false",
+          "revision" : "4",
+          "runID" : "6FF6B58C-D9A9-4EAD-BE87-F2048FAC015F",
+          "sequence" : "1",
+          "started" : "true",
+          "workerID" : "BBC6BFDA-0682-4BA9-BDD1-5C222CEC0970"
+        },
+        "ownerID" : "BBC6BFDA-0682-4BA9-BDD1-5C222CEC0970",
+        "ownerKind" : "worker",
+        "stage" : "lease.claimed",
+        "uptime" : 344661.81860262505
+      },
+      "sequence" : 54
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "attemptID" : "839F173A-92B8-47C4-A41A-E9EF340E3F75",
+          "count" : "1",
+          "cursor" : "0",
+          "cycleID" : "748C8A04-33EA-41B7-86C7-498E0E164D7F",
+          "draining" : "true",
+          "jobGeneration" : "45867788-9EAC-4427-80BE-C153340BF183",
+          "loadingPreview" : "false",
+          "model" : "fake-only",
+          "refreshPending" : "false",
+          "revision" : "4",
+          "runID" : "6FF6B58C-D9A9-4EAD-BE87-F2048FAC015F",
+          "sequence" : "1",
+          "started" : "true",
+          "workerID" : "BBC6BFDA-0682-4BA9-BDD1-5C222CEC0970"
+        },
+        "ownerID" : "BBC6BFDA-0682-4BA9-BDD1-5C222CEC0970",
+        "ownerKind" : "worker",
+        "stage" : "attempt.active",
+        "uptime" : 344661.81862950005
+      },
+      "sequence" : 55
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "10",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344661.82831658336
+      },
+      "sequence" : 56
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "10",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344661.8310501667
+      },
+      "sequence" : 57
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "11",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344661.84535308334
+      },
+      "sequence" : 58
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "11",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344661.8466291667
+      },
+      "sequence" : 59
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "12",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344661.85425120837
+      },
+      "sequence" : 60
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "12",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344661.8552349167
+      },
+      "sequence" : 61
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "13",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344661.8625299167
+      },
+      "sequence" : 62
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "13",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344661.86527891667
+      },
+      "sequence" : 63
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "14",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344661.87456158333
+      },
+      "sequence" : 64
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "14",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344661.8757355
+      },
+      "sequence" : 65
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "15",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344661.88275525003
+      },
+      "sequence" : 66
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "15",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344661.883084625
+      },
+      "sequence" : 67
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "16",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344661.8922454167
+      },
+      "sequence" : 68
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "16",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344661.8927342084
+      },
+      "sequence" : 69
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "17",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344661.9030865417
+      },
+      "sequence" : 70
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "17",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344661.90530879167
+      },
+      "sequence" : 71
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "18",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344661.91265012504
+      },
+      "sequence" : 72
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "18",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344661.91396183334
+      },
+      "sequence" : 73
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "19",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344661.92253000004
+      },
+      "sequence" : 74
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "19",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344661.923835
+      },
+      "sequence" : 75
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "20",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344661.932330625
+      },
+      "sequence" : 76
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "20",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344661.9329591667
+      },
+      "sequence" : 77
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "21",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344661.94017125
+      },
+      "sequence" : 78
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "21",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344661.9432726667
+      },
+      "sequence" : 79
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "22",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344661.95322133333
+      },
+      "sequence" : 80
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "22",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344661.9533922917
+      },
+      "sequence" : 81
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "23",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344661.9610757917
+      },
+      "sequence" : 82
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "23",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344661.9613065417
+      },
+      "sequence" : 83
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "24",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344661.97004341666
+      },
+      "sequence" : 84
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "24",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344661.97059029166
+      },
+      "sequence" : 85
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "25",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344661.97666079167
+      },
+      "sequence" : 86
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "25",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344661.9777902917
+      },
+      "sequence" : 87
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "26",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344661.9856682917
+      },
+      "sequence" : 88
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "26",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344661.98704070837
+      },
+      "sequence" : 89
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "27",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344661.99374033336
+      },
+      "sequence" : 90
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "27",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344661.99433870835
+      },
+      "sequence" : 91
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "28",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344662.0001190833
+      },
+      "sequence" : 92
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "28",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344662.00063725
+      },
+      "sequence" : 93
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "29",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344662.0077395834
+      },
+      "sequence" : 94
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "29",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344662.008852
+      },
+      "sequence" : 95
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "30",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344662.0158269167
+      },
+      "sequence" : 96
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "30",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344662.01645366667
+      },
+      "sequence" : 97
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "31",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344662.0244881667
+      },
+      "sequence" : 98
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "31",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344662.0255161667
+      },
+      "sequence" : 99
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "32",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344662.03311633336
+      },
+      "sequence" : 100
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "32",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344662.0341711667
+      },
+      "sequence" : 101
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "33",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344662.04074637505
+      },
+      "sequence" : 102
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "33",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344662.04162904166
+      },
+      "sequence" : 103
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "34",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344662.048850375
+      },
+      "sequence" : 104
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "34",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344662.0497295834
+      },
+      "sequence" : 105
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "35",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344662.05642125005
+      },
+      "sequence" : 106
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "35",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344662.05710283335
+      },
+      "sequence" : 107
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "36",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344662.06384370837
+      },
+      "sequence" : 108
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "36",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344662.0643794584
+      },
+      "sequence" : 109
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "37",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344662.07145275
+      },
+      "sequence" : 110
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "37",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344662.0719991667
+      },
+      "sequence" : 111
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "38",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344662.10855795833
+      },
+      "sequence" : 112
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "38",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344662.1102105
+      },
+      "sequence" : 113
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "39",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344662.116188
+      },
+      "sequence" : 114
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "39",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344662.11741891666
+      },
+      "sequence" : 115
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "40",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344662.1233684167
+      },
+      "sequence" : 116
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "40",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344662.12387483334
+      },
+      "sequence" : 117
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "41",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344662.1296395417
+      },
+      "sequence" : 118
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "41",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344662.1304290417
+      },
+      "sequence" : 119
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "42",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344662.1388674583
+      },
+      "sequence" : 120
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "42",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344662.139638875
+      },
+      "sequence" : 121
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "43",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344662.14672379167
+      },
+      "sequence" : 122
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "43",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344662.14739258337
+      },
+      "sequence" : 123
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "44",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344662.15331795835
+      },
+      "sequence" : 124
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "44",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344662.15372158337
+      },
+      "sequence" : 125
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "45",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344662.16049370833
+      },
+      "sequence" : 126
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "45",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344662.16095937503
+      },
+      "sequence" : 127
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "46",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344662.1671147917
+      },
+      "sequence" : 128
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "46",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344662.16786650004
+      },
+      "sequence" : 129
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "47",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344662.17434850003
+      },
+      "sequence" : 130
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "47",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344662.17511775
+      },
+      "sequence" : 131
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "48",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344662.18101245834
+      },
+      "sequence" : 132
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "48",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344662.18161233334
+      },
+      "sequence" : 133
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "49",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344662.1872789167
+      },
+      "sequence" : 134
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "49",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344662.187641625
+      },
+      "sequence" : 135
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "50",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344662.19291745836
+      },
+      "sequence" : 136
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "50",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344662.19332208333
+      },
+      "sequence" : 137
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "51",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344662.198682625
+      },
+      "sequence" : 138
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "51",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344662.1990586667
+      },
+      "sequence" : 139
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "attemptID" : "839F173A-92B8-47C4-A41A-E9EF340E3F75",
+          "count" : "1",
+          "cursor" : "0",
+          "cycleID" : "748C8A04-33EA-41B7-86C7-498E0E164D7F",
+          "draining" : "true",
+          "jobGeneration" : "45867788-9EAC-4427-80BE-C153340BF183",
+          "loadingPreview" : "false",
+          "model" : "fake-only",
+          "refreshPending" : "false",
+          "revision" : "5",
+          "runID" : "6FF6B58C-D9A9-4EAD-BE87-F2048FAC015F",
+          "sequence" : "1",
+          "started" : "true",
+          "workerID" : "BBC6BFDA-0682-4BA9-BDD1-5C222CEC0970"
+        },
+        "ownerID" : "BBC6BFDA-0682-4BA9-BDD1-5C222CEC0970",
+        "ownerKind" : "worker",
+        "stage" : "update.begin",
+        "uptime" : 344662.199813875
+      },
+      "sequence" : 140
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "52",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344662.204872625
+      },
+      "sequence" : 141
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "52",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344662.20510537503
+      },
+      "sequence" : 142
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "53",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344662.21023045835
+      },
+      "sequence" : 143
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "53",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344662.21031608334
+      },
+      "sequence" : 144
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "54",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344662.215451375
+      },
+      "sequence" : 145
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "54",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344662.21585566667
+      },
+      "sequence" : 146
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "55",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344662.22093745833
+      },
+      "sequence" : 147
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "55",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344662.221221
+      },
+      "sequence" : 148
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "56",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344662.22634495836
+      },
+      "sequence" : 149
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "56",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344662.22644183337
+      },
+      "sequence" : 150
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "57",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344662.2318452917
+      },
+      "sequence" : 151
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "57",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344662.23215062503
+      },
+      "sequence" : 152
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "58",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344662.23751520837
+      },
+      "sequence" : 153
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "58",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344662.2376139167
+      },
+      "sequence" : 154
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "59",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344662.243658
+      },
+      "sequence" : 155
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "59",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344662.2439619167
+      },
+      "sequence" : 156
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "60",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344662.24937775003
+      },
+      "sequence" : 157
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "60",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344662.24961162504
+      },
+      "sequence" : 158
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "61",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344662.25476208335
+      },
+      "sequence" : 159
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "61",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344662.2549142084
+      },
+      "sequence" : 160
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "62",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344662.26098295837
+      },
+      "sequence" : 161
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "62",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344662.26125833334
+      },
+      "sequence" : 162
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "63",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344662.2668400417
+      },
+      "sequence" : 163
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "63",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344662.266963
+      },
+      "sequence" : 164
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "64",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344662.27246708336
+      },
+      "sequence" : 165
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "64",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344662.27276575
+      },
+      "sequence" : 166
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "65",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344662.27831641666
+      },
+      "sequence" : 167
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "65",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344662.27867950004
+      },
+      "sequence" : 168
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "66",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344662.28388812504
+      },
+      "sequence" : 169
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "66",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344662.28418745834
+      },
+      "sequence" : 170
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "67",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344662.2892995417
+      },
+      "sequence" : 171
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "67",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344662.28957483335
+      },
+      "sequence" : 172
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "68",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344662.2947505
+      },
+      "sequence" : 173
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "68",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344662.29485737503
+      },
+      "sequence" : 174
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "69",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344662.300280375
+      },
+      "sequence" : 175
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "69",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344662.30050504167
+      },
+      "sequence" : 176
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "70",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344662.3055972917
+      },
+      "sequence" : 177
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "70",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344662.3060562083
+      },
+      "sequence" : 178
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "71",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344662.3120872917
+      },
+      "sequence" : 179
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "71",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344662.3123087084
+      },
+      "sequence" : 180
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "72",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344662.3174607084
+      },
+      "sequence" : 181
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "72",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344662.3176157917
+      },
+      "sequence" : 182
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "73",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344662.3231635417
+      },
+      "sequence" : 183
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "73",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344662.3234867917
+      },
+      "sequence" : 184
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "74",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344662.328858125
+      },
+      "sequence" : 185
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "74",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344662.32928420836
+      },
+      "sequence" : 186
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "75",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344662.3344357917
+      },
+      "sequence" : 187
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "75",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344662.3345454584
+      },
+      "sequence" : 188
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "76",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344662.3396299583
+      },
+      "sequence" : 189
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "76",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344662.33973425004
+      },
+      "sequence" : 190
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "77",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344662.34646133333
+      },
+      "sequence" : 191
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "77",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344662.3465645
+      },
+      "sequence" : 192
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "78",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344662.3522197917
+      },
+      "sequence" : 193
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "78",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344662.35297083337
+      },
+      "sequence" : 194
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "79",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344662.3588752917
+      },
+      "sequence" : 195
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "79",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344662.35914325004
+      },
+      "sequence" : 196
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "80",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344662.36419075
+      },
+      "sequence" : 197
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "80",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344662.36441416666
+      },
+      "sequence" : 198
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "81",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344662.37004720833
+      },
+      "sequence" : 199
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "81",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344662.37016137503
+      },
+      "sequence" : 200
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "82",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344662.3752537917
+      },
+      "sequence" : 201
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "82",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344662.3753516667
+      },
+      "sequence" : 202
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "83",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344662.3809714167
+      },
+      "sequence" : 203
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "83",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344662.3812330834
+      },
+      "sequence" : 204
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "84",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344662.3864257917
+      },
+      "sequence" : 205
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "84",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344662.38686204166
+      },
+      "sequence" : 206
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "85",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344662.39248045837
+      },
+      "sequence" : 207
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "85",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344662.392600125
+      },
+      "sequence" : 208
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "86",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344662.3978809167
+      },
+      "sequence" : 209
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "86",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344662.39813387505
+      },
+      "sequence" : 210
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "87",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344662.4034829583
+      },
+      "sequence" : 211
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "87",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344662.4038264167
+      },
+      "sequence" : 212
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "88",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344662.4097195
+      },
+      "sequence" : 213
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "88",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344662.4100975834
+      },
+      "sequence" : 214
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "89",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344662.41543287504
+      },
+      "sequence" : 215
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "89",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344662.4166810833
+      },
+      "sequence" : 216
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "90",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344662.4222394167
+      },
+      "sequence" : 217
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "90",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344662.4244882084
+      },
+      "sequence" : 218
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "attemptID" : "839F173A-92B8-47C4-A41A-E9EF340E3F75",
+          "count" : "1",
+          "cursor" : "0",
+          "cycleID" : "748C8A04-33EA-41B7-86C7-498E0E164D7F",
+          "draining" : "true",
+          "invocationID" : "D5D68ECC-D0E8-43BB-9B12-5776FBB06017",
+          "jobGeneration" : "45867788-9EAC-4427-80BE-C153340BF183",
+          "loadingPreview" : "false",
+          "model" : "fake-only",
+          "refreshPending" : "false",
+          "revision" : "5",
+          "runID" : "6FF6B58C-D9A9-4EAD-BE87-F2048FAC015F",
+          "sequence" : "1",
+          "started" : "true",
+          "workerID" : "BBC6BFDA-0682-4BA9-BDD1-5C222CEC0970"
+        },
+        "ownerID" : "95FEA0E3-5578-4B85-8323-A1F9677630BA",
+        "ownerKind" : "transport",
+        "stage" : "physical.enter",
+        "uptime" : 344662.425876625
+      },
+      "sequence" : 219
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "91",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344662.42968550004
+      },
+      "sequence" : 220
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "91",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344662.4299326667
+      },
+      "sequence" : 221
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "92",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344662.43598608335
+      },
+      "sequence" : 222
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "attemptID" : "839F173A-92B8-47C4-A41A-E9EF340E3F75",
+          "count" : "1",
+          "cursor" : "0",
+          "cycleID" : "748C8A04-33EA-41B7-86C7-498E0E164D7F",
+          "draining" : "true",
+          "invocationID" : "D5D68ECC-D0E8-43BB-9B12-5776FBB06017",
+          "jobGeneration" : "45867788-9EAC-4427-80BE-C153340BF183",
+          "loadingPreview" : "false",
+          "model" : "fake-only",
+          "refreshPending" : "false",
+          "revision" : "5",
+          "runID" : "6FF6B58C-D9A9-4EAD-BE87-F2048FAC015F",
+          "sequence" : "1",
+          "started" : "true",
+          "workerID" : "BBC6BFDA-0682-4BA9-BDD1-5C222CEC0970"
+        },
+        "ownerID" : "95FEA0E3-5578-4B85-8323-A1F9677630BA",
+        "ownerKind" : "transport",
+        "stage" : "physical.return",
+        "uptime" : 344662.437671625
+      },
+      "sequence" : 223
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "92",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344662.43772075
+      },
+      "sequence" : 224
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "93",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344662.44314283336
+      },
+      "sequence" : 225
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "93",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344662.4439698334
+      },
+      "sequence" : 226
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "94",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344662.44933879166
+      },
+      "sequence" : 227
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "94",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344662.45094870834
+      },
+      "sequence" : 228
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "95",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344662.45613529166
+      },
+      "sequence" : 229
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "95",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344662.4562732084
+      },
+      "sequence" : 230
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "96",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344662.46263
+      },
+      "sequence" : 231
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "96",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344662.46290758334
+      },
+      "sequence" : 232
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "97",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344662.4683196667
+      },
+      "sequence" : 233
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "iteration" : "97",
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344662.4732160417
+      },
+      "sequence" : 234
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "phase" : "ready-source coverage"
+        },
+        "ownerID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+        "ownerKind" : "case",
+        "stage" : "wait.return",
+        "uptime" : 344662.47321850003
+      },
+      "sequence" : 235
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "bridgeID" : "E144C6BB-99F4-4199-9ED2-7C70BDDEEA21",
+          "configurationID" : "D448222D-2413-44D7-A175-DE36BD4F83B4",
+          "dirty" : "false",
+          "enabled" : "true",
+          "model" : "fake-only",
+          "revision" : "5",
+          "startReturnedConfigurationID" : "D448222D-2413-44D7-A175-DE36BD4F83B4",
+          "started" : "true",
+          "workerID" : "BBC6BFDA-0682-4BA9-BDD1-5C222CEC0970",
+          "workerRunID" : "6FF6B58C-D9A9-4EAD-BE87-F2048FAC015F",
+          "workerStarted" : "true"
+        },
+        "ownerID" : "E144C6BB-99F4-4199-9ED2-7C70BDDEEA21",
+        "ownerKind" : "bridge",
+        "stage" : "stop.request",
+        "uptime" : 344662.47325850005
+      },
+      "sequence" : 236
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "workerID" : "BBC6BFDA-0682-4BA9-BDD1-5C222CEC0970"
+        },
+        "ownerID" : "E144C6BB-99F4-4199-9ED2-7C70BDDEEA21",
+        "ownerKind" : "bridge",
+        "stage" : "deinit",
+        "uptime" : 344662.4732789167
+      },
+      "sequence" : 237
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "attemptID" : "839F173A-92B8-47C4-A41A-E9EF340E3F75",
+          "count" : "1",
+          "cursor" : "0",
+          "cycleID" : "748C8A04-33EA-41B7-86C7-498E0E164D7F",
+          "draining" : "true",
+          "jobGeneration" : "45867788-9EAC-4427-80BE-C153340BF183",
+          "loadingPreview" : "false",
+          "model" : "fake-only",
+          "refreshPending" : "false",
+          "revision" : "5",
+          "runID" : "6FF6B58C-D9A9-4EAD-BE87-F2048FAC015F",
+          "sequence" : "1",
+          "started" : "true",
+          "workerID" : "BBC6BFDA-0682-4BA9-BDD1-5C222CEC0970"
+        },
+        "ownerID" : "BBC6BFDA-0682-4BA9-BDD1-5C222CEC0970",
+        "ownerKind" : "worker",
+        "stage" : "publication.inserted.return",
+        "uptime" : 344662.47330725
+      },
+      "sequence" : 238
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "workerID" : "BBC6BFDA-0682-4BA9-BDD1-5C222CEC0970"
+        },
+        "ownerID" : "E144C6BB-99F4-4199-9ED2-7C70BDDEEA21",
+        "ownerKind" : "bridge",
+        "stage" : "deinit.stop.begin",
+        "uptime" : 344662.473334875
+      },
+      "sequence" : 239
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "attemptID" : "839F173A-92B8-47C4-A41A-E9EF340E3F75",
+          "count" : "1",
+          "cursor" : "0",
+          "cycleID" : "748C8A04-33EA-41B7-86C7-498E0E164D7F",
+          "draining" : "true",
+          "jobGeneration" : "45867788-9EAC-4427-80BE-C153340BF183",
+          "loadingPreview" : "false",
+          "model" : "fake-only",
+          "refreshPending" : "false",
+          "revision" : "5",
+          "runID" : "6FF6B58C-D9A9-4EAD-BE87-F2048FAC015F",
+          "sequence" : "1",
+          "started" : "true",
+          "workerID" : "BBC6BFDA-0682-4BA9-BDD1-5C222CEC0970"
+        },
+        "ownerID" : "BBC6BFDA-0682-4BA9-BDD1-5C222CEC0970",
+        "ownerKind" : "worker",
+        "stage" : "stop.begin",
+        "uptime" : 344662.4733429584
+      },
+      "sequence" : 240
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "attemptID" : "839F173A-92B8-47C4-A41A-E9EF340E3F75",
+          "count" : "1",
+          "cursor" : "0",
+          "cycleID" : "748C8A04-33EA-41B7-86C7-498E0E164D7F",
+          "draining" : "true",
+          "jobGeneration" : "45867788-9EAC-4427-80BE-C153340BF183",
+          "loadingPreview" : "false",
+          "model" : "fake-only",
+          "refreshPending" : "false",
+          "revision" : "5",
+          "runID" : "6FF6B58C-D9A9-4EAD-BE87-F2048FAC015F",
+          "sequence" : "1",
+          "started" : "false",
+          "workerID" : "BBC6BFDA-0682-4BA9-BDD1-5C222CEC0970"
+        },
+        "ownerID" : "BBC6BFDA-0682-4BA9-BDD1-5C222CEC0970",
+        "ownerKind" : "worker",
+        "stage" : "stop.begin",
+        "uptime" : 344662.473363
+      },
+      "sequence" : 241
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "attemptID" : "839F173A-92B8-47C4-A41A-E9EF340E3F75",
+          "count" : "1",
+          "cursor" : "0",
+          "cycleID" : "748C8A04-33EA-41B7-86C7-498E0E164D7F",
+          "draining" : "true",
+          "jobGeneration" : "45867788-9EAC-4427-80BE-C153340BF183",
+          "loadingPreview" : "false",
+          "model" : "fake-only",
+          "refreshPending" : "false",
+          "revision" : "7",
+          "runID" : "6FF6B58C-D9A9-4EAD-BE87-F2048FAC015F",
+          "sequence" : "1",
+          "started" : "false",
+          "workerID" : "BBC6BFDA-0682-4BA9-BDD1-5C222CEC0970"
+        },
+        "ownerID" : "BBC6BFDA-0682-4BA9-BDD1-5C222CEC0970",
+        "ownerKind" : "worker",
+        "stage" : "attempt.return",
+        "uptime" : 344662.4735767917
+      },
+      "sequence" : 242
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "draining" : "true",
+          "loadingPreview" : "false",
+          "model" : "fake-only",
+          "refreshPending" : "false",
+          "revision" : "8",
+          "runID" : "6FF6B58C-D9A9-4EAD-BE87-F2048FAC015F",
+          "started" : "false",
+          "workerID" : "BBC6BFDA-0682-4BA9-BDD1-5C222CEC0970"
+        },
+        "ownerID" : "BBC6BFDA-0682-4BA9-BDD1-5C222CEC0970",
+        "ownerKind" : "worker",
+        "stage" : "stop.return",
+        "uptime" : 344662.473627
+      },
+      "sequence" : 243
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "workerID" : "BBC6BFDA-0682-4BA9-BDD1-5C222CEC0970"
+        },
+        "ownerID" : "E144C6BB-99F4-4199-9ED2-7C70BDDEEA21",
+        "ownerKind" : "bridge",
+        "stage" : "deinit.stop.return",
+        "uptime" : 344662.4736282917
+      },
+      "sequence" : 244
+    },
+    {
+      "caseID" : "1629AA01-7CAB-4FEA-8A7A-385BEB09976F",
+      "event" : {
+        "fields" : {
+          "draining" : "true",
+          "loadingPreview" : "false",
+          "model" : "fake-only",
+          "refreshPending" : "false",
+          "revision" : "8",
+          "runID" : "6FF6B58C-D9A9-4EAD-BE87-F2048FAC015F",
+          "started" : "false",
+          "workerID" : "BBC6BFDA-0682-4BA9-BDD1-5C222CEC0970"
+        },
+        "ownerID" : "BBC6BFDA-0682-4BA9-BDD1-5C222CEC0970",
+        "ownerKind" : "worker",
+        "stage" : "stop.return",
+        "uptime" : 344662.4736995834
+      },
+      "sequence" : 245
+    }
+  ],
+  "scenario" : "original-ready-event"
+}

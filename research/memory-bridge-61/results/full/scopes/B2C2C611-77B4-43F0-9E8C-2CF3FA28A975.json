@@ -1,0 +1,38 @@
+[
+  {
+    "stage" : "scope-created",
+    "test" : "stopRestartDoesNotOverlapOldCalculationAndManualInboxWinsItsLateResult()",
+    "uptime" : "344923.4376030417"
+  },
+  {
+    "root" : "assignment-runtime-5F7DC813-C52F-4406-83F5-86FA95FA73B1",
+    "stage" : "root-owned",
+    "uptime" : "344923.87595575"
+  },
+  {
+    "stage" : "store-owned",
+    "uptime" : "344923.8759862917"
+  },
+  {
+    "connection" : "73654BC8-2CD3-4669-AB40-03E84921C0D4",
+    "root" : "assignment-runtime-5F7DC813-C52F-4406-83F5-86FA95FA73B1",
+    "stage" : "opened",
+    "uptime" : "344923.9386572917"
+  },
+  {
+    "stage" : "body-finished",
+    "uptime" : "344929.70679533336"
+  },
+  {
+    "connection" : "73654BC8-2CD3-4669-AB40-03E84921C0D4",
+    "result" : "0",
+    "stage" : "closed",
+    "uptime" : "344930.08459283336"
+  },
+  {
+    "exists" : "false",
+    "root" : "assignment-runtime-5F7DC813-C52F-4406-83F5-86FA95FA73B1",
+    "stage" : "root-removed",
+    "uptime" : "344930.09026158333"
+  }
+]

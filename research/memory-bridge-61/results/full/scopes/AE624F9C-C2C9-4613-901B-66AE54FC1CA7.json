@@ -1,0 +1,73 @@
+[
+  {
+    "stage" : "scope-created",
+    "test" : "p2-boundary-foreign",
+    "uptime" : "344923.44044525"
+  },
+  {
+    "root" : "fault-expectation-66D7F8A0-7F66-4715-A54E-46F93EB04866",
+    "stage" : "root-owned",
+    "uptime" : "344923.44053195836"
+  },
+  {
+    "connection" : "7119C6CA-C8AE-4328-BC33-158CEB319D5A",
+    "root" : "fault-expectation-66D7F8A0-7F66-4715-A54E-46F93EB04866",
+    "stage" : "opened",
+    "uptime" : "344923.4407341667"
+  },
+  {
+    "connection" : "37FCD6DF-86DB-4C52-8809-72C2E5DD9EB9",
+    "root" : "fault-expectation-66D7F8A0-7F66-4715-A54E-46F93EB04866",
+    "stage" : "opened",
+    "uptime" : "344923.440839625"
+  },
+  {
+    "diagnostic" : "{\"connection\":\"37FCD6DF-86DB-4C52-8809-72C2E5DD9EB9\",\"elapsedMilliseconds\":0.027125002816319466,\"extended\":1811,\"operation\":\"update\",\"phase\":\"step\",\"result\":19}",
+    "stage" : "sqlite-failure",
+    "uptime" : "344923.44288925"
+  },
+  {
+    "acceptedBy" : "12447915-388A-46F5-929A-224D4C4E35BF",
+    "diagnostic" : "{\"connection\":\"7119C6CA-C8AE-4328-BC33-158CEB319D5A\",\"elapsedMilliseconds\":0.029250048100948334,\"extended\":1811,\"operation\":\"update\",\"phase\":\"step\",\"result\":19}",
+    "expected" : "true",
+    "stage" : "sqlite-failure",
+    "uptime" : "344923.44364745833"
+  },
+  {
+    "diagnostic" : "{\"connection\":\"7119C6CA-C8AE-4328-BC33-158CEB319D5A\",\"elapsedMilliseconds\":0.029250048100948334,\"extended\":1811,\"operation\":\"update\",\"phase\":\"step\",\"result\":19}",
+    "eventIndex" : "5",
+    "expectation" : "12447915-388A-46F5-929A-224D4C4E35BF",
+    "stage" : "expected-sqlite-failure",
+    "uptime" : "344923.44375520834"
+  },
+  {
+    "accepted" : "true",
+    "connection" : "7119C6CA-C8AE-4328-BC33-158CEB319D5A",
+    "expectation" : "12447915-388A-46F5-929A-224D4C4E35BF",
+    "matchingUnconsumed" : "1",
+    "stage" : "fault-expectation-checked",
+    "uptime" : "344923.44375933334"
+  },
+  {
+    "connection" : "37FCD6DF-86DB-4C52-8809-72C2E5DD9EB9",
+    "result" : "0",
+    "stage" : "closed",
+    "uptime" : "344923.4438154167"
+  },
+  {
+    "connection" : "7119C6CA-C8AE-4328-BC33-158CEB319D5A",
+    "result" : "0",
+    "stage" : "closed",
+    "uptime" : "344923.4438447917"
+  },
+  {
+    "stage" : "body-finished",
+    "uptime" : "344923.44385125005"
+  },
+  {
+    "exists" : "false",
+    "root" : "fault-expectation-66D7F8A0-7F66-4715-A54E-46F93EB04866",
+    "stage" : "root-removed",
+    "uptime" : "344923.44405995833"
+  }
+]

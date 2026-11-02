@@ -1,0 +1,73 @@
+[
+  {
+    "stage" : "scope-created",
+    "test" : "p2-boundary-late",
+    "uptime" : "344923.66511833336"
+  },
+  {
+    "root" : "fault-expectation-2FBEE595-8A1A-4E7C-B8DD-8235E7FE494A",
+    "stage" : "root-owned",
+    "uptime" : "344923.665280875"
+  },
+  {
+    "connection" : "7B3A1DE9-C6BE-4EB5-B953-AA989D84852C",
+    "root" : "fault-expectation-2FBEE595-8A1A-4E7C-B8DD-8235E7FE494A",
+    "stage" : "opened",
+    "uptime" : "344923.6654582917"
+  },
+  {
+    "connection" : "0046B88C-D989-4D9F-A148-2A4D831E1AB9",
+    "root" : "fault-expectation-2FBEE595-8A1A-4E7C-B8DD-8235E7FE494A",
+    "stage" : "opened",
+    "uptime" : "344923.6655715834"
+  },
+  {
+    "acceptedBy" : "3903F7DD-4DEB-477F-8D05-B4B81F99D2FB",
+    "diagnostic" : "{\"connection\":\"7B3A1DE9-C6BE-4EB5-B953-AA989D84852C\",\"elapsedMilliseconds\":0.03425002796575427,\"extended\":1811,\"operation\":\"update\",\"phase\":\"step\",\"result\":19}",
+    "expected" : "true",
+    "stage" : "sqlite-failure",
+    "uptime" : "344923.66816875"
+  },
+  {
+    "diagnostic" : "{\"connection\":\"7B3A1DE9-C6BE-4EB5-B953-AA989D84852C\",\"elapsedMilliseconds\":0.03425002796575427,\"extended\":1811,\"operation\":\"update\",\"phase\":\"step\",\"result\":19}",
+    "eventIndex" : "4",
+    "expectation" : "3903F7DD-4DEB-477F-8D05-B4B81F99D2FB",
+    "stage" : "expected-sqlite-failure",
+    "uptime" : "344923.6683136667"
+  },
+  {
+    "accepted" : "true",
+    "connection" : "7B3A1DE9-C6BE-4EB5-B953-AA989D84852C",
+    "expectation" : "3903F7DD-4DEB-477F-8D05-B4B81F99D2FB",
+    "matchingUnconsumed" : "1",
+    "stage" : "fault-expectation-checked",
+    "uptime" : "344923.66831800004"
+  },
+  {
+    "diagnostic" : "{\"connection\":\"7B3A1DE9-C6BE-4EB5-B953-AA989D84852C\",\"elapsedMilliseconds\":0.01933332532644272,\"extended\":1811,\"operation\":\"update\",\"phase\":\"step\",\"result\":19}",
+    "stage" : "sqlite-failure",
+    "uptime" : "344923.6683594167"
+  },
+  {
+    "connection" : "0046B88C-D989-4D9F-A148-2A4D831E1AB9",
+    "result" : "0",
+    "stage" : "closed",
+    "uptime" : "344923.66844625"
+  },
+  {
+    "connection" : "7B3A1DE9-C6BE-4EB5-B953-AA989D84852C",
+    "result" : "0",
+    "stage" : "closed",
+    "uptime" : "344923.6684700833"
+  },
+  {
+    "stage" : "body-finished",
+    "uptime" : "344923.6684758334"
+  },
+  {
+    "exists" : "false",
+    "root" : "fault-expectation-2FBEE595-8A1A-4E7C-B8DD-8235E7FE494A",
+    "stage" : "root-removed",
+    "uptime" : "344923.66908645834"
+  }
+]

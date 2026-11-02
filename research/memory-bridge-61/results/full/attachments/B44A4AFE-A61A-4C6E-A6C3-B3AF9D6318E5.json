@@ -1,0 +1,68 @@
+[
+  {
+    "stage" : "scope-created",
+    "test" : "p2-parallel-6",
+    "uptime" : "344923.906012625"
+  },
+  {
+    "root" : "fault-expectation-B11912D2-5378-44CB-94AE-5B80DEA56990",
+    "stage" : "root-owned",
+    "uptime" : "344923.9061475417"
+  },
+  {
+    "connection" : "EAE4D8F5-EAA7-4173-BC55-CE34280AB19B",
+    "root" : "fault-expectation-B11912D2-5378-44CB-94AE-5B80DEA56990",
+    "stage" : "opened",
+    "uptime" : "344923.9062895417"
+  },
+  {
+    "connection" : "9F15408D-DCFA-471E-A85F-2DB6FC0FFE9F",
+    "root" : "fault-expectation-B11912D2-5378-44CB-94AE-5B80DEA56990",
+    "stage" : "opened",
+    "uptime" : "344923.9063830417"
+  },
+  {
+    "acceptedBy" : "6014931E-C56B-429C-99D1-06CFE437B002",
+    "diagnostic" : "{\"connection\":\"EAE4D8F5-EAA7-4173-BC55-CE34280AB19B\",\"elapsedMilliseconds\":0.3161249915137887,\"extended\":1811,\"operation\":\"update\",\"phase\":\"step\",\"result\":19}",
+    "expected" : "true",
+    "stage" : "sqlite-failure",
+    "uptime" : "344926.73720537504"
+  },
+  {
+    "diagnostic" : "{\"connection\":\"EAE4D8F5-EAA7-4173-BC55-CE34280AB19B\",\"elapsedMilliseconds\":0.3161249915137887,\"extended\":1811,\"operation\":\"update\",\"phase\":\"step\",\"result\":19}",
+    "eventIndex" : "4",
+    "expectation" : "6014931E-C56B-429C-99D1-06CFE437B002",
+    "stage" : "expected-sqlite-failure",
+    "uptime" : "344926.73754862504"
+  },
+  {
+    "accepted" : "true",
+    "connection" : "EAE4D8F5-EAA7-4173-BC55-CE34280AB19B",
+    "expectation" : "6014931E-C56B-429C-99D1-06CFE437B002",
+    "matchingUnconsumed" : "1",
+    "stage" : "fault-expectation-checked",
+    "uptime" : "344926.737553625"
+  },
+  {
+    "connection" : "9F15408D-DCFA-471E-A85F-2DB6FC0FFE9F",
+    "result" : "0",
+    "stage" : "closed",
+    "uptime" : "344926.737645875"
+  },
+  {
+    "connection" : "EAE4D8F5-EAA7-4173-BC55-CE34280AB19B",
+    "result" : "0",
+    "stage" : "closed",
+    "uptime" : "344926.73768995836"
+  },
+  {
+    "stage" : "body-finished",
+    "uptime" : "344926.7377040417"
+  },
+  {
+    "exists" : "false",
+    "root" : "fault-expectation-B11912D2-5378-44CB-94AE-5B80DEA56990",
+    "stage" : "root-removed",
+    "uptime" : "344926.73812550004"
+  }
+]

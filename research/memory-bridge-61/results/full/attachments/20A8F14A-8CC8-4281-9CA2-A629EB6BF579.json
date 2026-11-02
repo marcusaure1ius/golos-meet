@@ -1,0 +1,62 @@
+[
+  {
+    "stage" : "scope-created",
+    "test" : "insufficientCoveragePersistsAndRestartDoesNotAskModelAgain()",
+    "uptime" : "344923.4362660417"
+  },
+  {
+    "root" : "memory-update-C31B36FB-2342-4CD6-9FDA-33C7B322F584",
+    "stage" : "root-owned",
+    "uptime" : "344923.8680520417"
+  },
+  {
+    "stage" : "store-owned",
+    "uptime" : "344923.86806975"
+  },
+  {
+    "connection" : "9E3B00B6-38A0-4891-9D27-0A884066A2F0",
+    "root" : "memory-update-C31B36FB-2342-4CD6-9FDA-33C7B322F584",
+    "stage" : "opened",
+    "uptime" : "344923.88162245834"
+  },
+  {
+    "connection" : "8BA9C08D-BF2D-4039-846D-9E5D380C7971",
+    "root" : "memory-update-C31B36FB-2342-4CD6-9FDA-33C7B322F584",
+    "stage" : "opened",
+    "uptime" : "344929.10010100005"
+  },
+  {
+    "stage" : "queue-stop-requested",
+    "uptime" : "344929.1216201667"
+  },
+  {
+    "stage" : "queue-idle",
+    "uptime" : "344929.1224505417"
+  },
+  {
+    "stage" : "update-callbacks-released",
+    "uptime" : "344929.12245950004"
+  },
+  {
+    "connection" : "8BA9C08D-BF2D-4039-846D-9E5D380C7971",
+    "result" : "0",
+    "stage" : "closed",
+    "uptime" : "344929.12254220835"
+  },
+  {
+    "stage" : "body-finished",
+    "uptime" : "344929.12325166666"
+  },
+  {
+    "connection" : "9E3B00B6-38A0-4891-9D27-0A884066A2F0",
+    "result" : "0",
+    "stage" : "closed",
+    "uptime" : "344929.982730375"
+  },
+  {
+    "exists" : "false",
+    "root" : "memory-update-C31B36FB-2342-4CD6-9FDA-33C7B322F584",
+    "stage" : "root-removed",
+    "uptime" : "344929.99314050004"
+  }
+]

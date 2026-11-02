@@ -1,0 +1,42 @@
+[
+  {
+    "stage" : "scope-created",
+    "test" : "meetingCitationKeepsExactReplicaAndRejectsTranscriptRecreation()",
+    "uptime" : "344923.34162575"
+  },
+  {
+    "root" : "question-service-24B4DBBA-FDEA-4CFA-B2B3-393ADCE4151F",
+    "stage" : "root-owned",
+    "uptime" : "344923.3822751667"
+  },
+  {
+    "stage" : "store-owned",
+    "uptime" : "344923.38229437504"
+  },
+  {
+    "connection" : "D69B0F9B-647B-4127-A5B1-A454C6DBC71F",
+    "root" : "question-service-24B4DBBA-FDEA-4CFA-B2B3-393ADCE4151F",
+    "stage" : "opened",
+    "uptime" : "344923.525398"
+  },
+  {
+    "stage" : "question-cancel-and-callback-release",
+    "uptime" : "344927.23620320833"
+  },
+  {
+    "connection" : "D69B0F9B-647B-4127-A5B1-A454C6DBC71F",
+    "result" : "0",
+    "stage" : "closed",
+    "uptime" : "344927.236327"
+  },
+  {
+    "stage" : "body-finished",
+    "uptime" : "344927.2892275417"
+  },
+  {
+    "exists" : "false",
+    "root" : "question-service-24B4DBBA-FDEA-4CFA-B2B3-393ADCE4151F",
+    "stage" : "root-removed",
+    "uptime" : "344927.35837129166"
+  }
+]

@@ -1,0 +1,485 @@
+{
+  "atomic" : false,
+  "beforeUnwind" : true,
+  "bridgeID" : "860AEBEB-C979-4562-B1FC-3F386C1230B3",
+  "caseID" : "ECC9E260-228C-494C-B277-7B1392DF04A6",
+  "elapsed" : 0.09797658334719017,
+  "error" : "CancellationError()",
+  "phase" : "body",
+  "reads" : [
+    {
+      "begin" : 344661.65179800004,
+      "end" : 344661.6518032917,
+      "fields" : {
+        "bridgeID" : "860AEBEB-C979-4562-B1FC-3F386C1230B3",
+        "configurationID" : "33396BA4-1D70-42EA-B48B-0F77AAB6C4D1",
+        "dirty" : "false",
+        "enabled" : "true",
+        "model" : "fake-only",
+        "revision" : "0",
+        "startReturnedConfigurationID" : "",
+        "started" : "true",
+        "weakAlive" : "true",
+        "workerID" : "7EE6923D-36AA-484F-8224-A6A0DFE8A735",
+        "workerRunID" : "",
+        "workerStarted" : "false"
+      },
+      "name" : "bridge.weak\/configuration",
+      "rows" : [
+
+      ]
+    },
+    {
+      "begin" : 344661.6518041667,
+      "end" : 344661.6518057917,
+      "fields" : {
+        "draining" : "false",
+        "loadingPreview" : "false",
+        "model" : "fake-only",
+        "refreshPending" : "false",
+        "revision" : "1",
+        "runID" : "",
+        "started" : "false",
+        "workerID" : "7EE6923D-36AA-484F-8224-A6A0DFE8A735"
+      },
+      "name" : "worker.run\/attempt\/lease",
+      "rows" : [
+
+      ]
+    },
+    {
+      "begin" : 344661.65180654166,
+      "end" : 344661.65180858335,
+      "fields" : {
+        "entered" : "0",
+        "fakeCalls" : "0",
+        "inFlight" : "0",
+        "maxPhysical" : "0",
+        "returned" : "0",
+        "transportID" : "A23AB2BD-C567-4CC7-B1FA-D7AD3F7E3804"
+      },
+      "name" : "physical.enter\/return",
+      "rows" : [
+
+      ]
+    },
+    {
+      "begin" : 344661.65180908336,
+      "end" : 344661.65558766667,
+      "fields" : {
+        "limited" : "false"
+      },
+      "name" : "durable.sql",
+      "rows" : [
+
+      ]
+    }
+  ],
+  "scenario" : "controlled-body-exit-true",
+  "timeline" : [
+    {
+      "caseID" : "ECC9E260-228C-494C-B277-7B1392DF04A6",
+      "event" : {
+        "fields" : {
+          "bridgeID" : "860AEBEB-C979-4562-B1FC-3F386C1230B3",
+          "transportID" : "A23AB2BD-C567-4CC7-B1FA-D7AD3F7E3804",
+          "workerID" : "7EE6923D-36AA-484F-8224-A6A0DFE8A735"
+        },
+        "ownerID" : "ECC9E260-228C-494C-B277-7B1392DF04A6",
+        "ownerKind" : "case",
+        "stage" : "owners.bound",
+        "uptime" : 344661.557910625
+      },
+      "sequence" : 0
+    },
+    {
+      "caseID" : "ECC9E260-228C-494C-B277-7B1392DF04A6",
+      "event" : {
+        "fields" : {
+
+        },
+        "ownerID" : "ECC9E260-228C-494C-B277-7B1392DF04A6",
+        "ownerKind" : "case",
+        "stage" : "test.start.request",
+        "uptime" : 344661.632940625
+      },
+      "sequence" : 1
+    },
+    {
+      "caseID" : "ECC9E260-228C-494C-B277-7B1392DF04A6",
+      "event" : {
+        "fields" : {
+          "bridgeID" : "860AEBEB-C979-4562-B1FC-3F386C1230B3",
+          "configurationID" : "",
+          "dirty" : "false",
+          "enabled" : "true",
+          "model" : "fake-only",
+          "revision" : "0",
+          "startReturnedConfigurationID" : "",
+          "started" : "false",
+          "workerID" : "7EE6923D-36AA-484F-8224-A6A0DFE8A735",
+          "workerRunID" : "",
+          "workerStarted" : "false"
+        },
+        "ownerID" : "860AEBEB-C979-4562-B1FC-3F386C1230B3",
+        "ownerKind" : "bridge",
+        "stage" : "start.request",
+        "uptime" : 344661.63295058336
+      },
+      "sequence" : 2
+    },
+    {
+      "caseID" : "ECC9E260-228C-494C-B277-7B1392DF04A6",
+      "event" : {
+        "fields" : {
+          "bridgeID" : "860AEBEB-C979-4562-B1FC-3F386C1230B3",
+          "configurationID" : "33396BA4-1D70-42EA-B48B-0F77AAB6C4D1",
+          "dirty" : "false",
+          "enabled" : "true",
+          "model" : "fake-only",
+          "revision" : "0",
+          "startReturnedConfigurationID" : "",
+          "started" : "true",
+          "workerID" : "7EE6923D-36AA-484F-8224-A6A0DFE8A735",
+          "workerRunID" : "",
+          "workerStarted" : "false"
+        },
+        "ownerID" : "860AEBEB-C979-4562-B1FC-3F386C1230B3",
+        "ownerKind" : "bridge",
+        "stage" : "configuration.request",
+        "uptime" : 344661.632962625
+      },
+      "sequence" : 3
+    },
+    {
+      "caseID" : "ECC9E260-228C-494C-B277-7B1392DF04A6",
+      "event" : {
+        "fields" : {
+          "phase" : "controlled body exit startup gate"
+        },
+        "ownerID" : "ECC9E260-228C-494C-B277-7B1392DF04A6",
+        "ownerKind" : "case",
+        "stage" : "wait.begin",
+        "uptime" : 344661.632969125
+      },
+      "sequence" : 4
+    },
+    {
+      "caseID" : "ECC9E260-228C-494C-B277-7B1392DF04A6",
+      "event" : {
+        "fields" : {
+          "iteration" : "1",
+          "phase" : "controlled body exit startup gate"
+        },
+        "ownerID" : "ECC9E260-228C-494C-B277-7B1392DF04A6",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344661.63297033333
+      },
+      "sequence" : 5
+    },
+    {
+      "caseID" : "ECC9E260-228C-494C-B277-7B1392DF04A6",
+      "event" : {
+        "fields" : {
+          "iteration" : "1",
+          "phase" : "controlled body exit startup gate"
+        },
+        "ownerID" : "ECC9E260-228C-494C-B277-7B1392DF04A6",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344661.6329745417
+      },
+      "sequence" : 6
+    },
+    {
+      "caseID" : "ECC9E260-228C-494C-B277-7B1392DF04A6",
+      "event" : {
+        "fields" : {
+          "bridgeID" : "860AEBEB-C979-4562-B1FC-3F386C1230B3",
+          "configurationID" : "33396BA4-1D70-42EA-B48B-0F77AAB6C4D1",
+          "dirty" : "false",
+          "enabled" : "true",
+          "model" : "fake-only",
+          "revision" : "0",
+          "startReturnedConfigurationID" : "",
+          "started" : "true",
+          "workerID" : "7EE6923D-36AA-484F-8224-A6A0DFE8A735",
+          "workerRunID" : "",
+          "workerStarted" : "false"
+        },
+        "ownerID" : "860AEBEB-C979-4562-B1FC-3F386C1230B3",
+        "ownerKind" : "bridge",
+        "stage" : "configuration.changed.begin",
+        "uptime" : 344661.63300462504
+      },
+      "sequence" : 7
+    },
+    {
+      "caseID" : "ECC9E260-228C-494C-B277-7B1392DF04A6",
+      "event" : {
+        "fields" : {
+          "draining" : "false",
+          "loadingPreview" : "false",
+          "model" : "fake-only",
+          "refreshPending" : "false",
+          "revision" : "0",
+          "runID" : "",
+          "started" : "false",
+          "workerID" : "7EE6923D-36AA-484F-8224-A6A0DFE8A735"
+        },
+        "ownerID" : "7EE6923D-36AA-484F-8224-A6A0DFE8A735",
+        "ownerKind" : "worker",
+        "stage" : "changed.begin",
+        "uptime" : 344661.63301270833
+      },
+      "sequence" : 8
+    },
+    {
+      "caseID" : "ECC9E260-228C-494C-B277-7B1392DF04A6",
+      "event" : {
+        "fields" : {
+          "draining" : "false",
+          "loadingPreview" : "false",
+          "model" : "fake-only",
+          "refreshPending" : "true",
+          "revision" : "0",
+          "runID" : "",
+          "started" : "false",
+          "workerID" : "7EE6923D-36AA-484F-8224-A6A0DFE8A735"
+        },
+        "ownerID" : "7EE6923D-36AA-484F-8224-A6A0DFE8A735",
+        "ownerKind" : "worker",
+        "stage" : "discovery.begin",
+        "uptime" : 344661.633015
+      },
+      "sequence" : 9
+    },
+    {
+      "caseID" : "ECC9E260-228C-494C-B277-7B1392DF04A6",
+      "event" : {
+        "fields" : {
+          "draining" : "false",
+          "loadingPreview" : "false",
+          "model" : "fake-only",
+          "refreshPending" : "false",
+          "revision" : "0",
+          "runID" : "",
+          "started" : "false",
+          "workerID" : "7EE6923D-36AA-484F-8224-A6A0DFE8A735"
+        },
+        "ownerID" : "7EE6923D-36AA-484F-8224-A6A0DFE8A735",
+        "ownerKind" : "worker",
+        "stage" : "discovery.return",
+        "uptime" : 344661.64561295835
+      },
+      "sequence" : 10
+    },
+    {
+      "caseID" : "ECC9E260-228C-494C-B277-7B1392DF04A6",
+      "event" : {
+        "fields" : {
+          "draining" : "false",
+          "loadingPreview" : "false",
+          "model" : "fake-only",
+          "refreshPending" : "false",
+          "revision" : "1",
+          "runID" : "",
+          "started" : "false",
+          "workerID" : "7EE6923D-36AA-484F-8224-A6A0DFE8A735"
+        },
+        "ownerID" : "7EE6923D-36AA-484F-8224-A6A0DFE8A735",
+        "ownerKind" : "worker",
+        "stage" : "changed.return",
+        "uptime" : 344661.650826375
+      },
+      "sequence" : 11
+    },
+    {
+      "caseID" : "ECC9E260-228C-494C-B277-7B1392DF04A6",
+      "event" : {
+        "fields" : {
+          "bridgeID" : "860AEBEB-C979-4562-B1FC-3F386C1230B3",
+          "configurationID" : "33396BA4-1D70-42EA-B48B-0F77AAB6C4D1",
+          "dirty" : "false",
+          "enabled" : "true",
+          "model" : "fake-only",
+          "revision" : "0",
+          "startReturnedConfigurationID" : "",
+          "started" : "true",
+          "workerID" : "7EE6923D-36AA-484F-8224-A6A0DFE8A735",
+          "workerRunID" : "",
+          "workerStarted" : "false"
+        },
+        "ownerID" : "860AEBEB-C979-4562-B1FC-3F386C1230B3",
+        "ownerKind" : "bridge",
+        "stage" : "configuration.changed.return",
+        "uptime" : 344661.65083525004
+      },
+      "sequence" : 12
+    },
+    {
+      "caseID" : "ECC9E260-228C-494C-B277-7B1392DF04A6",
+      "event" : {
+        "fields" : {
+
+        },
+        "ownerID" : "ECC9E260-228C-494C-B277-7B1392DF04A6",
+        "ownerKind" : "case",
+        "stage" : "control.exit.paused",
+        "uptime" : 344661.65083654167
+      },
+      "sequence" : 13
+    },
+    {
+      "caseID" : "ECC9E260-228C-494C-B277-7B1392DF04A6",
+      "event" : {
+        "fields" : {
+          "iteration" : "2",
+          "phase" : "controlled body exit startup gate"
+        },
+        "ownerID" : "ECC9E260-228C-494C-B277-7B1392DF04A6",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344661.65177920833
+      },
+      "sequence" : 14
+    },
+    {
+      "caseID" : "ECC9E260-228C-494C-B277-7B1392DF04A6",
+      "event" : {
+        "fields" : {
+          "iteration" : "2",
+          "phase" : "controlled body exit startup gate"
+        },
+        "ownerID" : "ECC9E260-228C-494C-B277-7B1392DF04A6",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344661.6517836667
+      },
+      "sequence" : 15
+    },
+    {
+      "caseID" : "ECC9E260-228C-494C-B277-7B1392DF04A6",
+      "event" : {
+        "fields" : {
+          "phase" : "controlled body exit startup gate"
+        },
+        "ownerID" : "ECC9E260-228C-494C-B277-7B1392DF04A6",
+        "ownerKind" : "case",
+        "stage" : "wait.return",
+        "uptime" : 344661.651784375
+      },
+      "sequence" : 16
+    },
+    {
+      "caseID" : "ECC9E260-228C-494C-B277-7B1392DF04A6",
+      "event" : {
+        "fields" : {
+          "name" : "bridge.weak\/configuration"
+        },
+        "ownerID" : "ECC9E260-228C-494C-B277-7B1392DF04A6",
+        "ownerKind" : "case",
+        "stage" : "read.begin",
+        "uptime" : 344661.65179850004
+      },
+      "sequence" : 17
+    },
+    {
+      "caseID" : "ECC9E260-228C-494C-B277-7B1392DF04A6",
+      "event" : {
+        "fields" : {
+          "name" : "bridge.weak\/configuration"
+        },
+        "ownerID" : "ECC9E260-228C-494C-B277-7B1392DF04A6",
+        "ownerKind" : "case",
+        "stage" : "read.end",
+        "uptime" : 344661.651804
+      },
+      "sequence" : 18
+    },
+    {
+      "caseID" : "ECC9E260-228C-494C-B277-7B1392DF04A6",
+      "event" : {
+        "fields" : {
+          "name" : "worker.run\/attempt\/lease"
+        },
+        "ownerID" : "ECC9E260-228C-494C-B277-7B1392DF04A6",
+        "ownerKind" : "case",
+        "stage" : "read.begin",
+        "uptime" : 344661.6518044167
+      },
+      "sequence" : 19
+    },
+    {
+      "caseID" : "ECC9E260-228C-494C-B277-7B1392DF04A6",
+      "event" : {
+        "fields" : {
+          "name" : "worker.run\/attempt\/lease"
+        },
+        "ownerID" : "ECC9E260-228C-494C-B277-7B1392DF04A6",
+        "ownerKind" : "case",
+        "stage" : "read.end",
+        "uptime" : 344661.6518064167
+      },
+      "sequence" : 20
+    },
+    {
+      "caseID" : "ECC9E260-228C-494C-B277-7B1392DF04A6",
+      "event" : {
+        "fields" : {
+          "name" : "physical.enter\/return"
+        },
+        "ownerID" : "ECC9E260-228C-494C-B277-7B1392DF04A6",
+        "ownerKind" : "case",
+        "stage" : "read.begin",
+        "uptime" : 344661.651807125
+      },
+      "sequence" : 21
+    },
+    {
+      "caseID" : "ECC9E260-228C-494C-B277-7B1392DF04A6",
+      "event" : {
+        "fields" : {
+          "name" : "physical.enter\/return"
+        },
+        "ownerID" : "ECC9E260-228C-494C-B277-7B1392DF04A6",
+        "ownerKind" : "case",
+        "stage" : "read.end",
+        "uptime" : 344661.6518089583
+      },
+      "sequence" : 22
+    },
+    {
+      "caseID" : "ECC9E260-228C-494C-B277-7B1392DF04A6",
+      "event" : {
+        "fields" : {
+          "awaited" : "true",
+          "name" : "durable.sql"
+        },
+        "ownerID" : "ECC9E260-228C-494C-B277-7B1392DF04A6",
+        "ownerKind" : "case",
+        "stage" : "read.begin",
+        "uptime" : 344661.6518095417
+      },
+      "sequence" : 23
+    },
+    {
+      "caseID" : "ECC9E260-228C-494C-B277-7B1392DF04A6",
+      "event" : {
+        "fields" : {
+          "awaited" : "true",
+          "name" : "durable.sql"
+        },
+        "ownerID" : "ECC9E260-228C-494C-B277-7B1392DF04A6",
+        "ownerKind" : "case",
+        "stage" : "read.end",
+        "uptime" : 344661.65558958333
+      },
+      "sequence" : 24
+    }
+  ],
+  "timelineDropped" : 0,
+  "transportID" : "A23AB2BD-C567-4CC7-B1FA-D7AD3F7E3804",
+  "workerID" : "7EE6923D-36AA-484F-8224-A6A0DFE8A735"
+}

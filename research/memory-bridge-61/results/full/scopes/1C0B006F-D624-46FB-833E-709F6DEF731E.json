@@ -1,0 +1,59 @@
+[
+  {
+    "stage" : "scope-created",
+    "test" : "p2-boundary-wrong-phase",
+    "uptime" : "344923.53631670837"
+  },
+  {
+    "root" : "fault-expectation-2C45536F-1147-4769-8194-C66B87FFCC7B",
+    "stage" : "root-owned",
+    "uptime" : "344923.53649100004"
+  },
+  {
+    "connection" : "34A5DEB8-8663-4E46-BAA5-8FED2C892693",
+    "root" : "fault-expectation-2C45536F-1147-4769-8194-C66B87FFCC7B",
+    "stage" : "opened",
+    "uptime" : "344923.5366381667"
+  },
+  {
+    "connection" : "EAF5DFA6-7A07-432C-8620-ACCD317F8907",
+    "root" : "fault-expectation-2C45536F-1147-4769-8194-C66B87FFCC7B",
+    "stage" : "opened",
+    "uptime" : "344923.5367241667"
+  },
+  {
+    "diagnostic" : "{\"connection\":\"34A5DEB8-8663-4E46-BAA5-8FED2C892693\",\"elapsedMilliseconds\":0.03670831210911274,\"extended\":1811,\"operation\":\"update\",\"phase\":\"step\",\"result\":19}",
+    "stage" : "sqlite-failure",
+    "uptime" : "344923.53944200004"
+  },
+  {
+    "accepted" : "false",
+    "connection" : "34A5DEB8-8663-4E46-BAA5-8FED2C892693",
+    "expectation" : "839EB51C-2996-4405-90D1-DBED0F2252A8",
+    "matchingUnconsumed" : "0",
+    "stage" : "fault-expectation-checked",
+    "uptime" : "344923.55586295837"
+  },
+  {
+    "connection" : "EAF5DFA6-7A07-432C-8620-ACCD317F8907",
+    "result" : "0",
+    "stage" : "closed",
+    "uptime" : "344923.5687195417"
+  },
+  {
+    "connection" : "34A5DEB8-8663-4E46-BAA5-8FED2C892693",
+    "result" : "0",
+    "stage" : "closed",
+    "uptime" : "344923.56876470835"
+  },
+  {
+    "stage" : "body-finished",
+    "uptime" : "344923.5687725833"
+  },
+  {
+    "exists" : "false",
+    "root" : "fault-expectation-2C45536F-1147-4769-8194-C66B87FFCC7B",
+    "stage" : "root-removed",
+    "uptime" : "344923.56904858333"
+  }
+]

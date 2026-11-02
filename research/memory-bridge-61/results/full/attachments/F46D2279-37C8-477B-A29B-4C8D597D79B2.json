@@ -1,0 +1,646 @@
+{
+  "caseID" : "64FDCA0D-49AC-4985-85AD-DF6363EC3A92",
+  "dropped" : 0,
+  "rows" : [
+    {
+      "caseID" : "64FDCA0D-49AC-4985-85AD-DF6363EC3A92",
+      "event" : {
+        "fields" : {
+          "bridgeID" : "2CF97703-716D-47B8-ADCF-EF2C1AEA6711",
+          "transportID" : "03685BFB-0C18-448F-B878-3469C223CF20",
+          "workerID" : "6D138D0D-75DB-47AB-84FD-D320BD2856A1"
+        },
+        "ownerID" : "64FDCA0D-49AC-4985-85AD-DF6363EC3A92",
+        "ownerKind" : "case",
+        "stage" : "owners.bound",
+        "uptime" : 344924.69592150004
+      },
+      "sequence" : 0
+    },
+    {
+      "caseID" : "64FDCA0D-49AC-4985-85AD-DF6363EC3A92",
+      "event" : {
+        "fields" : {
+
+        },
+        "ownerID" : "64FDCA0D-49AC-4985-85AD-DF6363EC3A92",
+        "ownerKind" : "case",
+        "stage" : "test.start.request",
+        "uptime" : 344925.352414375
+      },
+      "sequence" : 1
+    },
+    {
+      "caseID" : "64FDCA0D-49AC-4985-85AD-DF6363EC3A92",
+      "event" : {
+        "fields" : {
+          "bridgeID" : "2CF97703-716D-47B8-ADCF-EF2C1AEA6711",
+          "configurationID" : "",
+          "dirty" : "false",
+          "enabled" : "true",
+          "model" : "fake-only",
+          "revision" : "0",
+          "startReturnedConfigurationID" : "",
+          "started" : "false",
+          "workerID" : "6D138D0D-75DB-47AB-84FD-D320BD2856A1",
+          "workerRunID" : "",
+          "workerStarted" : "false"
+        },
+        "ownerID" : "2CF97703-716D-47B8-ADCF-EF2C1AEA6711",
+        "ownerKind" : "bridge",
+        "stage" : "start.request",
+        "uptime" : 344925.3524192917
+      },
+      "sequence" : 2
+    },
+    {
+      "caseID" : "64FDCA0D-49AC-4985-85AD-DF6363EC3A92",
+      "event" : {
+        "fields" : {
+          "bridgeID" : "2CF97703-716D-47B8-ADCF-EF2C1AEA6711",
+          "configurationID" : "063B3B86-5897-4FFF-9509-282C0F08B02B",
+          "dirty" : "false",
+          "enabled" : "true",
+          "model" : "fake-only",
+          "revision" : "0",
+          "startReturnedConfigurationID" : "",
+          "started" : "true",
+          "workerID" : "6D138D0D-75DB-47AB-84FD-D320BD2856A1",
+          "workerRunID" : "",
+          "workerStarted" : "false"
+        },
+        "ownerID" : "2CF97703-716D-47B8-ADCF-EF2C1AEA6711",
+        "ownerKind" : "bridge",
+        "stage" : "configuration.request",
+        "uptime" : 344925.35242558335
+      },
+      "sequence" : 3
+    },
+    {
+      "caseID" : "64FDCA0D-49AC-4985-85AD-DF6363EC3A92",
+      "event" : {
+        "fields" : {
+          "phase" : "controlled body exit startup gate"
+        },
+        "ownerID" : "64FDCA0D-49AC-4985-85AD-DF6363EC3A92",
+        "ownerKind" : "case",
+        "stage" : "wait.begin",
+        "uptime" : 344925.35242820834
+      },
+      "sequence" : 4
+    },
+    {
+      "caseID" : "64FDCA0D-49AC-4985-85AD-DF6363EC3A92",
+      "event" : {
+        "fields" : {
+          "iteration" : "1",
+          "phase" : "controlled body exit startup gate"
+        },
+        "ownerID" : "64FDCA0D-49AC-4985-85AD-DF6363EC3A92",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344925.352429125
+      },
+      "sequence" : 5
+    },
+    {
+      "caseID" : "64FDCA0D-49AC-4985-85AD-DF6363EC3A92",
+      "event" : {
+        "fields" : {
+          "iteration" : "1",
+          "phase" : "controlled body exit startup gate"
+        },
+        "ownerID" : "64FDCA0D-49AC-4985-85AD-DF6363EC3A92",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344925.3524308333
+      },
+      "sequence" : 6
+    },
+    {
+      "caseID" : "64FDCA0D-49AC-4985-85AD-DF6363EC3A92",
+      "event" : {
+        "fields" : {
+          "bridgeID" : "2CF97703-716D-47B8-ADCF-EF2C1AEA6711",
+          "configurationID" : "063B3B86-5897-4FFF-9509-282C0F08B02B",
+          "dirty" : "false",
+          "enabled" : "true",
+          "model" : "fake-only",
+          "revision" : "0",
+          "startReturnedConfigurationID" : "",
+          "started" : "true",
+          "workerID" : "6D138D0D-75DB-47AB-84FD-D320BD2856A1",
+          "workerRunID" : "",
+          "workerStarted" : "false"
+        },
+        "ownerID" : "2CF97703-716D-47B8-ADCF-EF2C1AEA6711",
+        "ownerKind" : "bridge",
+        "stage" : "configuration.changed.begin",
+        "uptime" : 344925.4889927083
+      },
+      "sequence" : 7
+    },
+    {
+      "caseID" : "64FDCA0D-49AC-4985-85AD-DF6363EC3A92",
+      "event" : {
+        "fields" : {
+          "draining" : "false",
+          "loadingPreview" : "false",
+          "model" : "fake-only",
+          "refreshPending" : "false",
+          "revision" : "0",
+          "runID" : "",
+          "started" : "false",
+          "workerID" : "6D138D0D-75DB-47AB-84FD-D320BD2856A1"
+        },
+        "ownerID" : "6D138D0D-75DB-47AB-84FD-D320BD2856A1",
+        "ownerKind" : "worker",
+        "stage" : "changed.begin",
+        "uptime" : 344925.48899487505
+      },
+      "sequence" : 8
+    },
+    {
+      "caseID" : "64FDCA0D-49AC-4985-85AD-DF6363EC3A92",
+      "event" : {
+        "fields" : {
+          "draining" : "false",
+          "loadingPreview" : "false",
+          "model" : "fake-only",
+          "refreshPending" : "true",
+          "revision" : "0",
+          "runID" : "",
+          "started" : "false",
+          "workerID" : "6D138D0D-75DB-47AB-84FD-D320BD2856A1"
+        },
+        "ownerID" : "6D138D0D-75DB-47AB-84FD-D320BD2856A1",
+        "ownerKind" : "worker",
+        "stage" : "discovery.begin",
+        "uptime" : 344925.4889965833
+      },
+      "sequence" : 9
+    },
+    {
+      "caseID" : "64FDCA0D-49AC-4985-85AD-DF6363EC3A92",
+      "event" : {
+        "fields" : {
+          "iteration" : "2",
+          "phase" : "controlled body exit startup gate"
+        },
+        "ownerID" : "64FDCA0D-49AC-4985-85AD-DF6363EC3A92",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344925.53063729167
+      },
+      "sequence" : 10
+    },
+    {
+      "caseID" : "64FDCA0D-49AC-4985-85AD-DF6363EC3A92",
+      "event" : {
+        "fields" : {
+          "iteration" : "2",
+          "phase" : "controlled body exit startup gate"
+        },
+        "ownerID" : "64FDCA0D-49AC-4985-85AD-DF6363EC3A92",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344925.53064141667
+      },
+      "sequence" : 11
+    },
+    {
+      "caseID" : "64FDCA0D-49AC-4985-85AD-DF6363EC3A92",
+      "event" : {
+        "fields" : {
+          "draining" : "false",
+          "loadingPreview" : "false",
+          "model" : "fake-only",
+          "refreshPending" : "false",
+          "revision" : "0",
+          "runID" : "",
+          "started" : "false",
+          "workerID" : "6D138D0D-75DB-47AB-84FD-D320BD2856A1"
+        },
+        "ownerID" : "6D138D0D-75DB-47AB-84FD-D320BD2856A1",
+        "ownerKind" : "worker",
+        "stage" : "discovery.return",
+        "uptime" : 344925.72796650004
+      },
+      "sequence" : 12
+    },
+    {
+      "caseID" : "64FDCA0D-49AC-4985-85AD-DF6363EC3A92",
+      "event" : {
+        "fields" : {
+          "iteration" : "3",
+          "phase" : "controlled body exit startup gate"
+        },
+        "ownerID" : "64FDCA0D-49AC-4985-85AD-DF6363EC3A92",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344925.7459717917
+      },
+      "sequence" : 13
+    },
+    {
+      "caseID" : "64FDCA0D-49AC-4985-85AD-DF6363EC3A92",
+      "event" : {
+        "fields" : {
+          "iteration" : "3",
+          "phase" : "controlled body exit startup gate"
+        },
+        "ownerID" : "64FDCA0D-49AC-4985-85AD-DF6363EC3A92",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344925.745975375
+      },
+      "sequence" : 14
+    },
+    {
+      "caseID" : "64FDCA0D-49AC-4985-85AD-DF6363EC3A92",
+      "event" : {
+        "fields" : {
+          "draining" : "false",
+          "loadingPreview" : "false",
+          "model" : "fake-only",
+          "refreshPending" : "false",
+          "revision" : "1",
+          "runID" : "",
+          "started" : "false",
+          "workerID" : "6D138D0D-75DB-47AB-84FD-D320BD2856A1"
+        },
+        "ownerID" : "6D138D0D-75DB-47AB-84FD-D320BD2856A1",
+        "ownerKind" : "worker",
+        "stage" : "changed.return",
+        "uptime" : 344925.81041308335
+      },
+      "sequence" : 15
+    },
+    {
+      "caseID" : "64FDCA0D-49AC-4985-85AD-DF6363EC3A92",
+      "event" : {
+        "fields" : {
+          "bridgeID" : "2CF97703-716D-47B8-ADCF-EF2C1AEA6711",
+          "configurationID" : "063B3B86-5897-4FFF-9509-282C0F08B02B",
+          "dirty" : "false",
+          "enabled" : "true",
+          "model" : "fake-only",
+          "revision" : "0",
+          "startReturnedConfigurationID" : "",
+          "started" : "true",
+          "workerID" : "6D138D0D-75DB-47AB-84FD-D320BD2856A1",
+          "workerRunID" : "",
+          "workerStarted" : "false"
+        },
+        "ownerID" : "2CF97703-716D-47B8-ADCF-EF2C1AEA6711",
+        "ownerKind" : "bridge",
+        "stage" : "configuration.changed.return",
+        "uptime" : 344925.8104184167
+      },
+      "sequence" : 16
+    },
+    {
+      "caseID" : "64FDCA0D-49AC-4985-85AD-DF6363EC3A92",
+      "event" : {
+        "fields" : {
+
+        },
+        "ownerID" : "64FDCA0D-49AC-4985-85AD-DF6363EC3A92",
+        "ownerKind" : "case",
+        "stage" : "control.exit.paused",
+        "uptime" : 344925.8104189167
+      },
+      "sequence" : 17
+    },
+    {
+      "caseID" : "64FDCA0D-49AC-4985-85AD-DF6363EC3A92",
+      "event" : {
+        "fields" : {
+          "iteration" : "4",
+          "phase" : "controlled body exit startup gate"
+        },
+        "ownerID" : "64FDCA0D-49AC-4985-85AD-DF6363EC3A92",
+        "ownerKind" : "case",
+        "stage" : "condition.read.begin",
+        "uptime" : 344925.81600287504
+      },
+      "sequence" : 18
+    },
+    {
+      "caseID" : "64FDCA0D-49AC-4985-85AD-DF6363EC3A92",
+      "event" : {
+        "fields" : {
+          "iteration" : "4",
+          "phase" : "controlled body exit startup gate"
+        },
+        "ownerID" : "64FDCA0D-49AC-4985-85AD-DF6363EC3A92",
+        "ownerKind" : "case",
+        "stage" : "condition.read.return",
+        "uptime" : 344925.81600720837
+      },
+      "sequence" : 19
+    },
+    {
+      "caseID" : "64FDCA0D-49AC-4985-85AD-DF6363EC3A92",
+      "event" : {
+        "fields" : {
+          "phase" : "controlled body exit startup gate"
+        },
+        "ownerID" : "64FDCA0D-49AC-4985-85AD-DF6363EC3A92",
+        "ownerKind" : "case",
+        "stage" : "wait.return",
+        "uptime" : 344925.8160079584
+      },
+      "sequence" : 20
+    },
+    {
+      "caseID" : "64FDCA0D-49AC-4985-85AD-DF6363EC3A92",
+      "event" : {
+        "fields" : {
+          "name" : "bridge.weak\/configuration"
+        },
+        "ownerID" : "64FDCA0D-49AC-4985-85AD-DF6363EC3A92",
+        "ownerKind" : "case",
+        "stage" : "read.begin",
+        "uptime" : 344925.81601275003
+      },
+      "sequence" : 21
+    },
+    {
+      "caseID" : "64FDCA0D-49AC-4985-85AD-DF6363EC3A92",
+      "event" : {
+        "fields" : {
+          "name" : "bridge.weak\/configuration"
+        },
+        "ownerID" : "64FDCA0D-49AC-4985-85AD-DF6363EC3A92",
+        "ownerKind" : "case",
+        "stage" : "read.end",
+        "uptime" : 344925.81601895834
+      },
+      "sequence" : 22
+    },
+    {
+      "caseID" : "64FDCA0D-49AC-4985-85AD-DF6363EC3A92",
+      "event" : {
+        "fields" : {
+          "name" : "worker.run\/attempt\/lease"
+        },
+        "ownerID" : "64FDCA0D-49AC-4985-85AD-DF6363EC3A92",
+        "ownerKind" : "case",
+        "stage" : "read.begin",
+        "uptime" : 344925.8160196667
+      },
+      "sequence" : 23
+    },
+    {
+      "caseID" : "64FDCA0D-49AC-4985-85AD-DF6363EC3A92",
+      "event" : {
+        "fields" : {
+          "name" : "worker.run\/attempt\/lease"
+        },
+        "ownerID" : "64FDCA0D-49AC-4985-85AD-DF6363EC3A92",
+        "ownerKind" : "case",
+        "stage" : "read.end",
+        "uptime" : 344925.81602195837
+      },
+      "sequence" : 24
+    },
+    {
+      "caseID" : "64FDCA0D-49AC-4985-85AD-DF6363EC3A92",
+      "event" : {
+        "fields" : {
+          "name" : "physical.enter\/return"
+        },
+        "ownerID" : "64FDCA0D-49AC-4985-85AD-DF6363EC3A92",
+        "ownerKind" : "case",
+        "stage" : "read.begin",
+        "uptime" : 344925.8160224167
+      },
+      "sequence" : 25
+    },
+    {
+      "caseID" : "64FDCA0D-49AC-4985-85AD-DF6363EC3A92",
+      "event" : {
+        "fields" : {
+          "name" : "physical.enter\/return"
+        },
+        "ownerID" : "64FDCA0D-49AC-4985-85AD-DF6363EC3A92",
+        "ownerKind" : "case",
+        "stage" : "read.end",
+        "uptime" : 344925.81602412503
+      },
+      "sequence" : 26
+    },
+    {
+      "caseID" : "64FDCA0D-49AC-4985-85AD-DF6363EC3A92",
+      "event" : {
+        "fields" : {
+          "awaited" : "true",
+          "name" : "durable.sql"
+        },
+        "ownerID" : "64FDCA0D-49AC-4985-85AD-DF6363EC3A92",
+        "ownerKind" : "case",
+        "stage" : "read.begin",
+        "uptime" : 344925.8160247917
+      },
+      "sequence" : 27
+    },
+    {
+      "caseID" : "64FDCA0D-49AC-4985-85AD-DF6363EC3A92",
+      "event" : {
+        "fields" : {
+          "awaited" : "true",
+          "name" : "durable.sql"
+        },
+        "ownerID" : "64FDCA0D-49AC-4985-85AD-DF6363EC3A92",
+        "ownerKind" : "case",
+        "stage" : "read.end",
+        "uptime" : 344926.014077125
+      },
+      "sequence" : 28
+    },
+    {
+      "caseID" : "64FDCA0D-49AC-4985-85AD-DF6363EC3A92",
+      "event" : {
+        "fields" : {
+          "bridgeID" : "2CF97703-716D-47B8-ADCF-EF2C1AEA6711",
+          "configurationID" : "063B3B86-5897-4FFF-9509-282C0F08B02B",
+          "dirty" : "false",
+          "enabled" : "true",
+          "model" : "fake-only",
+          "revision" : "1",
+          "startReturnedConfigurationID" : "",
+          "started" : "true",
+          "workerID" : "6D138D0D-75DB-47AB-84FD-D320BD2856A1",
+          "workerRunID" : "",
+          "workerStarted" : "false"
+        },
+        "ownerID" : "2CF97703-716D-47B8-ADCF-EF2C1AEA6711",
+        "ownerKind" : "bridge",
+        "stage" : "stop.request",
+        "uptime" : 344926.01525225
+      },
+      "sequence" : 29
+    },
+    {
+      "caseID" : "64FDCA0D-49AC-4985-85AD-DF6363EC3A92",
+      "event" : {
+        "fields" : {
+          "draining" : "false",
+          "loadingPreview" : "false",
+          "model" : "fake-only",
+          "refreshPending" : "false",
+          "revision" : "1",
+          "runID" : "",
+          "started" : "false",
+          "workerID" : "6D138D0D-75DB-47AB-84FD-D320BD2856A1"
+        },
+        "ownerID" : "6D138D0D-75DB-47AB-84FD-D320BD2856A1",
+        "ownerKind" : "worker",
+        "stage" : "stop.begin",
+        "uptime" : 344926.0273199584
+      },
+      "sequence" : 30
+    },
+    {
+      "caseID" : "64FDCA0D-49AC-4985-85AD-DF6363EC3A92",
+      "event" : {
+        "fields" : {
+          "draining" : "false",
+          "loadingPreview" : "false",
+          "model" : "fake-only",
+          "refreshPending" : "false",
+          "revision" : "2",
+          "runID" : "",
+          "started" : "false",
+          "workerID" : "6D138D0D-75DB-47AB-84FD-D320BD2856A1"
+        },
+        "ownerID" : "6D138D0D-75DB-47AB-84FD-D320BD2856A1",
+        "ownerKind" : "worker",
+        "stage" : "stop.begin",
+        "uptime" : 344926.09388075
+      },
+      "sequence" : 31
+    },
+    {
+      "caseID" : "64FDCA0D-49AC-4985-85AD-DF6363EC3A92",
+      "event" : {
+        "fields" : {
+          "draining" : "false",
+          "loadingPreview" : "false",
+          "model" : "fake-only",
+          "refreshPending" : "false",
+          "revision" : "3",
+          "runID" : "",
+          "started" : "false",
+          "workerID" : "6D138D0D-75DB-47AB-84FD-D320BD2856A1"
+        },
+        "ownerID" : "6D138D0D-75DB-47AB-84FD-D320BD2856A1",
+        "ownerKind" : "worker",
+        "stage" : "stop.return",
+        "uptime" : 344926.20355850004
+      },
+      "sequence" : 32
+    },
+    {
+      "caseID" : "64FDCA0D-49AC-4985-85AD-DF6363EC3A92",
+      "event" : {
+        "fields" : {
+          "draining" : "false",
+          "loadingPreview" : "false",
+          "model" : "fake-only",
+          "refreshPending" : "false",
+          "revision" : "3",
+          "runID" : "",
+          "started" : "false",
+          "workerID" : "6D138D0D-75DB-47AB-84FD-D320BD2856A1"
+        },
+        "ownerID" : "6D138D0D-75DB-47AB-84FD-D320BD2856A1",
+        "ownerKind" : "worker",
+        "stage" : "stop.return",
+        "uptime" : 344926.20359270833
+      },
+      "sequence" : 33
+    },
+    {
+      "caseID" : "64FDCA0D-49AC-4985-85AD-DF6363EC3A92",
+      "event" : {
+        "fields" : {
+          "workerID" : "6D138D0D-75DB-47AB-84FD-D320BD2856A1"
+        },
+        "ownerID" : "2CF97703-716D-47B8-ADCF-EF2C1AEA6711",
+        "ownerKind" : "bridge",
+        "stage" : "deinit",
+        "uptime" : 344926.266576125
+      },
+      "sequence" : 34
+    },
+    {
+      "caseID" : "64FDCA0D-49AC-4985-85AD-DF6363EC3A92",
+      "event" : {
+        "fields" : {
+          "workerID" : "6D138D0D-75DB-47AB-84FD-D320BD2856A1"
+        },
+        "ownerID" : "2CF97703-716D-47B8-ADCF-EF2C1AEA6711",
+        "ownerKind" : "bridge",
+        "stage" : "deinit.stop.begin",
+        "uptime" : 344926.266613
+      },
+      "sequence" : 35
+    },
+    {
+      "caseID" : "64FDCA0D-49AC-4985-85AD-DF6363EC3A92",
+      "event" : {
+        "fields" : {
+          "draining" : "false",
+          "loadingPreview" : "false",
+          "model" : "fake-only",
+          "refreshPending" : "false",
+          "revision" : "3",
+          "runID" : "",
+          "started" : "false",
+          "workerID" : "6D138D0D-75DB-47AB-84FD-D320BD2856A1"
+        },
+        "ownerID" : "6D138D0D-75DB-47AB-84FD-D320BD2856A1",
+        "ownerKind" : "worker",
+        "stage" : "stop.begin",
+        "uptime" : 344926.266616375
+      },
+      "sequence" : 36
+    },
+    {
+      "caseID" : "64FDCA0D-49AC-4985-85AD-DF6363EC3A92",
+      "event" : {
+        "fields" : {
+          "draining" : "false",
+          "loadingPreview" : "false",
+          "model" : "fake-only",
+          "refreshPending" : "false",
+          "revision" : "4",
+          "runID" : "",
+          "started" : "false",
+          "workerID" : "6D138D0D-75DB-47AB-84FD-D320BD2856A1"
+        },
+        "ownerID" : "6D138D0D-75DB-47AB-84FD-D320BD2856A1",
+        "ownerKind" : "worker",
+        "stage" : "stop.return",
+        "uptime" : 344926.4831825
+      },
+      "sequence" : 37
+    },
+    {
+      "caseID" : "64FDCA0D-49AC-4985-85AD-DF6363EC3A92",
+      "event" : {
+        "fields" : {
+          "workerID" : "6D138D0D-75DB-47AB-84FD-D320BD2856A1"
+        },
+        "ownerID" : "2CF97703-716D-47B8-ADCF-EF2C1AEA6711",
+        "ownerKind" : "bridge",
+        "stage" : "deinit.stop.return",
+        "uptime" : 344926.48318441666
+      },
+      "sequence" : 38
+    }
+  ],
+  "scenario" : "controlled-body-exit-false"
+}

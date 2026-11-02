@@ -1,0 +1,54 @@
+[
+  {
+    "stage" : "scope-created",
+    "test" : "everyOwnerMustBeKnownAndAllowed(_:)",
+    "uptime" : "344923.34059158334"
+  },
+  {
+    "root" : "question-service-71679564-65EF-4CCE-B83E-6FE70AED2D1F",
+    "stage" : "root-owned",
+    "uptime" : "344923.35987008334"
+  },
+  {
+    "stage" : "store-owned",
+    "uptime" : "344923.3598859167"
+  },
+  {
+    "connection" : "34044708-11F4-47A6-8E72-F714655FC8B4",
+    "root" : "question-service-71679564-65EF-4CCE-B83E-6FE70AED2D1F",
+    "stage" : "opened",
+    "uptime" : "344923.49950920837"
+  },
+  {
+    "connection" : "CC852B93-B0A6-41D6-8B7D-9E76F204FCC6",
+    "root" : "question-service-71679564-65EF-4CCE-B83E-6FE70AED2D1F",
+    "stage" : "opened",
+    "uptime" : "344925.5408465834"
+  },
+  {
+    "connection" : "CC852B93-B0A6-41D6-8B7D-9E76F204FCC6",
+    "result" : "0",
+    "stage" : "closed",
+    "uptime" : "344925.54239145835"
+  },
+  {
+    "stage" : "question-cancel-and-callback-release",
+    "uptime" : "344926.027995"
+  },
+  {
+    "connection" : "34044708-11F4-47A6-8E72-F714655FC8B4",
+    "result" : "0",
+    "stage" : "closed",
+    "uptime" : "344926.0282415417"
+  },
+  {
+    "stage" : "body-finished",
+    "uptime" : "344926.21680112503"
+  },
+  {
+    "exists" : "false",
+    "root" : "question-service-71679564-65EF-4CCE-B83E-6FE70AED2D1F",
+    "stage" : "root-removed",
+    "uptime" : "344926.40178025"
+  }
+]

@@ -1,0 +1,42 @@
+[
+  {
+    "stage" : "scope-created",
+    "test" : "changesDuringAsynchronousRetrievalCannotProduceReusablePreview(_:)",
+    "uptime" : "344923.341367875"
+  },
+  {
+    "root" : "question-service-AD023094-A7D4-4BF2-8C81-9733201D5962",
+    "stage" : "root-owned",
+    "uptime" : "344923.38020420837"
+  },
+  {
+    "stage" : "store-owned",
+    "uptime" : "344923.38023345836"
+  },
+  {
+    "connection" : "1E797122-3F2D-45BD-A291-9A0659819A21",
+    "root" : "question-service-AD023094-A7D4-4BF2-8C81-9733201D5962",
+    "stage" : "opened",
+    "uptime" : "344923.5169823333"
+  },
+  {
+    "stage" : "question-cancel-and-callback-release",
+    "uptime" : "344926.8221170417"
+  },
+  {
+    "connection" : "1E797122-3F2D-45BD-A291-9A0659819A21",
+    "result" : "0",
+    "stage" : "closed",
+    "uptime" : "344926.82223700004"
+  },
+  {
+    "stage" : "body-finished",
+    "uptime" : "344926.89824025"
+  },
+  {
+    "exists" : "false",
+    "root" : "question-service-AD023094-A7D4-4BF2-8C81-9733201D5962",
+    "stage" : "root-removed",
+    "uptime" : "344926.95106308337"
+  }
+]

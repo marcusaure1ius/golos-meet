@@ -1,0 +1,42 @@
+[
+  {
+    "stage" : "scope-created",
+    "test" : "compatibleRangesConditionsAndWordingAreNotInventedConflicts(_:)",
+    "uptime" : "344923.43983262504"
+  },
+  {
+    "root" : "memory-history-86E9DA19-B83A-4EF2-8A55-5724256821F4",
+    "stage" : "root-owned",
+    "uptime" : "344923.8903320417"
+  },
+  {
+    "stage" : "store-owned",
+    "uptime" : "344923.8903455"
+  },
+  {
+    "connection" : "F43E6E61-9A2F-485D-BB0F-0DBFC9965727",
+    "root" : "memory-history-86E9DA19-B83A-4EF2-8A55-5724256821F4",
+    "stage" : "opened",
+    "uptime" : "344924.0119711667"
+  },
+  {
+    "stage" : "history-fixture-body-cleanup",
+    "uptime" : "344926.7227200417"
+  },
+  {
+    "connection" : "F43E6E61-9A2F-485D-BB0F-0DBFC9965727",
+    "result" : "0",
+    "stage" : "closed",
+    "uptime" : "344926.7228767084"
+  },
+  {
+    "stage" : "body-finished",
+    "uptime" : "344926.79931070836"
+  },
+  {
+    "exists" : "false",
+    "root" : "memory-history-86E9DA19-B83A-4EF2-8A55-5724256821F4",
+    "stage" : "root-removed",
+    "uptime" : "344926.801682625"
+  }
+]

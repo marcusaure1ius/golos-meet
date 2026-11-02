@@ -1,0 +1,68 @@
+[
+  {
+    "stage" : "scope-created",
+    "test" : "p2-parallel-9",
+    "uptime" : "344923.9122191667"
+  },
+  {
+    "root" : "fault-expectation-9070230E-6249-4B7C-80C4-3E24F47AF101",
+    "stage" : "root-owned",
+    "uptime" : "344923.9123734167"
+  },
+  {
+    "connection" : "6988BBA6-83F5-47A8-AA2E-B75C0426BB16",
+    "root" : "fault-expectation-9070230E-6249-4B7C-80C4-3E24F47AF101",
+    "stage" : "opened",
+    "uptime" : "344923.91255662503"
+  },
+  {
+    "connection" : "04E910D5-1A42-4A78-8B9D-CB8DEB8BDA3C",
+    "root" : "fault-expectation-9070230E-6249-4B7C-80C4-3E24F47AF101",
+    "stage" : "opened",
+    "uptime" : "344923.91265875"
+  },
+  {
+    "acceptedBy" : "8DE846F9-9563-4919-A6C5-05F7CC9A1C51",
+    "diagnostic" : "{\"connection\":\"6988BBA6-83F5-47A8-AA2E-B75C0426BB16\",\"elapsedMilliseconds\":0.5872916663065553,\"extended\":1811,\"operation\":\"update\",\"phase\":\"step\",\"result\":19}",
+    "expected" : "true",
+    "stage" : "sqlite-failure",
+    "uptime" : "344926.74581600004"
+  },
+  {
+    "diagnostic" : "{\"connection\":\"6988BBA6-83F5-47A8-AA2E-B75C0426BB16\",\"elapsedMilliseconds\":0.5872916663065553,\"extended\":1811,\"operation\":\"update\",\"phase\":\"step\",\"result\":19}",
+    "eventIndex" : "4",
+    "expectation" : "8DE846F9-9563-4919-A6C5-05F7CC9A1C51",
+    "stage" : "expected-sqlite-failure",
+    "uptime" : "344926.7468886667"
+  },
+  {
+    "accepted" : "true",
+    "connection" : "6988BBA6-83F5-47A8-AA2E-B75C0426BB16",
+    "expectation" : "8DE846F9-9563-4919-A6C5-05F7CC9A1C51",
+    "matchingUnconsumed" : "1",
+    "stage" : "fault-expectation-checked",
+    "uptime" : "344926.7468962917"
+  },
+  {
+    "connection" : "04E910D5-1A42-4A78-8B9D-CB8DEB8BDA3C",
+    "result" : "0",
+    "stage" : "closed",
+    "uptime" : "344926.7469784167"
+  },
+  {
+    "connection" : "6988BBA6-83F5-47A8-AA2E-B75C0426BB16",
+    "result" : "0",
+    "stage" : "closed",
+    "uptime" : "344926.74702087505"
+  },
+  {
+    "stage" : "body-finished",
+    "uptime" : "344926.74702795834"
+  },
+  {
+    "exists" : "false",
+    "root" : "fault-expectation-9070230E-6249-4B7C-80C4-3E24F47AF101",
+    "stage" : "root-removed",
+    "uptime" : "344926.7474077084"
+  }
+]

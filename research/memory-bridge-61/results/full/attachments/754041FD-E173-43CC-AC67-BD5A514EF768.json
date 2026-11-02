@@ -1,0 +1,42 @@
+[
+  {
+    "stage" : "scope-created",
+    "test" : "question-callback-throw",
+    "uptime" : "344923.934790875"
+  },
+  {
+    "root" : "question-service-DAA1E866-A9D6-45F4-8D0E-172A0BFB80FC",
+    "stage" : "root-owned",
+    "uptime" : "344923.9349407917"
+  },
+  {
+    "stage" : "store-owned",
+    "uptime" : "344923.93495716667"
+  },
+  {
+    "connection" : "526D9AD5-AB9E-4CE1-A730-594D8C0CE9F3",
+    "root" : "question-service-DAA1E866-A9D6-45F4-8D0E-172A0BFB80FC",
+    "stage" : "opened",
+    "uptime" : "344924.0447430417"
+  },
+  {
+    "stage" : "question-cancel-and-callback-release",
+    "uptime" : "344926.62435195834"
+  },
+  {
+    "connection" : "526D9AD5-AB9E-4CE1-A730-594D8C0CE9F3",
+    "result" : "0",
+    "stage" : "closed",
+    "uptime" : "344926.6245246667"
+  },
+  {
+    "stage" : "body-finished",
+    "uptime" : "344926.75923850003"
+  },
+  {
+    "exists" : "false",
+    "root" : "question-service-DAA1E866-A9D6-45F4-8D0E-172A0BFB80FC",
+    "stage" : "root-removed",
+    "uptime" : "344926.7604075"
+  }
+]

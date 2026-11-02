@@ -1,0 +1,98 @@
+[
+  {
+    "stage" : "scope-created",
+    "test" : "invalidBatchRollsBackAllRowsAndImmutableJournalAndPaginationAreReal()",
+    "uptime" : "344923.43972612504"
+  },
+  {
+    "root" : "memory-history-89102B11-C085-44EA-9631-0A2644EAF1A7",
+    "stage" : "root-owned",
+    "uptime" : "344923.8888412917"
+  },
+  {
+    "stage" : "store-owned",
+    "uptime" : "344923.8888555833"
+  },
+  {
+    "connection" : "A1D09E16-5B40-45A5-9A7C-F021F5CA6ED9",
+    "root" : "memory-history-89102B11-C085-44EA-9631-0A2644EAF1A7",
+    "stage" : "opened",
+    "uptime" : "344923.9867977917"
+  },
+  {
+    "connection" : "34F3973A-1E47-47FA-B57E-B4E95114AFB5",
+    "root" : "memory-history-89102B11-C085-44EA-9631-0A2644EAF1A7",
+    "stage" : "opened",
+    "uptime" : "344926.7951262917"
+  },
+  {
+    "acceptedBy" : "DCA41923-4F86-4B26-A44E-31741776FABC",
+    "diagnostic" : "{\"connection\":\"34F3973A-1E47-47FA-B57E-B4E95114AFB5\",\"elapsedMilliseconds\":0.11454167542979121,\"extended\":1811,\"operation\":\"update\",\"phase\":\"step\",\"result\":19}",
+    "expected" : "true",
+    "stage" : "sqlite-failure",
+    "uptime" : "344926.7955410834"
+  },
+  {
+    "diagnostic" : "{\"connection\":\"34F3973A-1E47-47FA-B57E-B4E95114AFB5\",\"elapsedMilliseconds\":0.11454167542979121,\"extended\":1811,\"operation\":\"update\",\"phase\":\"step\",\"result\":19}",
+    "eventIndex" : "5",
+    "expectation" : "DCA41923-4F86-4B26-A44E-31741776FABC",
+    "stage" : "expected-sqlite-failure",
+    "uptime" : "344926.795696625"
+  },
+  {
+    "accepted" : "true",
+    "connection" : "34F3973A-1E47-47FA-B57E-B4E95114AFB5",
+    "expectation" : "DCA41923-4F86-4B26-A44E-31741776FABC",
+    "matchingUnconsumed" : "1",
+    "stage" : "fault-expectation-checked",
+    "uptime" : "344926.79569995834"
+  },
+  {
+    "acceptedBy" : "67BAA36D-7C3C-47C9-9318-A246D7E4218A",
+    "diagnostic" : "{\"connection\":\"34F3973A-1E47-47FA-B57E-B4E95114AFB5\",\"elapsedMilliseconds\":0.13391667744144797,\"extended\":1811,\"operation\":\"delete\",\"phase\":\"step\",\"result\":19}",
+    "expected" : "true",
+    "stage" : "sqlite-failure",
+    "uptime" : "344926.7958993334"
+  },
+  {
+    "diagnostic" : "{\"connection\":\"34F3973A-1E47-47FA-B57E-B4E95114AFB5\",\"elapsedMilliseconds\":0.13391667744144797,\"extended\":1811,\"operation\":\"delete\",\"phase\":\"step\",\"result\":19}",
+    "eventIndex" : "8",
+    "expectation" : "67BAA36D-7C3C-47C9-9318-A246D7E4218A",
+    "stage" : "expected-sqlite-failure",
+    "uptime" : "344926.79618458333"
+  },
+  {
+    "accepted" : "true",
+    "connection" : "34F3973A-1E47-47FA-B57E-B4E95114AFB5",
+    "expectation" : "67BAA36D-7C3C-47C9-9318-A246D7E4218A",
+    "matchingUnconsumed" : "1",
+    "stage" : "fault-expectation-checked",
+    "uptime" : "344926.7962022917"
+  },
+  {
+    "connection" : "34F3973A-1E47-47FA-B57E-B4E95114AFB5",
+    "result" : "0",
+    "stage" : "closed",
+    "uptime" : "344926.85285158333"
+  },
+  {
+    "stage" : "history-fixture-body-cleanup",
+    "uptime" : "344926.8528690417"
+  },
+  {
+    "connection" : "A1D09E16-5B40-45A5-9A7C-F021F5CA6ED9",
+    "result" : "0",
+    "stage" : "closed",
+    "uptime" : "344926.8529808333"
+  },
+  {
+    "stage" : "body-finished",
+    "uptime" : "344926.91367833334"
+  },
+  {
+    "exists" : "false",
+    "root" : "memory-history-89102B11-C085-44EA-9631-0A2644EAF1A7",
+    "stage" : "root-removed",
+    "uptime" : "344926.915328125"
+  }
+]

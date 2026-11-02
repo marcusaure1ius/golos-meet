@@ -1,0 +1,42 @@
+[
+  {
+    "stage" : "scope-created",
+    "test" : "finalTransportGateRejectsChangesAfterConsent(_:)",
+    "uptime" : "344923.33992245834"
+  },
+  {
+    "root" : "question-service-C7E68326-12E8-456C-AFEA-626BE3B728CC",
+    "stage" : "root-owned",
+    "uptime" : "344923.3579545417"
+  },
+  {
+    "stage" : "store-owned",
+    "uptime" : "344923.3579681667"
+  },
+  {
+    "connection" : "E75AB4AA-8C51-479D-B3E4-D5B40156D68F",
+    "root" : "question-service-C7E68326-12E8-456C-AFEA-626BE3B728CC",
+    "stage" : "opened",
+    "uptime" : "344923.483219375"
+  },
+  {
+    "stage" : "question-cancel-and-callback-release",
+    "uptime" : "344927.1867269167"
+  },
+  {
+    "connection" : "E75AB4AA-8C51-479D-B3E4-D5B40156D68F",
+    "result" : "0",
+    "stage" : "closed",
+    "uptime" : "344927.18684879167"
+  },
+  {
+    "stage" : "body-finished",
+    "uptime" : "344927.236191125"
+  },
+  {
+    "exists" : "false",
+    "root" : "question-service-C7E68326-12E8-456C-AFEA-626BE3B728CC",
+    "stage" : "root-removed",
+    "uptime" : "344927.29088108335"
+  }
+]
