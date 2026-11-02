@@ -6,14 +6,20 @@ import SQLite3
 
 // This alternate executable contains no normal app entry, client, credentials or audio.
 enum AppPaths {
-    static let appSupport: URL = {
-        let raw = Bundle.main.object(forInfoDictionaryKey: "SyntheticRoot") as! String
-        let root = URL(fileURLWithPath: raw).standardizedFileURL.resolvingSymlinksInPath()
-        let temporary = URL(fileURLWithPath: NSTemporaryDirectory()).resolvingSymlinksInPath()
-        precondition(root.path.hasPrefix("/private/var/folders/") && root.path.hasPrefix(temporary.path + "/golos-memory-gate37-"))
-        precondition(root.lastPathComponent == "library")
-        return root
-    }()
+    private static var installedRoot: URL?
+    static func installValidatedConfiguration() throws -> DiagnosticPathResolution {
+        guard installedRoot == nil else { throw DiagnosticPathFault(code:"alreadyInstalled",detail:"path setup is one-shot") }
+        let resolution = try DiagnosticGatePaths.validate(configuredPath:Bundle.main.object(forInfoDictionaryKey:"SyntheticRoot") as? String,temporaryPath:NSTemporaryDirectory())
+        installedRoot = resolution.library
+        return resolution
+    }
+    // Existing compiled consumers require URL. Configuration failures return from
+    // coordinator init BEFORE these paths or any default singleton can be used.
+    static var appSupport: URL {
+        guard let installedRoot else { preconditionFailure("Diagnostic paths accessed before successful typed configuration") }
+        return installedRoot
+    }
+    static var displayPath: String { installedRoot?.path ?? "INCONCLUSIVE: diagnostic path configuration unavailable" }
     static var meetingsRoot: URL { appSupport.appendingPathComponent("meetings") }
 }
 
@@ -309,10 +315,14 @@ nonisolated struct GateVisible: Sendable { let alive:Bool; let project:UUID?; le
     var terminal: Bool { phase == .passed || phase == .inconclusive }
     var mayOpen: Bool { !terminal && route == nil && (phase == .ready || phase == .awaitReopen) }
     var mayArm: Bool { !terminal && phase == .ready && arm == nil && route.map { appearedEntries.contains($0) } == true }
-    var evidencePath: String { AppPaths.appSupport.path }
+    var evidencePath: String { AppPaths.displayPath }
     init() {
         guard AppRuntime.isTestHost else { phase = .inconclusive; status = "Test host guard отсутствует"; return }
-        do { log = try GateLog(folder:AppPaths.appSupport); try record("session-start",["mode":"one synthetic meeting; no hidden model; no PDF/OCR/ONNX inference"]) }
+        do {
+            let paths = try AppPaths.installValidatedConfiguration()
+            log = try GateLog(folder:paths.library)
+            try record("session-start",["mode":"one synthetic meeting; no hidden model; no PDF/OCR/ONNX inference","validatedPaths":try GateClock.json(paths)])
+        }
         catch { phase = .inconclusive; status = "INCONCLUSIVE: \(error)"; rootError = status; return }
         client.owner = self
         Task { [weak self] in await self?.setup() }

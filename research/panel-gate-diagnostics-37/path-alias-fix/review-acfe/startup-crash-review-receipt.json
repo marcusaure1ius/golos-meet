@@ -1,0 +1,201 @@
+{
+  "reviewer": "/root/review43 independent",
+  "head": "acfe44fb379a9ba8de3c0aa5de7fefb9c93bd28f",
+  "compiledSource": "2febb801cd211db850eb3ce8dba70741a526d5a0",
+  "verdict": "P2 confirmed diagnostic-host AppPaths startup blocker; fixes required; UIcase NOT PASSED",
+  "file": "research/MemoryPanelGateDiagnostics.swift",
+  "line": 13,
+  "crashes": [
+    {
+      "localCopy": "/Users/alfa/.codex/worktrees/review-55-diagnostic-fix/golos-meet/.review-evidence/diagnostic-acfe44fb-startup-crash/MemoryPanelGateDiagnostics-2026-11-02-223214.ips",
+      "sha256": "519057daabb5e3517ab07a56063d0f4ef9e0179372bec565546fd1cea7004e77",
+      "bundle": "com.golos.memory-gate37.e09a046874694f3ba87b32616c963c6f",
+      "sliceUUID": "8a8bd768-b064-3414-a074-b3ec59215734",
+      "launch": "2026-11-02 22:32:13.7223 +0300",
+      "capture": "2026-11-02 22:32:13.9123 +0300",
+      "exception": {
+        "codes": "0x0000000000000001, 0x00000001a77ecd4c",
+        "rawCodes": [
+          1,
+          7105072460
+        ],
+        "type": "EXC_BREAKPOINT",
+        "signal": "SIGTRAP"
+      },
+      "topFrames": [
+        {
+          "imageOffset": 1445196,
+          "symbol": "_assertionFailure(_:_:file:line:flags:)",
+          "symbolLocation": 216,
+          "imageIndex": 1
+        },
+        {
+          "imageOffset": 3934024,
+          "symbol": "closure #1 in variable initialization expression of static AppPaths.appSupport",
+          "symbolLocation": 1528,
+          "imageIndex": 0
+        },
+        {
+          "imageOffset": 3932484,
+          "symbol": "one-time initialization function for appSupport",
+          "symbolLocation": 60,
+          "imageIndex": 0
+        },
+        {
+          "imageOffset": 112032,
+          "symbol": "_dispatch_client_callout",
+          "symbolLocation": 16,
+          "imageIndex": 2
+        },
+        {
+          "imageOffset": 17956,
+          "symbol": "_dispatch_once_callout",
+          "symbolLocation": 32,
+          "imageIndex": 2
+        },
+        {
+          "imageOffset": 3934472,
+          "symbol": "AppPaths.appSupport.unsafeMutableAddressor",
+          "symbolLocation": 88,
+          "imageIndex": 0
+        },
+        {
+          "imageOffset": 4106404,
+          "symbol": "GateDiagnosticCoordinator.init()",
+          "symbolLocation": 2592,
+          "imageIndex": 0
+        },
+        {
+          "imageOffset": 4103800,
+          "symbol": "GateDiagnosticCoordinator.__allocating_init()",
+          "symbolLocation": 44,
+          "imageIndex": 0
+        }
+      ]
+    },
+    {
+      "localCopy": "/Users/alfa/.codex/worktrees/review-55-diagnostic-fix/golos-meet/.review-evidence/diagnostic-acfe44fb-startup-crash/MemoryPanelGateDiagnostics-2026-11-02-195650.ips",
+      "sha256": "a2ee377ba28e403fb0650dd3e4f83d8700116afb1a42aa87bf3c585708e20706",
+      "bundle": "com.golos.memory-gate37.e09a046874694f3ba87b32616c963c6f",
+      "sliceUUID": "8a8bd768-b064-3414-a074-b3ec59215734",
+      "launch": "2026-11-02 19:56:47.0435 +0300",
+      "capture": "2026-11-02 19:56:48.2594 +0300",
+      "exception": {
+        "codes": "0x0000000000000001, 0x00000001a77ecd4c",
+        "rawCodes": [
+          1,
+          7105072460
+        ],
+        "type": "EXC_BREAKPOINT",
+        "signal": "SIGTRAP"
+      },
+      "topFrames": [
+        {
+          "imageOffset": 1445196,
+          "symbol": "_assertionFailure(_:_:file:line:flags:)",
+          "symbolLocation": 216,
+          "imageIndex": 1
+        },
+        {
+          "imageOffset": 3934024,
+          "symbol": "closure #1 in variable initialization expression of static AppPaths.appSupport",
+          "symbolLocation": 1528,
+          "imageIndex": 0
+        },
+        {
+          "imageOffset": 3932484,
+          "symbol": "one-time initialization function for appSupport",
+          "symbolLocation": 60,
+          "imageIndex": 0
+        },
+        {
+          "imageOffset": 112032,
+          "symbol": "_dispatch_client_callout",
+          "symbolLocation": 16,
+          "imageIndex": 2
+        },
+        {
+          "imageOffset": 17956,
+          "symbol": "_dispatch_once_callout",
+          "symbolLocation": 32,
+          "imageIndex": 2
+        },
+        {
+          "imageOffset": 3934472,
+          "symbol": "AppPaths.appSupport.unsafeMutableAddressor",
+          "symbolLocation": 88,
+          "imageIndex": 0
+        },
+        {
+          "imageOffset": 4106404,
+          "symbol": "GateDiagnosticCoordinator.init()",
+          "symbolLocation": 2592,
+          "imageIndex": 0
+        },
+        {
+          "imageOffset": 4103800,
+          "symbol": "GateDiagnosticCoordinator.__allocating_init()",
+          "symbolLocation": 44,
+          "imageIndex": 0
+        }
+      ]
+    }
+  ],
+  "currentInfo": {
+    "CFBundleExecutable": "MemoryPanelGateDiagnostics",
+    "CFBundleIdentifier": "com.golos.memory-gate37.e09a046874694f3ba87b32616c963c6f",
+    "CFBundleName": "Golos Memory Gate Diagnostics",
+    "NSHighResolutionCapable": true,
+    "SourceCommit": "2febb801cd211db850eb3ce8dba70741a526d5a0",
+    "SourceManifestSHA256": "ee1dddb5698539a1bed1287c1db0d8263ea75b5a854a8cbcb615acbd70c9350f",
+    "SyntheticRoot": "/private/var/folders/f6/hwzbqsn10fn6p6gx8d5vmnfm0000gn/T/golos-memory-gate37-a19e1b2b2d6b4518abd9614c7f16130f/library"
+  },
+  "binarySHA256": "ae7f8d0e29241bf61deaa0c95cc5829f3f08c4b08ead04d2fdc07d25b6043094",
+  "binaryUUID": "8a8bd768b0643414a074b3ec59215734",
+  "signatureVerify": {
+    "exit": 0,
+    "stderr": ""
+  },
+  "libraryAbsent": true,
+  "foundationValues": {
+    "compoundPreconditionLine13": false,
+    "dynamicTempPrefix": false,
+    "expectedPrefix": "/var/folders/f6/hwzbqsn10fn6p6gx8d5vmnfm0000gn/T/golos-memory-gate37-",
+    "leafPreconditionLine14": true,
+    "privateVarPrefix": true,
+    "raw": "/private/var/folders/f6/hwzbqsn10fn6p6gx8d5vmnfm0000gn/T/golos-memory-gate37-a19e1b2b2d6b4518abd9614c7f16130f/library",
+    "rootComponents": [
+      "/",
+      "private",
+      "var",
+      "folders",
+      "f6",
+      "hwzbqsn10fn6p6gx8d5vmnfm0000gn",
+      "T",
+      "golos-memory-gate37-a19e1b2b2d6b4518abd9614c7f16130f",
+      "library"
+    ],
+    "rootLastPathComponent": "library",
+    "rootPath": "/private/var/folders/f6/hwzbqsn10fn6p6gx8d5vmnfm0000gn/T/golos-memory-gate37-a19e1b2b2d6b4518abd9614c7f16130f/library",
+    "temporaryComponents": [
+      "/",
+      "var",
+      "folders",
+      "f6",
+      "hwzbqsn10fn6p6gx8d5vmnfm0000gn",
+      "T"
+    ],
+    "temporaryPath": "/var/folders/f6/hwzbqsn10fn6p6gx8d5vmnfm0000gn/T",
+    "temporaryPathHasSuffixSlash": false,
+    "temporaryRaw": "/var/folders/f6/hwzbqsn10fn6p6gx8d5vmnfm0000gn/T/"
+  },
+  "foundationFiles": {
+    "check.swift": "dd007f236d0cbd53fd9ed4b18890470745f8edc3426f9956657f87a19c3fbdaa",
+    "stdout.txt": "d716cff77797248c06eaf3f2b8d9d72d67e7ae20e95b801357067ebe0a0efb89",
+    "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "receipt.json": "1f18d18f674b80a1131c61a03bc42daa85cce3b4f6ca1e6ca0605c53345f6597"
+  },
+  "foundationLimits": "ONE Foundation-only CLI check; app LS path values unobserved; no app/CUA/build/model/DB run",
+  "rootLaunchReceiptSHA256": "4df3fa0bcad114aba285c00c7a1d36f689adc6927aa4ecd22948648b45ad1bf6",
+  "reportSHA256": "715047f155aa2c5c3214660871b7b36db60d925acfda1b00c39ea970d3cd5450"
+}

@@ -60,6 +60,8 @@ sources += [repo / 'golos-meet' / p for p in ['Util/AppRuntime.swift', 'UI/Desig
 sources += [repo / 'golos-meet/UI/Projects' / (p + '.swift') for p in ['ProjectLibrary', 'KnowledgeIndexing', 'KnowledgeSearchModel',
     'KnowledgeSearchScreen', 'KnowledgeSourceView', 'KnowledgeQuestionModel', 'KnowledgeQuestionScreen', 'ProjectCloudSettings', 'ProjectMemoryPanelModel', 'ProjectMemoryPanel', 'ProjectMemoryNavigation', 'ProjectMemoryEntry']]
 sources += [repo / 'research' / ('MemoryPanelGateDiagnostics.swift' if args.gate_diagnostics else 'MemoryPanelPreview.swift')]
+if args.gate_diagnostics:
+    sources += [repo / 'research/DiagnosticGatePaths.swift']
 for name in ['OpenRouterClient.swift','Keychain.swift','golos_meetApp.swift','ProductionMemoryPanel.swift','AppDelegate.swift','Recorder.swift','LocalASR.swift']:
     assert all(p.name != name for p in sources)
 manifest = {'sourceCommit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=repo,text=True).strip(),
