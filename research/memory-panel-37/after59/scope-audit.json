@@ -1,0 +1,1076 @@
+{
+  "scopes": 116,
+  "roots": 114,
+  "opened": 175,
+  "closed0": 175,
+  "removed": 114,
+  "errors": 0,
+  "attachments_byte_match": 116,
+  "all_closes_before_unlink": true,
+  "throw_cancel_cases": [
+    {
+      "scope": "7B512060-24A8-4634-9B83-0271AFECC132",
+      "test": "panel-cleanup-cancel-true",
+      "roots": 1,
+      "opened": 1,
+      "closed0": 1,
+      "removed": 1,
+      "attachment": "8AD5AAC5-34A2-4629-B979-40C9A20A997B.json"
+    },
+    {
+      "scope": "BAC31B32-82B4-457B-ACD9-A54C5F2739A1",
+      "test": "panel-cleanup-cancel-false",
+      "roots": 1,
+      "opened": 1,
+      "closed0": 1,
+      "removed": 1,
+      "attachment": "0DD3BFFC-3B5B-4296-B909-EB55B98E7E61.json"
+    }
+  ],
+  "results": [
+    {
+      "scope": "0210304A-80C5-4987-94E4-F8AF9ACD933F",
+      "test": "finalJournalTransactionRechecksModelAndForeignMemoryEvenAfterEarlierValidation(_:)",
+      "roots": 1,
+      "opened": 1,
+      "closed0": 1,
+      "removed": 1,
+      "attachment": "7D8805C1-0BC7-44E0-B0DF-6F33D534C297.json"
+    },
+    {
+      "scope": "03793BD9-CAB7-45FD-951F-652C916F718A",
+      "test": "openingSavedEvidenceRequiresCurrentRuntimeAndBothSourceRevisions(change:)",
+      "roots": 1,
+      "opened": 1,
+      "closed0": 1,
+      "removed": 1,
+      "attachment": "95F13950-C2FB-471E-B4F9-BD714609BBAB.json"
+    },
+    {
+      "scope": "06366F18-647C-404E-9644-07279BE4587D",
+      "test": "queryProjectAndFileChangesFencePreparedActionsWithoutTransport()",
+      "roots": 1,
+      "opened": 1,
+      "closed0": 1,
+      "removed": 1,
+      "attachment": "1B069E75-BCEA-4348-A39D-023AA889F9C5.json"
+    },
+    {
+      "scope": "0737DCCD-6C5E-4169-9B87-D342606E51A7",
+      "test": "capAndInvalidReplyLeaveCursorUnchangedAndDoNotRetryOnDuplicateEvents()",
+      "roots": 1,
+      "opened": 2,
+      "closed0": 2,
+      "removed": 1,
+      "attachment": "507E1C47-DB1A-4F96-BA1E-E1041314779B.json"
+    },
+    {
+      "scope": "0C7DF7C4-5E33-43DB-8F98-A0F25AD5F633",
+      "test": "durableQueueFenceRejectsLateTransportWithoutRelyingOnTaskCancellation(_:)",
+      "roots": 1,
+      "opened": 2,
+      "closed0": 2,
+      "removed": 1,
+      "attachment": "BBFA2939-46D9-4AE8-A74C-15D0FC0B04FE.json"
+    },
+    {
+      "scope": "0DCE0EC0-E889-411F-9298-5C39555D5102",
+      "test": "changedAncestorInvalidatesPendingExactConsentAndLegacyCoverageIsResetOnce()",
+      "roots": 1,
+      "opened": 2,
+      "closed0": 2,
+      "removed": 1,
+      "attachment": "7A64F303-BE98-4B89-9F9D-409820113B58.json"
+    },
+    {
+      "scope": "11FDA2E0-0E35-4064-8344-5677CE4D5E7A",
+      "test": "scopedSnapshotAndPagedHistoryDoNotClaimWholeArchiveCoverage()",
+      "roots": 1,
+      "opened": 1,
+      "closed0": 1,
+      "removed": 1,
+      "attachment": "5CA6DF28-DA42-4AB5-9924-83A77E2D2420.json"
+    },
+    {
+      "scope": "120EAF0F-52B6-47C3-A933-F8D57DDE0C23",
+      "test": "invalidStructuredResponseNeverPartiallyPublishes(_:)",
+      "roots": 1,
+      "opened": 1,
+      "closed0": 1,
+      "removed": 1,
+      "attachment": "FD168A2A-1BE6-4252-9F4B-E9BD3C28D46B.json"
+    },
+    {
+      "scope": "13294D4A-8D79-4203-AC7F-11FEE7A5B80B",
+      "test": "openingSavedEvidenceRequiresCurrentRuntimeAndBothSourceRevisions(change:)",
+      "roots": 1,
+      "opened": 1,
+      "closed0": 1,
+      "removed": 1,
+      "attachment": "595DED9D-497B-4D37-A8EE-05FEEB89BD89.json"
+    },
+    {
+      "scope": "16D257D8-6533-486B-891F-EC4B5356DB3D",
+      "test": "sequentialWorkerUpdatesKeepConflictingDeadlinesAndCompletionAsClaim()",
+      "roots": 1,
+      "opened": 2,
+      "closed0": 2,
+      "removed": 1,
+      "attachment": "D5BBE44F-BC2A-4312-B3DB-B531AFDEE4BF.json"
+    },
+    {
+      "scope": "177167C8-128B-4C7D-BB33-77607C828250",
+      "test": "changesAtTransportBoundaryPreventSendingOrPublishing(_:)",
+      "roots": 1,
+      "opened": 2,
+      "closed0": 2,
+      "removed": 1,
+      "attachment": "140E3198-C3B2-4325-88F5-B780B1E5BD7B.json"
+    },
+    {
+      "scope": "1A4E8A63-CE2B-4024-A604-5561E2E8EB94",
+      "test": "exactConsentUsesRealQueueAndSourceOpensCheckedSnapshotWithoutPlayer()",
+      "roots": 1,
+      "opened": 1,
+      "closed0": 1,
+      "removed": 1,
+      "attachment": "16FA91BE-2EFA-4489-AE05-D52BC583DDB8.json"
+    },
+    {
+      "scope": "1CFA8F8D-9137-47B8-A43C-0557FE1ED2B3",
+      "test": "changesAtTransportBoundaryPreventSendingOrPublishing(_:)",
+      "roots": 1,
+      "opened": 1,
+      "closed0": 1,
+      "removed": 1,
+      "attachment": "259CF04F-452E-4BDE-91EF-1AD5FED76D70.json"
+    },
+    {
+      "scope": "1D8A1926-1DE2-4CDE-AFFA-D0A05A99D9FB",
+      "test": "lateNoncooperativeSendCannotPublishAfterProjectSwitch()",
+      "roots": 1,
+      "opened": 1,
+      "closed0": 1,
+      "removed": 1,
+      "attachment": "E346EDA0-C295-4AEB-BA93-F3E775E8EFDC.json"
+    },
+    {
+      "scope": "1EFAB071-4A03-46F6-86A2-16BAD6001A48",
+      "test": "adaptiveJSONBudgetProcessesLongQuotedSourceWithoutSilentSkip()",
+      "roots": 1,
+      "opened": 1,
+      "closed0": 1,
+      "removed": 1,
+      "attachment": "8588FE39-0D85-4881-9B0C-F1CBB3CA1C05.json"
+    },
+    {
+      "scope": "24C37C60-F237-41AC-AE2B-5CFF9BBDEF35",
+      "test": "metadataAndIndexSubscriptionsCoalesceAndSettingsCanStopThenResumeSameWorker()",
+      "roots": 1,
+      "opened": 1,
+      "closed0": 1,
+      "removed": 1,
+      "attachment": "AFED9EA0-F1FC-4F6C-8A58-8D52A9AF7B99.json"
+    },
+    {
+      "scope": "25B6F007-54C3-4F7E-91CA-3815F925B275",
+      "test": "actualQueuePartialFailureRetryInsufficientAndNativeStateRenders()",
+      "roots": 1,
+      "opened": 1,
+      "closed0": 1,
+      "removed": 1,
+      "attachment": "28634EBD-EC73-44DA-B06C-62BAA04B070E.json"
+    },
+    {
+      "scope": "2CC96A79-7516-4864-80AC-9129C538418F",
+      "test": "concreteMetadataBridgeReceivesReadyEventWithoutLaunchingApplication()",
+      "roots": 1,
+      "opened": 1,
+      "closed0": 1,
+      "removed": 1,
+      "attachment": "91D18C56-2ED1-4AB7-A259-0FEB3DA60436.json"
+    },
+    {
+      "scope": "2CE75487-BD5A-42B7-B52B-58B08BC0CE0E",
+      "test": "stopRestartDoesNotOverlapOldCalculationAndManualInboxWinsItsLateResult()",
+      "roots": 1,
+      "opened": 1,
+      "closed0": 1,
+      "removed": 1,
+      "attachment": "DF3A068E-26D2-413F-AF24-5171D96D8270.json"
+    },
+    {
+      "scope": "2EC4C4A7-5BA2-4C4B-B42B-E491471EB857",
+      "test": "control",
+      "roots": 1,
+      "opened": 1,
+      "closed0": 1,
+      "removed": 1,
+      "attachment": "9529D30D-FFB0-4F33-9050-496AF24EBF78.json"
+    },
+    {
+      "scope": "3357072E-8183-4EDF-A9FB-2945FC614140",
+      "test": "changeBetweenBatchesStartsNewCycleAndNeverReportsOldPartialAsComplete(_:)",
+      "roots": 1,
+      "opened": 2,
+      "closed0": 2,
+      "removed": 1,
+      "attachment": "0206B95E-04CE-4705-8122-A98FF7EA48AA.json"
+    },
+    {
+      "scope": "3516841C-BB60-464A-8181-F01C32BEF626",
+      "test": "nativeQueueResumesAfterInstallationWatchesTranscriptAndKeepsSameModelCache()",
+      "roots": 1,
+      "opened": 2,
+      "closed0": 2,
+      "removed": 1,
+      "attachment": "8A7B015A-9CE4-4CCC-9BDC-1A94FAF06E96.json"
+    },
+    {
+      "scope": "3632D435-43EC-449F-B7AA-A3B8660250DD",
+      "test": "changeBetweenBatchesStartsNewCycleAndNeverReportsOldPartialAsComplete(_:)",
+      "roots": 1,
+      "opened": 2,
+      "closed0": 2,
+      "removed": 1,
+      "attachment": "03ACF390-8FCE-4D5D-9F4E-59A1E4A0F79C.json"
+    },
+    {
+      "scope": "3844B26E-1544-4658-A7E4-91A30682A092",
+      "test": "closingOldPanelDoesNotDiscardAnotherPanelsExactPreview()",
+      "roots": 1,
+      "opened": 1,
+      "closed0": 1,
+      "removed": 1,
+      "attachment": "76F34C6C-36DE-4931-8D3E-5D0AD290DF62.json"
+    },
+    {
+      "scope": "3C7878F4-49AE-4413-91B9-80D196807FA0",
+      "test": "invalidStructuredResponseNeverPartiallyPublishes(_:)",
+      "roots": 1,
+      "opened": 1,
+      "closed0": 1,
+      "removed": 1,
+      "attachment": "A014B252-00D9-49B2-8816-EF56BA135A3D.json"
+    },
+    {
+      "scope": "3E44A3C1-CA1E-492E-A097-A68B681E22AE",
+      "test": "eventPathKeepsDeletedAliasesAndFinalSymlinkInsideWatchedPrefix()",
+      "roots": 1,
+      "opened": 0,
+      "closed0": 0,
+      "removed": 1,
+      "attachment": "DBF533E6-6B9E-4075-B08E-D779569CA04B.json"
+    },
+    {
+      "scope": "3EA00086-CF87-4553-ABD1-62B74EE6228E",
+      "test": "defaultProducerHooksRunWithoutViewsAndTranscriptDoesNotWaitForLLMOrIndexing()",
+      "roots": 1,
+      "opened": 1,
+      "closed0": 1,
+      "removed": 1,
+      "attachment": "873B5CFB-6EE0-457E-B1F9-C25287990A30.json"
+    },
+    {
+      "scope": "417FC44A-DD0A-48FD-B830-9F960E1A925A",
+      "test": "externalModelRetirementResetsOnlyDependentCoverageAndKeepsOwnBatchHistory(_:_:)",
+      "roots": 1,
+      "opened": 4,
+      "closed0": 4,
+      "removed": 1,
+      "attachment": "8E87D188-C435-41FB-BEE2-EDCA0F4E812B.json"
+    },
+    {
+      "scope": "471DE52B-2B09-43E4-A1CD-B4A2F05B4458",
+      "test": "meetingAssignmentAndConfigurationInvalidateScopeAndPendingConsent()",
+      "roots": 1,
+      "opened": 1,
+      "closed0": 1,
+      "removed": 1,
+      "attachment": "EE294E83-6E5A-4F5B-B278-AA8F21F06E6E.json"
+    },
+    {
+      "scope": "4F5A5979-3C97-4914-B376-6A9EBE7815E9",
+      "test": "invalidStructuredResponseNeverPartiallyPublishes(_:)",
+      "roots": 1,
+      "opened": 1,
+      "closed0": 1,
+      "removed": 1,
+      "attachment": "4A8D11E8-A529-4FDD-85FB-68E42EFCCC02.json"
+    },
+    {
+      "scope": "5033FC32-BF04-4D11-8E15-D9EC863C1E00",
+      "test": "actualFileMonitorReconcilesExternalAtomicAndInPlaceTranscriptChangesWithoutUI()",
+      "roots": 1,
+      "opened": 1,
+      "closed0": 1,
+      "removed": 1,
+      "attachment": "36939108-53DB-47F5-98E0-53910339E53B.json"
+    },
+    {
+      "scope": "51140F89-0226-4CA3-A1CB-9BD337791E6C",
+      "test": "invalidStructuredResponseNeverPartiallyPublishes(_:)",
+      "roots": 1,
+      "opened": 1,
+      "closed0": 1,
+      "removed": 1,
+      "attachment": "4A0F2F27-0776-4644-AC6B-949E581378F0.json"
+    },
+    {
+      "scope": "527278C7-7FE8-49DA-9B9A-D25CF90717B9",
+      "test": "ancestorManualEditFencesDeepDerivedContextButCurrentCorrectionRetainsItsOwnHistory()",
+      "roots": 1,
+      "opened": 1,
+      "closed0": 1,
+      "removed": 1,
+      "attachment": "6A529D3D-C83C-4577-8AD5-E47D6001448C.json"
+    },
+    {
+      "scope": "52C94AA9-8DBB-4599-B5EE-26A47598232D",
+      "test": "ownRetirementExemptionDoesNotHideLaterExternalRetirementOfItsPublisher()",
+      "roots": 1,
+      "opened": 2,
+      "closed0": 2,
+      "removed": 1,
+      "attachment": "41A1E453-22CD-4347-AB25-F8440678C2F0.json"
+    },
+    {
+      "scope": "53590C2E-E30C-42A0-8D79-D73C8DC08E34",
+      "test": "cancellationOfNoncooperativeTransportCannotAppendAndNewSessionRequiresNewConsent()",
+      "roots": 1,
+      "opened": 1,
+      "closed0": 1,
+      "removed": 1,
+      "attachment": "0E4F433E-ACBC-4D90-96FB-CD3409548C29.json"
+    },
+    {
+      "scope": "58986205-D3D7-42F5-B2B2-9D6BA0CE1047",
+      "test": "invalidStructuredResponseNeverPartiallyPublishes(_:)",
+      "roots": 1,
+      "opened": 1,
+      "closed0": 1,
+      "removed": 1,
+      "attachment": "1044DC84-1C06-46EC-836E-5E61080795F4.json"
+    },
+    {
+      "scope": "595896D2-56B2-4DA9-8648-23FFA6855BC3",
+      "test": "indexUpdateBridgeRunsWhileNoScreenIsOpenAndManualEventsDoNotReindex()",
+      "roots": 1,
+      "opened": 1,
+      "closed0": 1,
+      "removed": 1,
+      "attachment": "07E5297C-0AC3-4341-9B39-CEA88C71643C.json"
+    },
+    {
+      "scope": "5A518FAC-83CE-4CEE-9E67-F28927FD1B97",
+      "test": "changesAtTransportBoundaryPreventSendingOrPublishing(_:)",
+      "roots": 1,
+      "opened": 1,
+      "closed0": 1,
+      "removed": 1,
+      "attachment": "26FDFC88-90B0-45E9-B6C4-D7596C423C48.json"
+    },
+    {
+      "scope": "5D724292-14E6-48D2-A9C1-234F9908949B",
+      "test": "limitedJournalHasExplicitTerminalStateWithoutDeletionOrAutomaticRetry()",
+      "roots": 1,
+      "opened": 2,
+      "closed0": 2,
+      "removed": 1,
+      "attachment": "4E361243-22A1-4F93-9932-55D0BFA1269D.json"
+    },
+    {
+      "scope": "60C8DA1C-BB85-46A6-8A18-C31F680B0D38",
+      "test": "externalModelRetirementResetsOnlyDependentCoverageAndKeepsOwnBatchHistory(_:_:)",
+      "roots": 1,
+      "opened": 4,
+      "closed0": 4,
+      "removed": 1,
+      "attachment": "0865FBCF-C1B0-48FA-97E1-CE2F5B0CCD50.json"
+    },
+    {
+      "scope": "61747A05-A13B-40F6-9377-689D7B4E9F8B",
+      "test": "control",
+      "roots": 1,
+      "opened": 1,
+      "closed0": 1,
+      "removed": 1,
+      "attachment": "D3B8D8AB-5F6D-40D9-BFE9-7F25D9CB3BE3.json"
+    },
+    {
+      "scope": "61787046-05A7-4075-AD13-95E953CD7F88",
+      "test": "changesAtTransportBoundaryPreventSendingOrPublishing(_:)",
+      "roots": 1,
+      "opened": 1,
+      "closed0": 1,
+      "removed": 1,
+      "attachment": "8F3AF273-CD81-42D8-9025-194C38BE34F8.json"
+    },
+    {
+      "scope": "63731125-7116-4AEC-A59A-18C2A0448BF2",
+      "test": "manualDateOnlyControlsPersistCanonicalCivilDaysWithoutImportDateSubstitution()",
+      "roots": 1,
+      "opened": 1,
+      "closed0": 1,
+      "removed": 1,
+      "attachment": "35AE95A3-8BCE-48FE-9621-8B57EF30BAD2.json"
+    },
+    {
+      "scope": "63BE5D2A-392F-42C2-A8CD-0EFAEAAB5527",
+      "test": "durableQueueFenceRejectsLateTransportWithoutRelyingOnTaskCancellation(_:)",
+      "roots": 1,
+      "opened": 2,
+      "closed0": 2,
+      "removed": 1,
+      "attachment": "99C45D26-24AA-4318-903A-D20F2B8A7579.json"
+    },
+    {
+      "scope": "683DD029-8F93-449E-A2BC-2ED17C0DB4E3",
+      "test": "scopedPanelCleanupReleasesCallbackCycleAfterThrowOrCancellation(cancel:)",
+      "roots": 0,
+      "opened": 0,
+      "closed0": 0,
+      "removed": 0,
+      "attachment": "C18A861C-C4FB-4862-9101-189CD85564E8.json"
+    },
+    {
+      "scope": "72BF7080-A0CD-4834-BA18-FA224924C36D",
+      "test": "deadlineFencesAnUncooperativeCalculationBeforeRetry()",
+      "roots": 1,
+      "opened": 1,
+      "closed0": 1,
+      "removed": 1,
+      "attachment": "2B02DEE3-995C-4ABC-BE0A-5D7DC19EB319.json"
+    },
+    {
+      "scope": "774462B6-69BF-4491-A472-C55FC35BF0DF",
+      "test": "invalidStructuredResponseNeverPartiallyPublishes(_:)",
+      "roots": 1,
+      "opened": 1,
+      "closed0": 1,
+      "removed": 1,
+      "attachment": "BD5F2601-DB97-4517-8E2B-B22BE61A2871.json"
+    },
+    {
+      "scope": "78076903-AFA4-4D55-89A8-AA877C2546DD",
+      "test": "latestDisabledConfigurationWinsQueuedEnableAndBridgeStop()",
+      "roots": 1,
+      "opened": 1,
+      "closed0": 1,
+      "removed": 1,
+      "attachment": "BA639AAB-67B8-4A43-ABB2-3BD88E24D398.json"
+    },
+    {
+      "scope": "791FF154-A767-4F1B-9C46-05F8290F6E8F",
+      "test": "queueFenceRejectsSkippedChunksEvenIfCallerClaimsWholeBatch()",
+      "roots": 1,
+      "opened": 1,
+      "closed0": 1,
+      "removed": 1,
+      "attachment": "BCDFE659-F4C1-4B87-A400-B4A2F726AC7F.json"
+    },
+    {
+      "scope": "79D3C32C-6B23-4698-886D-428DB70C53E4",
+      "test": "durableQueueFenceRejectsLateTransportWithoutRelyingOnTaskCancellation(_:)",
+      "roots": 1,
+      "opened": 2,
+      "closed0": 2,
+      "removed": 1,
+      "attachment": "50EF6BA4-CC53-4925-91C9-18480FC6A0F6.json"
+    },
+    {
+      "scope": "7B512060-24A8-4634-9B83-0271AFECC132",
+      "test": "panel-cleanup-cancel-true",
+      "roots": 1,
+      "opened": 1,
+      "closed0": 1,
+      "removed": 1,
+      "attachment": "8AD5AAC5-34A2-4629-B979-40C9A20A997B.json"
+    },
+    {
+      "scope": "848F7C6C-3118-4C7B-A2F9-A1DB8B175134",
+      "test": "manualPreviewCASRejectsJournalChangeInsteadOfOverwritingIt()",
+      "roots": 1,
+      "opened": 1,
+      "closed0": 1,
+      "removed": 1,
+      "attachment": "E0957EC5-62C1-4DC1-A93E-863190FDD700.json"
+    },
+    {
+      "scope": "86D0F367-3D36-4753-81BF-9B6676D3F6AD",
+      "test": "scopedPanelCleanupReleasesCallbackCycleAfterThrowOrCancellation(cancel:)",
+      "roots": 0,
+      "opened": 0,
+      "closed0": 0,
+      "removed": 0,
+      "attachment": "2210F419-4CAA-4033-BCC6-9236621270F4.json"
+    },
+    {
+      "scope": "86ED4367-5602-4B20-8F9C-B21EB015375F",
+      "test": "longSourceCoversEveryChunkWithDurableBatchesAndNoSelfRegeneration()",
+      "roots": 1,
+      "opened": 3,
+      "closed0": 3,
+      "removed": 1,
+      "attachment": "211A0511-0B77-4890-8496-C583DF8D43A5.json"
+    },
+    {
+      "scope": "8B4EC932-48F6-47AE-8C18-1E5C20E6810A",
+      "test": "invalidStructuredResponseNeverPartiallyPublishes(_:)",
+      "roots": 1,
+      "opened": 1,
+      "closed0": 1,
+      "removed": 1,
+      "attachment": "8449F822-B454-4434-AAB2-654C192B2B2E.json"
+    },
+    {
+      "scope": "8EF9FB35-78CB-4252-B360-6F31188D4D23",
+      "test": "sequentialReadyMeetingsUpdateJournalKeepConflictDatesAndCompletionAsClaim()",
+      "roots": 1,
+      "opened": 1,
+      "closed0": 1,
+      "removed": 1,
+      "attachment": "0D1B9D35-138D-46AA-BFFC-D7EA3E31E01F.json"
+    },
+    {
+      "scope": "900E4D18-A72C-48E0-882E-95DB89086C00",
+      "test": "insufficientEvidenceNotReadyAndBudgetHaveExplicitStatesAndZeroHistory()",
+      "roots": 1,
+      "opened": 1,
+      "closed0": 1,
+      "removed": 1,
+      "attachment": "421E433D-0E78-4F29-9A41-5C9C72A9D198.json"
+    },
+    {
+      "scope": "91722AEB-D90A-462E-8DDC-C65A276B1CC9",
+      "test": "unrelatedIndexCompletionAutomaticallyRetriesSupersededPlanWithoutUserAction()",
+      "roots": 1,
+      "opened": 1,
+      "closed0": 1,
+      "removed": 1,
+      "attachment": "4E18EAD0-8F3F-4998-A3C9-F27DD03F4F91.json"
+    },
+    {
+      "scope": "9708628C-F29F-4BFD-BD05-2450A823BB53",
+      "test": "invalidBatchRollsBackJournalAndCursorWhileErrorWaitsForExplicitRetry()",
+      "roots": 1,
+      "opened": 2,
+      "closed0": 2,
+      "removed": 1,
+      "attachment": "AC160C08-2697-4C18-B92F-CC379F9BFF38.json"
+    },
+    {
+      "scope": "976BBF72-FB96-4866-9F7C-48DEB1BEE70B",
+      "test": "finalJournalTransactionRechecksModelAndForeignMemoryEvenAfterEarlierValidation(_:)",
+      "roots": 1,
+      "opened": 1,
+      "closed0": 1,
+      "removed": 1,
+      "attachment": "054CA976-D22C-4C38-B987-5301E48A91D0.json"
+    },
+    {
+      "scope": "98F0C50D-BE74-455B-9AC3-70B3272DE608",
+      "test": "rawAndDerivedOwnersBlockCloudAndOnlyExplicitPayloadLeavesAfterPolicyChange()",
+      "roots": 1,
+      "opened": 1,
+      "closed0": 1,
+      "removed": 1,
+      "attachment": "2ACF4618-5ACC-49F4-89ED-9F4E139E5174.json"
+    },
+    {
+      "scope": "992A3D18-E02D-4FA2-B38E-3679937205CF",
+      "test": "openingSavedEvidenceRequiresCurrentRuntimeAndBothSourceRevisions(change:)",
+      "roots": 1,
+      "opened": 2,
+      "closed0": 2,
+      "removed": 1,
+      "attachment": "780A7F57-FA4C-4E87-B776-45E9C17AF324.json"
+    },
+    {
+      "scope": "99EFF5B5-DC78-4901-8652-0CB109DDC3F6",
+      "test": "retirementOfTransitiveAncestorResetsCoverageEvenWhenItWasNotSelectedAsMemory()",
+      "roots": 1,
+      "opened": 2,
+      "closed0": 2,
+      "removed": 1,
+      "attachment": "5BBB8E8C-5A9A-4146-ABB6-95E4442CA383.json"
+    },
+    {
+      "scope": "99F170BB-3219-4A07-8061-7D8663AE6762",
+      "test": "everyRetryAndLateReplyRecheckAllOwnersAndForeignParentMemory()",
+      "roots": 1,
+      "opened": 1,
+      "closed0": 1,
+      "removed": 1,
+      "attachment": "87A75EF9-C029-49D1-9349-4F3C1B3CF001.json"
+    },
+    {
+      "scope": "9AA88033-8329-4005-A07D-A331D3E436F1",
+      "test": "staleIntermediateCanBeInspectedAndExplicitlyRetractedThenRawQueueRecovers()",
+      "roots": 1,
+      "opened": 2,
+      "closed0": 2,
+      "removed": 1,
+      "attachment": "33875DEB-2908-4200-AEB4-9F6637BA035E.json"
+    },
+    {
+      "scope": "9B933B1F-CE74-43DF-B269-1A6C475D8471",
+      "test": "externalModelRetirementResetsOnlyDependentCoverageAndKeepsOwnBatchHistory(_:_:)",
+      "roots": 1,
+      "opened": 4,
+      "closed0": 4,
+      "removed": 1,
+      "attachment": "858429ED-E4CA-49AA-93BA-E48E4A3D5367.json"
+    },
+    {
+      "scope": "9C0266C8-AF2C-4513-86E5-50BA0B6E6E80",
+      "test": "invalidStructuredResponseNeverPartiallyPublishes(_:)",
+      "roots": 1,
+      "opened": 1,
+      "closed0": 1,
+      "removed": 1,
+      "attachment": "4C3A0B47-0826-4141-9E3D-EF5CF829E7A9.json"
+    },
+    {
+      "scope": "9E8B0E59-E52E-4D1C-95F0-C782B7660BB2",
+      "test": "durableQueueFenceRejectsLateTransportWithoutRelyingOnTaskCancellation(_:)",
+      "roots": 1,
+      "opened": 3,
+      "closed0": 3,
+      "removed": 1,
+      "attachment": "9D0E3FA1-D940-4FA4-A924-2FCA3BAD3D68.json"
+    },
+    {
+      "scope": "9EF69219-D666-44CE-B497-E9E4ADFA65A2",
+      "test": "externalModelRetirementResetsOnlyDependentCoverageAndKeepsOwnBatchHistory(_:_:)",
+      "roots": 1,
+      "opened": 4,
+      "closed0": 4,
+      "removed": 1,
+      "attachment": "A2DAB3B6-C7B3-4321-A8A0-96D768F751F4.json"
+    },
+    {
+      "scope": "A027E381-B326-4486-91D5-5C2201C8B272",
+      "test": "changesAtTransportBoundaryPreventSendingOrPublishing(_:)",
+      "roots": 1,
+      "opened": 1,
+      "closed0": 1,
+      "removed": 1,
+      "attachment": "317FF9B3-5AD9-45BB-87B0-846A32404229.json"
+    },
+    {
+      "scope": "A3A8BE5B-6EE4-499A-840F-B1E73C4E85E6",
+      "test": "readyIndexIsAutomaticallyAssignedWithoutMeetingScreenAndStaleLinksAreRemovedUntilRecovery()",
+      "roots": 1,
+      "opened": 1,
+      "closed0": 1,
+      "removed": 1,
+      "attachment": "56C3F53D-D016-48E1-BAB1-B26A715EA470.json"
+    },
+    {
+      "scope": "A57A57C9-F9E8-4E74-9DB5-C1B629AF209E",
+      "test": "durableQueueFenceRejectsLateTransportWithoutRelyingOnTaskCancellation(_:)",
+      "roots": 1,
+      "opened": 2,
+      "closed0": 2,
+      "removed": 1,
+      "attachment": "0E579C15-5553-4D78-82DE-B3A6580D3A6E.json"
+    },
+    {
+      "scope": "A62B50FE-AB67-4F5F-A446-5B6E5A532752",
+      "test": "invalidStructuredResponseNeverPartiallyPublishes(_:)",
+      "roots": 1,
+      "opened": 1,
+      "closed0": 1,
+      "removed": 1,
+      "attachment": "2378F720-4F65-4BF0-A21E-FF3092C7F21A.json"
+    },
+    {
+      "scope": "A79AB70A-C018-44FC-984A-D0E475D827A2",
+      "test": "changesAtTransportBoundaryPreventSendingOrPublishing(_:)",
+      "roots": 1,
+      "opened": 1,
+      "closed0": 1,
+      "removed": 1,
+      "attachment": "09CC0EE0-E6F8-4383-9CE4-D0DB510D1A5F.json"
+    },
+    {
+      "scope": "A93BF819-B048-4148-A896-6E8635E679F3",
+      "test": "restartMidSourceKeepsCompletedCursorAndFencesNoncooperativeOldRun()",
+      "roots": 1,
+      "opened": 2,
+      "closed0": 2,
+      "removed": 1,
+      "attachment": "C9EFFED0-92DF-415C-A7A7-06C42E39A861.json"
+    },
+    {
+      "scope": "A9E0D162-0B8A-4287-820F-A03AA66B8F47",
+      "test": "ambiguousLegacyServiceBatchIsRetainedButCannotAuthorizeSelectedInputReplay()",
+      "roots": 1,
+      "opened": 2,
+      "closed0": 2,
+      "removed": 1,
+      "attachment": "DCE73C2E-633D-4CC4-9A89-779441F31115.json"
+    },
+    {
+      "scope": "AAC16B9E-3ABA-446D-8302-C495C5DD886D",
+      "test": "durableQueueFenceRejectsLateTransportWithoutRelyingOnTaskCancellation(_:)",
+      "roots": 1,
+      "opened": 2,
+      "closed0": 2,
+      "removed": 1,
+      "attachment": "D5DE0BBA-905D-4B29-B6D1-14D00A8CC014.json"
+    },
+    {
+      "scope": "ABFE4E7C-D539-405C-824E-FFE4C4652228",
+      "test": "discoveryHasBoundedHotWindowAndDeferredJobIsClaimableWithoutDroppingMetadata()",
+      "roots": 1,
+      "opened": 1,
+      "closed0": 1,
+      "removed": 1,
+      "attachment": "FE5C3E62-4D7E-4ACB-9470-A93446F5425C.json"
+    },
+    {
+      "scope": "AC66CB21-F652-47FF-9917-5AD46CC75625",
+      "test": "oneTimeConsentIsFreshForEachBatchAndNotRestoredAsBackgroundPermission()",
+      "roots": 1,
+      "opened": 2,
+      "closed0": 2,
+      "removed": 1,
+      "attachment": "A5E264D7-4C4D-442E-A5D1-55C61EFFB8A2.json"
+    },
+    {
+      "scope": "AD0C210D-960B-45A1-A529-6945E555D99E",
+      "test": "derivedPreviewIncludesAllOwnersButOnlySelectedTextsAndCannotOverridePrivateAncestor()",
+      "roots": 1,
+      "opened": 1,
+      "closed0": 1,
+      "removed": 1,
+      "attachment": "54B51ECE-1DB4-42D6-9DA2-2ED17B81B412.json"
+    },
+    {
+      "scope": "AD4FCCE2-98D9-4FA2-ABD7-AB7EE57391D4",
+      "test": "openingSavedEvidenceRequiresCurrentRuntimeAndBothSourceRevisions(change:)",
+      "roots": 1,
+      "opened": 1,
+      "closed0": 1,
+      "removed": 1,
+      "attachment": "7CD61A14-ED74-46C1-B4F8-53971441D596.json"
+    },
+    {
+      "scope": "AD6F8B79-739C-4CF6-B2FD-2CEB5E5BBECD",
+      "test": "consentIsRequestSessionScopedConsumedOnFailureAndReplaySurvivesRestartWithoutExtraCloud()",
+      "roots": 1,
+      "opened": 2,
+      "closed0": 2,
+      "removed": 1,
+      "attachment": "92C5FBD7-267B-4EB1-B4D3-66CE01F462F6.json"
+    },
+    {
+      "scope": "AD9588EB-CADE-40D4-AE08-7C93DD29A1D7",
+      "test": "openingSavedEvidenceRequiresCurrentRuntimeAndBothSourceRevisions(change:)",
+      "roots": 1,
+      "opened": 1,
+      "closed0": 1,
+      "removed": 1,
+      "attachment": "EEFBC964-DFC9-4553-91CE-BE70FA3A0BA9.json"
+    },
+    {
+      "scope": "AFAF1884-E6AC-472D-8C78-2377B8D87AD8",
+      "test": "durableQueueFenceRejectsLateTransportWithoutRelyingOnTaskCancellation(_:)",
+      "roots": 1,
+      "opened": 2,
+      "closed0": 2,
+      "removed": 1,
+      "attachment": "EAB98EF2-F4DD-418B-9758-848942043D10.json"
+    },
+    {
+      "scope": "B142D3FA-D118-44FF-B48D-9BB99364E7FE",
+      "test": "selectedInputChangesWithinSameFullClosureProduceNewFactsAndExactReplayAfterRestart(_:)",
+      "roots": 1,
+      "opened": 5,
+      "closed0": 5,
+      "removed": 1,
+      "attachment": "C39E6C1C-1176-4E26-9C00-4DA838AEBFD4.json"
+    },
+    {
+      "scope": "B2639E47-1B2E-4593-8A39-D4BEF2A7CF67",
+      "test": "injectedDeadlineFencesLateReplyAndDoesNotStartOverlappingAttempt()",
+      "roots": 1,
+      "opened": 1,
+      "closed0": 1,
+      "removed": 1,
+      "attachment": "65CEA72D-F8A2-415E-8E9D-60E5C50B82D5.json"
+    },
+    {
+      "scope": "BA14DC92-576E-409C-A844-83A118C473ED",
+      "test": "selectedInputChangesWithinSameFullClosureProduceNewFactsAndExactReplayAfterRestart(_:)",
+      "roots": 1,
+      "opened": 5,
+      "closed0": 5,
+      "removed": 1,
+      "attachment": "B4440027-9053-4AC2-A171-F8EF52B2E36B.json"
+    },
+    {
+      "scope": "BAC31B32-82B4-457B-ACD9-A54C5F2739A1",
+      "test": "panel-cleanup-cancel-false",
+      "roots": 1,
+      "opened": 1,
+      "closed0": 1,
+      "removed": 1,
+      "attachment": "0DD3BFFC-3B5B-4296-B909-EB55B98E7E61.json"
+    },
+    {
+      "scope": "BB8D9B4B-7B46-4FCD-A57F-136039511EB1",
+      "test": "changesAtTransportBoundaryPreventSendingOrPublishing(_:)",
+      "roots": 1,
+      "opened": 1,
+      "closed0": 1,
+      "removed": 1,
+      "attachment": "B32C4AF8-0ACB-478C-A38C-43C94437D59E.json"
+    },
+    {
+      "scope": "BEE25DD9-6812-410E-8931-7964EDDCFA14",
+      "test": "changesAtTransportBoundaryPreventSendingOrPublishing(_:)",
+      "roots": 1,
+      "opened": 2,
+      "closed0": 2,
+      "removed": 1,
+      "attachment": "840A6756-2C22-41C2-8D55-5519C820CC41.json"
+    },
+    {
+      "scope": "C16CE8CE-EBE4-47EB-8482-55B08C60EBE0",
+      "test": "invalidStructuredResponseNeverPartiallyPublishes(_:)",
+      "roots": 1,
+      "opened": 1,
+      "closed0": 1,
+      "removed": 1,
+      "attachment": "8CDD64CB-088E-464E-AB68-913CE9845199.json"
+    },
+    {
+      "scope": "C276AE18-C6D6-40FC-83C5-29E98A34B0FF",
+      "test": "actualPDFPageTwoAndConflictingClaimsRenderThenOldVersionIsRejected()",
+      "roots": 1,
+      "opened": 1,
+      "closed0": 1,
+      "removed": 1,
+      "attachment": "207AF17D-F884-45F4-AE42-1852FB336E13.json"
+    },
+    {
+      "scope": "C3199151-8048-492B-8668-6A3CC7C50BCC",
+      "test": "preexistingExactJournalBatchRecordsUnchangedDispositionWithoutSendingAgain()",
+      "roots": 1,
+      "opened": 2,
+      "closed0": 2,
+      "removed": 1,
+      "attachment": "8C339AFD-FA02-4C65-8A54-9947C7085056.json"
+    },
+    {
+      "scope": "C4569068-5300-439E-AD84-336FBBF781F7",
+      "test": "manualCorrectionAndRetractionKeepHistoryAndManualPrecedence()",
+      "roots": 1,
+      "opened": 1,
+      "closed0": 1,
+      "removed": 1,
+      "attachment": "D7FAD020-9BA6-432F-B508-347328841156.json"
+    },
+    {
+      "scope": "C79DCA1C-2334-4E2F-B6F1-08FB022F32B2",
+      "test": "cancelRetryDrainsNoncooperativeAdapterBeforeStartingNextAttempt()",
+      "roots": 1,
+      "opened": 1,
+      "closed0": 1,
+      "removed": 1,
+      "attachment": "EC17D31F-B8D1-4F74-9665-E32D721CF1EE.json"
+    },
+    {
+      "scope": "C98DB4FF-FDC3-43A1-A02C-72DEA6CC9A20",
+      "test": "workerRechecksAllOwnersBeforeEveryTransportAttempt()",
+      "roots": 1,
+      "opened": 2,
+      "closed0": 2,
+      "removed": 1,
+      "attachment": "3EE4BDD7-1441-4364-A747-506473387F06.json"
+    },
+    {
+      "scope": "CEB29DBF-5E11-4D87-877A-9D2FA3B14B78",
+      "test": "explicitReplacementRetractionAndManualPrecedenceKeepHistoryThroughActualExtractor()",
+      "roots": 1,
+      "opened": 1,
+      "closed0": 1,
+      "removed": 1,
+      "attachment": "7CAAE9C1-7A9D-403A-97ED-F3BFCEF40A51.json"
+    },
+    {
+      "scope": "CFCF11B3-F192-4CAE-9923-F893AA22FFF2",
+      "test": "manualHeadSurvivesQueuedExtractionAndOnlyAffectedJobStartsNewCycle()",
+      "roots": 1,
+      "opened": 1,
+      "closed0": 1,
+      "removed": 1,
+      "attachment": "499ADA60-4229-4CAA-9523-33F4C789A9B3.json"
+    },
+    {
+      "scope": "D1E44DE4-D48D-4CEA-9A75-0B59E08E932C",
+      "test": "changesAtTransportBoundaryPreventSendingOrPublishing(_:)",
+      "roots": 1,
+      "opened": 1,
+      "closed0": 1,
+      "removed": 1,
+      "attachment": "0DCD86EC-42EC-4485-B4BF-6B79DF929607.json"
+    },
+    {
+      "scope": "D36E3ADA-4DC8-42B8-ACA1-B2EEF75C1C77",
+      "test": "changesAtTransportBoundaryPreventSendingOrPublishing(_:)",
+      "roots": 1,
+      "opened": 1,
+      "closed0": 1,
+      "removed": 1,
+      "attachment": "B988396E-BF9C-4A6D-A009-C1E1B5368BE6.json"
+    },
+    {
+      "scope": "D761BFB6-E689-4E0F-916B-6474E50D47E5",
+      "test": "failureDoesNotStarveFollowingMeetingsAndChangedSourceAutomaticallyRetries()",
+      "roots": 1,
+      "opened": 1,
+      "closed0": 1,
+      "removed": 1,
+      "attachment": "109828DC-B98B-4366-9D99-4470921BC914.json"
+    },
+    {
+      "scope": "DC10D5A8-4901-43D0-A496-137F5D1C4C2A",
+      "test": "roundRobinDoesNotStarveShortSourceBehindManyBatches()",
+      "roots": 1,
+      "opened": 1,
+      "closed0": 1,
+      "removed": 1,
+      "attachment": "A4FDF613-9265-48F4-A917-89B3880EBE97.json"
+    },
+    {
+      "scope": "DCD93FA9-38C3-45B4-98BB-0DF9BB8AB401",
+      "test": "oldVersionSourceCannotReopenAsCurrentAndProjectChangeDropsOldSourceAction()",
+      "roots": 1,
+      "opened": 1,
+      "closed0": 1,
+      "removed": 1,
+      "attachment": "2C622DD3-0304-43DA-B8B1-22401E79C9E9.json"
+    },
+    {
+      "scope": "DE2F0F60-EC73-4AD2-908F-26A686070536",
+      "test": "readOnlyOverviewShowsConflictsClaimsAndUnknownDatesWithoutChangingGeneration()",
+      "roots": 1,
+      "opened": 2,
+      "closed0": 2,
+      "removed": 1,
+      "attachment": "DDB56B31-C6F0-41C3-A344-BE638C353519.json"
+    },
+    {
+      "scope": "DF619D20-2767-4764-B97B-F007AE838A73",
+      "test": "selectedInputChangesWithinSameFullClosureProduceNewFactsAndExactReplayAfterRestart(_:)",
+      "roots": 1,
+      "opened": 5,
+      "closed0": 5,
+      "removed": 1,
+      "attachment": "7491E848-1119-419B-BA0D-E2F7A557B923.json"
+    },
+    {
+      "scope": "E4617273-3F91-423B-AF5B-E14B53A84AFF",
+      "test": "selectedInputChangesWithinSameFullClosureProduceNewFactsAndExactReplayAfterRestart(_:)",
+      "roots": 1,
+      "opened": 5,
+      "closed0": 5,
+      "removed": 1,
+      "attachment": "60CB7C81-5BA6-4E0A-8F54-3A91EC0EED96.json"
+    },
+    {
+      "scope": "EA9DBAB7-F1D7-4F8F-8666-ECCBD35AD522",
+      "test": "allOwnerDenialCannotBeOverriddenAndFreshPreviewRequiredAfterPolicyChange()",
+      "roots": 1,
+      "opened": 1,
+      "closed0": 1,
+      "removed": 1,
+      "attachment": "4217267A-21C7-42F8-AF8D-CA6270EA2D6D.json"
+    },
+    {
+      "scope": "EBF7C126-E37D-4481-958D-39D618D8E723",
+      "test": "rawAndDerivedPrivateOwnersDenyWorkerWithoutReadingKeysOrCallingTransport()",
+      "roots": 1,
+      "opened": 1,
+      "closed0": 1,
+      "removed": 1,
+      "attachment": "A57DCB86-5204-4D8E-8F7B-62CD2326F0D1.json"
+    },
+    {
+      "scope": "EC2BD061-D368-458D-9AE9-C043CE2AE7C1",
+      "test": "changesAtTransportBoundaryPreventSendingOrPublishing(_:)",
+      "roots": 1,
+      "opened": 1,
+      "closed0": 1,
+      "removed": 1,
+      "attachment": "4804E274-466E-4CB8-801D-15E9589D2AA5.json"
+    },
+    {
+      "scope": "EEBB019F-865F-4888-B94F-DEDC2B2EBA48",
+      "test": "changesAtTransportBoundaryPreventSendingOrPublishing(_:)",
+      "roots": 1,
+      "opened": 1,
+      "closed0": 1,
+      "removed": 1,
+      "attachment": "BC26776B-1B90-4262-99A6-32D09F154C9A.json"
+    },
+    {
+      "scope": "F27A9977-3DF0-4861-A7FD-19E104C538CA",
+      "test": "closingOldSenderCannotCancelNewerRetryOfSameSource()",
+      "roots": 1,
+      "opened": 1,
+      "closed0": 1,
+      "removed": 1,
+      "attachment": "D7A8F529-0AF0-4318-8573-574F3E1F14DF.json"
+    },
+    {
+      "scope": "F5A65B86-9912-4B65-8852-56600DA558E8",
+      "test": "missingRuntimeRemovesAutomaticLinksAndRecoverySchedulesSameReadyVectorsAgain()",
+      "roots": 1,
+      "opened": 1,
+      "closed0": 1,
+      "removed": 1,
+      "attachment": "7EEDF012-4717-4F54-B882-34A78DF4AFA6.json"
+    },
+    {
+      "scope": "F7EDB079-79D8-4352-9B6F-C29510DC8165",
+      "test": "durableQueueFenceRejectsLateTransportWithoutRelyingOnTaskCancellation(_:)",
+      "roots": 1,
+      "opened": 2,
+      "closed0": 2,
+      "removed": 1,
+      "attachment": "D5AD8D3E-AF1F-4355-964F-1AE5142788F0.json"
+    },
+    {
+      "scope": "FB11FFFD-B9D1-453C-94BA-1C850FE6A16D",
+      "test": "insufficientCoveragePersistsAndRestartDoesNotAskModelAgain()",
+      "roots": 1,
+      "opened": 2,
+      "closed0": 2,
+      "removed": 1,
+      "attachment": "DC10E356-4E33-4A01-A31A-FC0A8337A21B.json"
+    },
+    {
+      "scope": "FE6D64A4-9F40-411D-941D-9B253380867F",
+      "test": "cancellationSurvivesRestartAndLateNoncooperativePublisherCannotRestoreLinks()",
+      "roots": 1,
+      "opened": 2,
+      "closed0": 2,
+      "removed": 1,
+      "attachment": "074C7213-EF14-43A9-9D8A-256CCB4A7148.json"
+    },
+    {
+      "scope": "FEEF99E3-3CDB-4CDE-BB36-431A17F8D5B9",
+      "test": "renderActualNativePanelStatesWhenExplicitlyRequested()",
+      "roots": 1,
+      "opened": 1,
+      "closed0": 1,
+      "removed": 1,
+      "attachment": "F7A1ECE8-B023-4574-9955-7ED668996DFD.json"
+    }
+  ]
+}

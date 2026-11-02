@@ -1,0 +1,33 @@
+{
+  "candidate_before": "ee48e1d1f319f29d2a54f4f3d19488f492da061f",
+  "accepted_preview": "885b41e10d3caaed42d91d935776fc79e2b5044e",
+  "accepted_pr": 57,
+  "checked_head": "bc28cf7ff9f458e9f01219b8d27c38ce7750e660",
+  "pr57_merged_api_verified": true,
+  "checked_ancestor": true,
+  "checked_to_preview_full_tree_diff_empty": true,
+  "merge": "9b29e7fb500624b3b3f78476533ab733d1525093",
+  "parents": [
+    "ee48e1d1f319f29d2a54f4f3d19488f492da061f",
+    "885b41e10d3caaed42d91d935776fc79e2b5044e"
+  ],
+  "panel_production_and_tests_unchanged": true,
+  "old_artifact_hashes_verified": true,
+  "unaccepted_58_included": false,
+  "source_sha256": {
+    "golos-meet/Core/Knowledge/MemoryPanelReadStore.swift": "216c71801b8b65a31f4203c8f98bbf6e6ee7ac4384a184ba5ae9700325340bef",
+    "golos-meet/Core/Knowledge/MemoryQueueStore.swift": "47e64dcfb39b381c582f8ed19ec1f55e262f07c890bda9ebc1d70377cae3ac65",
+    "golos-meet/Core/Knowledge/ProjectMemoryQueueWorker.swift": "aa3ed2d30cb36ee1c10b31cedc56fd5d04d829e8e881bd27eff6dcbcd5bf43ac",
+    "golos-meet/UI/Meetings/MeetingDetailView.swift": "3f17f3188eb48f7f5ebe4421a2314fcce611cf7bed2cb1f1000fa206392be059",
+    "golos-meet/UI/Meetings/MeetingsScreen.swift": "edab3d5f50ace1909c542e8ea060fb489b3a667ffac328765b74c8a886d45339",
+    "golos-meet/UI/Projects/ProductionMemoryPanel.swift": "31471c271436790a1dba8338521775a792516c08b0761965923d9edff708a21e",
+    "golos-meet/UI/Projects/ProjectMemoryPanel.swift": "c8aa0c2b22370e85d2c10b0a893854ad1b1bde4d824e3dbbf3954de32a834ddc",
+    "golos-meet/UI/Projects/ProjectMemoryPanelModel.swift": "3410f615319797b8eb9dbb36df21d0c06786a1c1a6d853d771bfaaa3b8f693d0",
+    "golos-meetTests/ProjectMemoryPanelTests.swift": "eced48062ee1290960e0de2090eb35da069b71ca100c8f63412dc2ddca052e2a",
+    "golos-meetTests/TestHostIsolationTests.swift": "ea94ba21bfa3b227945f4f4b125d1eed69b3cb2a8b1e37c84203b5ad2e032b19",
+    "research/MemoryPanelPreview.swift": "f3d61d4c6b452d6e08b3b758d8664db0662e339ba4456bdad8d1aef1c021cc9f",
+    "research/build_memory_panel_preview.py": "c31bba2d442d69e03090a076b7f777b039781ceda447fefeac9efe90018d4d67",
+    "golos-meet/Core/Knowledge/LocalDocumentExtractor.swift": "7d1feaf7ca612d69926f2c35252f7f250845fc022486c2de3a7ab0c87a2c9c7a",
+    "golos-meetTests/LocalDocumentExtractorTests.swift": "4fedea02e6e0116f790bc6f7016882e6544ee8ee96e7ba0919994f19a89f2d86"
+  }
+}

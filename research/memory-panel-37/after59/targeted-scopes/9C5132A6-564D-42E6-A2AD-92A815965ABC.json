@@ -1,0 +1,11 @@
+[
+  {
+    "stage" : "scope-created",
+    "test" : "scopedPanelCleanupReleasesCallbackCycleAfterThrowOrCancellation(cancel:)",
+    "uptime" : "335881.9694940417"
+  },
+  {
+    "stage" : "body-finished",
+    "uptime" : "335882.126027875"
+  }
+]

@@ -1,0 +1,46 @@
+[
+  {
+    "stage" : "scope-created",
+    "test" : "oldVersionSourceCannotReopenAsCurrentAndProjectChangeDropsOldSourceAction()",
+    "uptime" : "335881.9692746667"
+  },
+  {
+    "root" : "memory-update-1A01336C-372E-4103-9DAE-09573571D695",
+    "stage" : "root-owned",
+    "uptime" : "335881.971505875"
+  },
+  {
+    "stage" : "store-owned",
+    "uptime" : "335881.97151933337"
+  },
+  {
+    "connection" : "29CB1A53-B646-465E-A0E5-4EF3C8A380D6",
+    "root" : "memory-update-1A01336C-372E-4103-9DAE-09573571D695",
+    "stage" : "opened",
+    "uptime" : "335881.97179025004"
+  },
+  {
+    "stage" : "update-callbacks-released",
+    "uptime" : "335882.13987920835"
+  },
+  {
+    "connection" : "29CB1A53-B646-465E-A0E5-4EF3C8A380D6",
+    "result" : "0",
+    "stage" : "closed",
+    "uptime" : "335882.13999312505"
+  },
+  {
+    "stage" : "body-finished",
+    "uptime" : "335882.14002391667"
+  },
+  {
+    "stage" : "panel-scope-stop-requested",
+    "uptime" : "335882.140047"
+  },
+  {
+    "exists" : "false",
+    "root" : "memory-update-1A01336C-372E-4103-9DAE-09573571D695",
+    "stage" : "root-removed",
+    "uptime" : "335882.14148650004"
+  }
+]

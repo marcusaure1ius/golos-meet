@@ -1,0 +1,17 @@
+{"milliseconds":0.3055832930840552,"extended":0,"strictPool":false,"name":"acquire","result":0}
+{"executor":"624BC565-3D1A-4AD8-92C8-D4EF937767DA","milliseconds":0.5046249716542661,"strictPool":false,"name":"first-task-start"}
+{"name":"second-task-start","milliseconds":0.855624966789037,"strictPool":false,"executor":"CDF9470F-65B2-4EFD-AA7D-E248CBEA3D89"}
+{"milliseconds":651.7857916187495,"executor":"624BC565-3D1A-4AD8-92C8-D4EF937767DA","name":"first-snapshot-call","strictPool":false}
+{"executor":"624BC565-3D1A-4AD8-92C8-D4EF937767DA","name":"first-sqlite-begin","connection":"E999DB2D-4579-43E0-B879-F03D66A87C37","strictPool":false,"milliseconds":652.0852916291915}
+{"executor":"CDF9470F-65B2-4EFD-AA7D-E248CBEA3D89","strictPool":false,"name":"second-snapshot-call","milliseconds":903.953458298929}
+{"strictPool":false,"name":"second-sqlite-begin","milliseconds":904.3946249876171,"executor":"CDF9470F-65B2-4EFD-AA7D-E248CBEA3D89","connection":"23EF852D-0CC6-4A16-9CFE-95F70BB753C3"}
+{"strictPool":false,"name":"schedule","milliseconds":905.15049995156,"scheduledMilliseconds":1405.1495416206308}
+{"milliseconds":1415.3217083076015,"strictPool":false,"name":"release-start"}
+{"milliseconds":1415.4191249981523,"strictPool":false,"lockState":2,"name":"release-lock-before","result":0}
+{"milliseconds":1415.612833283376,"result":0,"strictPool":false,"name":"rollback-result","extended":0}
+{"milliseconds":1415.6603332958184,"strictPool":false,"lockState":0,"name":"release-lock-after","result":0}
+{"milliseconds":1415.7224583323114,"result":0,"strictPool":false,"name":"close-result"}
+{"name":"first-success","milliseconds":1492.5958749954589,"strictPool":false,"executor":"624BC565-3D1A-4AD8-92C8-D4EF937767DA"}
+{"name":"second-success","milliseconds":1615.624999976717,"executor":"CDF9470F-65B2-4EFD-AA7D-E248CBEA3D89","strictPool":false}
+{"strictPool":false,"name":"executors-joined","milliseconds":2269.533958286047}
+{"milliseconds":2269.631416653283,"name":"joined","strictPool":false}

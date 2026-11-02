@@ -1,0 +1,9 @@
+{
+  "status": "blocked",
+  "observations": 2,
+  "operation": "cua.getState initial; cua.listApps bounded recheck",
+  "error": "The Mac is locked and automatic unlock could not unlock it. Ask the user to unlock the Mac manually before continuing.",
+  "required": "Пользователь вручную разблокирует Mac",
+  "app_launched": false,
+  "interactive_pass": false
+}

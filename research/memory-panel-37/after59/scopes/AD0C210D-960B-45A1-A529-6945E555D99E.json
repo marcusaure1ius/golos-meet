@@ -1,0 +1,46 @@
+[
+  {
+    "stage" : "scope-created",
+    "test" : "derivedPreviewIncludesAllOwnersButOnlySelectedTextsAndCannotOverridePrivateAncestor()",
+    "uptime" : "336002.14922608336"
+  },
+  {
+    "root" : "memory-update-92309450-6B7A-4191-845E-7EF6D39B3B54",
+    "stage" : "root-owned",
+    "uptime" : "336002.310394875"
+  },
+  {
+    "stage" : "store-owned",
+    "uptime" : "336002.31042600004"
+  },
+  {
+    "connection" : "F950103D-EECE-4538-AAB2-836C25763339",
+    "root" : "memory-update-92309450-6B7A-4191-845E-7EF6D39B3B54",
+    "stage" : "opened",
+    "uptime" : "336002.32391808333"
+  },
+  {
+    "stage" : "update-callbacks-released",
+    "uptime" : "336008.25915654167"
+  },
+  {
+    "connection" : "F950103D-EECE-4538-AAB2-836C25763339",
+    "result" : "0",
+    "stage" : "closed",
+    "uptime" : "336008.2593745"
+  },
+  {
+    "stage" : "body-finished",
+    "uptime" : "336008.25940820837"
+  },
+  {
+    "stage" : "panel-scope-stop-requested",
+    "uptime" : "336008.47863612504"
+  },
+  {
+    "exists" : "false",
+    "root" : "memory-update-92309450-6B7A-4191-845E-7EF6D39B3B54",
+    "stage" : "root-removed",
+    "uptime" : "336008.480067375"
+  }
+]

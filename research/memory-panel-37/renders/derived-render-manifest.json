@@ -1,0 +1,18 @@
+[
+  {
+    "derived" : 1,
+    "fake_calls" : 0,
+    "file" : "derived-context-light.png",
+    "owners" : 2,
+    "raw" : 1,
+    "sha256" : "0ce1108bd3ffba7b1a30fa2f4ca015833557bdc1280f19cf8a1bf12f0c0b54f0"
+  },
+  {
+    "derived" : 1,
+    "fake_calls" : 0,
+    "file" : "derived-context-dark.png",
+    "owners" : 2,
+    "raw" : 1,
+    "sha256" : "aa1891d42a08b37b6b3d581a9854742b3fd45d358dc95a774d336f8bb8b13886"
+  }
+]
