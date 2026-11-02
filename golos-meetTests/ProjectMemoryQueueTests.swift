@@ -247,13 +247,35 @@ private actor QueueDeadlineClock {
         let f = try QueueFixture(); let p = try await f.base.project()
         let center = NotificationCenter()
         let bridge = KnowledgeMemoryQueue(worker:f.worker,center:center,model:"fake-only")
-        SQLiteFixtureScope.current?.note("metadata-bridge-start")
-        bridge.start(); try await f.until("metadata bridge initial snapshot") { f.worker.snapshot().revision > 0 }
-        SQLiteFixtureScope.current?.note("metadata-bridge-initial-snapshot")
-        try await f.meeting("late",count:1,owners:[p])
-        KnowledgeIndexEvents.post(.meeting("late"),center:center)
-        try await f.until("metadata bridge ready-source coverage") { try await f.base.store.memoryQueueSnapshot().jobs.first { $0.source.externalID == "late" }?.completeCoverage == true }
-        SQLiteFixtureScope.current?.note("metadata-bridge-complete")
+        let started = ContinuousClock.now
+        var phase = "initial snapshot"
+        do {
+            SQLiteFixtureScope.current?.note("metadata-bridge-start")
+            bridge.start(); try await f.until("metadata bridge initial snapshot") { f.worker.snapshot().revision > 0 }
+            SQLiteFixtureScope.current?.note("metadata-bridge-initial-snapshot")
+            phase = "ready-source coverage"
+            try await f.meeting("late",count:1,owners:[p])
+            KnowledgeIndexEvents.post(.meeting("late"),center:center)
+            try await f.until("metadata bridge ready-source coverage") { try await f.base.store.memoryQueueSnapshot().jobs.first { $0.source.externalID == "late" }?.completeCoverage == true }
+            SQLiteFixtureScope.current?.note("metadata-bridge-complete")
+        } catch {
+            func snapshot(_ value: MemoryQueueSnapshot) -> [String: Any] {
+                ["revision": value.revision, "message": value.message ?? "", "jobs": value.jobs.map {
+                    ["source": $0.source.rawValue, "state": $0.state.rawValue, "generation": $0.generation,
+                     "cycle": $0.cycle, "completed": String($0.completedChunks), "total": String($0.totalChunks)]
+                }]
+            }
+            var report: [String: Any] = ["phase": phase, "elapsed": String(describing: started.duration(to: .now)),
+                "error": String(describing: error), "calls": f.base.spy.calls,
+                "worker": snapshot(f.worker.snapshot()), "bridge": snapshot(bridge.snapshot),
+                "configuration": ["enabled": "true", "model": "fake-only", "startRequested": "true"],
+                "startAcknowledgement": "Not exposed; revision > 0 is not a readiness acknowledgement"]
+            if let durable = try? await f.base.store.memoryQueueSnapshot() { report["durable"] = snapshot(durable) }
+            if let data = try? JSONSerialization.data(withJSONObject: report, options: [.prettyPrinted, .sortedKeys]) {
+                Attachment.record(data, named: "metadata-bridge-failure.json")
+            }
+            throw error
+        }
         #expect(f.base.spy.calls == 1)
         bridge.stop(); await f.cleanup()
     }

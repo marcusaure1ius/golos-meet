@@ -15,7 +15,8 @@ import Testing
         worker = .init(store:base.store,meetingsRoot:base.root.appendingPathComponent("meetings"),documentsRoot:base.root.appendingPathComponent("copies"),client:base.spy,model:"fake-only")
         model = .init(store:base.store,worker:worker,meetingsRoot:base.root.appendingPathComponent("meetings"),documentsRoot:base.root.appendingPathComponent("copies"))
         let base = base
-        base.spy.afterAttempt = { _ in
+        base.spy.afterAttempt = { [weak base] _ in
+            guard let base else { return }
             let json = try #require(try JSONSerialization.jsonObject(with:Data(base.spy.payload.utf8)) as? [String:Any])
             let fragments = try #require(json["fragments"] as? [[String:Any]])
             let text = try #require(fragments.first?["text"] as? String)
@@ -28,6 +29,22 @@ import Testing
             }
             base.spy.reply = try base.response(facts)
         }
+        // Independent weak captures still reach base when a callback keeps only
+        // base alive, or when an overridden callback captures the whole fixture.
+        // Do not wait here for a gated adapter: scope release hooks run next,
+        // then native close is witnessed before root removal by the trait.
+        let worker = worker, model = model
+        SQLiteFixtureScope.current?.onFinish { @MainActor [weak base, weak worker, weak model] in
+            model?.close(); base?.cleanup()
+            await worker?.stop()
+            SQLiteFixtureScope.current?.note("panel-scope-stop-requested")
+        }
+    }
+    func releaseOnFinish(_ gate: IndexGate) {
+        SQLiteFixtureScope.current?.onFinish { await gate.signal() }
+    }
+    func track(_ panel: ProjectMemoryPanelModel) {
+        SQLiteFixtureScope.current?.onFinish { @MainActor [weak panel] in panel?.close() }
     }
     func open(_ project: UUID) async throws { model.projectID = project; try await settle() }
     func settle(_ selected:ProjectMemoryPanelModel? = nil) async throws {
@@ -43,7 +60,7 @@ import Testing
     func cleanup() async { model.close(); await worker.stop(); await worker.waitUntilIdle(); base.cleanup() }
 }
 
-@MainActor @Suite struct ProjectMemoryPanelTests {
+@MainActor @Suite(SQLiteFixtureTrait()) struct ProjectMemoryPanelTests {
     @Test func readOnlyOverviewShowsConflictsClaimsAndUnknownDatesWithoutChangingGeneration() async throws {
         let f = try MemoryPanelFixture(), p = try await f.base.project()
         try await f.base.meeting("one",text:"Релиз 2026-11-26",owners:[p])
@@ -188,6 +205,7 @@ import Testing
         let f = try MemoryPanelFixture(), p = try await f.base.project(policy:.askEveryTime), q = try await f.base.project("Пустой")
         let doc = try await f.base.document(owners:[p]), entered = IndexGate(), release = IndexGate()
         let original = f.base.spy.afterAttempt
+        f.releaseOnFinish(release)
         f.base.spy.afterAttempt = { attempt in try await original?(attempt); await entered.signal(); await release.wait() }
         await f.worker.start(); await f.worker.waitUntilIdle(); try await f.open(p)
         f.model.prepare(try await f.job(doc.uuidString)); try await f.settle(); f.model.send(); await entered.wait()
@@ -273,6 +291,85 @@ import Testing
     }
 }
 
+@MainActor private final class PanelCleanupWitness {
+    weak var fixture: MemoryPanelFixture?
+    weak var base: UpdateFixture?
+    weak var model: ProjectMemoryPanelModel?
+    weak var worker: ProjectMemoryQueueWorker?
+    weak var store: ProjectStore?
+    // Keeping the spy alive makes callback release observable independently of
+    // fixture deinit. It must not retain a store after scoped cleanup.
+    var spy: MemoryTransportSpy?
+    var root: URL?
+}
+private enum PanelFixtureBodyFailure: Error, Equatable { case intentional }
+
+@MainActor extension ProjectMemoryPanelTests {
+    private func leaveActivePanelWithoutSuccessCleanup(cancel: Bool, witness: PanelCleanupWitness) async throws {
+        let f = try MemoryPanelFixture(), project = try await f.base.project(policy: .askEveryTime)
+        let document = try await f.base.document(owners: [project])
+        witness.fixture = f; witness.base = f.base; witness.model = f.model
+        witness.worker = f.worker; witness.store = f.base.store
+        witness.spy = f.base.spy; witness.root = f.base.root
+        let entered = IndexGate(), release = IndexGate(), original = f.base.spy.afterAttempt
+        f.releaseOnFinish(release)
+        // Deliberate fixture -> spy -> callback -> fixture cycle, with a real
+        // caller-owned approval suspended inside the noncooperative adapter.
+        f.base.spy.afterAttempt = { [f] attempt in
+            try await original?(attempt); await entered.signal(); await release.wait()
+            #expect(f.base.spy.calls == 1)
+        }
+        await f.worker.start(); await f.worker.waitUntilIdle()
+        f.model.start(); try await f.open(project)
+        f.model.prepare(try await f.job(document.uuidString)); try await f.settle()
+        f.model.send(); await entered.wait()
+        if cancel {
+            withUnsafeCurrentTask { $0?.cancel() }
+            try Task.checkCancellation()
+        }
+        throw PanelFixtureBodyFailure.intentional
+    }
+
+    @Test(arguments: [false, true])
+    func scopedPanelCleanupReleasesCallbackCycleAfterThrowOrCancellation(cancel: Bool) async throws {
+        let scope = SQLiteFixtureScope(test: "panel-cleanup-cancel-\(cancel)")
+        let witness = PanelCleanupWitness()
+        try await SQLiteFixtureScope.$current.withValue(scope) {
+            try await ProjectDatabase.$lifecycleObserver.withValue({ scope.observe($0) }) {
+                // Cancellation belongs to the child body; teardown runs in the
+                // live parent, so its native-close wait cannot be cancelled.
+                let body = Task { @MainActor in
+                    try await leaveActivePanelWithoutSuccessCleanup(cancel: cancel, witness: witness)
+                }
+                let outcome = await body.result
+                if cancel {
+                    #expect(body.isCancelled)
+                    if case .failure(let error) = outcome { #expect(error is CancellationError) }
+                    else { Issue.record("Cancelled panel body unexpectedly succeeded") }
+                } else {
+                    #expect(throws: PanelFixtureBodyFailure.intentional) { try outcome.get() }
+                }
+                let root = try #require(witness.root)
+                #expect(witness.fixture != nil && witness.spy?.afterAttempt != nil)
+                #expect(FileManager.default.fileExists(atPath: root.path))
+                scope.note("panel-body-error-observed")
+                try await scope.finish()
+                #expect(witness.fixture == nil && witness.base == nil && witness.model == nil)
+                #expect(witness.worker == nil && witness.store == nil)
+                #expect(witness.spy?.afterAttempt == nil && witness.spy?.beforeAttempt == nil && witness.spy?.calls == 1)
+                #expect(!FileManager.default.fileExists(atPath: root.path))
+                let trace = scope.trace
+                let closes = trace.filter { $0["stage"] == "closed" }
+                #expect(!closes.isEmpty && closes.allSatisfy { $0["result"] == "0" })
+                #expect(!trace.contains { $0["stage"] == "sqlite-failure" || $0["stage"] == "teardown-timeout" })
+                let close = try #require(trace.lastIndex { $0["stage"] == "closed" })
+                let removed = try #require(trace.firstIndex { $0["stage"] == "root-removed" })
+                #expect(close < removed)
+            }
+        }
+    }
+}
+
 @MainActor extension ProjectMemoryPanelTests {
     @Test func actualQueuePartialFailureRetryInsufficientAndNativeStateRenders() async throws {
         let f = try MemoryPanelFixture(), p = try await f.base.project(policy:.askEveryTime)
@@ -304,6 +401,7 @@ import Testing
         #expect(try await f.job("long").completedChunks == 12 && f.base.spy.calls == 1)
         try capture("partial-consent")
         let entered = IndexGate(), release = IndexGate(), original = f.base.spy.afterAttempt
+        f.releaseOnFinish(release)
         f.base.spy.afterAttempt = { i in try await original?(i); await entered.signal(); await release.wait() }
         f.base.spy.failure = URLError(.notConnectedToInternet)
         f.model.prepare(try await f.job("long")); try await f.settle(); f.model.send(); await entered.wait()
@@ -454,6 +552,7 @@ import Testing
         await f.worker.start(); await f.worker.waitUntilIdle(); try await f.open(p)
         f.model.prepare(try await f.job(a.uuidString)); try await f.settle(); let old = try #require(f.model.request)
         let other = ProjectMemoryPanelModel(store:f.base.store,worker:f.worker,meetingsRoot:f.base.root.appendingPathComponent("meetings"),documentsRoot:f.base.root.appendingPathComponent("copies"),projectID:q)
+        f.track(other)
         other.reload(); try await f.settle(other)
         other.prepare(try #require(other.queue.jobs.first { $0.source.externalID == b.uuidString })); try await f.settle(other)
         let current = try #require(other.request)
@@ -470,6 +569,7 @@ import Testing
         try await f.base.meeting("current",text:"Релиз 2026-11-26",owners:[p])
         let center = NotificationCenter(), configuration = PassthroughSubject<(Bool,String),Never>()
         let panel = ProjectMemoryPanelModel(store:f.base.store,worker:f.worker,meetingsRoot:f.base.root.appendingPathComponent("meetings"),documentsRoot:f.base.root.appendingPathComponent("copies"),meetingID:"current",center:center,configuration:configuration.eraseToAnyPublisher())
+        f.track(panel)
         await f.worker.start(); await f.worker.waitUntilIdle(); panel.start(); try await f.settle(panel)
         #expect(panel.projectID == p && panel.allowedProjects == [p])
         try await f.base.store.assignMeeting("current",to:[q]); await f.worker.changed(); await f.worker.waitUntilIdle()
@@ -492,6 +592,7 @@ import Testing
     @Test func closingOldSenderCannotCancelNewerRetryOfSameSource() async throws {
         let f = try MemoryPanelFixture(), p = try await f.base.project(policy:.askEveryTime)
         let doc = try await f.base.document(owners:[p]), entered = IndexGate(), release = IndexGate(), original = f.base.spy.afterAttempt
+        f.releaseOnFinish(release)
         f.base.spy.afterAttempt = { i in try await original?(i); if f.base.spy.calls == 1 { await entered.signal(); await release.wait() } }
         await f.worker.start(); await f.worker.waitUntilIdle(); try await f.open(p)
         f.model.prepare(try await f.job(doc.uuidString)); try await f.settle(); f.model.send(); await entered.wait()
