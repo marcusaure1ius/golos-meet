@@ -12,10 +12,25 @@ import Testing
         try await dispatch(messages)
     }
     private func dispatch(_ messages: [ChatMessage]) async throws -> String {
+        let scope = SQLiteFixtureScope.current
+        scope?.note("question-ui-transport-enter")
+        defer { scope?.note("question-ui-transport-returned") }
         calls += 1; payload = messages.last?.content ?? ""
         await waitAfterSend?()
         if let failure { throw failure }
         return reply
+    }
+}
+
+/// Owned separately from the fixture: a cancelled model task may outlive it.
+@MainActor private final class QuestionUICleanup {
+    struct WeakSession { weak var value: KnowledgeQuestionService? }
+    var sessions: [WeakSession] = []
+    private var releases: [IndexGate] = []
+    func own(_ gate: IndexGate) { releases.append(gate) }
+    func releaseHeldOperations() async {
+        let owned = releases; releases = []
+        for gate in owned { await gate.signal() }
     }
 }
 
@@ -27,20 +42,46 @@ import Testing
     let search: KnowledgeSearchService
     let spy = UIQuestionCompleter()
     let model: KnowledgeQuestionModel
+    let resources = QuestionUICleanup()
     init(query: @escaping KnowledgeSearchService.QueryEmbedding = { _ in throw LocalIndexingError.missingModel }, center: NotificationCenter? = nil) throws {
         root = FileManager.default.temporaryDirectory.appendingPathComponent("questions-ui-\(UUID())")
         try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
+        let scope = try #require(SQLiteFixtureScope.current)
+        scope.register(root: root)
         store = ProjectStore(url: root.appendingPathComponent("knowledge.sqlite"))
+        scope.register(store: store)
         projects = ProjectLibrary(store: store)
         importer = DocumentImporter(store: store, root: root.appendingPathComponent("copies"))
-        search = KnowledgeSearchService(store: store, meetingsRoot: root.appendingPathComponent("meetings"), documentsRoot: root.appendingPathComponent("copies"), queryEmbedding: query)
-        let store = store, search = search, root = root, spy = spy
+        search = KnowledgeSearchService(store: store, meetingsRoot: root.appendingPathComponent("meetings"), documentsRoot: root.appendingPathComponent("copies"), queryEmbedding: { text in
+            scope.note("question-ui-retrieval-enter")
+            defer { scope.note("question-ui-retrieval-returned") }
+            return try await query(text)
+        })
+        let store = store, search = search, root = root, spy = spy, resources = resources
         model = KnowledgeQuestionModel(center: center) {
-            KnowledgeQuestionService(store: store, search: search, meetingsRoot: root.appendingPathComponent("meetings"),
+            let service = KnowledgeQuestionService(store: store, search: search, meetingsRoot: root.appendingPathComponent("meetings"),
                 documentsRoot: root.appendingPathComponent("copies"), client: spy, model: "synthetic")
+            resources.sessions.append(.init(value: service))
+            return service
+        }
+        let model = model
+        scope.onFinish { @MainActor [weak model, weak spy, weak scope] in
+            model?.cancel(); spy?.waitAfterSend = nil
+            scope?.note("question-ui-cancel-and-callback-release")
+            await resources.releaseHeldOperations()
+            scope?.note("question-ui-held-gates-released")
         }
     }
-    func cleanup() { model.cancel(); try? FileManager.default.removeItem(at: root) }
+    func cleanup() {
+        model.cancel(); spy.waitAfterSend = nil
+        SQLiteFixtureScope.current?.note("question-ui-cancel-and-callback-release")
+    }
+    func ownRelease(_ gate: IndexGate) { resources.own(gate) }
+    func reopenedStore() -> ProjectStore {
+        let reopened = ProjectStore(url: root.appendingPathComponent("knowledge.sqlite"))
+        SQLiteFixtureScope.current?.register(store: reopened)
+        return reopened
+    }
     func setup(policy: ProjectCloudPolicy = .askEveryTime, sharedPolicy: ProjectCloudPolicy? = nil) async throws -> UUID {
         let p = try await store.createProject(name: "Север")
         try await store.setCloudPolicy(policy, for: p.id)
@@ -62,7 +103,7 @@ import Testing
     }
 }
 
-@MainActor @Suite struct KnowledgeQuestionModelTests {
+@MainActor @Suite(SQLiteFixtureTrait()) struct KnowledgeQuestionModelTests {
     @Test func actualModelPreparesLocallyThenExplicitConsentSendsAndSourceOpensWithoutAutoplay() async throws {
         let f = try QuestionUIFixture(); defer { f.cleanup() }
         let p = try await f.setup()
@@ -94,7 +135,7 @@ import Testing
         #expect(f.model.request?.approvalProjectIDs == [other.id])
         f.model.send(); try await f.settle()
         #expect(f.spy.calls == 1 && f.model.phase == .answered)
-        #expect(try await ProjectStore(url: f.root.appendingPathComponent("knowledge.sqlite")).snapshot().projects.first { $0.id == other.id }?.cloudPolicy == .askEveryTime)
+        #expect(try await f.reopenedStore().snapshot().projects.first { $0.id == other.id }?.cloudPolicy == .askEveryTime)
     }
 
     @Test func longQuestionIsKeptWholeAndExplicitShortSearchIsRequiredLocally() async throws {
@@ -119,6 +160,7 @@ import Testing
         let f = try QuestionUIFixture(); defer { f.cleanup() }
         _ = try await f.setup()
         let entered = IndexGate(), release = IndexGate()
+        f.ownRelease(release)
         f.spy.waitAfterSend = { await entered.signal(); await release.wait() }
         f.model.prepare(); try await f.settle(); f.model.send(); await entered.wait()
         switch action {
@@ -139,6 +181,7 @@ import Testing
         let entered = IndexGate(), release = IndexGate(), center = NotificationCenter()
         let f = try QuestionUIFixture(query: { _ in await entered.signal(); await release.wait(); throw LocalIndexingError.missingModel }, center: center)
         defer { f.cleanup() }
+        f.ownRelease(release)
         _ = try await f.setup()
         try await f.store.activateEmbeddingModel(.init(id: "synthetic", dimensions: 2))
         f.model.prepare(); await entered.wait()
@@ -189,5 +232,120 @@ import Testing
         f.model.open("S1"); try await f.settle()
         #expect(f.model.result == nil && f.model.destination == nil && f.model.notice?.kind == .stale)
         #expect(f.spy.calls == 1)
+    }
+}
+
+@MainActor private final class QuestionUIWitness {
+    weak var fixture: QuestionUIFixture?
+    weak var model: KnowledgeQuestionModel?
+    weak var spy: UIQuestionCompleter?
+    weak var store: ProjectStore?
+    var resources: QuestionUICleanup?
+    var root: URL?
+    func track(_ fixture: QuestionUIFixture) {
+        self.fixture = fixture; model = fixture.model; spy = fixture.spy; store = fixture.store
+        resources = fixture.resources; root = fixture.root
+    }
+    func lateWrite(_ scope: SQLiteFixtureScope) async {
+        scope.note("question-ui-late-write-enter")
+        #expect(root.map { FileManager.default.fileExists(atPath: $0.path) } == true)
+        do {
+            let store = try #require(store)
+            _ = try await store.createProject(name: "Synthetic noncooperative late write")
+            #expect(try await store.snapshot().projects.count == 2)
+            scope.note("question-ui-late-write-finished")
+        } catch { Issue.record(error) }
+    }
+}
+
+@MainActor @Suite struct QuestionUIFixtureLifecycleTests {
+    private enum BodyError: Error { case sentinel }
+    private func heldBody(kind: String, exit: String, scope: SQLiteFixtureScope, witness: QuestionUIWitness,
+                          entered: IndexGate, release: IndexGate, tail: IndexGate) async throws {
+        let f: QuestionUIFixture
+        if kind == "query" {
+            f = try QuestionUIFixture(query: { _ in
+                await entered.signal(); await release.wait()
+                await witness.lateWrite(scope)
+                await tail.wait()
+                throw LocalIndexingError.missingModel
+            }, center: NotificationCenter())
+        } else { f = try QuestionUIFixture(center: NotificationCenter()) }
+        witness.track(f); f.ownRelease(release)
+        _ = try await f.setup()
+        let reopened = f.reopenedStore()
+        #expect(try await reopened.snapshot().projects.count == 1)
+        if kind == "query" {
+            try await f.store.activateEmbeddingModel(.init(id: "synthetic", dimensions: 2))
+            f.model.prepare()
+        } else {
+            // Deliberate fixture→spy→callback→fixture cycle; the running call
+            // keeps its copy after cleanup clears the stored callback.
+            f.spy.waitAfterSend = { [f] in
+                await entered.signal(); await release.wait()
+                await witness.lateWrite(scope)
+                await tail.wait()
+                #expect(f.model.result == nil)
+            }
+            f.model.prepare(); try await f.settle(); f.model.send()
+        }
+        await entered.wait()
+        if exit == "cancel" { withUnsafeCurrentTask { $0?.cancel() }; try Task.checkCancellation() }
+        if exit == "throw" { throw BodyError.sentinel }
+        // No end-of-success cleanup here: onFinish must handle all three exits.
+    }
+    @Test(arguments: ["response", "query"], ["return", "throw", "cancel"])
+    func heldNoncooperativeOperationsAndCallbackCyclesFinishBeforeUnlink(kind: String, exit: String) async throws {
+        let scope = SQLiteFixtureScope(test: "question-ui-held-\(kind)-\(exit)"), witness = QuestionUIWitness()
+        let entered = IndexGate(), release = IndexGate(), tail = IndexGate()
+        try await SQLiteFixtureScope.$current.withValue(scope) {
+            try await ProjectDatabase.$lifecycleObserver.withValue({ scope.observe($0) }) {
+                let result = await Task { () -> Result<Void, any Error> in
+                    do { try await heldBody(kind: kind, exit: exit, scope: scope, witness: witness, entered: entered, release: release, tail: tail); return .success(()) }
+                    catch { return .failure(error) }
+                }.value
+                let root = try #require(witness.root)
+                let cleanup = Task { try await scope.finish() }
+                let deadline = ContinuousClock.now + .seconds(3)
+                while !scope.trace.contains(where: { $0["stage"] == "question-ui-late-write-finished" }), ContinuousClock.now < deadline { await Task.yield() }
+                #expect(scope.trace.contains { $0["stage"] == "question-ui-late-write-finished" })
+                #expect(FileManager.default.fileExists(atPath: root.path))
+                #expect(!scope.trace.contains { $0["stage"] == "root-removed" })
+                #expect(witness.model != nil && witness.model?.busy == false && witness.model?.result == nil)
+                #expect(witness.resources?.sessions.contains { $0.value != nil } == true)
+                #expect(scope.trace.filter { $0["stage"] == "opened" }.count == 2)
+                #expect(scope.trace.filter { $0["stage"] == "closed" }.count == 1)
+                await tail.signal(); try await cleanup.value
+                #expect(!FileManager.default.fileExists(atPath: root.path))
+                #expect(witness.fixture == nil && witness.model == nil && witness.spy == nil && witness.store == nil)
+                #expect(witness.resources?.sessions.allSatisfy { $0.value == nil } == true)
+                #expect(scope.trace.filter { $0["stage"] == "closed" && $0["result"] == "0" }.count == 2)
+                #expect(!scope.trace.contains { $0["stage"] == "sqlite-failure" })
+                if exit == "cancel" { #expect(throws: CancellationError.self) { try result.get() } }
+                else if exit == "throw" { #expect(throws: BodyError.sentinel) { try result.get() } }
+                else { try result.get() }
+            }
+        }
+    }
+    private func completedCycle(_ witness: QuestionUIWitness) async throws {
+        let f = try QuestionUIFixture()
+        witness.track(f); _ = try await f.setup()
+        f.spy.waitAfterSend = { [f] in #expect(f.model.busy) }
+        f.model.prepare(); try await f.settle(); f.model.send(); try await f.settle()
+        #expect(f.model.phase == .answered && f.spy.calls == 1)
+    }
+    @Test func storedCallbackCycleIsReleasedEvenAfterOperationAlreadyFinished() async throws {
+        let scope = SQLiteFixtureScope(test: "question-ui-completed-cycle"), witness = QuestionUIWitness()
+        try await SQLiteFixtureScope.$current.withValue(scope) {
+            try await ProjectDatabase.$lifecycleObserver.withValue({ scope.observe($0) }) {
+                try await completedCycle(witness)
+                #expect(witness.fixture != nil) // cycle is real before cleanup
+                try await scope.finish()
+                #expect(witness.fixture == nil && witness.model == nil && witness.spy == nil && witness.store == nil)
+                #expect(witness.resources?.sessions.allSatisfy { $0.value == nil } == true)
+                #expect(scope.trace.filter { $0["stage"] == "closed" && $0["result"] == "0" }.count == 1)
+                #expect(scope.trace.contains { $0["stage"] == "root-removed" && $0["exists"] == "false" })
+            }
+        }
     }
 }
