@@ -1,0 +1,66 @@
+{
+  "scope": "/private/var/folders/f6/hwzbqsn10fn6p6gx8d5vmnfm0000gn/T/golos-memory-gate37-28de2281609d4670ad977d96df4b6eee/Golos Memory Gate Diagnostics.app",
+  "commands": [
+    {
+      "kind": "sign",
+      "command": [
+        "/usr/bin/codesign",
+        "--force",
+        "--sign",
+        "-",
+        "--timestamp=none",
+        "/private/var/folders/f6/hwzbqsn10fn6p6gx8d5vmnfm0000gn/T/golos-memory-gate37-28de2281609d4670ad977d96df4b6eee/Golos Memory Gate Diagnostics.app/Contents/Resources/swift-transformers_Hub.bundle"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "kind": "sign",
+      "command": [
+        "/usr/bin/codesign",
+        "--force",
+        "--sign",
+        "-",
+        "--timestamp=none",
+        "/private/var/folders/f6/hwzbqsn10fn6p6gx8d5vmnfm0000gn/T/golos-memory-gate37-28de2281609d4670ad977d96df4b6eee/Golos Memory Gate Diagnostics.app/Contents/Resources/swift-crypto_Crypto.bundle"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "kind": "sign",
+      "command": [
+        "/usr/bin/codesign",
+        "--force",
+        "--sign",
+        "-",
+        "--timestamp=none",
+        "/private/var/folders/f6/hwzbqsn10fn6p6gx8d5vmnfm0000gn/T/golos-memory-gate37-28de2281609d4670ad977d96df4b6eee/Golos Memory Gate Diagnostics.app"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "/private/var/folders/f6/hwzbqsn10fn6p6gx8d5vmnfm0000gn/T/golos-memory-gate37-28de2281609d4670ad977d96df4b6eee/Golos Memory Gate Diagnostics.app: replacing existing signature\n"
+    },
+    {
+      "kind": "verify",
+      "command": [
+        "/usr/bin/codesign",
+        "--verify",
+        "--deep",
+        "--strict",
+        "--verbose=2",
+        "/private/var/folders/f6/hwzbqsn10fn6p6gx8d5vmnfm0000gn/T/golos-memory-gate37-28de2281609d4670ad977d96df4b6eee/Golos Memory Gate Diagnostics.app"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "/private/var/folders/f6/hwzbqsn10fn6p6gx8d5vmnfm0000gn/T/golos-memory-gate37-28de2281609d4670ad977d96df4b6eee/Golos Memory Gate Diagnostics.app: valid on disk\n/private/var/folders/f6/hwzbqsn10fn6p6gx8d5vmnfm0000gn/T/golos-memory-gate37-28de2281609d4670ad977d96df4b6eee/Golos Memory Gate Diagnostics.app: satisfies its Designated Requirement\n"
+    }
+  ],
+  "binary_sha256_before_sign": "3536b16125940329d0e3cf89f8d8b88180856416e788a7e9bc742962207e7a5f",
+  "status": "Signed own completed diagnostic bundle; strict verify Passed; NOT launched",
+  "host_launched": false,
+  "comparison": "Whole-file before/after hashes only; no executable-section equivalence claim",
+  "binary_sha256_after_sign": "4a9a607d781f0a2b5f391c01ffc64f289401a218a1d6230c249ec7d4e669d089"
+}

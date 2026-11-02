@@ -1,0 +1,22 @@
+{
+  "status": "FIRST actual path-helper host compile and deep strict signature verify Passed; runtime NOT RUN",
+  "code_head": "c3342ff42e0a9fa60eab926aec821c9110c5e05e",
+  "source_manifest_sha256": "106c033a62bdee2ce2b98e8c1b3ca67f68ba7fe114cffcbff34c2e178bb71885",
+  "app": "/private/var/folders/f6/hwzbqsn10fn6p6gx8d5vmnfm0000gn/T/golos-memory-gate37-28de2281609d4670ad977d96df4b6eee/Golos Memory Gate Diagnostics.app",
+  "bundle": "com.golos.memory-gate37.f82072742833483eaa3a21868679161e",
+  "binary_sha256_before_sign": "3536b16125940329d0e3cf89f8d8b88180856416e788a7e9bc742962207e7a5f",
+  "binary_sha256_after_sign": "4a9a607d781f0a2b5f391c01ffc64f289401a218a1d6230c249ec7d4e669d089",
+  "elapsed": 32.594828332999896,
+  "output_bytes": 334537215,
+  "telemetry_samples": 65,
+  "minimum_free_bytes": 82128830464,
+  "signature_commands": 4,
+  "strict_verify_exit_code": 0,
+  "control_checkpoint": "35c4da62abe23c4de90656525617676d75fbdcf7",
+  "controls_reused_without_rerun": true,
+  "compile_source_count": 60,
+  "old_049ff_and_acfe_output_bytes_preserved": true,
+  "old_acfe_startup_failure_preserved": true,
+  "host_launched": false,
+  "actual_case_executed": false
+}

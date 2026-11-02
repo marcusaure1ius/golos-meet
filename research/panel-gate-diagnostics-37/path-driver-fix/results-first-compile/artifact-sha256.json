@@ -1,0 +1,16 @@
+{
+  "READ-BEFORE-ONE-AUTHORIZED-RUN.txt": "2e6a8532fe21a1ed155c4464f50732f10e5ffc116307098edffd6988be7733bc",
+  "build-driver.log": "6513d2a0ab76add4bf5409339ecfc3a36c4609d3ff26ea0e2362cdd60d2c7a34",
+  "build-output-files.json.gz": "ab57cc0c9640c1850a1a5825b2d72640ec81c5ac46459902e148f1cf5e982817",
+  "build-receipt.json": "3f0ecc8ad98141b701900719cc9f496a89edb814a32ab68dcbca8e9ed7296f40",
+  "build-summary.json": "bec565e4539d93fa71015c440b31c8ec5d4d1e904ba4b63720c32f41d1703754",
+  "build-telemetry.jsonl": "0d0deea67a0fd1abfa7020d97174491e3bc382b5532bf896b42b319a61a7584d",
+  "build.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "compile-command.json": "cf7381620009eddf7fec4f9945a3a5b10a35dba1373378af3fdf26a549b5f5d2",
+  "control-source-binding.json": "16e44ba3614430bd6d2486da6be4f813ceefc49f40bb966793d706e7956a7fe3",
+  "linked-inputs.json": "5a89339689657698ad32a59f67a7c1acda350d67cfa880a325cd479982f1732e",
+  "preservation-summary.json": "fbed6c2f90ff801e9780cf6d0d86a504b4d5d118900625c2a0f56ef4d74fed7e",
+  "signature-receipt.json": "3fdb49639d433d6e3e5d5b588914f7c97505d8f6ca402bb423bf026f24c3258f",
+  "source-allowlist.txt": "e63071c8a3e7a137139e6ad5bd4bfcab2943f9fb6fa79fece4d17162bc407a18",
+  "source-manifest.json": "106c033a62bdee2ce2b98e8c1b3ca67f68ba7fe114cffcbff34c2e178bb71885"
+}

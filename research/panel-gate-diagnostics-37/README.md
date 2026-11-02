@@ -1,6 +1,6 @@
 # #37 · Self-recording diagnostic gate: подготовка до запуска
 
-**Актуальная подготовка: [два driver fixes перед первым actual compile](path-driver-fix/README.md).** Independent43 подтвердил exactfda driver P2 для status path formats и raw HEAD equality; controlled helper/host/builder/controls35c4 заморожены. Старый STOP не переписывается, новая попытка получает отдельный exclusive namespace. Никакого host launch; после подготовки требуется exact-SHA/assets review.
+**Актуальная подготовка: [два driver fixes и первый actual compile](path-driver-fix/README.md).** Checkpointc3342ff собран один раз: exit0/32.595s/334537215 B, strict signature verify0. Status/provenance captures сохранены, controls35c4 привязаны bytes+ancestry и не перезапускались. Host НЕ запускался, runtime NOT RUN. Старый STOP не переписывается; требуется independent43 exact-SHA/assets review до runtime.
 
 **Актуальное продолжение после actual startup crash acfe: [path-alias fix](path-alias-fix/README.md).** Source checkpoint35c4da6, единственный Foundation-only validator Passed16/16. Addressed build остановлена на собственном preflight guard ДО compiler: INCOMPLETE, новых app/binary/manifest нет. Failure receipt сохранён, retry/source changes после STOP не выполнялись; нужна root assessment. Host не открывать. Исторические static/build receipts ниже сохранены; они не доказывали startup и не отменяют actual crash.
 

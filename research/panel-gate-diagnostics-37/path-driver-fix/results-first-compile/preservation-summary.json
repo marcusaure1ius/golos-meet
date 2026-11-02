@@ -1,0 +1,18 @@
+{
+  "method": "readonly ALL prior output byte/size/SHA comparison; no writes/reuse/launch",
+  "prior_outputs": [
+    {
+      "root": "/private/var/folders/f6/hwzbqsn10fn6p6gx8d5vmnfm0000gn/T/golos-memory-gate37-ef623b597e83409796b75d7e232d4420",
+      "matched_files": 307,
+      "library_exists": false
+    },
+    {
+      "root": "/private/var/folders/f6/hwzbqsn10fn6p6gx8d5vmnfm0000gn/T/golos-memory-gate37-a19e1b2b2d6b4518abd9614c7f16130f",
+      "matched_files": 317,
+      "library_exists": false
+    }
+  ],
+  "current_postsign_output_count": 317,
+  "protected_source_count": 257,
+  "no_new_controls": true
+}
