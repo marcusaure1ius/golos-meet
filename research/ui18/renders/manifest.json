@@ -1,0 +1,66 @@
+{
+  "kind": "conceptual native offscreen renders, not production screenshots",
+  "source": "research/ui18/native/MockHost.swift",
+  "source_sha256": "6ec7074099074faccb1f37f307b20e377e6acec95dd9d0d736540dddaa897183",
+  "command": "research/ui18/native/render.sh",
+  "checked_environment": "macOS 27.0.1; Xcode 27.1 (27A9275); SDK 27.0; arm64; target 14.4",
+  "optical_glass": "not validated; native NSToolbar and NSVisualEffectView sidebar; offscreen inactive window",
+  "images": [
+    {
+      "file": "A2-document-fullscreen-dark.png",
+      "pixels": [
+        3840,
+        2160
+      ],
+      "sha256": "463ba8f3cab49a1894299dc1b7e71ddd0ac24228e06d375a6ce5839339506fb8"
+    },
+    {
+      "file": "A2-document-wide-light.png",
+      "pixels": [
+        2880,
+        1800
+      ],
+      "sha256": "e6bed9ca7908013e556c2acd2187a004829a6270d8c441c33299390d974146b3"
+    },
+    {
+      "file": "A2-meeting-fullscreen-dark.png",
+      "pixels": [
+        3840,
+        2160
+      ],
+      "sha256": "6fea45d4d7385fa6e574d1cefa54df631df9d4c2a88c08e3566612725ed49718"
+    },
+    {
+      "file": "A2-meeting-reduced.png",
+      "pixels": [
+        2880,
+        1800
+      ],
+      "sha256": "b863705ecee524a45b5e85379dd63bc0e28753e5d551836cee8ea6e5e2fde9ca"
+    },
+    {
+      "file": "A2-meeting-wide-light.png",
+      "pixels": [
+        2880,
+        1800
+      ],
+      "sha256": "a6479e606e0e23e39783471c02b9be477e64476b2d8eb314b2459ff8bf546bfc"
+    },
+    {
+      "file": "A2-overview-fullscreen-dark.png",
+      "pixels": [
+        3840,
+        2160
+      ],
+      "sha256": "2bc3054c657ba9f93056c01ba5e552513464de6e4c2b6c5421a61771ef264ab3"
+    },
+    {
+      "file": "A2-overview-wide-light.png",
+      "pixels": [
+        2880,
+        1800
+      ],
+      "sha256": "34a45cdb54958644fa74df32477df5365aa68fb394e6603e2f4f88b87622a2fd"
+    }
+  ]
+}
