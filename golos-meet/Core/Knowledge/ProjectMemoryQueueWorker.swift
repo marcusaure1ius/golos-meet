@@ -4,6 +4,28 @@ import Foundation
 /// fences durable state immediately, then drains a noncooperative adapter before
 /// starting another operation; no growing pile of abandoned transport tasks.
 @MainActor final class ProjectMemoryQueueWorker {
+    #if DEBUG
+    nonisolated let diagnosticOwnerID = UUID()
+    private nonisolated let diagnosticObserver = MemoryQueueDiagnostics.observer
+    func diagnosticSnapshot() -> [String: String] {
+        var value = ["workerID": diagnosticOwnerID.uuidString, "started": String(started), "runID": run,
+            "model": model, "revision": String(state.revision), "draining": String(worker != nil),
+            "loadingPreview": String(loadingPreview), "refreshPending": String(refreshPending)]
+        if let lease = active?.lease { value.merge(diagnosticLease(lease)) { _, new in new } }
+        return value
+    }
+    private func diagnosticLease(_ lease: MemoryQueueLease) -> [String: String] {
+        ["runID": lease.runID, "attemptID": lease.attempt, "jobGeneration": lease.job.generation,
+         "cycleID": lease.job.cycle, "sequence": String(lease.job.sequence),
+         "cursor": String(lease.job.completedChunks), "count": String(lease.count)]
+    }
+    private func diagnostic(_ stage: String, lease: MemoryQueueLease? = nil) {
+        guard diagnosticObserver != nil else { return }
+        var fields = diagnosticSnapshot()
+        if let lease { fields.merge(diagnosticLease(lease)) { _, new in new } }
+        MemoryQueueDiagnostics.record(diagnosticObserver, owner: diagnosticOwnerID, kind: "worker", stage: stage, fields: fields)
+    }
+    #endif
     private let store: ProjectStore
     private let history: ProjectMemoryHistoryService
     private let reader: KnowledgeSearchSourceReader
@@ -38,11 +60,25 @@ import Foundation
     }
     func snapshot() -> MemoryQueueSnapshot { state }
     func start() async {
+        #if DEBUG
+        diagnostic("start.request")
+        defer { diagnostic("start.return") }
+        #endif
         guard !started else { return }; started = true
-        do { run = try await store.startMemoryQueueRun(); await changed() }
+        do {
+            run = try await store.startMemoryQueueRun()
+            #if DEBUG
+            diagnostic("run.started")
+            #endif
+            await changed()
+        }
         catch { state.message = "Не удалось восстановить очередь памяти."; await emit() }
     }
     func changed(model: String? = nil) async {
+        #if DEBUG
+        diagnostic("changed.begin")
+        defer { diagnostic("changed.return") }
+        #endif
         if let model { self.model = model }
         refreshPending = true
         do {
@@ -62,6 +98,10 @@ import Foundation
         await emit(); if started { launch() }
     }
     func stop() async {
+        #if DEBUG
+        diagnostic("stop.begin")
+        defer { diagnostic("stop.return") }
+        #endif
         started = false; refreshPending = false
         let stoppingWorker = worker
         let stoppingPreview = preview
@@ -143,6 +183,9 @@ import Foundation
         .init(store: store, meetingsRoot: meetings, documentsRoot: documents, client: client, model: model)
     }
     private func reconcile() async throws {
+        #if DEBUG
+        diagnostic("discovery.begin")
+        #endif
         let catalog = try await store.knowledgeSearchCatalog(scope: .all)
         var identities: [EmbeddingSourceKey: String] = [:]
         for source in catalog.sources {
@@ -151,6 +194,9 @@ import Foundation
         }
         try await store.reconcileMemoryQueue(catalog: catalog, identities: identities, generatorModel: model, contract: MemoryFactExtractor.producerKey(model: model, payload: "", hits: [], parents: []), run: run.isEmpty ? nil : run)
         refreshPending = false
+        #if DEBUG
+        diagnostic("discovery.return")
+        #endif
     }
     private func launch() {
         guard started, worker == nil, active == nil, !loadingPreview else { return }
@@ -169,6 +215,9 @@ import Foundation
                     if try await store.hasMemoryQueueWork(excluding: preview?.lease.job.projectID) { continue }
                     break
                 }
+                #if DEBUG
+                diagnostic("lease.claimed", lease: lease)
+                #endif
                 cursor = lease.job.sequence
                 await process(lease, service: makeService())
                 // Fill backpressure slots after a completed batch without
@@ -226,9 +275,27 @@ import Foundation
             if !request.approvalProjectIDs.isEmpty, consent == nil {
                 try await self.store.pauseMemoryQueueForConsent(lease); service.cancel(); return
             }
+            #if DEBUG
+            self.diagnostic("update.begin", lease: lease)
+            #endif
+            #if DEBUG
+            let outcome = try await service.update(request, consent: consent)
+            switch outcome {
+            case .published(let publication):
+                switch publication {
+                case .inserted: self.diagnostic("publication.inserted.return", lease: lease)
+                case .unchanged: self.diagnostic("publication.unchanged.return", lease: lease)
+                }
+            case .insufficientEvidence: self.diagnostic("insufficient.return", lease: lease)
+            }
+            #else
             _ = try await service.update(request, consent: consent)
+            #endif
         }
         active = (lease,service,task)
+        #if DEBUG
+        diagnostic("attempt.active", lease: lease)
+        #endif
         let timer = Task {
             do {
                 try await sleep(timeout)
@@ -238,8 +305,16 @@ import Foundation
             } catch {}
         }
         await emit()
-        do { try await task.value }
+        do {
+            try await task.value
+            #if DEBUG
+            diagnostic("attempt.return", lease: lease)
+            #endif
+        }
         catch {
+            #if DEBUG
+            diagnostic("attempt.error", lease: lease)
+            #endif
             try? await store.setMemoryQueueState(lease, state: failureState(error), message: safeMessage(error))
         }
         timer.cancel()

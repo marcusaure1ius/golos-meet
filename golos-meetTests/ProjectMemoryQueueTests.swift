@@ -3,15 +3,15 @@ import Combine
 import Testing
 @testable import golos_meet
 
-@MainActor private final class QueueFixture {
+@MainActor final class QueueFixture {
     let base: UpdateFixture
     let worker: ProjectMemoryQueueWorker
     var payloads: [String] = []
     var onCall: ((Int) async throws -> Void)?
     var insufficient = false
-    init(timeout: Duration = .seconds(30), sleep: @escaping @Sendable (Duration) async throws -> Void = { try await Task.sleep(for: $0) }) throws {
+    init(timeout: Duration = .seconds(30), sleep: @escaping @Sendable (Duration) async throws -> Void = { try await Task.sleep(for: $0) }, clientFactory: (MemoryTransportSpy) -> ChatCompleter = { $0 }) throws {
         base = try UpdateFixture()
-        worker = ProjectMemoryQueueWorker(store: base.store, meetingsRoot: base.root.appendingPathComponent("meetings"), documentsRoot: base.root.appendingPathComponent("copies"), client: base.spy, model: "fake-only", timeout: timeout, sleep: sleep)
+        worker = ProjectMemoryQueueWorker(store: base.store, meetingsRoot: base.root.appendingPathComponent("meetings"), documentsRoot: base.root.appendingPathComponent("copies"), client: clientFactory(base.spy), model: "fake-only", timeout: timeout, sleep: sleep)
         base.spy.afterAttempt = { [weak self] _ in
             guard let self else { return }
             payloads.append(base.spy.payload)
@@ -244,18 +244,15 @@ private actor QueueDeadlineClock {
     }
 
     @Test func concreteMetadataBridgeReceivesReadyEventWithoutLaunchingApplication() async throws {
-        let f = try QueueFixture(); let p = try await f.base.project()
-        let center = NotificationCenter()
-        let bridge = KnowledgeMemoryQueue(worker:f.worker,center:center,model:"fake-only")
-        SQLiteFixtureScope.current?.note("metadata-bridge-start")
-        bridge.start(); try await f.until("metadata bridge initial snapshot") { f.worker.snapshot().revision > 0 }
-        SQLiteFixtureScope.current?.note("metadata-bridge-initial-snapshot")
-        try await f.meeting("late",count:1,owners:[p])
-        KnowledgeIndexEvents.post(.meeting("late"),center:center)
-        try await f.until("metadata bridge ready-source coverage") { try await f.base.store.memoryQueueSnapshot().jobs.first { $0.source.externalID == "late" }?.completeCoverage == true }
-        SQLiteFixtureScope.current?.note("metadata-bridge-complete")
-        #expect(f.base.spy.calls == 1)
-        bridge.stop(); await f.cleanup()
+        try await MemoryBridgeTestSession.run("original-ready-event") { session in
+            session.start()
+            // Still the original initial-snapshot fence, not a startup ACK.
+            try await session.wait("initial snapshot") { session.fixture.worker.snapshot().revision > 0 }
+            try await session.readySource()
+            try await session.wait("ready-source coverage") { try await session.completed() }
+            #expect(session.fixture.base.spy.calls == 1)
+            #expect(session.weakBridge != nil)
+        }
     }
 
     @Test func queueFenceRejectsSkippedChunksEvenIfCallerClaimsWholeBatch() async throws {
