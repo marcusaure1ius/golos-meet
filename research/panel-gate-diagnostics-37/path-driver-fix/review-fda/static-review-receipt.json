@@ -1,0 +1,48 @@
+{
+  "reviewer": "/root/review43 independent non-implementer",
+  "recordedUTC": "2026-11-02T20:03:45.242779+00:00",
+  "head": "fda8a2f104501b1f6bcf2b25446342729421dd92",
+  "controlledSourceCheckpoint": "35c4da62abe23c4de90656525617676d75fbdcf7",
+  "verdict": "fixes required in build preflight driver; helper/source substantively addressed; host UNBUILT",
+  "findings": [
+    {
+      "priority": "P2",
+      "file": "research/panel-gate-diagnostics-37/path-alias-fix/build_once.py",
+      "line": 24,
+      "mechanism": "relative porcelain versus absolute folder whitelist; captured original status absent; source-level defect"
+    },
+    {
+      "priority": "P2",
+      "file": "research/panel-gate-diagnostics-37/path-alias-fix/build_once.py",
+      "line": 26,
+      "mechanism": "immutable controls.code_head35c4 differs from currentfda despite identical controlled source bytes; prevents compile after docs/driver commit"
+    }
+  ],
+  "helperSHA256": "17e72c66e142e379517bb38d596329d8cf682465b3b719675e03a7712c645c15",
+  "controlsReceiptSHA256": "4b35577a91d4d6ba0a8bdef50c1f7ecf66858799351c37b2ae30897d3ad1dce7",
+  "controlResultsSHA256": "1f8c6a87bdd61a71671513116567472ff74d42eb7b99dca3ff3dc6d2911c6a8f",
+  "combinedSourceSHA256": "878b1deb18f680c988e0ac7591c4a79c7df87cb088007969911a0d773cb0d976",
+  "controlCounts": {
+    "positive": 3,
+    "negative": 13,
+    "total": 16
+  },
+  "buildFailureReceipt": {
+    "utc": "2026-11-02T19:51:40.184189+00:00",
+    "authorization": "Root confirmed acfe path-alias startup P2: ONE addressed diagnostic build after controls; no launch",
+    "status": "STOP INCOMPLETE/FAILED; no retry; root assessment required",
+    "build_started": false,
+    "host_launched": false,
+    "actual_case_executed": false,
+    "failure": "AssertionError('STOP: only saved control receipts may be untracked')"
+  },
+  "buildFailureReceiptSHA256": "07783739d7251f77475ff03cc2c010aa0c375a485cc59e325260c93c9072a272",
+  "originalPreflightStatusCaptured": false,
+  "newAssets": "none; compiler not started",
+  "oldOutputCountsVerifiedPreserved": [
+    307,
+    317
+  ],
+  "newRuntimeBuildControlExecutionByReviewer": false,
+  "reportSHA256": "85c30e34eaf124053959702a288125b976b79e28234abcf5d58f9070f116d15e"
+}

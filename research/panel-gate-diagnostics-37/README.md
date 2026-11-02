@@ -1,5 +1,7 @@
 # #37 · Self-recording diagnostic gate: подготовка до запуска
 
+**Актуальная подготовка: [два driver fixes перед первым actual compile](path-driver-fix/README.md).** Independent43 подтвердил exactfda driver P2 для status path formats и raw HEAD equality; controlled helper/host/builder/controls35c4 заморожены. Старый STOP не переписывается, новая попытка получает отдельный exclusive namespace. Никакого host launch; после подготовки требуется exact-SHA/assets review.
+
 **Актуальное продолжение после actual startup crash acfe: [path-alias fix](path-alias-fix/README.md).** Source checkpoint35c4da6, единственный Foundation-only validator Passed16/16. Addressed build остановлена на собственном preflight guard ДО compiler: INCOMPLETE, новых app/binary/manifest нет. Failure receipt сохранён, retry/source changes после STOP не выполнялись; нужна root assessment. Host не открывать. Исторические static/build receipts ниже сохранены; они не доказывали startup и не отменяют actual crash.
 
 Это отдельная host-only часть той же feature PR55, base `24b49b067fcda107e397ed4f2461f9bb23de322f`, accepted preview `23b1da158304a2c0c596752d9150e489b1884fb4`. Новый managed worktree/branch `codex/37-panel-gate-diagnostics`. Production, Swift-тесты, Rust, Makefile, deadlines и privacy guards должны оставаться побайтово равными24b. Старые worktrees, reviewer app, completed seed и evidence не изменяются.
