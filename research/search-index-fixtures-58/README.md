@@ -2,7 +2,7 @@
 
 Принятая база `ec77fea89c480eb1d0db7a5cbc2a1ff452d5bc46` (PR64 checked `3561d0cbd81a9a48284274d746b5e1541128d53d`). Перед новым managed worktree выполнены fresh GitHub/fetch/ancestry и empty full diff checked64→preview; main `bd6191c7960ae017e8063795f19e2348cdc35bd9` сохраняется. Unreviewed63/55 не использованы.
 
-**Текущий checkpoint:** targeted Passed; первый full прерван disk guard и НЕ засчитан. Recovery full после достаточного запаса разрешён координатором отдельно, с приоритетом native review63. До его завершения общего full результата нет.
+**Актуальный итог:** targeted Passed; отдельно разрешённый completed recovery full — FAILED только на прежнем bridge ready-source coverage (#61). Global stdout recovery:0 vnode/6922,430 native close0→255 removals. Первый interrupted full сохранён отдельно и НЕ засчитан. Swift-код с checkpoint485fd4a не менялся; итоговые изменения — evidence/docs/runner только.
 
 ## Причины и actual before/control
 
@@ -57,11 +57,27 @@ Partial bundle найден как единственный bundle этого с
 
 После STOP тяжёлые повторы не запускались до нового разрешения/восстановления места. Координатор разрешил recovery после native review63 и достаточного запаса, прежний partial не стирать/не засчитывать. Guard остаётся STOP<6GiB; для recovery требуется отдельный prefix и более консервативный прогноз.
 
+## Recovery full — completed FAILED
+
+После явного восстановления пространства и разрешения координатора дождались завершения priority native review63 (exit0, дальше только audit). Новый запуск имел отдельный prefix `golos58si-recovery-full`; partial не перезаписывался. Прогноз расхода увеличен до2GiB сверх обязательного6GiB, sample каждую секунду. Тот же уже собранный DerivedData/package path, Swift source SHA совпадают с completed targeted и checkpoint `485fd4ad4401e3aab32f696d4e495fc7101b17b0`. Unreviewed63 не импортирован.
+
+**Actual `make check`:453 tests —448 ordinary passed/1 failed/4 expected-negative tests;649 runs —636 passed/1 failed/12 expected negatives;0 skipped/runtime warnings.** Единственный failure — `ProjectMemoryQueueTests.concreteMetadataBridgeReceivesReadyEventWithoutLaunchingApplication`: metadata bridge ready-source coverage, прежний5s deadline. Initial-snapshot достигнут, complete marker отсутствует. [Summary](results/recovery-full-summary.json), [original activities](results/recovery-full-failure-activities.json). Причина61 не исследовалась; source/assertion/timeout не изменены. Completed red после этого не повторялся.
+
+Full native ledger: **255 roots/430 actual native opens/430 close=0/255 removals;0 teardown timeouts**.264 scope attachments побайтно совпали с direct env files. Девять empty scopes — pure search syntax, шесть внешних scopes новых controls, два принятых assignment controls. [Attachment audit](results/recovery-full-attachment-audit.json.gz). Global captured stdout: **0 vnode unlinked/0 extended6922**, включая оба текущих семейства. Это actual outcome данного workload, не вывод из старого count2.
+
+Source/fault guards: новый intentional FTS fault принят один раз; всего43 allowance checks/31accepted из49 raw faults, остальные относятся к принятым negative controls. Raw diagnostics/stdout не фильтруются. Native order всех completed scopes проверен; six held search/index paths присутствуют и в full.
+
+OCR именно completed recovery:40 success streams +1 предусмотренный invalidDocument. Все82 input/result attachments/41 invocation сохранены: exact input bytes, raw result JSON иSHA. [OCR audit](results/recovery-full-ocr-audit.json.gz), [synthetic inputs](results/ocr-assets). Это не восстановление OCR и не отмена прежних e5rt10/e5rt13/mixedPDF red evidence.
+
+Disk: preflight **15,680,720,896B (~14.60GiB)**; minimum **14,100,156,416B (~13.13GiB)**;76samples. Наблюдённое global снижение от preflight до минимума — **1,580,564,480B (~1.47GiB)**, без утверждения, что всё оно принадлежит одному build/test процессу. Forecast2GiB и STOP<6GiB выдержаны, guard не сработал, ENOSPC/write failures не наблюдались. [Receipt](results/recovery-full-receipt.json), [telemetry](results/recovery-full-telemetry.jsonl).
+
+Whole completed failed bundle сохранён отдельно APFS clone: `/private/tmp/golos58si-preserved-recovery-full.xcresult`. Ранний partial остаётся `/private/tmp/golos58si-preserved-partial-full.xcresult`; его missing metadata/113files и counters не дополнялись данными recovery задним числом. Completed и incomplete outcomes раздельны в validator/report. В git только scoped/redacted evidence и synthetic assets, без system logarchive/моделей/бинарников.
+
 ## Общий остаток #58 и воспроизводимость
 
-Targeted отсутствие diagnostics относится только к двум families и controls. Полный остаток stderr текущего diff пока **не проверен завершённым full**. [Read-only inventory](results/readonly-store-inventory.json) содержит25 файлов с ProjectStore constructors,11 со scope trait. Это статическая инвентаризация, не доказательство дефекта или безопасности остальных14 файлов. Они не патчатся; существующие native/migration/fault tests требуют отдельной интерпретации. Закрытие всего58 не заявляется по старым2строкам или новому targeted0.
+Targeted относится к двум families/controls; completed recovery дополнительно дал global stdout0 vnode/6922. Это не универсальная lifetime гарантия для неинструментированных suites. [Read-only inventory](results/readonly-store-inventory.json) содержит25 файлов с ProjectStore constructors,11 со scope trait. Это статическая инвентаризация, не доказательство дефекта или безопасности остальных14 файлов. Они не патчатся; существующие native/migration/fault tests требуют отдельной интерпретации. Закрытие всего58 не заявляется по старым2строкам или новому targeted0.
 
-[validate.py](validate.py) проверяет completed before/control/after, реальные6922, weak/held order, source SHA/assertions, native close/unlink, exact attachments и явный interrupted status. Частичные env bytes проверяются только по SHA, не выдаются за полный audit. Новых моделей/тестов/OCR/сети validator не запускает.
+[validate.py](validate.py) проверяет completed before/control/after, реальные6922, weak/held order, source SHA/assertions, native close/unlink, exact attachments и явный interrupted status. Частичные env bytes проверяются только по SHA, не выдаются за полный audit; completed recovery проверяется отдельно по полному native/attachment/OCR ledger и фактическому FAILED summary. Новых моделей/тестов/OCR/сети validator не запускает.
 
 Подготовка копий и probes:
 

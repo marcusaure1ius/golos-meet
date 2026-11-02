@@ -2,17 +2,17 @@
 """One guarded run per kind; never overwrite a completed or interrupted run."""
 from pathlib import Path
 import argparse,datetime,hashlib,json,os,signal,subprocess,time
-p=argparse.ArgumentParser();p.add_argument('kind',choices=['after','full']);a=p.parse_args()
+p=argparse.ArgumentParser();p.add_argument('kind',choices=['after','full','recovery-full']);a=p.parse_args()
 prefix=Path('/private/tmp/golos58si-'+a.kind);log=prefix.with_suffix('.log');telemetry=Path(str(prefix)+'-telemetry.jsonl')
 assert not log.exists() and not telemetry.exists(), 'Do not overwrite evidence or rerun to green'
 def free():return os.statvfs('/private/tmp').f_bavail*os.statvfs('/private/tmp').f_frsize
 floor=6*1024**3
 warm=Path('/private/tmp/golos58si-derived/Build/Products/Debug/Golos Meet.app').exists()
-forecast=(1 if a.kind=='after' and not warm else .25)*1024**3
+forecast=(2 if a.kind=='recovery-full' else 1 if a.kind=='after' and not warm else .25)*1024**3
 assert free()>=floor+forecast, 'STOP: forecast would consume the 6GiB reserve'
 assert subprocess.run(['pgrep','-x','xcodebuild'],stdout=subprocess.DEVNULL).returncode==1,'STOP: another build is active'
 derived='/private/tmp/golos58si-derived';env=os.environ.copy();env['TEST_RUNNER_GOLOS_FIXTURE_EVIDENCE']=str(prefix)+'-events'
-if a.kind=='full':
+if a.kind in ('full','recovery-full'):
  env.update(TEST_RUNNER_GOLOS_MEET_E5_FOLDER='/tmp/golos-embedding-native/e5-small',TEST_RUNNER_GOLOS_MEET_RENDER_TALK_SETTINGS='1',TEST_RUNNER_GOLOS_MEET_MENU_PREVIEW='1')
  command=['make','check','DERIVED_DATA='+derived]
 else:command=['xcodebuild','test','-project','golos-meet.xcodeproj','-scheme','golos-meet','-destination','platform=macOS','-derivedDataPath',derived,'-disableAutomaticPackageResolution','-skipPackageUpdates','-only-testing:golos-meetTests/KnowledgeSearchTests','-only-testing:golos-meetTests/LocalIndexingServiceTests','CODE_SIGNING_ALLOWED=NO']

@@ -10,7 +10,7 @@ def write(name,value):
  if len(data)>16384:(r/(name+'.gz')).write_bytes(gzip.compress(data,mtime=0))
  else:(r/name).write_bytes(data)
 checks={};audits={};scopes={}
-for kind in ('before','before-index','retain','after'):
+for kind in ('before','before-index','retain','after','recovery-full'):
  prefix='/private/tmp/golos58si-'+kind
  s=json.loads(Path(prefix+'-summary.json').read_text());checks[kind]={k:s[k] for k in ('result','totalTestCount','passedTests','failedTests','expectedFailures','skippedTests','runtimeWarnings','testFailures')}
  checks[kind]['runs']={k:sum(d[k] for d in s['devicesAndConfigurations']) for k in ('passedTests','failedTests','expectedFailures','skippedTests')}
@@ -86,3 +86,21 @@ for name in ('summary-error.txt','tests-error.txt','diagnostics-export.log','att
  p=Path('/private/tmp/golos58si-partial-'+name)
  if p.exists():errors[name]=redact(p.read_text(errors='replace'))
 write('partial-export-errors.json',errors)
+
+prefix='/private/tmp/golos58si-recovery-full'
+receipt=json.loads(Path(prefix+'-receipt.json').read_text());assert 'stop_reason' not in receipt
+for suffix in ('receipt.json','telemetry.jsonl'):(r/('recovery-full-'+suffix)).write_text(redact(Path(prefix+'-'+suffix).read_text()))
+manifest=json.loads(Path(prefix+'-attachments/manifest.json').read_text());inputs={};outputs={}
+for test in manifest:
+ for a in test['attachments']:
+  m=re.match(r'ocr-([0-9A-F-]{36})-(input|result)_',a['suggestedHumanReadableName'])
+  if m:(inputs if m[2]=='input' else outputs)[m[1]]=(test['testIdentifier'],Path(prefix+'-attachments')/a['exportedFileName'])
+assert inputs.keys()==outputs.keys();assets=r/'ocr-assets';assets.mkdir(exist_ok=True);ocr=[]
+for identity,(test,p) in inputs.items():
+ data=p.read_bytes();result=outputs[identity][1].read_text();value=json.loads(result)
+ assert value['inputSHA256']==sha(data) and value['inputBytes']==len(data)
+ name=sha(data)+p.suffix;target=assets/name
+ if target.exists():assert target.read_bytes()==data
+ else:target.write_bytes(data)
+ ocr.append(dict(test=test,invocation=identity,input=name,result=value,result_raw=result,result_sha256=sha(result.encode())))
+write('recovery-full-ocr-audit.json',ocr)

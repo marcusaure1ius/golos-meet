@@ -10,11 +10,11 @@ source=read('source-check.json');assert source['production_diff']==source['allow
 for p,h in source['source_sha256'].items():assert sha(Path(p).read_bytes())==h,p
 receipt=read('after-receipt.json');assert receipt['source_sha256']==source['source_sha256'] and receipt['exit_code']==0 and 'stop_reason' not in receipt
 allRows={}
-for kind in ('before','before-index','retain','after'):
+for kind in ('before','before-index','retain','after','recovery-full'):
  raw=json.loads(gzip.decompress((r/(kind+'-events.json.gz')).read_bytes()));assert {p:sha(s.encode()) for p,s in raw.items()}==read(kind+'-trace-hashes.json')
  cases=[]
  for text in raw.values():
-  rows=json.loads(text) if kind=='after' else list(map(json.loads,text.splitlines()));cases.append(rows)
+  rows=json.loads(text) if kind in ('after','recovery-full') else list(map(json.loads,text.splitlines()));cases.append(rows)
   live=set();accepted=set()
   for i,row in enumerate(rows):
    stage=row['stage']
@@ -22,14 +22,14 @@ for kind in ('before','before-index','retain','after'):
    if stage=='closed':assert row['result']=='0';live.remove(row['connection'])
    if stage=='root-removed':
     assert row['exists']=='false'
-    if kind=='after':assert not live
+    if kind in ('after','recovery-full'):assert not live
    if stage=='expected-sqlite-failure':
     at=int(row['eventIndex']);assert at<i and at not in accepted;accepted.add(at)
     assert rows[at]['diagnostic']==row['diagnostic'] and rows[at]['acceptedBy']==row['expectation']
   assert not live
  allRows[kind]=cases
- if kind=='after':
-  attachments=read('after-attachment-audit.json');assert {a['scope']+'.json' for a in attachments}==raw.keys()
+ if kind in ('after','recovery-full'):
+  attachments=read(kind+'-attachment-audit.json');assert {a['scope']+'.json' for a in attachments}==raw.keys()
   for a in attachments:assert a['sha256']==sha(raw[a['scope']+'.json'].encode())
 search=[c for c in allRows['before'] if c[0]['test'].startswith('heldSearchBefore')][0]
 index=[c for c in allRows['before-index'] if c[0]['test'].startswith('throwingIndexBody')][0]
@@ -60,4 +60,18 @@ raw=json.loads(gzip.decompress((r/'partial-full-scope-files.json.gz').read_bytes
 for path,original in source['assertion_lines'].items():
  text=subprocess.check_output(['git','show',source['base']+':'+path],text=True)
  assert [l.strip() for l in text.splitlines() if '#expect' in l or '#require' in l]==original
-print('Validated two real6922 paths/retain controls, 93 assertions, six held lifetimes, 37 native closes/22 unlinks/29 attachments. Full remains interrupted; no full counters inferred.')
+recovery=read('recovery-full-receipt.json');assert recovery['source_sha256']==source['source_sha256'] and recovery['exit_code']==2 and 'stop_reason' not in recovery
+assert recovery['forecast_bytes']==2*1024**3 and recovery['reserve_bytes']==6*1024**3
+full=checks['recovery-full'];assert full['totalTestCount']==453 and full['passedTests']==448 and full['failedTests']==1 and full['expectedFailures']==4
+assert full['runs']==dict(passedTests=636,failedTests=1,expectedFailures=12,skippedTests=0) and full['runtimeWarnings']==[]
+assert len(full['testFailures'])==1 and 'metadata bridge ready-source coverage' in full['testFailures'][0]['failureText']
+fullCounts=sum((collections.Counter(c['counts']) for c in audit['recovery-full']),collections.Counter())
+assert fullCounts['root-owned']==fullCounts['root-removed']==255 and fullCounts['opened']==fullCounts['closed']==430 and fullCounts['scope-created']==264
+assert read('stdout-audit.json')['recovery-full']==dict(vnode=0,families={},extended6922=0)
+telemetry=[json.loads(l) for l in (r/'recovery-full-telemetry.jsonl').read_text().splitlines()];assert len(telemetry)==76 and min(x['free_bytes'] for x in telemetry)==14100156416
+ocr=read('recovery-full-ocr-audit.json');assert len(ocr)==41
+for c in ocr:
+ data=(r/'ocr-assets'/c['input']).read_bytes();assert sha(data)==c['result']['inputSHA256'] and len(data)==c['result']['inputBytes']
+ assert json.loads(c['result_raw'])==c['result'] and sha(c['result_raw'].encode())==c['result_sha256']
+assert collections.Counter(c['result']['stage'] for c in ocr)=={'extract-returned':40,'extract-threw':1}
+print('Validated completed before/control/after,430 native closes/255 unlinks/264 exact attachments,FAILED recovery full and separate uncounted partial;93 original assertions and82 OCR attachments preserved.')
