@@ -1,0 +1,38 @@
+{
+  "utc": 1793601443.8191218,
+  "before": 6711283712,
+  "removed": [
+    {
+      "path": "/private/tmp/golos58si-control-derived/Build",
+      "bytes": 470220669
+    },
+    {
+      "path": "/private/tmp/golos58si-control-derived/Index.noindex",
+      "bytes": 46060208
+    },
+    {
+      "path": "/private/tmp/golos58si-control-derived/ModuleCache.noindex",
+      "bytes": 40692901
+    },
+    {
+      "path": "/private/tmp/golos58si-control-derived/SDKExplicitPrecompiledModules",
+      "bytes": 173476000
+    },
+    {
+      "path": "/private/tmp/golos58si-control-derived/SDKStatCaches.noindex",
+      "bytes": 15291804
+    },
+    {
+      "path": "/private/tmp/golos58si-control-derived/CompilationCache.noindex",
+      "bytes": 16736
+    }
+  ],
+  "preserved": [
+    "Logs",
+    "TestResults",
+    "SourcePackages",
+    "source copies",
+    "all evidence"
+  ],
+  "after": 7302107136
+}

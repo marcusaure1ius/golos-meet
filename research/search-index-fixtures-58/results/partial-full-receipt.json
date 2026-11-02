@@ -1,0 +1,26 @@
+{
+  "command": [
+    "make",
+    "check",
+    "DERIVED_DATA=/private/tmp/golos58si-derived"
+  ],
+  "cwd": "<user-home>/.codex/worktrees/58-search-index-fixture-lifecycle/golos-meet",
+  "base": "ec77fea89c480eb1d0db7a5cbc2a1ff452d5bc46",
+  "source_sha256": {
+    "golos-meetTests/KnowledgeSearchTests.swift": "2995345aee691dfcceba52cc28a594b7ed7d687381fffd2ccbec958d485c553e",
+    "golos-meetTests/LocalIndexingServiceTests.swift": "6c7b148398ef1c48aaf7e49d7fbed268db08b63c548c1afec14dbca87482a818",
+    "golos-meetTests/SearchIndexFixtureCleanup.swift": "dd38d51b0361bd26e97a65baa2153dc1dc0c6c97d97471789a4288fc88322094"
+  },
+  "reserve_bytes": 6442450944,
+  "forecast_bytes": 268435456.0,
+  "preflight_free_bytes": 6869188608,
+  "safe_test_environment": {
+    "TEST_RUNNER_GOLOS_FIXTURE_EVIDENCE": "/private/tmp/golos58si-full-events",
+    "TEST_RUNNER_GOLOS_MEET_E5_FOLDER": "/tmp/golos-embedding-native/e5-small",
+    "TEST_RUNNER_GOLOS_MEET_RENDER_TALK_SETTINGS": "1",
+    "TEST_RUNNER_GOLOS_MEET_MENU_PREVIEW": "1"
+  },
+  "stop_reason": "runtime-free-below-6GiB",
+  "exit_code": -15,
+  "elapsed": 14.5716968330089
+}

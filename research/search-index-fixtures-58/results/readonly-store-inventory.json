@@ -1,0 +1,177 @@
+[
+  {
+    "path": "golos-meetTests/ProjectMemoryQueueTests.swift",
+    "scoped": true,
+    "root_defer_count": 0,
+    "project_store_constructors": 1,
+    "classification": "read-only inventory; no new lifecycle claim"
+  },
+  {
+    "path": "golos-meetTests/ProjectMemoryMigrationTests.swift",
+    "scoped": false,
+    "root_defer_count": 0,
+    "project_store_constructors": 4,
+    "classification": "read-only inventory; no new lifecycle claim"
+  },
+  {
+    "path": "golos-meetTests/KnowledgeSearchNativeTests.swift",
+    "scoped": false,
+    "root_defer_count": 1,
+    "project_store_constructors": 1,
+    "classification": "read-only inventory; no new lifecycle claim"
+  },
+  {
+    "path": "golos-meetTests/EmbeddingIndexNativeTests.swift",
+    "scoped": false,
+    "root_defer_count": 1,
+    "project_store_constructors": 2,
+    "classification": "read-only inventory; no new lifecycle claim"
+  },
+  {
+    "path": "golos-meetTests/MeetingAssignmentRuntimeTests.swift",
+    "scoped": true,
+    "root_defer_count": 0,
+    "project_store_constructors": 2,
+    "classification": "read-only inventory; no new lifecycle claim"
+  },
+  {
+    "path": "golos-meetTests/DocumentImportTests.swift",
+    "scoped": false,
+    "root_defer_count": 8,
+    "project_store_constructors": 11,
+    "classification": "read-only inventory; no new lifecycle claim"
+  },
+  {
+    "path": "golos-meetTests/ProjectLibraryTests.swift",
+    "scoped": false,
+    "root_defer_count": 2,
+    "project_store_constructors": 3,
+    "classification": "read-only inventory; no new lifecycle claim"
+  },
+  {
+    "path": "golos-meetTests/DocumentImportRetryTests.swift",
+    "scoped": false,
+    "root_defer_count": 2,
+    "project_store_constructors": 3,
+    "classification": "read-only inventory; no new lifecycle claim"
+  },
+  {
+    "path": "golos-meetTests/EmbeddingCatalogRaceTests.swift",
+    "scoped": false,
+    "root_defer_count": 3,
+    "project_store_constructors": 5,
+    "classification": "read-only inventory; no new lifecycle claim"
+  },
+  {
+    "path": "golos-meetTests/ProjectMemoryHistoryTests.swift",
+    "scoped": true,
+    "root_defer_count": 0,
+    "project_store_constructors": 2,
+    "classification": "read-only inventory; no new lifecycle claim"
+  },
+  {
+    "path": "golos-meetTests/KnowledgeSearchTests.swift",
+    "scoped": true,
+    "root_defer_count": 0,
+    "project_store_constructors": 2,
+    "classification": "current scope"
+  },
+  {
+    "path": "golos-meetTests/DocumentFormatImportTests.swift",
+    "scoped": false,
+    "root_defer_count": 1,
+    "project_store_constructors": 1,
+    "classification": "read-only inventory; no new lifecycle claim"
+  },
+  {
+    "path": "golos-meetTests/ProjectStoreTests.swift",
+    "scoped": false,
+    "root_defer_count": 4,
+    "project_store_constructors": 7,
+    "classification": "read-only inventory; no new lifecycle claim"
+  },
+  {
+    "path": "golos-meetTests/ProjectMemoryUpdateTests.swift",
+    "scoped": true,
+    "root_defer_count": 0,
+    "project_store_constructors": 3,
+    "classification": "read-only inventory; no new lifecycle claim"
+  },
+  {
+    "path": "golos-meetTests/SQLiteFixtureLifecycleTests.swift",
+    "scoped": false,
+    "root_defer_count": 1,
+    "project_store_constructors": 2,
+    "classification": "read-only inventory; no new lifecycle claim"
+  },
+  {
+    "path": "golos-meetTests/EmbeddingIndexStoreTests.swift",
+    "scoped": false,
+    "root_defer_count": 8,
+    "project_store_constructors": 13,
+    "classification": "read-only inventory; no new lifecycle claim"
+  },
+  {
+    "path": "golos-meetTests/KnowledgeQuestionServiceTests.swift",
+    "scoped": true,
+    "root_defer_count": 0,
+    "project_store_constructors": 1,
+    "classification": "read-only inventory; no new lifecycle claim"
+  },
+  {
+    "path": "golos-meetTests/IndexingProductionHooksTests.swift",
+    "scoped": true,
+    "root_defer_count": 0,
+    "project_store_constructors": 2,
+    "classification": "read-only inventory; no new lifecycle claim"
+  },
+  {
+    "path": "golos-meetTests/MeetingEmbeddingSnapshotTests.swift",
+    "scoped": false,
+    "root_defer_count": 2,
+    "project_store_constructors": 2,
+    "classification": "read-only inventory; no new lifecycle claim"
+  },
+  {
+    "path": "golos-meetTests/KnowledgeQuestionModelTests.swift",
+    "scoped": true,
+    "root_defer_count": 0,
+    "project_store_constructors": 2,
+    "classification": "read-only inventory; no new lifecycle claim"
+  },
+  {
+    "path": "golos-meetTests/MemoryQueueMigrationTests.swift",
+    "scoped": false,
+    "root_defer_count": 0,
+    "project_store_constructors": 4,
+    "classification": "read-only inventory; no new lifecycle claim"
+  },
+  {
+    "path": "golos-meetTests/LocalIndexingServiceTests.swift",
+    "scoped": true,
+    "root_defer_count": 0,
+    "project_store_constructors": 9,
+    "classification": "current scope"
+  },
+  {
+    "path": "golos-meetTests/LocalIndexingNativeTests.swift",
+    "scoped": true,
+    "root_defer_count": 0,
+    "project_store_constructors": 2,
+    "classification": "read-only inventory; no new lifecycle claim"
+  },
+  {
+    "path": "golos-meetTests/MeetingAssignmentTests.swift",
+    "scoped": true,
+    "root_defer_count": 0,
+    "project_store_constructors": 2,
+    "classification": "read-only inventory; no new lifecycle claim"
+  },
+  {
+    "path": "golos-meetTests/EmbeddingMigrationRaceTests.swift",
+    "scoped": false,
+    "root_defer_count": 6,
+    "project_store_constructors": 14,
+    "classification": "read-only inventory; no new lifecycle claim"
+  }
+]

@@ -1,0 +1,26 @@
+{
+  "before": {
+    "vnode": 9,
+    "families": {
+      "knowledge-search": 9
+    },
+    "extended6922": 2
+  },
+  "before-index": {
+    "vnode": 1,
+    "families": {
+      "index-service": 1
+    },
+    "extended6922": 6
+  },
+  "retain": {
+    "vnode": 0,
+    "families": {},
+    "extended6922": 0
+  },
+  "after": {
+    "vnode": 0,
+    "families": {},
+    "extended6922": 0
+  }
+}
