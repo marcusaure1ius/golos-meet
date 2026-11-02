@@ -135,6 +135,7 @@ actor PanelPreviewGate {
     }
 }
 struct PanelPreviewRoot: View {
+    @State private var showingMemory = false
     @ObservedObject var state: PanelPreviewState
     @ObservedObject var model: ProjectMemoryPanelModel
     @ObservedObject var client: PanelPreviewClient
@@ -161,13 +162,14 @@ struct PanelPreviewRoot: View {
                 VStack(alignment:.leading,spacing:14) {
                     Text("Текущая встреча").font(.title2)
                     Text("Синтетическая расшифровка").font(.caption)
+                    ProjectMemoryOpenButton { showingMemory.toggle() }
                     Text("00:42 · Участник\nРелиз 2026-11-26. Проверим готовность нагрузки.")
                     Spacer()
                     Text("Захват и ASR отсутствуют в этом host.").font(.caption)
                 }.padding(24).frame(width:290)
-                Divider()
-                ProjectMemoryPanel(model:model).environmentObject(state.projects)
             }
+        }.projectMemoryInspector(isPresented:$showingMemory) {
+            ProjectMemoryPanel(model:model).environmentObject(state.projects)
         }.task { model.start() }.onDisappear { model.close() }
             .frame(minWidth:920,minHeight:740)
             .environment(\.palette,Palette.of(state.dark ? .dark : .light)).preferredColorScheme(state.dark ? .dark : .light)

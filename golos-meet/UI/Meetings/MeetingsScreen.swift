@@ -105,7 +105,7 @@ struct MeetingsScreen: View {
                 Spacer()
                 if scope != .all {
                     if questionProjectID != nil {
-                        Button { showingMemory = true } label: { Label("Память",systemImage:"text.book.closed") }.buttonStyle(GhostButton())
+                        ProjectMemoryOpenButton(title:"Память",systemImage:"text.book.closed",identifier:"project.memory") { showingMemory = true }
                         Button { showingQuestions = true } label: { Label("Вопросы", systemImage: "text.bubble") }.buttonStyle(GhostButton())
                     }
                     Button { showingSearch = true } label: { Label("Поиск", systemImage: "magnifyingglass") }

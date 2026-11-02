@@ -44,7 +44,7 @@ sources = sorted((repo / 'golos-meet/Core/Knowledge').glob('*.swift'))
 sources += [repo / 'golos-meet/Core/Insights/ChatCompleter.swift']
 sources += [repo / 'golos-meet' / p for p in ['Util/AppRuntime.swift', 'UI/DesignSystem/Palette.swift', 'UI/DesignSystem/Components.swift']]
 sources += [repo / 'golos-meet/UI/Projects' / (p + '.swift') for p in ['ProjectLibrary', 'KnowledgeIndexing', 'KnowledgeSearchModel',
-    'KnowledgeSearchScreen', 'KnowledgeSourceView', 'KnowledgeQuestionModel', 'KnowledgeQuestionScreen', 'ProjectCloudSettings', 'ProjectMemoryPanelModel', 'ProjectMemoryPanel']]
+    'KnowledgeSearchScreen', 'KnowledgeSourceView', 'KnowledgeQuestionModel', 'KnowledgeQuestionScreen', 'ProjectCloudSettings', 'ProjectMemoryPanelModel', 'ProjectMemoryPanel', 'ProjectMemoryNavigation']]
 sources += [repo / 'research/MemoryPanelPreview.swift']
 for name in ['OpenRouterClient.swift', 'Keychain.swift', 'golos_meetApp.swift', 'ProductionKnowledgeMemory Panel.swift']:
     assert all(p.name != name for p in sources)

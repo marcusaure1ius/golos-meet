@@ -73,9 +73,8 @@ struct MeetingDetailView: View {
                 .padding(.horizontal, 56).padding(.vertical, 24)
             }
         }
-        .inspector(isPresented:$showingMemory) {
+        .projectMemoryInspector(isPresented:$showingMemory) {
             ProjectMemoryEntry(meetingID:meeting.id,onSettings:onSettings).id(meeting.id)
-                .inspectorColumnWidth(min:380,ideal:460,max:600)
         }
         .task(id: meeting.id) {
             transcript = library.transcript(for: meeting.id)
@@ -209,8 +208,7 @@ struct MeetingDetailView: View {
             actions
             HStack {
                 MeetingProjectButton(meetingID: meeting.id, meetingTitle: liveMeeting.title)
-                Button { showingMemory.toggle() } label: { Label("Контекст проекта",systemImage:"sidebar.right") }
-                    .buttonStyle(GhostButton()).accessibilityIdentifier("meeting.memory")
+                ProjectMemoryOpenButton { showingMemory.toggle() }
             }
             if let assignments = ProductionAssignments.shared {
                 MeetingAssignmentPanel(assignments: assignments, meetingID: meeting.id, meetingTitle: liveMeeting.title).id(meeting.id)
