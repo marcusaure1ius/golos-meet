@@ -1,0 +1,134 @@
+[
+  {
+    "test": "QuestionUIFixtureLifecycleTests/storedCallbackCycleIsReleasedEvenAfterOperationAlreadyFinished()",
+    "scope": "868606D4-BAF6-417F-AA45-8C0AA8DC02F6",
+    "attachment": "E0FDBB89-5F0B-40A0-8D94-43CD6694A22E.json",
+    "sha256": "6de911c63b6c6aa5217bf8b43a6b0a4f017651f8e8dacb12058ef3334d7f8d45"
+  },
+  {
+    "test": "QuestionUIFixtureLifecycleTests/heldNoncooperativeOperationsAndCallbackCyclesFinishBeforeUnlink(kind:exit:)",
+    "scope": "5BCDE4D6-A82B-438E-A692-7C58A8E41AB8",
+    "attachment": "93A6EC2B-3DFE-41D7-B81E-AE0A6DA27F56.json",
+    "sha256": "e6fa18d6d344a13626cf9ee789ce4c996bcaeb5ef03053faec9966f0879b6de3"
+  },
+  {
+    "test": "QuestionUIFixtureLifecycleTests/heldNoncooperativeOperationsAndCallbackCyclesFinishBeforeUnlink(kind:exit:)",
+    "scope": "168D465C-6D05-4CBF-8EFE-03111E6D0038",
+    "attachment": "50D00035-3B11-4CD5-A821-B2EDEF907D0B.json",
+    "sha256": "1522378e29330b300a41a9bcc95c9a82ba7e7bd722382e8ab105f8f1e3a8f83c"
+  },
+  {
+    "test": "QuestionUIFixtureLifecycleTests/heldNoncooperativeOperationsAndCallbackCyclesFinishBeforeUnlink(kind:exit:)",
+    "scope": "A4C48211-93F0-48DC-818C-0A1D15061050",
+    "attachment": "B741DCB3-A8B1-45A6-9E55-1A583FF9462C.json",
+    "sha256": "15b17b8dc66e8fae6d6f6d4e6d07805c1e4ad235e4d914b99d00473a28228499"
+  },
+  {
+    "test": "QuestionUIFixtureLifecycleTests/heldNoncooperativeOperationsAndCallbackCyclesFinishBeforeUnlink(kind:exit:)",
+    "scope": "717C589C-679A-4BC2-9B2D-74C1B86E443D",
+    "attachment": "81AC2299-720A-4569-929B-25D43F54D169.json",
+    "sha256": "0cbcffbc9b07ea080ff86c75828696ccb1e561953967970ac560deff4f23bf97"
+  },
+  {
+    "test": "QuestionUIFixtureLifecycleTests/heldNoncooperativeOperationsAndCallbackCyclesFinishBeforeUnlink(kind:exit:)",
+    "scope": "EE43F720-AEE7-4290-A2AF-2430AF5478E2",
+    "attachment": "405A0FBC-3262-4F57-B368-17ABC4BA4B58.json",
+    "sha256": "a76338074b3f37a64b4202adccc565cb330dffd15e793b529fef2729503dc4fa"
+  },
+  {
+    "test": "QuestionUIFixtureLifecycleTests/heldNoncooperativeOperationsAndCallbackCyclesFinishBeforeUnlink(kind:exit:)",
+    "scope": "9F09CCD3-4061-4605-B04A-1BFB5433BBC4",
+    "attachment": "9305F4DB-854A-4C92-A8F3-7BD234E682D0.json",
+    "sha256": "639b798b5e84e8798c239fb59bc8e8d67bbb4b891760875a8542ccb1a5448b27"
+  },
+  {
+    "test": "KnowledgeQuestionModelTests/actualModelPreparesLocallyThenExplicitConsentSendsAndSourceOpensWithoutAutoplay()",
+    "scope": "93577A58-4448-4FCF-B629-2B16D0572DBC",
+    "attachment": "3CEE23D5-DE7C-4186-A9B3-2367CE2AC09E.json",
+    "sha256": "d8117a47966104ae5ce85b4bf4d32ba185ba5f3a283dff0649e11fee2e384991"
+  },
+  {
+    "test": "KnowledgeQuestionModelTests/localOnlyOwnerCannotBeOverriddenAndOnlyExplicitSettingsChangeIsPersisted()",
+    "scope": "C8D2380C-EAF6-4A0C-9F13-94F58B045DD2",
+    "attachment": "4B58F97D-621F-4737-AE9A-1E5EC70274F2.json",
+    "sha256": "89bfe60c3595cae12b001879291e2fa216ffa7d31324e4c0b197282454b930f7"
+  },
+  {
+    "test": "KnowledgeQuestionModelTests/longQuestionIsKeptWholeAndExplicitShortSearchIsRequiredLocally()",
+    "scope": "81F10E9E-0950-46BC-A204-204BCCC28CA9",
+    "attachment": "6A5B444E-A7BD-4044-BF7D-8266B96CCFC9.json",
+    "sha256": "6b8a2a5e8a35cd4f0d17909acfde682c1495460c74fad1137cbf96d1db6291bf"
+  },
+  {
+    "test": "KnowledgeQuestionModelTests/delayedRetrievalAndIndexEventsAreAlsoFenced()",
+    "scope": "1660E826-443D-43F3-A760-2DB6948C92A5",
+    "attachment": "9FA1568D-0CC1-46B2-A827-658083907D40.json",
+    "sha256": "0489069ec4fc7cfa9fb8d3c1c2ae3990aa122b95ef468b21bc07942ebdd9ea9a"
+  },
+  {
+    "test": "KnowledgeQuestionModelTests/failedOpeningClearsOldAnswerInsteadOfPresentingChangedSource()",
+    "scope": "928CB6A0-DC49-417E-868D-DE0DCD436AEB",
+    "attachment": "33F9B888-53F3-4CE7-B130-8F7FD933EF02.json",
+    "sha256": "d77939c3906d67148c721039cd0229e38199ad2718afb84352de37b2d3892a2a"
+  },
+  {
+    "test": "KnowledgeQuestionModelTests/delayedReplyCannotReappearAfterUIChange(_:)",
+    "scope": "C93CAE7E-BA19-4B67-86A3-780B25962DB3",
+    "attachment": "C7339E6F-6A98-4D3F-B7D5-806CA80F8807.json",
+    "sha256": "21aae2142c29a5eb5a5c20394d09fa4ee2af80acaad093423a65161e8e21617a"
+  },
+  {
+    "test": "KnowledgeQuestionModelTests/delayedReplyCannotReappearAfterUIChange(_:)",
+    "scope": "646B0BEB-EED8-4361-8E83-A07A73F219C6",
+    "attachment": "0CFA745A-61E4-40EE-98FD-55DA483714C0.json",
+    "sha256": "32bf6ed2f45aff4b81424114674547d224e485f3cf9a5890d7580116171169a2"
+  },
+  {
+    "test": "KnowledgeQuestionModelTests/delayedReplyCannotReappearAfterUIChange(_:)",
+    "scope": "E1BF6AB5-5F77-46C1-9500-C26B91E352B8",
+    "attachment": "8B1EE60C-B8CF-45F3-A45E-5FB4269D368F.json",
+    "sha256": "4481d7def3a9ae3ee44c30bb65e97598af5f25fa794df6a2d27b4ec564d2028e"
+  },
+  {
+    "test": "KnowledgeQuestionModelTests/delayedReplyCannotReappearAfterUIChange(_:)",
+    "scope": "DFFF412B-8B9F-43C9-9BCA-BE77726BF91F",
+    "attachment": "F5C57845-E4A0-4D8C-8969-28117EB098F7.json",
+    "sha256": "fd29a1dc84d9e34d1d488312481ebdfee0a2a5d0ef5819d29e01733edb4ac5ec"
+  },
+  {
+    "test": "KnowledgeQuestionModelTests/errorsAndInsufficientEvidenceHaveExplicitStateAndRetryPreparesNewConsent(_:)",
+    "scope": "B5233460-BCAD-4AE1-AAA1-5CD7E2F95C61",
+    "attachment": "B37F85D8-DD06-4885-9461-3883E81A1AA6.json",
+    "sha256": "5e9533fb25982c7548c7c4e59293c088cd52d0f63b2f155443dd5e3390d5a2cb"
+  },
+  {
+    "test": "KnowledgeQuestionModelTests/errorsAndInsufficientEvidenceHaveExplicitStateAndRetryPreparesNewConsent(_:)",
+    "scope": "47518308-C73F-4B01-AE95-B62AD06AFB1C",
+    "attachment": "21C1E4AB-A4A2-4533-B777-6A5DB98808BB.json",
+    "sha256": "e0a7aed1fa9eb65c658d43330f694bc03604ef0497bd6702ee23acf602b42dfc"
+  },
+  {
+    "test": "KnowledgeQuestionModelTests/errorsAndInsufficientEvidenceHaveExplicitStateAndRetryPreparesNewConsent(_:)",
+    "scope": "23B7ED54-A9A0-4AB2-ACF2-C3A6FAA8E4E7",
+    "attachment": "A005C42F-C137-4C32-AD69-9215D33CE03F.json",
+    "sha256": "89486f578743bd071c35465ded52285cd055294924f2aa0caf90b8419c4615db"
+  },
+  {
+    "test": "KnowledgeQuestionModelTests/errorsAndInsufficientEvidenceHaveExplicitStateAndRetryPreparesNewConsent(_:)",
+    "scope": "A4848649-63BB-4CBB-81C6-8DD6553F2C39",
+    "attachment": "C36D0D68-1E3A-40C8-9634-EFEB0B5331B8.json",
+    "sha256": "06e356b8637c1ae89a78f45866a13ea66fbceefcbd55a38d3408e8d3adeae2eb"
+  },
+  {
+    "test": "KnowledgeQuestionModelTests/errorsAndInsufficientEvidenceHaveExplicitStateAndRetryPreparesNewConsent(_:)",
+    "scope": "20CFAE4E-2624-48C6-9DAF-A5091771305F",
+    "attachment": "232E1440-DD75-457F-867B-004D28CB74C6.json",
+    "sha256": "f9cd69588b0a43a908e7ec101110c434ee0a81a81c40f028f9ad920be403beca"
+  },
+  {
+    "test": "KnowledgeQuestionModelTests/errorsAndInsufficientEvidenceHaveExplicitStateAndRetryPreparesNewConsent(_:)",
+    "scope": "34E4E4F2-D23B-4E92-98A9-DF152292F73F",
+    "attachment": "17A24BEB-2B46-4962-AF72-01F9FD85458A.json",
+    "sha256": "9d8662920be5551da04722503344e5a49872bded1774b0d2d47a1d323a5b7856"
+  }
+]

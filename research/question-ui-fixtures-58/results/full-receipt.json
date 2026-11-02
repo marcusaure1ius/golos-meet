@@ -1,0 +1,20 @@
+{
+  "command": [
+    "make",
+    "check",
+    "DERIVED_DATA=/private/tmp/golos58qui-derived"
+  ],
+  "cwd": "<user-home>/.codex/worktrees/58-question-ui-fixture-lifecycle/golos-meet",
+  "source_sha256": {
+    "golos-meetTests/KnowledgeQuestionModelTests.swift": "e2deb02be95885376eae787dbe67eb683593d8c5ebba0587c20bf338eeb11052"
+  },
+  "base": "7be254c4a1eceb28755ad60d718a4ed72cb21179",
+  "safe_test_environment": {
+    "TEST_RUNNER_GOLOS_FIXTURE_EVIDENCE": "/private/tmp/golos58qui-full-events",
+    "TEST_RUNNER_GOLOS_MEET_E5_FOLDER": "/tmp/golos-embedding-native/e5-small",
+    "TEST_RUNNER_GOLOS_MEET_RENDER_TALK_SETTINGS": "1",
+    "TEST_RUNNER_GOLOS_MEET_MENU_PREVIEW": "1"
+  },
+  "exit_code": 2,
+  "elapsed": 85.67730441701133
+}
