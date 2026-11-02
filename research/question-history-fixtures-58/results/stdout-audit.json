@@ -1,0 +1,34 @@
+{
+  "before": {
+    "vnode_unlinked_lines": 55,
+    "families": {
+      "question-service": 32,
+      "memory-history": 23
+    },
+    "extended6922_lines": 0
+  },
+  "retain": {
+    "vnode_unlinked_lines": 0,
+    "families": {},
+    "extended6922_lines": 0
+  },
+  "after": {
+    "vnode_unlinked_lines": 0,
+    "families": {},
+    "extended6922_lines": 0
+  },
+  "controls": {
+    "vnode_unlinked_lines": 0,
+    "families": {},
+    "extended6922_lines": 0
+  },
+  "full": {
+    "vnode_unlinked_lines": 39,
+    "families": {
+      "knowledge-search": 7,
+      "assignment-fixture": 18,
+      "questions-ui": 14
+    },
+    "extended6922_lines": 0
+  }
+}

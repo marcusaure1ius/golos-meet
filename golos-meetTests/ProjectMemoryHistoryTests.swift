@@ -11,12 +11,15 @@ import Testing
     init() throws {
         root = FileManager.default.temporaryDirectory.appendingPathComponent("memory-history-\(UUID())")
         try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
+        let scope = try #require(SQLiteFixtureScope.current)
+        scope.register(root: root)
         store = ProjectStore(url: root.appendingPathComponent("knowledge.sqlite"))
+        scope.register(store: store)
         importer = DocumentImporter(store: store, root: root.appendingPathComponent("copies"))
         service = ProjectMemoryHistoryService(store: store, meetingsRoot: root.appendingPathComponent("meetings"), documentsRoot: root.appendingPathComponent("copies"))
         search = KnowledgeSearchService(store: store, meetingsRoot: root.appendingPathComponent("meetings"), documentsRoot: root.appendingPathComponent("copies"), queryEmbedding: { _ in throw LocalIndexingError.missingModel })
     }
-    func cleanup() { try? FileManager.default.removeItem(at: root) }
+    func cleanup() { SQLiteFixtureScope.current?.note("history-fixture-body-cleanup") }
     func project(_ name: String = "Север", policy: ProjectCloudPolicy = .allowSelectedContext) async throws -> UUID {
         let p = try await store.createProject(name: name); try await store.setCloudPolicy(policy, for: p.id); return p.id
     }
@@ -86,7 +89,7 @@ import Testing
     static func day(_ value: String) -> Date { ISO8601DateFormatter().date(from:value+"T00:00:00Z")! }
 }
 
-@MainActor @Suite struct ProjectMemoryHistoryTests {
+@MainActor @Suite(SQLiteFixtureTrait()) struct ProjectMemoryHistoryTests {
     @Test func sequentialMeetingsKeepBothDatedAssertionsAndRealStructuredDeadlineConflict() async throws {
         let f = try MemoryFixture(); defer { f.cleanup() }
         let p = try await f.project()
@@ -379,9 +382,67 @@ import Testing
         let cursor = try #require(one.nextBeforeSequence)
         let two = try await f.service.history(projectID:p,beforeSequence:cursor,limit:1)
         #expect(two.entries.first?.event.id == first && two.nextBeforeSequence == nil)
-        let db = try ProjectDatabase(url:f.root.appendingPathComponent("knowledge.sqlite"))
-        #expect(throws:ProjectStoreError.self) { try db.execute("UPDATE memory_events SET body='{}'") }
-        #expect(throws:ProjectStoreError.self) { try db.execute("DELETE FROM memory_events") }
+        let scope = try #require(SQLiteFixtureScope.current)
+        let (db, connection) = try scope.openConnection(at: f.root.appendingPathComponent("knowledge.sqlite"))
+        scope.expectingFailure(connection: connection, phase: .step, operation: .update, result: 19, extended: 1811) {
+            #expect(throws:ProjectStoreError.self) { try db.execute("UPDATE memory_events SET body='{}'") }
+        }
+        scope.expectingFailure(connection: connection, phase: .step, operation: .delete, result: 19, extended: 1811) {
+            #expect(throws:ProjectStoreError.self) { try db.execute("DELETE FROM memory_events") }
+        }
         #expect(try await f.service.history(projectID:p).entries.count == 2)
+    }
+}
+
+@MainActor @Suite struct MemoryHistoryFixtureLifecycleTests {
+    private enum BodyFailure: Error { case expected }
+    private func throwAfterOpeningHistory() async throws {
+        let f = try MemoryFixture(); defer { f.cleanup() }
+        _ = try await f.project()
+        throw BodyFailure.expected
+    }
+    @Test func throwingHistoryBodyPreservesErrorAndClosesStoreBeforeUnlink() async throws {
+        let scope = SQLiteFixtureScope(test: "history-throw-control")
+        try await SQLiteFixtureScope.$current.withValue(scope) {
+            try await ProjectDatabase.$lifecycleObserver.withValue({ scope.observe($0) }) {
+                await #expect(throws: BodyFailure.expected) { try await throwAfterOpeningHistory() }
+                try await scope.finish()
+            }
+        }
+        #expect(scope.trace.contains { $0["stage"] == "closed" && $0["result"] == "0" })
+        #expect(scope.trace.contains { $0["stage"] == "root-removed" && $0["exists"] == "false" })
+    }
+    private func produceExpectedForeignAndLateFaults(_ scope: SQLiteFixtureScope) async throws {
+        let f = try MemoryFixture(); defer { f.cleanup() }
+        let p = try await f.project()
+        _ = try await f.meeting("one", text: "Релиз в ноябре", owners: [p])
+        let hit = try await f.hit("one", project: p)
+        let lease = try await f.service.begin(projectID: p, producerKey: "fault-boundary-control", hits: [hit])
+        _ = try await f.service.publish([f.draft(hit)], lease: lease)
+        let url = f.root.appendingPathComponent("knowledge.sqlite")
+        let (owner, connection) = try scope.openConnection(at: url)
+        let (foreign, _) = try scope.openConnection(at: url)
+        scope.expectingFailure(connection: connection, phase: .step, operation: .update, result: 19, extended: 1811) {
+            // Same file, statement and code, but this connection is not authorized.
+            #expect(throws: ProjectStoreError.self) { try foreign.execute("UPDATE memory_events SET body='{}'") }
+            #expect(throws: ProjectStoreError.self) { try owner.execute("UPDATE memory_events SET body='{}'") }
+        }
+        // The same owner's error outside the asserted operation must also fail teardown.
+        #expect(throws: ProjectStoreError.self) { try owner.execute("UPDATE memory_events SET body='{}'") }
+        #expect(try await f.service.history(projectID: p).entries.count == 1)
+    }
+    @Test func exactJournalFaultDoesNotAuthorizeForeignConnectionOrLaterError() async throws {
+        let scope = SQLiteFixtureScope(test: "fault-boundary-control")
+        try await SQLiteFixtureScope.$current.withValue(scope) {
+            try await ProjectDatabase.$lifecycleObserver.withValue({ scope.observe($0) }) {
+                try await produceExpectedForeignAndLateFaults(scope)
+                // This is the explicit negative control: native resources still
+                // close and unlink, while the two unexpected diagnostics fail it.
+                await #expect(throws: SQLiteFixtureScope.FixtureError.sqliteFailures) { try await scope.finish() }
+            }
+        }
+        #expect(scope.trace.filter { $0["stage"] == "sqlite-failure" }.count == 3)
+        #expect(scope.trace.filter { $0["stage"] == "expected-sqlite-failure" }.count == 1)
+        #expect(scope.trace.contains { $0["stage"] == "root-removed" && $0["exists"] == "false" })
     }
 }
