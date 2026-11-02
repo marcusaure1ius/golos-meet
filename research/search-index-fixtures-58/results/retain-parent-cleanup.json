@@ -1,0 +1,74 @@
+[
+  {
+    "root": "index-service-5780E67F-B89A-431F-AEE6-ADBCBA18B94E",
+    "removed_after_host_exit": true
+  },
+  {
+    "root": "knowledge-search-DDD2C0B0-A9C4-4926-B326-469B496C2D74",
+    "removed_after_host_exit": true
+  },
+  {
+    "root": "knowledge-search-33121C85-F111-4E83-9DB5-9D0D1A8D27B4",
+    "removed_after_host_exit": true
+  },
+  {
+    "root": "knowledge-search-0FDE415E-AA1B-46AF-90CD-0249D4D475D3",
+    "removed_after_host_exit": true
+  },
+  {
+    "root": "index-service-A5C673EF-0090-461F-8573-537AB2004132",
+    "removed_after_host_exit": true
+  },
+  {
+    "root": "knowledge-search-D6A8501B-1D0E-49C5-991E-D0A580F3EC04",
+    "removed_after_host_exit": true
+  },
+  {
+    "root": "index-service-7687A63D-8A3C-4434-AF0E-4AFEA97A26FB",
+    "removed_after_host_exit": true
+  },
+  {
+    "root": "knowledge-search-FDE1CEB4-5321-42AC-9150-CB62A915B567",
+    "removed_after_host_exit": true
+  },
+  {
+    "root": "knowledge-search-4B4B8FCA-4B7F-4E01-9ABE-6F334812C7DF",
+    "removed_after_host_exit": true
+  },
+  {
+    "root": "knowledge-search-A13336D6-6A73-4C39-83CB-750B2B0E22A9",
+    "removed_after_host_exit": true
+  },
+  {
+    "root": "knowledge-search-9FA9726F-3349-4654-9AC9-A6662924E7E5",
+    "removed_after_host_exit": true
+  },
+  {
+    "root": "index-service-2B74009A-07D1-4EA3-A52B-BF0037F6EE76",
+    "removed_after_host_exit": true
+  },
+  {
+    "root": "index-service-2D7688AE-952B-4764-A30B-90DF85B8999E",
+    "removed_after_host_exit": true
+  },
+  {
+    "root": "knowledge-search-9DF04811-643D-425C-9DC5-DB07F4E253E6",
+    "removed_after_host_exit": true
+  },
+  {
+    "root": "index-service-04964F93-6E99-4059-8FA1-4439D7C48B64",
+    "removed_after_host_exit": true
+  },
+  {
+    "root": "knowledge-search-C7BFA217-5CC2-41D9-AC47-5B85D639D0D6",
+    "removed_after_host_exit": true
+  },
+  {
+    "root": "index-service-F8CE3BBC-6F7A-4830-B519-6F2843DBAB3F",
+    "removed_after_host_exit": true
+  },
+  {
+    "root": "knowledge-search-1E7A75D8-0A98-44C2-98F5-4ED284E13883",
+    "removed_after_host_exit": true
+  }
+]

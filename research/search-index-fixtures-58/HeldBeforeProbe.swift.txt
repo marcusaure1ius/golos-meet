@@ -1,0 +1,28 @@
+
+@MainActor extension KnowledgeSearchTests {
+    @Test func heldSearchBeforeCleanupRecordsActualLateWriteOutcome() async throws {
+        let f = try Fixture()
+        _ = try await f.document("Релиз транспорт")
+        await f.indexer.start(); await f.indexer.waitUntilIdle()
+        let entered = IndexGate(), release = IndexGate(), store = f.store, encoder = f.encoder
+        let observer = SearchIndexObservation.current
+        let search = f.service(query: { text in
+            await entered.signal(); await release.wait()
+            observer?.note("late-write-enter", ["rootExists":String(FileManager.default.fileExists(atPath:f.root.path))])
+            do {
+                _ = try await store.createProject(name: "Synthetic late search write")
+                observer?.note("late-write-succeeded")
+            } catch { observer?.note("late-write-threw", ["errorType":String(reflecting:type(of:error))]) }
+            return try await encoder.embed([text], purpose: .query)[0]
+        })
+        let pending = Task { try await search.search("релиз", scope: .all) }
+        await entered.wait()
+        await f.cleanup()
+        observer?.note("cleanup-returned-while-query-held")
+        await release.signal()
+        switch await pending.result {
+        case .success: observer?.note("held-query-succeeded")
+        case .failure: observer?.note("held-query-threw")
+        }
+    }
+}
