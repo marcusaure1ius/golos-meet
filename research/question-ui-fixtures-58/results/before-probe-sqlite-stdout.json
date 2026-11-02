@@ -1,0 +1,4 @@
+[
+  "2026-11-02 08:04:46.596833+0300 Golos Meet[43496:7773943] [logging] BUG IN CLIENT OF libsqlite3.dylib: database integrity compromised by API violation: vnode unlinked while in use: <synthetic-temp>/questions-ui-62336AA9-F889-4E16-B1EF-D574261B7346/knowledge.sqlite",
+  "2026-11-02 08:04:46.598092+0300 Golos Meet[43496:7773943] [library] SQLite failure {\"connection\":\"74328F29-2148-46FE-B9AF-C9D15AA15148\",\"elapsedMilliseconds\":0.022916647139936686,\"extended\":6922,\"operation\":\"beginImmediate\",\"phase\":\"step\",\"result\":10,\"transaction\":\"4828C9C8-3705-4481-B341-9D120492C461\",\"transactionElapsedMilliseconds\":0.033374992199242115,\"transactionPhase\":\"begin\"}"
+]
