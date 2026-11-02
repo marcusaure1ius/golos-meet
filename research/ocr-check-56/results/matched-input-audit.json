@@ -1,0 +1,34 @@
+{
+  "same_driver": true,
+  "same_swift_target": "arm64-apple-macos14.4",
+  "same_deadline_seconds": 90,
+  "vision_images_verified": true,
+  "case_image_hashes": {
+    "20": [
+      "0e5e0d92af32c8dbcf4f4e4055fa450fde53c242363af02785df70f5ed995831"
+    ],
+    "26": [
+      "ed81cb04fddb07561b7087d54646c8dda614c678115347c82f8fd2c0df7c7b87"
+    ],
+    "distinct": [
+      "14a5184eacdcb275a78cf4ed069202a3158961339f61bc863e7b8b334b4fea52"
+    ],
+    "duplicate": [
+      "06a03cc4a095f7a057faa63febaca970e1b3cce558da4e203a2c41b8ae35a90f"
+    ],
+    "mixed": [
+      "facb4e7b8aa93c9cdd9e29c8ba27942099dcb671963b4b68c5e4a85ad7b6017c"
+    ],
+    "native": [
+      "519c66ffa5ee209d22d22f97216f5e539515783538256c5fe34b955e3dd6445d"
+    ],
+    "png-en": [
+      "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0"
+    ],
+    "png-ru": [
+      "e1183c6d804b89a27f0146202d71c2569fe688e26399387fe6255f5e0251c0f9"
+    ]
+  },
+  "reference_timeout": true,
+  "fixed_successes": 32
+}

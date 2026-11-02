@@ -25,8 +25,22 @@ nonisolated enum DocumentExtractionError: LocalizedError, Equatable {
     }
 }
 
-/// File parsing and OCR are serialized off the main actor. No network dependency.
+/// Blocking framework work must not occupy Swift's cooperative executor.
+/// A separate serial queue preserves this actor's ordering; other extractor
+/// instances still run independently. No global OCR lock or request retry.
+private nonisolated final class DocumentExtractionExecutor: SerialExecutor {
+    private let queue = DispatchQueue(label: "com.golos.meet.document-extraction", qos: .utility)
+    func enqueue(_ job: consuming ExecutorJob) {
+        let job = UnownedJob(job)
+        queue.async { [self] in job.runSynchronously(on: asUnownedSerialExecutor()) }
+    }
+}
+
+/// File parsing and OCR are serialized per instance off the main actor. No network dependency.
 actor LocalDocumentExtractor {
+    private nonisolated let extractionExecutor = DocumentExtractionExecutor()
+    nonisolated var unownedExecutor: UnownedSerialExecutor { extractionExecutor.asUnownedSerialExecutor() }
+
     static let maximumBytes = 50 * 1024 * 1024
 
     func extract(from url: URL, progress: (@Sendable (Int, Int) -> Void)? = nil) throws -> ExtractedDocument {
