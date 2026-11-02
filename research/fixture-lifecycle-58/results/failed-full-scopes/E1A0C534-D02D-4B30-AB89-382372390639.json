@@ -1,0 +1,57 @@
+[
+  {
+    "stage" : "scope-created",
+    "test" : "defaultProducerHooksRunWithoutViewsAndTranscriptDoesNotWaitForLLMOrIndexing()",
+    "uptime" : "332776.53741333337"
+  },
+  {
+    "root" : "index-hooks-90208022-953A-4223-8CD3-79E630CB66CF",
+    "stage" : "root-owned",
+    "uptime" : "332776.55172208336"
+  },
+  {
+    "stage" : "store-owned",
+    "uptime" : "332776.551735875"
+  },
+  {
+    "connection" : "36712FBD-4BC5-49F6-9C63-CAAFA4684D23",
+    "root" : "index-hooks-90208022-953A-4223-8CD3-79E630CB66CF",
+    "stage" : "opened",
+    "uptime" : "332776.6630307083"
+  },
+  {
+    "diagnostic" : "{\"connection\":\"DC741463-D12D-48C6-8D24-C27D398AAF34\",\"elapsedMilliseconds\":0.0207500415854156,\"extended\":6922,\"operation\":\"update\",\"phase\":\"step\",\"result\":10}",
+    "stage" : "sqlite-failure",
+    "uptime" : "332790.30642475"
+  },
+  {
+    "diagnostic" : "{\"connection\":\"DC741463-D12D-48C6-8D24-C27D398AAF34\",\"elapsedMilliseconds\":0.004374946001917124,\"extended\":6922,\"operation\":\"beginImmediate\",\"phase\":\"step\",\"result\":10,\"transaction\":\"766E80AF-E553-434A-B65C-4377248075C9\",\"transactionElapsedMilliseconds\":0.008374976459890604,\"transactionPhase\":\"begin\"}",
+    "stage" : "sqlite-failure",
+    "uptime" : "332790.3064840417"
+  },
+  {
+    "diagnostic" : "{\"connection\":\"DC741463-D12D-48C6-8D24-C27D398AAF34\",\"elapsedMilliseconds\":0.007458322215825319,\"extended\":6922,\"operation\":\"beginImmediate\",\"phase\":\"step\",\"result\":10,\"transaction\":\"F15872DE-1044-4C36-9744-73546C30857C\",\"transactionElapsedMilliseconds\":0.01087499549612403,\"transactionPhase\":\"begin\"}",
+    "stage" : "sqlite-failure",
+    "uptime" : "332791.10954308335"
+  },
+  {
+    "stage" : "index-stop-requested",
+    "uptime" : "332793.1204884167"
+  },
+  {
+    "stage" : "body-finished",
+    "uptime" : "332794.41071208334"
+  },
+  {
+    "connection" : "36712FBD-4BC5-49F6-9C63-CAAFA4684D23",
+    "result" : "0",
+    "stage" : "closed",
+    "uptime" : "332794.6726735"
+  },
+  {
+    "exists" : "false",
+    "root" : "index-hooks-90208022-953A-4223-8CD3-79E630CB66CF",
+    "stage" : "root-removed",
+    "uptime" : "332794.6746835"
+  }
+]

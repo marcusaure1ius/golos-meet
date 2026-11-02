@@ -1,0 +1,74 @@
+[
+  {
+    "stage" : "scope-created",
+    "test" : "externalModelRetirementResetsOnlyDependentCoverageAndKeepsOwnBatchHistory(_:_:)",
+    "uptime" : "332466.49431383336"
+  },
+  {
+    "root" : "memory-update-192DA8D0-8864-4DC8-9934-537AC565031B",
+    "stage" : "root-owned",
+    "uptime" : "332466.51736108336"
+  },
+  {
+    "stage" : "store-owned",
+    "uptime" : "332466.517378375"
+  },
+  {
+    "connection" : "B2DCD664-E537-4686-94EB-10FF0A31640B",
+    "root" : "memory-update-192DA8D0-8864-4DC8-9934-537AC565031B",
+    "stage" : "opened",
+    "uptime" : "332466.53806962504"
+  },
+  {
+    "connection" : "8B59E320-5A65-48E7-8593-E87BE80D7029",
+    "root" : "memory-update-192DA8D0-8864-4DC8-9934-537AC565031B",
+    "stage" : "opened",
+    "uptime" : "332466.91687195835"
+  },
+  {
+    "connection" : "6A80FCAC-1697-4BCA-8AA1-4020BE729BC0",
+    "root" : "memory-update-192DA8D0-8864-4DC8-9934-537AC565031B",
+    "stage" : "opened",
+    "uptime" : "332466.9184695417"
+  },
+  {
+    "connection" : "57B618EF-4EB0-48BC-8EFC-46312CF1672D",
+    "root" : "memory-update-192DA8D0-8864-4DC8-9934-537AC565031B",
+    "stage" : "opened",
+    "uptime" : "332467.10092033335"
+  },
+  {
+    "connection" : "57B618EF-4EB0-48BC-8EFC-46312CF1672D",
+    "result" : "0",
+    "stage" : "closed",
+    "uptime" : "332467.10644141666"
+  },
+  {
+    "connection" : "6A80FCAC-1697-4BCA-8AA1-4020BE729BC0",
+    "result" : "0",
+    "stage" : "closed",
+    "uptime" : "332467.10650675005"
+  },
+  {
+    "connection" : "8B59E320-5A65-48E7-8593-E87BE80D7029",
+    "result" : "0",
+    "stage" : "closed",
+    "uptime" : "332467.10656233336"
+  },
+  {
+    "connection" : "B2DCD664-E537-4686-94EB-10FF0A31640B",
+    "result" : "0",
+    "stage" : "closed",
+    "uptime" : "332467.10663775"
+  },
+  {
+    "stage" : "body-finished",
+    "uptime" : "332467.1066655417"
+  },
+  {
+    "exists" : "false",
+    "root" : "memory-update-192DA8D0-8864-4DC8-9934-537AC565031B",
+    "stage" : "root-removed",
+    "uptime" : "332467.108108"
+  }
+]

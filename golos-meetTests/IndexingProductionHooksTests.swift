@@ -11,10 +11,11 @@ private struct DelayedHookLLM: ChatCompleter {
     }
 }
 
-@MainActor @Suite struct IndexingProductionHooksTests {
+@MainActor @Suite(SQLiteFixtureTrait()) struct IndexingProductionHooksTests {
     private func root() throws -> URL {
         let root = FileManager.default.temporaryDirectory.appendingPathComponent("index-hooks-\(UUID())")
         try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
+        try #require(SQLiteFixtureScope.current).register(root: root)
         return root
     }
     private func until(_ label: String = "indexing state", _ condition: @MainActor () async throws -> Bool) async throws {
@@ -28,8 +29,9 @@ private struct DelayedHookLLM: ChatCompleter {
     }
 
     @Test func defaultProducerHooksRunWithoutViewsAndTranscriptDoesNotWaitForLLMOrIndexing() async throws {
-        let root = try root(); defer { try? FileManager.default.removeItem(at: root) }
+        let root = try root()
         let store = ProjectStore(url: root.appendingPathComponent("knowledge.sqlite"))
+        SQLiteFixtureScope.current?.register(store: store)
         let entered = IndexGate(), release = IndexGate()
         let encoder = LifecycleEncoder(entered: entered, release: release)
         let candidate = LocalEmbeddingCandidate(model: .init(id: encoder.modelID, dimensions: 2), folder: nil, load: { encoder })
@@ -37,7 +39,7 @@ private struct DelayedHookLLM: ChatCompleter {
         // The actual default process-local producer channel, but a private
         // controller/store/root. No SwiftUI view or production singleton exists.
         let indexing = KnowledgeIndexing(service: service, installer: .init(root: root.appendingPathComponent("models")), center: .default)
-        defer { indexing.stop() }
+        defer { SQLiteFixtureScope.current?.note("index-stop-requested"); indexing.stop() }
         indexing.start(); indexing.start(); await service.waitUntilIdle()
         let importer = DocumentImporter(store: store, root: root.appendingPathComponent("copies"))
         let queue = DocumentImportQueue(importer: importer, store: store)
@@ -73,14 +75,15 @@ private struct DelayedHookLLM: ChatCompleter {
     }
 
     @Test func actualFileMonitorReconcilesExternalAtomicAndInPlaceTranscriptChangesWithoutUI() async throws {
-        let root = try root(); defer { try? FileManager.default.removeItem(at: root) }
+        let root = try root()
         let meetings = root.appendingPathComponent("meetings"), models = root.appendingPathComponent("models")
         let store = ProjectStore(url: root.appendingPathComponent("knowledge.sqlite")), encoder = LifecycleEncoder()
+        SQLiteFixtureScope.current?.register(store: store)
         let service = LocalIndexingService(store: store, meetingsRoot: meetings, inspect: {
             .init(model: .init(id: encoder.modelID, dimensions: 2), folder: nil, load: { encoder })
         })
         let indexing = KnowledgeIndexing(service: service, installer: .init(root: models), roots: (meetings, models))
-        defer { indexing.stop() }
+        defer { SQLiteFixtureScope.current?.note("index-stop-requested"); indexing.stop() }
         indexing.start()
         let folder = meetings.appendingPathComponent("external")
         try FileManager.default.createDirectory(at: folder, withIntermediateDirectories: true)
@@ -109,7 +112,7 @@ private struct DelayedHookLLM: ChatCompleter {
     }
 
     @Test func eventPathKeepsDeletedAliasesAndFinalSymlinkInsideWatchedPrefix() throws {
-        let root = try root(); defer { try? FileManager.default.removeItem(at: root) }
+        let root = try root()
         let watched = root.appendingPathComponent("meetings")
         let folder = watched.appendingPathComponent("external")
         try FileManager.default.createDirectory(at: folder, withIntermediateDirectories: true)

@@ -13,15 +13,17 @@ private actor NativeRuntimeLoads {
 
 /// Actual installer, local runtime, queue, SQLite, process-local import event
 /// and OS file monitor. Only pinned public weights and synthetic temp sources.
-@MainActor @Suite(.serialized) struct LocalIndexingNativeTests {
+@MainActor @Suite(.serialized, SQLiteFixtureTrait()) struct LocalIndexingNativeTests {
     @Test(.enabled(if: ProcessInfo.processInfo.environment["GOLOS_MEET_E5_FOLDER"] != nil))
     func nativeQueueResumesAfterInstallationWatchesTranscriptAndKeepsSameModelCache() async throws {
         let weights = URL(fileURLWithPath: try #require(ProcessInfo.processInfo.environment["GOLOS_MEET_E5_FOLDER"]))
         let root = FileManager.default.temporaryDirectory.appendingPathComponent("native-index-queue-\(UUID())")
         try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
-        defer { try? FileManager.default.removeItem(at: root) }
+        let scope = try #require(SQLiteFixtureScope.current)
+        scope.register(root: root)
         let meetings = root.appendingPathComponent("meetings"), models = root.appendingPathComponent("models")
         let store = ProjectStore(url: root.appendingPathComponent("knowledge.sqlite"))
+        scope.register(store: store)
         let installer = EmbeddingModelInstaller(root: models), counter = NativeRuntimeLoads()
         let service = LocalIndexingService(store: store, meetingsRoot: meetings, inspect: {
             guard let candidate = try await LocalEmbeddingCandidate.installed(using: installer), let folder = candidate.folder else { return nil }
