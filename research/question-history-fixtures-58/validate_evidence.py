@@ -63,7 +63,10 @@ assert all(x['extended6922_lines']==0 for x in audit.values())
 for kind in ['before','retain']:
  c=read(kind+'-receipt.json');assert c['ref']=='9dfdf8feecf83e94782c0e78acfdd0b2d920a37e'
  assert hashlib.sha256((r/(kind+'-observer.swift.txt')).read_bytes()).hexdigest()==c['observer_sha256']
-for path,expected in read('source-hashes.json').items():assert hashlib.sha256(Path(path).read_bytes()).hexdigest()==expected,path
+# This dataset belongs to the frozen pre-P2 author run, not the new helper.
+for path,expected in read('source-hashes.json').items():
+ historical=subprocess.check_output(['git','show','5446d7dfaff87f8cd97256340960b20dc293a874:'+path])
+ assert hashlib.sha256(historical).hexdigest()==expected,path
 for name,marker in [('KnowledgeQuestionServiceTests','@MainActor @Suite struct QuestionFixtureLifecycleTests'),('ProjectMemoryHistoryTests','@MainActor @Suite struct MemoryHistoryFixtureLifecycleTests')]:
  path='golos-meetTests/'+name+'.swift';old=subprocess.check_output(['git','show','9dfdf8feecf83e94782c0e78acfdd0b2d920a37e:'+path],text=True)
  current=Path(path).read_text().split(marker)[0]
@@ -73,4 +76,4 @@ assert not subprocess.check_output(['git','diff','--name-only','9dfdf8feecf83e94
 assert read('attachment-audit.json')['verified']==153
 print('Before55 roots unlinked with live handles/14 closes absent; after87 native closes before55 unlinks.')
 print('Faults19/1811 retained and exactly matched; foreign/late faults rejected; full437/612 passed with153 roots/246 closes.')
-print('Original assertions/application tree unchanged;153 actual attachments verified. Remaining39 unrelated vnode diagnostics preserved.')
+print('Historical5446d7d source/assertions and153 attachments verified. Current P2 results are separate; historical remaining39 diagnostics preserved.')

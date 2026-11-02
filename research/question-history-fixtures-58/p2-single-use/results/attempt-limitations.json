@@ -1,0 +1,7 @@
+{
+  "sandbox_targeted": "Exit74 before test execution: cache writes denied. Authorized targeted run completed.",
+  "infrastructure_full": "Exit2 during dependency build; no completed bundle reader (Info.plist absent), no tests started. Log preserved. No causal claim from incomplete log.",
+  "before_selector": "Succeeded command but selected0 tests; discarded as evidence. Entire frozen suite executed subsequently.",
+  "disk_pressure": "Data volume observed around1.8GiB free during infrastructure investigation; root separately observed ENOSPC. Per-OCR free-space telemetry missing. Completed full occurred in this pressure/recovery window; no claim ENOSPC explains earlier/current e5rt13.",
+  "reruns": "No completed red full repeated; no new build/OCR after coordinator pause. Mandatory gate after recovery remains separate."
+}

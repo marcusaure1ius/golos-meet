@@ -1,0 +1,126 @@
+import Foundation
+import Testing
+@testable import golos_meet
+
+@MainActor @Suite struct Reviewer60FaultProbes {
+    private enum Sentinel: Error { case body }
+    private func connectionBody(_ scope: SQLiteFixtureScope, _ body: (ProjectDatabase, UUID, ProjectDatabase) throws -> Void) throws {
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent("review60-fault-\(UUID())")
+        try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
+        scope.register(root: root)
+        let url = root.appendingPathComponent("knowledge.sqlite")
+        let (owner, id) = try scope.openConnection(at: url)
+        let (foreign, _) = try scope.openConnection(at: url)
+        try owner.execute("CREATE TABLE journal(value TEXT NOT NULL)")
+        try owner.execute("INSERT INTO journal VALUES ('original')")
+        try owner.execute("CREATE TRIGGER immutable_update BEFORE UPDATE ON journal BEGIN SELECT RAISE(ABORT, 'immutable'); END")
+        try owner.execute("CREATE TRIGGER immutable_delete BEFORE DELETE ON journal BEGIN SELECT RAISE(ABORT, 'immutable'); END")
+        try body(owner, id, foreign)
+        #expect(try owner.rows("SELECT value FROM journal") == [["original"]])
+    }
+    @Test(arguments: ["foreign", "late", "wrong-operation", "wrong-code"])
+    func narrowAllowanceRetainsUnexpectedNativeFault(_ mode: String) async throws {
+        let scope = SQLiteFixtureScope(test: "review60-\(mode)")
+        try connectionBody(scope) { owner, id, foreign in
+            if mode == "wrong-code" {
+                withKnownIssue("The explicitly mismatched expected code must record an issue") {
+                    scope.expectingFailure(connection: id, phase: .step, operation: .update, result: 19, extended: 1555) {
+                        #expect(throws: ProjectStoreError.self) { try owner.execute("UPDATE journal SET value='changed'") }
+                    }
+                }
+            } else {
+                scope.expectingFailure(connection: id, phase: .step, operation: .update, result: 19, extended: 1811) {
+                    if mode == "foreign" { #expect(throws: ProjectStoreError.self) { try foreign.execute("UPDATE journal SET value='foreign'") } }
+                    if mode == "wrong-operation" { #expect(throws: ProjectStoreError.self) { try owner.execute("DELETE FROM journal") } }
+                    #expect(throws: ProjectStoreError.self) { try owner.execute("UPDATE journal SET value='owner'") }
+                }
+                if mode == "late" { #expect(throws: ProjectStoreError.self) { try owner.execute("UPDATE journal SET value='late'") } }
+            }
+        }
+        await #expect(throws: SQLiteFixtureScope.FixtureError.sqliteFailures) { try await scope.finish() }
+        #expect(scope.trace.filter { $0["stage"] == "opened" }.count == 2)
+        #expect(scope.trace.filter { $0["stage"] == "closed" && $0["result"] == "0" }.count == 2)
+        #expect(scope.trace.contains { $0["stage"] == "root-removed" && $0["exists"] == "false" })
+    }
+    @Test(arguments: [0, 2])
+    func missingAndDuplicateFaultCannotPass(_ count: Int) async throws {
+        let scope = SQLiteFixtureScope(test: "review60-count-\(count)")
+        try connectionBody(scope) { owner, id, _ in
+            withKnownIssue("Zero or two actual native faults must reject an exact-one expectation") {
+                scope.expectingFailure(connection: id, phase: .step, operation: .update, result: 19, extended: 1811) {
+                    for _ in 0..<count { #expect(throws: ProjectStoreError.self) { try owner.execute("UPDATE journal SET value='changed'") } }
+                }
+            }
+        }
+        if count == 0 { try await scope.finish() }
+        else { await #expect(throws: SQLiteFixtureScope.FixtureError.sqliteFailures) { try await scope.finish() } }
+        #expect(!scope.trace.contains { $0["stage"] == "expected-sqlite-failure" })
+    }
+    @Test func errorUnwindPreservesBodyErrorAndClosesBothConnections() async throws {
+        let scope = SQLiteFixtureScope(test: "review60-error-unwind")
+        #expect(throws: Sentinel.body) {
+            try connectionBody(scope) { owner, id, _ in
+                try scope.expectingFailure(connection: id, phase: .step, operation: .update, result: 19, extended: 1811) {
+                    #expect(throws: ProjectStoreError.self) { try owner.execute("UPDATE journal SET value='changed'") }
+                    throw Sentinel.body
+                }
+            }
+        }
+        try await scope.finish()
+        #expect(scope.trace.filter { $0["stage"] == "expected-sqlite-failure" }.count == 1)
+        #expect(scope.trace.filter { $0["stage"] == "closed" && $0["result"] == "0" }.count == 2)
+    }
+    @Test func nestedExpectationsMustNotReuseAnAlreadyConsumedFault() async throws {
+        let scope = SQLiteFixtureScope(test: "review60-nested")
+        try connectionBody(scope) { owner, id, _ in
+            withKnownIssue("Outer expectation has no additional fault after the inner expectation consumed the sole fault") {
+                scope.expectingFailure(connection: id, phase: .step, operation: .update, result: 19, extended: 1811) {
+                    scope.expectingFailure(connection: id, phase: .step, operation: .update, result: 19, extended: 1811) {
+                        #expect(throws: ProjectStoreError.self) { try owner.execute("UPDATE journal SET value='changed'") }
+                    }
+                }
+            }
+        }
+        try await scope.finish()
+        #expect(scope.trace.filter { $0["stage"] == "sqlite-failure" }.count == 1)
+        #expect(scope.trace.filter { $0["stage"] == "expected-sqlite-failure" }.count == 1)
+    }
+}
+
+@MainActor extension Reviewer60FaultProbes {
+    private func delayedNativeFault(_ scope: SQLiteFixtureScope, index: Int) async throws {
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent("review60-parallel-\(UUID())")
+        try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
+        scope.register(root: root)
+        let (db, id) = try scope.openConnection(at: root.appendingPathComponent("knowledge.sqlite"))
+        try db.execute("CREATE TABLE journal(value INTEGER)")
+        try db.execute("INSERT INTO journal VALUES (\(index))")
+        try db.execute("CREATE TRIGGER immutable_update BEFORE UPDATE ON journal BEGIN SELECT RAISE(ABORT, 'immutable'); END")
+        for _ in 0..<12 { await Task.yield() }
+        #expect(SQLiteFixtureScope.current === scope)
+        scope.expectingFailure(connection: id, phase: .step, operation: .update, result: 19, extended: 1811) {
+            #expect(throws: ProjectStoreError.self) { try db.execute("UPDATE journal SET value=-1") }
+        }
+        #expect(try db.rows("SELECT value FROM journal") == [[String(index)]])
+    }
+    private func parallelScope(_ index: Int) async throws -> [String] {
+        let scope = SQLiteFixtureScope(test: "review60-parallel-\(index)")
+        try await SQLiteFixtureScope.$current.withValue(scope) {
+            try await delayedNativeFault(scope, index: index)
+            try await scope.finish()
+        }
+        #expect(scope.trace.filter { $0["stage"] == "expected-sqlite-failure" }.count == 1)
+        #expect(scope.trace.filter { $0["stage"] == "closed" && $0["result"] == "0" }.count == 1)
+        #expect(scope.trace.filter { $0["stage"] == "root-removed" && $0["exists"] == "false" }.count == 1)
+        return scope.trace.compactMap { $0["stage"] == "opened" ? $0["connection"] : nil }
+    }
+    @Test func twelveOverlappingScopesKeepTheirActualNativeConnectionsAndFailuresSeparate() async throws {
+        let connections = try await withThrowingTaskGroup(of: [String].self) { group in
+            for i in 0..<12 { group.addTask { @MainActor in try await parallelScope(i) } }
+            var ids: [String] = []
+            for try await value in group { ids += value }
+            return ids
+        }
+        #expect(connections.count == 12 && Set(connections).count == 12)
+    }
+}

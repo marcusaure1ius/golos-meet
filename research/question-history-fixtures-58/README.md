@@ -1,5 +1,7 @@
 # #58 · Ownership fixtures вопросов и истории памяти
 
+**Актуальное продолжение:** независимое ревью5446d7d выявило P2 повторного принятия fault при nested expectations. Исправление, matched negative probes и новый **красный** full с disk-pressure ограничением — в [P2 report](p2-single-use/README.md). Ниже сохранён исторический author run5446d7d;437/612 не является проверкой исправленного helper и не отменяет независимые OCR failures. Исторический validator сверяет source hashes по frozen5446d7d.
+
 ## Результат и границы
 
 Вторая адресная часть #58 переносит удаление `question-service` и `memory-history` на принятый в PR59 scoped teardown. В вопросах cleanup отменяет сессию и освобождает callbacks, которые могли удерживать fixture. В истории прежние assertions защиты неизменяемого журнала сохранены; две намеренные SQLite-ошибки учитываются по точному соединению, фазе, операции и кодам. Production source, lifecycle, schema, busy timeout, retry, время ожидания и параллельность тестов не менялись.

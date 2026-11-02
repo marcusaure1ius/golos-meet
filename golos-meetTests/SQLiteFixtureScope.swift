@@ -69,23 +69,30 @@ nonisolated final class SQLiteFixtureScope: @unchecked Sendable {
                           operation: ProjectDatabase.Diagnostic.Operation, result: Int32, extended: Int32,
                           performing body: () throws -> Void) rethrows {
         let start = lock.withLock { events.count }
+        let expectation = UUID().uuidString
         defer {
-            let count = lock.withLock {
+            let accepted = lock.withLock {
                 let matches = events.indices.dropFirst(start).filter { index in
-                    guard events[index]["stage"] == "sqlite-failure", let raw = events[index]["diagnostic"],
+                    guard events[index]["stage"] == "sqlite-failure", events[index]["expected"] != "true",
+                          let raw = events[index]["diagnostic"],
                           let value = try? JSONDecoder().decode(ProjectDatabase.Diagnostic.self, from: Data(raw.utf8)) else { return false }
                     return value.connection == connection && value.phase == phase && value.operation == operation
                         && value.result == result && value.extended == extended
                 }
+                var accepted = false
                 if matches.count == 1, let index = matches.first, let raw = events[index]["diagnostic"],
                    let failure = failures.firstIndex(of: raw) {
                     failures.remove(at: failure)
                     events[index]["expected"] = "true"
-                    event("expected-sqlite-failure", ["diagnostic": raw])
+                    events[index]["acceptedBy"] = expectation
+                    event("expected-sqlite-failure", ["diagnostic": raw, "expectation": expectation, "eventIndex": String(index)])
+                    accepted = true
                 }
-                return matches.count
+                event("fault-expectation-checked", ["expectation": expectation, "connection": connection.uuidString,
+                      "matchingUnconsumed": String(matches.count), "accepted": String(accepted)])
+                return accepted
             }
-            #expect(count == 1, "Expected one exact SQLite fault; the original assertion and raw diagnostics are preserved")
+            #expect(accepted, "Expected one newly accepted exact SQLite fault; consumed events cannot satisfy another expectation")
         }
         try body()
     }

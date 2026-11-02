@@ -1,0 +1,55 @@
+{
+  "devicesAndConfigurations" : [
+    {
+      "device" : {
+        "architecture" : "arm64",
+        "deviceId" : "00006040-000C51D93404801C",
+        "deviceName" : "My Mac",
+        "modelName" : "MacBook Pro",
+        "osBuildNumber" : "26A434",
+        "osVersion" : "27.0.1",
+        "platform" : "macOS"
+      },
+      "expectedFailures" : 3,
+      "failedTests" : 1,
+      "passedTests" : 4,
+      "skippedTests" : 0,
+      "testPlanConfiguration" : {
+        "configurationId" : "1",
+        "configurationName" : "Test Scheme Action"
+      }
+    }
+  ],
+  "environmentDescription" : "golos-meet · Built with macOS 27.0.1",
+  "expectedFailures" : 1,
+  "failedTests" : 1,
+  "finishTime" : 1793588366.857,
+  "passedTests" : 2,
+  "result" : "Failed",
+  "runtimeWarnings" : [
+
+  ],
+  "skippedTests" : 0,
+  "startTime" : 1793588349.628,
+  "statistics" : [
+    {
+      "subtitle" : "6 test runs",
+      "title" : "2 tests ran with dynamic parameters"
+    }
+  ],
+  "testFailures" : [
+    {
+      "failureText" : "Known issue was not recorded: Outer expectation has no additional fault after the inner expectation consumed the sole fault",
+      "targetName" : "golos-meetTests",
+      "testIdentifier" : 2,
+      "testIdentifierString" : "Reviewer60FaultProbes/nestedExpectationsMustNotReuseAnAlreadyConsumedFault()",
+      "testIdentifierURL" : "test://com.apple.xcode/golos-meet/golos-meetTests/Reviewer60FaultProbes/nestedExpectationsMustNotReuseAnAlreadyConsumedFault()",
+      "testName" : "nestedExpectationsMustNotReuseAnAlreadyConsumedFault()"
+    }
+  ],
+  "title" : "Test - golos-meet",
+  "topInsights" : [
+
+  ],
+  "totalTestCount" : 4
+}
