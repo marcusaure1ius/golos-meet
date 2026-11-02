@@ -1,0 +1,20 @@
+{
+  "status": "Passed",
+  "process_exit": 0,
+  "base": "74dbf7e8aa0031faf709f76ff738a850a23fb940",
+  "tree": "238f94ca2c82b1dbd914d7411f5ef5c128b2a152",
+  "result": "Passed",
+  "totalTestCount": 478,
+  "passedTests": 474,
+  "failedTests": 0,
+  "expectedFailures": 4,
+  "skippedTests": 0,
+  "runtimeWarnings": [],
+  "testFailures": [],
+  "runs": {
+    "passedTests": 664,
+    "failedTests": 0,
+    "expectedFailures": 12,
+    "skippedTests": 0
+  }
+}

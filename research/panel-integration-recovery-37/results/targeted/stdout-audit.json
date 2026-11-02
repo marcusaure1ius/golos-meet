@@ -1,0 +1,41 @@
+{
+  "source_files": [
+    {
+      "path": "/private/tmp/golos37recovery-targeted-diagnostics/0_Test_My Mac_Diagnostics/golos-meetTests-26E48D11-D5DA-40EE-A0DF-6DED5CD7E3A6-Configuration-Test Scheme Action-Iteration-1/golos-meetTests-6A094F75-DC8B-4CDD-A7DD-02D67CF7FCDD/StandardOutputAndStandardError.txt",
+      "bytes": 176,
+      "sha256": "8c31c4dc8e8e955983b8e6ea0ac4edd1d0979da15af937dd9b1c1bea35959922"
+    },
+    {
+      "path": "/private/tmp/golos37recovery-targeted-diagnostics/0_Test_My Mac_Diagnostics/golos-meetTests-26E48D11-D5DA-40EE-A0DF-6DED5CD7E3A6-Configuration-Test Scheme Action-Iteration-1/golos-meetTests-7C63AE45-1DBE-4BEF-8713-7F60BD5EB177/StandardOutputAndStandardError.txt",
+      "bytes": 28875,
+      "sha256": "cd43a6f1082fa0d0956e474284abcc6c0160630e31cf5e3e14a919ae816e0387"
+    },
+    {
+      "path": "/private/tmp/golos37recovery-targeted-diagnostics/0_Test_My Mac_Diagnostics/golos-meetTests-26E48D11-D5DA-40EE-A0DF-6DED5CD7E3A6-Configuration-Test Scheme Action-Iteration-1/golos-meetTests-86251BCB-1260-4D87-9AEE-A606D91678E9/StandardOutputAndStandardError.txt",
+      "bytes": 176,
+      "sha256": "8c31c4dc8e8e955983b8e6ea0ac4edd1d0979da15af937dd9b1c1bea35959922"
+    },
+    {
+      "path": "/private/tmp/golos37recovery-targeted-diagnostics/0_Test_My Mac_Diagnostics/golos-meetTests-26E48D11-D5DA-40EE-A0DF-6DED5CD7E3A6-Configuration-Test Scheme Action-Iteration-1/golos-meetTests-8CE97E68-CF1D-435C-B431-77FD4F6182E6/StandardOutputAndStandardError.txt",
+      "bytes": 176,
+      "sha256": "8c31c4dc8e8e955983b8e6ea0ac4edd1d0979da15af937dd9b1c1bea35959922"
+    },
+    {
+      "path": "/private/tmp/golos37recovery-targeted-diagnostics/0_Test_My Mac_Diagnostics/golos-meetTests-26E48D11-D5DA-40EE-A0DF-6DED5CD7E3A6-Configuration-Test Scheme Action-Iteration-1/golos-meetTests-AFA76C41-9149-42FA-AF7F-84443D233060/StandardOutputAndStandardError.txt",
+      "bytes": 176,
+      "sha256": "8c31c4dc8e8e955983b8e6ea0ac4edd1d0979da15af937dd9b1c1bea35959922"
+    },
+    {
+      "path": "/private/tmp/golos37recovery-targeted-diagnostics/0_Test_My Mac_Diagnostics/golos-meetTests-26E48D11-D5DA-40EE-A0DF-6DED5CD7E3A6-Configuration-Test Scheme Action-Iteration-1/golos-meetTests-CC36CAE6-BF61-4678-AC2F-56D2A3808EAE/StandardOutputAndStandardError.txt",
+      "bytes": 176,
+      "sha256": "8c31c4dc8e8e955983b8e6ea0ac4edd1d0979da15af937dd9b1c1bea35959922"
+    }
+  ],
+  "combined_sha256": "91c93af773c71e1ee268aa37ae6da052ef31e60a71ddfe57c52bb9ba8625c0e5",
+  "vnode_lines": 0,
+  "extended6922": 0,
+  "sqlite_failure_lines": 0,
+  "e5rt_lines": 3,
+  "rollback_failure_lines": [],
+  "raw_sqlite_lines": []
+}

@@ -1,0 +1,141 @@
+{
+  "command": [
+    "python3",
+    "research/build_memory_panel_preview.py",
+    "--weights",
+    "/tmp/golos-embedding-native/e5-small",
+    "--derived-data",
+    "/private/tmp/golos37recovery-derived"
+  ],
+  "source_head": "e2ba5b5e7b5d9f31d8a603f605a136d8f487334d",
+  "preflight_free": 93155127296,
+  "exit_code": 0,
+  "elapsed": 31.264652013778687,
+  "telemetry": [
+    {
+      "epoch": 1793612314.126868,
+      "free_bytes": 93155115008
+    },
+    {
+      "epoch": 1793612315.131935,
+      "free_bytes": 93145927680
+    },
+    {
+      "epoch": 1793612316.136977,
+      "free_bytes": 93120200704
+    },
+    {
+      "epoch": 1793612317.14202,
+      "free_bytes": 93087965184
+    },
+    {
+      "epoch": 1793612318.14707,
+      "free_bytes": 93060304896
+    },
+    {
+      "epoch": 1793612319.152111,
+      "free_bytes": 93054160896
+    },
+    {
+      "epoch": 1793612320.16215,
+      "free_bytes": 93032071168
+    },
+    {
+      "epoch": 1793612321.166649,
+      "free_bytes": 93032062976
+    },
+    {
+      "epoch": 1793612322.176695,
+      "free_bytes": 93000900608
+    },
+    {
+      "epoch": 1793612323.186736,
+      "free_bytes": 92970303488
+    },
+    {
+      "epoch": 1793612324.1954381,
+      "free_bytes": 92942655488
+    },
+    {
+      "epoch": 1793612325.205486,
+      "free_bytes": 92925480960
+    },
+    {
+      "epoch": 1793612326.215318,
+      "free_bytes": 92900597760
+    },
+    {
+      "epoch": 1793612327.225376,
+      "free_bytes": 92865720320
+    },
+    {
+      "epoch": 1793612328.2354162,
+      "free_bytes": 92865519616
+    },
+    {
+      "epoch": 1793612329.245485,
+      "free_bytes": 92865634304
+    },
+    {
+      "epoch": 1793612330.255548,
+      "free_bytes": 92860796928
+    },
+    {
+      "epoch": 1793612331.260531,
+      "free_bytes": 92860751872
+    },
+    {
+      "epoch": 1793612332.2705762,
+      "free_bytes": 92843446272
+    },
+    {
+      "epoch": 1793612333.2806249,
+      "free_bytes": 92842921984
+    },
+    {
+      "epoch": 1793612334.290668,
+      "free_bytes": 92846211072
+    },
+    {
+      "epoch": 1793612335.3007202,
+      "free_bytes": 92845289472
+    },
+    {
+      "epoch": 1793612336.3107631,
+      "free_bytes": 92844494848
+    },
+    {
+      "epoch": 1793612337.314527,
+      "free_bytes": 92844064768
+    },
+    {
+      "epoch": 1793612338.315257,
+      "free_bytes": 92842819584
+    },
+    {
+      "epoch": 1793612339.325305,
+      "free_bytes": 92841734144
+    },
+    {
+      "epoch": 1793612340.335348,
+      "free_bytes": 92841058304
+    },
+    {
+      "epoch": 1793612341.339085,
+      "free_bytes": 92839780352
+    },
+    {
+      "epoch": 1793612342.3489778,
+      "free_bytes": 92838326272
+    },
+    {
+      "epoch": 1793612343.359027,
+      "free_bytes": 92843397120
+    },
+    {
+      "epoch": 1793612344.369069,
+      "free_bytes": 92841283584
+    }
+  ],
+  "stdout": "APP=/var/folders/f6/hwzbqsn10fn6p6gx8d5vmnfm0000gn/T/golos-memory-panel-preview37-50hepqb7/Golos Memory Panel Preview.app\nBUNDLE=com.golos.memory-panel-preview37.ceb01bb91f6142c7965888dc1b3e446c\nROOT=/var/folders/f6/hwzbqsn10fn6p6gx8d5vmnfm0000gn/T/golos-memory-panel-preview37-50hepqb7/library\nBUILD_LOG=/var/folders/f6/hwzbqsn10fn6p6gx8d5vmnfm0000gn/T/golos-memory-panel-preview37-50hepqb7/build.log\nSOURCE_ALLOWLIST=/var/folders/f6/hwzbqsn10fn6p6gx8d5vmnfm0000gn/T/golos-memory-panel-preview37-50hepqb7/source-allowlist.txt\n"
+}
