@@ -1,0 +1,162 @@
+{
+  "testIdentifier" : "LocalDocumentExtractorTests/mixedPDFExtractsScanAndDoesNotDuplicateTextLayer(native:scanned:duplicateNative:)",
+  "testIdentifierURL" : "test://com.apple.xcode/golos-meet/golos-meetTests/LocalDocumentExtractorTests/mixedPDFExtractsScanAndDoesNotDuplicateTextLayer(native:scanned:duplicateNative:)",
+  "testName" : "mixedPDFExtractsScanAndDoesNotDuplicateTextLayer(native:scanned:duplicateNative:)",
+  "testRuns" : [
+    {
+      "activities" : [
+        {
+          "childActivities" : [
+            {
+              "isAssociatedWithFailure" : false,
+              "title" : ""
+            }
+          ],
+          "isAssociatedWithFailure" : true,
+          "startTime" : 1793576363.335,
+          "title" : "Expectation failed: lines.filter { $0 == scanned }.count == 1\nlines.filter { $0 == scanned }.count → 0"
+        }
+      ],
+      "arguments" : [
+        {
+          "value" : "\"Page 1\""
+        },
+        {
+          "value" : "\"Decision: launch postponed to December\""
+        },
+        {
+          "value" : "false"
+        }
+      ],
+      "device" : {
+        "architecture" : "arm64",
+        "deviceId" : "00006040-000C51D93404801C",
+        "deviceName" : "My Mac",
+        "modelName" : "MacBook Pro",
+        "osBuildNumber" : "26A434",
+        "osVersion" : "27.0.1",
+        "platform" : "macOS"
+      },
+      "testPlanConfiguration" : {
+        "configurationId" : "1",
+        "configurationName" : "Test Scheme Action"
+      }
+    },
+    {
+      "activities" : [
+
+      ],
+      "arguments" : [
+        {
+          "value" : "\"Page 1\""
+        },
+        {
+          "value" : "\"Decision: launch postponed to December\""
+        },
+        {
+          "value" : "true"
+        }
+      ],
+      "device" : {
+        "architecture" : "arm64",
+        "deviceId" : "00006040-000C51D93404801C",
+        "deviceName" : "My Mac",
+        "modelName" : "MacBook Pro",
+        "osBuildNumber" : "26A434",
+        "osVersion" : "27.0.1",
+        "platform" : "macOS"
+      },
+      "testPlanConfiguration" : {
+        "configurationId" : "1",
+        "configurationName" : "Test Scheme Action"
+      }
+    },
+    {
+      "activities" : [
+
+      ],
+      "arguments" : [
+        {
+          "value" : "\"2026\""
+        },
+        {
+          "value" : "\"20\""
+        },
+        {
+          "value" : "false"
+        }
+      ],
+      "device" : {
+        "architecture" : "arm64",
+        "deviceId" : "00006040-000C51D93404801C",
+        "deviceName" : "My Mac",
+        "modelName" : "MacBook Pro",
+        "osBuildNumber" : "26A434",
+        "osVersion" : "27.0.1",
+        "platform" : "macOS"
+      },
+      "testPlanConfiguration" : {
+        "configurationId" : "1",
+        "configurationName" : "Test Scheme Action"
+      }
+    },
+    {
+      "activities" : [
+
+      ],
+      "arguments" : [
+        {
+          "value" : "\"Not approved\""
+        },
+        {
+          "value" : "\"Approved\""
+        },
+        {
+          "value" : "false"
+        }
+      ],
+      "device" : {
+        "architecture" : "arm64",
+        "deviceId" : "00006040-000C51D93404801C",
+        "deviceName" : "My Mac",
+        "modelName" : "MacBook Pro",
+        "osBuildNumber" : "26A434",
+        "osVersion" : "27.0.1",
+        "platform" : "macOS"
+      },
+      "testPlanConfiguration" : {
+        "configurationId" : "1",
+        "configurationName" : "Test Scheme Action"
+      }
+    },
+    {
+      "activities" : [
+
+      ],
+      "arguments" : [
+        {
+          "value" : "\"2026\""
+        },
+        {
+          "value" : "\"26\""
+        },
+        {
+          "value" : "false"
+        }
+      ],
+      "device" : {
+        "architecture" : "arm64",
+        "deviceId" : "00006040-000C51D93404801C",
+        "deviceName" : "My Mac",
+        "modelName" : "MacBook Pro",
+        "osBuildNumber" : "26A434",
+        "osVersion" : "27.0.1",
+        "platform" : "macOS"
+      },
+      "testPlanConfiguration" : {
+        "configurationId" : "1",
+        "configurationName" : "Test Scheme Action"
+      }
+    }
+  ]
+}

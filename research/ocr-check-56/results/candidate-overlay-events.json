@@ -1,0 +1,5533 @@
+[
+  {
+    "id": "028E6234-0332-4092-A069-0A15AFDF1D9F",
+    "raw_sha256": "136460bbc65ce191185876aaf54ea973c4f96b99a9acceee9bc6d9be10f49484",
+    "events": [
+      {
+        "bytes": 23283,
+        "cpuControl": false,
+        "id": "028E6234-0332-4092-A069-0A15AFDF1D9F",
+        "input": "028E6234-0332-4092-A069-0A15AFDF1D9F.png",
+        "sha256": "666a19cf8a8ac85e56ccabc0cc911b5d0f570b22c534aff08c942531e46b9b5a",
+        "stage": "input",
+        "uptime": 330955.347362375,
+        "wall": 1793580690.75225
+      },
+      {
+        "bitsPerPixel": 32,
+        "bytesPerRow": 6400,
+        "cpuControl": false,
+        "height": 300,
+        "id": "028E6234-0332-4092-A069-0A15AFDF1D9F",
+        "image": "028E6234-0332-4092-A069-0A15AFDF1D9F-e1183c6d804b89a27f0146202d71c2569fe688e26399387fe6255f5e0251c0f9.png",
+        "sha256": "e1183c6d804b89a27f0146202d71c2569fe688e26399387fe6255f5e0251c0f9",
+        "stage": "ocr-input",
+        "uptime": 330955.3534202917,
+        "wall": 1793580690.758308,
+        "width": 1600
+      },
+      {
+        "automaticLanguage": true,
+        "cpuControl": false,
+        "id": "028E6234-0332-4092-A069-0A15AFDF1D9F",
+        "languageCorrection": true,
+        "languages": [
+          "ru-RU",
+          "en-US"
+        ],
+        "revision": 3,
+        "stage": "request-options",
+        "uptime": 330955.35571845836,
+        "wall": 1793580690.760606
+      },
+      {
+        "cpuControl": false,
+        "id": "028E6234-0332-4092-A069-0A15AFDF1D9F",
+        "stage": "perform-begin",
+        "uptime": 330955.35578441666,
+        "wall": 1793580690.760672
+      },
+      {
+        "cpuControl": false,
+        "id": "028E6234-0332-4092-A069-0A15AFDF1D9F",
+        "observations": [
+          {
+            "candidates": [
+              {
+                "confidence": 1,
+                "text": "Решение: запуск проекта в ноябре"
+              },
+              {
+                "confidence": 1,
+                "text": "Решение запуск проекта в ноябре"
+              },
+              {
+                "confidence": 0.5,
+                "text": "Решение: запус проекта в ноябре"
+              },
+              {
+                "confidence": 0.5,
+                "text": "Решение: запук проекта в ноябре"
+              },
+              {
+                "confidence": 0.5,
+                "text": "Решение: запуск проекта в ноябр"
+              }
+            ],
+            "height": 0.24444445292154948,
+            "width": 0.6166666793823242,
+            "x": 0.02916666008681844,
+            "y": 0.3999999958506608
+          }
+        ],
+        "stage": "perform-end",
+        "uptime": 330955.6320715,
+        "wall": 1793580691.0369592
+      },
+      {
+        "cpuControl": false,
+        "id": "028E6234-0332-4092-A069-0A15AFDF1D9F",
+        "lines": [
+          "Решение: запуск проекта в ноябре"
+        ],
+        "stage": "extract-result",
+        "uptime": 330955.6325567917,
+        "wall": 1793580691.037444,
+        "warnings": []
+      }
+    ],
+    "assets": {
+      "028E6234-0332-4092-A069-0A15AFDF1D9F.png": {
+        "asset": "assets/666a19cf8a8ac85e56ccabc0cc911b5d0f570b22c534aff08c942531e46b9b5a.png",
+        "bytes": 23283,
+        "sha256": "666a19cf8a8ac85e56ccabc0cc911b5d0f570b22c534aff08c942531e46b9b5a"
+      },
+      "028E6234-0332-4092-A069-0A15AFDF1D9F-e1183c6d804b89a27f0146202d71c2569fe688e26399387fe6255f5e0251c0f9.png": {
+        "asset": "assets/e1183c6d804b89a27f0146202d71c2569fe688e26399387fe6255f5e0251c0f9.png",
+        "bytes": 23295,
+        "sha256": "e1183c6d804b89a27f0146202d71c2569fe688e26399387fe6255f5e0251c0f9"
+      }
+    }
+  },
+  {
+    "id": "048479EA-ACF8-46DD-B447-D21E16A0910B",
+    "raw_sha256": "1aeb1d004a8c086b165ae78f77ecfb2da1b2ba832f57c24d18a4e4b95f619d4b",
+    "events": [
+      {
+        "bytes": 10560,
+        "cpuControl": false,
+        "id": "048479EA-ACF8-46DD-B447-D21E16A0910B",
+        "input": "048479EA-ACF8-46DD-B447-D21E16A0910B.pdf",
+        "sha256": "9b8612f6d00255dcb20933705cf6c23e64025f73d620fc5ed00e2a8ff4f6c7dd",
+        "stage": "input",
+        "uptime": 330955.8806241667,
+        "wall": 1793580691.285512
+      },
+      {
+        "cpuControl": false,
+        "id": "048479EA-ACF8-46DD-B447-D21E16A0910B",
+        "native": "Обложĸа проеĸта",
+        "page": 1,
+        "stage": "pdf-native",
+        "uptime": 330955.88582925004,
+        "wall": 1793580691.2907171
+      },
+      {
+        "bitsPerPixel": 32,
+        "bytesPerRow": 7200,
+        "cpuControl": false,
+        "height": 2400,
+        "id": "048479EA-ACF8-46DD-B447-D21E16A0910B",
+        "image": "048479EA-ACF8-46DD-B447-D21E16A0910B-aaddc868fdf414228c20f3ac13bee5b929d68f3e8c4aa158b9527e31eb32d421.png",
+        "sha256": "aaddc868fdf414228c20f3ac13bee5b929d68f3e8c4aa158b9527e31eb32d421",
+        "stage": "ocr-input",
+        "uptime": 330955.9162834167,
+        "wall": 1793580691.321171,
+        "width": 1800
+      },
+      {
+        "automaticLanguage": true,
+        "cpuControl": false,
+        "id": "048479EA-ACF8-46DD-B447-D21E16A0910B",
+        "languageCorrection": true,
+        "languages": [
+          "ru-RU",
+          "en-US"
+        ],
+        "revision": 3,
+        "stage": "request-options",
+        "uptime": 330955.9166435417,
+        "wall": 1793580691.321531
+      },
+      {
+        "cpuControl": false,
+        "id": "048479EA-ACF8-46DD-B447-D21E16A0910B",
+        "stage": "perform-begin",
+        "uptime": 330955.9167270417,
+        "wall": 1793580691.321614
+      },
+      {
+        "cpuControl": false,
+        "id": "048479EA-ACF8-46DD-B447-D21E16A0910B",
+        "observations": [
+          {
+            "candidates": [
+              {
+                "confidence": 1,
+                "text": "Обложка проекта"
+              },
+              {
+                "confidence": 0.30000001192092896,
+                "text": "Облока проекта"
+              },
+              {
+                "confidence": 0.30000001192092896,
+                "text": "Обложа проекта"
+              },
+              {
+                "confidence": 0.30000001192092896,
+                "text": "Обложка прокта"
+              },
+              {
+                "confidence": 0.30000001192092896,
+                "text": "Обложка проект"
+              }
+            ],
+            "height": 0.024393456776936828,
+            "width": 0.2489310709635417,
+            "x": 0.04993295414505781,
+            "y": 0.8106310854562386
+          }
+        ],
+        "stage": "perform-end",
+        "uptime": 330958.7963815,
+        "wall": 1793580694.20127
+      },
+      {
+        "cpuControl": false,
+        "id": "048479EA-ACF8-46DD-B447-D21E16A0910B",
+        "native": "Релиз 2026-12-05. Я сделал проверĸу.",
+        "page": 2,
+        "stage": "pdf-native",
+        "uptime": 330958.79712533334,
+        "wall": 1793580694.202014
+      },
+      {
+        "bitsPerPixel": 32,
+        "bytesPerRow": 7200,
+        "cpuControl": false,
+        "height": 2400,
+        "id": "048479EA-ACF8-46DD-B447-D21E16A0910B",
+        "image": "048479EA-ACF8-46DD-B447-D21E16A0910B-f17c2e93b379dd115019420d1e6503619430f4d778345c073ee0f5c7974194f4.png",
+        "sha256": "f17c2e93b379dd115019420d1e6503619430f4d778345c073ee0f5c7974194f4",
+        "stage": "ocr-input",
+        "uptime": 330958.8230505,
+        "wall": 1793580694.2279391,
+        "width": 1800
+      },
+      {
+        "automaticLanguage": true,
+        "cpuControl": false,
+        "id": "048479EA-ACF8-46DD-B447-D21E16A0910B",
+        "languageCorrection": true,
+        "languages": [
+          "ru-RU",
+          "en-US"
+        ],
+        "revision": 3,
+        "stage": "request-options",
+        "uptime": 330958.8233001667,
+        "wall": 1793580694.228189
+      },
+      {
+        "cpuControl": false,
+        "id": "048479EA-ACF8-46DD-B447-D21E16A0910B",
+        "stage": "perform-begin",
+        "uptime": 330958.8233764584,
+        "wall": 1793580694.228265
+      },
+      {
+        "cpuControl": false,
+        "id": "048479EA-ACF8-46DD-B447-D21E16A0910B",
+        "observations": [
+          {
+            "candidates": [
+              {
+                "confidence": 1,
+                "text": "Релиз 2026-12-05. Я сделал проверку."
+              },
+              {
+                "confidence": 1,
+                "text": "Релиз 2026-12-05. Я сделал проверку"
+              },
+              {
+                "confidence": 1,
+                "text": "Рели 2026-12-05. Я сделал проверку."
+              },
+              {
+                "confidence": 0.5,
+                "text": "Релиз 2026-12-05. Я сделал поверку."
+              },
+              {
+                "confidence": 0.5,
+                "text": "Релиз 2026-12-05 Я сделал проверку."
+              }
+            ],
+            "height": 0.02180232524871828,
+            "width": 0.5465116373697917,
+            "x": 0.050387591983310547,
+            "y": 0.8125000001738051
+          }
+        ],
+        "stage": "perform-end",
+        "uptime": 330959.09217633336,
+        "wall": 1793580694.497065
+      },
+      {
+        "cpuControl": false,
+        "id": "048479EA-ACF8-46DD-B447-D21E16A0910B",
+        "lines": [
+          "Обложĸа проеĸта\nОбложка проекта",
+          "Релиз 2026-12-05. Я сделал проверĸу.\nРелиз 2026-12-05. Я сделал проверку."
+        ],
+        "stage": "extract-result",
+        "uptime": 330959.09256558336,
+        "wall": 1793580694.4974542,
+        "warnings": []
+      }
+    ],
+    "assets": {
+      "048479EA-ACF8-46DD-B447-D21E16A0910B.pdf": {
+        "asset": "assets/9b8612f6d00255dcb20933705cf6c23e64025f73d620fc5ed00e2a8ff4f6c7dd.pdf",
+        "bytes": 10560,
+        "sha256": "9b8612f6d00255dcb20933705cf6c23e64025f73d620fc5ed00e2a8ff4f6c7dd"
+      },
+      "048479EA-ACF8-46DD-B447-D21E16A0910B-aaddc868fdf414228c20f3ac13bee5b929d68f3e8c4aa158b9527e31eb32d421.png": {
+        "asset": "assets/aaddc868fdf414228c20f3ac13bee5b929d68f3e8c4aa158b9527e31eb32d421.png",
+        "bytes": 95944,
+        "sha256": "aaddc868fdf414228c20f3ac13bee5b929d68f3e8c4aa158b9527e31eb32d421"
+      },
+      "048479EA-ACF8-46DD-B447-D21E16A0910B-f17c2e93b379dd115019420d1e6503619430f4d778345c073ee0f5c7974194f4.png": {
+        "asset": "assets/f17c2e93b379dd115019420d1e6503619430f4d778345c073ee0f5c7974194f4.png",
+        "bytes": 103180,
+        "sha256": "f17c2e93b379dd115019420d1e6503619430f4d778345c073ee0f5c7974194f4"
+      }
+    }
+  },
+  {
+    "id": "0DDA1F49-9AFB-4B67-BD24-314ACE58F7A1",
+    "raw_sha256": "a03f61fbaf852c1b93b75c4d05bf6e13bf0eab8d4a18f873b4079ee5b2a0a671",
+    "events": [
+      {
+        "bytes": 23567,
+        "cpuControl": false,
+        "id": "0DDA1F49-9AFB-4B67-BD24-314ACE58F7A1",
+        "input": "0DDA1F49-9AFB-4B67-BD24-314ACE58F7A1.png",
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "stage": "input",
+        "uptime": 330955.7020622917,
+        "wall": 1793580691.10695
+      },
+      {
+        "bitsPerPixel": 32,
+        "bytesPerRow": 6400,
+        "cpuControl": false,
+        "height": 300,
+        "id": "0DDA1F49-9AFB-4B67-BD24-314ACE58F7A1",
+        "image": "0DDA1F49-9AFB-4B67-BD24-314ACE58F7A1-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+        "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0",
+        "stage": "ocr-input",
+        "uptime": 330955.706549375,
+        "wall": 1793580691.1114368,
+        "width": 1600
+      },
+      {
+        "automaticLanguage": true,
+        "cpuControl": false,
+        "id": "0DDA1F49-9AFB-4B67-BD24-314ACE58F7A1",
+        "languageCorrection": true,
+        "languages": [
+          "ru-RU",
+          "en-US"
+        ],
+        "revision": 3,
+        "stage": "request-options",
+        "uptime": 330955.706670875,
+        "wall": 1793580691.111559
+      },
+      {
+        "cpuControl": false,
+        "id": "0DDA1F49-9AFB-4B67-BD24-314ACE58F7A1",
+        "stage": "perform-begin",
+        "uptime": 330955.7067245,
+        "wall": 1793580691.1116118
+      },
+      {
+        "cpuControl": false,
+        "id": "0DDA1F49-9AFB-4B67-BD24-314ACE58F7A1",
+        "observations": [
+          {
+            "candidates": [
+              {
+                "confidence": 1,
+                "text": "Project Alpha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project A pha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Apha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Alpha budget approve"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Alpha budge approved"
+              }
+            ],
+            "height": 0.19457364400227872,
+            "width": 0.5174418640136719,
+            "x": 0.03197674233930247,
+            "y": 0.4333333312911074
+          }
+        ],
+        "stage": "perform-end",
+        "uptime": 330958.5329100417,
+        "wall": 1793580693.937799
+      },
+      {
+        "cpuControl": false,
+        "id": "0DDA1F49-9AFB-4B67-BD24-314ACE58F7A1",
+        "lines": [
+          "Project Alpha budget approved"
+        ],
+        "stage": "extract-result",
+        "uptime": 330958.5330736667,
+        "wall": 1793580693.937962,
+        "warnings": []
+      }
+    ],
+    "assets": {
+      "0DDA1F49-9AFB-4B67-BD24-314ACE58F7A1.png": {
+        "asset": "assets/8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8.png",
+        "bytes": 23567,
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8"
+      },
+      "0DDA1F49-9AFB-4B67-BD24-314ACE58F7A1-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png": {
+        "asset": "assets/20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+        "bytes": 23579,
+        "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0"
+      }
+    }
+  },
+  {
+    "id": "14B556CD-985C-4382-BD54-FDF752F7D9D1",
+    "raw_sha256": "b7883fb1868d4bc9d097fbe310b1c233812e0d62610037442e84e30718ff5fbf",
+    "events": [
+      {
+        "bytes": 23567,
+        "cpuControl": false,
+        "id": "14B556CD-985C-4382-BD54-FDF752F7D9D1",
+        "input": "14B556CD-985C-4382-BD54-FDF752F7D9D1.png",
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "stage": "input",
+        "uptime": 330955.7084337917,
+        "wall": 1793580691.1133208
+      },
+      {
+        "bitsPerPixel": 32,
+        "bytesPerRow": 6400,
+        "cpuControl": false,
+        "height": 300,
+        "id": "14B556CD-985C-4382-BD54-FDF752F7D9D1",
+        "image": "14B556CD-985C-4382-BD54-FDF752F7D9D1-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+        "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0",
+        "stage": "ocr-input",
+        "uptime": 330955.712646875,
+        "wall": 1793580691.1175342,
+        "width": 1600
+      },
+      {
+        "automaticLanguage": true,
+        "cpuControl": false,
+        "id": "14B556CD-985C-4382-BD54-FDF752F7D9D1",
+        "languageCorrection": true,
+        "languages": [
+          "ru-RU",
+          "en-US"
+        ],
+        "revision": 3,
+        "stage": "request-options",
+        "uptime": 330955.7127753334,
+        "wall": 1793580691.117663
+      },
+      {
+        "cpuControl": false,
+        "id": "14B556CD-985C-4382-BD54-FDF752F7D9D1",
+        "stage": "perform-begin",
+        "uptime": 330955.71282791666,
+        "wall": 1793580691.117715
+      },
+      {
+        "cpuControl": false,
+        "id": "14B556CD-985C-4382-BD54-FDF752F7D9D1",
+        "observations": [
+          {
+            "candidates": [
+              {
+                "confidence": 1,
+                "text": "Project Alpha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project A pha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Apha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Alpha budget approve"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Alpha budge approved"
+              }
+            ],
+            "height": 0.19457364400227872,
+            "width": 0.5174418640136719,
+            "x": 0.03197674233930247,
+            "y": 0.4333333312911074
+          }
+        ],
+        "stage": "perform-end",
+        "uptime": 330958.59918670834,
+        "wall": 1793580694.004075
+      },
+      {
+        "cpuControl": false,
+        "id": "14B556CD-985C-4382-BD54-FDF752F7D9D1",
+        "lines": [
+          "Project Alpha budget approved"
+        ],
+        "stage": "extract-result",
+        "uptime": 330958.5994605417,
+        "wall": 1793580694.004349,
+        "warnings": []
+      }
+    ],
+    "assets": {
+      "14B556CD-985C-4382-BD54-FDF752F7D9D1.png": {
+        "asset": "assets/8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8.png",
+        "bytes": 23567,
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8"
+      },
+      "14B556CD-985C-4382-BD54-FDF752F7D9D1-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png": {
+        "asset": "assets/20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+        "bytes": 23579,
+        "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0"
+      }
+    }
+  },
+  {
+    "id": "159910EB-050F-4978-892F-155690D1BD7B",
+    "raw_sha256": "980b3a559de0740c798519468ee7d273dda01c6ea2dba952c56e8e36ed115431",
+    "events": [
+      {
+        "bytes": 23567,
+        "cpuControl": false,
+        "id": "159910EB-050F-4978-892F-155690D1BD7B",
+        "input": "159910EB-050F-4978-892F-155690D1BD7B.png",
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "stage": "input",
+        "uptime": 330955.6810063333,
+        "wall": 1793580691.085894
+      },
+      {
+        "bitsPerPixel": 32,
+        "bytesPerRow": 6400,
+        "cpuControl": false,
+        "height": 300,
+        "id": "159910EB-050F-4978-892F-155690D1BD7B",
+        "image": "159910EB-050F-4978-892F-155690D1BD7B-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+        "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0",
+        "stage": "ocr-input",
+        "uptime": 330955.685863,
+        "wall": 1793580691.09075,
+        "width": 1600
+      },
+      {
+        "automaticLanguage": true,
+        "cpuControl": false,
+        "id": "159910EB-050F-4978-892F-155690D1BD7B",
+        "languageCorrection": true,
+        "languages": [
+          "ru-RU",
+          "en-US"
+        ],
+        "revision": 3,
+        "stage": "request-options",
+        "uptime": 330955.68601320835,
+        "wall": 1793580691.090901
+      },
+      {
+        "cpuControl": false,
+        "id": "159910EB-050F-4978-892F-155690D1BD7B",
+        "stage": "perform-begin",
+        "uptime": 330955.6860792917,
+        "wall": 1793580691.0909672
+      },
+      {
+        "cpuControl": false,
+        "id": "159910EB-050F-4978-892F-155690D1BD7B",
+        "observations": [
+          {
+            "candidates": [
+              {
+                "confidence": 1,
+                "text": "Project Alpha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project A pha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Apha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Alpha budget approve"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Alpha budge approved"
+              }
+            ],
+            "height": 0.19457364400227872,
+            "width": 0.5174418640136719,
+            "x": 0.03197674233930247,
+            "y": 0.4333333312911074
+          }
+        ],
+        "stage": "perform-end",
+        "uptime": 330958.1423845,
+        "wall": 1793580693.5472732
+      },
+      {
+        "cpuControl": false,
+        "id": "159910EB-050F-4978-892F-155690D1BD7B",
+        "lines": [
+          "Project Alpha budget approved"
+        ],
+        "stage": "extract-result",
+        "uptime": 330958.142554,
+        "wall": 1793580693.547442,
+        "warnings": []
+      }
+    ],
+    "assets": {
+      "159910EB-050F-4978-892F-155690D1BD7B.png": {
+        "asset": "assets/8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8.png",
+        "bytes": 23567,
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8"
+      },
+      "159910EB-050F-4978-892F-155690D1BD7B-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png": {
+        "asset": "assets/20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+        "bytes": 23579,
+        "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0"
+      }
+    }
+  },
+  {
+    "id": "24EFAA9F-7C17-43AA-99DB-36D101A2F054",
+    "raw_sha256": "453eb14a73ca3a3c8bcf694a86cbe3d40a9b3fe06a59461fddabf6018934ff32",
+    "events": [
+      {
+        "bytes": 23567,
+        "cpuControl": false,
+        "id": "24EFAA9F-7C17-43AA-99DB-36D101A2F054",
+        "input": "24EFAA9F-7C17-43AA-99DB-36D101A2F054.png",
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "stage": "input",
+        "uptime": 330955.627023875,
+        "wall": 1793580691.031911
+      },
+      {
+        "bitsPerPixel": 32,
+        "bytesPerRow": 6400,
+        "cpuControl": false,
+        "height": 300,
+        "id": "24EFAA9F-7C17-43AA-99DB-36D101A2F054",
+        "image": "24EFAA9F-7C17-43AA-99DB-36D101A2F054-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+        "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0",
+        "stage": "ocr-input",
+        "uptime": 330955.6324924167,
+        "wall": 1793580691.03738,
+        "width": 1600
+      },
+      {
+        "automaticLanguage": true,
+        "cpuControl": false,
+        "id": "24EFAA9F-7C17-43AA-99DB-36D101A2F054",
+        "languageCorrection": true,
+        "languages": [
+          "ru-RU",
+          "en-US"
+        ],
+        "revision": 3,
+        "stage": "request-options",
+        "uptime": 330955.6326709167,
+        "wall": 1793580691.037559
+      },
+      {
+        "cpuControl": false,
+        "id": "24EFAA9F-7C17-43AA-99DB-36D101A2F054",
+        "stage": "perform-begin",
+        "uptime": 330955.6330347083,
+        "wall": 1793580691.037922
+      },
+      {
+        "cpuControl": false,
+        "id": "24EFAA9F-7C17-43AA-99DB-36D101A2F054",
+        "observations": [
+          {
+            "candidates": [
+              {
+                "confidence": 1,
+                "text": "Project Alpha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project A pha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Apha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Alpha budget approve"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Alpha budge approved"
+              }
+            ],
+            "height": 0.19457364400227872,
+            "width": 0.5174418640136719,
+            "x": 0.03197674233930247,
+            "y": 0.4333333312911074
+          }
+        ],
+        "stage": "perform-end",
+        "uptime": 330956.44010137505,
+        "wall": 1793580691.84499
+      },
+      {
+        "cpuControl": false,
+        "id": "24EFAA9F-7C17-43AA-99DB-36D101A2F054",
+        "lines": [
+          "Project Alpha budget approved"
+        ],
+        "stage": "extract-result",
+        "uptime": 330956.44028287503,
+        "wall": 1793580691.84517,
+        "warnings": []
+      }
+    ],
+    "assets": {
+      "24EFAA9F-7C17-43AA-99DB-36D101A2F054.png": {
+        "asset": "assets/8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8.png",
+        "bytes": 23567,
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8"
+      },
+      "24EFAA9F-7C17-43AA-99DB-36D101A2F054-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png": {
+        "asset": "assets/20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+        "bytes": 23579,
+        "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0"
+      }
+    }
+  },
+  {
+    "id": "2635B0A3-4DF5-4FD0-97F8-8AB1F5BA8CB8",
+    "raw_sha256": "8a70d58cec0e719e91c7fcb51dd4b0ce174822b28c2df620bea9e6009139cec0",
+    "events": [
+      {
+        "bytes": 31299,
+        "cpuControl": false,
+        "id": "2635B0A3-4DF5-4FD0-97F8-8AB1F5BA8CB8",
+        "input": "2635B0A3-4DF5-4FD0-97F8-8AB1F5BA8CB8.pdf",
+        "sha256": "87b8b4fa713a29fd26c53833c87877fb44d0f8ce9ce2f54f864571e8f5323023",
+        "stage": "input",
+        "uptime": 330955.367977875,
+        "wall": 1793580690.772865
+      },
+      {
+        "cpuControl": false,
+        "id": "2635B0A3-4DF5-4FD0-97F8-8AB1F5BA8CB8",
+        "native": "Decision: launch postponed to December\nPage 1",
+        "page": 1,
+        "stage": "pdf-native",
+        "uptime": 330955.36874191667,
+        "wall": 1793580690.773629
+      },
+      {
+        "bitsPerPixel": 32,
+        "bytesPerRow": 7200,
+        "cpuControl": false,
+        "height": 2400,
+        "id": "2635B0A3-4DF5-4FD0-97F8-8AB1F5BA8CB8",
+        "image": "2635B0A3-4DF5-4FD0-97F8-8AB1F5BA8CB8-06a03cc4a095f7a057faa63febaca970e1b3cce558da4e203a2c41b8ae35a90f.png",
+        "sha256": "06a03cc4a095f7a057faa63febaca970e1b3cce558da4e203a2c41b8ae35a90f",
+        "stage": "ocr-input",
+        "uptime": 330955.40076416667,
+        "wall": 1793580690.8056521,
+        "width": 1800
+      },
+      {
+        "automaticLanguage": true,
+        "cpuControl": false,
+        "id": "2635B0A3-4DF5-4FD0-97F8-8AB1F5BA8CB8",
+        "languageCorrection": true,
+        "languages": [
+          "ru-RU",
+          "en-US"
+        ],
+        "revision": 3,
+        "stage": "request-options",
+        "uptime": 330955.40106408333,
+        "wall": 1793580690.805952
+      },
+      {
+        "cpuControl": false,
+        "id": "2635B0A3-4DF5-4FD0-97F8-8AB1F5BA8CB8",
+        "stage": "perform-begin",
+        "uptime": 330955.40121079166,
+        "wall": 1793580690.806098
+      },
+      {
+        "cpuControl": false,
+        "id": "2635B0A3-4DF5-4FD0-97F8-8AB1F5BA8CB8",
+        "observations": [
+          {
+            "candidates": [
+              {
+                "confidence": 1,
+                "text": "Decision: launch postporebttoDeeembler"
+              },
+              {
+                "confidence": 1,
+                "text": "Decision: launch postporebttoDeembler"
+              },
+              {
+                "confidence": 1,
+                "text": "Decision: launch post porebttoDeembler"
+              },
+              {
+                "confidence": 1,
+                "text": "Decision: launch postporebttoDeeembleer"
+              },
+              {
+                "confidence": 1,
+                "text": "Decision: launch postporebttoDeembleer"
+              }
+            ],
+            "height": 0.027136732737223168,
+            "width": 0.606769273546007,
+            "x": 0.03285736628284945,
+            "y": 0.5296818403596832
+          },
+          {
+            "candidates": [
+              {
+                "confidence": 1,
+                "text": "Page 1"
+              },
+              {
+                "confidence": 0.30000001192092896,
+                "text": "Page1"
+              },
+              {
+                "confidence": 0.30000001192092896,
+                "text": "Page"
+              },
+              {
+                "confidence": 0.30000001192092896,
+                "text": "age 1"
+              },
+              {
+                "confidence": 0.30000001192092896,
+                "text": "Pag 1"
+              }
+            ],
+            "height": 0.018934109210968053,
+            "width": 0.07945736355251737,
+            "x": 0.41666666696647386,
+            "y": 0.0508333330057934
+          }
+        ],
+        "stage": "perform-end",
+        "uptime": 330955.77037933335,
+        "wall": 1793580691.175267
+      },
+      {
+        "cpuControl": false,
+        "id": "2635B0A3-4DF5-4FD0-97F8-8AB1F5BA8CB8",
+        "lines": [
+          "Decision: launch postponed to December\nPage 1\nDecision: launch postporebttoDeeembler"
+        ],
+        "stage": "extract-result",
+        "uptime": 330955.77062258334,
+        "wall": 1793580691.17551,
+        "warnings": []
+      }
+    ],
+    "assets": {
+      "2635B0A3-4DF5-4FD0-97F8-8AB1F5BA8CB8.pdf": {
+        "asset": "assets/87b8b4fa713a29fd26c53833c87877fb44d0f8ce9ce2f54f864571e8f5323023.pdf",
+        "bytes": 31299,
+        "sha256": "87b8b4fa713a29fd26c53833c87877fb44d0f8ce9ce2f54f864571e8f5323023"
+      },
+      "2635B0A3-4DF5-4FD0-97F8-8AB1F5BA8CB8-06a03cc4a095f7a057faa63febaca970e1b3cce558da4e203a2c41b8ae35a90f.png": {
+        "asset": "assets/06a03cc4a095f7a057faa63febaca970e1b3cce558da4e203a2c41b8ae35a90f.png",
+        "bytes": 120625,
+        "sha256": "06a03cc4a095f7a057faa63febaca970e1b3cce558da4e203a2c41b8ae35a90f"
+      }
+    }
+  },
+  {
+    "id": "2AA6EF35-167F-4962-BC71-670873092AB0",
+    "raw_sha256": "763420619ae402b160c8ee93ce9cbea23f5c9cf1f01e027189cb7f4244d28a74",
+    "events": [
+      {
+        "bytes": 24231,
+        "cpuControl": false,
+        "id": "2AA6EF35-167F-4962-BC71-670873092AB0",
+        "input": "2AA6EF35-167F-4962-BC71-670873092AB0.pdf",
+        "sha256": "af705728e2a4533cfa8e4bac84db2f2b74809a3961bd875f2255f8e1a58e22c9",
+        "stage": "input",
+        "uptime": 330955.3572156667,
+        "wall": 1793580690.762103
+      },
+      {
+        "cpuControl": false,
+        "id": "2AA6EF35-167F-4962-BC71-670873092AB0",
+        "native": "Not approved",
+        "page": 1,
+        "stage": "pdf-native",
+        "uptime": 330955.35790350003,
+        "wall": 1793580690.7627912
+      },
+      {
+        "bitsPerPixel": 32,
+        "bytesPerRow": 7200,
+        "cpuControl": false,
+        "height": 2400,
+        "id": "2AA6EF35-167F-4962-BC71-670873092AB0",
+        "image": "2AA6EF35-167F-4962-BC71-670873092AB0-14a5184eacdcb275a78cf4ed069202a3158961339f61bc863e7b8b334b4fea52.png",
+        "sha256": "14a5184eacdcb275a78cf4ed069202a3158961339f61bc863e7b8b334b4fea52",
+        "stage": "ocr-input",
+        "uptime": 330955.39273587504,
+        "wall": 1793580690.7976232,
+        "width": 1800
+      },
+      {
+        "automaticLanguage": true,
+        "cpuControl": false,
+        "id": "2AA6EF35-167F-4962-BC71-670873092AB0",
+        "languageCorrection": true,
+        "languages": [
+          "ru-RU",
+          "en-US"
+        ],
+        "revision": 3,
+        "stage": "request-options",
+        "uptime": 330955.3929217917,
+        "wall": 1793580690.79781
+      },
+      {
+        "cpuControl": false,
+        "id": "2AA6EF35-167F-4962-BC71-670873092AB0",
+        "stage": "perform-begin",
+        "uptime": 330955.3929910833,
+        "wall": 1793580690.797878
+      },
+      {
+        "cpuControl": false,
+        "id": "2AA6EF35-167F-4962-BC71-670873092AB0",
+        "observations": [
+          {
+            "candidates": [
+              {
+                "confidence": 1,
+                "text": "Approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Approved"
+              },
+              {
+                "confidence": 0.5,
+                "text": "Approve"
+              },
+              {
+                "confidence": 0.5,
+                "text": "Approve"
+              },
+              {
+                "confidence": 0.5,
+                "text": "Aproved"
+              }
+            ],
+            "height": 0.02693046569824209,
+            "width": 0.14020431518554688,
+            "x": 0.032611020605454004,
+            "y": 0.5294126741478844
+          },
+          {
+            "candidates": [
+              {
+                "confidence": 1,
+                "text": "Not approved"
+              },
+              {
+                "confidence": 1,
+                "text": "No approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Not approve"
+              },
+              {
+                "confidence": 1,
+                "text": "ot approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Not aproved"
+              }
+            ],
+            "height": 0.01991864363352458,
+            "width": 0.16518888685438365,
+            "x": 0.41644341493485565,
+            "y": 0.04995987001281588
+          }
+        ],
+        "stage": "perform-end",
+        "uptime": 330955.6971870417,
+        "wall": 1793580691.102075
+      },
+      {
+        "cpuControl": false,
+        "id": "2AA6EF35-167F-4962-BC71-670873092AB0",
+        "lines": [
+          "Not approved\nApproved"
+        ],
+        "stage": "extract-result",
+        "uptime": 330955.69742854167,
+        "wall": 1793580691.102316,
+        "warnings": []
+      }
+    ],
+    "assets": {
+      "2AA6EF35-167F-4962-BC71-670873092AB0.pdf": {
+        "asset": "assets/af705728e2a4533cfa8e4bac84db2f2b74809a3961bd875f2255f8e1a58e22c9.pdf",
+        "bytes": 24231,
+        "sha256": "af705728e2a4533cfa8e4bac84db2f2b74809a3961bd875f2255f8e1a58e22c9"
+      },
+      "2AA6EF35-167F-4962-BC71-670873092AB0-14a5184eacdcb275a78cf4ed069202a3158961339f61bc863e7b8b334b4fea52.png": {
+        "asset": "assets/14a5184eacdcb275a78cf4ed069202a3158961339f61bc863e7b8b334b4fea52.png",
+        "bytes": 103962,
+        "sha256": "14a5184eacdcb275a78cf4ed069202a3158961339f61bc863e7b8b334b4fea52"
+      }
+    }
+  },
+  {
+    "id": "2D8C8979-B6DD-45D5-A895-1CAB1DC24ED2",
+    "raw_sha256": "f3748643b17fcfc17eaecb0706a70f45e96b98c83204f2a4227a6c7864997fdd",
+    "events": [
+      {
+        "bytes": 23567,
+        "cpuControl": false,
+        "id": "2D8C8979-B6DD-45D5-A895-1CAB1DC24ED2",
+        "input": "2D8C8979-B6DD-45D5-A895-1CAB1DC24ED2.png",
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "stage": "input",
+        "uptime": 330955.6581469167,
+        "wall": 1793580691.063034
+      },
+      {
+        "bitsPerPixel": 32,
+        "bytesPerRow": 6400,
+        "cpuControl": false,
+        "height": 300,
+        "id": "2D8C8979-B6DD-45D5-A895-1CAB1DC24ED2",
+        "image": "2D8C8979-B6DD-45D5-A895-1CAB1DC24ED2-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+        "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0",
+        "stage": "ocr-input",
+        "uptime": 330955.66285620834,
+        "wall": 1793580691.067744,
+        "width": 1600
+      },
+      {
+        "automaticLanguage": true,
+        "cpuControl": false,
+        "id": "2D8C8979-B6DD-45D5-A895-1CAB1DC24ED2",
+        "languageCorrection": true,
+        "languages": [
+          "ru-RU",
+          "en-US"
+        ],
+        "revision": 3,
+        "stage": "request-options",
+        "uptime": 330955.66300137504,
+        "wall": 1793580691.067889
+      },
+      {
+        "cpuControl": false,
+        "id": "2D8C8979-B6DD-45D5-A895-1CAB1DC24ED2",
+        "stage": "perform-begin",
+        "uptime": 330955.66305308335,
+        "wall": 1793580691.06794
+      },
+      {
+        "cpuControl": false,
+        "id": "2D8C8979-B6DD-45D5-A895-1CAB1DC24ED2",
+        "observations": [
+          {
+            "candidates": [
+              {
+                "confidence": 1,
+                "text": "Project Alpha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project A pha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Apha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Alpha budget approve"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Alpha budge approved"
+              }
+            ],
+            "height": 0.19457364400227872,
+            "width": 0.5174418640136719,
+            "x": 0.03197674233930247,
+            "y": 0.4333333312911074
+          }
+        ],
+        "stage": "perform-end",
+        "uptime": 330957.70385608333,
+        "wall": 1793580693.108746
+      },
+      {
+        "cpuControl": false,
+        "id": "2D8C8979-B6DD-45D5-A895-1CAB1DC24ED2",
+        "lines": [
+          "Project Alpha budget approved"
+        ],
+        "stage": "extract-result",
+        "uptime": 330957.70452533336,
+        "wall": 1793580693.109414,
+        "warnings": []
+      }
+    ],
+    "assets": {
+      "2D8C8979-B6DD-45D5-A895-1CAB1DC24ED2.png": {
+        "asset": "assets/8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8.png",
+        "bytes": 23567,
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8"
+      },
+      "2D8C8979-B6DD-45D5-A895-1CAB1DC24ED2-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png": {
+        "asset": "assets/20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+        "bytes": 23579,
+        "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0"
+      }
+    }
+  },
+  {
+    "id": "2E8BECB0-1EA9-44EA-A83E-A69765305574",
+    "raw_sha256": "49a9dd62e69671e454669ec576ac94aa775160946a7271475dec4b52713975f1",
+    "events": [
+      {
+        "bytes": 21549,
+        "cpuControl": false,
+        "id": "2E8BECB0-1EA9-44EA-A83E-A69765305574",
+        "input": "2E8BECB0-1EA9-44EA-A83E-A69765305574.pdf",
+        "sha256": "2e9319f66e8a7e081a96bab01391970d1e8ee4d1f89dd4b16df7e5b50e9b1be5",
+        "stage": "input",
+        "uptime": 330955.3939121667,
+        "wall": 1793580690.7988
+      },
+      {
+        "cpuControl": false,
+        "id": "2E8BECB0-1EA9-44EA-A83E-A69765305574",
+        "native": "2026",
+        "page": 1,
+        "stage": "pdf-native",
+        "uptime": 330955.3944870417,
+        "wall": 1793580690.799374
+      },
+      {
+        "bitsPerPixel": 32,
+        "bytesPerRow": 7200,
+        "cpuControl": false,
+        "height": 2400,
+        "id": "2E8BECB0-1EA9-44EA-A83E-A69765305574",
+        "image": "2E8BECB0-1EA9-44EA-A83E-A69765305574-ed81cb04fddb07561b7087d54646c8dda614c678115347c82f8fd2c0df7c7b87.png",
+        "sha256": "ed81cb04fddb07561b7087d54646c8dda614c678115347c82f8fd2c0df7c7b87",
+        "stage": "ocr-input",
+        "uptime": 330955.467487875,
+        "wall": 1793580690.872375,
+        "width": 1800
+      },
+      {
+        "automaticLanguage": true,
+        "cpuControl": false,
+        "id": "2E8BECB0-1EA9-44EA-A83E-A69765305574",
+        "languageCorrection": true,
+        "languages": [
+          "ru-RU",
+          "en-US"
+        ],
+        "revision": 3,
+        "stage": "request-options",
+        "uptime": 330955.4682495833,
+        "wall": 1793580690.873138
+      },
+      {
+        "cpuControl": false,
+        "id": "2E8BECB0-1EA9-44EA-A83E-A69765305574",
+        "stage": "perform-begin",
+        "uptime": 330955.46841470833,
+        "wall": 1793580690.873302
+      },
+      {
+        "cpuControl": false,
+        "id": "2E8BECB0-1EA9-44EA-A83E-A69765305574",
+        "observations": [
+          {
+            "candidates": [
+              {
+                "confidence": 1,
+                "text": "26"
+              },
+              {
+                "confidence": 0.30000001192092896,
+                "text": "6"
+              },
+              {
+                "confidence": 0.30000001192092896,
+                "text": "2"
+              }
+            ],
+            "height": 0.01889534950256344,
+            "width": 0.04263565911187066,
+            "x": 0.03294573623863831,
+            "y": 0.5348837206500425
+          },
+          {
+            "candidates": [
+              {
+                "confidence": 1,
+                "text": "2026"
+              },
+              {
+                "confidence": 0.30000001192092896,
+                "text": "202"
+              },
+              {
+                "confidence": 0.30000001192092896,
+                "text": "206"
+              },
+              {
+                "confidence": 0.30000001192092896,
+                "text": "226"
+              },
+              {
+                "confidence": 0.30000001192092896,
+                "text": "026"
+              }
+            ],
+            "height": 0.017441860834757517,
+            "width": 0.06589147355821401,
+            "x": 0.4166666667092651,
+            "y": 0.05377906975703994
+          }
+        ],
+        "stage": "perform-end",
+        "uptime": 330956.04535833333,
+        "wall": 1793580691.450247
+      },
+      {
+        "cpuControl": false,
+        "id": "2E8BECB0-1EA9-44EA-A83E-A69765305574",
+        "lines": [
+          "2026\n26"
+        ],
+        "stage": "extract-result",
+        "uptime": 330956.0456656667,
+        "wall": 1793580691.450553,
+        "warnings": []
+      }
+    ],
+    "assets": {
+      "2E8BECB0-1EA9-44EA-A83E-A69765305574.pdf": {
+        "asset": "assets/2e9319f66e8a7e081a96bab01391970d1e8ee4d1f89dd4b16df7e5b50e9b1be5.pdf",
+        "bytes": 21549,
+        "sha256": "2e9319f66e8a7e081a96bab01391970d1e8ee4d1f89dd4b16df7e5b50e9b1be5"
+      },
+      "2E8BECB0-1EA9-44EA-A83E-A69765305574-ed81cb04fddb07561b7087d54646c8dda614c678115347c82f8fd2c0df7c7b87.png": {
+        "asset": "assets/ed81cb04fddb07561b7087d54646c8dda614c678115347c82f8fd2c0df7c7b87.png",
+        "bytes": 94605,
+        "sha256": "ed81cb04fddb07561b7087d54646c8dda614c678115347c82f8fd2c0df7c7b87"
+      }
+    }
+  },
+  {
+    "id": "37CE37AA-F160-448B-AEFC-D91D43AD0150",
+    "raw_sha256": "d238b5aaf8f52f2dc23a3db798f6bf728495d29843a5f60631308e030d01bce3",
+    "events": [
+      {
+        "bytes": 23567,
+        "cpuControl": false,
+        "id": "37CE37AA-F160-448B-AEFC-D91D43AD0150",
+        "input": "37CE37AA-F160-448B-AEFC-D91D43AD0150.png",
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "stage": "input",
+        "uptime": 330955.34513720835,
+        "wall": 1793580690.7501101
+      },
+      {
+        "bitsPerPixel": 32,
+        "bytesPerRow": 6400,
+        "cpuControl": false,
+        "height": 300,
+        "id": "37CE37AA-F160-448B-AEFC-D91D43AD0150",
+        "image": "37CE37AA-F160-448B-AEFC-D91D43AD0150-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+        "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0",
+        "stage": "ocr-input",
+        "uptime": 330955.35340708337,
+        "wall": 1793580690.758295,
+        "width": 1600
+      },
+      {
+        "automaticLanguage": true,
+        "cpuControl": false,
+        "id": "37CE37AA-F160-448B-AEFC-D91D43AD0150",
+        "languageCorrection": true,
+        "languages": [
+          "ru-RU",
+          "en-US"
+        ],
+        "revision": 3,
+        "stage": "request-options",
+        "uptime": 330955.35572,
+        "wall": 1793580690.760608
+      },
+      {
+        "cpuControl": false,
+        "id": "37CE37AA-F160-448B-AEFC-D91D43AD0150",
+        "stage": "perform-begin",
+        "uptime": 330955.35585133336,
+        "wall": 1793580690.7607388
+      },
+      {
+        "cpuControl": false,
+        "id": "37CE37AA-F160-448B-AEFC-D91D43AD0150",
+        "observations": [
+          {
+            "candidates": [
+              {
+                "confidence": 1,
+                "text": "Project Alpha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project A pha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Apha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Alpha budget approve"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Alpha budge approved"
+              }
+            ],
+            "height": 0.19457364400227872,
+            "width": 0.5174418640136719,
+            "x": 0.03197674233930247,
+            "y": 0.4333333312911074
+          }
+        ],
+        "stage": "perform-end",
+        "uptime": 330955.57542816666,
+        "wall": 1793580690.9803162
+      },
+      {
+        "cpuControl": false,
+        "id": "37CE37AA-F160-448B-AEFC-D91D43AD0150",
+        "lines": [
+          "Project Alpha budget approved"
+        ],
+        "stage": "extract-result",
+        "uptime": 330955.575739,
+        "wall": 1793580690.980626,
+        "warnings": []
+      }
+    ],
+    "assets": {
+      "37CE37AA-F160-448B-AEFC-D91D43AD0150.png": {
+        "asset": "assets/8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8.png",
+        "bytes": 23567,
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8"
+      },
+      "37CE37AA-F160-448B-AEFC-D91D43AD0150-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png": {
+        "asset": "assets/20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+        "bytes": 23579,
+        "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0"
+      }
+    }
+  },
+  {
+    "id": "3D6E60A4-27DA-4842-8E0F-C385D9C0F415",
+    "raw_sha256": "055b861e13e3cf9f5cb627aa87f0f92ec48a46ebd0c26efbd829875e489d9f84",
+    "events": [
+      {
+        "bytes": 23567,
+        "cpuControl": false,
+        "id": "3D6E60A4-27DA-4842-8E0F-C385D9C0F415",
+        "input": "3D6E60A4-27DA-4842-8E0F-C385D9C0F415.png",
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "stage": "input",
+        "uptime": 330955.63859633333,
+        "wall": 1793580691.043484
+      },
+      {
+        "bitsPerPixel": 32,
+        "bytesPerRow": 6400,
+        "cpuControl": false,
+        "height": 300,
+        "id": "3D6E60A4-27DA-4842-8E0F-C385D9C0F415",
+        "image": "3D6E60A4-27DA-4842-8E0F-C385D9C0F415-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+        "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0",
+        "stage": "ocr-input",
+        "uptime": 330955.64440625004,
+        "wall": 1793580691.049294,
+        "width": 1600
+      },
+      {
+        "automaticLanguage": true,
+        "cpuControl": false,
+        "id": "3D6E60A4-27DA-4842-8E0F-C385D9C0F415",
+        "languageCorrection": true,
+        "languages": [
+          "ru-RU",
+          "en-US"
+        ],
+        "revision": 3,
+        "stage": "request-options",
+        "uptime": 330955.64457008336,
+        "wall": 1793580691.049458
+      },
+      {
+        "cpuControl": false,
+        "id": "3D6E60A4-27DA-4842-8E0F-C385D9C0F415",
+        "stage": "perform-begin",
+        "uptime": 330955.644726,
+        "wall": 1793580691.049613
+      },
+      {
+        "cpuControl": false,
+        "id": "3D6E60A4-27DA-4842-8E0F-C385D9C0F415",
+        "observations": [
+          {
+            "candidates": [
+              {
+                "confidence": 1,
+                "text": "Project Alpha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project A pha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Apha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Alpha budget approve"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Alpha budge approved"
+              }
+            ],
+            "height": 0.19457364400227872,
+            "width": 0.5174418640136719,
+            "x": 0.03197674233930247,
+            "y": 0.4333333312911074
+          }
+        ],
+        "stage": "perform-end",
+        "uptime": 330956.74738066667,
+        "wall": 1793580692.152269
+      },
+      {
+        "cpuControl": false,
+        "id": "3D6E60A4-27DA-4842-8E0F-C385D9C0F415",
+        "lines": [
+          "Project Alpha budget approved"
+        ],
+        "stage": "extract-result",
+        "uptime": 330956.748327,
+        "wall": 1793580692.153215,
+        "warnings": []
+      }
+    ],
+    "assets": {
+      "3D6E60A4-27DA-4842-8E0F-C385D9C0F415.png": {
+        "asset": "assets/8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8.png",
+        "bytes": 23567,
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8"
+      },
+      "3D6E60A4-27DA-4842-8E0F-C385D9C0F415-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png": {
+        "asset": "assets/20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+        "bytes": 23579,
+        "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0"
+      }
+    }
+  },
+  {
+    "id": "3E24A1D8-8DA1-44CA-8D82-10044E0AB477",
+    "raw_sha256": "0a55839a091d29407116e9d34d5df1646a6fa21ba9fe9725aaa555b9b987a4fd",
+    "events": [
+      {
+        "bytes": 23567,
+        "cpuControl": false,
+        "id": "3E24A1D8-8DA1-44CA-8D82-10044E0AB477",
+        "input": "3E24A1D8-8DA1-44CA-8D82-10044E0AB477.png",
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "stage": "input",
+        "uptime": 330955.66808070836,
+        "wall": 1793580691.072968
+      },
+      {
+        "bitsPerPixel": 32,
+        "bytesPerRow": 6400,
+        "cpuControl": false,
+        "height": 300,
+        "id": "3E24A1D8-8DA1-44CA-8D82-10044E0AB477",
+        "image": "3E24A1D8-8DA1-44CA-8D82-10044E0AB477-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+        "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0",
+        "stage": "ocr-input",
+        "uptime": 330955.672788375,
+        "wall": 1793580691.077676,
+        "width": 1600
+      },
+      {
+        "automaticLanguage": true,
+        "cpuControl": false,
+        "id": "3E24A1D8-8DA1-44CA-8D82-10044E0AB477",
+        "languageCorrection": true,
+        "languages": [
+          "ru-RU",
+          "en-US"
+        ],
+        "revision": 3,
+        "stage": "request-options",
+        "uptime": 330955.67292758333,
+        "wall": 1793580691.077815
+      },
+      {
+        "cpuControl": false,
+        "id": "3E24A1D8-8DA1-44CA-8D82-10044E0AB477",
+        "stage": "perform-begin",
+        "uptime": 330955.67302054167,
+        "wall": 1793580691.077908
+      },
+      {
+        "cpuControl": false,
+        "id": "3E24A1D8-8DA1-44CA-8D82-10044E0AB477",
+        "observations": [
+          {
+            "candidates": [
+              {
+                "confidence": 1,
+                "text": "Project Alpha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project A pha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Apha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Alpha budget approve"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Alpha budge approved"
+              }
+            ],
+            "height": 0.19457364400227872,
+            "width": 0.5174418640136719,
+            "x": 0.03197674233930247,
+            "y": 0.4333333312911074
+          }
+        ],
+        "stage": "perform-end",
+        "uptime": 330957.9425221667,
+        "wall": 1793580693.347412
+      },
+      {
+        "cpuControl": false,
+        "id": "3E24A1D8-8DA1-44CA-8D82-10044E0AB477",
+        "lines": [
+          "Project Alpha budget approved"
+        ],
+        "stage": "extract-result",
+        "uptime": 330957.94297175005,
+        "wall": 1793580693.3478599,
+        "warnings": []
+      }
+    ],
+    "assets": {
+      "3E24A1D8-8DA1-44CA-8D82-10044E0AB477.png": {
+        "asset": "assets/8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8.png",
+        "bytes": 23567,
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8"
+      },
+      "3E24A1D8-8DA1-44CA-8D82-10044E0AB477-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png": {
+        "asset": "assets/20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+        "bytes": 23579,
+        "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0"
+      }
+    }
+  },
+  {
+    "id": "40FB9655-DEDB-405D-B22D-8D4B3EF67DFD",
+    "raw_sha256": "ceebe1fab959ef0f972c0add1f6763117d10041a4eec201d45a31695c7b7c22a",
+    "events": [
+      {
+        "bytes": 23567,
+        "cpuControl": false,
+        "id": "40FB9655-DEDB-405D-B22D-8D4B3EF67DFD",
+        "input": "40FB9655-DEDB-405D-B22D-8D4B3EF67DFD.png",
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "stage": "input",
+        "uptime": 330955.6345929167,
+        "wall": 1793580691.03948
+      },
+      {
+        "bitsPerPixel": 32,
+        "bytesPerRow": 6400,
+        "cpuControl": false,
+        "height": 300,
+        "id": "40FB9655-DEDB-405D-B22D-8D4B3EF67DFD",
+        "image": "40FB9655-DEDB-405D-B22D-8D4B3EF67DFD-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+        "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0",
+        "stage": "ocr-input",
+        "uptime": 330955.64097912505,
+        "wall": 1793580691.045867,
+        "width": 1600
+      },
+      {
+        "automaticLanguage": true,
+        "cpuControl": false,
+        "id": "40FB9655-DEDB-405D-B22D-8D4B3EF67DFD",
+        "languageCorrection": true,
+        "languages": [
+          "ru-RU",
+          "en-US"
+        ],
+        "revision": 3,
+        "stage": "request-options",
+        "uptime": 330955.64135654166,
+        "wall": 1793580691.0462441
+      },
+      {
+        "cpuControl": false,
+        "id": "40FB9655-DEDB-405D-B22D-8D4B3EF67DFD",
+        "stage": "perform-begin",
+        "uptime": 330955.64151983336,
+        "wall": 1793580691.046407
+      },
+      {
+        "cpuControl": false,
+        "id": "40FB9655-DEDB-405D-B22D-8D4B3EF67DFD",
+        "observations": [
+          {
+            "candidates": [
+              {
+                "confidence": 1,
+                "text": "Project Alpha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project A pha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Apha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Alpha budget approve"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Alpha budge approved"
+              }
+            ],
+            "height": 0.19457364400227872,
+            "width": 0.5174418640136719,
+            "x": 0.03197674233930247,
+            "y": 0.4333333312911074
+          }
+        ],
+        "stage": "perform-end",
+        "uptime": 330956.5880437917,
+        "wall": 1793580691.9929318
+      },
+      {
+        "cpuControl": false,
+        "id": "40FB9655-DEDB-405D-B22D-8D4B3EF67DFD",
+        "lines": [
+          "Project Alpha budget approved"
+        ],
+        "stage": "extract-result",
+        "uptime": 330956.588372125,
+        "wall": 1793580691.99326,
+        "warnings": []
+      }
+    ],
+    "assets": {
+      "40FB9655-DEDB-405D-B22D-8D4B3EF67DFD.png": {
+        "asset": "assets/8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8.png",
+        "bytes": 23567,
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8"
+      },
+      "40FB9655-DEDB-405D-B22D-8D4B3EF67DFD-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png": {
+        "asset": "assets/20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+        "bytes": 23579,
+        "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0"
+      }
+    }
+  },
+  {
+    "id": "49C1A517-ECD2-49A2-8103-1E7FFA4F6192",
+    "raw_sha256": "6263b4ba1a6ec8bd700a8887458a8276440465f6f82f82fcf50032e22aa5ca4e",
+    "events": [
+      {
+        "bytes": 23567,
+        "cpuControl": false,
+        "id": "49C1A517-ECD2-49A2-8103-1E7FFA4F6192",
+        "input": "49C1A517-ECD2-49A2-8103-1E7FFA4F6192.png",
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "stage": "input",
+        "uptime": 330955.65111595835,
+        "wall": 1793580691.056003
+      },
+      {
+        "bitsPerPixel": 32,
+        "bytesPerRow": 6400,
+        "cpuControl": false,
+        "height": 300,
+        "id": "49C1A517-ECD2-49A2-8103-1E7FFA4F6192",
+        "image": "49C1A517-ECD2-49A2-8103-1E7FFA4F6192-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+        "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0",
+        "stage": "ocr-input",
+        "uptime": 330955.65598362504,
+        "wall": 1793580691.0608711,
+        "width": 1600
+      },
+      {
+        "automaticLanguage": true,
+        "cpuControl": false,
+        "id": "49C1A517-ECD2-49A2-8103-1E7FFA4F6192",
+        "languageCorrection": true,
+        "languages": [
+          "ru-RU",
+          "en-US"
+        ],
+        "revision": 3,
+        "stage": "request-options",
+        "uptime": 330955.65613841667,
+        "wall": 1793580691.061026
+      },
+      {
+        "cpuControl": false,
+        "id": "49C1A517-ECD2-49A2-8103-1E7FFA4F6192",
+        "stage": "perform-begin",
+        "uptime": 330955.65623258334,
+        "wall": 1793580691.06112
+      },
+      {
+        "cpuControl": false,
+        "id": "49C1A517-ECD2-49A2-8103-1E7FFA4F6192",
+        "observations": [
+          {
+            "candidates": [
+              {
+                "confidence": 1,
+                "text": "Project Alpha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project A pha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Apha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Alpha budget approve"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Alpha budge approved"
+              }
+            ],
+            "height": 0.19457364400227872,
+            "width": 0.5174418640136719,
+            "x": 0.03197674233930247,
+            "y": 0.4333333312911074
+          }
+        ],
+        "stage": "perform-end",
+        "uptime": 330957.58695645834,
+        "wall": 1793580692.9918451
+      },
+      {
+        "cpuControl": false,
+        "id": "49C1A517-ECD2-49A2-8103-1E7FFA4F6192",
+        "lines": [
+          "Project Alpha budget approved"
+        ],
+        "stage": "extract-result",
+        "uptime": 330957.58715908334,
+        "wall": 1793580692.9920468,
+        "warnings": []
+      }
+    ],
+    "assets": {
+      "49C1A517-ECD2-49A2-8103-1E7FFA4F6192.png": {
+        "asset": "assets/8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8.png",
+        "bytes": 23567,
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8"
+      },
+      "49C1A517-ECD2-49A2-8103-1E7FFA4F6192-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png": {
+        "asset": "assets/20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+        "bytes": 23579,
+        "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0"
+      }
+    }
+  },
+  {
+    "id": "4D89EBEF-0B69-4BC6-8815-758F640A0131",
+    "raw_sha256": "fe2dde654875b0bca72b7d313a39844b69d8b3925d248e05a601ed5bc77dbceb",
+    "events": [
+      {
+        "bytes": 23567,
+        "cpuControl": false,
+        "id": "4D89EBEF-0B69-4BC6-8815-758F640A0131",
+        "input": "4D89EBEF-0B69-4BC6-8815-758F640A0131.png",
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "stage": "input",
+        "uptime": 330955.62362545833,
+        "wall": 1793580691.028513
+      },
+      {
+        "bitsPerPixel": 32,
+        "bytesPerRow": 6400,
+        "cpuControl": false,
+        "height": 300,
+        "id": "4D89EBEF-0B69-4BC6-8815-758F640A0131",
+        "image": "4D89EBEF-0B69-4BC6-8815-758F640A0131-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+        "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0",
+        "stage": "ocr-input",
+        "uptime": 330955.6289906667,
+        "wall": 1793580691.0338778,
+        "width": 1600
+      },
+      {
+        "automaticLanguage": true,
+        "cpuControl": false,
+        "id": "4D89EBEF-0B69-4BC6-8815-758F640A0131",
+        "languageCorrection": true,
+        "languages": [
+          "ru-RU",
+          "en-US"
+        ],
+        "revision": 3,
+        "stage": "request-options",
+        "uptime": 330955.62931075,
+        "wall": 1793580691.034199
+      },
+      {
+        "cpuControl": false,
+        "id": "4D89EBEF-0B69-4BC6-8815-758F640A0131",
+        "stage": "perform-begin",
+        "uptime": 330955.6294142917,
+        "wall": 1793580691.034302
+      },
+      {
+        "cpuControl": false,
+        "id": "4D89EBEF-0B69-4BC6-8815-758F640A0131",
+        "observations": [
+          {
+            "candidates": [
+              {
+                "confidence": 1,
+                "text": "Project Alpha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project A pha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Apha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Alpha budget approve"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Alpha budge approved"
+              }
+            ],
+            "height": 0.19457364400227872,
+            "width": 0.5174418640136719,
+            "x": 0.03197674233930247,
+            "y": 0.4333333312911074
+          }
+        ],
+        "stage": "perform-end",
+        "uptime": 330956.294677,
+        "wall": 1793580691.699565
+      },
+      {
+        "cpuControl": false,
+        "id": "4D89EBEF-0B69-4BC6-8815-758F640A0131",
+        "lines": [
+          "Project Alpha budget approved"
+        ],
+        "stage": "extract-result",
+        "uptime": 330956.2964010417,
+        "wall": 1793580691.7012892,
+        "warnings": []
+      }
+    ],
+    "assets": {
+      "4D89EBEF-0B69-4BC6-8815-758F640A0131.png": {
+        "asset": "assets/8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8.png",
+        "bytes": 23567,
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8"
+      },
+      "4D89EBEF-0B69-4BC6-8815-758F640A0131-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png": {
+        "asset": "assets/20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+        "bytes": 23579,
+        "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0"
+      }
+    }
+  },
+  {
+    "id": "4F83E8A8-2CD5-4ADC-A8D9-056BE18CFEA3",
+    "raw_sha256": "31e472c5633be7bb3a4025d57d6b0d172b386839429ba4d2f589f32b757b7d54",
+    "events": [
+      {
+        "bytes": 21495,
+        "cpuControl": false,
+        "id": "4F83E8A8-2CD5-4ADC-A8D9-056BE18CFEA3",
+        "input": "4F83E8A8-2CD5-4ADC-A8D9-056BE18CFEA3.pdf",
+        "sha256": "23e5c6d4c597bf20d2a09483c68a19d2c0ea4315fbefe8530e3c9f8b8651032d",
+        "stage": "input",
+        "uptime": 330955.4067384167,
+        "wall": 1793580690.811626
+      },
+      {
+        "cpuControl": false,
+        "id": "4F83E8A8-2CD5-4ADC-A8D9-056BE18CFEA3",
+        "native": "2026",
+        "page": 1,
+        "stage": "pdf-native",
+        "uptime": 330955.40733395837,
+        "wall": 1793580690.812221
+      },
+      {
+        "bitsPerPixel": 32,
+        "bytesPerRow": 7200,
+        "cpuControl": false,
+        "height": 2400,
+        "id": "4F83E8A8-2CD5-4ADC-A8D9-056BE18CFEA3",
+        "image": "4F83E8A8-2CD5-4ADC-A8D9-056BE18CFEA3-0e5e0d92af32c8dbcf4f4e4055fa450fde53c242363af02785df70f5ed995831.png",
+        "sha256": "0e5e0d92af32c8dbcf4f4e4055fa450fde53c242363af02785df70f5ed995831",
+        "stage": "ocr-input",
+        "uptime": 330955.524907875,
+        "wall": 1793580690.929795,
+        "width": 1800
+      },
+      {
+        "automaticLanguage": true,
+        "cpuControl": false,
+        "id": "4F83E8A8-2CD5-4ADC-A8D9-056BE18CFEA3",
+        "languageCorrection": true,
+        "languages": [
+          "ru-RU",
+          "en-US"
+        ],
+        "revision": 3,
+        "stage": "request-options",
+        "uptime": 330955.525178125,
+        "wall": 1793580690.930066
+      },
+      {
+        "cpuControl": false,
+        "id": "4F83E8A8-2CD5-4ADC-A8D9-056BE18CFEA3",
+        "stage": "perform-begin",
+        "uptime": 330955.52527075005,
+        "wall": 1793580690.9301581
+      },
+      {
+        "cpuControl": false,
+        "id": "4F83E8A8-2CD5-4ADC-A8D9-056BE18CFEA3",
+        "observations": [
+          {
+            "candidates": [
+              {
+                "confidence": 1,
+                "text": "20"
+              },
+              {
+                "confidence": 0.30000001192092896,
+                "text": "0"
+              },
+              {
+                "confidence": 0.30000001192092896,
+                "text": "2"
+              }
+            ],
+            "height": 0.01889534950256344,
+            "width": 0.04069767422146267,
+            "x": 0.03294573644116358,
+            "y": 0.5348837206500425
+          },
+          {
+            "candidates": [
+              {
+                "confidence": 1,
+                "text": "2026"
+              },
+              {
+                "confidence": 0.30000001192092896,
+                "text": "202"
+              },
+              {
+                "confidence": 0.30000001192092896,
+                "text": "206"
+              },
+              {
+                "confidence": 0.30000001192092896,
+                "text": "226"
+              },
+              {
+                "confidence": 0.30000001192092896,
+                "text": "026"
+              }
+            ],
+            "height": 0.017441860834757517,
+            "width": 0.06589147355821401,
+            "x": 0.4166666667092651,
+            "y": 0.05377906975703994
+          }
+        ],
+        "stage": "perform-end",
+        "uptime": 330956.1033432917,
+        "wall": 1793580691.508232
+      },
+      {
+        "cpuControl": false,
+        "id": "4F83E8A8-2CD5-4ADC-A8D9-056BE18CFEA3",
+        "lines": [
+          "2026\n20"
+        ],
+        "stage": "extract-result",
+        "uptime": 330956.10363675,
+        "wall": 1793580691.508524,
+        "warnings": []
+      }
+    ],
+    "assets": {
+      "4F83E8A8-2CD5-4ADC-A8D9-056BE18CFEA3.pdf": {
+        "asset": "assets/23e5c6d4c597bf20d2a09483c68a19d2c0ea4315fbefe8530e3c9f8b8651032d.pdf",
+        "bytes": 21495,
+        "sha256": "23e5c6d4c597bf20d2a09483c68a19d2c0ea4315fbefe8530e3c9f8b8651032d"
+      },
+      "4F83E8A8-2CD5-4ADC-A8D9-056BE18CFEA3-0e5e0d92af32c8dbcf4f4e4055fa450fde53c242363af02785df70f5ed995831.png": {
+        "asset": "assets/0e5e0d92af32c8dbcf4f4e4055fa450fde53c242363af02785df70f5ed995831.png",
+        "bytes": 94857,
+        "sha256": "0e5e0d92af32c8dbcf4f4e4055fa450fde53c242363af02785df70f5ed995831"
+      }
+    }
+  },
+  {
+    "id": "5A0DC893-55EA-495E-9735-2526290E51E2",
+    "raw_sha256": "330d69dda51b839f4012db3e3f0b68711174cad8272b3085ccf6280dbe2b00f0",
+    "events": [
+      {
+        "bytes": 23567,
+        "cpuControl": false,
+        "id": "5A0DC893-55EA-495E-9735-2526290E51E2",
+        "input": "5A0DC893-55EA-495E-9735-2526290E51E2.png",
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "stage": "input",
+        "uptime": 330955.71159375,
+        "wall": 1793580691.1164808
+      },
+      {
+        "bitsPerPixel": 32,
+        "bytesPerRow": 6400,
+        "cpuControl": false,
+        "height": 300,
+        "id": "5A0DC893-55EA-495E-9735-2526290E51E2",
+        "image": "5A0DC893-55EA-495E-9735-2526290E51E2-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+        "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0",
+        "stage": "ocr-input",
+        "uptime": 330955.7160852917,
+        "wall": 1793580691.120973,
+        "width": 1600
+      },
+      {
+        "automaticLanguage": true,
+        "cpuControl": false,
+        "id": "5A0DC893-55EA-495E-9735-2526290E51E2",
+        "languageCorrection": true,
+        "languages": [
+          "ru-RU",
+          "en-US"
+        ],
+        "revision": 3,
+        "stage": "request-options",
+        "uptime": 330955.71619820833,
+        "wall": 1793580691.1210861
+      },
+      {
+        "cpuControl": false,
+        "id": "5A0DC893-55EA-495E-9735-2526290E51E2",
+        "stage": "perform-begin",
+        "uptime": 330955.7162464167,
+        "wall": 1793580691.121134
+      },
+      {
+        "cpuControl": false,
+        "id": "5A0DC893-55EA-495E-9735-2526290E51E2",
+        "observations": [
+          {
+            "candidates": [
+              {
+                "confidence": 1,
+                "text": "Project Alpha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project A pha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Apha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Alpha budget approve"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Alpha budge approved"
+              }
+            ],
+            "height": 0.19457364400227872,
+            "width": 0.5174418640136719,
+            "x": 0.03197674233930247,
+            "y": 0.4333333312911074
+          }
+        ],
+        "stage": "perform-end",
+        "uptime": 330958.6282287917,
+        "wall": 1793580694.033118
+      },
+      {
+        "cpuControl": false,
+        "id": "5A0DC893-55EA-495E-9735-2526290E51E2",
+        "lines": [
+          "Project Alpha budget approved"
+        ],
+        "stage": "extract-result",
+        "uptime": 330958.6284582917,
+        "wall": 1793580694.0333471,
+        "warnings": []
+      }
+    ],
+    "assets": {
+      "5A0DC893-55EA-495E-9735-2526290E51E2.png": {
+        "asset": "assets/8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8.png",
+        "bytes": 23567,
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8"
+      },
+      "5A0DC893-55EA-495E-9735-2526290E51E2-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png": {
+        "asset": "assets/20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+        "bytes": 23579,
+        "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0"
+      }
+    }
+  },
+  {
+    "id": "643B0EC8-2668-4506-A385-1C66B90CB458",
+    "raw_sha256": "e42a52cbf3ab3b0d563c18d951d811f086bf8279415c5ab1eadcb67fdbc0059e",
+    "events": [
+      {
+        "bytes": 23567,
+        "cpuControl": false,
+        "id": "643B0EC8-2668-4506-A385-1C66B90CB458",
+        "input": "643B0EC8-2668-4506-A385-1C66B90CB458.png",
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "stage": "input",
+        "uptime": 330955.69493837503,
+        "wall": 1793580691.0998259
+      },
+      {
+        "bitsPerPixel": 32,
+        "bytesPerRow": 6400,
+        "cpuControl": false,
+        "height": 300,
+        "id": "643B0EC8-2668-4506-A385-1C66B90CB458",
+        "image": "643B0EC8-2668-4506-A385-1C66B90CB458-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+        "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0",
+        "stage": "ocr-input",
+        "uptime": 330955.6993785,
+        "wall": 1793580691.1042662,
+        "width": 1600
+      },
+      {
+        "automaticLanguage": true,
+        "cpuControl": false,
+        "id": "643B0EC8-2668-4506-A385-1C66B90CB458",
+        "languageCorrection": true,
+        "languages": [
+          "ru-RU",
+          "en-US"
+        ],
+        "revision": 3,
+        "stage": "request-options",
+        "uptime": 330955.699512375,
+        "wall": 1793580691.1044002
+      },
+      {
+        "cpuControl": false,
+        "id": "643B0EC8-2668-4506-A385-1C66B90CB458",
+        "stage": "perform-begin",
+        "uptime": 330955.6995591667,
+        "wall": 1793580691.104447
+      },
+      {
+        "cpuControl": false,
+        "id": "643B0EC8-2668-4506-A385-1C66B90CB458",
+        "observations": [
+          {
+            "candidates": [
+              {
+                "confidence": 1,
+                "text": "Project Alpha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project A pha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Apha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Alpha budget approve"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Alpha budge approved"
+              }
+            ],
+            "height": 0.19457364400227872,
+            "width": 0.5174418640136719,
+            "x": 0.03197674233930247,
+            "y": 0.4333333312911074
+          }
+        ],
+        "stage": "perform-end",
+        "uptime": 330958.468879125,
+        "wall": 1793580693.8737679
+      },
+      {
+        "cpuControl": false,
+        "id": "643B0EC8-2668-4506-A385-1C66B90CB458",
+        "lines": [
+          "Project Alpha budget approved"
+        ],
+        "stage": "extract-result",
+        "uptime": 330958.46905037505,
+        "wall": 1793580693.873938,
+        "warnings": []
+      }
+    ],
+    "assets": {
+      "643B0EC8-2668-4506-A385-1C66B90CB458.png": {
+        "asset": "assets/8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8.png",
+        "bytes": 23567,
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8"
+      },
+      "643B0EC8-2668-4506-A385-1C66B90CB458-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png": {
+        "asset": "assets/20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+        "bytes": 23579,
+        "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0"
+      }
+    }
+  },
+  {
+    "id": "69AE82B1-8FB4-4DD0-AE96-A527F426FFE3",
+    "raw_sha256": "db7e42b0c586b982a23d14835eeea8117b5de1b9b8b8f0dbda6ee670bf1000b3",
+    "events": [
+      {
+        "bytes": 23567,
+        "cpuControl": false,
+        "id": "69AE82B1-8FB4-4DD0-AE96-A527F426FFE3",
+        "input": "69AE82B1-8FB4-4DD0-AE96-A527F426FFE3.png",
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "stage": "input",
+        "uptime": 330955.69872883335,
+        "wall": 1793580691.103616
+      },
+      {
+        "bitsPerPixel": 32,
+        "bytesPerRow": 6400,
+        "cpuControl": false,
+        "height": 300,
+        "id": "69AE82B1-8FB4-4DD0-AE96-A527F426FFE3",
+        "image": "69AE82B1-8FB4-4DD0-AE96-A527F426FFE3-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+        "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0",
+        "stage": "ocr-input",
+        "uptime": 330955.70331479167,
+        "wall": 1793580691.108202,
+        "width": 1600
+      },
+      {
+        "automaticLanguage": true,
+        "cpuControl": false,
+        "id": "69AE82B1-8FB4-4DD0-AE96-A527F426FFE3",
+        "languageCorrection": true,
+        "languages": [
+          "ru-RU",
+          "en-US"
+        ],
+        "revision": 3,
+        "stage": "request-options",
+        "uptime": 330955.7034637917,
+        "wall": 1793580691.108352
+      },
+      {
+        "cpuControl": false,
+        "id": "69AE82B1-8FB4-4DD0-AE96-A527F426FFE3",
+        "stage": "perform-begin",
+        "uptime": 330955.70354841667,
+        "wall": 1793580691.108436
+      },
+      {
+        "cpuControl": false,
+        "id": "69AE82B1-8FB4-4DD0-AE96-A527F426FFE3",
+        "observations": [
+          {
+            "candidates": [
+              {
+                "confidence": 1,
+                "text": "Project Alpha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project A pha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Apha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Alpha budget approve"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Alpha budge approved"
+              }
+            ],
+            "height": 0.19457364400227872,
+            "width": 0.5174418640136719,
+            "x": 0.03197674233930247,
+            "y": 0.4333333312911074
+          }
+        ],
+        "stage": "perform-end",
+        "uptime": 330958.4982117917,
+        "wall": 1793580693.9031
+      },
+      {
+        "cpuControl": false,
+        "id": "69AE82B1-8FB4-4DD0-AE96-A527F426FFE3",
+        "lines": [
+          "Project Alpha budget approved"
+        ],
+        "stage": "extract-result",
+        "uptime": 330958.4984337917,
+        "wall": 1793580693.903322,
+        "warnings": []
+      }
+    ],
+    "assets": {
+      "69AE82B1-8FB4-4DD0-AE96-A527F426FFE3.png": {
+        "asset": "assets/8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8.png",
+        "bytes": 23567,
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8"
+      },
+      "69AE82B1-8FB4-4DD0-AE96-A527F426FFE3-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png": {
+        "asset": "assets/20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+        "bytes": 23579,
+        "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0"
+      }
+    }
+  },
+  {
+    "id": "6F9FE50E-7080-4A80-A727-57DECF76F9A7",
+    "raw_sha256": "14756fe3574cc5f4211519c53c92fa3dc4dd8152179d1a365e3fa63efdf5b05f",
+    "events": [
+      {
+        "bytes": 23567,
+        "cpuControl": false,
+        "id": "6F9FE50E-7080-4A80-A727-57DECF76F9A7",
+        "input": "6F9FE50E-7080-4A80-A727-57DECF76F9A7.png",
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "stage": "input",
+        "uptime": 330955.64853325003,
+        "wall": 1793580691.053421
+      },
+      {
+        "bitsPerPixel": 32,
+        "bytesPerRow": 6400,
+        "cpuControl": false,
+        "height": 300,
+        "id": "6F9FE50E-7080-4A80-A727-57DECF76F9A7",
+        "image": "6F9FE50E-7080-4A80-A727-57DECF76F9A7-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+        "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0",
+        "stage": "ocr-input",
+        "uptime": 330955.6543120834,
+        "wall": 1793580691.0591989,
+        "width": 1600
+      },
+      {
+        "automaticLanguage": true,
+        "cpuControl": false,
+        "id": "6F9FE50E-7080-4A80-A727-57DECF76F9A7",
+        "languageCorrection": true,
+        "languages": [
+          "ru-RU",
+          "en-US"
+        ],
+        "revision": 3,
+        "stage": "request-options",
+        "uptime": 330955.654459375,
+        "wall": 1793580691.0593472
+      },
+      {
+        "cpuControl": false,
+        "id": "6F9FE50E-7080-4A80-A727-57DECF76F9A7",
+        "stage": "perform-begin",
+        "uptime": 330955.65451820835,
+        "wall": 1793580691.0594049
+      },
+      {
+        "cpuControl": false,
+        "id": "6F9FE50E-7080-4A80-A727-57DECF76F9A7",
+        "observations": [
+          {
+            "candidates": [
+              {
+                "confidence": 1,
+                "text": "Project Alpha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project A pha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Apha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Alpha budget approve"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Alpha budge approved"
+              }
+            ],
+            "height": 0.19457364400227872,
+            "width": 0.5174418640136719,
+            "x": 0.03197674233930247,
+            "y": 0.4333333312911074
+          }
+        ],
+        "stage": "perform-end",
+        "uptime": 330957.557336,
+        "wall": 1793580692.962225
+      },
+      {
+        "cpuControl": false,
+        "id": "6F9FE50E-7080-4A80-A727-57DECF76F9A7",
+        "lines": [
+          "Project Alpha budget approved"
+        ],
+        "stage": "extract-result",
+        "uptime": 330957.5577705,
+        "wall": 1793580692.9626598,
+        "warnings": []
+      }
+    ],
+    "assets": {
+      "6F9FE50E-7080-4A80-A727-57DECF76F9A7.png": {
+        "asset": "assets/8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8.png",
+        "bytes": 23567,
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8"
+      },
+      "6F9FE50E-7080-4A80-A727-57DECF76F9A7-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png": {
+        "asset": "assets/20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+        "bytes": 23579,
+        "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0"
+      }
+    }
+  },
+  {
+    "id": "714D821A-ECFC-48BD-87FC-BC59D57768CB",
+    "raw_sha256": "3c0c0da1f090cff58e162b807fbb976d89dbf1c3be6bc77e9228b1b792935ab4",
+    "events": [
+      {
+        "bytes": 23567,
+        "cpuControl": false,
+        "id": "714D821A-ECFC-48BD-87FC-BC59D57768CB",
+        "input": "714D821A-ECFC-48BD-87FC-BC59D57768CB.png",
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "stage": "input",
+        "uptime": 330955.63068683335,
+        "wall": 1793580691.035574
+      },
+      {
+        "bitsPerPixel": 32,
+        "bytesPerRow": 6400,
+        "cpuControl": false,
+        "height": 300,
+        "id": "714D821A-ECFC-48BD-87FC-BC59D57768CB",
+        "image": "714D821A-ECFC-48BD-87FC-BC59D57768CB-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+        "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0",
+        "stage": "ocr-input",
+        "uptime": 330955.6377060417,
+        "wall": 1793580691.042594,
+        "width": 1600
+      },
+      {
+        "automaticLanguage": true,
+        "cpuControl": false,
+        "id": "714D821A-ECFC-48BD-87FC-BC59D57768CB",
+        "languageCorrection": true,
+        "languages": [
+          "ru-RU",
+          "en-US"
+        ],
+        "revision": 3,
+        "stage": "request-options",
+        "uptime": 330955.6380649167,
+        "wall": 1793580691.042953
+      },
+      {
+        "cpuControl": false,
+        "id": "714D821A-ECFC-48BD-87FC-BC59D57768CB",
+        "stage": "perform-begin",
+        "uptime": 330955.63843683334,
+        "wall": 1793580691.043325
+      },
+      {
+        "cpuControl": false,
+        "id": "714D821A-ECFC-48BD-87FC-BC59D57768CB",
+        "observations": [
+          {
+            "candidates": [
+              {
+                "confidence": 1,
+                "text": "Project Alpha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project A pha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Apha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Alpha budget approve"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Alpha budge approved"
+              }
+            ],
+            "height": 0.19457364400227872,
+            "width": 0.5174418640136719,
+            "x": 0.03197674233930247,
+            "y": 0.4333333312911074
+          }
+        ],
+        "stage": "perform-end",
+        "uptime": 330956.554631125,
+        "wall": 1793580691.959519
+      },
+      {
+        "cpuControl": false,
+        "id": "714D821A-ECFC-48BD-87FC-BC59D57768CB",
+        "lines": [
+          "Project Alpha budget approved"
+        ],
+        "stage": "extract-result",
+        "uptime": 330956.55478529166,
+        "wall": 1793580691.959673,
+        "warnings": []
+      }
+    ],
+    "assets": {
+      "714D821A-ECFC-48BD-87FC-BC59D57768CB.png": {
+        "asset": "assets/8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8.png",
+        "bytes": 23567,
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8"
+      },
+      "714D821A-ECFC-48BD-87FC-BC59D57768CB-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png": {
+        "asset": "assets/20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+        "bytes": 23579,
+        "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0"
+      }
+    }
+  },
+  {
+    "id": "7A88B4D7-04D6-457D-A5B1-384F1A33A272",
+    "raw_sha256": "921f535c0d767c104d18398dda3d4021778a9aaa734e3d78647e743f284c1292",
+    "events": [
+      {
+        "bytes": 23567,
+        "cpuControl": false,
+        "id": "7A88B4D7-04D6-457D-A5B1-384F1A33A272",
+        "input": "7A88B4D7-04D6-457D-A5B1-384F1A33A272.png",
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "stage": "input",
+        "uptime": 330955.71495975,
+        "wall": 1793580691.119847
+      },
+      {
+        "bitsPerPixel": 32,
+        "bytesPerRow": 6400,
+        "cpuControl": false,
+        "height": 300,
+        "id": "7A88B4D7-04D6-457D-A5B1-384F1A33A272",
+        "image": "7A88B4D7-04D6-457D-A5B1-384F1A33A272-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+        "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0",
+        "stage": "ocr-input",
+        "uptime": 330955.71942362504,
+        "wall": 1793580691.124311,
+        "width": 1600
+      },
+      {
+        "automaticLanguage": true,
+        "cpuControl": false,
+        "id": "7A88B4D7-04D6-457D-A5B1-384F1A33A272",
+        "languageCorrection": true,
+        "languages": [
+          "ru-RU",
+          "en-US"
+        ],
+        "revision": 3,
+        "stage": "request-options",
+        "uptime": 330955.7195559167,
+        "wall": 1793580691.124444
+      },
+      {
+        "cpuControl": false,
+        "id": "7A88B4D7-04D6-457D-A5B1-384F1A33A272",
+        "stage": "perform-begin",
+        "uptime": 330955.7196059167,
+        "wall": 1793580691.1244931
+      },
+      {
+        "cpuControl": false,
+        "id": "7A88B4D7-04D6-457D-A5B1-384F1A33A272",
+        "observations": [
+          {
+            "candidates": [
+              {
+                "confidence": 1,
+                "text": "Project Alpha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project A pha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Apha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Alpha budget approve"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Alpha budge approved"
+              }
+            ],
+            "height": 0.19457364400227872,
+            "width": 0.5174418640136719,
+            "x": 0.03197674233930247,
+            "y": 0.4333333312911074
+          }
+        ],
+        "stage": "perform-end",
+        "uptime": 330958.65895245835,
+        "wall": 1793580694.0638409
+      },
+      {
+        "cpuControl": false,
+        "id": "7A88B4D7-04D6-457D-A5B1-384F1A33A272",
+        "lines": [
+          "Project Alpha budget approved"
+        ],
+        "stage": "extract-result",
+        "uptime": 330958.65920075,
+        "wall": 1793580694.0640888,
+        "warnings": []
+      }
+    ],
+    "assets": {
+      "7A88B4D7-04D6-457D-A5B1-384F1A33A272.png": {
+        "asset": "assets/8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8.png",
+        "bytes": 23567,
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8"
+      },
+      "7A88B4D7-04D6-457D-A5B1-384F1A33A272-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png": {
+        "asset": "assets/20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+        "bytes": 23579,
+        "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0"
+      }
+    }
+  },
+  {
+    "id": "7CD90792-8747-4F89-A003-EE0DC1F19E78",
+    "raw_sha256": "54c65f1536b932787e936a58f8dbd91a477e1fef8f82124bb7fd51319c0639c7",
+    "events": [
+      {
+        "bytes": 11145,
+        "cpuControl": false,
+        "id": "7CD90792-8747-4F89-A003-EE0DC1F19E78",
+        "input": "7CD90792-8747-4F89-A003-EE0DC1F19E78.pdf",
+        "sha256": "07032a9aa3eabdc6218db51866343f18a9710e1c4582cc0fe8adb8a73a352d38",
+        "stage": "input",
+        "uptime": 330956.48825187504,
+        "wall": 1793580691.893156
+      },
+      {
+        "cpuControl": false,
+        "id": "7CD90792-8747-4F89-A003-EE0DC1F19E78",
+        "native": "Общие сведения о проеĸте Север",
+        "page": 1,
+        "stage": "pdf-native",
+        "uptime": 330956.4984704584,
+        "wall": 1793580691.903358
+      },
+      {
+        "bitsPerPixel": 32,
+        "bytesPerRow": 7200,
+        "cpuControl": false,
+        "height": 2400,
+        "id": "7CD90792-8747-4F89-A003-EE0DC1F19E78",
+        "image": "7CD90792-8747-4F89-A003-EE0DC1F19E78-3bebd4c72af39d48ec4974555b963cdbcdffe232c22a5a3cd08c1bd03400d173.png",
+        "sha256": "3bebd4c72af39d48ec4974555b963cdbcdffe232c22a5a3cd08c1bd03400d173",
+        "stage": "ocr-input",
+        "uptime": 330956.585058,
+        "wall": 1793580691.989946,
+        "width": 1800
+      },
+      {
+        "automaticLanguage": true,
+        "cpuControl": false,
+        "id": "7CD90792-8747-4F89-A003-EE0DC1F19E78",
+        "languageCorrection": true,
+        "languages": [
+          "ru-RU",
+          "en-US"
+        ],
+        "revision": 3,
+        "stage": "request-options",
+        "uptime": 330956.58525579167,
+        "wall": 1793580691.990144
+      },
+      {
+        "cpuControl": false,
+        "id": "7CD90792-8747-4F89-A003-EE0DC1F19E78",
+        "stage": "perform-begin",
+        "uptime": 330956.58538870834,
+        "wall": 1793580691.990277
+      },
+      {
+        "cpuControl": false,
+        "id": "7CD90792-8747-4F89-A003-EE0DC1F19E78",
+        "observations": [
+          {
+            "candidates": [
+              {
+                "confidence": 1,
+                "text": "Общие сведения о проекте Север"
+              },
+              {
+                "confidence": 0.5,
+                "text": "Общие сведения о прокте Север"
+              },
+              {
+                "confidence": 0.5,
+                "text": "Общие сведения проекте Север"
+              },
+              {
+                "confidence": 0.5,
+                "text": "Общи сведения о проекте Север"
+              },
+              {
+                "confidence": 0.5,
+                "text": "Общие сведения о проект Север"
+              }
+            ],
+            "height": 0.023459302584330266,
+            "width": 0.5251937866210938,
+            "x": 0.06782946316597632,
+            "y": 0.8762499997278691
+          }
+        ],
+        "stage": "perform-end",
+        "uptime": 330958.92648170836,
+        "wall": 1793580694.3313708
+      },
+      {
+        "cpuControl": false,
+        "id": "7CD90792-8747-4F89-A003-EE0DC1F19E78",
+        "native": "Команда перенесла релиз на 26 ноября.",
+        "page": 2,
+        "stage": "pdf-native",
+        "uptime": 330958.926976625,
+        "wall": 1793580694.3318648
+      },
+      {
+        "bitsPerPixel": 32,
+        "bytesPerRow": 7200,
+        "cpuControl": false,
+        "height": 2400,
+        "id": "7CD90792-8747-4F89-A003-EE0DC1F19E78",
+        "image": "7CD90792-8747-4F89-A003-EE0DC1F19E78-b6cadea2db3e999a065eb25c27ce83666eb94a3da8e6eca1956e76de76340bfd.png",
+        "sha256": "b6cadea2db3e999a065eb25c27ce83666eb94a3da8e6eca1956e76de76340bfd",
+        "stage": "ocr-input",
+        "uptime": 330958.9530438334,
+        "wall": 1793580694.357932,
+        "width": 1800
+      },
+      {
+        "automaticLanguage": true,
+        "cpuControl": false,
+        "id": "7CD90792-8747-4F89-A003-EE0DC1F19E78",
+        "languageCorrection": true,
+        "languages": [
+          "ru-RU",
+          "en-US"
+        ],
+        "revision": 3,
+        "stage": "request-options",
+        "uptime": 330958.953291875,
+        "wall": 1793580694.358181
+      },
+      {
+        "cpuControl": false,
+        "id": "7CD90792-8747-4F89-A003-EE0DC1F19E78",
+        "stage": "perform-begin",
+        "uptime": 330958.95339029166,
+        "wall": 1793580694.358279
+      },
+      {
+        "cpuControl": false,
+        "id": "7CD90792-8747-4F89-A003-EE0DC1F19E78",
+        "observations": [
+          {
+            "candidates": [
+              {
+                "confidence": 1,
+                "text": "Команда перенесла релиз на 26 ноября."
+              },
+              {
+                "confidence": 1,
+                "text": "Команда перенесла релиз на 26 ноября"
+              },
+              {
+                "confidence": 1,
+                "text": "Команда перенесла рели на 26 ноября."
+              },
+              {
+                "confidence": 0.5,
+                "text": "Комана перенесла релиз на 26 ноября."
+              },
+              {
+                "confidence": 0.5,
+                "text": "Команда перенесла релиз а 26 ноября."
+              }
+            ],
+            "height": 0.02470930258433024,
+            "width": 0.6279069688585068,
+            "x": 0.06782946120272654,
+            "y": 0.8749999998748136
+          }
+        ],
+        "stage": "perform-end",
+        "uptime": 330959.2083915,
+        "wall": 1793580694.613282
+      },
+      {
+        "cpuControl": false,
+        "id": "7CD90792-8747-4F89-A003-EE0DC1F19E78",
+        "native": "Перед запусĸом нужна проверĸа нагрузĸи.",
+        "page": 3,
+        "stage": "pdf-native",
+        "uptime": 330959.2295275,
+        "wall": 1793580694.634417
+      },
+      {
+        "bitsPerPixel": 32,
+        "bytesPerRow": 7200,
+        "cpuControl": false,
+        "height": 2400,
+        "id": "7CD90792-8747-4F89-A003-EE0DC1F19E78",
+        "image": "7CD90792-8747-4F89-A003-EE0DC1F19E78-dede35315f202b26b25e867fc99c71f9ee78c26c4940f0ce144fa44229df5342.png",
+        "sha256": "dede35315f202b26b25e867fc99c71f9ee78c26c4940f0ce144fa44229df5342",
+        "stage": "ocr-input",
+        "uptime": 330959.41098754166,
+        "wall": 1793580694.815876,
+        "width": 1800
+      },
+      {
+        "automaticLanguage": true,
+        "cpuControl": false,
+        "id": "7CD90792-8747-4F89-A003-EE0DC1F19E78",
+        "languageCorrection": true,
+        "languages": [
+          "ru-RU",
+          "en-US"
+        ],
+        "revision": 3,
+        "stage": "request-options",
+        "uptime": 330959.41129225004,
+        "wall": 1793580694.8161821
+      },
+      {
+        "cpuControl": false,
+        "id": "7CD90792-8747-4F89-A003-EE0DC1F19E78",
+        "stage": "perform-begin",
+        "uptime": 330959.41136895836,
+        "wall": 1793580694.816257
+      },
+      {
+        "cpuControl": false,
+        "id": "7CD90792-8747-4F89-A003-EE0DC1F19E78",
+        "observations": [
+          {
+            "candidates": [
+              {
+                "confidence": 1,
+                "text": "Перед запуском нужна проверка нагрузки."
+              },
+              {
+                "confidence": 1,
+                "text": "Перед запуском нужна проверка нагрузки"
+              },
+              {
+                "confidence": 0.5,
+                "text": "Перед запуском нужна проверка нагрузк."
+              },
+              {
+                "confidence": 0.5,
+                "text": "Перед запуском нуна проверка нагрузки."
+              },
+              {
+                "confidence": 0.5,
+                "text": "Перед запуском нужна поверка нагрузки."
+              }
+            ],
+            "height": 0.028276179631551157,
+            "width": 0.6671282280815972,
+            "x": 0.06951630968829035,
+            "y": 0.8715385825427205
+          }
+        ],
+        "stage": "perform-end",
+        "uptime": 330959.4970349167,
+        "wall": 1793580694.9019241
+      },
+      {
+        "cpuControl": false,
+        "id": "7CD90792-8747-4F89-A003-EE0DC1F19E78",
+        "lines": [
+          "Общие сведения о проеĸте Север\nОбщие сведения о проекте Север",
+          "Команда перенесла релиз на 26 ноября.",
+          "Перед запусĸом нужна проверĸа нагрузĸи.\nПеред запуском нужна проверка нагрузки."
+        ],
+        "stage": "extract-result",
+        "uptime": 330959.497412125,
+        "wall": 1793580694.9023008,
+        "warnings": []
+      }
+    ],
+    "assets": {
+      "7CD90792-8747-4F89-A003-EE0DC1F19E78.pdf": {
+        "asset": "assets/07032a9aa3eabdc6218db51866343f18a9710e1c4582cc0fe8adb8a73a352d38.pdf",
+        "bytes": 11145,
+        "sha256": "07032a9aa3eabdc6218db51866343f18a9710e1c4582cc0fe8adb8a73a352d38"
+      },
+      "7CD90792-8747-4F89-A003-EE0DC1F19E78-3bebd4c72af39d48ec4974555b963cdbcdffe232c22a5a3cd08c1bd03400d173.png": {
+        "asset": "assets/3bebd4c72af39d48ec4974555b963cdbcdffe232c22a5a3cd08c1bd03400d173.png",
+        "bytes": 99971,
+        "sha256": "3bebd4c72af39d48ec4974555b963cdbcdffe232c22a5a3cd08c1bd03400d173"
+      },
+      "7CD90792-8747-4F89-A003-EE0DC1F19E78-b6cadea2db3e999a065eb25c27ce83666eb94a3da8e6eca1956e76de76340bfd.png": {
+        "asset": "assets/b6cadea2db3e999a065eb25c27ce83666eb94a3da8e6eca1956e76de76340bfd.png",
+        "bytes": 102735,
+        "sha256": "b6cadea2db3e999a065eb25c27ce83666eb94a3da8e6eca1956e76de76340bfd"
+      },
+      "7CD90792-8747-4F89-A003-EE0DC1F19E78-dede35315f202b26b25e867fc99c71f9ee78c26c4940f0ce144fa44229df5342.png": {
+        "asset": "assets/dede35315f202b26b25e867fc99c71f9ee78c26c4940f0ce144fa44229df5342.png",
+        "bytes": 101587,
+        "sha256": "dede35315f202b26b25e867fc99c71f9ee78c26c4940f0ce144fa44229df5342"
+      }
+    }
+  },
+  {
+    "id": "7E084ABC-0249-4972-8EBC-6411D8F272DD",
+    "raw_sha256": "fa8593e4a6cc9f17c827a588e4ac30de4f2f08ba017da4a31acd046d39ba9c44",
+    "events": [
+      {
+        "bytes": 4,
+        "cpuControl": false,
+        "id": "7E084ABC-0249-4972-8EBC-6411D8F272DD",
+        "input": "7E084ABC-0249-4972-8EBC-6411D8F272DD.png",
+        "sha256": "054edec1d0211f624fed0cbca9d4f9400b0e491c43742af2c5b0abebf0c990d8",
+        "stage": "input",
+        "uptime": 330955.41287920834,
+        "wall": 1793580690.8177671
+      }
+    ],
+    "assets": {
+      "7E084ABC-0249-4972-8EBC-6411D8F272DD.png": {
+        "asset": "assets/054edec1d0211f624fed0cbca9d4f9400b0e491c43742af2c5b0abebf0c990d8.png",
+        "bytes": 4,
+        "sha256": "054edec1d0211f624fed0cbca9d4f9400b0e491c43742af2c5b0abebf0c990d8"
+      }
+    }
+  },
+  {
+    "id": "7E3339B3-D40B-40C5-9052-33BF22893B52",
+    "raw_sha256": "a3313b743471a157d89be2c0fe7e1dc0a9da6806d20c26b933b4db3a178b53f4",
+    "events": [
+      {
+        "bytes": 23567,
+        "cpuControl": false,
+        "id": "7E3339B3-D40B-40C5-9052-33BF22893B52",
+        "input": "7E3339B3-D40B-40C5-9052-33BF22893B52.png",
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "stage": "input",
+        "uptime": 330955.62017008336,
+        "wall": 1793580691.0250568
+      },
+      {
+        "bitsPerPixel": 32,
+        "bytesPerRow": 6400,
+        "cpuControl": false,
+        "height": 300,
+        "id": "7E3339B3-D40B-40C5-9052-33BF22893B52",
+        "image": "7E3339B3-D40B-40C5-9052-33BF22893B52-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+        "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0",
+        "stage": "ocr-input",
+        "uptime": 330955.6251294584,
+        "wall": 1793580691.030017,
+        "width": 1600
+      },
+      {
+        "automaticLanguage": true,
+        "cpuControl": false,
+        "id": "7E3339B3-D40B-40C5-9052-33BF22893B52",
+        "languageCorrection": true,
+        "languages": [
+          "ru-RU",
+          "en-US"
+        ],
+        "revision": 3,
+        "stage": "request-options",
+        "uptime": 330955.62528958335,
+        "wall": 1793580691.030178
+      },
+      {
+        "cpuControl": false,
+        "id": "7E3339B3-D40B-40C5-9052-33BF22893B52",
+        "stage": "perform-begin",
+        "uptime": 330955.625381875,
+        "wall": 1793580691.0302691
+      },
+      {
+        "cpuControl": false,
+        "id": "7E3339B3-D40B-40C5-9052-33BF22893B52",
+        "observations": [
+          {
+            "candidates": [
+              {
+                "confidence": 1,
+                "text": "Project Alpha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project A pha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Apha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Alpha budget approve"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Alpha budge approved"
+              }
+            ],
+            "height": 0.19457364400227872,
+            "width": 0.5174418640136719,
+            "x": 0.03197674233930247,
+            "y": 0.4333333312911074
+          }
+        ],
+        "stage": "perform-end",
+        "uptime": 330956.25543795835,
+        "wall": 1793580691.660326
+      },
+      {
+        "cpuControl": false,
+        "id": "7E3339B3-D40B-40C5-9052-33BF22893B52",
+        "lines": [
+          "Project Alpha budget approved"
+        ],
+        "stage": "extract-result",
+        "uptime": 330956.25576641667,
+        "wall": 1793580691.660654,
+        "warnings": []
+      }
+    ],
+    "assets": {
+      "7E3339B3-D40B-40C5-9052-33BF22893B52.png": {
+        "asset": "assets/8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8.png",
+        "bytes": 23567,
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8"
+      },
+      "7E3339B3-D40B-40C5-9052-33BF22893B52-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png": {
+        "asset": "assets/20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+        "bytes": 23579,
+        "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0"
+      }
+    }
+  },
+  {
+    "id": "7E352E74-B6BB-490E-8EB1-2E2D65ABCF1B",
+    "raw_sha256": "83ef24d38520c413c813f78a306567ed459f59dfe357cb3f0efd4ff524bab849",
+    "events": [
+      {
+        "bytes": 23567,
+        "cpuControl": false,
+        "id": "7E352E74-B6BB-490E-8EB1-2E2D65ABCF1B",
+        "input": "7E352E74-B6BB-490E-8EB1-2E2D65ABCF1B.png",
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "stage": "input",
+        "uptime": 330955.7182106667,
+        "wall": 1793580691.123098
+      },
+      {
+        "bitsPerPixel": 32,
+        "bytesPerRow": 6400,
+        "cpuControl": false,
+        "height": 300,
+        "id": "7E352E74-B6BB-490E-8EB1-2E2D65ABCF1B",
+        "image": "7E352E74-B6BB-490E-8EB1-2E2D65ABCF1B-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+        "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0",
+        "stage": "ocr-input",
+        "uptime": 330955.7235321667,
+        "wall": 1793580691.1284199,
+        "width": 1600
+      },
+      {
+        "automaticLanguage": true,
+        "cpuControl": false,
+        "id": "7E352E74-B6BB-490E-8EB1-2E2D65ABCF1B",
+        "languageCorrection": true,
+        "languages": [
+          "ru-RU",
+          "en-US"
+        ],
+        "revision": 3,
+        "stage": "request-options",
+        "uptime": 330955.7237176667,
+        "wall": 1793580691.128605
+      },
+      {
+        "cpuControl": false,
+        "id": "7E352E74-B6BB-490E-8EB1-2E2D65ABCF1B",
+        "stage": "perform-begin",
+        "uptime": 330955.7238071667,
+        "wall": 1793580691.128695
+      },
+      {
+        "cpuControl": false,
+        "id": "7E352E74-B6BB-490E-8EB1-2E2D65ABCF1B",
+        "observations": [
+          {
+            "candidates": [
+              {
+                "confidence": 1,
+                "text": "Project Alpha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project A pha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Apha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Alpha budget approve"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Alpha budge approved"
+              }
+            ],
+            "height": 0.19457364400227872,
+            "width": 0.5174418640136719,
+            "x": 0.03197674233930247,
+            "y": 0.4333333312911074
+          }
+        ],
+        "stage": "perform-end",
+        "uptime": 330958.6868317917,
+        "wall": 1793580694.09172
+      },
+      {
+        "cpuControl": false,
+        "id": "7E352E74-B6BB-490E-8EB1-2E2D65ABCF1B",
+        "lines": [
+          "Project Alpha budget approved"
+        ],
+        "stage": "extract-result",
+        "uptime": 330958.68706354167,
+        "wall": 1793580694.0919518,
+        "warnings": []
+      }
+    ],
+    "assets": {
+      "7E352E74-B6BB-490E-8EB1-2E2D65ABCF1B.png": {
+        "asset": "assets/8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8.png",
+        "bytes": 23567,
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8"
+      },
+      "7E352E74-B6BB-490E-8EB1-2E2D65ABCF1B-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png": {
+        "asset": "assets/20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+        "bytes": 23579,
+        "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0"
+      }
+    }
+  },
+  {
+    "id": "7FF2D4EE-B561-44E2-842E-9487E7091CFB",
+    "raw_sha256": "4644271f1b4d0cf6bf82e959fce076a532e80f244c84d3f6093d5a43f1cc9726",
+    "events": [
+      {
+        "bytes": 23567,
+        "cpuControl": false,
+        "id": "7FF2D4EE-B561-44E2-842E-9487E7091CFB",
+        "input": "7FF2D4EE-B561-44E2-842E-9487E7091CFB.png",
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "stage": "input",
+        "uptime": 330955.64124775,
+        "wall": 1793580691.046135
+      },
+      {
+        "bitsPerPixel": 32,
+        "bytesPerRow": 6400,
+        "cpuControl": false,
+        "height": 300,
+        "id": "7FF2D4EE-B561-44E2-842E-9487E7091CFB",
+        "image": "7FF2D4EE-B561-44E2-842E-9487E7091CFB-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+        "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0",
+        "stage": "ocr-input",
+        "uptime": 330955.64721850003,
+        "wall": 1793580691.052106,
+        "width": 1600
+      },
+      {
+        "automaticLanguage": true,
+        "cpuControl": false,
+        "id": "7FF2D4EE-B561-44E2-842E-9487E7091CFB",
+        "languageCorrection": true,
+        "languages": [
+          "ru-RU",
+          "en-US"
+        ],
+        "revision": 3,
+        "stage": "request-options",
+        "uptime": 330955.647624875,
+        "wall": 1793580691.0525131
+      },
+      {
+        "cpuControl": false,
+        "id": "7FF2D4EE-B561-44E2-842E-9487E7091CFB",
+        "stage": "perform-begin",
+        "uptime": 330955.647772,
+        "wall": 1793580691.052659
+      },
+      {
+        "cpuControl": false,
+        "id": "7FF2D4EE-B561-44E2-842E-9487E7091CFB",
+        "observations": [
+          {
+            "candidates": [
+              {
+                "confidence": 1,
+                "text": "Project Alpha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project A pha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Apha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Alpha budget approve"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Alpha budge approved"
+              }
+            ],
+            "height": 0.19457364400227872,
+            "width": 0.5174418640136719,
+            "x": 0.03197674233930247,
+            "y": 0.4333333312911074
+          }
+        ],
+        "stage": "perform-end",
+        "uptime": 330957.4057035417,
+        "wall": 1793580692.8105931
+      },
+      {
+        "cpuControl": false,
+        "id": "7FF2D4EE-B561-44E2-842E-9487E7091CFB",
+        "lines": [
+          "Project Alpha budget approved"
+        ],
+        "stage": "extract-result",
+        "uptime": 330957.4500562917,
+        "wall": 1793580692.854944,
+        "warnings": []
+      }
+    ],
+    "assets": {
+      "7FF2D4EE-B561-44E2-842E-9487E7091CFB.png": {
+        "asset": "assets/8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8.png",
+        "bytes": 23567,
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8"
+      },
+      "7FF2D4EE-B561-44E2-842E-9487E7091CFB-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png": {
+        "asset": "assets/20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+        "bytes": 23579,
+        "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0"
+      }
+    }
+  },
+  {
+    "id": "81589729-1156-4902-88B8-42CF97A1D9E1",
+    "raw_sha256": "eb997fad6d8bfd48a944b28765144208e0025239f418e5726e751f51952e8ab2",
+    "events": [
+      {
+        "bytes": 7543,
+        "cpuControl": false,
+        "id": "81589729-1156-4902-88B8-42CF97A1D9E1",
+        "input": "81589729-1156-4902-88B8-42CF97A1D9E1.pdf",
+        "sha256": "e33cb25f2a79277b01026d140992eb2c7e590c8cb1b7be367c1afe298276a6b5",
+        "stage": "input",
+        "uptime": 330955.5226045417,
+        "wall": 1793580690.9274921
+      },
+      {
+        "cpuControl": false,
+        "id": "81589729-1156-4902-88B8-42CF97A1D9E1",
+        "native": "Project Alpha launch in November",
+        "page": 1,
+        "stage": "pdf-native",
+        "uptime": 330955.52326825,
+        "wall": 1793580690.928156
+      },
+      {
+        "bitsPerPixel": 32,
+        "bytesPerRow": 7200,
+        "cpuControl": false,
+        "height": 514,
+        "id": "81589729-1156-4902-88B8-42CF97A1D9E1",
+        "image": "81589729-1156-4902-88B8-42CF97A1D9E1-ee7e8dbfc3df4e11fbf4e8565a16d7f1a298df948400818fb885f4a302452213.png",
+        "sha256": "ee7e8dbfc3df4e11fbf4e8565a16d7f1a298df948400818fb885f4a302452213",
+        "stage": "ocr-input",
+        "uptime": 330955.5304012084,
+        "wall": 1793580690.935289,
+        "width": 1800
+      },
+      {
+        "automaticLanguage": true,
+        "cpuControl": false,
+        "id": "81589729-1156-4902-88B8-42CF97A1D9E1",
+        "languageCorrection": true,
+        "languages": [
+          "ru-RU",
+          "en-US"
+        ],
+        "revision": 3,
+        "stage": "request-options",
+        "uptime": 330955.53057112504,
+        "wall": 1793580690.9354591
+      },
+      {
+        "cpuControl": false,
+        "id": "81589729-1156-4902-88B8-42CF97A1D9E1",
+        "stage": "perform-begin",
+        "uptime": 330955.53066750005,
+        "wall": 1793580690.935555
+      },
+      {
+        "cpuControl": false,
+        "id": "81589729-1156-4902-88B8-42CF97A1D9E1",
+        "observations": [
+          {
+            "candidates": [
+              {
+                "confidence": 1,
+                "text": "Project Alpha launch in November"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Alpha aunch in November"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Alpha launch inNovember"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Alpha launchin November"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Alphalaunch in November"
+              }
+            ],
+            "height": 0.11838251700197211,
+            "width": 0.49719702826605894,
+            "x": 0.02963188183058861,
+            "y": 0.495657749231849
+          }
+        ],
+        "stage": "perform-end",
+        "uptime": 330956.1860885834,
+        "wall": 1793580691.590976
+      },
+      {
+        "cpuControl": false,
+        "id": "81589729-1156-4902-88B8-42CF97A1D9E1",
+        "lines": [
+          "Project Alpha launch in November"
+        ],
+        "stage": "extract-result",
+        "uptime": 330956.18640216667,
+        "wall": 1793580691.59129,
+        "warnings": []
+      }
+    ],
+    "assets": {
+      "81589729-1156-4902-88B8-42CF97A1D9E1.pdf": {
+        "asset": "assets/e33cb25f2a79277b01026d140992eb2c7e590c8cb1b7be367c1afe298276a6b5.pdf",
+        "bytes": 7543,
+        "sha256": "e33cb25f2a79277b01026d140992eb2c7e590c8cb1b7be367c1afe298276a6b5"
+      },
+      "81589729-1156-4902-88B8-42CF97A1D9E1-ee7e8dbfc3df4e11fbf4e8565a16d7f1a298df948400818fb885f4a302452213.png": {
+        "asset": "assets/ee7e8dbfc3df4e11fbf4e8565a16d7f1a298df948400818fb885f4a302452213.png",
+        "bytes": 34993,
+        "sha256": "ee7e8dbfc3df4e11fbf4e8565a16d7f1a298df948400818fb885f4a302452213"
+      }
+    }
+  },
+  {
+    "id": "857A4B7A-3A67-4B2C-9978-648391317BEB",
+    "raw_sha256": "a5638fd8e0912a192080cb8452a7d3a16e8914d0a0054d22e56a86abb9c151bf",
+    "events": [
+      {
+        "bytes": 23567,
+        "cpuControl": false,
+        "id": "857A4B7A-3A67-4B2C-9978-648391317BEB",
+        "input": "857A4B7A-3A67-4B2C-9978-648391317BEB.png",
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "stage": "input",
+        "uptime": 330955.70526625,
+        "wall": 1793580691.1101542
+      },
+      {
+        "bitsPerPixel": 32,
+        "bytesPerRow": 6400,
+        "cpuControl": false,
+        "height": 300,
+        "id": "857A4B7A-3A67-4B2C-9978-648391317BEB",
+        "image": "857A4B7A-3A67-4B2C-9978-648391317BEB-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+        "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0",
+        "stage": "ocr-input",
+        "uptime": 330955.7096887917,
+        "wall": 1793580691.1145759,
+        "width": 1600
+      },
+      {
+        "automaticLanguage": true,
+        "cpuControl": false,
+        "id": "857A4B7A-3A67-4B2C-9978-648391317BEB",
+        "languageCorrection": true,
+        "languages": [
+          "ru-RU",
+          "en-US"
+        ],
+        "revision": 3,
+        "stage": "request-options",
+        "uptime": 330955.70981820836,
+        "wall": 1793580691.114706
+      },
+      {
+        "cpuControl": false,
+        "id": "857A4B7A-3A67-4B2C-9978-648391317BEB",
+        "stage": "perform-begin",
+        "uptime": 330955.70987150003,
+        "wall": 1793580691.114759
+      },
+      {
+        "cpuControl": false,
+        "id": "857A4B7A-3A67-4B2C-9978-648391317BEB",
+        "observations": [
+          {
+            "candidates": [
+              {
+                "confidence": 1,
+                "text": "Project Alpha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project A pha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Apha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Alpha budget approve"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Alpha budge approved"
+              }
+            ],
+            "height": 0.19457364400227872,
+            "width": 0.5174418640136719,
+            "x": 0.03197674233930247,
+            "y": 0.4333333312911074
+          }
+        ],
+        "stage": "perform-end",
+        "uptime": 330958.5700407917,
+        "wall": 1793580693.974941
+      },
+      {
+        "cpuControl": false,
+        "id": "857A4B7A-3A67-4B2C-9978-648391317BEB",
+        "lines": [
+          "Project Alpha budget approved"
+        ],
+        "stage": "extract-result",
+        "uptime": 330958.5702830417,
+        "wall": 1793580693.975171,
+        "warnings": []
+      }
+    ],
+    "assets": {
+      "857A4B7A-3A67-4B2C-9978-648391317BEB.png": {
+        "asset": "assets/8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8.png",
+        "bytes": 23567,
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8"
+      },
+      "857A4B7A-3A67-4B2C-9978-648391317BEB-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png": {
+        "asset": "assets/20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+        "bytes": 23579,
+        "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0"
+      }
+    }
+  },
+  {
+    "id": "89175AEE-5A3E-4F5B-976F-BD084DF1348C",
+    "raw_sha256": "79c0584680945476207499812bc7814922f0a636a0c827963b9afb447c5068cf",
+    "events": [
+      {
+        "bytes": 8205,
+        "cpuControl": false,
+        "id": "89175AEE-5A3E-4F5B-976F-BD084DF1348C",
+        "input": "89175AEE-5A3E-4F5B-976F-BD084DF1348C.pdf",
+        "sha256": "eb23a2262314a5ff475549aa6d804affed38ba62c1db45941406737b0df14143",
+        "stage": "input",
+        "uptime": 330955.341264625,
+        "wall": 1793580690.746152
+      },
+      {
+        "cpuControl": false,
+        "id": "89175AEE-5A3E-4F5B-976F-BD084DF1348C",
+        "native": "Project alpha launch",
+        "page": 1,
+        "stage": "pdf-native",
+        "uptime": 330955.34476504166,
+        "wall": 1793580690.749652
+      },
+      {
+        "bitsPerPixel": 32,
+        "bytesPerRow": 7200,
+        "cpuControl": false,
+        "height": 2400,
+        "id": "89175AEE-5A3E-4F5B-976F-BD084DF1348C",
+        "image": "89175AEE-5A3E-4F5B-976F-BD084DF1348C-519c66ffa5ee209d22d22f97216f5e539515783538256c5fe34b955e3dd6445d.png",
+        "sha256": "519c66ffa5ee209d22d22f97216f5e539515783538256c5fe34b955e3dd6445d",
+        "stage": "ocr-input",
+        "uptime": 330955.3691565833,
+        "wall": 1793580690.774044,
+        "width": 1800
+      },
+      {
+        "automaticLanguage": true,
+        "cpuControl": false,
+        "id": "89175AEE-5A3E-4F5B-976F-BD084DF1348C",
+        "languageCorrection": true,
+        "languages": [
+          "ru-RU",
+          "en-US"
+        ],
+        "revision": 3,
+        "stage": "request-options",
+        "uptime": 330955.36935650004,
+        "wall": 1793580690.774245
+      },
+      {
+        "cpuControl": false,
+        "id": "89175AEE-5A3E-4F5B-976F-BD084DF1348C",
+        "stage": "perform-begin",
+        "uptime": 330955.36943458335,
+        "wall": 1793580690.774322
+      },
+      {
+        "cpuControl": false,
+        "id": "89175AEE-5A3E-4F5B-976F-BD084DF1348C",
+        "observations": [
+          {
+            "candidates": [
+              {
+                "confidence": 1,
+                "text": "Project alpha launch"
+              },
+              {
+                "confidence": 1,
+                "text": "Project alphalaunch"
+              },
+              {
+                "confidence": 1,
+                "text": "Project alpha aunch"
+              },
+              {
+                "confidence": 1,
+                "text": "Project alpha lunch"
+              },
+              {
+                "confidence": 1,
+                "text": "Project apha launch"
+              }
+            ],
+            "height": 0.023459302584330155,
+            "width": 0.2965116373697917,
+            "x": 0.06782945255434608,
+            "y": 0.876249999731925
+          }
+        ],
+        "stage": "perform-end",
+        "uptime": 330955.903459,
+        "wall": 1793580691.308347
+      },
+      {
+        "cpuControl": false,
+        "id": "89175AEE-5A3E-4F5B-976F-BD084DF1348C",
+        "native": "Decision: ship in November",
+        "page": 2,
+        "stage": "pdf-native",
+        "uptime": 330955.90373675,
+        "wall": 1793580691.308624
+      },
+      {
+        "bitsPerPixel": 32,
+        "bytesPerRow": 7200,
+        "cpuControl": false,
+        "height": 2400,
+        "id": "89175AEE-5A3E-4F5B-976F-BD084DF1348C",
+        "image": "89175AEE-5A3E-4F5B-976F-BD084DF1348C-3422cced33fa0611b8ea88a554ab96fa231c83027d0696a70ebc5a3b616b4280.png",
+        "sha256": "3422cced33fa0611b8ea88a554ab96fa231c83027d0696a70ebc5a3b616b4280",
+        "stage": "ocr-input",
+        "uptime": 330955.927450375,
+        "wall": 1793580691.3323379,
+        "width": 1800
+      },
+      {
+        "automaticLanguage": true,
+        "cpuControl": false,
+        "id": "89175AEE-5A3E-4F5B-976F-BD084DF1348C",
+        "languageCorrection": true,
+        "languages": [
+          "ru-RU",
+          "en-US"
+        ],
+        "revision": 3,
+        "stage": "request-options",
+        "uptime": 330955.927659125,
+        "wall": 1793580691.3325481
+      },
+      {
+        "cpuControl": false,
+        "id": "89175AEE-5A3E-4F5B-976F-BD084DF1348C",
+        "stage": "perform-begin",
+        "uptime": 330955.92772125005,
+        "wall": 1793580691.3326092
+      },
+      {
+        "cpuControl": false,
+        "id": "89175AEE-5A3E-4F5B-976F-BD084DF1348C",
+        "observations": [
+          {
+            "candidates": [
+              {
+                "confidence": 1,
+                "text": "Decision: ship in November"
+              },
+              {
+                "confidence": 1,
+                "text": "Decision ship in November"
+              },
+              {
+                "confidence": 1,
+                "text": "Decision:ship in November"
+              },
+              {
+                "confidence": 1,
+                "text": "Decision: ship in Novembe"
+              },
+              {
+                "confidence": 1,
+                "text": "Decision: shipin November"
+              }
+            ],
+            "height": 0.02470930258433024,
+            "width": 0.3992248196072049,
+            "x": 0.06976743505231266,
+            "y": 0.8749999998773401
+          }
+        ],
+        "stage": "perform-end",
+        "uptime": 330958.8600883334,
+        "wall": 1793580694.264977
+      },
+      {
+        "cpuControl": false,
+        "id": "89175AEE-5A3E-4F5B-976F-BD084DF1348C",
+        "lines": [
+          "Project alpha launch",
+          "Decision: ship in November"
+        ],
+        "stage": "extract-result",
+        "uptime": 330958.86046145833,
+        "wall": 1793580694.2653499,
+        "warnings": []
+      }
+    ],
+    "assets": {
+      "89175AEE-5A3E-4F5B-976F-BD084DF1348C.pdf": {
+        "asset": "assets/eb23a2262314a5ff475549aa6d804affed38ba62c1db45941406737b0df14143.pdf",
+        "bytes": 8205,
+        "sha256": "eb23a2262314a5ff475549aa6d804affed38ba62c1db45941406737b0df14143"
+      },
+      "89175AEE-5A3E-4F5B-976F-BD084DF1348C-519c66ffa5ee209d22d22f97216f5e539515783538256c5fe34b955e3dd6445d.png": {
+        "asset": "assets/519c66ffa5ee209d22d22f97216f5e539515783538256c5fe34b955e3dd6445d.png",
+        "bytes": 95566,
+        "sha256": "519c66ffa5ee209d22d22f97216f5e539515783538256c5fe34b955e3dd6445d"
+      },
+      "89175AEE-5A3E-4F5B-976F-BD084DF1348C-3422cced33fa0611b8ea88a554ab96fa231c83027d0696a70ebc5a3b616b4280.png": {
+        "asset": "assets/3422cced33fa0611b8ea88a554ab96fa231c83027d0696a70ebc5a3b616b4280.png",
+        "bytes": 98598,
+        "sha256": "3422cced33fa0611b8ea88a554ab96fa231c83027d0696a70ebc5a3b616b4280"
+      }
+    }
+  },
+  {
+    "id": "9697F761-2B5A-459D-B154-D268EC9057EE",
+    "raw_sha256": "96d57bcfea8c992aa16a861b172f9bf2f469d2595693f5fa85cf1af67569c9b8",
+    "events": [
+      {
+        "bytes": 23567,
+        "cpuControl": false,
+        "id": "9697F761-2B5A-459D-B154-D268EC9057EE",
+        "input": "9697F761-2B5A-459D-B154-D268EC9057EE.png",
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "stage": "input",
+        "uptime": 330955.68793245836,
+        "wall": 1793580691.0928202
+      },
+      {
+        "bitsPerPixel": 32,
+        "bytesPerRow": 6400,
+        "cpuControl": false,
+        "height": 300,
+        "id": "9697F761-2B5A-459D-B154-D268EC9057EE",
+        "image": "9697F761-2B5A-459D-B154-D268EC9057EE-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+        "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0",
+        "stage": "ocr-input",
+        "uptime": 330955.69313437503,
+        "wall": 1793580691.098022,
+        "width": 1600
+      },
+      {
+        "automaticLanguage": true,
+        "cpuControl": false,
+        "id": "9697F761-2B5A-459D-B154-D268EC9057EE",
+        "languageCorrection": true,
+        "languages": [
+          "ru-RU",
+          "en-US"
+        ],
+        "revision": 3,
+        "stage": "request-options",
+        "uptime": 330955.69327825,
+        "wall": 1793580691.098166
+      },
+      {
+        "cpuControl": false,
+        "id": "9697F761-2B5A-459D-B154-D268EC9057EE",
+        "stage": "perform-begin",
+        "uptime": 330955.6933360417,
+        "wall": 1793580691.0982242
+      },
+      {
+        "cpuControl": false,
+        "id": "9697F761-2B5A-459D-B154-D268EC9057EE",
+        "observations": [
+          {
+            "candidates": [
+              {
+                "confidence": 1,
+                "text": "Project Alpha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project A pha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Apha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Alpha budget approve"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Alpha budge approved"
+              }
+            ],
+            "height": 0.19457364400227872,
+            "width": 0.5174418640136719,
+            "x": 0.03197674233930247,
+            "y": 0.4333333312911074
+          }
+        ],
+        "stage": "perform-end",
+        "uptime": 330958.38053595833,
+        "wall": 1793580693.785425
+      },
+      {
+        "cpuControl": false,
+        "id": "9697F761-2B5A-459D-B154-D268EC9057EE",
+        "lines": [
+          "Project Alpha budget approved"
+        ],
+        "stage": "extract-result",
+        "uptime": 330958.38080295833,
+        "wall": 1793580693.785691,
+        "warnings": []
+      }
+    ],
+    "assets": {
+      "9697F761-2B5A-459D-B154-D268EC9057EE.png": {
+        "asset": "assets/8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8.png",
+        "bytes": 23567,
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8"
+      },
+      "9697F761-2B5A-459D-B154-D268EC9057EE-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png": {
+        "asset": "assets/20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+        "bytes": 23579,
+        "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0"
+      }
+    }
+  },
+  {
+    "id": "A42D5676-CA69-4938-B8DF-26366F38B3DE",
+    "raw_sha256": "f16b61c7862d4575fab96acd925a2718d3096f05863e41558e7847fe66528a4a",
+    "events": [
+      {
+        "bytes": 28138,
+        "cpuControl": false,
+        "id": "A42D5676-CA69-4938-B8DF-26366F38B3DE",
+        "input": "A42D5676-CA69-4938-B8DF-26366F38B3DE.pdf",
+        "sha256": "9857cd3f7216641a3ca3ebdeaf6f25a941896648568ad52a2cbcf3d8c52be3e8",
+        "stage": "input",
+        "uptime": 330955.37976975,
+        "wall": 1793580690.784657
+      },
+      {
+        "cpuControl": false,
+        "id": "A42D5676-CA69-4938-B8DF-26366F38B3DE",
+        "native": "Page 1",
+        "page": 1,
+        "stage": "pdf-native",
+        "uptime": 330955.3802600417,
+        "wall": 1793580690.785147
+      },
+      {
+        "bitsPerPixel": 32,
+        "bytesPerRow": 7200,
+        "cpuControl": false,
+        "height": 2400,
+        "id": "A42D5676-CA69-4938-B8DF-26366F38B3DE",
+        "image": "A42D5676-CA69-4938-B8DF-26366F38B3DE-facb4e7b8aa93c9cdd9e29c8ba27942099dcb671963b4b68c5e4a85ad7b6017c.png",
+        "sha256": "facb4e7b8aa93c9cdd9e29c8ba27942099dcb671963b4b68c5e4a85ad7b6017c",
+        "stage": "ocr-input",
+        "uptime": 330955.41441179166,
+        "wall": 1793580690.8193002,
+        "width": 1800
+      },
+      {
+        "automaticLanguage": true,
+        "cpuControl": false,
+        "id": "A42D5676-CA69-4938-B8DF-26366F38B3DE",
+        "languageCorrection": true,
+        "languages": [
+          "ru-RU",
+          "en-US"
+        ],
+        "revision": 3,
+        "stage": "request-options",
+        "uptime": 330955.42244633334,
+        "wall": 1793580690.827334
+      },
+      {
+        "cpuControl": false,
+        "id": "A42D5676-CA69-4938-B8DF-26366F38B3DE",
+        "stage": "perform-begin",
+        "uptime": 330955.42252920836,
+        "wall": 1793580690.827417
+      },
+      {
+        "cpuControl": false,
+        "id": "A42D5676-CA69-4938-B8DF-26366F38B3DE",
+        "observations": [
+          {
+            "candidates": [
+              {
+                "confidence": 1,
+                "text": "Decision: launch postponed to December"
+              },
+              {
+                "confidence": 1,
+                "text": "Decision launch postponed to December"
+              },
+              {
+                "confidence": 1,
+                "text": "Decision: aunch postponed to December"
+              },
+              {
+                "confidence": 1,
+                "text": "Decision: lunch postponed to December"
+              },
+              {
+                "confidence": 1,
+                "text": "Decision: launch postpone to December"
+              }
+            ],
+            "height": 0.023362402915954594,
+            "width": 0.5852713351779514,
+            "x": 0.03488371215430959,
+            "y": 0.5304166668370995
+          },
+          {
+            "candidates": [
+              {
+                "confidence": 1,
+                "text": "Page 1"
+              },
+              {
+                "confidence": 0.30000001192092896,
+                "text": "Page1"
+              },
+              {
+                "confidence": 0.30000001192092896,
+                "text": "Page"
+              },
+              {
+                "confidence": 0.30000001192092896,
+                "text": "age 1"
+              },
+              {
+                "confidence": 0.30000001192092896,
+                "text": "Pag 1"
+              }
+            ],
+            "height": 0.018934109210968053,
+            "width": 0.07945736355251737,
+            "x": 0.41666666696647386,
+            "y": 0.0508333330057934
+          }
+        ],
+        "stage": "perform-end",
+        "uptime": 330955.9711639167,
+        "wall": 1793580691.376052
+      },
+      {
+        "cpuControl": false,
+        "id": "A42D5676-CA69-4938-B8DF-26366F38B3DE",
+        "lines": [
+          "Page 1\nDecision: launch postponed to December"
+        ],
+        "stage": "extract-result",
+        "uptime": 330955.9714045417,
+        "wall": 1793580691.376292,
+        "warnings": []
+      }
+    ],
+    "assets": {
+      "A42D5676-CA69-4938-B8DF-26366F38B3DE.pdf": {
+        "asset": "assets/9857cd3f7216641a3ca3ebdeaf6f25a941896648568ad52a2cbcf3d8c52be3e8.pdf",
+        "bytes": 28138,
+        "sha256": "9857cd3f7216641a3ca3ebdeaf6f25a941896648568ad52a2cbcf3d8c52be3e8"
+      },
+      "A42D5676-CA69-4938-B8DF-26366F38B3DE-facb4e7b8aa93c9cdd9e29c8ba27942099dcb671963b4b68c5e4a85ad7b6017c.png": {
+        "asset": "assets/facb4e7b8aa93c9cdd9e29c8ba27942099dcb671963b4b68c5e4a85ad7b6017c.png",
+        "bytes": 117329,
+        "sha256": "facb4e7b8aa93c9cdd9e29c8ba27942099dcb671963b4b68c5e4a85ad7b6017c"
+      }
+    }
+  },
+  {
+    "id": "A5D94C13-26C4-4320-9CB3-4ECF077D9A6E",
+    "raw_sha256": "57fb9750bd40ffe005405d591d0ba7a4791eb7ca59277abaf539abaab95a3115",
+    "events": [
+      {
+        "bytes": 23567,
+        "cpuControl": false,
+        "id": "A5D94C13-26C4-4320-9CB3-4ECF077D9A6E",
+        "input": "A5D94C13-26C4-4320-9CB3-4ECF077D9A6E.png",
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "stage": "input",
+        "uptime": 330955.64448045834,
+        "wall": 1793580691.049368
+      },
+      {
+        "bitsPerPixel": 32,
+        "bytesPerRow": 6400,
+        "cpuControl": false,
+        "height": 300,
+        "id": "A5D94C13-26C4-4320-9CB3-4ECF077D9A6E",
+        "image": "A5D94C13-26C4-4320-9CB3-4ECF077D9A6E-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+        "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0",
+        "stage": "ocr-input",
+        "uptime": 330955.651253625,
+        "wall": 1793580691.056141,
+        "width": 1600
+      },
+      {
+        "automaticLanguage": true,
+        "cpuControl": false,
+        "id": "A5D94C13-26C4-4320-9CB3-4ECF077D9A6E",
+        "languageCorrection": true,
+        "languages": [
+          "ru-RU",
+          "en-US"
+        ],
+        "revision": 3,
+        "stage": "request-options",
+        "uptime": 330955.6515071667,
+        "wall": 1793580691.056395
+      },
+      {
+        "cpuControl": false,
+        "id": "A5D94C13-26C4-4320-9CB3-4ECF077D9A6E",
+        "stage": "perform-begin",
+        "uptime": 330955.65155870834,
+        "wall": 1793580691.056446
+      },
+      {
+        "cpuControl": false,
+        "id": "A5D94C13-26C4-4320-9CB3-4ECF077D9A6E",
+        "observations": [
+          {
+            "candidates": [
+              {
+                "confidence": 1,
+                "text": "Project Alpha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project A pha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Apha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Alpha budget approve"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Alpha budge approved"
+              }
+            ],
+            "height": 0.19457364400227872,
+            "width": 0.5174418640136719,
+            "x": 0.03197674233930247,
+            "y": 0.4333333312911074
+          }
+        ],
+        "stage": "perform-end",
+        "uptime": 330957.5218296667,
+        "wall": 1793580692.926725
+      },
+      {
+        "cpuControl": false,
+        "id": "A5D94C13-26C4-4320-9CB3-4ECF077D9A6E",
+        "lines": [
+          "Project Alpha budget approved"
+        ],
+        "stage": "extract-result",
+        "uptime": 330957.5262507917,
+        "wall": 1793580692.931139,
+        "warnings": []
+      }
+    ],
+    "assets": {
+      "A5D94C13-26C4-4320-9CB3-4ECF077D9A6E.png": {
+        "asset": "assets/8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8.png",
+        "bytes": 23567,
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8"
+      },
+      "A5D94C13-26C4-4320-9CB3-4ECF077D9A6E-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png": {
+        "asset": "assets/20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+        "bytes": 23579,
+        "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0"
+      }
+    }
+  },
+  {
+    "id": "ADFF9DFB-850F-45B9-B6D7-D479B8734F81",
+    "raw_sha256": "ae06403f0d77216c8596e0d90bb45687bfdad1d0a8ac5ca0fda925b8a7cdc2ed",
+    "events": [
+      {
+        "bytes": 23567,
+        "cpuControl": false,
+        "id": "ADFF9DFB-850F-45B9-B6D7-D479B8734F81",
+        "input": "ADFF9DFB-850F-45B9-B6D7-D479B8734F81.png",
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "stage": "input",
+        "uptime": 330955.6547325417,
+        "wall": 1793580691.05962
+      },
+      {
+        "bitsPerPixel": 32,
+        "bytesPerRow": 6400,
+        "cpuControl": false,
+        "height": 300,
+        "id": "ADFF9DFB-850F-45B9-B6D7-D479B8734F81",
+        "image": "ADFF9DFB-850F-45B9-B6D7-D479B8734F81-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+        "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0",
+        "stage": "ocr-input",
+        "uptime": 330955.6597277917,
+        "wall": 1793580691.064615,
+        "width": 1600
+      },
+      {
+        "automaticLanguage": true,
+        "cpuControl": false,
+        "id": "ADFF9DFB-850F-45B9-B6D7-D479B8734F81",
+        "languageCorrection": true,
+        "languages": [
+          "ru-RU",
+          "en-US"
+        ],
+        "revision": 3,
+        "stage": "request-options",
+        "uptime": 330955.659899375,
+        "wall": 1793580691.064787
+      },
+      {
+        "cpuControl": false,
+        "id": "ADFF9DFB-850F-45B9-B6D7-D479B8734F81",
+        "stage": "perform-begin",
+        "uptime": 330955.65996995836,
+        "wall": 1793580691.064857
+      },
+      {
+        "cpuControl": false,
+        "id": "ADFF9DFB-850F-45B9-B6D7-D479B8734F81",
+        "observations": [
+          {
+            "candidates": [
+              {
+                "confidence": 1,
+                "text": "Project Alpha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project A pha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Apha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Alpha budget approve"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Alpha budge approved"
+              }
+            ],
+            "height": 0.19457364400227872,
+            "width": 0.5174418640136719,
+            "x": 0.03197674233930247,
+            "y": 0.4333333312911074
+          }
+        ],
+        "stage": "perform-end",
+        "uptime": 330957.6281138334,
+        "wall": 1793580693.033002
+      },
+      {
+        "cpuControl": false,
+        "id": "ADFF9DFB-850F-45B9-B6D7-D479B8734F81",
+        "lines": [
+          "Project Alpha budget approved"
+        ],
+        "stage": "extract-result",
+        "uptime": 330957.6282835833,
+        "wall": 1793580693.0331712,
+        "warnings": []
+      }
+    ],
+    "assets": {
+      "ADFF9DFB-850F-45B9-B6D7-D479B8734F81.png": {
+        "asset": "assets/8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8.png",
+        "bytes": 23567,
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8"
+      },
+      "ADFF9DFB-850F-45B9-B6D7-D479B8734F81-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png": {
+        "asset": "assets/20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+        "bytes": 23579,
+        "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0"
+      }
+    }
+  },
+  {
+    "id": "CAF24847-4E59-4682-A31A-2F70F3D6D221",
+    "raw_sha256": "acd46d6ffa3eeee0d0956a5a65dfd45db9e36b3fe35f1f848b2af710d71d769a",
+    "events": [
+      {
+        "bytes": 23567,
+        "cpuControl": false,
+        "id": "CAF24847-4E59-4682-A31A-2F70F3D6D221",
+        "input": "CAF24847-4E59-4682-A31A-2F70F3D6D221.png",
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "stage": "input",
+        "uptime": 330955.67778225004,
+        "wall": 1793580691.08267
+      },
+      {
+        "bitsPerPixel": 32,
+        "bytesPerRow": 6400,
+        "cpuControl": false,
+        "height": 300,
+        "id": "CAF24847-4E59-4682-A31A-2F70F3D6D221",
+        "image": "CAF24847-4E59-4682-A31A-2F70F3D6D221-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+        "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0",
+        "stage": "ocr-input",
+        "uptime": 330955.6824506667,
+        "wall": 1793580691.087338,
+        "width": 1600
+      },
+      {
+        "automaticLanguage": true,
+        "cpuControl": false,
+        "id": "CAF24847-4E59-4682-A31A-2F70F3D6D221",
+        "languageCorrection": true,
+        "languages": [
+          "ru-RU",
+          "en-US"
+        ],
+        "revision": 3,
+        "stage": "request-options",
+        "uptime": 330955.6826118333,
+        "wall": 1793580691.0875
+      },
+      {
+        "cpuControl": false,
+        "id": "CAF24847-4E59-4682-A31A-2F70F3D6D221",
+        "stage": "perform-begin",
+        "uptime": 330955.68269158335,
+        "wall": 1793580691.087579
+      },
+      {
+        "cpuControl": false,
+        "id": "CAF24847-4E59-4682-A31A-2F70F3D6D221",
+        "observations": [
+          {
+            "candidates": [
+              {
+                "confidence": 1,
+                "text": "Project Alpha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project A pha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Apha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Alpha budget approve"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Alpha budge approved"
+              }
+            ],
+            "height": 0.19457364400227872,
+            "width": 0.5174418640136719,
+            "x": 0.03197674233930247,
+            "y": 0.4333333312911074
+          }
+        ],
+        "stage": "perform-end",
+        "uptime": 330958.06345325004,
+        "wall": 1793580693.4683418
+      },
+      {
+        "cpuControl": false,
+        "id": "CAF24847-4E59-4682-A31A-2F70F3D6D221",
+        "lines": [
+          "Project Alpha budget approved"
+        ],
+        "stage": "extract-result",
+        "uptime": 330958.0688831667,
+        "wall": 1793580693.473771,
+        "warnings": []
+      }
+    ],
+    "assets": {
+      "CAF24847-4E59-4682-A31A-2F70F3D6D221.png": {
+        "asset": "assets/8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8.png",
+        "bytes": 23567,
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8"
+      },
+      "CAF24847-4E59-4682-A31A-2F70F3D6D221-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png": {
+        "asset": "assets/20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+        "bytes": 23579,
+        "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0"
+      }
+    }
+  },
+  {
+    "id": "CD711911-ABBF-403F-AEE7-86581D9DD917",
+    "raw_sha256": "e33133a5e198f5c9c098e927b6320e505b8a1291c288de35dc7dbc6a1e25e29d",
+    "events": [
+      {
+        "bytes": 23567,
+        "cpuControl": false,
+        "id": "CD711911-ABBF-403F-AEE7-86581D9DD917",
+        "input": "CD711911-ABBF-403F-AEE7-86581D9DD917.png",
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "stage": "input",
+        "uptime": 330955.61678758333,
+        "wall": 1793580691.021675
+      },
+      {
+        "bitsPerPixel": 32,
+        "bytesPerRow": 6400,
+        "cpuControl": false,
+        "height": 300,
+        "id": "CD711911-ABBF-403F-AEE7-86581D9DD917",
+        "image": "CD711911-ABBF-403F-AEE7-86581D9DD917-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+        "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0",
+        "stage": "ocr-input",
+        "uptime": 330955.62173525,
+        "wall": 1793580691.026623,
+        "width": 1600
+      },
+      {
+        "automaticLanguage": true,
+        "cpuControl": false,
+        "id": "CD711911-ABBF-403F-AEE7-86581D9DD917",
+        "languageCorrection": true,
+        "languages": [
+          "ru-RU",
+          "en-US"
+        ],
+        "revision": 3,
+        "stage": "request-options",
+        "uptime": 330955.62196475,
+        "wall": 1793580691.026853
+      },
+      {
+        "cpuControl": false,
+        "id": "CD711911-ABBF-403F-AEE7-86581D9DD917",
+        "stage": "perform-begin",
+        "uptime": 330955.62206483335,
+        "wall": 1793580691.026952
+      },
+      {
+        "cpuControl": false,
+        "id": "CD711911-ABBF-403F-AEE7-86581D9DD917",
+        "observations": [
+          {
+            "candidates": [
+              {
+                "confidence": 1,
+                "text": "Project Alpha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project A pha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Apha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Alpha budget approve"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Alpha budge approved"
+              }
+            ],
+            "height": 0.19457364400227872,
+            "width": 0.5174418640136719,
+            "x": 0.03197674233930247,
+            "y": 0.4333333312911074
+          }
+        ],
+        "stage": "perform-end",
+        "uptime": 330956.2209371667,
+        "wall": 1793580691.625825
+      },
+      {
+        "cpuControl": false,
+        "id": "CD711911-ABBF-403F-AEE7-86581D9DD917",
+        "lines": [
+          "Project Alpha budget approved"
+        ],
+        "stage": "extract-result",
+        "uptime": 330956.221232375,
+        "wall": 1793580691.62612,
+        "warnings": []
+      }
+    ],
+    "assets": {
+      "CD711911-ABBF-403F-AEE7-86581D9DD917.png": {
+        "asset": "assets/8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8.png",
+        "bytes": 23567,
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8"
+      },
+      "CD711911-ABBF-403F-AEE7-86581D9DD917-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png": {
+        "asset": "assets/20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+        "bytes": 23579,
+        "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0"
+      }
+    }
+  },
+  {
+    "id": "E4BCEDB3-C064-4980-A9E8-FEF38A717D99",
+    "raw_sha256": "7d2403d561ba7fb09cf0cc11bc5a1c4d16feca4669aed42252d202e69566dcd1",
+    "events": [
+      {
+        "bytes": 23567,
+        "cpuControl": false,
+        "id": "E4BCEDB3-C064-4980-A9E8-FEF38A717D99",
+        "input": "E4BCEDB3-C064-4980-A9E8-FEF38A717D99.png",
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "stage": "input",
+        "uptime": 330955.67137120833,
+        "wall": 1793580691.0762591
+      },
+      {
+        "bitsPerPixel": 32,
+        "bytesPerRow": 6400,
+        "cpuControl": false,
+        "height": 300,
+        "id": "E4BCEDB3-C064-4980-A9E8-FEF38A717D99",
+        "image": "E4BCEDB3-C064-4980-A9E8-FEF38A717D99-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+        "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0",
+        "stage": "ocr-input",
+        "uptime": 330955.67604475,
+        "wall": 1793580691.0809321,
+        "width": 1600
+      },
+      {
+        "automaticLanguage": true,
+        "cpuControl": false,
+        "id": "E4BCEDB3-C064-4980-A9E8-FEF38A717D99",
+        "languageCorrection": true,
+        "languages": [
+          "ru-RU",
+          "en-US"
+        ],
+        "revision": 3,
+        "stage": "request-options",
+        "uptime": 330955.6762040834,
+        "wall": 1793580691.081092
+      },
+      {
+        "cpuControl": false,
+        "id": "E4BCEDB3-C064-4980-A9E8-FEF38A717D99",
+        "stage": "perform-begin",
+        "uptime": 330955.67626783333,
+        "wall": 1793580691.0811548
+      },
+      {
+        "cpuControl": false,
+        "id": "E4BCEDB3-C064-4980-A9E8-FEF38A717D99",
+        "observations": [
+          {
+            "candidates": [
+              {
+                "confidence": 1,
+                "text": "Project Alpha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project A pha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Apha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Alpha budget approve"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Alpha budge approved"
+              }
+            ],
+            "height": 0.19457364400227872,
+            "width": 0.5174418640136719,
+            "x": 0.03197674233930247,
+            "y": 0.4333333312911074
+          }
+        ],
+        "stage": "perform-end",
+        "uptime": 330957.9813901667,
+        "wall": 1793580693.386279
+      },
+      {
+        "cpuControl": false,
+        "id": "E4BCEDB3-C064-4980-A9E8-FEF38A717D99",
+        "lines": [
+          "Project Alpha budget approved"
+        ],
+        "stage": "extract-result",
+        "uptime": 330957.98169708333,
+        "wall": 1793580693.386585,
+        "warnings": []
+      }
+    ],
+    "assets": {
+      "E4BCEDB3-C064-4980-A9E8-FEF38A717D99.png": {
+        "asset": "assets/8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8.png",
+        "bytes": 23567,
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8"
+      },
+      "E4BCEDB3-C064-4980-A9E8-FEF38A717D99-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png": {
+        "asset": "assets/20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+        "bytes": 23579,
+        "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0"
+      }
+    }
+  },
+  {
+    "id": "E595B520-13D1-47F0-A0C0-69C5CD79E80B",
+    "raw_sha256": "e1e3ca1e8219245c9b3bf60b904d359629d1f5051a8e14cd0896c83d0b4913d2",
+    "events": [
+      {
+        "bytes": 18893,
+        "cpuControl": false,
+        "id": "E595B520-13D1-47F0-A0C0-69C5CD79E80B",
+        "input": "E595B520-13D1-47F0-A0C0-69C5CD79E80B.png",
+        "sha256": "953237e11108c9c3ac54649b97996e7661ce726244bbcb9dbc73bf11f9ca573c",
+        "stage": "input",
+        "uptime": 330955.52332325,
+        "wall": 1793580690.928211
+      },
+      {
+        "bitsPerPixel": 32,
+        "bytesPerRow": 6400,
+        "cpuControl": false,
+        "height": 250,
+        "id": "E595B520-13D1-47F0-A0C0-69C5CD79E80B",
+        "image": "E595B520-13D1-47F0-A0C0-69C5CD79E80B-132416c332f1b2866336400c8b8ed94b10eb3a3431af005aca796c66bfbf350a.png",
+        "sha256": "132416c332f1b2866336400c8b8ed94b10eb3a3431af005aca796c66bfbf350a",
+        "stage": "ocr-input",
+        "uptime": 330955.528161625,
+        "wall": 1793580690.933049,
+        "width": 1600
+      },
+      {
+        "automaticLanguage": true,
+        "cpuControl": false,
+        "id": "E595B520-13D1-47F0-A0C0-69C5CD79E80B",
+        "languageCorrection": true,
+        "languages": [
+          "ru-RU",
+          "en-US"
+        ],
+        "revision": 3,
+        "stage": "request-options",
+        "uptime": 330955.5283686667,
+        "wall": 1793580690.933257
+      },
+      {
+        "cpuControl": false,
+        "id": "E595B520-13D1-47F0-A0C0-69C5CD79E80B",
+        "stage": "perform-begin",
+        "uptime": 330955.528434125,
+        "wall": 1793580690.933321
+      },
+      {
+        "cpuControl": false,
+        "id": "E595B520-13D1-47F0-A0C0-69C5CD79E80B",
+        "observations": [
+          {
+            "candidates": [
+              {
+                "confidence": 1,
+                "text": "Решение: запуск проекта в ноябре"
+              },
+              {
+                "confidence": 1,
+                "text": "Решение запуск проекта в ноябре"
+              },
+              {
+                "confidence": 1,
+                "text": "Решение: запук проекта в ноябре"
+              },
+              {
+                "confidence": 1,
+                "text": "Решение: запус проекта в ноябре"
+              },
+              {
+                "confidence": 0.5,
+                "text": "Решение: запуск проекта в ноябр"
+              }
+            ],
+            "height": 0.2639999999999999,
+            "width": 0.5,
+            "x": 0.008333337166666581,
+            "y": 0.36800000263157895
+          }
+        ],
+        "stage": "perform-end",
+        "uptime": 330956.133589625,
+        "wall": 1793580691.538478
+      },
+      {
+        "cpuControl": false,
+        "id": "E595B520-13D1-47F0-A0C0-69C5CD79E80B",
+        "lines": [
+          "Решение: запуск проекта в ноябре"
+        ],
+        "stage": "extract-result",
+        "uptime": 330956.13390479167,
+        "wall": 1793580691.5387921,
+        "warnings": []
+      }
+    ],
+    "assets": {
+      "E595B520-13D1-47F0-A0C0-69C5CD79E80B.png": {
+        "asset": "assets/953237e11108c9c3ac54649b97996e7661ce726244bbcb9dbc73bf11f9ca573c.png",
+        "bytes": 18893,
+        "sha256": "953237e11108c9c3ac54649b97996e7661ce726244bbcb9dbc73bf11f9ca573c"
+      },
+      "E595B520-13D1-47F0-A0C0-69C5CD79E80B-132416c332f1b2866336400c8b8ed94b10eb3a3431af005aca796c66bfbf350a.png": {
+        "asset": "assets/132416c332f1b2866336400c8b8ed94b10eb3a3431af005aca796c66bfbf350a.png",
+        "bytes": 18905,
+        "sha256": "132416c332f1b2866336400c8b8ed94b10eb3a3431af005aca796c66bfbf350a"
+      }
+    }
+  },
+  {
+    "id": "E663ABD4-59CD-41F6-986B-1448BEA7D3C2",
+    "raw_sha256": "f80ba542a05f5feaec3321f39e4eae1272207945675550245e0d0f8f7e33e24a",
+    "events": [
+      {
+        "bytes": 23567,
+        "cpuControl": false,
+        "id": "E663ABD4-59CD-41F6-986B-1448BEA7D3C2",
+        "input": "E663ABD4-59CD-41F6-986B-1448BEA7D3C2.png",
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "stage": "input",
+        "uptime": 330955.6616239584,
+        "wall": 1793580691.0665112
+      },
+      {
+        "bitsPerPixel": 32,
+        "bytesPerRow": 6400,
+        "cpuControl": false,
+        "height": 300,
+        "id": "E663ABD4-59CD-41F6-986B-1448BEA7D3C2",
+        "image": "E663ABD4-59CD-41F6-986B-1448BEA7D3C2-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+        "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0",
+        "stage": "ocr-input",
+        "uptime": 330955.6663211667,
+        "wall": 1793580691.071209,
+        "width": 1600
+      },
+      {
+        "automaticLanguage": true,
+        "cpuControl": false,
+        "id": "E663ABD4-59CD-41F6-986B-1448BEA7D3C2",
+        "languageCorrection": true,
+        "languages": [
+          "ru-RU",
+          "en-US"
+        ],
+        "revision": 3,
+        "stage": "request-options",
+        "uptime": 330955.66645258333,
+        "wall": 1793580691.07134
+      },
+      {
+        "cpuControl": false,
+        "id": "E663ABD4-59CD-41F6-986B-1448BEA7D3C2",
+        "stage": "perform-begin",
+        "uptime": 330955.66650183336,
+        "wall": 1793580691.071389
+      },
+      {
+        "cpuControl": false,
+        "id": "E663ABD4-59CD-41F6-986B-1448BEA7D3C2",
+        "observations": [
+          {
+            "candidates": [
+              {
+                "confidence": 1,
+                "text": "Project Alpha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project A pha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Apha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Alpha budget approve"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Alpha budge approved"
+              }
+            ],
+            "height": 0.19457364400227872,
+            "width": 0.5174418640136719,
+            "x": 0.03197674233930247,
+            "y": 0.4333333312911074
+          }
+        ],
+        "stage": "perform-end",
+        "uptime": 330957.74038275,
+        "wall": 1793580693.1452708
+      },
+      {
+        "cpuControl": false,
+        "id": "E663ABD4-59CD-41F6-986B-1448BEA7D3C2",
+        "lines": [
+          "Project Alpha budget approved"
+        ],
+        "stage": "extract-result",
+        "uptime": 330957.740684375,
+        "wall": 1793580693.145572,
+        "warnings": []
+      }
+    ],
+    "assets": {
+      "E663ABD4-59CD-41F6-986B-1448BEA7D3C2.png": {
+        "asset": "assets/8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8.png",
+        "bytes": 23567,
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8"
+      },
+      "E663ABD4-59CD-41F6-986B-1448BEA7D3C2-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png": {
+        "asset": "assets/20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+        "bytes": 23579,
+        "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0"
+      }
+    }
+  },
+  {
+    "id": "EA304A16-C82D-4AF0-BF2A-3F2AD6773AA5",
+    "raw_sha256": "747d67b320a685041a9ae87f038d7b121826e7e61726b64001466699e5ff4725",
+    "events": [
+      {
+        "bytes": 9395,
+        "cpuControl": false,
+        "id": "EA304A16-C82D-4AF0-BF2A-3F2AD6773AA5",
+        "input": "EA304A16-C82D-4AF0-BF2A-3F2AD6773AA5.pdf",
+        "sha256": "4532b534d7893530170b8fcf628748d192f29193db67bee69ebf7a35276c481e",
+        "stage": "input",
+        "uptime": 330957.17621058336,
+        "wall": 1793580692.581098
+      },
+      {
+        "cpuControl": false,
+        "id": "EA304A16-C82D-4AF0-BF2A-3F2AD6773AA5",
+        "native": "Проеĸт Альфа: запусĸ согласован на деĸабрь.",
+        "page": 1,
+        "stage": "pdf-native",
+        "uptime": 330957.17727287504,
+        "wall": 1793580692.582161
+      },
+      {
+        "bitsPerPixel": 32,
+        "bytesPerRow": 7200,
+        "cpuControl": false,
+        "height": 495,
+        "id": "EA304A16-C82D-4AF0-BF2A-3F2AD6773AA5",
+        "image": "EA304A16-C82D-4AF0-BF2A-3F2AD6773AA5-3935d87e19369d33fc09618604c0d38bc58deb947ee3181fc334b5999a202531.png",
+        "sha256": "3935d87e19369d33fc09618604c0d38bc58deb947ee3181fc334b5999a202531",
+        "stage": "ocr-input",
+        "uptime": 330957.1945291667,
+        "wall": 1793580692.599417,
+        "width": 1800
+      },
+      {
+        "automaticLanguage": true,
+        "cpuControl": false,
+        "id": "EA304A16-C82D-4AF0-BF2A-3F2AD6773AA5",
+        "languageCorrection": true,
+        "languages": [
+          "ru-RU",
+          "en-US"
+        ],
+        "revision": 3,
+        "stage": "request-options",
+        "uptime": 330957.20004512504,
+        "wall": 1793580692.604933
+      },
+      {
+        "cpuControl": false,
+        "id": "EA304A16-C82D-4AF0-BF2A-3F2AD6773AA5",
+        "stage": "perform-begin",
+        "uptime": 330957.2011344167,
+        "wall": 1793580692.606022
+      },
+      {
+        "cpuControl": false,
+        "id": "EA304A16-C82D-4AF0-BF2A-3F2AD6773AA5",
+        "observations": [
+          {
+            "candidates": [
+              {
+                "confidence": 1,
+                "text": "Проект Альфа: запуск согласован на декабрь."
+              },
+              {
+                "confidence": 1,
+                "text": "Проект Альфа: запуск согласован на декабрь"
+              },
+              {
+                "confidence": 1,
+                "text": "Прокт Альфа: запуск согласован на декабрь."
+              },
+              {
+                "confidence": 0.5,
+                "text": "Проект Альфа: запуск согласован на декабр."
+              },
+              {
+                "confidence": 0.5,
+                "text": "Проект Альфа: запук согласован на декабрь."
+              }
+            ],
+            "height": 0.1049731200741183,
+            "width": 0.6280137803819443,
+            "x": 0.032146955913372355,
+            "y": 0.4958333320640935
+          }
+        ],
+        "stage": "perform-end",
+        "uptime": 330958.96903483337,
+        "wall": 1793580694.373924
+      },
+      {
+        "cpuControl": false,
+        "id": "EA304A16-C82D-4AF0-BF2A-3F2AD6773AA5",
+        "lines": [
+          "Проеĸт Альфа: запусĸ согласован на деĸабрь.\nПроект Альфа: запуск согласован на декабрь."
+        ],
+        "stage": "extract-result",
+        "uptime": 330958.9693725417,
+        "wall": 1793580694.374261,
+        "warnings": []
+      }
+    ],
+    "assets": {
+      "EA304A16-C82D-4AF0-BF2A-3F2AD6773AA5.pdf": {
+        "asset": "assets/4532b534d7893530170b8fcf628748d192f29193db67bee69ebf7a35276c481e.pdf",
+        "bytes": 9395,
+        "sha256": "4532b534d7893530170b8fcf628748d192f29193db67bee69ebf7a35276c481e"
+      },
+      "EA304A16-C82D-4AF0-BF2A-3F2AD6773AA5-3935d87e19369d33fc09618604c0d38bc58deb947ee3181fc334b5999a202531.png": {
+        "asset": "assets/3935d87e19369d33fc09618604c0d38bc58deb947ee3181fc334b5999a202531.png",
+        "bytes": 35047,
+        "sha256": "3935d87e19369d33fc09618604c0d38bc58deb947ee3181fc334b5999a202531"
+      }
+    }
+  },
+  {
+    "id": "EBF89E53-BF96-4D10-9EFD-F353CFE4B4AC",
+    "raw_sha256": "2091141174cb3263352d69bbfb8387e085f101a3f1a35373d7f50df2ddf63131",
+    "events": [
+      {
+        "bytes": 23567,
+        "cpuControl": false,
+        "id": "EBF89E53-BF96-4D10-9EFD-F353CFE4B4AC",
+        "input": "EBF89E53-BF96-4D10-9EFD-F353CFE4B4AC.png",
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "stage": "input",
+        "uptime": 330955.72172133334,
+        "wall": 1793580691.1266088
+      },
+      {
+        "bitsPerPixel": 32,
+        "bytesPerRow": 6400,
+        "cpuControl": false,
+        "height": 300,
+        "id": "EBF89E53-BF96-4D10-9EFD-F353CFE4B4AC",
+        "image": "EBF89E53-BF96-4D10-9EFD-F353CFE4B4AC-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+        "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0",
+        "stage": "ocr-input",
+        "uptime": 330955.72693008336,
+        "wall": 1793580691.1318169,
+        "width": 1600
+      },
+      {
+        "automaticLanguage": true,
+        "cpuControl": false,
+        "id": "EBF89E53-BF96-4D10-9EFD-F353CFE4B4AC",
+        "languageCorrection": true,
+        "languages": [
+          "ru-RU",
+          "en-US"
+        ],
+        "revision": 3,
+        "stage": "request-options",
+        "uptime": 330955.7270521667,
+        "wall": 1793580691.13194
+      },
+      {
+        "cpuControl": false,
+        "id": "EBF89E53-BF96-4D10-9EFD-F353CFE4B4AC",
+        "stage": "perform-begin",
+        "uptime": 330955.7270989167,
+        "wall": 1793580691.1319861
+      },
+      {
+        "cpuControl": false,
+        "id": "EBF89E53-BF96-4D10-9EFD-F353CFE4B4AC",
+        "observations": [
+          {
+            "candidates": [
+              {
+                "confidence": 1,
+                "text": "Project Alpha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project A pha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Apha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Alpha budget approve"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Alpha budge approved"
+              }
+            ],
+            "height": 0.19457364400227872,
+            "width": 0.5174418640136719,
+            "x": 0.03197674233930247,
+            "y": 0.4333333312911074
+          }
+        ],
+        "stage": "perform-end",
+        "uptime": 330958.7183604583,
+        "wall": 1793580694.12325
+      },
+      {
+        "cpuControl": false,
+        "id": "EBF89E53-BF96-4D10-9EFD-F353CFE4B4AC",
+        "lines": [
+          "Project Alpha budget approved"
+        ],
+        "stage": "extract-result",
+        "uptime": 330958.7230924583,
+        "wall": 1793580694.1279821,
+        "warnings": []
+      }
+    ],
+    "assets": {
+      "EBF89E53-BF96-4D10-9EFD-F353CFE4B4AC.png": {
+        "asset": "assets/8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8.png",
+        "bytes": 23567,
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8"
+      },
+      "EBF89E53-BF96-4D10-9EFD-F353CFE4B4AC-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png": {
+        "asset": "assets/20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+        "bytes": 23579,
+        "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0"
+      }
+    }
+  },
+  {
+    "id": "F96BAD61-81FD-480A-8E56-1D10A6E8E9E0",
+    "raw_sha256": "85a348337a21ec6c2694cdf20653bf443278674008fc84db9e58c48cb9145876",
+    "events": [
+      {
+        "bytes": 23567,
+        "cpuControl": false,
+        "id": "F96BAD61-81FD-480A-8E56-1D10A6E8E9E0",
+        "input": "F96BAD61-81FD-480A-8E56-1D10A6E8E9E0.png",
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "stage": "input",
+        "uptime": 330955.66494550003,
+        "wall": 1793580691.069833
+      },
+      {
+        "bitsPerPixel": 32,
+        "bytesPerRow": 6400,
+        "cpuControl": false,
+        "height": 300,
+        "id": "F96BAD61-81FD-480A-8E56-1D10A6E8E9E0",
+        "image": "F96BAD61-81FD-480A-8E56-1D10A6E8E9E0-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+        "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0",
+        "stage": "ocr-input",
+        "uptime": 330955.66965133336,
+        "wall": 1793580691.074539,
+        "width": 1600
+      },
+      {
+        "automaticLanguage": true,
+        "cpuControl": false,
+        "id": "F96BAD61-81FD-480A-8E56-1D10A6E8E9E0",
+        "languageCorrection": true,
+        "languages": [
+          "ru-RU",
+          "en-US"
+        ],
+        "revision": 3,
+        "stage": "request-options",
+        "uptime": 330955.669838125,
+        "wall": 1793580691.074726
+      },
+      {
+        "cpuControl": false,
+        "id": "F96BAD61-81FD-480A-8E56-1D10A6E8E9E0",
+        "stage": "perform-begin",
+        "uptime": 330955.66993325,
+        "wall": 1793580691.074821
+      },
+      {
+        "cpuControl": false,
+        "id": "F96BAD61-81FD-480A-8E56-1D10A6E8E9E0",
+        "observations": [
+          {
+            "candidates": [
+              {
+                "confidence": 1,
+                "text": "Project Alpha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project A pha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Apha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Alpha budget approve"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Alpha budge approved"
+              }
+            ],
+            "height": 0.19457364400227872,
+            "width": 0.5174418640136719,
+            "x": 0.03197674233930247,
+            "y": 0.4333333312911074
+          }
+        ],
+        "stage": "perform-end",
+        "uptime": 330957.769598875,
+        "wall": 1793580693.17449
+      },
+      {
+        "cpuControl": false,
+        "id": "F96BAD61-81FD-480A-8E56-1D10A6E8E9E0",
+        "lines": [
+          "Project Alpha budget approved"
+        ],
+        "stage": "extract-result",
+        "uptime": 330957.769918875,
+        "wall": 1793580693.174807,
+        "warnings": []
+      }
+    ],
+    "assets": {
+      "F96BAD61-81FD-480A-8E56-1D10A6E8E9E0.png": {
+        "asset": "assets/8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8.png",
+        "bytes": 23567,
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8"
+      },
+      "F96BAD61-81FD-480A-8E56-1D10A6E8E9E0-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png": {
+        "asset": "assets/20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+        "bytes": 23579,
+        "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0"
+      }
+    }
+  },
+  {
+    "id": "FA7BD353-6354-4A3C-BA04-C6C95317BA0C",
+    "raw_sha256": "966a592c9cf4612562ca7aa5b4319e85d4d91b38b606fde1757487c3fb3afd03",
+    "events": [
+      {
+        "bytes": 23567,
+        "cpuControl": false,
+        "id": "FA7BD353-6354-4A3C-BA04-C6C95317BA0C",
+        "input": "FA7BD353-6354-4A3C-BA04-C6C95317BA0C.png",
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "stage": "input",
+        "uptime": 330955.67464320833,
+        "wall": 1793580691.079531
+      },
+      {
+        "bitsPerPixel": 32,
+        "bytesPerRow": 6400,
+        "cpuControl": false,
+        "height": 300,
+        "id": "FA7BD353-6354-4A3C-BA04-C6C95317BA0C",
+        "image": "FA7BD353-6354-4A3C-BA04-C6C95317BA0C-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+        "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0",
+        "stage": "ocr-input",
+        "uptime": 330955.67932837503,
+        "wall": 1793580691.084216,
+        "width": 1600
+      },
+      {
+        "automaticLanguage": true,
+        "cpuControl": false,
+        "id": "FA7BD353-6354-4A3C-BA04-C6C95317BA0C",
+        "languageCorrection": true,
+        "languages": [
+          "ru-RU",
+          "en-US"
+        ],
+        "revision": 3,
+        "stage": "request-options",
+        "uptime": 330955.6794995834,
+        "wall": 1793580691.084388
+      },
+      {
+        "cpuControl": false,
+        "id": "FA7BD353-6354-4A3C-BA04-C6C95317BA0C",
+        "stage": "perform-begin",
+        "uptime": 330955.67961287504,
+        "wall": 1793580691.0844998
+      },
+      {
+        "cpuControl": false,
+        "id": "FA7BD353-6354-4A3C-BA04-C6C95317BA0C",
+        "observations": [
+          {
+            "candidates": [
+              {
+                "confidence": 1,
+                "text": "Project Alpha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project A pha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Apha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Alpha budget approve"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Alpha budge approved"
+              }
+            ],
+            "height": 0.19457364400227872,
+            "width": 0.5174418640136719,
+            "x": 0.03197674233930247,
+            "y": 0.4333333312911074
+          }
+        ],
+        "stage": "perform-end",
+        "uptime": 330958.01969725004,
+        "wall": 1793580693.424586
+      },
+      {
+        "cpuControl": false,
+        "id": "FA7BD353-6354-4A3C-BA04-C6C95317BA0C",
+        "lines": [
+          "Project Alpha budget approved"
+        ],
+        "stage": "extract-result",
+        "uptime": 330958.02012187504,
+        "wall": 1793580693.42501,
+        "warnings": []
+      }
+    ],
+    "assets": {
+      "FA7BD353-6354-4A3C-BA04-C6C95317BA0C.png": {
+        "asset": "assets/8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8.png",
+        "bytes": 23567,
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8"
+      },
+      "FA7BD353-6354-4A3C-BA04-C6C95317BA0C-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png": {
+        "asset": "assets/20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+        "bytes": 23579,
+        "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0"
+      }
+    }
+  },
+  {
+    "id": "FBF3ACE6-8717-4827-8683-130A8F0FBC0F",
+    "raw_sha256": "fb5c47707d1839c191990801692ce01d3f8567fb6fc3716e1d008089df792433",
+    "events": [
+      {
+        "bytes": 23567,
+        "cpuControl": false,
+        "id": "FBF3ACE6-8717-4827-8683-130A8F0FBC0F",
+        "input": "FBF3ACE6-8717-4827-8683-130A8F0FBC0F.png",
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "stage": "input",
+        "uptime": 330955.691348625,
+        "wall": 1793580691.096236
+      },
+      {
+        "bitsPerPixel": 32,
+        "bytesPerRow": 6400,
+        "cpuControl": false,
+        "height": 300,
+        "id": "FBF3ACE6-8717-4827-8683-130A8F0FBC0F",
+        "image": "FBF3ACE6-8717-4827-8683-130A8F0FBC0F-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+        "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0",
+        "stage": "ocr-input",
+        "uptime": 330955.69613345835,
+        "wall": 1793580691.101021,
+        "width": 1600
+      },
+      {
+        "automaticLanguage": true,
+        "cpuControl": false,
+        "id": "FBF3ACE6-8717-4827-8683-130A8F0FBC0F",
+        "languageCorrection": true,
+        "languages": [
+          "ru-RU",
+          "en-US"
+        ],
+        "revision": 3,
+        "stage": "request-options",
+        "uptime": 330955.696290875,
+        "wall": 1793580691.1011791
+      },
+      {
+        "cpuControl": false,
+        "id": "FBF3ACE6-8717-4827-8683-130A8F0FBC0F",
+        "stage": "perform-begin",
+        "uptime": 330955.69637245836,
+        "wall": 1793580691.10126
+      },
+      {
+        "cpuControl": false,
+        "id": "FBF3ACE6-8717-4827-8683-130A8F0FBC0F",
+        "observations": [
+          {
+            "candidates": [
+              {
+                "confidence": 1,
+                "text": "Project Alpha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project A pha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Apha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Alpha budget approve"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Alpha budge approved"
+              }
+            ],
+            "height": 0.19457364400227872,
+            "width": 0.5174418640136719,
+            "x": 0.03197674233930247,
+            "y": 0.4333333312911074
+          }
+        ],
+        "stage": "perform-end",
+        "uptime": 330958.410121875,
+        "wall": 1793580693.81501
+      },
+      {
+        "cpuControl": false,
+        "id": "FBF3ACE6-8717-4827-8683-130A8F0FBC0F",
+        "lines": [
+          "Project Alpha budget approved"
+        ],
+        "stage": "extract-result",
+        "uptime": 330958.41039125004,
+        "wall": 1793580693.815279,
+        "warnings": []
+      }
+    ],
+    "assets": {
+      "FBF3ACE6-8717-4827-8683-130A8F0FBC0F.png": {
+        "asset": "assets/8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8.png",
+        "bytes": 23567,
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8"
+      },
+      "FBF3ACE6-8717-4827-8683-130A8F0FBC0F-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png": {
+        "asset": "assets/20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+        "bytes": 23579,
+        "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0"
+      }
+    }
+  },
+  {
+    "id": "FEC02D54-A5BD-41BD-8B52-6F37DEBE276E",
+    "raw_sha256": "e53e6f82cfaf25f06b8bf48969a469a2acac67d36bc998b5ee3ec4b4fc12277c",
+    "events": [
+      {
+        "bytes": 23567,
+        "cpuControl": false,
+        "id": "FEC02D54-A5BD-41BD-8B52-6F37DEBE276E",
+        "input": "FEC02D54-A5BD-41BD-8B52-6F37DEBE276E.png",
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "stage": "input",
+        "uptime": 330955.6843770417,
+        "wall": 1793580691.089264
+      },
+      {
+        "bitsPerPixel": 32,
+        "bytesPerRow": 6400,
+        "cpuControl": false,
+        "height": 300,
+        "id": "FEC02D54-A5BD-41BD-8B52-6F37DEBE276E",
+        "image": "FEC02D54-A5BD-41BD-8B52-6F37DEBE276E-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+        "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0",
+        "stage": "ocr-input",
+        "uptime": 330955.6892240417,
+        "wall": 1793580691.094112,
+        "width": 1600
+      },
+      {
+        "automaticLanguage": true,
+        "cpuControl": false,
+        "id": "FEC02D54-A5BD-41BD-8B52-6F37DEBE276E",
+        "languageCorrection": true,
+        "languages": [
+          "ru-RU",
+          "en-US"
+        ],
+        "revision": 3,
+        "stage": "request-options",
+        "uptime": 330955.6893683334,
+        "wall": 1793580691.094256
+      },
+      {
+        "cpuControl": false,
+        "id": "FEC02D54-A5BD-41BD-8B52-6F37DEBE276E",
+        "stage": "perform-begin",
+        "uptime": 330955.6894565417,
+        "wall": 1793580691.0943441
+      },
+      {
+        "cpuControl": false,
+        "id": "FEC02D54-A5BD-41BD-8B52-6F37DEBE276E",
+        "observations": [
+          {
+            "candidates": [
+              {
+                "confidence": 1,
+                "text": "Project Alpha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project A pha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Apha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Alpha budget approve"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Alpha budge approved"
+              }
+            ],
+            "height": 0.19457364400227872,
+            "width": 0.5174418640136719,
+            "x": 0.03197674233930247,
+            "y": 0.4333333312911074
+          }
+        ],
+        "stage": "perform-end",
+        "uptime": 330958.34976120834,
+        "wall": 1793580693.75465
+      },
+      {
+        "cpuControl": false,
+        "id": "FEC02D54-A5BD-41BD-8B52-6F37DEBE276E",
+        "lines": [
+          "Project Alpha budget approved"
+        ],
+        "stage": "extract-result",
+        "uptime": 330958.35001862503,
+        "wall": 1793580693.7549071,
+        "warnings": []
+      }
+    ],
+    "assets": {
+      "FEC02D54-A5BD-41BD-8B52-6F37DEBE276E.png": {
+        "asset": "assets/8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8.png",
+        "bytes": 23567,
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8"
+      },
+      "FEC02D54-A5BD-41BD-8B52-6F37DEBE276E-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png": {
+        "asset": "assets/20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+        "bytes": 23579,
+        "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0"
+      }
+    }
+  }
+]
