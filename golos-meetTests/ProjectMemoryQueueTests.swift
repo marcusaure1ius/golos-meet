@@ -245,7 +245,7 @@ private actor QueueDeadlineClock {
 
     @Test func concreteMetadataBridgeReceivesReadyEventWithoutLaunchingApplication() async throws {
         try await MemoryBridgeTestSession.run("original-ready-event") { session in
-            session.start()
+            try session.start()
             // Still the original initial-snapshot fence, not a startup ACK.
             try await session.wait("initial snapshot") { session.fixture.worker.snapshot().revision > 0 }
             try await session.readySource()

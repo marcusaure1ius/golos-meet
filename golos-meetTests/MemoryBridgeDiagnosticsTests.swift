@@ -6,16 +6,18 @@ import Testing
     @Test func pausedStartupSeparatesRevisionFromStartAndExecutesFailureRecorderBeforeRecovery() async throws {
         try await MemoryBridgeTestSession.run("controlled-startup-pause") { session in
             let gate = session.gate, trace = session.trace
+            var gateEntered = false
             session.bridge?.diagnosticBeforeStart = { configuration in
+                gateEntered = true
                 trace.mark("control.startup.paused", ["configurationID": configuration.uuidString])
                 await gate.wait()
                 trace.mark("control.startup.released", ["configurationID": configuration.uuidString])
             }
-            session.start()
-            try await session.wait("control startup gate") { session.trace.has("control.startup.paused") }
+            try session.start()
+            try await session.wait("control startup gate") { gateEntered }
             let before = session.fixture.worker.diagnosticSnapshot()
             #expect(before["revision"] == "1" && before["started"] == "false" && before["runID"] == "")
-            #expect(!session.trace.has("configuration.start.return", owner: session.bridgeID))
+            #expect(try !session.startupReturned())
             try await session.readySource()
             try await session.wait("control source discovered") {
                 try await session.fixture.base.store.memoryQueueSnapshot().jobs.first?.state == .queued
@@ -47,20 +49,20 @@ import Testing
             #expect(report.timeline.contains { $0.event.stage == "discovery.return" && $0.event.ownerID == report.workerID })
             #expect(!report.timeline.contains { $0.event.stage == "lease.claimed" || $0.event.stage == "physical.enter" })
             await gate.signal()
-            try await session.wait("startup return acknowledgement") {
-                session.trace.has("configuration.start.return", owner: session.bridgeID)
-            }
+            try await session.waitForStartup()
             try await session.wait("recovered ready-source coverage") { try await session.completed() }
             #expect(session.fixture.base.spy.calls == 1 && session.physical.entered == 1 && session.physical.returned == 1)
             // Durable coverage can be read before the service caller resumes.
-            // Observe its separate return explicitly; do not cancel it via
-            // cleanup and do not treat a missing immediate event as data loss.
-            try await session.wait("publication return acknowledgement") {
-                session.trace.has("publication.inserted.return", owner: report.workerID)
+            // Join the actual producer before reading its return evidence.
+            // A truncated journal reports overflow, never a liveness timeout.
+            try await session.wait("publication producer idle") {
+                session.fixture.worker.diagnosticSnapshot()["draining"] == "false"
             }
-            #expect(session.trace.has("publication.inserted.return", owner: report.workerID))
             let lease = try #require(session.trace.rows.first { $0.event.stage == "lease.claimed" })
             let call = try #require(session.trace.rows.first { $0.event.stage == "physical.enter" })
+            #expect(try session.trace.evidence("publication.inserted.return", owner: report.workerID,
+                fields: ["runID": try #require(lease.event.fields["runID"]),
+                         "attemptID": try #require(lease.event.fields["attemptID"])]))
             #expect(lease.event.fields["runID"] == call.event.fields["runID"])
             #expect(lease.event.fields["attemptID"] == call.event.fields["attemptID"])
             #expect(call.event.fields["workerID"] == report.workerID.uuidString)
@@ -69,10 +71,8 @@ import Testing
 
     @Test func releasingSoleOwnerIsAttributedToCreatingObserverAndDirectRestartRecovers() async throws {
         try await MemoryBridgeTestSession.run("controlled-owner-release") { session in
-            session.start()
-            try await session.wait("startup return acknowledgement") {
-                session.trace.has("configuration.start.return", owner: session.bridgeID)
-            }
+            try session.start()
+            try await session.waitForStartup()
             await session.fixture.worker.waitUntilIdle()
             let oldRun = session.fixture.worker.diagnosticSnapshot()["runID"]
             let foreign = MemoryBridgeTestTrace("foreign-context")
@@ -80,14 +80,14 @@ import Testing
                 session.bridge = nil
                 try await session.wait("sole owner released") { session.weakBridge == nil }
                 try await session.wait("owner deinit stop returned") {
-                    session.trace.has("deinit.stop.return", owner: session.bridgeID)
+                    try session.joinDeinit()
                 }
             }
             #expect(foreign.rows.isEmpty)
-            #expect(session.trace.has("deinit", owner: session.bridgeID))
+            #expect(try session.trace.evidence("deinit", owner: session.bridgeID))
             #expect(session.fixture.worker.diagnosticSnapshot()["started"] == "false")
             try await session.readySource()
-            #expect(!session.trace.has("event.received", owner: session.bridgeID))
+            #expect(try !session.trace.evidence("event.received", owner: session.bridgeID))
             #expect(session.physical.entered == 0 && session.fixture.base.spy.calls == 0)
             #expect(try await session.fixture.base.store.memoryQueueSnapshot().jobs.isEmpty)
             session.trace.mark("control.direct.restart", ["workerID": session.fixture.worker.diagnosticOwnerID.uuidString])
@@ -109,11 +109,15 @@ private enum BridgeControlBodyError: Error, Equatable { case intentional }
             try await MemoryBridgeTestSession.run("controlled-body-exit-\(cancel)") { session in
                 observed = session.weakBridge
                 let trace = session.trace, gate = session.gate
+                var gateEntered = false
                 session.bridge?.diagnosticBeforeStart = { _ in
+                    gateEntered = true
                     trace.mark("control.exit.paused"); await gate.wait()
                 }
-                session.start()
-                try await session.wait("controlled body exit startup gate") { trace.has("control.exit.paused") }
+                // Both error and cancellation unwind after evidence saturation.
+                for _ in 0..<4100 { trace.mark("control.exit.fill") }
+                try session.start()
+                try await session.wait("controlled body exit startup gate") { gateEntered }
                 if cancel {
                     withUnsafeCurrentTask { $0?.cancel() }
                     try Task.checkCancellation()
