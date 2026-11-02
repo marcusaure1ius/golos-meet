@@ -52,6 +52,12 @@ import Testing
             }
             try await session.wait("recovered ready-source coverage") { try await session.completed() }
             #expect(session.fixture.base.spy.calls == 1 && session.physical.entered == 1 && session.physical.returned == 1)
+            // Durable coverage can be read before the service caller resumes.
+            // Observe its separate return explicitly; do not cancel it via
+            // cleanup and do not treat a missing immediate event as data loss.
+            try await session.wait("publication return acknowledgement") {
+                session.trace.has("publication.inserted.return", owner: report.workerID)
+            }
             #expect(session.trace.has("publication.inserted.return", owner: report.workerID))
             let lease = try #require(session.trace.rows.first { $0.event.stage == "lease.claimed" })
             let call = try #require(session.trace.rows.first { $0.event.stage == "physical.enter" })
