@@ -1,0 +1,1283 @@
+Skipped export for ASRModelTests/loadEncodesKind(): no matching attachments
+
+Skipped export for ASRModelTests/speedMapsToGigaamDir(): no matching attachments
+
+Skipped export for ASRModelTests/qualityMapsToWhisperBin(): no matching attachments
+
+Skipped export for WavRepairTests/healthyFile_untouched(): no matching attachments
+
+Skipped export for WavRepairTests/stub_smallerThanHeader_isSkipped(): no matching attachments
+
+Skipped export for WavRepairTests/notWav_returnsNil(): no matching attachments
+
+Skipped export for WavRepairTests/missingFile_returnsNil(): no matching attachments
+
+Skipped export for WavRepairTests/brokenHeader_isRepaired_durationComputed(): no matching attachments
+
+Skipped export for ProjectMemoryMigrationTests/genuinePreviousSchemaPreservesEveryLegacyTableBlobOriginalAndManualInbox(): no matching attachments
+
+Skipped export for ProjectMemoryMigrationTests/failureAfterSeveralNewDDLsRollsBackVersionObjectsAndAllLegacyData(): no matching attachments
+
+Skipped export for TalkRecordingModeTests/runtimeNeverFallsBackAfterCredentialLossRotationOrBadModeFile(): no matching attachments
+
+Skipped export for TalkRecordingModeTests/lateLookupRechecksStoreWithoutChangeEvent(replyFails:): no matching attachments
+
+Skipped export for TalkRecordingModeTests/staleSecondWindowCannotOverwriteNewRoomsAfterPATRotation(): no matching attachments
+
+Skipped export for TalkRecordingModeTests/modeChangeRefreshesOtherOpenSettingsWithoutLosingRoomDrafts(): no matching attachments
+
+Skipped export for TalkRecordingModeTests/mutationsReadAuthoritativeCredentialEvenWithoutNotification(action:change:): no matching attachments
+
+Skipped export for TalkRecordingModeTests/oldConnectionWindowCannotDeleteReplacementConnection(): no matching attachments
+
+Skipped export for TalkRecordingModeTests/lateLookupFromStaleWindowCannotReplaceNewIdentity(): no matching attachments
+
+Skipped export for TalkRecordingModeTests/modeWriteFailureNeverClaimsChangedModeAndReportsStorageError(): no matching attachments
+
+Skipped export for TalkRecordingModeTests/staleSecondWindowCannotEnableUnconfiguredAPIImmediatelyAfterPATRotation(): no matching attachments
+
+Skipped export for TalkRecordingModeTests/enablingRequiresSavedBindingAndDoesNotCommitDrafts(): no matching attachments
+
+Skipped export for TalkRecordingModeTests/roomSaveKeepsFreshIdentityFromOtherWindowOnSameConnection(): no matching attachments
+
+Skipped export for TalkRecordingModeTests/changeDeliveryIsSynchronousAndModeFileIsTemporary(): no matching attachments
+
+Exported 1 attachment for: MeetingAssignmentRuntimeTests/stopRestartDoesNotOverlapOldCalculationAndManualInboxWinsItsLateResult():
+File: F823457A-BC8C-4C08-8B5C-8979178D3821.json, suggested name: "sqlite-fixture-C6C27941-FB6E-4374-8AA9-84948F7FE883_0_A802B2FB-F9ED-4572-A092-A132364D6299.json"
+
+Exported 1 attachment for: MeetingAssignmentRuntimeTests/indexUpdateBridgeRunsWhileNoScreenIsOpenAndManualEventsDoNotReindex():
+File: DC54C14F-6DC4-4033-AC32-635E47DD9981.json, suggested name: "sqlite-fixture-D571C883-3CB6-4874-BE36-EB1B6871329C_0_B39C27C1-6FC6-4F3D-9AD7-A8532E84B05A.json"
+
+Exported 1 attachment for: MeetingAssignmentRuntimeTests/cancellationSurvivesRestartAndLateNoncooperativePublisherCannotRestoreLinks():
+File: 4B47E71E-04CB-42F2-8F96-7D0C4854B15A.json, suggested name: "sqlite-fixture-8652BADE-38F7-4104-B345-828F52D701EE_0_53C7E8DA-304F-477C-B336-042DC5D7C35F.json"
+
+Exported 1 attachment for: MeetingAssignmentRuntimeTests/missingRuntimeRemovesAutomaticLinksAndRecoverySchedulesSameReadyVectorsAgain():
+File: 6760E269-49E0-4F4B-B66E-0B8DE71A76C9.json, suggested name: "sqlite-fixture-FCB45D67-AECD-40F6-A7D5-78963ED7CF92_0_3CAC818C-FD96-4602-BD7F-BDE2F09D0A75.json"
+
+Exported 1 attachment for: MeetingAssignmentRuntimeTests/deadlineFencesAnUncooperativeCalculationBeforeRetry():
+File: DE159102-FED3-4285-9881-B5C8ABDB371F.json, suggested name: "sqlite-fixture-3C7CBBE8-8ECE-48B9-AEE8-C894D7D7C5CE_0_81817826-3889-457C-A48F-ED6B3CCF9DC7.json"
+
+Exported 5 attachments for: MeetingAssignmentRuntimeTests/openingSavedEvidenceRequiresCurrentRuntimeAndBothSourceRevisions(change:):
+File: 8C0D565E-CBD5-4EBC-BA8F-A5ADACF45AF1.json, suggested name: "sqlite-fixture-ADB5298F-80D1-4765-93E5-B3638BDCFB75_0_A7D5B240-55C9-4B91-B1E2-E3DAE8BC48A7.json"
+File: F1465DA7-7DE4-43DD-9490-EB1DA3447F35.json, suggested name: "sqlite-fixture-78044CA8-69DD-4427-BC66-98CBDA4C579B_0_FC517C03-1B80-4617-B44C-FB2D9DD07D30.json"
+File: 7FB99856-AB54-4C25-AA29-CA1EAA1702DB.json, suggested name: "sqlite-fixture-1759575B-C2B6-410E-ACF7-C55B02ADBCEA_0_7647668B-9BDD-4D1A-801F-261879918711.json"
+File: EC697EF7-ED09-42CD-BCC7-01A9B1B6210A.json, suggested name: "sqlite-fixture-B6DCFC06-ADE1-4DB5-A279-415F24655FF9_0_F48595B9-0795-4DA5-97BF-033D7AE83882.json"
+File: 2EA0AD54-8432-4149-B93A-8FD9FFE3380D.json, suggested name: "sqlite-fixture-FDBE5D31-FC90-47F6-AD30-9D0D396D918C_0_B0BAC4EC-D340-4BD7-95B5-55F4652E1E93.json"
+
+Exported 1 attachment for: MeetingAssignmentRuntimeTests/failureDoesNotStarveFollowingMeetingsAndChangedSourceAutomaticallyRetries():
+File: BF31F348-12D0-4950-BC88-6FED2A5D5565.json, suggested name: "sqlite-fixture-49951675-1C5F-4405-9C05-679A49FE863E_0_8A40C0B9-B040-48DA-A077-0FB611970BCC.json"
+
+Exported 1 attachment for: MeetingAssignmentRuntimeTests/unrelatedIndexCompletionAutomaticallyRetriesSupersededPlanWithoutUserAction():
+File: 7BBDD351-5A82-4E10-A4FD-BDF8D1D74757.json, suggested name: "sqlite-fixture-0394E240-457B-4956-A86D-7E908C8C0C45_0_BDCF3DCE-7E1D-472E-BB28-70C590312D02.json"
+
+Exported 1 attachment for: MeetingAssignmentRuntimeTests/readyIndexIsAutomaticallyAssignedWithoutMeetingScreenAndStaleLinksAreRemovedUntilRecovery():
+File: F4653F3E-84A3-4B75-9389-62285762B0FA.json, suggested name: "sqlite-fixture-3F0F69A3-6A46-40A4-8111-22C978C552E1_0_B276D021-E325-412B-A4F8-98D680FEC0C3.json"
+
+Skipped export for KnowledgeSearchNativeTests/nativeProjectImportFindPageAndReplicaThenRejectUpdatedSources(): no matching attachments
+
+Skipped export for E5NativeTests/nativeParityRussianRetrievalAndLongPassageCoverage(): no matching attachments
+
+Skipped export for SQLiteFixtureLifecycleTests/connectionObserverOwnsFailureEvenWhenCallerHasAnotherTaskContext(): no matching attachments
+
+Exported 1 attachment for: SQLiteFixtureLifecycleTests/cleanupWaitsForLateTaskWriteAndNativeCloseBeforeUnlink():
+File: 4B3320E9-C80B-44F7-8840-14F9A07A6E24.json, suggested name: "sqlite-fixture-EECF7EC0-8C81-4BDE-93C0-3BDB1806B311_0_D62C8114-4FE1-449B-9EFA-C0D13EDC14AE.json"
+
+Exported 1 attachment for: SQLiteFixtureLifecycleTests/throwingBodyReleasesStoreAndPreservesOriginalFailure():
+File: C5338ABA-1E49-46DB-81EC-F81543116AFA.json, suggested name: "sqlite-fixture-2FE5E1E5-FCC4-4D9E-BEA4-55A79B699234_0_6D3B346F-E091-4EC1-9AA3-FDF6F90EE35C.json"
+
+Skipped export for TalkRoomTransportTests/observerUsesRealClientWithSyntheticTransportAndSharedTime(): no matching attachments
+
+Skipped export for TalkRoomTransportTests/incompleteIdentityNeverBecomesAbsence(mode:): no matching attachments
+
+Skipped export for TalkRoomTransportTests/sharedBudgetSpacesConcurrentRequestsAndCancellationHasNoBurst(): no matching attachments
+
+Skipped export for TalkRoomTransportTests/rateLimitBlocksOtherTokenAndProfileOnSameOrigin(mode:): no matching attachments
+
+Skipped export for TalkRoomTransportTests/rejectsRedirectWithoutDisplayingErrorBody(): no matching attachments
+
+Skipped export for TalkRoomTransportTests/transportDecodesStableKeyAndAnonymousSeparately(): no matching attachments
+
+Skipped export for AppCoordinatorTests/audioSignalAloneActivatesMeeting(): no matching attachments
+
+Skipped export for AppCoordinatorTests/windowSignalAloneActivatesMeeting(): no matching attachments
+
+Skipped export for AppCoordinatorTests/bothSignalsFalseDoesNotStartMeeting(): no matching attachments
+
+Skipped export for PCMWriteSinkTests/writeFailureIsReportedOnce(): no matching attachments
+
+Skipped export for PCMWriteSinkTests/closeDrainsAllAcceptedBuffersAndRejectsLateWrites(): no matching attachments
+
+Skipped export for MeetingDetectorManualTests/forceStopEndsAutoSession(): no matching attachments
+
+Skipped export for MeetingDetectorManualTests/forceStopEndsManualSession(): no matching attachments
+
+Skipped export for MeetingDetectorManualTests/asynchronousFailureAllowsAutoAfterRealInactivity(): no matching attachments
+
+Skipped export for MeetingDetectorManualTests/failedManualStartRollsBackAndAutoStillWorks(): no matching attachments
+
+Skipped export for MeetingDetectorManualTests/asynchronousFailureReleasesManualLatchAndSuppressesAutoRetryStorm(): no matching attachments
+
+Skipped export for MeetingDetectorManualTests/silenceDoesNotEndManualSession(): no matching attachments
+
+Skipped export for MeetingDetectorManualTests/noAutoRestartUntilInactiveAfterStop(): no matching attachments
+
+Skipped export for MeetingDetectorManualTests/forceStartDuringActiveIsNoop(): no matching attachments
+
+Skipped export for MeetingDetectorManualTests/forceStartFromIdleStartsManual(): no matching attachments
+
+Exported 10 attachments for: ProjectMemoryUpdateTests/invalidStructuredResponseNeverPartiallyPublishes(_:):
+File: 24D8BC9B-25D4-4F65-A2B0-071C826B2164.json, suggested name: "sqlite-fixture-04375A75-9C67-483A-AC56-373F45B577D9_0_E8DD2078-3224-4165-8F39-28359D6A47E9.json"
+File: B4477EC4-DEE3-4B8A-9FCA-9FC0E59E3E63.json, suggested name: "sqlite-fixture-3EC3293B-4B74-475B-B3A9-9348202AB045_0_04E4B799-253F-4ADC-8A92-443EC75B434F.json"
+File: 95AADE6C-0F07-4980-87C3-C30A2507AD94.json, suggested name: "sqlite-fixture-B65CD1B1-0B17-4413-81D4-B87279B24821_0_3C51B0DC-156A-4FDC-AAA3-BE907BC225C8.json"
+File: 8FFFC58F-CC19-462C-8F29-E89509F32437.json, suggested name: "sqlite-fixture-2BA7C0E9-2115-4A36-86DC-060A6F2AA57A_0_75386655-3274-48B4-B96B-79568F1A3165.json"
+File: 902BFD09-E3BC-477F-ACA3-618060679CA8.json, suggested name: "sqlite-fixture-A862F69E-7CB2-46D0-93D5-3E0E6EE50B5E_0_D8EB55DA-A9D8-4E8C-A75F-CF97D10AA255.json"
+File: 38CC3A8A-8764-4AC2-A872-AFEB71D5325A.json, suggested name: "sqlite-fixture-D12EDEE4-4336-42B6-A334-04994F1C8EA1_0_F95F21B8-5CE3-4119-874A-5976EB351426.json"
+File: ACC5BE1B-F6AF-4185-A1EA-71B80CCD716A.json, suggested name: "sqlite-fixture-CFA0C707-7F8A-44C5-B530-AD06BB5AB553_0_2750E9BC-BD7E-4082-93BE-2698E7E54E85.json"
+File: EB286A92-12FA-42E1-B4C2-F387F08DD94B.json, suggested name: "sqlite-fixture-5918CF4A-3580-4908-918F-BA9C5B893B39_0_55A85692-89F9-4A6A-8BDE-D76BFB5FD095.json"
+File: 732E7D00-0152-48E0-85B1-F61802143E1B.json, suggested name: "sqlite-fixture-1C394C61-178A-4BCE-8F28-C6513E317604_0_9D9F2CCC-2580-4B90-B456-201303A5E123.json"
+File: EFC9137F-03CF-4670-984C-1E4F926FF981.json, suggested name: "sqlite-fixture-21131945-FB88-4746-9BB1-9BAF70562D8E_0_0EC4F946-CFB5-4A3F-A031-D673D43531B7.json"
+
+Exported 4 attachments for: ProjectMemoryUpdateTests/selectedInputChangesWithinSameFullClosureProduceNewFactsAndExactReplayAfterRestart(_:):
+File: 3FC116CC-CFA2-410F-A7DF-FE14D4A7FE11.json, suggested name: "sqlite-fixture-32863206-4468-4EC2-94B5-F267D50000E6_0_07873D59-188A-4F91-9452-FE7E33E06184.json"
+File: 14B88F15-981B-407B-A77E-CB400BA917A3.json, suggested name: "sqlite-fixture-A3824F82-8A00-4C81-ADA7-2D11B49D6AD1_0_FABDF68A-9D8F-41C1-A58E-E156DDC7FBDD.json"
+File: 448FB5F2-AB76-43E4-8FA0-F6197503A9C2.json, suggested name: "sqlite-fixture-E8B1D282-815E-40BA-8561-EF441A5BDAAB_0_9283C549-549D-450B-84DA-17F6BF10530B.json"
+File: 0F7F7B88-0290-4D8F-90E0-E11D306085D2.json, suggested name: "sqlite-fixture-9ABBC1F2-36C6-483C-B892-916607FDFB78_0_BCA6CB26-C18C-4F84-B755-17A990DAA783.json"
+
+Exported 1 attachment for: ProjectMemoryUpdateTests/insufficientEvidenceNotReadyAndBudgetHaveExplicitStatesAndZeroHistory():
+File: 49FF5857-FF19-4AB6-A485-AB62983931A3.json, suggested name: "sqlite-fixture-72281E95-3229-4F77-B80D-2D61DE86EA0E_0_1D59F739-FBAB-4607-8C6E-8615077E1C8B.json"
+
+Exported 1 attachment for: ProjectMemoryUpdateTests/sequentialReadyMeetingsUpdateJournalKeepConflictDatesAndCompletionAsClaim():
+File: F223E9BA-704A-4050-9FAD-97CAA68D02A4.json, suggested name: "sqlite-fixture-9D676C6B-F675-4249-9257-75D4C867546B_0_7C54F180-331D-42CC-9831-8A581BEA0AA9.json"
+
+Exported 1 attachment for: ProjectMemoryUpdateTests/explicitReplacementRetractionAndManualPrecedenceKeepHistoryThroughActualExtractor():
+File: 7ADEE4B1-A3D3-4453-9A8C-07CD24255013.json, suggested name: "sqlite-fixture-EA7336EC-FC8F-4174-BF6D-3B192A55E323_0_7B98EDB6-4B63-42C5-A944-49C50B69A416.json"
+
+Exported 1 attachment for: ProjectMemoryUpdateTests/consentIsRequestSessionScopedConsumedOnFailureAndReplaySurvivesRestartWithoutExtraCloud():
+File: 7B0A80D5-2245-4CFF-B6F3-BB37361F6342.json, suggested name: "sqlite-fixture-19343165-D7F8-4AD3-9406-EC46579E259A_0_5E5C154A-6BA2-481F-B449-08F9BE41D498.json"
+
+Exported 1 attachment for: ProjectMemoryUpdateTests/ambiguousLegacyServiceBatchIsRetainedButCannotAuthorizeSelectedInputReplay():
+File: 4B9A58BF-C727-411D-B164-D80711E54FF8.json, suggested name: "sqlite-fixture-FF12776E-522F-4F1F-A929-BEB7305547A6_0_9D1D22D6-62FD-4DC9-9118-056A3A7BD5AA.json"
+
+Exported 12 attachments for: ProjectMemoryUpdateTests/changesAtTransportBoundaryPreventSendingOrPublishing(_:):
+File: 13A9D958-51D9-4D99-97EB-F789ABAF04CB.json, suggested name: "sqlite-fixture-970955DD-EF8E-4F3F-82F1-825D36E486DA_0_8F279777-2D19-458D-9B5F-536CAED18303.json"
+File: AF11B7FA-E09C-4741-93B1-C0AAB1EE414B.json, suggested name: "sqlite-fixture-866851CC-A061-45E7-9DDF-239BE5DE76DD_0_BF03EA5D-3F07-4141-A366-4E4735256B04.json"
+File: A26D1124-F526-4F2E-B98A-429395B0E843.json, suggested name: "sqlite-fixture-D4D78AF4-A27F-470A-B491-5333651176C8_0_2107ADC6-4239-4B0F-9CB0-E36E343A8E00.json"
+File: 7380DC63-BDB6-4BFD-A494-32019B2798F2.json, suggested name: "sqlite-fixture-7DA122E9-85AF-4F2E-94C3-7C9409D7D21E_0_C3275978-5575-4790-B157-E693DBDBFC22.json"
+File: 77B0A9FB-B758-4388-A61A-F6F2DBAAD188.json, suggested name: "sqlite-fixture-0B3BA4B2-42E7-4D6F-8B71-F227D107F489_0_9D732E78-ED8C-4E22-BF70-8EE87FA7BD90.json"
+File: B363F18E-0D6B-4CFB-8121-D54C8FA39DC9.json, suggested name: "sqlite-fixture-A1C22996-2402-4E19-8D88-74EC8062EC99_0_D3E8485C-EB6B-4769-B200-0A9673744124.json"
+File: F8FED9D6-39C5-4A6F-957B-7101FA6D7B79.json, suggested name: "sqlite-fixture-CD11F0AE-DEA1-46FE-B5AF-AC5747A3823B_0_F62C6873-1A1E-4AC4-AED1-C9262CC07182.json"
+File: F7B6DE70-3330-46B3-99DF-04CF2F9286CA.json, suggested name: "sqlite-fixture-31F151E2-D43D-48D8-924F-9791C5C5181C_0_368B9C95-0FC4-45F0-A6DC-E82A5E5B29CC.json"
+File: 775691BB-6536-4835-A255-CBE5F86D9636.json, suggested name: "sqlite-fixture-1C79AF46-7BC1-4789-B609-866ABDD46F4F_0_25E984F9-C697-4A56-898D-1F54B9FA42D4.json"
+File: 68B12C6F-E908-45C5-AD27-96241B50C5A3.json, suggested name: "sqlite-fixture-1836A560-81DF-44A0-A274-6B60C68D6FDC_0_7E640672-4E3B-41EC-87DA-26B458EBAED9.json"
+File: 37AA5B57-3142-4B1F-A8DD-48D2245714F8.json, suggested name: "sqlite-fixture-B55299BF-8F97-4EC6-8D42-467C2182E4C1_0_ED1FB83F-8292-4B6C-9A46-6C410DFC3C52.json"
+File: BAD7D0AB-DFD4-4F1F-8A36-2B091F75B065.json, suggested name: "sqlite-fixture-A3626532-6E71-44C9-9FCC-5C076C66640B_0_BD7EFE2C-F28A-4915-A1D5-28A7D98DBD2E.json"
+
+Exported 1 attachment for: ProjectMemoryUpdateTests/limitedJournalHasExplicitTerminalStateWithoutDeletionOrAutomaticRetry():
+File: E69E6C0F-B83D-4459-98D0-8D27D132551A.json, suggested name: "sqlite-fixture-1D0699A6-BFCD-4555-A2A4-0EB111B4BB62_0_754D4234-248C-4298-9C54-76FF82978337.json"
+
+Exported 1 attachment for: ProjectMemoryUpdateTests/rawAndDerivedOwnersBlockCloudAndOnlyExplicitPayloadLeavesAfterPolicyChange():
+File: 636EBE98-1DDD-45E7-B51C-26FE8AFFB538.json, suggested name: "sqlite-fixture-4E9F2777-4F2B-42C6-B24D-22133C92B8E1_0_8FEB6D59-EBE0-431C-AD58-48BDBE07DC4D.json"
+
+Exported 1 attachment for: ProjectMemoryUpdateTests/everyRetryAndLateReplyRecheckAllOwnersAndForeignParentMemory():
+File: C67ABFFA-09EC-4B69-9F40-DE0A9A6E026A.json, suggested name: "sqlite-fixture-95BFC375-98E8-4470-994F-5C539BBD9022_0_F433099B-8FF0-46CF-AF03-B5B651EAB702.json"
+
+Exported 1 attachment for: ProjectMemoryUpdateTests/ancestorManualEditFencesDeepDerivedContextButCurrentCorrectionRetainsItsOwnHistory():
+File: E0C7E06E-64DA-47AB-AEAE-9D31E689EF76.json, suggested name: "sqlite-fixture-969B4408-2FCF-4A04-B192-8E7AF8809C0B_0_6AB9BDBD-CEDD-4ABA-808A-68C771BF6FF1.json"
+
+Exported 1 attachment for: ProjectMemoryUpdateTests/cancellationOfNoncooperativeTransportCannotAppendAndNewSessionRequiresNewConsent():
+File: 9F5EC224-70F7-4E80-8A25-0FDC57890755.json, suggested name: "sqlite-fixture-3B941893-1D58-41CA-B1F7-5F119038EAE1_0_42903D08-799B-4B40-9A40-6AB2E6B45CAD.json"
+
+Exported 2 attachments for: ProjectMemoryUpdateTests/finalJournalTransactionRechecksModelAndForeignMemoryEvenAfterEarlierValidation(_:):
+File: 620D56D1-6014-4AF5-8B40-76A060E42D49.json, suggested name: "sqlite-fixture-1688A35D-B56A-4079-8020-0348547A8CED_0_20CCF6DA-B700-4D99-B619-6E3155C26F60.json"
+File: E4F6DF6D-A30F-489B-8EEC-A6C4AD243234.json, suggested name: "sqlite-fixture-A67460A1-B132-4985-8D22-559C1ADDEA68_0_2754CE03-A645-4FA2-AEAB-E6385709563B.json"
+
+Skipped export for TalkUserLookupTests/malformedIdentityAndHTTPBodyStaySafe(): no matching attachments
+
+Skipped export for TalkUserLookupTests/invalidEmailIsRejectedBeforeTransport(email:): no matching attachments
+
+Skipped export for TalkUserLookupTests/emailFilterIsEncodedAsOneQueryParameterAndDecodesIdentity(): no matching attachments
+
+Skipped export for ProjectStoreTests/invalidAssignmentRollsBackAndRepeatingAssignmentDoesNotDuplicate(): no matching attachments
+
+Skipped export for ProjectStoreTests/corruptDatabaseAndFailedMigrationPreserveOriginal(): no matching attachments
+
+Skipped export for ProjectStoreTests/futureSchemaIsRejectedWithoutChangingDatabase(): no matching attachments
+
+Skipped export for ProjectStoreTests/projectMembershipsSurviveRestartWithoutChangingMeetingFiles(): no matching attachments
+
+Exported 2 attachments for: QuestionFixtureLifecycleTests/throwingAndCancelledCallbacksReleaseFixtureBeforeRootRemoval(_:):
+File: 32456EA0-BB17-4128-A5DF-AF9B28F93F75.json, suggested name: "sqlite-fixture-8CAAA1B9-6895-45C1-8F20-FDB81057142C_0_D7DBE56E-5EF0-41EB-8AB1-152DB87CA426.json"
+File: 603CEF5F-247A-48AA-9A64-A612B5B63F53.json, suggested name: "sqlite-fixture-A5607309-4B21-40ED-A3C2-11D97EB52CBD_0_F1AA5E3A-C821-40BA-8345-9906B10B445D.json"
+
+Skipped export for MeetingEmbeddingSnapshotTests/actualTranscriptABAUsesContentFingerprintAndKeepsTimecodesAndSharedIdentity(): no matching attachments
+
+Skipped export for MeetingEmbeddingSnapshotTests/malformedDeletedAndSymlinkTranscriptsInvalidateDerivedCatalogWithoutEditingSource(): no matching attachments
+
+Skipped export for BackfillTests/run_enqueuesOnlyMeetingsWithAudioAndNoTranscript(): no matching attachments
+
+Skipped export for MeetingGroupingTests/groupsByDayWithRelativeLabels(): no matching attachments
+
+Skipped export for MeetingGroupingTests/emptyInputYieldsNoGroups(): no matching attachments
+
+Exported 2 attachments for: SQLiteAsyncFaultExpectationTests/nestedAsyncExpectationsRequireSeparateNewConnectionsAndFaults(outerFault:):
+File: 607F8F30-C47C-4033-B3C6-02B81E4D7409.json, suggested name: "sqlite-fixture-ED1B6F37-07CE-4500-9454-76DE0E581CBE_0_5FB2252C-433F-4E3A-A8E7-863C160F94FA.json"
+File: 5343742E-2657-40B9-8A7A-4012330A4473.json, suggested name: "sqlite-fixture-D7FA13A8-AF7D-49D3-815F-CDAC4393E00D_0_5E115A78-B4E8-47D1-BEB1-EE9F532306AE.json"
+
+Exported 1 attachment for: SQLiteAsyncFaultExpectationTests/foreignAsyncFaultCannotBeConsumedByExpectedConnection():
+File: 200B7251-DFBF-4228-A1CC-D3EC911D30C7.json, suggested name: "sqlite-fixture-576A180F-0694-4D6C-8225-759BE260D411_0_6888313E-7CAB-4001-B923-43122C4771FF.json"
+
+Exported 2 attachments for: SQLiteAsyncFaultExpectationTests/requiresOneNewNativeConnectionAtExactURL(count:):
+File: 243DF602-9FC8-4067-975D-20FB7E366345.json, suggested name: "sqlite-fixture-05D6BA7F-0A68-4359-B1AF-B24D17AA0A45_0_88404120-923A-43B7-BA79-937D04680398.json"
+File: 0D9B1461-6687-4C28-8BD4-1C6806229B05.json, suggested name: "sqlite-fixture-2DC9397E-2207-4526-AB8E-2C91B558E00D_0_D7DB9317-2407-43D9-8AD7-D3BCDF4B6AFA.json"
+
+Exported 3 attachments for: SQLiteAsyncFaultExpectationTests/otherNativeFaultsRemainTeardownErrors(kind:):
+File: 98CB6301-3177-471A-821F-4C7BAECA8E94.json, suggested name: "sqlite-fixture-2C7D9E22-2429-4D41-B423-FD214D771CD3_0_3FB6A444-9924-4128-B815-C12D58CE4582.json"
+File: A67E91A9-EEC6-4995-B785-969EC4ECF781.json, suggested name: "sqlite-fixture-2C2ACFBC-4ABE-4063-A065-3FA2252E90A8_0_DDD03086-565C-4150-8EDF-1C9D504140B3.json"
+File: 964D16D3-866D-4D93-8E9A-EFBA132B2884.json, suggested name: "sqlite-fixture-D09B05BC-684B-4F00-B2D5-3738DF564CED_0_2481392E-AAD5-4DF4-BF84-7803EABE8409.json"
+
+Exported 1 attachment for: SQLiteAsyncFaultExpectationTests/exactAsyncFaultPreservesBodyErrorAndClosesBeforeUnlink():
+File: E74D0F18-843C-4325-9935-39FA4B0F529C.json, suggested name: "sqlite-fixture-F529BA43-D473-495D-8A37-DF0F95C6F657_0_19728BC7-1D8F-4C5E-931A-C7CC4EF76F82.json"
+
+Skipped export for StartupRescueTests/terminalStatuses_untouched_notReturned(): no matching attachments
+
+Skipped export for StartupRescueTests/recording_wavRepaired_metaClosed_folderReturned(): no matching attachments
+
+Skipped export for StartupRescueTests/processing_folderReturned_metaUntouched(): no matching attachments
+
+Skipped export for StartupRescueTests/summarizing_becomesReady_notReturned(): no matching attachments
+
+Skipped export for StartupRescueTests/failedProtectionWriteDoesNotEnqueueLegacyShortAudio(): no matching attachments
+
+Skipped export for StartupRescueTests/shortInterruptedCaptureSurvivesRescueAndDefaultPipeline(): no matching attachments
+
+Skipped export for AppPathsTests/modelDirIsUnderModelsRoot(): no matching attachments
+
+Skipped export for TalkRoomObserverTests/positiveExpiresDuringStalledCycleAndNetworkFailureIsUnknown(): no matching attachments
+
+Skipped export for TalkRoomObserverTests/partialCycleNeverSignalsExitOrPartialPositive(error:firstPresent:): no matching attachments
+
+Skipped export for TalkRoomObserverTests/pauseWakeStopRestartDiscardOldReplies(): no matching attachments
+
+Skipped export for TalkRoomObserverTests/completeCycleMatchesKeyNotNamesOrUniqueIDAndAggregatesRooms(): no matching attachments
+
+Skipped export for TalkRoomObserverTests/onlyCompleteNegativeCycleConfirmsAbsenceAndStateExpires(): no matching attachments
+
+Skipped export for TalkRoomObserverTests/slowFullCycleIsUnknownAndNoTickCreatesOverlappingRequests(): no matching attachments
+
+Skipped export for TalkRoomObserverTests/canonicalizesDeduplicatesAndRejectsUnsafeRooms(): no matching attachments
+
+Skipped export for TalkRoomObserverTests/changedConfigurationDiscardsLateReplyAndDoesNotOverlap(kind:): no matching attachments
+
+Skipped export for TalkRoomObserverTests/defaultObserverCannotUseLiveTransportInTestHost(): no matching attachments
+
+Skipped export for InsightsMarkdownTests/render_includesTitleSummaryAndCheckboxes(): no matching attachments
+
+Skipped export for InsightsMarkdownTests/render_withoutActionPoints_omitsSection(): no matching attachments
+
+Skipped export for ProcessingBannerTests/pluralization(): no matching attachments
+
+Exported 1 attachment for: LocalIndexingServiceTests/cancelRetryFailureAndRestartRecoverOnlyInterruptedAttempt():
+File: 3399F51F-44BB-4778-9FFB-E2894DF7F162.json, suggested name: "sqlite-fixture-A3B4F3C3-2DB2-4A2B-980A-983AE13819A2_0_A858F052-3475-4758-9932-509565C546F6.json"
+
+Exported 1 attachment for: LocalIndexingServiceTests/failedReplacementKeepsWorkingModelReadyVectorsAndQueryAvailable():
+File: FDAFFE3E-6EDB-4F4F-ADB5-9E4BE064FD83.json, suggested name: "sqlite-fixture-E9D0C75E-AE55-42AB-BFB4-8047FEE2C2DA_0_A578A2AB-A2D4-4441-8741-22F6E2BA1DBF.json"
+
+Exported 1 attachment for: LocalIndexingServiceTests/cancelAllAndRetryAllCoverActiveAndQueuedSourcesWithoutLosingWakeup():
+File: 48C37158-F37B-4333-8AAD-EB24F16931CF.json, suggested name: "sqlite-fixture-8355FFE0-7BB7-4270-B08F-277AB50FC565_0_AAD73EBF-EE5D-4E0C-8E77-7BAAA580BC83.json"
+
+Exported 1 attachment for: LocalIndexingServiceTests/missingModelDoesNotBlockImportAndActivationIndexesWithoutReimportOrDuplicateLoad():
+File: 225CE5DF-D296-4B8A-9D7A-8F558635B35A.json, suggested name: "sqlite-fixture-760BF581-33C9-41FE-A7D4-5C56CF4BD619_0_B1BCA71F-0B0E-48E7-A936-A5CE7EBF951D.json"
+
+Exported 1 attachment for: LocalIndexingServiceTests/lateModelLoaderAndLateQueryCannotUndoModelABAAndSameIDKeepsReadyCache():
+File: 29A19BB2-D5A8-4997-BA20-7BC4B048321F.json, suggested name: "sqlite-fixture-DB1C22A9-A333-4986-BFC5-F70B9F1B3568_0_89A1871E-4E6B-4738-A69B-0C3579542789.json"
+
+Exported 6 attachments for: LocalIndexingServiceTests/heldIndexerAndCandidateCycleFinishBeforeUnlinkOnEveryExit(exit:):
+File: 1F447E3A-FF38-40F1-A0FA-CB9835D5AB12.json, suggested name: "sqlite-fixture-07CD37C8-4CD8-4EAC-AFC3-D6E31940CAB8_0_4AEF06DC-D5D8-47B0-9A72-3A4E3DC61157.json"
+File: 6FF7BF96-0501-419C-8173-DA6470C73ADE.json, suggested name: "sqlite-fixture-F865C85B-D9CC-4E48-B2DC-0078E3209F5C_0_39C31138-1958-4709-86E2-F0DA076B3770.json"
+File: 5E4232AA-8B12-437A-8508-0CD09BE31790.json, suggested name: "sqlite-fixture-06ACAEEF-E3FE-4B9C-941F-685B7637929E_0_E25CAFEE-98EA-4077-BB89-C2C82F7A7929.json"
+File: 0ACFB794-E0B0-4D2A-963C-9F76453BC785.json, suggested name: "sqlite-fixture-5519B761-2961-4C9A-B916-2C5C876BBD14_0_64B3143A-1F4C-4D73-ADFA-4CBA6A83581C.json"
+File: 08E18B4C-4E9D-4B02-B0AB-BCC33470D9EB.json, suggested name: "sqlite-fixture-5821F6C9-53D6-4C37-AFE8-BF03B023DAAB_0_551E1739-286C-4E21-8796-08274186EAA1.json"
+File: 1281BA80-B016-4BD2-A8AE-FDAFDE7FF4E2.json, suggested name: "sqlite-fixture-1C6BBD1C-4B59-4032-9272-BBC5EB21A92D_0_89C23C09-2DA9-43C9-9435-E1C6C95EC524.json"
+
+Exported 1 attachment for: LocalIndexingServiceTests/sourceSupersessionUsesFreshBytesAndRoundRobinDoesNotStarveAnotherSource():
+File: E95FB136-2362-4D1F-BE12-D2EDB4E741CD.json, suggested name: "sqlite-fixture-367C82B1-685E-4EB7-8981-253746E69843_0_B19132AD-0FCA-40D7-9F4A-AF1E7AB9CA76.json"
+
+Exported 1 attachment for: ProjectMemoryHistoryTests/derivedCrossProjectAndManualTextCannotHideOriginalOwnerEvenAfterRemovalOrDeletion():
+File: B2E875C1-6F25-4D8F-AF85-DF1628E484BA.json, suggested name: "sqlite-fixture-C78775F6-3980-48DC-BE69-0FDEDF4FC396_0_522BA1C4-E369-480C-93CC-0753B87A351A.json"
+
+Exported 1 attachment for: ProjectMemoryHistoryTests/retractionIsVisibleHistoryButNotACurrentPositiveFactAndModelCannotRetireManualSelection():
+File: A6D91F3B-2F4A-4ACE-9E9D-D1BB56EEFDAE.json, suggested name: "sqlite-fixture-7DAAE059-AA2D-48AC-AAB2-ED0E0F70B9CA_0_1B216116-5F46-4DE8-89FA-E8FF83956B87.json"
+
+Exported 1 attachment for: ProjectMemoryHistoryTests/finalCandidateBudgetAllows256Rejects257AndRollsBackAnOverflowLateInBatch():
+File: 4CECD071-FF81-40E7-9C38-0274A242E35F.json, suggested name: "sqlite-fixture-818B874A-1BF5-41B4-B0C7-DC61E56A222E_0_8B6F6783-EC79-4725-ABF0-E550F1ABE8A7.json"
+
+Exported 2 attachments for: ProjectMemoryHistoryTests/legacy257CanRecoverByExplicitManualRetirementsWithoutDiscardingHistory(_:):
+File: 3035360B-6D73-4E3C-9244-CDAC0FC99F35.json, suggested name: "sqlite-fixture-5DC36AF1-90DC-4E3C-88BB-CECAF0CFDCB2_0_432043BC-BC77-47B7-9595-33056A1510BB.json"
+File: 1436771D-0E75-4E26-AB04-965AFDF28D62.json, suggested name: "sqlite-fixture-14F85989-20BE-41EA-97DD-CA8B664BCD3A_0_53610378-57B6-48A6-8A75-3ABC2756D450.json"
+
+Exported 1 attachment for: ProjectMemoryHistoryTests/sequentialMeetingsKeepBothDatedAssertionsAndRealStructuredDeadlineConflict():
+File: 4CB7B9B4-A9E1-4850-B60B-E27786DB8DB8.json, suggested name: "sqlite-fixture-C3AD464A-CF32-4A6E-8D12-0F53EA9E440E_0_5562F131-0941-4CF0-B66A-2D6741AD74E7.json"
+
+Exported 3 attachments for: ProjectMemoryHistoryTests/compatibleRangesConditionsAndWordingAreNotInventedConflicts(_:):
+File: DED2181A-43E0-4B5A-B386-2833EDCDE9BF.json, suggested name: "sqlite-fixture-0AD6E23B-5ED0-43DC-91E2-0601928EB24F_0_B2534330-6A61-4226-9DA0-4696AADB9BD3.json"
+File: 3DB14534-7693-4257-8228-D532A4ED53BD.json, suggested name: "sqlite-fixture-FC6F742A-F741-4DE6-92DB-64B32C676B08_0_F0B13199-AD48-4878-9267-DF9A99355086.json"
+File: 2D5D88A4-9318-4F59-A03F-CDF0BF331069.json, suggested name: "sqlite-fixture-DA17D3BD-77CC-4706-8D56-F8E39145AA4D_0_70D9A111-512B-4073-A878-56314F9AA910.json"
+
+Exported 8 attachments for: ProjectMemoryHistoryTests/delayedPublicationCannotReplaceNewStateAndStoredHistoryBecomesNoncurrent(_:):
+File: 73C7AAEB-3D84-4F30-ABFE-FED187136BC9.json, suggested name: "sqlite-fixture-A762186C-C53A-409E-AC59-0E9DBEC1CBD3_0_58C2B87B-4018-4DC4-BDF0-6DE183D64655.json"
+File: BB643525-F56B-472D-A340-78BDCCB2FD86.json, suggested name: "sqlite-fixture-E33922DB-4384-4401-BBD0-000A4804136D_0_9A0215DD-D077-463F-9F2F-B2545B1D7BB6.json"
+File: A81936CE-1E41-4205-9CFF-B10D20EA7A33.json, suggested name: "sqlite-fixture-CAA0EDA3-F53B-4992-8D82-CB36C28DDF1F_0_EC83D7A4-0D8A-4A70-A704-9AB66A237022.json"
+File: 30CA36BD-1326-42C3-A20B-AF439E8475E1.json, suggested name: "sqlite-fixture-4CA0DB64-66C2-4014-8883-062B00A9F24A_0_7C1CCEDB-5838-4777-8C75-2B2C60136541.json"
+File: 47CB867A-124D-458C-B1E8-2B5323F6E417.json, suggested name: "sqlite-fixture-D4EB8764-756F-40EB-9287-FFECBE34F16A_0_76E9DCF8-C44F-4813-A325-C3105BBBEFBB.json"
+File: F0E94FAD-A312-46C9-99B8-069C72EA9F4F.json, suggested name: "sqlite-fixture-047F521C-B1E1-4C03-9375-D975C6D19067_0_8D073186-D70D-457E-9CC7-B0848245A610.json"
+File: 45934B77-64DD-4136-9731-E6BA618E77B5.json, suggested name: "sqlite-fixture-88FB3B7C-CFD1-4DAF-9997-265B56849AEC_0_072F7C19-86B9-484D-9FA5-DB792AB29CA0.json"
+File: 8DC2523C-7FDD-4293-99A8-B2C5DC1E1F2D.json, suggested name: "sqlite-fixture-AC8F4D26-B16E-40E4-BAB5-4F43E60075AD_0_1DCB073E-2E79-4A4C-A8C4-32A16EA07B48.json"
+
+Exported 1 attachment for: ProjectMemoryHistoryTests/explicitReplacementRetainsOldClaimAndCompletionClaimDoesNotChangeExternalOrLocalTask():
+File: BE3867CC-3140-4730-A799-E3AEE573F412.json, suggested name: "sqlite-fixture-FC8A16A5-0CF2-48BD-B28C-965114365C76_0_22ABF3E1-BA4C-41B2-9905-03012F705C7F.json"
+
+Exported 1 attachment for: ProjectMemoryHistoryTests/selectionReadCannotReturnAnOlderHeadAfterConcurrentPublication():
+File: FA9A660F-DC93-4630-8C7C-8180DA134888.json, suggested name: "sqlite-fixture-63733F20-30B8-4D97-BF66-01FC7CE5C207_0_9960F87B-FEE3-4E30-A409-DB9D0619A784.json"
+
+Exported 1 attachment for: ProjectMemoryHistoryTests/cancelledPublicationDoesNotAppendAnyHistoryOrSelection():
+File: 0EB1C18B-6CF6-4079-A736-DCD4A5A80ED0.json, suggested name: "sqlite-fixture-51980989-3B05-4AC2-8CD8-F52E0B8B9081_0_E6CE7319-0121-4AC6-863C-F94C09FF6D27.json"
+
+Exported 1 attachment for: ProjectMemoryHistoryTests/manualCorrectionAndRetractionWorkAt256WithoutLosingPrecedenceOrBudget():
+File: 32E29B9C-B23F-420D-BCCB-CC6A5833F636.json, suggested name: "sqlite-fixture-23B1BEDD-7B46-49E6-8C86-5CC1A6419A2D_0_112709B0-57B7-4596-9259-5B964743C434.json"
+
+Exported 1 attachment for: ProjectMemoryHistoryTests/invalidBatchRollsBackAllRowsAndImmutableJournalAndPaginationAreReal():
+File: 5360D62E-FB81-4FC2-9534-7D0406E3A77F.json, suggested name: "sqlite-fixture-52D21BC2-4339-4F82-8FCD-E1837CFA27BD_0_B3C75459-9491-4757-9563-9121016F86A8.json"
+
+Exported 1 attachment for: ProjectMemoryHistoryTests/manualCorrectionSurvivesRestartReindexReplayAndNewModelVersionWithCompleteLineage():
+File: CCCB8089-2BF6-4D1C-B2CD-C16050E4C5E7.json, suggested name: "sqlite-fixture-07F3BB15-ED45-461F-AC48-F676C453EBC5_0_F1A57E48-C941-4CB4-80C7-3F8AC08AA981.json"
+
+Skipped export for EmbeddingIndexStoreTests/sharedSourceIsStoredOnceAndSurvivesRestartWithIdentityAndLocations(): no matching attachments
+
+Skipped export for EmbeddingIndexStoreTests/partialCoverageWrongIdentityAndTransactionFailureNeverPublishPartialVectors(): no matching attachments
+
+Skipped export for EmbeddingIndexStoreTests/actualDocumentVersionABARejectsLateResultProgressAndFailure(): no matching attachments
+
+Skipped export for EmbeddingIndexStoreTests/importAndEmbeddingInvalidationRollbackTogether(): no matching attachments
+
+Skipped export for EmbeddingIndexStoreTests/leasesAreExclusiveAndCancelRetryAndRestartInvalidateOldAttempts(): no matching attachments
+
+Skipped export for EmbeddingIndexStoreTests/modelABAAndDimensionReuseCannotAcceptAnOldLease(): no matching attachments
+
+Skipped export for EmbeddingIndexStoreTests/migrationKeepsLegacyDocumentsAndRollsBackFailedSchemaChanges(): no matching attachments
+
+Skipped export for EmbeddingIndexStoreTests/removalCascadesDerivedDataAndRecreatedSameSourceRejectsOldLease(): no matching attachments
+
+Skipped export for MeetingStoreTests/rename_setsTitleAndManualFlag(): no matching attachments
+
+Skipped export for MeetingStoreTests/delete_removesFolder_andSafeOnMissing(): no matching attachments
+
+Skipped export for MeetingStoreTests/setActionPointDone_togglesOnlyTarget(): no matching attachments
+
+Skipped export for MeetingPlayerTests/missingOneTrack_stillPlays(): no matching attachments
+
+Skipped export for MeetingPlayerTests/seek_clampsAndSetsCurrentTime(): no matching attachments
+
+Skipped export for MeetingPlayerTests/duration_isMaxOfTracks(): no matching attachments
+
+Skipped export for MeetingPlayerTests/noAudio_hasAudioFalse(): no matching attachments
+
+Skipped export for TalkAPIClientTests/readsOnlineParticipants(): no matching attachments
+
+Skipped export for TalkAPIClientTests/rejectsUnsafeBaseURL(address:): no matching attachments
+
+Skipped export for TalkAPIClientTests/rejectsMissingKeyAndPathInjection(): no matching attachments
+
+Skipped export for TalkAPIClientTests/mapsFailuresWithoutExposingResponseOrToken(status:): no matching attachments
+
+Skipped export for TalkAPIClientTests/authenticatesAndDecodesProfile(): no matching attachments
+
+Skipped export for EmbeddingCatalogRaceTests/delayedScanAndInvalidationCannotCrossCatalogABAOrRecreation(): no matching attachments
+
+Skipped export for EmbeddingCatalogRaceTests/observedAbsenceCannotSurviveCreateDeleteOrAnotherRemoval(): no matching attachments
+
+Skipped export for EmbeddingCatalogRaceTests/unchangedFingerprintAndJobLifecycleKeepCatalogObservationStable(): no matching attachments
+
+Skipped export for TalkRecordingIntegrationTests/manualStopSuppressesUntilAbsentThenNewPresentAndProtectsAudio(): no matching attachments
+
+Skipped export for TalkRecordingIntegrationTests/defaultCoordinatorIsBlockedBeforeRuntimeStoresInTestHost(): no matching attachments
+
+Skipped export for TalkRecordingIntegrationTests/sleepCutsProtectedSegmentAndWakeRequiresNewReply(): no matching attachments
+
+Skipped export for TalkRecordingIntegrationTests/invalidInitialSettingsHaveExplicitStatusAndTerminatedCoordinatorCannotRestart(): no matching attachments
+
+Skipped export for TalkRecordingIntegrationTests/nativeProcessLossUsesActualGuardAndNeverRestartsSameEpisode(): no matching attachments
+
+Skipped export for TalkRecordingIntegrationTests/normalTerminationFinalizesProtectedWAVWithoutQueue(): no matching attachments
+
+Skipped export for TalkRecordingIntegrationTests/mutedJoinNeedsOnlyFreshAPIAndUnknownNeverEndsRecording(): no matching attachments
+
+Skipped export for TalkRecordingIntegrationTests/staleCachedPresentCannotStartAndQuitBlocksAllLateActions(): no matching attachments
+
+Skipped export for TalkRecordingIntegrationTests/startupFailureAllowsExplicitManualRetryAndManualIgnoresAPIExit(): no matching attachments
+
+Skipped export for TalkRecordingIntegrationTests/actualAPIClientURLProtocolAndMultipleRoomsProduceOneCapture(): no matching attachments
+
+Skipped export for TalkRecordingIntegrationTests/configChangeDiscardsLateReplyAndProtectsActiveSegment(): no matching attachments
+
+Skipped export for TalkRecordingIntegrationTests/cancellingStartWaitsForBackendAndNeverPublishesLateReady(): no matching attachments
+
+Skipped export for InsightsModelsTests/roundTripEncodesISO8601AndDecodes(): no matching attachments
+
+Skipped export for InsightsModelsTests/actionPoint_doneDefaultsFalse_andDecodesLegacy(): no matching attachments
+
+Skipped export for MeetingFolderTests/idFormatIsTimestamp(): no matching attachments
+
+Skipped export for ElapsedTextTests/formatsHours(): no matching attachments
+
+Skipped export for ElapsedTextTests/formatsMinutesSeconds(): no matching attachments
+
+Skipped export for ElapsedTextTests/clampsNegative(): no matching attachments
+
+Skipped export for RecordingStateTests/beginSetsLive_endClears_endIsIdempotent(): no matching attachments
+
+Exported 2 attachments for: MemoryBridgeDiagnosticsTests/releasingSoleOwnerIsAttributedToCreatingObserverAndDirectRestartRecovers():
+File: 25C77AA8-7480-4FEE-A3E5-BF6B1F5F9B4B.json, suggested name: "sqlite-fixture-AA1953C2-364B-4536-B983-43102632E7A2_0_05DF0AF6-7C78-4ABD-822F-D4EDF971FB0D.json"
+File: E6530AE2-088A-4085-80C3-1C2239A0043F.json, suggested name: "bridge61-86415597-7963-4C2B-BF3B-6150CB24864A-timeline_0_F234001D-D0C1-40F4-9CF8-645113FC7EF4.json"
+
+Exported 6 attachments for: MemoryBridgeDiagnosticsTests/strongOwnerAndGateAreReleasedWhenBodyThrowsOrCancels(cancel:):
+File: DC874E69-2253-47A8-838D-45F99C87F024.json, suggested name: "sqlite-fixture-8802B3F5-ED48-4DE5-B711-7F557240F060_0_7629FD4A-66E4-4DFC-B527-49C57C1CEDDF.json"
+File: 772276D1-DB77-41AC-BC08-405AB4FC7072.json, suggested name: "bridge61-0D79AE2B-8DA9-4597-B75A-8B43FC311D09-timeline_0_A39FF2FD-DE4C-43EA-B23A-4821B335CE0A.json"
+File: 5AF4A55A-7BE3-4D3E-8CFC-F6A018DE9BD8.json, suggested name: "bridge61-0D79AE2B-8DA9-4597-B75A-8B43FC311D09-failure_0_32F0786D-18EA-498C-BE41-B541BE0955F6.json"
+File: 5B9AABC4-1806-46BB-BD29-43F56E436C16.json, suggested name: "sqlite-fixture-B28E9298-F51C-475F-A85C-7A21B2F4551F_0_995BB006-102E-4CE0-9530-CB4C9611F146.json"
+File: D60DB0F8-FD5B-44E2-9317-6FB71E4FC108.json, suggested name: "bridge61-24D660B5-ADE3-4D2E-A003-8A4DA518855B-timeline_0_7A455353-39B3-45A0-8BBD-859C25836CE9.json"
+File: 327758F5-50DA-462E-BF69-D900B36EFB26.json, suggested name: "bridge61-24D660B5-ADE3-4D2E-A003-8A4DA518855B-failure_0_2F38B518-CBDE-42C4-A2A3-DDF2D7740D22.json"
+
+Exported 3 attachments for: MemoryBridgeDiagnosticsTests/pausedStartupSeparatesRevisionFromStartAndExecutesFailureRecorderBeforeRecovery():
+File: D357C2F2-66DA-4373-82B7-94569A0E56BA.json, suggested name: "sqlite-fixture-40102B31-012F-408B-889C-00EA04182431_0_6DA16182-0A4E-4044-8E2D-05BF58B544FE.json"
+File: 12B03054-FA63-4A16-A17F-D7223E21E4B2.json, suggested name: "bridge61-41AFB70C-8576-473B-98F5-06CE41AE33DD-timeline_0_20A2857B-7025-4228-B051-E53B571D8661.json"
+File: C08D56AB-E66D-4C99-A8F5-454BA950C206.json, suggested name: "bridge61-41AFB70C-8576-473B-98F5-06CE41AE33DD-failure_0_6F740DF7-FC11-4C47-BD7C-2B140A25DE3D.json"
+
+Skipped export for TalkAudioSelectionTests/helperOrBrowserAloneDoesNotReplaceNativeClient(bundleID:): no matching attachments
+
+Skipped export for TalkAudioSelectionTests/selectsOnlyConfirmedNativeApplicationsAndHelpers(): no matching attachments
+
+Skipped export for TalkAudioSelectionTests/rejectsConflictingOrInvalidProcessIdentities(): no matching attachments
+
+Skipped export for TalkAudioSelectionTests/noSelectionHasNoAllSystemMeaning(): no matching attachments
+
+Skipped export for MeetingCatchUpTests/fullyDone_needsNothing(): no matching attachments
+
+Skipped export for MeetingCatchUpTests/insightsDisabled_skipsInsightsCatchUp(): no matching attachments
+
+Skipped export for MeetingCatchUpTests/failedWithAudio_reprocesses(): no matching attachments
+
+Skipped export for MeetingCatchUpTests/mixedLibrary_picksOnlyUnfinished(): no matching attachments
+
+Skipped export for MeetingCatchUpTests/orphanWithoutAudioOrTranscript_needsNothing(): no matching attachments
+
+Skipped export for MeetingCatchUpTests/recording_isSkipped(): no matching attachments
+
+Skipped export for MeetingCatchUpTests/noTranscript_withAudio_needsFullProcess(): no matching attachments
+
+Skipped export for MeetingCatchUpTests/transcriptWithoutInsights_needsInsights(): no matching attachments
+
+Skipped export for KnowledgeAnswerGeneratorTests/foreignOrEmptyContextNeverCallsTransport(): no matching attachments
+
+Skipped export for KnowledgeAnswerGeneratorTests/sharedSourceCannotEscapeThroughAllowedProject(): no matching attachments
+
+Skipped export for KnowledgeAnswerGeneratorTests/rejectsInventedSourceLabels(): no matching attachments
+
+Skipped export for KnowledgeAnswerGeneratorTests/deniesCloudBeforeCallingTransport(): no matching attachments
+
+Skipped export for KnowledgeAnswerGeneratorTests/approvalAllowsOnlySelectedFragmentsAndRetainsPageCitation(): no matching attachments
+
+Skipped export for MeetingDetectorTests/reArmsAfterEnd(): no matching attachments
+
+Skipped export for MeetingDetectorTests/repeatedActiveNoSecondStart(): no matching attachments
+
+Skipped export for MeetingDetectorTests/inactiveBeforeMeetingIgnored(): no matching attachments
+
+Skipped export for MeetingDetectorTests/startsOnFirstActive(): no matching attachments
+
+Skipped export for MeetingDetectorTests/silenceBeyondGraceEnds(): no matching attachments
+
+Skipped export for MeetingDetectorTests/activityResetsGraceTimer(): no matching attachments
+
+Skipped export for MeetingDetectorTests/silenceWithinGraceDoesNotEnd(): no matching attachments
+
+Skipped export for KnowledgeFoundationTests/vectorsAreNormalizedAndIncompatibleIndicesAreRejected(): no matching attachments
+
+Skipped export for KnowledgeFoundationTests/chunksPreservePagesAndHaveStableRevisionDependentIDs(): no matching attachments
+
+Skipped export for KnowledgeFoundationTests/unbrokenTextWithOverlapAlwaysAdvances(): no matching attachments
+
+Skipped export for KnowledgeFoundationTests/chunkingDoesNotLoseUnbrokenTextOrSplitUnicodeCharacters(): no matching attachments
+
+Skipped export for KnowledgeFoundationTests/cloudAccessIsExplicitAndSharedSourcesObeyAllOwners(): no matching attachments
+
+Exported 1 attachment for: KnowledgeQuestionModelTests/failedOpeningClearsOldAnswerInsteadOfPresentingChangedSource():
+File: 778A6782-0C55-4C60-B5DB-A7D06B0A3314.json, suggested name: "sqlite-fixture-4C1BE94B-81DB-4D26-9272-2616F0707523_0_1432E8A4-4627-4FC5-BAC1-7F46337E701C.json"
+
+Exported 1 attachment for: KnowledgeQuestionModelTests/delayedRetrievalAndIndexEventsAreAlsoFenced():
+File: DE942A62-2E45-4F77-B537-52C4A05D5404.json, suggested name: "sqlite-fixture-477FCBEA-7FF9-411C-B231-F41BFB3E9745_0_47C24B9D-AF4B-45C6-BC09-D11E092CED2D.json"
+
+Exported 4 attachments for: KnowledgeQuestionModelTests/delayedReplyCannotReappearAfterUIChange(_:):
+File: A5D5BBE3-E0F3-4B08-B05E-AA5608A7C70C.json, suggested name: "sqlite-fixture-99D8B81C-8FE2-4307-92B8-8F5819035BFD_0_A713AE15-8225-47A1-B860-81FEE597E8F0.json"
+File: 80D0B5C2-A4F1-440B-BAB6-062DE3412ABF.json, suggested name: "sqlite-fixture-18324662-9B7F-4B18-A59E-232BD4C566A0_0_0D84019C-25E0-4ECA-82A9-897A4AB2679B.json"
+File: 4646229C-FED8-4F9B-9CBF-D9E6C7077540.json, suggested name: "sqlite-fixture-3A1BFC35-EAA6-443E-9F57-FEC2DED3C0EE_0_E2CE5133-5CDA-4D25-952E-FD59EC0086FB.json"
+File: 9F3E46D1-9762-472A-8A3F-0A1D0EC3737E.json, suggested name: "sqlite-fixture-A31464EB-3F98-4FED-A44D-C7686BEDE3ED_0_C75AF315-18B0-4D85-8C4C-AD9FEC264AA4.json"
+
+Exported 6 attachments for: KnowledgeQuestionModelTests/errorsAndInsufficientEvidenceHaveExplicitStateAndRetryPreparesNewConsent(_:):
+File: BB046BD6-7879-4655-AF27-36B3A100CE02.json, suggested name: "sqlite-fixture-F1D9ADA2-4031-4833-B0B6-34D6F0199A8D_0_FC133C33-9934-4B09-B7FE-3DA949E33F6B.json"
+File: 50E8853D-A92B-4AA9-891E-F727EBB30722.json, suggested name: "sqlite-fixture-2E7BCDF9-9C60-4292-9616-DB7215444DCC_0_05F946C6-1060-4DA0-AFF2-36FA919551F7.json"
+File: 45E3FD2E-F9FA-4704-A8B9-14F283856580.json, suggested name: "sqlite-fixture-460795A3-B1B6-45BA-8AA0-1F4C54C6A43A_0_98A731EE-E804-4AB8-904B-32D16C359D09.json"
+File: EE7499D4-04D1-42AB-9467-6838D620000C.json, suggested name: "sqlite-fixture-1B867FBC-7AF4-41D4-8527-6A52BEF60C5E_0_99AED32A-A9DC-4BD0-A162-19B014E824A5.json"
+File: 6A9848FC-E7A0-4BB3-9424-5BFB6C0179C2.json, suggested name: "sqlite-fixture-CA55F892-DB0D-4B0F-ADEC-5B88BBE6ACAC_0_5C21609C-8A60-4D90-B470-96857C61E17E.json"
+File: 581677EF-2545-4EB1-9DCE-552D92F7D4CC.json, suggested name: "sqlite-fixture-AEA866FF-C34D-4C34-BF05-47C71518DEFF_0_3B943930-F3CC-441C-A0CB-67231B7E3BAB.json"
+
+Exported 1 attachment for: KnowledgeQuestionModelTests/actualModelPreparesLocallyThenExplicitConsentSendsAndSourceOpensWithoutAutoplay():
+File: 40BE546E-6CDE-4D0D-96BA-0FDAD797ED14.json, suggested name: "sqlite-fixture-824FF3A7-86E3-4C47-8BE1-48685B1BA203_0_4DFA85B9-843D-4F45-B865-41F11E691B95.json"
+
+Exported 1 attachment for: KnowledgeQuestionModelTests/localOnlyOwnerCannotBeOverriddenAndOnlyExplicitSettingsChangeIsPersisted():
+File: BB54710B-BCC5-40CE-ABA6-68A4F131496B.json, suggested name: "sqlite-fixture-2DF0C469-D098-486D-8154-A4225B68D6BC_0_FCA8997E-1E63-4970-A435-21826CDA6979.json"
+
+Exported 1 attachment for: KnowledgeQuestionModelTests/longQuestionIsKeptWholeAndExplicitShortSearchIsRequiredLocally():
+File: B1E4E86E-59EE-41F9-A983-E7B523D90862.json, suggested name: "sqlite-fixture-B9803FAB-D8E1-44E1-A851-1793735CB382_0_08993752-E74F-415A-827A-41F3B77388D1.json"
+
+Exported 1 attachment for: MemoryHistoryFixtureLifecycleTests/throwingHistoryBodyPreservesErrorAndClosesStoreBeforeUnlink():
+File: F37A5FDF-051A-4216-8A09-B83D5C94F144.json, suggested name: "sqlite-fixture-C96547F7-3666-4481-9D40-A46997EE079C_0_A4287CFF-3F34-4AD4-87AC-DAA737D8B1EC.json"
+
+Exported 1 attachment for: MemoryHistoryFixtureLifecycleTests/exactJournalFaultDoesNotAuthorizeForeignConnectionOrLaterError():
+File: 650508B2-3554-462E-A072-37BC02DBB177.json, suggested name: "sqlite-fixture-A8C9DDD3-48C8-4F22-BB2B-7EF9DA986765_0_E3A880CD-3181-4618-A299-227B26445908.json"
+
+Skipped export for ProjectLibraryTests/openErrorIsVisibleAndRetryRecovers(): no matching attachments
+
+Skipped export for ProjectLibraryTests/createAssignReassignAndReloadScopes(): no matching attachments
+
+Skipped export for EmbeddingIndexNativeTests/persistsRealDocumentAndMeetingWindowsAndRejectsFilesystemChangesDuringCalculation(): no matching attachments
+
+Skipped export for MeetingStatusMetaTests/decodesOldMetaWithoutStatus(): no matching attachments
+
+Skipped export for MeetingStatusMetaTests/roundTripsWithStatus(): no matching attachments
+
+Skipped export for ProjectDatabaseDiagnosticsTests/busyBeginReportsWaitAndKeepsTwoSecondTimeoutWithoutRetry(): no matching attachments
+
+Skipped export for ProjectDatabaseDiagnosticsTests/commitErrorSurvivesFailedCleanupAndConnectionRemainsUsable(): no matching attachments
+
+Skipped export for ProjectDatabaseDiagnosticsTests/openFailureExcludesPersonalPath(): no matching attachments
+
+Skipped export for ProjectDatabaseDiagnosticsTests/prepareAndBindFailuresExcludeSQLNamesPathsAndValues(): no matching attachments
+
+Skipped export for ProjectDatabaseDiagnosticsTests/stepConstraintKeepsExtendedCodeAndRollsBackEarlierWrite(): no matching attachments
+
+Skipped export for TalkAudioCaptureTests/invalidOrMissingSelectedSourcePreventsBackendStart(emptySelection:): no matching attachments
+
+Skipped export for TalkAudioCaptureTests/sourceErrorsDoNotStartFallbackOrPublishReady(error:): no matching attachments
+
+Skipped export for TalkAudioCaptureTests/defaultPathIsBlockedInUnitTestHostBeforeScreenDiscovery(): no matching attachments
+
+Skipped export for TalkAudioCaptureTests/selectedProcessLossOrInspectionErrorFinalizesAndProtectsAudio(inspectionThrows:): no matching attachments
+
+Skipped export for TalkAudioCaptureTests/disappearanceWhileBackendStartsNeverPublishesReadiness(): no matching attachments
+
+Exported 1 attachment for: LocalIndexingNativeTests/nativeQueueResumesAfterInstallationWatchesTranscriptAndKeepsSameModelCache():
+File: 6DF0CE50-6E1D-4CB0-8322-EBCE5EF5E05E.json, suggested name: "sqlite-fixture-F50F970A-ADF6-4503-AD66-A1A09FB5A19E_0_FF6104FC-E9E3-4933-B2EF-9F44DF4AE39E.json"
+
+Exported 2 attachments for: LocalDocumentExtractorTests/PDFRetainsOneBasedPageLocations():
+File: 9D4DC696-E1D8-4B8E-830F-C9115FE3EAB7.json, suggested name: "ocr-E607C20F-FFD3-4636-8B74-29F2F62B44D2-result_0_A040E855-0DB0-409F-A5DB-3C239909FCB3.json"
+File: 8B7A07D2-52DE-4BC2-8247-6BDB72AD31B3.pdf, suggested name: "ocr-E607C20F-FFD3-4636-8B74-29F2F62B44D2-input_0_BD3F9043-1DEF-49B3-958E-465DACF80156.pdf"
+
+Exported 4 attachments for: LocalDocumentExtractorTests/extractsTextFromPNGUsingLocalOCR(text:):
+File: CA583D80-8887-4A62-B6F2-0CE60AC672C9.json, suggested name: "ocr-3D82C25D-0295-4CD0-B70E-C964F92A6271-result_0_77F465BB-D084-4A30-BC28-307D83ACD1BD.json"
+File: D41A9734-1124-491E-A522-0D07D961670B.png, suggested name: "ocr-3D82C25D-0295-4CD0-B70E-C964F92A6271-input_0_942020F2-5026-4588-9AF5-EED7162F1EC9.png"
+File: 3911BEC7-C1A3-4AEE-81EC-5713E6BF44D7.json, suggested name: "ocr-B80A0468-D8DE-4EF8-93DC-BA102C1D62AC-result_0_6519A74A-76FA-45EB-966A-4426D7124D38.json"
+File: 3AA987E6-C204-4BA0-877C-929382516D5E.png, suggested name: "ocr-B80A0468-D8DE-4EF8-93DC-BA102C1D62AC-input_0_911450C8-B6C7-4905-85F6-2D4956353D50.png"
+
+Skipped export for LocalDocumentExtractorTests/rejectsOversizedFileBeforeLoadingItsContents(): no matching attachments
+
+Skipped export for LocalDocumentExtractorTests/rejectsEmptyAndUnsupportedDocuments(): no matching attachments
+
+Exported 64 attachments for: LocalDocumentExtractorTests/concurrentOCRDoesNotOccupyTheCooperativePool():
+File: C0741F4E-0C8A-4766-B739-964212737DD4.json, suggested name: "ocr-57B89765-43EB-45D0-8735-A2AC269B94A5-result_0_CB6D2A01-1D9F-4088-905E-6A4B6C97C407.json"
+File: 71691A9B-982D-45B3-B56F-A5E0EE6A0CCD.json, suggested name: "ocr-1789F769-7309-46D9-B894-97C20FD78BBC-result_0_08B5FDBA-2413-42A5-B79C-1E746F52E0A8.json"
+File: 5E9BA649-709F-4205-9178-FCD82627E28A.json, suggested name: "ocr-02603329-DEB7-4E24-A2DA-542B62343049-result_0_5873DD86-8C50-496D-8ACD-4A409F5807B9.json"
+File: BF39FEA2-8925-43D0-A2F2-DF4377F8AA50.json, suggested name: "ocr-0130E51C-8670-40C9-9558-C68863279B47-result_0_A5214B36-3FA0-4D87-BC40-18528D453750.json"
+File: E4B7D403-D68C-498B-A5B2-FC1D851980EF.json, suggested name: "ocr-20B720B3-3518-4268-8DE1-38C7BCBCB743-result_0_CA863E67-F34D-4B50-B726-4AE2588E2A80.json"
+File: 7B681961-F1ED-47F8-B1D1-D76FD7F61C37.json, suggested name: "ocr-C0656F9A-66E4-4216-85AB-CBEE0B6E1B76-result_0_3122E8B9-A061-4ABE-8635-D17F1F2DC381.json"
+File: 4CBE5028-6689-440D-AF7D-66DBE184DDE4.json, suggested name: "ocr-7AFE5F4B-947B-42D5-A784-00C0ECE56BBA-result_0_8C94542A-10E4-4C40-92D7-26BB1150A9FF.json"
+File: 00FC8F82-A149-4F28-B406-C7CA80F78C86.json, suggested name: "ocr-A26F8B5B-07FD-4640-83AC-35E431483EF3-result_0_7A7D2A75-D73F-415E-B3BD-126D3CD4816D.json"
+File: 380F2336-0A5E-46A8-9A71-7E7E5F57F3E6.json, suggested name: "ocr-85668CB3-A4C5-4240-B522-09F4DFD58214-result_0_858A8505-6225-4E87-847A-A440CC751A8A.json"
+File: C453D151-E418-45A7-98E8-A86B36D7AFE2.json, suggested name: "ocr-7225849A-465D-43AA-B9B8-EB27D0A61701-result_0_5786CD67-BE14-403C-A605-E0F297755ED9.json"
+File: 071C7BAF-9B97-4135-9BBD-3C87BCDCC54A.json, suggested name: "ocr-99F7CAAA-918B-4CD5-B0B4-8A726CBA8F9E-result_0_8C557C6D-5E8E-4C90-94A7-BC28FD531509.json"
+File: 0BF6A261-7F14-4EFC-88E8-FF53B87CEED5.json, suggested name: "ocr-D9D2F32F-D172-4749-8265-ECC71D835DDE-result_0_BB19BF68-E392-4535-96DE-DA3BD1DA42CD.json"
+File: 25B32866-7FB3-444C-A071-B325F0E34BA4.json, suggested name: "ocr-16CE9B23-24DC-46B8-A1B5-BC5C2767A22F-result_0_DCB6746D-D506-4129-97A3-FC231280DE49.json"
+File: ACC9C7B5-9402-4A47-9D7D-F7CAEE21F206.json, suggested name: "ocr-49429D6C-AF0B-4741-955F-F0EA65BFFD55-result_0_399BFED2-3E96-433B-B380-AA27B1880C7E.json"
+File: 8894A44A-AEEA-45DB-AB22-A320609B5412.json, suggested name: "ocr-0136CA2D-5871-4E68-BD9C-BEB1E763669D-result_0_F1E3D4A4-5EEF-4BEA-842B-FA6AFFF95E83.json"
+File: 024961FB-5D4E-4933-BB25-90C92B072A0E.json, suggested name: "ocr-5830E5E5-DC94-4128-9534-9549BC41B27D-result_0_3829CE72-DD41-4257-A9B4-0947505F835F.json"
+File: 13D64AC9-9A97-474E-8E67-B882AAE7CE12.json, suggested name: "ocr-186414DE-234A-4D0D-8849-09A7018DFE51-result_0_F89ABFD7-2148-4BB1-87A7-11E8C2E56A52.json"
+File: ECDE9C57-2D28-44FA-98C1-F1015858E940.json, suggested name: "ocr-D954AEC3-C45D-4E82-82A2-DAA341CD1398-result_0_825796BA-37FB-41D9-BD0C-38D30C9B8BAD.json"
+File: EABC9C50-8D22-49C6-AB6D-5DC5599AC66B.json, suggested name: "ocr-46408D33-E6FF-49FB-9C8B-C957C9814A59-result_0_E1E5C856-8C82-45CC-B399-3398584D5BB6.json"
+File: 66EC962F-9779-41ED-A1A6-C7D27A22D934.json, suggested name: "ocr-C1F44513-410E-4A34-8288-F5A5071BEFE8-result_0_19CDD7B2-CDC2-4BE1-BE58-A4D635A9C659.json"
+File: 5B1145AA-7454-4B29-8A6E-B2E173025DC5.json, suggested name: "ocr-C7072731-3B34-410A-8E07-147AE3F45B66-result_0_AD396E00-C216-4561-A1D1-B8FBCBE7C448.json"
+File: 687D1B77-23DD-45D9-B15A-C02BC3CDA6E7.json, suggested name: "ocr-A6DC9CEA-FC01-41D6-AD07-EA5600581B8C-result_0_1AD2FE9B-F821-462D-A6F5-F3248D833CB7.json"
+File: AB838252-4529-4254-9D81-5869E761DF2B.json, suggested name: "ocr-3B33C513-F293-4548-BA05-E9A7E9E6AD68-result_0_25EF971E-FFFA-4272-AD48-285B0BD7E407.json"
+File: 89E04AE7-CD74-492D-B4B7-75C3501FF1EF.json, suggested name: "ocr-A53F8D11-B167-4053-A1D5-3FABACC7F485-result_0_26FBC510-FBA9-4E65-AA93-0D9712D7A76C.json"
+File: F7862982-1092-4136-AE93-9131496D22CE.json, suggested name: "ocr-C5DB75C9-AD7F-4538-931C-36E5CF5458BE-result_0_08EA41AA-A60B-4FD3-AB0D-17FD03A5EF7C.json"
+File: CFB5C951-0D24-4495-B052-2911912E45B1.json, suggested name: "ocr-E59FF751-2701-4278-8287-76C80E0EA22A-result_0_85C74D26-A4E1-4D78-AE24-3AAE5B7AD8EF.json"
+File: 30D81719-EB7E-437C-A934-3FBDD6D13C72.json, suggested name: "ocr-17C87A22-1F64-43CC-BBAC-4D76A65F9392-result_0_533CE085-98D5-4E39-8385-D6F06E132BBF.json"
+File: D745DE1B-DB38-40F9-B02E-147471984A2D.json, suggested name: "ocr-5B588E0D-F8A3-4B26-B5E7-B4AB3148A9B4-result_0_A496A665-C2CC-4567-9D31-765458A5BC24.json"
+File: E32AD606-8A05-49A7-B09E-7E441657F2CE.json, suggested name: "ocr-07DF3336-0442-403F-A3CA-C4895E977C65-result_0_8BD58275-ED2C-4466-8731-AA2F6917390C.json"
+File: 5A2C381A-A505-43E3-993B-88882F2C374A.json, suggested name: "ocr-E9767202-DD3A-4343-B621-43C2C1F5A660-result_0_5969E5C2-3B68-49C3-9483-DEF035D4C92C.json"
+File: 646F73CC-AFCC-4EE5-BC9F-5519A8EF7EBD.json, suggested name: "ocr-02DCCC49-03A5-492B-9D01-855ADD9A1DEC-result_0_0291A6F2-ECA0-489B-A64C-E23F1C598920.json"
+File: D4CCFADC-E51C-4506-9FBE-69ECA8E7A4F5.json, suggested name: "ocr-4A8BFC3D-ECE5-4179-926C-7E4D722629EA-result_0_F47E2AAE-5921-4335-8357-E2C112532DA2.json"
+File: AB67BC11-CE75-4429-95E8-D71315A0BD24.png, suggested name: "ocr-57B89765-43EB-45D0-8735-A2AC269B94A5-input_0_A5D728F4-B225-4DE5-9668-94CD80B305C7.png"
+File: AD3A0818-DA13-47E7-BB34-CA073C914DCF.png, suggested name: "ocr-1789F769-7309-46D9-B894-97C20FD78BBC-input_0_BDF052EF-561D-4E30-AC4B-068612FBAAC8.png"
+File: 27C0439B-D4A7-426A-804F-228420DD8376.png, suggested name: "ocr-02603329-DEB7-4E24-A2DA-542B62343049-input_0_31B213D2-0728-4EC9-ADC6-7943B75FB0A9.png"
+File: 38E6E407-FE69-4FCD-A6AC-CEDC49E75D1A.png, suggested name: "ocr-0130E51C-8670-40C9-9558-C68863279B47-input_0_0E4CA860-2724-44DB-AEAF-1F9D2CC70E59.png"
+File: 0D02E973-C43D-4899-82C7-73E765B130DA.png, suggested name: "ocr-20B720B3-3518-4268-8DE1-38C7BCBCB743-input_0_5C5A0254-16E0-4F8E-8FDF-475E41411B86.png"
+File: 4E21808C-0295-4CED-9194-398F8C968CC1.png, suggested name: "ocr-C0656F9A-66E4-4216-85AB-CBEE0B6E1B76-input_0_E8A121CA-DE76-4816-A1DF-680C344DB59D.png"
+File: FBB586FB-0900-4197-89B6-CA2068704E64.png, suggested name: "ocr-7AFE5F4B-947B-42D5-A784-00C0ECE56BBA-input_0_00D03770-E164-4FCE-B425-6AA6EE92DB2A.png"
+File: B0EC57E3-59B6-4991-9B42-C238AC94E17D.png, suggested name: "ocr-A26F8B5B-07FD-4640-83AC-35E431483EF3-input_0_6C68CC6C-D283-4D5B-97AD-475057E2CEF5.png"
+File: 2A1472E9-52B6-46EA-83B9-B79E54FA2D18.png, suggested name: "ocr-85668CB3-A4C5-4240-B522-09F4DFD58214-input_0_F90430DC-5641-4A10-9B2A-EA841353042D.png"
+File: 8C57D018-B61D-4FB3-9C2F-AD3C1A65FEA5.png, suggested name: "ocr-7225849A-465D-43AA-B9B8-EB27D0A61701-input_0_1128CA58-776C-4A48-8F74-5E1A55400C03.png"
+File: 15779DE6-7E94-49C2-AD14-BE26BA504DC9.png, suggested name: "ocr-99F7CAAA-918B-4CD5-B0B4-8A726CBA8F9E-input_0_E1505FDD-DB64-44DE-80D5-33DB87BF8E81.png"
+File: 2EF5A581-EA82-47E8-936E-DC9649A2DA80.png, suggested name: "ocr-D9D2F32F-D172-4749-8265-ECC71D835DDE-input_0_96602F2F-60A9-4327-8E9E-754562159835.png"
+File: E62CABB0-B210-4D5A-8AAC-482098317FCA.png, suggested name: "ocr-16CE9B23-24DC-46B8-A1B5-BC5C2767A22F-input_0_BF985C28-195D-4F89-B9DD-4E159D0CF9BD.png"
+File: EC6FA5D8-8D0E-42B6-90E2-73028EF22976.png, suggested name: "ocr-49429D6C-AF0B-4741-955F-F0EA65BFFD55-input_0_E6DE1716-AF49-4E5E-B00C-F04CF59AF2A0.png"
+File: 64093C8C-D6B6-4F90-BED9-80310CB5A20F.png, suggested name: "ocr-0136CA2D-5871-4E68-BD9C-BEB1E763669D-input_0_920E9CCE-9C26-4478-B9CC-44EBFBD3E991.png"
+File: 9BF8C7F4-30E8-40C0-8F0A-B8951E49A7E8.png, suggested name: "ocr-5830E5E5-DC94-4128-9534-9549BC41B27D-input_0_7C4718BA-9DFA-47AB-B6B0-37EC7BAD8AAB.png"
+File: 396CB34C-5AEF-4F0E-A505-2CD09629FC5F.png, suggested name: "ocr-186414DE-234A-4D0D-8849-09A7018DFE51-input_0_C3E78DFF-28F5-49AE-9FD1-A1DD08D6DB9D.png"
+File: 53102C47-8BE5-44B0-8BB4-E073C82B82F6.png, suggested name: "ocr-D954AEC3-C45D-4E82-82A2-DAA341CD1398-input_0_4973BDAB-15AF-4BC1-9461-94C82CC4CBEF.png"
+File: 070C5C81-EC58-4C4D-855A-867230E0C250.png, suggested name: "ocr-46408D33-E6FF-49FB-9C8B-C957C9814A59-input_0_4915CA93-6FAF-4778-8BF1-3A21EDDC86D7.png"
+File: 9DFC8F05-3E84-4BE7-B1AA-E800043AA798.png, suggested name: "ocr-C1F44513-410E-4A34-8288-F5A5071BEFE8-input_0_CF024901-E452-4F0B-A0AD-2DA8CEFC675D.png"
+File: 44F02C49-F4DD-41B8-9BE3-74EC8CFF71C6.png, suggested name: "ocr-C7072731-3B34-410A-8E07-147AE3F45B66-input_0_72161D83-D6D9-4135-923F-75AC89601651.png"
+File: F28A3E06-F1D1-4F31-ACAA-44C991B116F6.png, suggested name: "ocr-A6DC9CEA-FC01-41D6-AD07-EA5600581B8C-input_0_3350C90F-3549-4C0C-AD20-56283F541380.png"
+File: 96C1F2D1-9520-4A0E-9C61-E554A3C6524A.png, suggested name: "ocr-3B33C513-F293-4548-BA05-E9A7E9E6AD68-input_0_41D0AE36-CCCB-4F2B-9876-5C9B6E3D91AA.png"
+File: 4C7E507A-BA45-441F-9A7B-B6AC01E0A92C.png, suggested name: "ocr-A53F8D11-B167-4053-A1D5-3FABACC7F485-input_0_DD49AC2B-BF6C-4E0D-BD6A-066A019FA0AB.png"
+File: B71B5303-EB8D-4193-8CCB-B6A122842872.png, suggested name: "ocr-C5DB75C9-AD7F-4538-931C-36E5CF5458BE-input_0_75F11D2A-30FC-45F8-A146-21855A72110B.png"
+File: DC5E7F2D-B7F8-4565-B8EF-B49469688606.png, suggested name: "ocr-E59FF751-2701-4278-8287-76C80E0EA22A-input_0_FCBB6216-C365-4F13-91BD-1FF21425998D.png"
+File: 161F180F-CE8F-4FCB-94F7-FD5D107EE53C.png, suggested name: "ocr-17C87A22-1F64-43CC-BBAC-4D76A65F9392-input_0_F0AB56C9-1CE8-4CA1-A5A3-AC0D23E8BE8B.png"
+File: ED29FBF3-AE67-46C5-8E1E-51A78351256A.png, suggested name: "ocr-5B588E0D-F8A3-4B26-B5E7-B4AB3148A9B4-input_0_D47342B3-2A50-4F2D-91A5-EDBA9E17E66E.png"
+File: E16EF634-A002-4A8A-997A-19FFA21B06F2.png, suggested name: "ocr-07DF3336-0442-403F-A3CA-C4895E977C65-input_0_68D67D14-B29E-4F5F-8604-B807BC92E805.png"
+File: E7F42CD4-3DFD-4BEA-BE70-E610B7595BFE.png, suggested name: "ocr-E9767202-DD3A-4343-B621-43C2C1F5A660-input_0_0B300EE8-CA46-4DAB-B8C5-6093260D8020.png"
+File: F6E8BCE2-6D61-4517-A332-BDCB3CC946DF.png, suggested name: "ocr-02DCCC49-03A5-492B-9D01-855ADD9A1DEC-input_0_1400F5E5-554B-472E-92A4-F12ED794EFD7.png"
+File: 99C2B7C9-683A-4E7A-BE56-75ABE01B45A7.png, suggested name: "ocr-4A8BFC3D-ECE5-4179-926C-7E4D722629EA-input_0_FFCCE6ED-0AFA-4416-BF14-FF1359BF9EB8.png"
+
+Exported 2 attachments for: LocalDocumentExtractorTests/extractionErrorStillAttachesExactInputAndOriginalError():
+File: B049C194-A982-42B9-89A7-B7579BA9E665.json, suggested name: "ocr-074A2B4B-BDAA-454F-8BCC-095F3D2BC2AF-result_0_F07A5F9D-173B-41F0-A958-AF53476EDB7C.json"
+File: 1E9C6640-E17C-4354-9900-50BEE3429277.png, suggested name: "ocr-074A2B4B-BDAA-454F-8BCC-095F3D2BC2AF-input_0_0FB8FC09-7CC6-4B5E-A82E-BB0A48EA5D0E.png"
+
+Skipped export for LocalDocumentExtractorTests/mergingPreservesDistinctStatementsAndValues(native:recognized:expected:): no matching attachments
+
+Exported 10 attachments for: LocalDocumentExtractorTests/mixedPDFExtractsScanAndDoesNotDuplicateTextLayer(native:scanned:duplicateNative:):
+File: 10C974CE-BF65-441C-819E-F9DD6F97F0DE.json, suggested name: "ocr-1E14ABE0-4791-4ED2-81F0-FF36CF534A7F-result_0_8A5406EF-CC92-47B8-A243-9985CF03359E.json"
+File: 0268FE72-E622-4530-8D9B-9A61D1018D24.pdf, suggested name: "ocr-1E14ABE0-4791-4ED2-81F0-FF36CF534A7F-input_0_68166B34-D16B-4910-8EAF-E3BB2B39B1E9.pdf"
+File: 7D73DBE8-9DDF-463E-A43E-57F520535791.json, suggested name: "ocr-B26C3BAB-371E-4C5A-8B93-04FC1D45C87E-result_0_EF3C2A79-A518-4B94-8D43-A531B3345A9B.json"
+File: 42FCD6B6-AB2E-4D02-9F81-3CFF7C581A68.pdf, suggested name: "ocr-B26C3BAB-371E-4C5A-8B93-04FC1D45C87E-input_0_0BB74576-2E66-4132-8C35-854AD255774F.pdf"
+File: B31A4951-BED1-40F4-81D1-4CFD3BE12BDA.json, suggested name: "ocr-CCF52E28-6000-4616-BA7A-9AF8F5A75A0D-result_0_228891BB-47B4-47B0-8386-1D78F2F1B172.json"
+File: A63DADB5-1A0D-4D81-91F0-28BAF08F287B.pdf, suggested name: "ocr-CCF52E28-6000-4616-BA7A-9AF8F5A75A0D-input_0_4EAF1145-4B3F-4386-836F-2181AD5EEAAB.pdf"
+File: 61A24BB4-08FA-40B7-937D-1FA117BCCDCF.json, suggested name: "ocr-94ABAE40-CCA0-4837-8F4B-85AD512BC670-result_0_52E0F30F-2BDE-4589-BF30-E0A1B7419BAA.json"
+File: 4491DD4F-E6DC-4039-8B36-D0D47AD4B35A.pdf, suggested name: "ocr-94ABAE40-CCA0-4837-8F4B-85AD512BC670-input_0_B4EEF667-1951-4DB3-9B8D-97108F9324A1.pdf"
+File: 819248D8-2B55-4BC7-A9A1-D11E0396654A.json, suggested name: "ocr-31433790-4089-4B41-BA50-3E6CC2F0A332-result_0_912945E6-7170-4D2D-8880-801037CF085E.json"
+File: 0AE6C325-20CC-4FE8-AED3-C20C7190F96F.pdf, suggested name: "ocr-31433790-4089-4B41-BA50-3E6CC2F0A332-input_0_A26DA157-6943-4CE9-BAF5-4CBF427EE6F1.pdf"
+
+Skipped export for LocalDocumentExtractorTests/extractsRussianUTF8AndKeepsContentRevisionStable(): no matching attachments
+
+Skipped export for LocalDocumentExtractorTests/mergingSuppressesOnlyMatchingNativeOccurrences(): no matching attachments
+
+Skipped export for LocalDocumentExtractorTests/extractsDOCXLocally(): no matching attachments
+
+Skipped export for InsightsGeneratorTests/recoversJSONWrappedInMarkdownFence(): no matching attachments
+
+Skipped export for InsightsGeneratorTests/throwsDecodeOnGarbage(): no matching attachments
+
+Skipped export for InsightsGeneratorTests/parsesSnakeCaseActionPoints(): no matching attachments
+
+Skipped export for InsightsGeneratorTests/parsesCleanJSONIntoInsights(): no matching attachments
+
+Skipped export for InsightsGeneratorTests/dialogRendersSpeakerLabelsWithoutTimecodes(): no matching attachments
+
+Skipped export for InsightsGeneratorTests/emptyTranscriptSkipsNetworkAndThrows(): no matching attachments
+
+Skipped export for TalkAudioProcessGuardTests/missingSourceBeforeStartDoesNotBeginMonitoring(): no matching attachments
+
+Skipped export for TalkAudioProcessGuardTests/missingSelectedHelperFailsOnceAndDoesNotReplaceSelection(): no matching attachments
+
+Skipped export for TalkAudioProcessGuardTests/explicitStopIgnoresLatePoll(): no matching attachments
+
+Skipped export for TalkAudioProcessGuardTests/discoveryFailureIsExplicitAndStopsMonitoring(): no matching attachments
+
+Exported 1 attachment for: KnowledgeSearchTests/corruptVectorsAreReindexedAndLateRepairCannotResetNewGeneration():
+File: 211A0E0C-433F-4D39-A0EA-317C3402E36E.json, suggested name: "sqlite-fixture-7010F969-07D2-49E4-8352-A9612EF20095_0_A25A6C76-BFFE-43B0-B557-62E65038E559.json"
+
+Exported 1 attachment for: KnowledgeSearchTests/fusionIncludesWordsAndSemanticOnlyHitAndReportsBudgetWithoutMixingVectors():
+File: C0071AB9-AC10-4EE3-BA2D-D0EBD1A468E9.json, suggested name: "sqlite-fixture-94D4A528-3643-471F-8DB3-EC6B1D825B91_0_9CE75376-E029-40E3-888C-2479718B558B.json"
+
+Exported 1 attachment for: KnowledgeSearchTests/filesystemABAAndRecreationAreRejectedBeforeObserverSeesThem():
+File: DB1787C9-B4E6-4670-A3DC-674762C0A591.json, suggested name: "sqlite-fixture-3ADA7F1B-2585-4FA5-80C7-26FBC1F65159_0_F8CBCEB0-DD5E-4888-8900-9BCF6BCDC511.json"
+
+Exported 1 attachment for: KnowledgeSearchTests/documentUpdateAndGenerationChangesInvalidateOldHitsEvenAfterSelectingOldBytesAgain():
+File: FDE3371F-3F45-49DD-A3AF-F00FBF5A2FCA.json, suggested name: "sqlite-fixture-2EF086C9-ED19-495A-A896-53B10E4F7FB5_0_9CB24EF7-CCCC-4569-967A-60AA56E94BB5.json"
+
+Exported 1 attachment for: KnowledgeSearchTests/querySyntaxIsDataAndLimitsAreExplicit():
+File: 7BE36172-2B69-4D6D-9927-3EA8332971B7.json, suggested name: "sqlite-fixture-ACFF4A2A-F28A-4E19-94A7-76044CA27132_0_0C711EC8-5522-44CA-A548-6FF4709DF968.json"
+
+Exported 1 attachment for: KnowledgeSearchTests/malformedTranscriptIsReportedInItsScopeAfterBeingRemovedFromSearchCatalog():
+File: CFFA3275-4484-4C6D-9C42-BB2D7E28016E.json, suggested name: "sqlite-fixture-80D009FC-94C5-431B-89E9-C3BD5446F473_0_F071E7FF-0D77-4C96-AFE6-6F25C9FF008E.json"
+
+Exported 1 attachment for: KnowledgeSearchTests/tamperedManagedCopyCannotOpenIndexedTextAsCurrent():
+File: 8E0D04A1-EA0E-40CF-93C6-57D44A3BA902.json, suggested name: "sqlite-fixture-392F5CB0-8955-4585-A58D-7391AF3B7419_0_CF8E2EF9-31F0-4675-88D0-60141A1F85E1.json"
+
+Exported 6 attachments for: KnowledgeSearchTests/heldSearchModelAndLateWriteDrainAfterEveryBodyExit(exit:):
+File: 0A655D0A-D460-4652-8392-358E0137179A.json, suggested name: "sqlite-fixture-AC9798B2-AEB6-4B8B-B038-03B9E7EA7860_0_D8EE0AB8-92B1-4780-8AFF-271BD9EA6B98.json"
+File: 02A85766-E5B1-4F1B-8C97-458313BDD0A2.json, suggested name: "sqlite-fixture-AD2EDEB8-033A-4C3D-B8E9-888763CA835F_0_6DEC7E45-963D-4D7A-BBC9-FCE05513B961.json"
+File: 623F62DA-4274-42F9-B342-72509659CF5E.json, suggested name: "sqlite-fixture-70E94074-1920-4187-A3CD-8E78A304C885_0_E69355F0-4B7B-4D5C-B832-98D7E83C1368.json"
+File: D6B595FF-959E-4CEE-82CC-82585602635A.json, suggested name: "sqlite-fixture-DC708202-C6D5-4D4B-A648-678BBF48C007_0_1C72DFFE-A682-4EA3-A53F-21425D39C817.json"
+File: D9374EC9-28DA-42B5-ACE5-9B89E24D861F.json, suggested name: "sqlite-fixture-2669A55C-8961-4D2A-895E-C50F301D49A4_0_F3C18B23-3E97-4535-AFED-0B71DC3F83C8.json"
+File: 88388330-CDAC-49E5-94E2-1326608EA4C9.json, suggested name: "sqlite-fixture-9AE08C61-7DE0-41DD-9240-00431E97051F_0_9867B91D-EF6A-4BB6-9456-B85DACEE6132.json"
+
+Exported 1 attachment for: KnowledgeSearchTests/v3MigrationRebuildsFTSAndFailureRollsBackWithoutChangingOriginalRecords():
+File: 66E4EEDF-95CF-4042-A386-624DE457B66B.json, suggested name: "sqlite-fixture-8F77CEEF-4361-4BD7-B9E4-F40F32A87C04_0_98FF4779-8E65-4A1F-8741-89659BC915C9.json"
+
+Exported 1 attachment for: KnowledgeSearchTests/russianLexicalSearchWorksBeforeWeightsAndUsesExactProjectAndInboxMembership():
+File: F51C9489-912C-4584-80CF-35218A4CF4A1.json, suggested name: "sqlite-fixture-9C56597B-8184-4CF2-B0CF-E7509BC4ADFA_0_154BE643-3642-45B9-B1F6-9DCC7EA937C5.json"
+
+Exported 1 attachment for: KnowledgeSearchTests/lateQueryRejectsModelABAAndFileChangesInsteadOfOpeningWrongTimecode():
+File: F73DD258-F037-470C-813F-53B71B8575EE.json, suggested name: "sqlite-fixture-3C57FE71-13E0-4C61-921E-CC13817F328D_0_9B57E3C3-6F61-45F6-8EB7-3C981E734932.json"
+
+Exported 1 attachment for: KnowledgeSearchTests/newUIRequestCancelsDelayedQueryWithoutPublishingItsOldResults():
+File: 759DFB43-DB9E-4BE5-BD4E-3FCC52EFCD28.json, suggested name: "sqlite-fixture-F561751C-55BD-4AA8-B04B-429B501737BE_0_0865675A-9E4A-4481-B426-B03F95B7B5C0.json"
+
+Skipped export for DocumentImportRetryTests/missingUpdateTargetIsNeverRetriedAsNewDocument(): no matching attachments
+
+Skipped export for DocumentImportRetryTests/retryAfterRestartPreservesUpdateTarget(state:): no matching attachments
+
+Skipped export for MeetingFilterTests/filter_emptyQueryAllPeriod_returnsAll(): no matching attachments
+
+Skipped export for MeetingFilterTests/filter_byQuery_caseInsensitive(): no matching attachments
+
+Skipped export for MeetingFilterTests/filter_byPeriod_today(): no matching attachments
+
+Skipped export for MeetingFilterTests/filter_combinesQueryAndPeriod(): no matching attachments
+
+Exported 1 attachment for: KnowledgeQuestionServiceTests/retrievalEgressAnswerAndOpeningUseOnlySelectedVersionedFragmentsWithoutWeightsOrNetwork():
+File: 58183D1F-B2BD-435D-AC55-C163112FB7CA.json, suggested name: "sqlite-fixture-356BB501-1B13-4F93-AD01-A972992A0EB5_0_74354B34-34CB-4FA6-B70A-B24B8A8A006A.json"
+
+Exported 10 attachments for: KnowledgeQuestionServiceTests/finalTransportGateRejectsChangesAfterConsent(_:):
+File: CCB0754B-F641-4DAF-B1E5-BFAEE4DD4D52.json, suggested name: "sqlite-fixture-0AFF0E96-E320-444C-A308-523B14F04E95_0_1913499E-23D5-4160-AABB-8D35CC8A51DA.json"
+File: A9C95405-D97C-40B8-82CD-E2E582B52CCA.json, suggested name: "sqlite-fixture-2421D751-0F62-4EA2-B947-6F4F4E99750B_0_9B97B068-88AD-467D-BC27-98193206712C.json"
+File: 6006E523-EECF-47D8-844B-51928538698C.json, suggested name: "sqlite-fixture-2F07E6DA-98A0-42F5-9964-122BB7C896AE_0_4DD02E87-7AFF-4693-BC51-37D4BFEFC8A0.json"
+File: FBB46148-2094-4350-A05F-27F84EE251B5.json, suggested name: "sqlite-fixture-2A0CDDC5-05CF-416A-BA7F-D8D34F0C1789_0_BCE396A4-EE3C-4146-983E-C1C5D1EB3EF5.json"
+File: 0DF72677-C317-478E-8B49-1FCBF27E8729.json, suggested name: "sqlite-fixture-821C1E2C-5DA7-4D46-B49B-377E48F7EACC_0_A176F486-095D-42C7-8A4E-8E940ACBAC04.json"
+File: 965C1328-6273-4BFC-A60F-912DC21273BE.json, suggested name: "sqlite-fixture-065A4621-FDAB-4983-8C98-C44A349C728B_0_C4A53115-A173-48CF-8D05-69C04C8C063C.json"
+File: D1ECC512-9DC1-4BCF-9D2F-13A0B1FE8348.json, suggested name: "sqlite-fixture-BEBD3184-FE52-4139-81C0-EA58FE5C3C4B_0_5AB0013B-B917-46C0-857E-AEE3A8B3F8E2.json"
+File: 2DCE5E48-67EB-4183-971B-221749B0784B.json, suggested name: "sqlite-fixture-26A75063-37FF-4DF6-B35E-73FC19F6B9B5_0_670E5B0C-04B0-4D3D-8984-64706B0EF0E6.json"
+File: 120D40E6-DCA4-4D4D-83FF-E7EAE170EF7C.json, suggested name: "sqlite-fixture-D48D7913-47A4-45D5-9054-5A732FE280F8_0_A74D193E-90FF-4F46-A967-CCBE875D9184.json"
+File: 7FFFB02F-EE6E-4487-9855-C6ECF25DB08C.json, suggested name: "sqlite-fixture-3DB004B9-A0DB-44A6-A592-EC329D0FF605_0_7DACC4BA-A5B0-41B0-8FB6-1819A4F43C87.json"
+
+Exported 1 attachment for: KnowledgeQuestionServiceTests/consentIsSingleUseAndBoundToExactQuestionProjectAndService():
+File: 0AF184F4-F4CC-4ACD-BE1E-4215BAB30511.json, suggested name: "sqlite-fixture-8B1DD850-E5E1-4A9A-BE68-08E9C65291C4_0_CD131F00-88E6-4856-8813-01A141CFE9C2.json"
+
+Exported 7 attachments for: KnowledgeQuestionServiceTests/answerValidationAndProviderErrorsAreExplicit(_:):
+File: EFE73498-B746-4A31-ADBB-FB13F8DEB06D.json, suggested name: "sqlite-fixture-AFFE4ADA-D4DD-43E0-8AC4-C882DE6708D7_0_9D4F3D34-4030-415E-81D0-AFCEC515EA7D.json"
+File: 3FDA0998-BC6D-4C9B-9032-5D38811BBD53.json, suggested name: "sqlite-fixture-141CB474-1D04-4260-AE50-658017DDBC88_0_3A6B4352-F385-49CA-AD6B-10BEDA377BC3.json"
+File: FE8B7070-E265-45F5-AF33-77EC4D8932D7.json, suggested name: "sqlite-fixture-422848AD-12C8-4FA2-AD3A-1CC3A2C0ABB4_0_9C9A227B-F5D1-4318-BB4A-D643241D8CB2.json"
+File: 9604C245-194E-4E85-BC15-F3508E8EDB59.json, suggested name: "sqlite-fixture-9975325D-0012-4195-9348-8175033996C6_0_5BD4CE1C-A122-4C55-99FE-80FF39B81BDD.json"
+File: D63274E7-3773-4794-8558-A31D89813B41.json, suggested name: "sqlite-fixture-47753530-AB83-4D15-83B5-5E7BFEAAB356_0_7C7569DC-7038-44AA-AFC5-5084121CEB46.json"
+File: 964B32A2-2544-4B62-A295-9F155C109200.json, suggested name: "sqlite-fixture-98AF22C3-6196-4B12-97A1-AC07FED528B7_0_3751C5F6-E737-4981-8002-C25DDC8C36AB.json"
+File: BF107989-2324-4920-9BDF-D7A2DA3D65AD.json, suggested name: "sqlite-fixture-9D1BF25E-5BFE-4FDF-9B05-46E28C8EF1D0_0_D2E577EB-6C5D-4943-84BB-0103849D3DF6.json"
+
+Exported 5 attachments for: KnowledgeQuestionServiceTests/cancellationAndLateRepliesCannotPublish(_:):
+File: EC670CFD-15F5-4A1E-AC2B-047B1EB4867C.json, suggested name: "sqlite-fixture-0016E589-79AB-4863-8834-D14347C50C52_0_653EE03D-354A-4CEC-9F99-4E07FDD7E4C6.json"
+File: EAFB0A94-65B4-46C1-84A9-F107670117FA.json, suggested name: "sqlite-fixture-3B49E7F9-1196-483A-A086-15BE108BB752_0_0586A95F-3BC6-436A-80E5-ACB16A177FBB.json"
+File: EE6B270D-93C6-44E0-82AB-C4B84E26F6CD.json, suggested name: "sqlite-fixture-96BA0F1C-18A0-47D4-8BB5-BB6D2C4B2F60_0_745E52DB-1797-4F6D-A8CC-EBA7FCC3FA46.json"
+File: 4E79A462-2C9F-4FA9-978D-B9F3DBAEC2DC.json, suggested name: "sqlite-fixture-3B5F34AB-347E-4F30-AC36-17C89AAB4AB0_0_BA16A172-86B9-48A6-B132-633DE04437E1.json"
+File: D5A51809-86B9-4050-A027-B9123A716E8A.json, suggested name: "sqlite-fixture-21F089A1-73B2-4700-8F7E-F4C5FA7FEC78_0_DC034655-8D25-4ADB-9A7A-FFEC4E914B49.json"
+
+Exported 1 attachment for: KnowledgeQuestionServiceTests/emptyContextAndInvalidQueriesNeverReachTransportAndPreviewIsBounded():
+File: BB84CFC4-FB86-4F70-B6D3-42689D91B606.json, suggested name: "sqlite-fixture-89A201C0-C661-4BB8-AC5A-CDDB36FF06BE_0_D67770B5-FAD4-4BC3-AE4A-7CB56E113146.json"
+
+Exported 1 attachment for: KnowledgeQuestionServiceTests/meetingCitationKeepsExactReplicaAndRejectsTranscriptRecreation():
+File: 311689D9-B629-48B9-BFCC-1A8FB89A99A7.json, suggested name: "sqlite-fixture-F5244E5B-AED4-423D-80DF-DB183176FB5C_0_B5B9AEF8-C643-4453-8D28-88D71E7BF765.json"
+
+Exported 2 attachments for: KnowledgeQuestionServiceTests/everyOwnerMustBeKnownAndAllowed(_:):
+File: BF2EE30D-D243-49CC-8D74-7A0E36FC587C.json, suggested name: "sqlite-fixture-3DB325FD-3052-4C7F-935C-B41846FE7837_0_A99800D0-21CD-4880-8F83-73F416D5FABF.json"
+File: AE39B81C-56AE-4DD8-929F-3376293C120A.json, suggested name: "sqlite-fixture-92C8E9E0-8DA9-439F-B82F-8FA2FFAC0401_0_DEFF71B4-F8ED-48E6-AC8C-E8C6BB57CDB7.json"
+
+Exported 4 attachments for: KnowledgeQuestionServiceTests/changesDuringAsynchronousRetrievalCannotProduceReusablePreview(_:):
+File: B2E5A3CD-B264-4E92-9557-5AD24AEDB237.json, suggested name: "sqlite-fixture-EECAAA0C-C4F9-4C4E-94E2-D5F7499F05AD_0_30F08FFD-B6DE-4B1E-A8DC-1B6B0554BA43.json"
+File: 8338A01E-412F-495A-BC4B-5636B1D5F9A2.json, suggested name: "sqlite-fixture-BBAF00C4-C66C-4F30-868A-9A12901C9BE3_0_6A62A0CA-C63C-4E41-912B-7985203DFD83.json"
+File: 7BAEB0F5-9CB2-46C4-89B8-C68C5B585E0E.json, suggested name: "sqlite-fixture-E52CABD0-8787-45F3-9CA9-94F0E9DCFD67_0_30B63EA0-37F9-402F-9DDA-17946323A112.json"
+File: DD76CE4E-93F5-4598-9824-224B9D3337FF.json, suggested name: "sqlite-fixture-A8855F09-A4EB-4584-8ECF-1FE1F4D8A9D9_0_36047D00-0A3F-4F20-B905-3BF3CF44E3A9.json"
+
+Skipped export for WavWriterTests/writesValidWavHeaderAndSamples(): no matching attachments
+
+Skipped export for AudioProcessMonitorTests/talkHelperCapturingMicIsACall(): no matching attachments
+
+Skipped export for AudioProcessMonitorTests/outputOnlyTalkHelperIsNotACall(): no matching attachments
+
+Skipped export for AudioProcessMonitorTests/matchesPrefixCaseInsensitive(): no matching attachments
+
+Skipped export for AudioProcessMonitorTests/otherProcessCapturingMicIsNotACall(): no matching attachments
+
+Exported 1 attachment for: IndexingProductionHooksTests/eventPathKeepsDeletedAliasesAndFinalSymlinkInsideWatchedPrefix():
+File: D440A0EB-A70B-4F6D-BEF5-AD80D95F31FC.json, suggested name: "sqlite-fixture-EA59648C-04A4-49E2-A87D-725D4CAB16A5_0_AB46B7BE-E8F7-4635-9E67-41C0B648EF02.json"
+
+Exported 1 attachment for: IndexingProductionHooksTests/defaultProducerHooksRunWithoutViewsAndTranscriptDoesNotWaitForLLMOrIndexing():
+File: 8E99CFF7-D58A-4D8F-B22F-0B8FB26EA752.json, suggested name: "sqlite-fixture-379E3B19-F4C1-4EA3-9903-D42DDE1B23DB_0_0D8CE578-099A-47D0-8086-9F6D314C2705.json"
+
+Exported 1 attachment for: IndexingProductionHooksTests/actualFileMonitorReconcilesExternalAtomicAndInPlaceTranscriptChangesWithoutUI():
+File: 4C3731D3-923C-4C49-8BCA-105D577A55EB.json, suggested name: "sqlite-fixture-99B915DD-DB61-405B-88FB-AE516BF8543A_0_6820713D-567F-4527-B06E-13B953E3DA48.json"
+
+Skipped export for MetaJsonTests/encodesAndComputesDuration(): no matching attachments
+
+Skipped export for MetaJsonTests/titleManual_roundTripsAndDefaultsNil(): no matching attachments
+
+Exported 6 attachments for: SQLiteFaultExpectationTests/allowanceDoesNotAbsorbForeignLateExtraOrMismatchedFault(_:):
+File: 853E8C84-8717-4301-933F-86432324A1AB.json, suggested name: "sqlite-fixture-E5AC62D5-77DE-4A4C-BD6D-48B564401CEC_0_8A4AADBA-0337-4E06-AF36-FE8EAB220622.json"
+File: 3DED273E-1427-4468-8AC2-1113536D97D9.json, suggested name: "sqlite-fixture-D8E6A560-C9BC-4D42-980D-754D6367C09E_0_47741CC1-9B4C-4564-B706-648F897683F6.json"
+File: 03A46293-19AA-4EDD-9F35-1EDCAD1A9C79.json, suggested name: "sqlite-fixture-FEAF8381-6BA4-481C-B592-241928F93F85_0_DD5A0FC6-FCBA-4294-9E32-C671713C550A.json"
+File: EB2CE606-8A39-409D-8C5E-EFC55C89E5F5.json, suggested name: "sqlite-fixture-AF195F41-0CCA-4A21-9A4D-E820A9C423B8_0_4FCD126A-7D8A-4517-95E1-E51208859946.json"
+File: DA4B436F-EEF0-4E9E-AE9E-6DE6B0015E29.json, suggested name: "sqlite-fixture-50619209-F6D6-42DE-BEAB-7D67745F5B9E_0_F1F9F5CA-1F82-41EE-AC85-87768B5B5CD9.json"
+File: DAAE74DD-2F8A-4418-BC46-8A593E468E6E.json, suggested name: "sqlite-fixture-00C70FDE-ED90-42B6-B026-3552EB7CA659_0_1EB809CD-75B1-438F-8514-C38AC548E51A.json"
+
+Exported 1 attachment for: SQLiteFaultExpectationTests/nestedExpectationRejectsMissingOuterFaultAfterInnerConsumedSoleEvent():
+File: 92E4E936-88CC-4ADF-A467-2653242F7664.json, suggested name: "sqlite-fixture-B64C2644-04C3-442D-AA2C-E7B36A04E65B_0_F135A4C2-00CA-4FB0-9554-A168741DAA91.json"
+
+Exported 2 attachments for: SQLiteFaultExpectationTests/exactOneExpectationRejectsMissingAndDuplicateNativeFaults(_:):
+File: 5C90D898-714A-4A9E-A0B9-31E936F31AB5.json, suggested name: "sqlite-fixture-64B2134D-7A5D-4BC4-BBC2-0E9939AEFE54_0_4F43E3BE-2BEF-45C0-BD95-618AFD3DB977.json"
+File: 2C5A2D02-EC2C-45A0-AA84-9E2CDAA9C643.json, suggested name: "sqlite-fixture-E03979C0-9997-4C56-A8CC-9E4BA2FE3939_0_E981D30C-3BB8-405E-A0F0-2835044B24ED.json"
+
+Exported 12 attachments for: SQLiteFaultExpectationTests/twelveOverlappingNativeScopesKeepSingleUseAcceptancesSeparate():
+File: 459D446A-6245-4985-94CE-B34AC44D7E22.json, suggested name: "sqlite-fixture-269788DB-3C13-46D2-942F-D4148EF4F21A_0_A633F08A-8940-4854-B180-8318C12A55BF.json"
+File: 5C2250AA-D5EE-48A8-90AB-B7F9636C3D7D.json, suggested name: "sqlite-fixture-5B7ED9A9-D1C8-4C81-8505-AD01AED2B18A_0_A42B1D2E-4D8D-4965-9FE3-E5509E78EDF9.json"
+File: 82C160FD-53EF-40BB-AFE0-E04C895EE342.json, suggested name: "sqlite-fixture-2E5C80B5-42C5-4E04-A6E1-869EDD98AD59_0_166133F6-39F8-4C44-ADDA-B0C15177680A.json"
+File: 0C983A9E-1967-4013-8F38-E65BAAFCD3ED.json, suggested name: "sqlite-fixture-8C50382C-0C82-43C7-9CF2-C3C1E0734F7B_0_0283BDBA-1011-429F-9853-4ACB46C491FA.json"
+File: 3D7D37CD-6939-4E36-9529-D7909E4FCE40.json, suggested name: "sqlite-fixture-27DD2DCF-1926-4675-9FD8-265E557DD949_0_1A574E2A-5F3E-4CB5-B0BB-E7CADF8F46AB.json"
+File: 256E8DA6-F1DE-4DF6-9331-DB272D271230.json, suggested name: "sqlite-fixture-F7CFB9F1-9729-40EB-AEB7-62906A08D64D_0_AFF228F9-1A5F-446E-BACD-B17ACD3B2107.json"
+File: 4FBFB00B-D724-4C0B-98D5-CDDAE1827260.json, suggested name: "sqlite-fixture-D9827150-9CAD-4347-97C5-6FB5AD6E59A5_0_1255E296-71BD-4D0A-B79C-6CE495858E55.json"
+File: B65BB463-6A36-454B-92AA-0426FE456F08.json, suggested name: "sqlite-fixture-17E10F02-8928-43BF-8EE6-951BC80CC6F5_0_2E265B31-EFD0-4656-B4B2-A95099E746AB.json"
+File: 2D4B935C-4C3B-42EE-BF5A-D22DA692D8BE.json, suggested name: "sqlite-fixture-7DACA480-CCB2-4632-97DC-B6EC5F9A9791_0_17840EB3-9109-429D-BD59-EFD5D5D22154.json"
+File: AC14630A-EBB2-4FC3-BA66-153065981402.json, suggested name: "sqlite-fixture-76D48BD2-D76A-415A-811F-F6B95C7C2083_0_D0729F48-D6FE-4F30-B27E-93A23085F322.json"
+File: 7BE65247-3364-478B-9ADE-F310F923EBC3.json, suggested name: "sqlite-fixture-5AB98B3E-3B4B-4F37-BECB-8B11A375D120_0_CD0BE56F-C243-4960-BC1D-176E773CB8A4.json"
+File: 880A58BD-8D6B-47EB-A28C-8254ED5D9A0D.json, suggested name: "sqlite-fixture-346DF948-840B-4575-97B5-0E3FB9414F16_0_B2A6B1A1-F935-45F9-8A73-8F8C6EF330BA.json"
+
+Exported 1 attachment for: SQLiteFaultExpectationTests/thrownBodyKeepsOriginalErrorAfterAcceptingOneNewFault():
+File: 6003D51B-D955-4CFA-80D2-D90DA2FB1412.json, suggested name: "sqlite-fixture-617AB63B-3906-438A-A856-F60D8C488A46_0_B801E137-77A5-419C-9C21-7B36FF510EE1.json"
+
+Exported 2 attachments for: SQLiteFaultExpectationTests/nestedExpectationsAcceptTwoDistinctNativeFaults(_:):
+File: 2AD55B72-980C-42B1-B6EA-4CC9C5AA0E92.json, suggested name: "sqlite-fixture-E38E4D93-12C8-4BCB-9D8B-5829CDC30E41_0_07B7DB9B-F667-4C27-BD47-CB9D0ED38B36.json"
+File: 13C5029F-11A5-42BC-9D30-D61A33A50F69.json, suggested name: "sqlite-fixture-05D6FE8D-786D-4D05-9626-81102AD08CFE_0_C8E87FD8-D056-4B80-8AFC-C4BF2EA049C0.json"
+
+Skipped export for TranscriptMergerTests/emptyInputsGiveEmptyTranscript(): no matching attachments
+
+Skipped export for TranscriptMergerTests/mergeFromSingleTrack(): no matching attachments
+
+Skipped export for TranscriptMergerTests/jsonSpeakerLabelsAreLiteralStrings(): no matching attachments
+
+Skipped export for TranscriptMergerTests/timecodeFormatsMinutesAndHours(): no matching attachments
+
+Skipped export for TranscriptMergerTests/jsonRoundTrips(): no matching attachments
+
+Skipped export for TranscriptMergerTests/mergeSortsByStartAndLabels(): no matching attachments
+
+Skipped export for TranscriptMergerTests/crossTrackTieBreakPrefersMe(): no matching attachments
+
+Skipped export for TranscriptMergerTests/markdownHasLocalizedSpeakersAndTimecodes(): no matching attachments
+
+Skipped export for MeetingLibraryTests/scan_classifiesAndSorts(): no matching attachments
+
+Skipped export for MeetingLibraryTests/scan_excludesDiscardedMeetings(): no matching attachments
+
+Skipped export for MeetingLibraryTests/insightsRoundTripAndHasInsightsFlag(): no matching attachments
+
+Skipped export for MeetingLibraryTests/reload_populatesPublished(): no matching attachments
+
+Skipped export for MeetingLibraryTests/transcript_decodesWhenPresent(): no matching attachments
+
+Skipped export for MeetingLibraryTests/scan_excludesPhantomFolders(): no matching attachments
+
+Skipped export for MeetingLibraryTests/reload_invalidatesSearchIndex(): no matching attachments
+
+Skipped export for EmbeddingModelInstallerTests/managesIndependentCopyAndDetectsTampering(): no matching attachments
+
+Skipped export for EmbeddingModelInstallerTests/failedRuntimeAndCancelledInstallPreservePreviousActivation(): no matching attachments
+
+Skipped export for EmbeddingModelInstallerTests/rejectsWrongRevisionMissingFileAndSymlinkWithoutActivation(): no matching attachments
+
+Skipped export for ProcessingPipelineTests/persistentProtectionOverridesDefaultShortFilter(): no matching attachments
+
+Skipped export for ProcessingPipelineTests/startupResetsSummarizingToReady(): no matching attachments
+
+Skipped export for ProcessingPipelineTests/startupRescuesProcessingAndRecording(): no matching attachments
+
+Skipped export for ProcessingPipelineTests/asrModelIsThreadedIntoMeta(): no matching attachments
+
+Skipped export for ProcessingPipelineTests/llmFailureKeepsMeetingReadyWithoutInsights(): no matching attachments
+
+Skipped export for ProcessingPipelineTests/asrFailureMarksFailedAndKeepsAudio(): no matching attachments
+
+Skipped export for ProcessingPipelineTests/shortMeetingIsDiscardedAndAudioDeleted(): no matching attachments
+
+Skipped export for ProcessingPipelineTests/longMeetingProducesTranscriptAndReady(): no matching attachments
+
+Skipped export for ProcessingPipelineTests/backfillModeKeepsShortAudio(): no matching attachments
+
+Skipped export for ProcessingPipelineTests/generatesInsightsAndTitleAfterTranscript(): no matching attachments
+
+Skipped export for TestHostIsolationTests/defaultPathsAndLibraryUseTemporaryStorage(): no matching attachments
+
+Skipped export for TestHostIsolationTests/testLaunchDoesNotRescueRecordOrEnqueue(): no matching attachments
+
+Skipped export for TestHostIsolationTests/detectsTestHostBeforeApplicationInitialization(): no matching attachments
+
+Exported 6 attachments for: QuestionUIFixtureLifecycleTests/heldNoncooperativeOperationsAndCallbackCyclesFinishBeforeUnlink(kind:exit:):
+File: 6378CBD9-343A-4F23-BF20-AB321FA51B5E.json, suggested name: "sqlite-fixture-20378C01-2F88-4019-8E4C-B6432BA2750C_0_5F9D9C66-718D-4386-A39A-3F37B6206161.json"
+File: 2D2F6C9E-34C8-465D-ABB4-C3C8FFF6D729.json, suggested name: "sqlite-fixture-37892FCB-A4BB-4F21-B599-4E29E5070641_0_86C4F72E-02C1-4315-9679-E6F73345F6E7.json"
+File: 649108AC-8774-463C-BE5A-DEC8EB01D23D.json, suggested name: "sqlite-fixture-D5203F8C-F85C-4F1A-B101-8A0BD0518913_0_F1CD5EF2-D7E2-4F7E-B756-0D06601C88F8.json"
+File: ADA47E84-336E-4B09-ABED-E1EECD6604D6.json, suggested name: "sqlite-fixture-6F0FF4E8-EC4D-4E5B-BE30-A9BB6AD95525_0_74DCEE4D-914A-402E-9B3F-3C37B799ED1B.json"
+File: A0F41E51-933A-4BF1-AE92-3715CC0A5710.json, suggested name: "sqlite-fixture-7F732E0A-FC61-4F58-ACC8-C8282E7806C4_0_B414CE5F-9775-404A-B676-9A85895C8222.json"
+File: EBF4D0CE-1A12-4AA2-948C-56DC63ADE994.json, suggested name: "sqlite-fixture-FE5BC46F-17AB-412A-97D1-7501BF73F207_0_48E99483-838E-4E52-A2D6-83ECB86364DF.json"
+
+Exported 1 attachment for: QuestionUIFixtureLifecycleTests/storedCallbackCycleIsReleasedEvenAfterOperationAlreadyFinished():
+File: D97A6ED0-CDD6-4310-8123-AF09D913BE5C.json, suggested name: "sqlite-fixture-0ABDFACA-B4A0-492E-B6E6-866E83017958_0_753BF4C5-D933-422C-A84A-55EE106ADAB5.json"
+
+Skipped export for TalkConnectionTests/checkedKeychainRoundTripUsesIsolatedService(): no matching attachments
+
+Skipped export for TalkConnectionTests/diagnosesHTTPFailuresWithoutChangingCredential(error:): no matching attachments
+
+Skipped export for TalkConnectionTests/checkOnlyRunsExplicitlyAndDoesNotSaveDraft(): no matching attachments
+
+Skipped export for TalkConnectionTests/neverReusesSavedTokenForChangedHost(): no matching attachments
+
+Skipped export for TalkConnectionTests/changingSettingsOrDeletingKeyIgnoresInFlightResult(): no matching attachments
+
+Skipped export for TalkConnectionTests/doesNotExposeArbitraryErrorDescriptions(): no matching attachments
+
+Skipped export for TalkConnectionTests/savesCredentialAndOriginTogetherWithoutRepopulatingSecret(): no matching attachments
+
+Skipped export for TalkConnectionTests/profileReplyForReplacedPATDoesNotClaimCurrentConnectionVerified(): no matching attachments
+
+Skipped export for TalkConnectionTests/rejectsUnsafeURLAndWrongProviderKeyBeforeNetwork(): no matching attachments
+
+Skipped export for TalkConnectionTests/storageFailureNeverClaimsSuccessfulSaveOrDeletion(): no matching attachments
+
+Skipped export for KeychainTests/setGetDeleteRoundTrip(): no matching attachments
+
+Skipped export for TalkConnectionRenderTests/renderConnectionStates(): no matching attachments
+
+Exported 2 attachments for: ProjectMemoryQueueTests/changeBetweenBatchesStartsNewCycleAndNeverReportsOldPartialAsComplete(_:):
+File: 6928DFE4-C1B9-4E19-BF63-94850C8DE675.json, suggested name: "sqlite-fixture-60E7931C-AE03-49F4-95BA-B994B1F098FA_0_B3DD0834-5388-4E69-9A06-65FF8E3CD26A.json"
+File: EAADFC28-5226-4316-B204-BC5562B41E78.json, suggested name: "sqlite-fixture-6BCFB897-6ABB-4044-A882-E8C7AA60B35B_0_57F3D742-8094-4A19-876E-8FEAF6A0F511.json"
+
+Exported 1 attachment for: ProjectMemoryQueueTests/ownRetirementExemptionDoesNotHideLaterExternalRetirementOfItsPublisher():
+File: 7067A1A8-1797-4267-9F40-29B77E1147E0.json, suggested name: "sqlite-fixture-6B87D4F1-4080-4D86-A164-004B61196356_0_4FECADAF-AD8C-40C4-B517-DE0F229FCCD2.json"
+
+Exported 1 attachment for: ProjectMemoryQueueTests/rawAndDerivedPrivateOwnersDenyWorkerWithoutReadingKeysOrCallingTransport():
+File: 4243500F-D0D6-41B4-B852-2003E7B5DD34.json, suggested name: "sqlite-fixture-479BE461-AFB0-4EB4-9B1C-3690F7BA9093_0_876E8353-8FAD-4585-B648-97C61587164F.json"
+
+Exported 1 attachment for: ProjectMemoryQueueTests/manualHeadSurvivesQueuedExtractionAndOnlyAffectedJobStartsNewCycle():
+File: 519185F7-FFF6-463F-9D66-C9FFF92B0760.json, suggested name: "sqlite-fixture-61CBE412-9EE7-465D-8FA0-11ED8290E404_0_924B3F3F-1B60-410D-B3B3-AAB1178F6BE6.json"
+
+Exported 1 attachment for: ProjectMemoryQueueTests/changedAncestorInvalidatesPendingExactConsentAndLegacyCoverageIsResetOnce():
+File: D7F5C1C0-3C4C-447A-A35F-89C117E7D9A0.json, suggested name: "sqlite-fixture-618A67C7-2C1D-4201-9575-A7B78290DAB6_0_95D546DB-EC8D-4D9C-8E3F-1567B19E2865.json"
+
+Exported 1 attachment for: ProjectMemoryQueueTests/cancelRetryDrainsNoncooperativeAdapterBeforeStartingNextAttempt():
+File: 79CCB5DF-94C3-425D-8B72-37261368456A.json, suggested name: "sqlite-fixture-279A17F9-9F17-4BAB-8737-93E288DAD2E6_0_9C9B910C-8C78-45CD-AE03-1F8F69D75B26.json"
+
+Exported 1 attachment for: ProjectMemoryQueueTests/workerRechecksAllOwnersBeforeEveryTransportAttempt():
+File: AA2EFEFE-715E-4CB6-A0CB-5A2B43F8620E.json, suggested name: "sqlite-fixture-FFFE0D48-7896-4C23-BA3E-959E8711CF58_0_73781279-CD74-4830-BF95-51FA79D3708A.json"
+
+Exported 1 attachment for: ProjectMemoryQueueTests/oneTimeConsentIsFreshForEachBatchAndNotRestoredAsBackgroundPermission():
+File: 475564CE-B382-4619-BD02-0C8B02ECC4AF.json, suggested name: "sqlite-fixture-79B6B4E5-CEFD-435F-9FCC-519C48533498_0_A77CB967-4384-4590-B2E2-3172098FB3E1.json"
+
+Exported 1 attachment for: ProjectMemoryQueueTests/discoveryHasBoundedHotWindowAndDeferredJobIsClaimableWithoutDroppingMetadata():
+File: 450F5C65-6C25-4C1D-8C92-A93E30C4524A.json, suggested name: "sqlite-fixture-0249579F-E426-415E-8CD5-72387EFFA17A_0_1720CAC3-7B05-42D1-92A3-9CBB81FC2C9F.json"
+
+Exported 2 attachments for: ProjectMemoryQueueTests/concreteMetadataBridgeReceivesReadyEventWithoutLaunchingApplication():
+File: FE583F4A-9817-4679-8577-525CD517A41D.json, suggested name: "sqlite-fixture-834C168C-3783-4508-A5BC-868B63494C36_0_971C78D7-DCC0-4B3B-BB65-02F9E4FA5893.json"
+File: 80D6F2C8-8F00-4A1B-B2E7-790A5C318A5D.json, suggested name: "bridge61-098080CE-20B4-4436-8001-6D973172DBAA-timeline_0_C6247EB8-23B6-489C-9E7B-8DBFD0B65F2B.json"
+
+Exported 1 attachment for: ProjectMemoryQueueTests/retirementOfTransitiveAncestorResetsCoverageEvenWhenItWasNotSelectedAsMemory():
+File: C08ACB2C-4000-43E4-B768-11D176B6BE33.json, suggested name: "sqlite-fixture-8A521CAD-E1EC-44F4-B99F-8F85419E52D7_0_77B37509-8E44-45E4-BDB3-50AC341E42BE.json"
+
+Exported 4 attachments for: ProjectMemoryQueueTests/externalModelRetirementResetsOnlyDependentCoverageAndKeepsOwnBatchHistory(_:_:):
+File: DB8DA0DB-2687-483C-898E-389152149624.json, suggested name: "sqlite-fixture-9EC0AB10-EB2C-4D2D-AED1-91AB40D0632A_0_51386426-C474-476C-83A9-BC8DB7062CD4.json"
+File: EC4AB814-3F30-41C8-9960-1E94CA65A2D1.json, suggested name: "sqlite-fixture-668CF48A-2EC4-44DB-AB2C-F8B45FF95999_0_677757FE-0880-4F32-8496-5A05C98ABC5D.json"
+File: 2C4FE590-AD9A-4795-9EAF-B24C88C3BC77.json, suggested name: "sqlite-fixture-5EAAD388-D53C-4538-9EA1-E8CD2DA304F8_0_B911651C-EF97-477F-8BCE-2672310A9C04.json"
+File: 4DB5F53A-0B94-4C67-8061-4DCE83A69680.json, suggested name: "sqlite-fixture-C874A745-6086-42C0-B49A-E255686DC193_0_C4E31528-BBC6-41A3-81EC-053FB82C2D87.json"
+
+Exported 1 attachment for: ProjectMemoryQueueTests/roundRobinDoesNotStarveShortSourceBehindManyBatches():
+File: 22F266B8-866E-41CD-A11C-F793018EA3BD.json, suggested name: "sqlite-fixture-6A608322-C298-41D6-BF50-A725AA98EE36_0_0852DEE7-A436-44F4-AF17-6AEDBF7531E4.json"
+
+Exported 1 attachment for: ProjectMemoryQueueTests/capAndInvalidReplyLeaveCursorUnchangedAndDoNotRetryOnDuplicateEvents():
+File: E34818C5-1C6B-44B2-9216-7AF321277121.json, suggested name: "sqlite-fixture-3026207E-448F-4032-A8C7-2D9115ABD04C_0_3A58B425-EACF-42B5-8225-51A379F2E4E0.json"
+
+Exported 1 attachment for: ProjectMemoryQueueTests/sequentialWorkerUpdatesKeepConflictingDeadlinesAndCompletionAsClaim():
+File: BF4643F9-7A86-4580-9B95-844727A86F99.json, suggested name: "sqlite-fixture-AEE6CDB7-0120-4FCA-84E5-D128C7B96192_0_4EB69AF6-07DE-4416-88E8-F4C4A2642634.json"
+
+Exported 1 attachment for: ProjectMemoryQueueTests/invalidBatchRollsBackJournalAndCursorWhileErrorWaitsForExplicitRetry():
+File: 3D884D77-3E78-4F2C-831F-612FCF222024.json, suggested name: "sqlite-fixture-9861882D-E5C7-401C-8C4B-EFA02B4DC627_0_EF55699A-EC43-41B1-8376-49999EACB968.json"
+
+Exported 1 attachment for: ProjectMemoryQueueTests/adaptiveJSONBudgetProcessesLongQuotedSourceWithoutSilentSkip():
+File: AC0EB117-D18F-451D-B24A-4280DE40D616.json, suggested name: "sqlite-fixture-3518ADA1-A29F-48DC-B6BB-AA2C10E4D3B1_0_85AA0F3A-E5CA-4B09-A35D-C0AEB8A05ADD.json"
+
+Exported 1 attachment for: ProjectMemoryQueueTests/insufficientCoveragePersistsAndRestartDoesNotAskModelAgain():
+File: FE9DCBDB-D9AB-4C82-8CF2-8BB07C145C75.json, suggested name: "sqlite-fixture-58B3625F-9917-4831-A897-45AFA38A9113_0_DDF74FFE-EC31-456D-B689-47EE9B5F89DC.json"
+
+Exported 1 attachment for: ProjectMemoryQueueTests/metadataAndIndexSubscriptionsCoalesceAndSettingsCanStopThenResumeSameWorker():
+File: F8DAA0EC-91C0-488D-8A31-E7B62F00813A.json, suggested name: "sqlite-fixture-BB3EDD00-DB25-421E-BC0C-CFCCC4299629_0_CD893038-F2D3-412B-9074-0BD742DE815B.json"
+
+Exported 8 attachments for: ProjectMemoryQueueTests/durableQueueFenceRejectsLateTransportWithoutRelyingOnTaskCancellation(_:):
+File: E7729F5B-4FC7-4A72-9A7F-C28BB8CAD59A.json, suggested name: "sqlite-fixture-F95AAE0D-296B-4DE3-8470-4C7AF5AC6B6E_0_296CF878-4CA4-4A61-9D84-ACE70C4665BC.json"
+File: B68A445B-C177-4AB9-B02E-C84D86F5ACF8.json, suggested name: "sqlite-fixture-A3BC846C-97A9-4462-81E6-CB2C52D44408_0_0DB08735-263A-45DC-88EB-A16914DBBE40.json"
+File: CF520BCE-FAD9-4A6F-AE66-5CB2FF844A1F.json, suggested name: "sqlite-fixture-5B6E06FC-D698-4DCC-86C2-B65EBBCB3F5D_0_0B5CB363-6F0D-4B6D-8841-362EE7C335A5.json"
+File: D47F889E-1166-4B6F-808B-1C3FC0B090D7.json, suggested name: "sqlite-fixture-31FD8E6D-7135-4D2A-80EB-D79E266F411C_0_FFF2EC20-A095-4DFC-9243-5DD36A272F2F.json"
+File: 51E9F08E-42B9-488F-B059-8FD80E8F9621.json, suggested name: "sqlite-fixture-5EEF84A2-24B1-4491-90CC-AB1BE0CBBBAE_0_F72DFCDF-E4FE-4750-880E-12E8104F0B55.json"
+File: 60194DD1-6FF2-4C07-A0B7-47C71DB83544.json, suggested name: "sqlite-fixture-21774218-06B0-49D8-8196-1B9C839D41E9_0_62A6B9B2-C98F-4CDE-9A3E-3ECDCC57AF65.json"
+File: 748FA5CB-235F-44E7-A8C2-779B1B7DEBC0.json, suggested name: "sqlite-fixture-066AD7F1-51CB-4E3F-99BB-D80F5C67E637_0_E5D9065B-A34A-4F06-BC04-666B6F91D398.json"
+File: 33E0B8C8-7B63-4EC7-9C26-12CB82644ED1.json, suggested name: "sqlite-fixture-C3F42406-4C9B-4CDB-BAB1-FEF282AA095B_0_B41AD137-E5F8-4B6A-BA57-7F42322DDDBF.json"
+
+Exported 1 attachment for: ProjectMemoryQueueTests/latestDisabledConfigurationWinsQueuedEnableAndBridgeStop():
+File: BF6B3354-962A-44B0-B10A-DE7FD34B5BB9.json, suggested name: "sqlite-fixture-37234C38-C828-416F-A171-C8C441E0F72D_0_533E58BA-D275-49A8-A600-5E42585EE213.json"
+
+Exported 1 attachment for: ProjectMemoryQueueTests/queueFenceRejectsSkippedChunksEvenIfCallerClaimsWholeBatch():
+File: 29AE61D9-94DA-4A8D-8211-B2179840F95A.json, suggested name: "sqlite-fixture-ACAC6186-B5B9-448F-AD28-44CA5442A6C8_0_48A6084D-ECA5-4CAA-8E56-2417B703E2C6.json"
+
+Exported 1 attachment for: ProjectMemoryQueueTests/longSourceCoversEveryChunkWithDurableBatchesAndNoSelfRegeneration():
+File: 8E2362A4-2C18-4480-9108-6744AA45897F.json, suggested name: "sqlite-fixture-2848F982-7634-49B0-8715-672FA38F24B7_0_C46A2B1C-2430-4D8B-B25C-13FD7FEC2A04.json"
+
+Exported 1 attachment for: ProjectMemoryQueueTests/injectedDeadlineFencesLateReplyAndDoesNotStartOverlappingAttempt():
+File: 9AAE9917-A249-433E-9A76-403611692ADD.json, suggested name: "sqlite-fixture-01DD7EF8-4E40-4629-A3BD-E97D7084FF0D_0_530CBC26-1BF6-4F1A-8B6C-6CF4449CC913.json"
+
+Exported 1 attachment for: ProjectMemoryQueueTests/restartMidSourceKeepsCompletedCursorAndFencesNoncooperativeOldRun():
+File: 32F3DD9F-531D-4270-9737-A261FF601787.json, suggested name: "sqlite-fixture-516B25EC-76AF-4575-846F-F8B33B859089_0_0B868009-36AB-48D0-8D16-2E829000B299.json"
+
+Exported 1 attachment for: ProjectMemoryQueueTests/preexistingExactJournalBatchRecordsUnchangedDispositionWithoutSendingAgain():
+File: B0569B12-7335-4543-B4C2-8CCF49EAE7AA.json, suggested name: "sqlite-fixture-E498188F-A973-48E6-9097-EE6C109DE5DA_0_E083C636-FF10-44BA-887B-9EA2B23213F6.json"
+
+Skipped export for PCM16ConverterTests/smallDownsampleBufferProducesOutput(): no matching attachments
+
+Skipped export for MeetingProcessorTests/runInsights_writesInsightsAndTitle(): no matching attachments
+
+Skipped export for MeetingProcessorTests/runInsights_generatorFailureKeepsReadyNoInsights(): no matching attachments
+
+Skipped export for MeetingProcessorTests/runInsights_regeneration_doesNotOverwriteManualTitle(): no matching attachments
+
+Skipped export for MeetingProcessorTests/dedupe_processSupersedesQueuedInsights(): no matching attachments
+
+Skipped export for MeetingProcessorTests/dedupe_sameKindSameMeeting_ignored(): no matching attachments
+
+Skipped export for MeetingProcessorTests/enqueueAndWait_dedupedInsights_waitsForProcess(): no matching attachments
+
+Skipped export for MeetingProcessorTests/dedupe_insightsIgnoredWhenProcessPending(): no matching attachments
+
+Skipped export for MeetingProcessorTests/fifo_runsJobsOneByOneInOrder(): no matching attachments
+
+Skipped export for MeetingProcessorTests/state_processingAndQueuedAndBanner(): no matching attachments
+
+Skipped export for MeetingSearchIndexTests/buildText_concatenatesTitleInsightsTranscript_lowercased(): no matching attachments
+
+Skipped export for MeetingSearchIndexTests/buildText_titleOnlyWhenNoArtifacts(): no matching attachments
+
+Skipped export for MenuBarRenderTests/nativeMenuConstructionAndRendering(): no matching attachments
+
+Skipped export for DocumentImportTests/failedChunkTransactionAndCancelledUpdateKeepPreviousVersion(): no matching attachments
+
+Skipped export for DocumentImportTests/copiesDeduplicatesAcrossProjectsAndSurvivesLossOfExternalFile(): no matching attachments
+
+Skipped export for DocumentImportTests/migrationFromV1KeepsProjectsAndFailedMigrationRollsBack(): no matching attachments
+
+Skipped export for DocumentImportTests/oversizedInputIsRejectedAndInterruptedAttemptsRecoverWithoutDataLoss(): no matching attachments
+
+Skipped export for DocumentImportTests/explicitUpdateKeepsVersionsAndGenericImportNeverGuessesByName(): no matching attachments
+
+Skipped export for DocumentImportTests/importedTextPreservesEmbeddedNullAndUnicodeThroughSQLite(): no matching attachments
+
+Skipped export for DocumentImportTests/cancellationDoesNotCancelFollowingQueuedFile(): no matching attachments
+
+Skipped export for DocumentImportTests/extractionAndCommitErrorsPreserveCurrentVersionAndOriginals(): no matching attachments
+
+Skipped export for TalkMeetingSettingsTests/invalidElementNeverPartiallySavesAndFileFailureIsVisible(): no matching attachments
+
+Skipped export for TalkMeetingSettingsTests/lookupRequiresExplicitSelectionAndDoesNotCommitUnsavedRooms(): no matching attachments
+
+Skipped export for TalkMeetingSettingsTests/normalizesPersistsEditsDeletesAndReopensWithoutSecret(): no matching attachments
+
+Skipped export for TalkMeetingSettingsTests/legacyCredentialNeedsExplicitSaveBeforeIdentitySetup(): no matching attachments
+
+Skipped export for TalkMeetingSettingsTests/fileStoreRoundTripAndFailureUseTemporaryData(): no matching attachments
+
+Skipped export for TalkMeetingSettingsTests/savingNewPATOrOriginNeverReusesOldIdentityAndUnchangedSaveKeepsBinding(): no matching attachments
+
+Skipped export for TalkMeetingSettingsTests/lateResultCannotRestoreInvalidatedSelection(change:): no matching attachments
+
+Skipped export for TalkMeetingSettingsTests/noKeyEmptyFailureAndUnlistedConfirmationAreSafe(): no matching attachments
+
+Exported 1 attachment for: MemoryBridgeOverflowTests/boundedReceiptsRejectForeignOwnerKindRunAttemptAndReplay():
+File: D309C5EF-E185-4E5A-A3E4-F5DCA962DF6F.json, suggested name: "sqlite-fixture-0FA8BA24-7DA8-41A1-AF19-0428BDB57D21_0_335FDFDE-8268-4631-9952-E074B78BBB34.json"
+
+Exported 3 attachments for: MemoryBridgeOverflowTests/overflowPreservesNativeStartupTimeoutRecoveryAndDeinitJoin():
+File: C3F5BE11-73E7-48BA-96D2-C6CB217712FB.json, suggested name: "sqlite-fixture-C3C7015C-16A0-420D-8CAE-BE6BBB9AEFB5_0_5E874D27-7FD4-4559-A633-71A3682F63CD.json"
+File: 24BD8FA3-88C0-4A81-9882-BBB5D2B24A0D.json, suggested name: "bridge61-EE32FBDA-5B82-4AFB-8914-08F0301DB111-timeline_0_23D9EBB5-FCF2-4642-8D56-1032DA468BD0.json"
+File: 81E6187C-F1C8-4099-AC94-67549C46BA50.json, suggested name: "bridge61-EE32FBDA-5B82-4AFB-8914-08F0301DB111-failure_0_91D956EC-9B7C-46C3-A6BC-BCDE104680CC.json"
+
+Exported 2 attachments for: MemoryBridgeOverflowTests/oldConfigurationReceiptCannotAcknowledgeNewNativeStartup():
+File: 78961468-B360-49AB-86F0-8990815B64CE.json, suggested name: "sqlite-fixture-91501492-0059-410E-8345-EADA7D964EF3_0_DCF6B487-C022-4C88-865F-F44BF83E99EC.json"
+File: 23FD9BFF-6A3C-40B6-B23C-78C81C80D40A.json, suggested name: "bridge61-E0ED87FD-77D0-4D08-A5AC-1AA4BC20225A-timeline_0_8F3B4F1A-3541-4A24-8B34-38A10F8F9F26.json"
+
+Skipped export for DocumentFormatImportTests/actualLocalExtractorFeedsPersistedChunks(ext:): no matching attachments
+
+Skipped export for MemoryQueueMigrationTests/midDDLQueueFailureRollsBackVersionSchemaAndEveryLegacyValueThenRetries(): no matching attachments
+
+Skipped export for MemoryQueueMigrationTests/genuineAcceptedV7MigratesWithEveryMemoryTableVectorFTSAssignmentAndOriginalPreserved(): no matching attachments
+
+Exported 1 attachment for: MeetingAssignmentTests/ambiguousNamesAndGenericMatchesAreProposalsNotAutomaticContext():
+File: F65CE89F-681A-4775-A546-1FB475B74482.json, suggested name: "sqlite-fixture-624CF55A-0A8B-4DA6-9738-5E576EE95C12_0_7438C014-A8F3-4844-87D8-B626D41B3A06.json"
+
+Exported 1 attachment for: MeetingAssignmentTests/automaticManyToManyPersistsAndRepeatingSameCalculationDoesNotChurnEpoch():
+File: 362ACCFA-3AF7-46DF-B732-23D5193DAAAC.json, suggested name: "sqlite-fixture-701A5C2B-0A2B-4614-B9D7-6FD24A3E2B7B_0_1A79C360-601F-4E10-A715-8E1F714BDCCB.json"
+
+Exported 1 attachment for: MeetingAssignmentTests/oldPayloadDecodesButCannotPublishUnderNewPolicy():
+File: E538E810-E308-4852-8A65-78305A22FD60.json, suggested name: "sqlite-fixture-E99FC96B-C227-4744-A529-CA3230C8BD5A_0_ACDC334B-8E88-414E-B8DF-CBF22FC5EAAE.json"
+
+Exported 8 attachments for: MeetingAssignmentTests/latePlansCannotOverwriteChangedContext(change:):
+File: B62020D6-4A33-4BBA-81E9-D0C67DDF3DEC.json, suggested name: "sqlite-fixture-14550B92-192E-488A-96AF-2F324BBCF89B_0_9D02695E-6C2C-48B4-83D5-2D7431CBB76D.json"
+File: 1252F88A-CC76-4022-9E75-FB6D6DF11643.json, suggested name: "sqlite-fixture-3D1C3FDE-41EB-4FA9-8677-48D996D842F9_0_3788CBA8-443F-4FE5-9FBC-DA635AEE6936.json"
+File: 85A60FA7-9F6D-4259-9BBD-72C65353333D.json, suggested name: "sqlite-fixture-D040DC76-23AA-4A5D-B6C5-ECF894637FFC_0_3640592C-D837-4273-B121-B7AE708FF287.json"
+File: B7448FA4-B420-4C53-9391-DE769FA98E58.json, suggested name: "sqlite-fixture-27398A07-BA0A-4ED3-B6AD-029E763B2816_0_E718650E-A5B5-47D9-8F4E-A86B32DBA270.json"
+File: DA02B43D-B622-42BF-858F-5CAF22E621CC.json, suggested name: "sqlite-fixture-F6135C34-91FB-4080-9961-1BCED3564B38_0_0E3B03D5-D206-4F6A-B416-36EA5BB559B7.json"
+File: 1B3A1EFF-C0F2-4E55-8435-31AB3FB7FC4B.json, suggested name: "sqlite-fixture-ACD78EB7-5C5B-4C63-A6E5-EAE489C918C4_0_26ADB425-E380-4C4E-8331-6FB79992443A.json"
+File: 56D808A3-4DAA-4E3A-81E5-C64FC427D5F7.json, suggested name: "sqlite-fixture-34E7B924-75F3-44E8-9980-0BA71DC37D09_0_71107A69-1A1C-4A8F-8001-CCD4CAB44536.json"
+File: 100ADBA4-7BC4-46AA-AA42-977565718107.json, suggested name: "sqlite-fixture-12EBDAD2-A213-40FE-A157-F51B6DC41C56_0_AD91413F-7BA7-4612-941B-60213218F991.json"
+
+Exported 2 attachments for: MeetingAssignmentTests/manualSelectionIncludingInboxFencesAlreadyPreparedPlanAndSurvivesRestart(empty:):
+File: 4E353E35-715F-4FB7-83E3-233D3ACD5BC9.json, suggested name: "sqlite-fixture-76C05D8E-4F0A-487A-A753-CCDD1586B0C7_0_C61E7D10-E26A-406C-8A7D-98FD3A5F658C.json"
+File: C5016261-DE96-4B2B-A347-1E07E71597C7.json, suggested name: "sqlite-fixture-A8402E54-B9C8-48B2-8E9D-C38BF94A0820_0_9A17B203-227B-4B52-95F5-D9865CCF0A57.json"
+
+Exported 1 attachment for: MeetingAssignmentTests/negatedSeparateChunkCannotBeOverriddenByTemptingPositiveEvidence():
+File: C100DA08-9844-4A44-B034-323DAB7B22A3.json, suggested name: "sqlite-fixture-491CD6BB-8E54-463D-A3AE-DE61F7B4FA38_0_11716609-C361-4F73-A598-B9FE45566D54.json"
+
+Exported 3 attachments for: MeetingAssignmentTests/semanticEvidenceDoesNotRequireProjectNameAndSurvivesRename(name:):
+File: 8FB77033-1643-4010-A877-35E2C3DA45D6.json, suggested name: "sqlite-fixture-0889780B-5D5E-4B01-9F47-7B43CA86F924_0_1127F8BA-D818-4005-BFDA-384811D54DE6.json"
+File: 040BBE7D-31FA-4066-98CC-3C04275F339C.json, suggested name: "sqlite-fixture-E8C0761E-7E17-47FD-BF34-B15CD3563664_0_65FD1BD0-4E5B-4B75-B325-B0C7E8CC7436.json"
+File: 01B3B6FA-B316-4D56-8267-3BFB3A1D1DD3.json, suggested name: "sqlite-fixture-9B221B0C-74BE-4D58-A282-6C5BA56F8642_0_BDB2822F-5064-49D0-B122-82C90E1F4EAA.json"
+
+Exported 1 attachment for: MeetingAssignmentTests/cancellationAndInvalidTranscriptCannotPublishAnyDecision():
+File: 5D040117-5D7B-4DEC-8CB8-92B631A8DA7B.json, suggested name: "sqlite-fixture-F24E011E-A6EB-4F5B-9080-9F01A4B1607E_0_4DA0C5BC-A958-4C56-9769-3A09F76B4BBE.json"
+
+Exported 1 attachment for: MeetingAssignmentTests/v4MigrationPreservesExplicitInboxAndMultipleOwnersAndRollsBackFailure():
+File: 241486D3-865C-4567-A5C1-A7BD6FB4AE01.json, suggested name: "sqlite-fixture-890C194E-374C-4D17-866E-5668338CDF17_0_8E005091-DAA7-4984-9769-44C8B51CD5C0.json"
+
+Exported 1 attachment for: MeetingAssignmentTests/automaticAssignmentsDoNotTrainOtherMeetingsButExplicitManualContextDoes():
+File: 281F277D-F4B5-4A8D-8679-680A45EAE4F8.json, suggested name: "sqlite-fixture-58C2A483-2901-4884-8EF5-D1668501D137_0_16C6C4A8-6A19-4100-96EB-3CB8FC1EB2CC.json"
+
+Exported 4 attachments for: MeetingAssignmentTests/fixtureThrowAndCancellationDrainSuspendedIndexerBeforeNativeCloseAndUnlink(cancel:):
+File: E82462AA-8F4C-4F60-9670-77D1226F3D51.json, suggested name: "sqlite-fixture-4661ED2B-34ED-4FBB-9E21-3D8B2ED9440E_0_6A3DA476-23AB-4CBB-8F4C-A1224079C3EB.json"
+File: 565EFCD7-2F4B-40DD-9736-5E7C56388A63.json, suggested name: "sqlite-fixture-E0E9A599-161A-4A31-9D37-4D069B6A4C4F_0_1105C86B-64AF-4DE5-ABAC-0F1831CF63C6.json"
+File: F07C9870-40B1-4412-B8E7-3B9FFC5CD885.json, suggested name: "sqlite-fixture-A6A53548-E65A-451E-97AF-5A7C13892656_0_84D5A36D-4301-4103-86E0-704A3A1C6031.json"
+File: C30EE499-ED11-48B2-9C52-025564F27A26.json, suggested name: "sqlite-fixture-B4F38E36-6B75-46C8-BED8-A3B4E37018B4_0_7EBA880C-D9B5-42AB-950C-4E8F9A5167E5.json"
+
+Exported 1 attachment for: MeetingAssignmentTests/unavailableCancelledAndOverBudgetIndexesDoNotWriteAssignments():
+File: 380E02FE-860C-4082-8534-273C1CA5260A.json, suggested name: "sqlite-fixture-760DBF41-38A6-4D3E-A1E5-A90468A7E4BA_0_634631FE-96CD-41AF-A781-0ADBE5CEF0B5.json"
+
+Exported 1 attachment for: MeetingAssignmentTests/missingTrustedContextIsAnExplicitErrorInsteadOfSilentlyReducingCompetition():
+File: 38E8AFBA-7280-4408-97A4-07F30D8D8E44.json, suggested name: "sqlite-fixture-FA8A0075-3BFD-468F-A792-BE6DF7219D51_0_5DB4B478-964A-4A34-A798-68395D368FC7.json"
+
+Exported 1 attachment for: MeetingAssignmentTests/lexicalPreparationCannotPublishAConfidentPartialResultOverBudget():
+File: 8CC2C017-D721-4F34-90F4-B6962BC47236.json, suggested name: "sqlite-fixture-30FCB5AE-8EC0-4682-BB5C-0CDEE3D1F4AD_0_A6AA07E7-61E4-44F8-8447-40E18A708B28.json"
+
+Skipped export for EmbeddingMigrationRaceTests/concurrentConnectionsReadSchemaOnlyAfterAcquiringMigrationLock(version:): no matching attachments
+
+Skipped export for EmbeddingMigrationRaceTests/firstFailureStillWaitsForSecondConnectionAndReleaseBeforeTeardown(): no matching attachments
+
+Skipped export for EmbeddingMigrationRaceTests/delayedActorExecutionRequiresRealSQLiteEntries(prematureRelease:): no matching attachments
+
+Skipped export for EmbeddingMigrationRaceTests/singleExecutionLaneReproducesBarrierStarvationAndIsRejected(): no matching attachments
+
+Skipped export for EmbeddingMigrationRaceTests/delayedPeerDoesNotSpendFirstConnectionsSQLiteBusyTimeoutBeforeContention(): no matching attachments
+
+Skipped export for EmbeddingMigrationRaceTests/testLockReleaseWithAnActualSharedReader(action:): no matching attachments
+
+Skipped export for MenuBarModelTests/startingShowsReadinessAndAllowsCancellation(): no matching attachments
+
+Skipped export for MenuBarModelTests/manualRecordingShowsElapsed(): no matching attachments
+
+Skipped export for MenuBarModelTests/durationIsVisibleInStatusBarButton(): no matching attachments
+
+Skipped export for MenuBarModelTests/stoppingCannotStartAnotherCapture(): no matching attachments
+
+Skipped export for MenuBarModelTests/idleWhenNoLive(): no matching attachments
+
+Skipped export for MenuBarModelTests/apiUnknownIsSeparateFromActualRecordingAndIdleHasCurrentMode(): no matching attachments
+
+Skipped export for MenuBarModelTests/failureCannotBeDisplayedAsSuccessfulRecording(): no matching attachments
+
+Skipped export for MenuBarModelTests/autoRecordingIsLabelled(): no matching attachments
+
+Skipped export for MeetingSummaryTests/make_noMeta_parsesIdAndFallbackTitle(): no matching attachments
+
+Skipped export for MeetingSummaryTests/summarizingLabel(): no matching attachments
+
+Skipped export for MeetingSummaryTests/effectiveStatus_transcriptWins(): no matching attachments
+
+Skipped export for MeetingSummaryTests/effectiveStatus_oldRecordingNoMeta(): no matching attachments
+
+Skipped export for MeetingSummaryTests/make_carriesHasInsights(): no matching attachments
+
+Skipped export for MeetingSummaryTests/effectiveStatus_fromMetaWhenNoTranscript(): no matching attachments
+
+Skipped export for MeetingSummaryTests/make_preservesRawStatusAndAudio(): no matching attachments
+
+Skipped export for MeetingSummaryTests/durationText_formats(): no matching attachments
+
+Skipped export for MeetingSummaryTests/effectiveStatus_readyWhenTranscriptAndNotSummarizing(): no matching attachments
+
+Skipped export for MeetingSummaryTests/effectiveStatus_summarizingWinsOverTranscript(): no matching attachments
+
+Skipped export for MeetingSummaryTests/make_metaTitlePreferred(): no matching attachments
+
+Skipped export for RecorderTests/backendFailureDuringRecordingFinalizesWithoutAutomaticProcessing(): no matching attachments
+
+Skipped export for RecorderTests/stopDuringStartWaitsForLateBackendAndDoesNotPublishRecording(): no matching attachments
+
+Skipped export for RecorderTests/partialStartFailureStopsBothTracksPreservesAudioAndAllowsManualRetry(): no matching attachments
+
+Skipped export for RecorderTests/failureWhileDrainingKeepsProtectionAndFailureStatus(): no matching attachments
+
+Skipped export for RecorderTests/publishesRecordingOnlyAfterBothBackendsAreReady(): no matching attachments
+
+Skipped export for RecorderTests/shortManualRecordingEnqueuesWithPersistentProtection(): no matching attachments
+
+Skipped export for RecorderTests/duplicateFolderCannotOverwritePreviousAudio(): no matching attachments
+
+Skipped export for RecorderTests/systemTrackPropagatesBackendStopFailureBeforeMetadataAndQueue(): no matching attachments
+
+Skipped export for RecorderTests/startupTimeoutCannotBecomeLateSuccess(): no matching attachments
+
+Skipped export for RecorderTests/finalizeDrainsStopsClosesMetaAndIsIdempotent(): no matching attachments
+
+Skipped export for SidecarProtocolTests/decodesSegmentsResponse(): no matching attachments
+
+Skipped export for SidecarProtocolTests/decodesErrorWithoutId(): no matching attachments
+
+Skipped export for SidecarProtocolTests/encodesTranscribeFileSnakeCase(): no matching attachments
+
+Skipped export for SidecarProtocolTests/decodesHello(): no matching attachments
+
+Skipped export for SidecarProtocolTests/decodesError(): no matching attachments
+
+Skipped export for SidecarProtocolTests/decodesReady(): no matching attachments
+
+Skipped export for OpenRouterClientTests/sendsAuthHeadersAndOpenAIBody(): no matching attachments
+
+Skipped export for OpenRouterClientTests/retriesOn5xxThenSucceeds(): no matching attachments
+
+Skipped export for OpenRouterClientTests/failsFastOn4xx(): no matching attachments
+
+Skipped export for OpenRouterClientTests/guardedTransportDoesNotSendWhenInitialGateRejects(): no matching attachments
+
+Skipped export for OpenRouterClientTests/guardedTransportRevalidatesEachRetryAndDoesNotRetryRejectedGate(): no matching attachments
+
+Skipped export for WindowMonitorTests/rejectsNonCallWindows(): no matching attachments
+
+Skipped export for WindowMonitorTests/matchesCallWindowsByTitle(): no matching attachments
+
+Skipped export for WindowMonitorTests/ownerMatchVariants(): no matching attachments
+
+Generated manifest file with attachment details: /private/tmp/golos58integrated-full-attachments/manifest.json
