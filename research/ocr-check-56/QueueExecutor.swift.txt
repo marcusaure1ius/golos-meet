@@ -8,4 +8,3 @@ private nonisolated final class DocumentExtractionExecutor: SerialExecutor {
         queue.async { [self] in job.runSynchronously(on: asUnownedSerialExecutor()) }
     }
 }
-

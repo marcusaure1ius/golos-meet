@@ -46,4 +46,3 @@ nonisolated final class ProbeTaskExecutor: TaskExecutor, @unchecked Sendable {
     func enqueue(_ job: consuming ExecutorJob) { queue.enqueue(UnownedJob(job)) }
     func close() async { await queue.close() }
 }
-
