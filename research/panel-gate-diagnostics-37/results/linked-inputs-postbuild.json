@@ -1,0 +1,50 @@
+{
+  "utc": "2026-11-02T13:42:08.544093+00:00",
+  "limits": "Read-only post-build package input hashes; verify again before any later authorized launch. No model weights/inference.",
+  "files": {
+    "/private/tmp/golos37recovery-derived/Build/Products/Debug/OnnxRuntimeBindings.o": {
+      "bytes": 421232,
+      "sha256": "02d69861c44d974c7ca3862adaef4815e2aece5cc9f1d642387e74a58e068626"
+    },
+    "/private/tmp/golos37recovery-derived/Build/Products/Debug/OrderedCollections.o": {
+      "bytes": 982416,
+      "sha256": "c8bd490be87b6ae676b2483eba2ee275f7e63f200a0ac1cb2b58e9f7cc8e752b"
+    },
+    "/private/tmp/golos37recovery-derived/Build/Products/Debug/InternalCollectionsUtilities.o": {
+      "bytes": 349712,
+      "sha256": "f20f8a9796621bcd4c709340b39dd6ae1ff8b43f61a2819963d4676c6195ba76"
+    },
+    "/private/tmp/golos37recovery-derived/Build/Products/Debug/Jinja.o": {
+      "bytes": 3039368,
+      "sha256": "79133cbf536d1857e237bb40fb1f8307c0125a0ce058099ea48e02373c60cac2"
+    },
+    "/private/tmp/golos37recovery-derived/Build/Products/Debug/Crypto.o": {
+      "bytes": 66120,
+      "sha256": "7f6b43b63a80b233632da5c5c758342f059b7e8c9088fc90f491c57e887450d5"
+    },
+    "/private/tmp/golos37recovery-derived/Build/Products/Debug/EventSource.o": {
+      "bytes": 257856,
+      "sha256": "3511f6c1a506312878ae3315ba996d8b4479de6ae534fae9d69e5f6d19edbefc"
+    },
+    "/private/tmp/golos37recovery-derived/Build/Products/Debug/Hub.o": {
+      "bytes": 1103448,
+      "sha256": "abfdf52f1905f02bc46e81c05ed3b0927e6cf8f801d4b4a855554debdc596d1a"
+    },
+    "/private/tmp/golos37recovery-derived/Build/Products/Debug/HuggingFace.o": {
+      "bytes": 6314232,
+      "sha256": "10890b74b6de7bead1fc560f74c4f0fcd7ed86431d790fa726c74a78bdd04f1d"
+    },
+    "/private/tmp/golos37recovery-derived/Build/Products/Debug/yyjson.o": {
+      "bytes": 813080,
+      "sha256": "db8ca95e700db0e87a0d65bbea468609697d07f79dcf3d62e4fdc718318dd7af"
+    },
+    "/private/tmp/golos37recovery-derived/Build/Products/Debug/Tokenizers.o": {
+      "bytes": 1041160,
+      "sha256": "7de7c6c0d7422cbd5f073cfeb65de802b77a149643dabe537eddf9721d0b4d61"
+    },
+    "/private/tmp/golos37recovery-derived/Build/Products/Debug/onnxruntime.framework/onnxruntime": {
+      "bytes": 90585848,
+      "sha256": "1e57e861aae21b03780d796a5725288e16d68510a2916c26b3b479fa35c91b92"
+    }
+  }
+}

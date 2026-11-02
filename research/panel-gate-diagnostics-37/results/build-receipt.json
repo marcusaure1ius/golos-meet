@@ -1,0 +1,52 @@
+{
+  "utc": "2026-11-02T13:37:03.744257+00:00",
+  "code_head": "fcdd8837d3163bf9aba9274b0c66449e14a11940",
+  "base": "24b49b067fcda107e397ed4f2461f9bb23de322f",
+  "command": [
+    "python3",
+    "research/build_memory_panel_preview.py",
+    "--gate-diagnostics",
+    "--gate-root",
+    "/private/var/folders/f6/hwzbqsn10fn6p6gx8d5vmnfm0000gn/T/golos-memory-gate37-ef623b597e83409796b75d7e232d4420",
+    "--derived-data",
+    "/private/tmp/golos37recovery-derived"
+  ],
+  "output_root": "/private/var/folders/f6/hwzbqsn10fn6p6gx8d5vmnfm0000gn/T/golos-memory-gate37-ef623b597e83409796b75d7e232d4420",
+  "protected_diff_empty": true,
+  "diagnostic_source_sha256": {
+    "research/MemoryPanelGateDiagnostics.swift": "80192f3de69d720b9bf15effd9fb39096dd6e66875fc91d4477b2d7a7ae6b954",
+    "research/build_memory_panel_preview.py": "9e90d076959c7da631953d77b9ef80a19c5422720de5f570f4aa3f4db9be8c23"
+  },
+  "preflight_free_bytes": 91507605504,
+  "reserve_bytes": 6442450944,
+  "forecast_bytes": 1073741824,
+  "output_budget_bytes": 1073741824,
+  "build_budget_seconds": 180,
+  "inventory": {
+    "xcodebuild": {
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "swiftc": {
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "swift-frontend": {
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": ""
+    }
+  },
+  "build_started": true,
+  "host_launched": false,
+  "actual_case_executed": false,
+  "status": "Build Passed; NOT launched; runtime NOT run",
+  "pid": 70188,
+  "exit_code": 0,
+  "elapsed": 37.43622991700249,
+  "post_free_bytes": 91164520448,
+  "output_bytes": 334724977,
+  "stdout": "APP=/private/var/folders/f6/hwzbqsn10fn6p6gx8d5vmnfm0000gn/T/golos-memory-gate37-ef623b597e83409796b75d7e232d4420/Golos Memory Gate Diagnostics.app\nBUNDLE=com.golos.memory-gate37.7260db48e97e426e954d1f6bcc258c68\nROOT=/private/var/folders/f6/hwzbqsn10fn6p6gx8d5vmnfm0000gn/T/golos-memory-gate37-ef623b597e83409796b75d7e232d4420/library\nBUILD_LOG=/private/var/folders/f6/hwzbqsn10fn6p6gx8d5vmnfm0000gn/T/golos-memory-gate37-ef623b597e83409796b75d7e232d4420/build.log\nSOURCE_ALLOWLIST=/private/var/folders/f6/hwzbqsn10fn6p6gx8d5vmnfm0000gn/T/golos-memory-gate37-ef623b597e83409796b75d7e232d4420/source-allowlist.txt\n"
+}

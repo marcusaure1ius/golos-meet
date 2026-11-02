@@ -30,8 +30,35 @@ Apple описывает публикацию `@Published` в willSet, до пр
 - Logger≤512events/2MiB, монотонные sequence/clock+UTC, append+sync, явный overflow/error. Final manifest не появляется под final.json до успешных write/sync/close. Snapshot атомарен только внутри своего SQL transaction; общая UI/actor/SQL картина неатомарна, observer может влиять на scheduling.
 - Любой сбой красный INCONCLUSIVE. Cleanup отдельно маркирован и не считается project-cancel proof; снимает только собственную continuation, закрывает observation и read-only sensor, не force-close production DB и не удаляет библиотеку.
 
+## Единственный build: результат
+
+**Build Passed, actual case NOT RUN.** Скомпилирован code checkpoint `fcdd8837d3163bf9aba9274b0c66449e14a11940`. После него изменены только отчёт/receipts/offline validator; helper и builder не менялись.
+
+| Проверка | Фактический результат |
+|---|---|
+| Сборка |Одна попытка, exit0,37.436s; повторов/full/test matrix не было |
+| Outputs |334724977B (~319MiB), ниже1GiB |
+| Space |74samples; preflight91507605504B, minimum91202404352B; reserve6GiB+forecast1GiB, STOP не сработал |
+| Compiler |0warning lines /0error lines в сохранённом raw build.log |
+| Native binary SHA256 |`3fe0e3b68bcbbd08c8f73e7f8a928994f73e2b6c04eddf62a328a148b0f4980c` |
+| Source manifest SHA256 |`f163707e9972b480a60dc44318f661fa293d06c17612ee5591ef5c0d01e85ace` |
+| Bundle |`com.golos.memory-gate37.7260db48e97e426e954d1f6bcc258c68` |
+| Runtime |Host NOT launched; CUA/consent/held attempt NOT executed; fresh `library` directory ещё не создана |
+
+Output root: `/private/var/folders/f6/hwzbqsn10fn6p6gx8d5vmnfm0000gn/T/golos-memory-gate37-ef623b597e83409796b75d7e232d4420`. Бинарь и SDK caches остаются локально; в git только source/evidence/hashes. Старые completed библиотеки не сбрасывались. Linked package input hashes записаны после build и должны совпадать перед будущим разрешённым запуском; это не новые модели/веса.
+
+[Build receipt](results/build-receipt.json), [summary](results/build-summary.json), [raw build log](results/build.log), [allowlist](results/source-allowlist.txt), [source manifest](results/source-manifest.json), [linked inputs](results/linked-inputs-postbuild.json). Target14.4 проверен компиляцией текущимSDK, не runtime на отдельнойmacOS14.4.
+
+Offline audit без compiler/launch:
+
+```sh
+python3 -B research/panel-gate-diagnostics-37/validate.py
+```
+
+Он проверяет защищённые source bytes, compiled checkpoint hashes, manifest/Info/binary, output file hashes, budgets и отсутствие созданной runtime library. Он не проверяет поведение неисполненного case. Перед actual launch нужны независимый review43 этого exact prepared SHA и отдельное решение root; текущий build не является таким разрешением.
+
 ## Статус и передача
 
-Static assessment: [results/static-assessment.json](results/static-assessment.json). Результат единственного build будет сохранён в results/build-receipt.json и raw build.log независимо от исхода. Meaningful compile failure не исправляется с новым автоматическим build; incomplete не выдаётся за Passed.
+Static assessment: [results/static-assessment.json](results/static-assessment.json). Результат единственного build сохранён в results/build-receipt.json и raw build.log. Meaningful compile failure не исправляется с новым автоматическим build; incomplete не выдаётся за Passed.
 
 Normal singleton composition и width-extrema не проверяются этим диагностическим case. Прежние FINAL24b/noP1P2 и старые inconclusive/0call captures сохраняют свои исходы. Не требуется от человека повторять старый неинструментированный путь или ждать команды чата между timed действиями.

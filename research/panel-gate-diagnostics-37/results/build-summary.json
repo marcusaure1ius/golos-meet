@@ -1,0 +1,18 @@
+{
+  "status": "Build Passed; ACTUAL CASE NOT RUN",
+  "code_head": "fcdd8837d3163bf9aba9274b0c66449e14a11940",
+  "app": "/private/var/folders/f6/hwzbqsn10fn6p6gx8d5vmnfm0000gn/T/golos-memory-gate37-ef623b597e83409796b75d7e232d4420/Golos Memory Gate Diagnostics.app",
+  "bundle": "com.golos.memory-gate37.7260db48e97e426e954d1f6bcc258c68",
+  "binary_sha256": "3fe0e3b68bcbbd08c8f73e7f8a928994f73e2b6c04eddf62a328a148b0f4980c",
+  "source_manifest_sha256": "f163707e9972b480a60dc44318f661fa293d06c17612ee5591ef5c0d01e85ace",
+  "elapsed": 37.43622991700249,
+  "output_bytes": 334724977,
+  "telemetry_samples": 74,
+  "preflight_free_bytes": 91507605504,
+  "minimum_free_bytes": 91202404352,
+  "runtime_library_exists": false,
+  "compiler_warning_lines": 0,
+  "compiler_error_lines": 0,
+  "host_launched": false,
+  "actual_case_executed": false
+}
