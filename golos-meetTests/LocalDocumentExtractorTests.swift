@@ -1,6 +1,7 @@
 import Foundation
 import AppKit
 import PDFKit
+import CryptoKit
 import Testing
 @testable import golos_meet
 
@@ -11,6 +12,58 @@ import Testing
         try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
         defer { try? FileManager.default.removeItem(at: root) }
         try await body(root)
+    }
+
+    private func extractWithEvidence(from url: URL) async throws -> ExtractedDocument {
+        let id = UUID().uuidString
+        let bytes = try Data(contentsOf: url)
+        let started = ProcessInfo.processInfo.systemUptime
+        var report: [String: Any] = ["id": id, "test": Test.current?.name ?? "unknown", "inputBytes": bytes.count,
+            "inputSHA256": SHA256.hash(data: bytes).map { String(format: "%02x", $0) }.joined(),
+            "wallStart": Date().timeIntervalSince1970]
+        Attachment.record(bytes, named: "ocr-\(id)-input.\(url.pathExtension)")
+        func record() throws {
+            report["elapsedSeconds"] = ProcessInfo.processInfo.systemUptime - started
+            let data = try JSONSerialization.data(withJSONObject: report, options: [.sortedKeys, .prettyPrinted])
+            Attachment.record(data, named: "ocr-\(id)-result.json")
+        }
+        do {
+            let result = try await LocalDocumentExtractor().extract(from: url)
+            report["stage"] = "extract-returned"
+            report["blocks"] = result.blocks.map(\.text)
+            report["lines"] = result.blocks.flatMap { $0.text.components(separatedBy: .newlines) }
+            report["warnings"] = result.warnings
+            try record()
+            return result
+        } catch {
+            let failure = error as NSError
+            report["stage"] = "extract-threw"
+            report["error"] = String(describing: error)
+            report["errorDomain"] = failure.domain
+            report["errorCode"] = failure.code
+            report["errorDescription"] = failure.localizedDescription
+            try record()
+            throw error
+        }
+    }
+
+    @Test func extractionErrorStillAttachesExactInputAndOriginalError() async throws {
+        try await withFolder { root in
+            let input = root.appendingPathComponent("invalid.png")
+            try Data([0, 1, 2, 3]).write(to: input)
+            await #expect(throws: DocumentExtractionError.invalidDocument) {
+                _ = try await extractWithEvidence(from: input)
+            }
+        }
+    }
+
+    @Test func concurrentOCRDoesNotOccupyTheCooperativePool() async throws {
+        try await withThrowingTaskGroup(of: Void.self) { group in
+            for _ in 0..<32 {
+                group.addTask { try await self.extractsTextFromPNGUsingLocalOCR(text: "Project Alpha budget approved") }
+            }
+            try await group.waitForAll()
+        }
     }
 
     @Test func extractsRussianUTF8AndKeepsContentRevisionStable() async throws {
@@ -64,7 +117,7 @@ import Testing
             }
             context.closePDF()
             try (data as Data).write(to: url)
-            let result = try await LocalDocumentExtractor().extract(from: url)
+            let result = try await extractWithEvidence(from: url)
             #expect(result.blocks.map(\.location.page) == [1, 2])
             #expect(result.blocks[1].text.contains("November"))
         }
@@ -86,7 +139,7 @@ import Testing
             NSGraphicsContext.restoreGraphicsState()
             let png = try #require(bitmap.representation(using: .png, properties: [:]))
             try png.write(to: url)
-            let result = try await LocalDocumentExtractor().extract(from: url)
+            let result = try await extractWithEvidence(from: url)
             let expected = text.hasPrefix("Решение") ? "ноябре" : "budget approved"
             #expect(result.blocks.first?.text.lowercased().contains(expected) == true)
         }
@@ -138,7 +191,7 @@ import Testing
             let nativeLines = (page.string ?? "").components(separatedBy: .newlines)
             #expect(nativeLines.contains(native))
             #expect(nativeLines.contains(scanned) == duplicateNative)
-            let result = try await LocalDocumentExtractor().extract(from: url)
+            let result = try await extractWithEvidence(from: url)
             let text = result.blocks.map(\.text).joined(separator: "\n")
             let lines = text.components(separatedBy: .newlines)
             #expect(lines.filter { $0 == scanned }.count == 1)
