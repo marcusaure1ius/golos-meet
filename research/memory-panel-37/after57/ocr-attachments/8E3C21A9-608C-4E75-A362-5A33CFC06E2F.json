@@ -1,0 +1,20 @@
+{
+  "blocks" : [
+    "Project alpha launch",
+    "Decision: ship in November"
+  ],
+  "elapsedSeconds" : 58.734699833323248,
+  "id" : "08B750B1-52C4-4D9D-BE8D-EFA12138CF29",
+  "inputBytes" : 8205,
+  "inputSHA256" : "adff392c3ff066c5ed67c9e1ac5c6645725dcdc8410ee1b8767d74d15c7cdc78",
+  "lines" : [
+    "Project alpha launch",
+    "Decision: ship in November"
+  ],
+  "stage" : "extract-returned",
+  "test" : "PDFRetainsOneBasedPageLocations()",
+  "wallStart" : 1793582771.388747,
+  "warnings" : [
+
+  ]
+}

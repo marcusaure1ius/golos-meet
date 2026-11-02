@@ -1,10 +1,12 @@
 # Панель памяти проекта · #37
 
-Результат подготовлен для независимого ревью в `codex/product-preview`. Это часть #37 и этапа #5, не завершение всего этапа. Интерактивный проход автора заблокирован экраном блокировки Mac. Последний полный `make check` красный из-за OCR; успешный целевой прогон не заменяет этот результат.
+Результат подготовлен для независимого ревью в `codex/product-preview`. Это часть #37 и этапа #5, не завершение всего этапа. Интерактивный проход автора заблокирован экраном блокировки Mac. После включения принятого PR #57 последний полный `make check` остаётся красным: timeout ожидания synthetic metadata worker; OCR и все тесты панели прошли. Прежние OCR-отказы сохранены, их конкретная причина не объявляется установленной.
 
 ## Основа и включение в приложение
 
 Рабочая ветка `codex/37-project-memory-panel` создана в отдельном управляемом worktree от принятого preview `24b75f63bad8429aec00331c4968d6963a09bc09`. Перед реализацией проверены merge/ancestry и наличие результатов PR #48, #49, #50, #52, #54 в preview. Для #54 проверенный SHA `81efc1a4bacc769ff1edf4aeac7008d10010c335`, дерево merge preview совпадало с проверенным деревом. Исходная ветка очереди не изменена.
+
+2 ноября включён принятый OCR PR #57: checked `bc28cf7ff9f458e9f01219b8d27c38ce7750e660`, merged preview `885b41e10d3caaed42d91d935776fc79e2b5044e`. Fresh GitHub API подтвердил merged/head/merge SHA; после fetch проверены ancestry и пустой полный tree diff checked57→preview. Обычный merge `9b29e7fb500624b3b3f78476533ab733d1525093` имеет родителей `ee48e1d…` и `885b41e…`, без конфликтов и переписывания истории. Фактический код панели, её worker guards и тесты не изменились. Старые артефакты сверены по хэшам и оставлены побайтово прежними. Непринятый #58 не включён. [Integration receipt](memory-panel-37/after57/integration-receipt.json).
 
 В проекте доступна кнопка «Память». В деталях встречи кнопка «Контекст проекта» открывает inspector рядом с текущей встречей; его ширина 380–600 pt. Существующая запись, очередь ASR и плеер остаются владельцами своих lifecycle. Переход к источнику памяти не вызывает player/seek/play.
 
@@ -41,11 +43,32 @@
 
 ## Проверки и артефакты
 
+Текущая проверенная комбинация — панель `ee48e1d` плюс принятый OCR57/preview885b41e. Команды, результаты, полные source hashes нового host: [after57/checks.json](memory-panel-37/after57/checks.json).
+
+| Проверка после принятого PR57 | Фактический результат |
+|---|---|
+| Полный make check + existing publicE5/settings/menu/panel renders/traces | **Failed: 449 tests / 623 runs; 448 passed / 622 passed runs, 1 failed, 0 skipped, 0 runtime warnings** |
+| Все ProjectMemoryPanelTests и LocalDocumentExtractorTests внутри этого full | Passed, включая actual PDF page2 и real OCR concurrent32 |
+| Новый safehost build | Passed, build-only, не запускался |
+| Свежие native renders / migration traces | 44 PNG + 4 manifest / 9 JSONL |
+| Exact OCR input/output/error attachments | 82 файла / 41 invocation: 40 returned + 1 expected invalidDocument; все input SHA/bytes проверены |
+| Actual interactive | Не выполнялся; ожидается сообщение пользователя об unlock |
+
+Первый preflight запуск остановился до тестов: sandbox запретил запись SwiftPM/Clang cache, exit74. Исходный лог сохранён. Повтор с необходимыми tool permissions запустил full; это устранение ограничения окружения, не зелёный rerun тестов.
+
+Новый отказ — `ProjectMemoryQueueTests.concreteMetadataBridgeReceivesReadyEventWithoutLaunchingApplication()`: `until` с дедлайном5s записал `Timed out waiting for synthetic worker state`, затем пойман `.busy`; тест завершился через10.297s. Он вызывает helper дважды (revision>0 до добавления источника и completeCoverage после ready event); в существующем failure evidence нет различения, какое ожидание истекло. Нельзя по длительности доказать причину или конкретный момент состояния. Сохранены [summary](memory-panel-37/after57/full-summary.json), [activities](memory-panel-37/after57/failure-activities.json), exact stdout/runner logs. Timeout/production logic не менялись, full ради случайного зелёного результата не повторялся. Нужен отдельный диагноз через координатора; связь timeout с lifecycle #58 пока не установлена. OCR57 не объявляется его объяснением.
+
+RuntimeWarnings пуст, но stdout содержит33 строки SQLite failure и181 unlink-warning для test temp DB, а также6 e5rt diagnostic lines при успешных OCR assertions. Их counts/полный stdout и excerpt сохранены; это не «чистый stdout». Lifecycle #58 остаётся отдельно; новые строки не приписываются исходным историческим эпизодам задним числом. System logarchive не публикуется.
+
+Новые доказательства — в [after57](memory-panel-37/after57), старые ниже сохранены как история. Свежие derived-context-light/conflicts-claims-dark PNG просмотрены: условия/unknown даты/владельцы/разовое согласие/конфликт/claim caveat видимы. Production inspector interaction по-прежнему не проверен. Новый host содержит принятый executor57; source allowlist/hash и binary hash сохранены. В этом продолжении CUA не вызывался и host не запускался.
+
+### Проверки до принятого PR57
+
 Сырые runner/stdout/native build логи сохранены как gzip без изменения байтов; хэши исходных распакованных логов записаны в checks.json. Машиночитаемые команды, counts, SHA-256 исходников и ссылки на сырые результаты: [checks.json](memory-panel-37/checks.json).
 
 | Проверка | Фактический результат |
 |---|---|
-| Последний полный `make check`, installed E5 + явные opt-in UI renders/traces | **Failed:** 447 тестов / 621 запуск; 446 passed, 1 failed, 0 skipped, 0 runtime warnings |
+| Исторический полный `make check` до PR57, installed E5 + явные opt-in UI renders/traces | **Failed:** 447 тестов / 621 запуск; 446 passed, 1 failed, 0 skipped, 0 runtime warnings |
 | Финальные Panel + Queue + EmbeddingMigrationRace | **Passed:** 50 тестов / 64 запуска; 0 failures/skips/runtime warnings |
 | Изолированный native preview build, финальные исходники | Passed, build-only, приложение не запускалось |
 | Native SwiftUI/AppKit render fixtures | 44 PNG, 4 manifest, светлая/тёмная темы |
@@ -61,11 +84,11 @@ Full run использует уже установленные публичны
 
 Предыдущий full run (`02-30-39`) — 445/446 тестов, 619/620 запусков, один runtime QoS warning. Параметр PNG OCR `"Решение: запуск проекта в ноябре"` выбросил `.e5rtError("e5rt_stream_completion_handler call failed", 10)`; английский PNG прошёл. Это framework error, а не timeout assertion. Сохранены точные summary/activities/runner log. Xcode удалил старый xcresult при retention следующего прогона; summary и activities экспортированы до удаления, полный diagnostics stdout того запуска не успели экспортировать. Нельзя утверждать, что warning исправлен.
 
-Последний full (`02-39-00`) — mixed PDF, параметры native=`"Page 1"`, scanned=`"Decision: launch postponed to December"`, duplicateNative=`false`. Проверка строки `lines.filter { $0 == scanned }.count == 1` получила 0 в LocalDocumentExtractorTests.swift:144. Остальные четыре параметра прошли. Функция извлечения завершилась, но результат не удовлетворил assertion; это не timeout. Полный OCR output тест не прикрепляет, временный fixture удаляется, поэтому фактическую распознанную строку/байты именно того изображения восстановить нельзя. Вход и способ генерации зафиксированы неизменённым параметризованным тестом (1200×600 raster, font40, PDF600×800).
+Исторический full (`02-39-00`) — mixed PDF, параметры native=`"Page 1"`, scanned=`"Decision: launch postponed to December"`, duplicateNative=`false`. Проверка строки `lines.filter { $0 == scanned }.count == 1` получила 0 в LocalDocumentExtractorTests.swift:144. Остальные четыре параметра прошли. Функция извлечения завершилась, но результат не удовлетворил assertion; это не timeout. Полный OCR output тест не прикрепляет, временный fixture удаляется, поэтому фактическую распознанную строку/байты именно того изображения восстановить нельзя. Вход и способ генерации зафиксированы неизменённым параметризованным тестом (1200×600 raster, font40, PDF600×800).
 
 Из diagnostics экспортирован stdout именно тестового процесса. В нём рядом есть сообщения Vision `CRImageReaderError error 1`, `Unable to find a valid E5` в системном TextRecognition.framework. Это **системный OCR E5**, он не является нашим ONNX embedding `e5-small`. Корреляция по времени не доказывает корневую причину потери строки. Также stdout содержит `vnode unlinked while in use` для временных test SQLite и SQLite failure extended6922; фикстуры удаляют каталог, пока объекты store ещё живут. Эти сообщения не отражены в xcresult runtimeWarnings, не означают «чистый stdout» и требуют отдельной диагностики жизненного цикла fixture. Нельзя по этому логу приписать их конкретной новой панели или игнорировать риск. Они сохранены в полном stdout и diagnostic excerpt. Панельный cleanup перед удалением останавливает свой worker, но явного close API store здесь не добавлено.
 
-Файлы extractor и его тестов в diff отсутствуют. Это не доказательство безвредности отказа. В эту задачу не внесены случайные OCR/retry/timeout исправления. Перед принятием нужен отдельный диагноз стабильности обязательного full check: захват OCR output/fixture на отказе и изолированное сравнение с accepted preview, затем отдельный проверяемый issue/PR по решению координатора. Полный набор не перезапускался до случайного зелёного результата. Более ранний full 441/615 был зелёным с QoS warning; он не покрывает финальные изменения.
+Файлы extractor и его тестов в diff отсутствуют. Это не доказательство безвредности отказа. В эту задачу не внесены случайные OCR/retry/timeout исправления. Отдельная диагностика #56 привела к принятому PR57 (executor isolation и exact OCR input/output/error attachments). Доказан executor defect; причины именно старых e5rt10/mixedPDFcount0 не объявлены установленными. Новый timeout full после57 требует отдельной диагностики, #58 ещё не принят. Полный набор не перезапускался до случайного зелёного результата. Более ранний full 441/615 был зелёным с QoS warning; он не покрывает финальные изменения.
 
 ## Интерактивная проверка и передача
 
