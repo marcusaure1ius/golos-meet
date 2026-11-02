@@ -1,0 +1,38 @@
+[
+  {
+    "stage" : "scope-created",
+    "test" : "control",
+    "uptime" : "336002.2487814167"
+  },
+  {
+    "root" : "fixture-lifecycle-3FA9086D-1CCF-44C3-8FAF-5040EF96C1BB",
+    "stage" : "root-owned",
+    "uptime" : "336002.2489018334"
+  },
+  {
+    "stage" : "store-owned",
+    "uptime" : "336002.2489216667"
+  },
+  {
+    "connection" : "3D50BC9E-74FE-4024-8A19-D705A25E556F",
+    "root" : "fixture-lifecycle-3FA9086D-1CCF-44C3-8FAF-5040EF96C1BB",
+    "stage" : "opened",
+    "uptime" : "336002.28284025"
+  },
+  {
+    "connection" : "3D50BC9E-74FE-4024-8A19-D705A25E556F",
+    "result" : "0",
+    "stage" : "closed",
+    "uptime" : "336002.84083679167"
+  },
+  {
+    "stage" : "body-finished",
+    "uptime" : "336002.8408487917"
+  },
+  {
+    "exists" : "false",
+    "root" : "fixture-lifecycle-3FA9086D-1CCF-44C3-8FAF-5040EF96C1BB",
+    "stage" : "root-removed",
+    "uptime" : "336002.8411160834"
+  }
+]

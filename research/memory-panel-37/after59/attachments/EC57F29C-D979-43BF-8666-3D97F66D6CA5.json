@@ -1,0 +1,18 @@
+{
+  "blocks" : [
+    "Project Alpha budget approved"
+  ],
+  "elapsedSeconds" : 1.9108100416488014,
+  "id" : "FB6541E5-F2FF-490A-8265-455CE62D9B49",
+  "inputBytes" : 23567,
+  "inputSHA256" : "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+  "lines" : [
+    "Project Alpha budget approved"
+  ],
+  "stage" : "extract-returned",
+  "test" : "concurrentOCRDoesNotOccupyTheCooperativePool()",
+  "wallStart" : 1793585738.3584309,
+  "warnings" : [
+
+  ]
+}

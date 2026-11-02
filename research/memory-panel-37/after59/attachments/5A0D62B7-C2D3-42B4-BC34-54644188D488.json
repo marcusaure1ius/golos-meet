@@ -1,0 +1,19 @@
+{
+  "blocks" : [
+    "Page 1\nDecision: launch postponed to December"
+  ],
+  "elapsedSeconds" : 1.3109800416277722,
+  "id" : "15C6B750-1357-4BAF-BBC7-7A6BF6C3FCD5",
+  "inputBytes" : 28138,
+  "inputSHA256" : "51c6eae60078e0f0c48b1259ea52211891c6b4b2d2ae107dd6a9ebcb824109a5",
+  "lines" : [
+    "Page 1",
+    "Decision: launch postponed to December"
+  ],
+  "stage" : "extract-returned",
+  "test" : "mixedPDFExtractsScanAndDoesNotDuplicateTextLayer(native:scanned:duplicateNative:)",
+  "wallStart" : 1793585737.7851009,
+  "warnings" : [
+
+  ]
+}

@@ -1,0 +1,94 @@
+[
+  {
+    "stage" : "scope-created",
+    "test" : "externalModelRetirementResetsOnlyDependentCoverageAndKeepsOwnBatchHistory(_:_:)",
+    "uptime" : "336002.2522909167"
+  },
+  {
+    "root" : "memory-update-4C99B02A-7B22-427F-BB2B-9FA29193D63E",
+    "stage" : "root-owned",
+    "uptime" : "336002.72116270836"
+  },
+  {
+    "stage" : "store-owned",
+    "uptime" : "336002.7211837917"
+  },
+  {
+    "connection" : "C1F1E6D8-CAA3-4E72-9D47-C1D559D1714F",
+    "root" : "memory-update-4C99B02A-7B22-427F-BB2B-9FA29193D63E",
+    "stage" : "opened",
+    "uptime" : "336002.73885745835"
+  },
+  {
+    "connection" : "F0891CD4-E378-47B4-8966-B06F270AA6B1",
+    "root" : "memory-update-4C99B02A-7B22-427F-BB2B-9FA29193D63E",
+    "stage" : "opened",
+    "uptime" : "336005.4651914167"
+  },
+  {
+    "connection" : "4E62C20C-8D97-4858-A6EB-1329835FA51C",
+    "root" : "memory-update-4C99B02A-7B22-427F-BB2B-9FA29193D63E",
+    "stage" : "opened",
+    "uptime" : "336005.4715015"
+  },
+  {
+    "stage" : "queue-stop-requested",
+    "uptime" : "336009.215943125"
+  },
+  {
+    "stage" : "queue-idle",
+    "uptime" : "336009.21627229167"
+  },
+  {
+    "connection" : "7A1752A5-39D2-4D96-8AED-81024BA915B7",
+    "root" : "memory-update-4C99B02A-7B22-427F-BB2B-9FA29193D63E",
+    "stage" : "opened",
+    "uptime" : "336009.21700608335"
+  },
+  {
+    "stage" : "queue-stop-requested",
+    "uptime" : "336009.22845991666"
+  },
+  {
+    "stage" : "queue-idle",
+    "uptime" : "336009.22865916666"
+  },
+  {
+    "stage" : "update-callbacks-released",
+    "uptime" : "336009.2286697917"
+  },
+  {
+    "connection" : "7A1752A5-39D2-4D96-8AED-81024BA915B7",
+    "result" : "0",
+    "stage" : "closed",
+    "uptime" : "336009.22876950004"
+  },
+  {
+    "connection" : "4E62C20C-8D97-4858-A6EB-1329835FA51C",
+    "result" : "0",
+    "stage" : "closed",
+    "uptime" : "336009.2288585417"
+  },
+  {
+    "connection" : "F0891CD4-E378-47B4-8966-B06F270AA6B1",
+    "result" : "0",
+    "stage" : "closed",
+    "uptime" : "336009.22893758334"
+  },
+  {
+    "connection" : "C1F1E6D8-CAA3-4E72-9D47-C1D559D1714F",
+    "result" : "0",
+    "stage" : "closed",
+    "uptime" : "336009.22903375"
+  },
+  {
+    "stage" : "body-finished",
+    "uptime" : "336009.2290532084"
+  },
+  {
+    "exists" : "false",
+    "root" : "memory-update-4C99B02A-7B22-427F-BB2B-9FA29193D63E",
+    "stage" : "root-removed",
+    "uptime" : "336009.23121137504"
+  }
+]

@@ -1,0 +1,50 @@
+[
+  {
+    "stage" : "scope-created",
+    "test" : "cancellationSurvivesRestartAndLateNoncooperativePublisherCannotRestoreLinks()",
+    "uptime" : "336002.1927279584"
+  },
+  {
+    "root" : "assignment-runtime-81B6D061-1927-4080-800D-2B66781354BB",
+    "stage" : "root-owned",
+    "uptime" : "336002.42545208335"
+  },
+  {
+    "stage" : "store-owned",
+    "uptime" : "336002.425516875"
+  },
+  {
+    "connection" : "4D3CED10-C9D5-4A09-9075-4B66DE1D0B5B",
+    "root" : "assignment-runtime-81B6D061-1927-4080-800D-2B66781354BB",
+    "stage" : "opened",
+    "uptime" : "336002.4507482083"
+  },
+  {
+    "connection" : "FE508AEB-AD93-499D-9782-4A899C8AAC3C",
+    "root" : "assignment-runtime-81B6D061-1927-4080-800D-2B66781354BB",
+    "stage" : "opened",
+    "uptime" : "336004.5346509167"
+  },
+  {
+    "connection" : "FE508AEB-AD93-499D-9782-4A899C8AAC3C",
+    "result" : "0",
+    "stage" : "closed",
+    "uptime" : "336004.8601010417"
+  },
+  {
+    "connection" : "4D3CED10-C9D5-4A09-9075-4B66DE1D0B5B",
+    "result" : "0",
+    "stage" : "closed",
+    "uptime" : "336004.89000420837"
+  },
+  {
+    "stage" : "body-finished",
+    "uptime" : "336004.8983534584"
+  },
+  {
+    "exists" : "false",
+    "root" : "assignment-runtime-81B6D061-1927-4080-800D-2B66781354BB",
+    "stage" : "root-removed",
+    "uptime" : "336004.8996095"
+  }
+]

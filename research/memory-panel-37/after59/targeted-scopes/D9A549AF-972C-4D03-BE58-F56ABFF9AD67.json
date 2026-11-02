@@ -1,0 +1,11 @@
+[
+  {
+    "stage" : "scope-created",
+    "test" : "renderActualNativePanelStatesWhenExplicitlyRequested()",
+    "uptime" : "335881.969503625"
+  },
+  {
+    "stage" : "body-finished",
+    "uptime" : "335881.9901267917"
+  }
+]

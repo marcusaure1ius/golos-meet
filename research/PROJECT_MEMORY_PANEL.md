@@ -1,12 +1,14 @@
 # Панель памяти проекта · #37
 
-Результат подготовлен для независимого ревью в `codex/product-preview`. Это часть #37 и этапа #5, не завершение всего этапа. Интерактивный проход автора заблокирован экраном блокировки Mac. После включения принятого PR #57 последний полный `make check` остаётся красным: timeout ожидания synthetic metadata worker; OCR и все тесты панели прошли. Прежние OCR-отказы сохранены, их конкретная причина не объявляется установленной.
+Результат подготовлен для независимого ревью в `codex/product-preview`. Это часть #37 и этапа #5, не завершение всего этапа. Интерактивный проход автора заблокирован экраном блокировки Mac. После включения принятых PR #57/#59 и адаптации scoped fixtures панели последний полный `make check` прошёл: 453 теста / 628 запусков, без отказов, пропусков и runtime warnings. Прежние OCR-отказы и bridge timeout сохранены; их конкретные причины не объявляются установленными по успешному новому прогону.
 
 ## Основа и включение в приложение
 
 Рабочая ветка `codex/37-project-memory-panel` создана в отдельном управляемом worktree от принятого preview `24b75f63bad8429aec00331c4968d6963a09bc09`. Перед реализацией проверены merge/ancestry и наличие результатов PR #48, #49, #50, #52, #54 в preview. Для #54 проверенный SHA `81efc1a4bacc769ff1edf4aeac7008d10010c335`, дерево merge preview совпадало с проверенным деревом. Исходная ветка очереди не изменена.
 
 2 ноября включён принятый OCR PR #57: checked `bc28cf7ff9f458e9f01219b8d27c38ce7750e660`, merged preview `885b41e10d3caaed42d91d935776fc79e2b5044e`. Fresh GitHub API подтвердил merged/head/merge SHA; после fetch проверены ancestry и пустой полный tree diff checked57→preview. Обычный merge `9b29e7fb500624b3b3f78476533ab733d1525093` имеет родителей `ee48e1d…` и `885b41e…`, без конфликтов и переписывания истории. Фактический код панели, её worker guards и тесты не изменились. Старые артефакты сверены по хэшам и оставлены побайтово прежними. Непринятый #58 не включён. [Integration receipt](memory-panel-37/after57/integration-receipt.json).
+
+Следующим обычным merge `e2ae4609a21630228cde983dd955107b80c49b0b` включён принятый partial58 PR #59: checked `2a5907a79c21f8ad8e394961fa68b9275609c1a3`, accepted preview `9dfdf8feecf83e94782c0e78acfdd0b2d920a37e`. Fresh API/ancestry и пустой полный tree diff checked59→preview проверены. Панельный production-код прежний; дополнительно изменены только её test fixture и failure-only diagnostics bridge-теста. Дальнейшие непринятые части #58 не включались. Проверенное содержимое исходников соответствует коммиту `e7cf8273b284d4c7d87a880ad53f38f7425f8675`; после него добавляются только отчёт и evidence.
 
 В проекте доступна кнопка «Память». В деталях встречи кнопка «Контекст проекта» открывает inspector рядом с текущей встречей; его ширина 380–600 pt. Существующая запись, очередь ASR и плеер остаются владельцами своих lifecycle. Переход к источнику памяти не вызывает player/seek/play.
 
@@ -43,7 +45,32 @@
 
 ## Проверки и артефакты
 
-Текущая проверенная комбинация — панель `ee48e1d` плюс принятый OCR57/preview885b41e. Команды, результаты, полные source hashes нового host: [after57/checks.json](memory-panel-37/after57/checks.json).
+### Текущая комбинация после принятого PR59
+
+[after59/checks.json](memory-panel-37/after59/checks.json) содержит точные команды, результаты и source hashes.
+
+| Проверка | Результат |
+|---|---|
+| Полный make check + existing publicE5/settings/menu/panel renders/traces/scope evidence | **Passed: 453 tests / 628 runs, 0 failures/skips/runtime warnings** |
+| Целевой panel-only | **Passed: 19 tests / 20 runs**, включая параметризованную throw/cancel regression; без render opt-in в этом целевом прогоне |
+| Scoped native lifecycle full | **116 scopes / 114 roots / 175 opened / 175 native close0 / 114 unlink / 0 scope errors** |
+| Scope attachments | 116 из 116 побайтово совпадают с независимо сохранёнными trace-файлами |
+| Full OCR attachments | 82 / 41 invocation, exact input bytes/SHA verified;40 successful +1 expected invalidDocument |
+| Fresh native renders / migration traces | 44 PNG +4 manifest /9 JSONL |
+| Safehost rebuild | Passed, build-only; не запускался |
+| Actual interactive | Ожидает человеческого сообщения об unlock; новых CUA-вызовов нет |
+
+`UpdateFixture` принятой основы теперь требует `SQLiteFixtureScope.current`. Панельная suite получила recursive `SQLiteFixtureTrait` для всех test cases/параметров. Default fake callback захватывает base слабо. Scoped onFinish захватывает base/model/worker независимыми weak-ссылками, закрывает модель, очищает callbacks и запрашивает stop worker даже при throw/cancel; он не полагается на weak self или только на успешный вызов cleanup в конце теста. Для noncooperative test gates зарегистрирован release-hook; дополнительные модели имеют close-hook. Native-close/owner-release wait и root unlink выполняет принятый scope, без force close, вечного удержания корней и изменений production stop/timeout.
+
+Новая meaningful regression имеет два параметра: intentional throw и настоящая cancellation child-task. Реальный approved send остановлен внутри fake adapter; callback намеренно создаёт fixture→spy→callback→fixture цикл. Тело выходит без success cleanup. Spy отдельно остаётся живым как witness: после scope finish callbacks nil, weak fixture/base/model/worker/store nil, все native closes=0 до root removal, исходные ошибки сохранены. Для cancel teardown выполняется в живом parent task, чтобы cancellation тела не отменяла ожидание native close. [scope-audit](memory-panel-37/after59/scope-audit.json) содержит обе nested traces и всю матрицу full.
+
+Условия bridge-теста и5s helper не ослаблены. Test-only catch добавляет при отказе phase/elapsed/fake calls/worker+bridge+durable snapshots/configuration и повторно бросает исходную ошибку. Реальный start acknowledgement публичный контракт не раскрывает; diagnostics явно не называют revision>0 подтверждением готовности. В новом full обе стадии прошли, failure-only attachment не создавался. Это не воспроизведение/объяснение старого449/623 timeout; его исходный trace в after57 остаётся с неизвестной стадией.
+
+Global stdout по-прежнему не чист:64 unlink warning lines других fixture families,24 SQLite failure lines (22 полных JSON +2 interleaved fragments),6 e5rt lines. Среди22 полных диагностик нет connection UUID наших175 scoped connections; scope errors=0. В сырых данных нет literal extended6922, но фрагментация ограничивает полную атрибуцию. Отрицательные SQLite tests намеренно вызывают часть ошибок. Полный stdout/excerpt сохранены; завершение #58 и исчезновение всех системных warning не заявляются.
+
+### Историческая комбинация после PR57 до PR59
+
+Историческая проверенная комбинация — панель `ee48e1d` плюс принятый OCR57/preview885b41e. Команды, результаты, полные source hashes нового host: [after57/checks.json](memory-panel-37/after57/checks.json).
 
 | Проверка после принятого PR57 | Фактический результат |
 |---|---|
