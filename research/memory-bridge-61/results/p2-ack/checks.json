@@ -1,0 +1,393 @@
+{
+  "before": {
+    "result": "Failed",
+    "totalTestCount": 1,
+    "passedTests": 0,
+    "failedTests": 1,
+    "expectedFailures": 0,
+    "skippedTests": 0,
+    "runtimeWarnings": [],
+    "testFailures": [
+      {
+        "failureText": "Expectation failed: trace.has(\"configuration.start.return\", owner: session.bridgeID)\ntrace → golos_meetTests.MemoryBridgeTestTrace\nsession.bridgeID → F656E3D8-B95A-4775-84A3-4525FDE5F541: // Actual callback was received by the independent observer; a\n// bounded diagnostic buffer must not make a control report it absent.",
+        "targetName": "golos-meetTests",
+        "testIdentifier": 1,
+        "testIdentifierString": "MemoryBridgeOverflowTests/overflowMustNotTurnARealStartupAcknowledgementIntoFalseAbsence()",
+        "testIdentifierURL": "test://com.apple.xcode/golos-meet/golos-meetTests/MemoryBridgeOverflowTests/overflowMustNotTurnARealStartupAcknowledgementIntoFalseAbsence()",
+        "testName": "overflowMustNotTurnARealStartupAcknowledgementIntoFalseAbsence()"
+      }
+    ],
+    "runs": {
+      "passedTests": 0,
+      "failedTests": 1,
+      "expectedFailures": 0,
+      "skippedTests": 0
+    }
+  },
+  "targeted": {
+    "result": "Passed",
+    "totalTestCount": 32,
+    "passedTests": 32,
+    "failedTests": 0,
+    "expectedFailures": 0,
+    "skippedTests": 0,
+    "runtimeWarnings": [],
+    "testFailures": [],
+    "runs": {
+      "passedTests": 44,
+      "failedTests": 0,
+      "expectedFailures": 0,
+      "skippedTests": 0
+    }
+  },
+  "full": {
+    "result": "Failed",
+    "totalTestCount": 457,
+    "passedTests": 451,
+    "failedTests": 2,
+    "expectedFailures": 4,
+    "skippedTests": 0,
+    "runtimeWarnings": [],
+    "testFailures": [
+      {
+        "failureText": "Issue recorded: Timed out waiting for ready-source coverage",
+        "targetName": "golos-meetTests",
+        "testIdentifier": 279,
+        "testIdentifierString": "ProjectMemoryQueueTests/concreteMetadataBridgeReceivesReadyEventWithoutLaunchingApplication()",
+        "testIdentifierURL": "test://com.apple.xcode/golos-meet/golos-meetTests/ProjectMemoryQueueTests/concreteMetadataBridgeReceivesReadyEventWithoutLaunchingApplication()",
+        "testName": "concreteMetadataBridgeReceivesReadyEventWithoutLaunchingApplication()"
+      },
+      {
+        "failureText": "Issue recorded: Timed out waiting for direct restart coverage",
+        "targetName": "golos-meetTests",
+        "testIdentifier": 25,
+        "testIdentifierString": "MemoryBridgeDiagnosticsTests/releasingSoleOwnerIsAttributedToCreatingObserverAndDirectRestartRecovers()",
+        "testIdentifierURL": "test://com.apple.xcode/golos-meet/golos-meetTests/MemoryBridgeDiagnosticsTests/releasingSoleOwnerIsAttributedToCreatingObserverAndDirectRestartRecovers()",
+        "testName": "releasingSoleOwnerIsAttributedToCreatingObserverAndDirectRestartRecovers()"
+      }
+    ],
+    "runs": {
+      "passedTests": 636,
+      "failedTests": 2,
+      "expectedFailures": 12,
+      "skippedTests": 0
+    }
+  },
+  "tested_source_commit": "0901a1b8a1400233897f2f6b4bc1f19d6057a584",
+  "accepted_base": "ec77fea89c480eb1d0db7a5cbc2a1ff452d5bc46",
+  "checked64": "3561d0cbd81a9a48284274d746b5e1541128d53d",
+  "merge_commit": "b21e2d0",
+  "full_space": {
+    "mode": "full",
+    "command": [
+      "make",
+      "check"
+    ],
+    "cwd": "/Users/alfa/.codex/worktrees/61-memory-bridge-test-diagnostics/golos-meet",
+    "explicitEnvironment": {
+      "TEST_RUNNER_GOLOS_MEET_E5_FOLDER": "/tmp/golos-embedding-native/e5-small",
+      "TEST_RUNNER_GOLOS_MEET_RENDER_TALK_SETTINGS": "1",
+      "TEST_RUNNER_GOLOS_MEET_MENU_PREVIEW": "1",
+      "TEST_RUNNER_GOLOS_FIXTURE_EVIDENCE": "/tmp/golos61-p2-final-scopes",
+      "TEST_RUNNER_GOLOS_BRIDGE_EVIDENCE": "/tmp/golos61-p2-final-bridge",
+      "TEST_RUNNER_GOLOS_MEET_MIGRATION_TRACE_DIR": "/tmp/golos61-p2-final-migration"
+    },
+    "startedEpoch": 1793600888.791129,
+    "duration": 69.49825096130371,
+    "returncode": 2,
+    "minimumFreeBytes": 6517932032,
+    "samples": [
+      {
+        "elapsed": 0.0031518936157226562,
+        "freeBytes": 8021164032
+      },
+      {
+        "elapsed": 1.0084948539733887,
+        "freeBytes": 8021049344
+      },
+      {
+        "elapsed": 2.013702869415283,
+        "freeBytes": 8020946944
+      },
+      {
+        "elapsed": 3.018946886062622,
+        "freeBytes": 8020578304
+      },
+      {
+        "elapsed": 4.024147033691406,
+        "freeBytes": 8020578304
+      },
+      {
+        "elapsed": 5.029140949249268,
+        "freeBytes": 8020455424
+      },
+      {
+        "elapsed": 6.029582738876343,
+        "freeBytes": 8020377600
+      },
+      {
+        "elapsed": 7.0347819328308105,
+        "freeBytes": 8017412096
+      },
+      {
+        "elapsed": 8.036986827850342,
+        "freeBytes": 8018784256
+      },
+      {
+        "elapsed": 9.042119979858398,
+        "freeBytes": 8018612224
+      },
+      {
+        "elapsed": 10.047231912612915,
+        "freeBytes": 8017739776
+      },
+      {
+        "elapsed": 11.048311710357666,
+        "freeBytes": 8017448960
+      },
+      {
+        "elapsed": 12.04880166053772,
+        "freeBytes": 8019345408
+      },
+      {
+        "elapsed": 13.050572872161865,
+        "freeBytes": 8018268160
+      },
+      {
+        "elapsed": 14.055734872817993,
+        "freeBytes": 8018288640
+      },
+      {
+        "elapsed": 15.060897827148438,
+        "freeBytes": 7973208064
+      },
+      {
+        "elapsed": 16.07549285888672,
+        "freeBytes": 7916756992
+      },
+      {
+        "elapsed": 17.093490839004517,
+        "freeBytes": 7810949120
+      },
+      {
+        "elapsed": 18.10885000228882,
+        "freeBytes": 7438491648
+      },
+      {
+        "elapsed": 19.12504291534424,
+        "freeBytes": 7440105472
+      },
+      {
+        "elapsed": 20.328229904174805,
+        "freeBytes": 7437578240
+      },
+      {
+        "elapsed": 21.332011938095093,
+        "freeBytes": 7425523712
+      },
+      {
+        "elapsed": 22.335624933242798,
+        "freeBytes": 7422529536
+      },
+      {
+        "elapsed": 23.340939044952393,
+        "freeBytes": 7415234560
+      },
+      {
+        "elapsed": 24.346136808395386,
+        "freeBytes": 7401525248
+      },
+      {
+        "elapsed": 25.346768856048584,
+        "freeBytes": 7397089280
+      },
+      {
+        "elapsed": 26.351489067077637,
+        "freeBytes": 6837112832
+      },
+      {
+        "elapsed": 27.35334086418152,
+        "freeBytes": 6763696128
+      },
+      {
+        "elapsed": 28.3539457321167,
+        "freeBytes": 6690254848
+      },
+      {
+        "elapsed": 29.355578899383545,
+        "freeBytes": 6606192640
+      },
+      {
+        "elapsed": 30.36089777946472,
+        "freeBytes": 7497428992
+      },
+      {
+        "elapsed": 31.3659987449646,
+        "freeBytes": 7413571584
+      },
+      {
+        "elapsed": 32.3708758354187,
+        "freeBytes": 7350607872
+      },
+      {
+        "elapsed": 33.375311851501465,
+        "freeBytes": 7235190784
+      },
+      {
+        "elapsed": 34.378028869628906,
+        "freeBytes": 7151112192
+      },
+      {
+        "elapsed": 35.379639863967896,
+        "freeBytes": 7046070272
+      },
+      {
+        "elapsed": 36.38339877128601,
+        "freeBytes": 6951624704
+      },
+      {
+        "elapsed": 37.38614201545715,
+        "freeBytes": 6846767104
+      },
+      {
+        "elapsed": 38.389503955841064,
+        "freeBytes": 6517932032
+      },
+      {
+        "elapsed": 39.389853954315186,
+        "freeBytes": 7952523264
+      },
+      {
+        "elapsed": 40.394078969955444,
+        "freeBytes": 7952293888
+      },
+      {
+        "elapsed": 41.39652466773987,
+        "freeBytes": 7945760768
+      },
+      {
+        "elapsed": 42.39942407608032,
+        "freeBytes": 7838724096
+      },
+      {
+        "elapsed": 43.40166997909546,
+        "freeBytes": 7754817536
+      },
+      {
+        "elapsed": 44.40687894821167,
+        "freeBytes": 7671152640
+      },
+      {
+        "elapsed": 45.41217374801636,
+        "freeBytes": 7587155968
+      },
+      {
+        "elapsed": 46.41744685173035,
+        "freeBytes": 7503257600
+      },
+      {
+        "elapsed": 47.42236280441284,
+        "freeBytes": 7419138048
+      },
+      {
+        "elapsed": 48.42285084724426,
+        "freeBytes": 7345848320
+      },
+      {
+        "elapsed": 49.42587494850159,
+        "freeBytes": 7230492672
+      },
+      {
+        "elapsed": 50.429139852523804,
+        "freeBytes": 7167414272
+      },
+      {
+        "elapsed": 51.434475898742676,
+        "freeBytes": 7052058624
+      },
+      {
+        "elapsed": 52.43649482727051,
+        "freeBytes": 6957735936
+      },
+      {
+        "elapsed": 53.441736936569214,
+        "freeBytes": 6884192256
+      },
+      {
+        "elapsed": 54.445971965789795,
+        "freeBytes": 6800228352
+      },
+      {
+        "elapsed": 55.45074677467346,
+        "freeBytes": 7948546048
+      },
+      {
+        "elapsed": 56.45217490196228,
+        "freeBytes": 7948705792
+      },
+      {
+        "elapsed": 57.45435070991516,
+        "freeBytes": 7948488704
+      },
+      {
+        "elapsed": 58.45710802078247,
+        "freeBytes": 7948775424
+      },
+      {
+        "elapsed": 59.46229887008667,
+        "freeBytes": 7947939840
+      },
+      {
+        "elapsed": 60.464223861694336,
+        "freeBytes": 7947915264
+      },
+      {
+        "elapsed": 61.46945381164551,
+        "freeBytes": 7931498496
+      },
+      {
+        "elapsed": 62.47466278076172,
+        "freeBytes": 7911952384
+      },
+      {
+        "elapsed": 63.4764199256897,
+        "freeBytes": 7880880128
+      },
+      {
+        "elapsed": 64.4787027835846,
+        "freeBytes": 7880445952
+      },
+      {
+        "elapsed": 65.48282289505005,
+        "freeBytes": 7880220672
+      },
+      {
+        "elapsed": 66.48564887046814,
+        "freeBytes": 7879819264
+      },
+      {
+        "elapsed": 67.49085283279419,
+        "freeBytes": 7638761472
+      },
+      {
+        "elapsed": 68.49248886108398,
+        "freeBytes": 7324524544
+      },
+      {
+        "elapsed": 69.49761891365051,
+        "freeBytes": 7783272448
+      }
+    ]
+  },
+  "before_source": "c4678c3c396d0d942aa5d4a0b9e6f2b2ace6f524 plus saved native probe",
+  "targeted_source": "post-ec77fea ACK implementation, before final publication run/attempt evidence scoping; final scoping is covered by full",
+  "preserved_full_bundle": "/tmp/golos61-p2-final-preserved.xcresult",
+  "limitations": "Only the bounded timeline ACK P2 is fixed. Both actual coverage timeouts still have timelineDropped=0. No historical root cause, production workaround, timeout extension or repeat full.",
+  "source_sha256": {
+    "golos-meetTests/MemoryBridgeTestSession.swift": "ea91985bb3907763b04af5d2f8b7b38a1af7c39b038dc83313203044453954a6",
+    "golos-meetTests/MemoryBridgeDiagnosticsTests.swift": "240457634bc9275a0a4b81d40aaad3b11b6187bfc49cfdff66f5e7c34575bd0a",
+    "golos-meetTests/MemoryBridgeOverflowTests.swift": "26aec127cfdc58aa0554cdb7cb47b9fa76a3bbce7a238b7310e616bf0ec93d58",
+    "golos-meetTests/ProjectMemoryQueueTests.swift": "d7357f919e3dcf7801a6dc1122b2f7de63861b387e2ee7f631466c47f00e1d13",
+    "golos-meetTests/SQLiteFixtureScope.swift": "4a77deea563a53eb81f7c64d5651f53da1755478c836149da87ba96ee0b7ad8e"
+  }
+}

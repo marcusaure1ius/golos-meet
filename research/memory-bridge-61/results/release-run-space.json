@@ -1,0 +1,396 @@
+{
+  "mode": "release",
+  "command": [
+    "xcodebuild",
+    "build",
+    "-scheme",
+    "golos-meet",
+    "-configuration",
+    "Release",
+    "-destination",
+    "platform=macOS",
+    "-derivedDataPath",
+    ".build/xcode",
+    "CODE_SIGNING_ALLOWED=NO"
+  ],
+  "cwd": "/Users/alfa/.codex/worktrees/61-memory-bridge-test-diagnostics/golos-meet",
+  "explicitEnvironment": {},
+  "startedEpoch": 1793594463.690055,
+  "duration": 92.62416410446167,
+  "returncode": 0,
+  "minimumFreeBytes": 8385552384,
+  "samples": [
+    {
+      "elapsed": 0.002234220504760742,
+      "freeBytes": 9144549376
+    },
+    {
+      "elapsed": 1.0067782402038574,
+      "freeBytes": 9144332288
+    },
+    {
+      "elapsed": 2.0156941413879395,
+      "freeBytes": 9144647680
+    },
+    {
+      "elapsed": 3.023426055908203,
+      "freeBytes": 9144152064
+    },
+    {
+      "elapsed": 4.025905132293701,
+      "freeBytes": 9143808000
+    },
+    {
+      "elapsed": 5.029128313064575,
+      "freeBytes": 9143660544
+    },
+    {
+      "elapsed": 6.031902313232422,
+      "freeBytes": 9143296000
+    },
+    {
+      "elapsed": 7.042078256607056,
+      "freeBytes": 9131147264
+    },
+    {
+      "elapsed": 8.047311067581177,
+      "freeBytes": 9122840576
+    },
+    {
+      "elapsed": 9.049658060073853,
+      "freeBytes": 9110241280
+    },
+    {
+      "elapsed": 10.05091404914856,
+      "freeBytes": 9094627328
+    },
+    {
+      "elapsed": 11.056794166564941,
+      "freeBytes": 9081913344
+    },
+    {
+      "elapsed": 12.065163135528564,
+      "freeBytes": 9066864640
+    },
+    {
+      "elapsed": 13.065928936004639,
+      "freeBytes": 9066377216
+    },
+    {
+      "elapsed": 14.07592511177063,
+      "freeBytes": 9066295296
+    },
+    {
+      "elapsed": 15.077803134918213,
+      "freeBytes": 9066078208
+    },
+    {
+      "elapsed": 16.079238176345825,
+      "freeBytes": 9066061824
+    },
+    {
+      "elapsed": 17.084413290023804,
+      "freeBytes": 9063014400
+    },
+    {
+      "elapsed": 18.09134006500244,
+      "freeBytes": 9062850560
+    },
+    {
+      "elapsed": 19.094934940338135,
+      "freeBytes": 9062801408
+    },
+    {
+      "elapsed": 20.102840185165405,
+      "freeBytes": 9062789120
+    },
+    {
+      "elapsed": 21.105478048324585,
+      "freeBytes": 9062785024
+    },
+    {
+      "elapsed": 22.115625143051147,
+      "freeBytes": 9062658048
+    },
+    {
+      "elapsed": 23.125770092010498,
+      "freeBytes": 9060114432
+    },
+    {
+      "elapsed": 24.13593602180481,
+      "freeBytes": 9054810112
+    },
+    {
+      "elapsed": 25.142686128616333,
+      "freeBytes": 9041596416
+    },
+    {
+      "elapsed": 26.14701795578003,
+      "freeBytes": 9028829184
+    },
+    {
+      "elapsed": 27.15286922454834,
+      "freeBytes": 9010937856
+    },
+    {
+      "elapsed": 28.153648138046265,
+      "freeBytes": 8998600704
+    },
+    {
+      "elapsed": 29.162515878677368,
+      "freeBytes": 8998596608
+    },
+    {
+      "elapsed": 30.172724962234497,
+      "freeBytes": 8997814272
+    },
+    {
+      "elapsed": 31.179786920547485,
+      "freeBytes": 8996880384
+    },
+    {
+      "elapsed": 32.18835520744324,
+      "freeBytes": 8990314496
+    },
+    {
+      "elapsed": 33.198562145233154,
+      "freeBytes": 8990658560
+    },
+    {
+      "elapsed": 34.20879316329956,
+      "freeBytes": 8989937664
+    },
+    {
+      "elapsed": 35.21173906326294,
+      "freeBytes": 8989782016
+    },
+    {
+      "elapsed": 36.21588611602783,
+      "freeBytes": 8988561408
+    },
+    {
+      "elapsed": 37.22223997116089,
+      "freeBytes": 8976306176
+    },
+    {
+      "elapsed": 38.22524309158325,
+      "freeBytes": 8948310016
+    },
+    {
+      "elapsed": 39.2317910194397,
+      "freeBytes": 8921354240
+    },
+    {
+      "elapsed": 40.24071407318115,
+      "freeBytes": 8873689088
+    },
+    {
+      "elapsed": 41.24684691429138,
+      "freeBytes": 8871538688
+    },
+    {
+      "elapsed": 42.254643201828,
+      "freeBytes": 8872329216
+    },
+    {
+      "elapsed": 43.26485514640808,
+      "freeBytes": 8867037184
+    },
+    {
+      "elapsed": 44.265809059143066,
+      "freeBytes": 8867037184
+    },
+    {
+      "elapsed": 45.275959968566895,
+      "freeBytes": 8866402304
+    },
+    {
+      "elapsed": 46.2782461643219,
+      "freeBytes": 8862203904
+    },
+    {
+      "elapsed": 47.283123254776,
+      "freeBytes": 8862097408
+    },
+    {
+      "elapsed": 48.292705059051514,
+      "freeBytes": 8862101504
+    },
+    {
+      "elapsed": 49.30288100242615,
+      "freeBytes": 8862072832
+    },
+    {
+      "elapsed": 50.30991315841675,
+      "freeBytes": 8862064640
+    },
+    {
+      "elapsed": 51.32009816169739,
+      "freeBytes": 8861929472
+    },
+    {
+      "elapsed": 52.330281257629395,
+      "freeBytes": 8860934144
+    },
+    {
+      "elapsed": 53.33975696563721,
+      "freeBytes": 8863932416
+    },
+    {
+      "elapsed": 54.341254234313965,
+      "freeBytes": 8863383552
+    },
+    {
+      "elapsed": 55.34858322143555,
+      "freeBytes": 8863338496
+    },
+    {
+      "elapsed": 56.35693407058716,
+      "freeBytes": 8863322112
+    },
+    {
+      "elapsed": 57.358397245407104,
+      "freeBytes": 8863293440
+    },
+    {
+      "elapsed": 58.36527109146118,
+      "freeBytes": 8863223808
+    },
+    {
+      "elapsed": 59.36709022521973,
+      "freeBytes": 8863064064
+    },
+    {
+      "elapsed": 60.37659215927124,
+      "freeBytes": 8861454336
+    },
+    {
+      "elapsed": 61.38025426864624,
+      "freeBytes": 8865759232
+    },
+    {
+      "elapsed": 62.38916301727295,
+      "freeBytes": 8865443840
+    },
+    {
+      "elapsed": 63.395328998565674,
+      "freeBytes": 8865263616
+    },
+    {
+      "elapsed": 64.4029061794281,
+      "freeBytes": 8865218560
+    },
+    {
+      "elapsed": 65.40790390968323,
+      "freeBytes": 8864669696
+    },
+    {
+      "elapsed": 66.40942788124084,
+      "freeBytes": 8862445568
+    },
+    {
+      "elapsed": 67.41945219039917,
+      "freeBytes": 8850632704
+    },
+    {
+      "elapsed": 68.42355608940125,
+      "freeBytes": 8831995904
+    },
+    {
+      "elapsed": 69.43053221702576,
+      "freeBytes": 8818978816
+    },
+    {
+      "elapsed": 70.44134497642517,
+      "freeBytes": 8812589056
+    },
+    {
+      "elapsed": 71.4547770023346,
+      "freeBytes": 8788246528
+    },
+    {
+      "elapsed": 72.46491694450378,
+      "freeBytes": 8758927360
+    },
+    {
+      "elapsed": 73.47504615783691,
+      "freeBytes": 8750645248
+    },
+    {
+      "elapsed": 74.48194003105164,
+      "freeBytes": 8740024320
+    },
+    {
+      "elapsed": 75.49208116531372,
+      "freeBytes": 8730648576
+    },
+    {
+      "elapsed": 76.49569988250732,
+      "freeBytes": 8717762560
+    },
+    {
+      "elapsed": 77.50396418571472,
+      "freeBytes": 8701411328
+    },
+    {
+      "elapsed": 78.51413130760193,
+      "freeBytes": 8684552192
+    },
+    {
+      "elapsed": 79.52281594276428,
+      "freeBytes": 8662888448
+    },
+    {
+      "elapsed": 80.53730201721191,
+      "freeBytes": 8649191424
+    },
+    {
+      "elapsed": 81.54331588745117,
+      "freeBytes": 8637382656
+    },
+    {
+      "elapsed": 82.54821395874023,
+      "freeBytes": 8619622400
+    },
+    {
+      "elapsed": 83.55837202072144,
+      "freeBytes": 8595996672
+    },
+    {
+      "elapsed": 84.56860423088074,
+      "freeBytes": 8575754240
+    },
+    {
+      "elapsed": 85.57886219024658,
+      "freeBytes": 8556572672
+    },
+    {
+      "elapsed": 86.58447408676147,
+      "freeBytes": 8534052864
+    },
+    {
+      "elapsed": 87.59050512313843,
+      "freeBytes": 8518012928
+    },
+    {
+      "elapsed": 88.59914326667786,
+      "freeBytes": 8510697472
+    },
+    {
+      "elapsed": 89.60932397842407,
+      "freeBytes": 8497963008
+    },
+    {
+      "elapsed": 90.61535906791687,
+      "freeBytes": 8485355520
+    },
+    {
+      "elapsed": 91.61782026290894,
+      "freeBytes": 8435482624
+    },
+    {
+      "elapsed": 92.62371826171875,
+      "freeBytes": 8385552384
+    }
+  ]
+}

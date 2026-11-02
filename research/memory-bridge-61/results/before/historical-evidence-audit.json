@@ -1,0 +1,33 @@
+{
+  "bundle": "/tmp/golos60-p2-preserved-full.xcresult",
+  "activities": "/Users/alfa/.codex/worktrees/review-61-bridge-diagnosis/golos-meet/research/question-history-fixtures-58/p2-single-use/results/bridge-activities.json",
+  "attachmentCount": 1,
+  "attachments": [
+    {
+      "path": "/tmp/golos60-p2-final-attachments/461EF27C-87AB-4486-A662-36970D774C9B.json",
+      "sha256": "ed838f0a14a890b59fdb22e23cff82c8479e0e667533c2faa31108c981055ec2",
+      "bytes": 1138,
+      "stages": [
+        "scope-created",
+        "root-owned",
+        "store-owned",
+        "opened",
+        "metadata-bridge-start",
+        "metadata-bridge-initial-snapshot",
+        "body-finished",
+        "closed",
+        "root-removed"
+      ]
+    }
+  ],
+  "hasCallsWorkerDurableConfigSnapshots": false,
+  "known": "initial snapshot reached, ready-source coverage timeout, native close0 then removal; no SQLite failure in this scope",
+  "unknown": [
+    "exact event receipt",
+    "config completion/start ACK",
+    "calls/physical adapter progress",
+    "discovered job/lease state",
+    "bridge lifetime at timeout",
+    "which actor/executor awaited"
+  ]
+}
