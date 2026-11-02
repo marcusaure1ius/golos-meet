@@ -1,0 +1,35 @@
+{
+  "utc": "2026-11-02T09:22:55.126Z",
+  "prs": [
+    {
+      "number": 63,
+      "merged": true,
+      "head_sha": "9134715492c4f02664d5160ed4576e84173bfeab",
+      "merge_commit_sha": "17110ae0877bd211c943e3f58fcc8442bdff5a64",
+      "base": "codex/product-preview",
+      "url": "https://github.com/marcusaure1ius/golos-meet/pull/63"
+    },
+    {
+      "number": 65,
+      "merged": true,
+      "head_sha": "dcdbf7aca8c98c637c6e1650141d258df55e9210",
+      "merge_commit_sha": "e9990685bdcf334039cbce7edbfb245750b0154a",
+      "base": "codex/product-preview",
+      "url": "https://github.com/marcusaure1ius/golos-meet/pull/65"
+    }
+  ],
+  "issues": [
+    {
+      "number": 58,
+      "state": "open",
+      "url": "https://github.com/marcusaure1ius/golos-meet/issues/58",
+      "updated_at": "2026-11-02T09:05:46Z"
+    },
+    {
+      "number": 61,
+      "state": "open",
+      "url": "https://github.com/marcusaure1ius/golos-meet/issues/61",
+      "updated_at": "2026-11-02T09:16:47Z"
+    }
+  ]
+}
