@@ -94,4 +94,39 @@ command = ['xcrun','swiftc','-parse-as-library','-swift-version','5','-default-i
 with (qa/'build.log').open('w') as log: result = subprocess.run(command,stdout=log,stderr=subprocess.STDOUT)
 if result.returncode: parser.exit(result.returncode,'Build failed: '+str(qa/'build.log')+'\n')
 for resource in products.glob('*.bundle'): shutil.copytree(resource,app/'Resources'/resource.name,dirs_exist_ok=True)
+if args.gate_diagnostics:
+    # Seal only the finished NEW diagnostic bundle. Never sign linked products.
+    bundle_root = app.parent.resolve()
+    binary = app/'MacOS'/executable
+    signature = {'scope':str(bundle_root),'commands':[],
+                 'binary_sha256_before_sign':hashlib.sha256(binary.read_bytes()).hexdigest(),
+                 'status':'INCOMPLETE','host_launched':False,
+                 'comparison':'Whole-file before/after hashes only; no executable-section equivalence claim'}
+    try:
+        assert bundle_root.parent == qa and not synthetic_root.exists()
+        members = list(bundle_root.rglob('*'))
+        for member in members:
+            assert not member.is_symlink() and member.resolve().is_relative_to(bundle_root), 'Signing refuses symlink/outside member'
+        magic = {b'\xcf\xfa\xed\xfe',b'\xce\xfa\xed\xfe',b'\xfe\xed\xfa\xcf',b'\xfe\xed\xfa\xce',b'\xca\xfe\xba\xbe',b'\xca\xfe\xba\xbf'}
+        nested_code = []
+        for member in members:
+            if member.is_file() and member != binary:
+                with member.open('rb') as inp: header = inp.read(4)
+                if header in magic: nested_code.append(member)
+        containers = [p for p in members if p.is_dir() and p.suffix in {'.bundle','.app','.framework','.xpc','.appex'}]
+        targets = sorted(nested_code,key=lambda p:len(p.parts),reverse=True) + sorted(containers,key=lambda p:len(p.parts),reverse=True) + [bundle_root]
+        for target in targets:
+            assert target.resolve().is_relative_to(bundle_root)
+            command = ['/usr/bin/codesign','--force','--sign','-','--timestamp=none',str(target)]
+            signed = subprocess.run(command,capture_output=True,text=True)
+            signature['commands'].append({'kind':'sign','command':command,'exit_code':signed.returncode,'stdout':signed.stdout,'stderr':signed.stderr})
+            if signed.returncode: parser.exit(signed.returncode,'Diagnostic signing failed\n')
+        command = ['/usr/bin/codesign','--verify','--deep','--strict','--verbose=2',str(bundle_root)]
+        verified = subprocess.run(command,capture_output=True,text=True)
+        signature['commands'].append({'kind':'verify','command':command,'exit_code':verified.returncode,'stdout':verified.stdout,'stderr':verified.stderr})
+        if verified.returncode: parser.exit(verified.returncode,'Diagnostic strict signature verification failed\n')
+        signature['binary_sha256_after_sign'] = hashlib.sha256(binary.read_bytes()).hexdigest()
+        signature['status'] = 'Signed own completed diagnostic bundle; strict verify Passed; NOT launched'
+    finally:
+        (qa/'signature-receipt.json').write_text(json.dumps(signature,indent=2)+'\n')
 print('APP='+str(app.parent));print('BUNDLE='+bundle);print('ROOT='+str(synthetic_root));print('BUILD_LOG='+str(qa/'build.log'));print('SOURCE_ALLOWLIST='+str(qa/'source-allowlist.txt'))

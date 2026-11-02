@@ -2,7 +2,7 @@
 
 Это отдельная host-only часть той же feature PR55, base `24b49b067fcda107e397ed4f2461f9bb23de322f`, accepted preview `23b1da158304a2c0c596752d9150e489b1884fb4`. Новый managed worktree/branch `codex/37-panel-gate-diagnostics`. Production, Swift-тесты, Rust, Makefile, deadlines и privacy guards должны оставаться побайтово равными24b. Старые worktrees, reviewer app, completed seed и evidence не изменяются.
 
-**Текущий source исправляет подтверждённый review43 P2 на prepared `049ff242643240a8bd57006fa1b1ad8ee240fb1b` и ещё не собран.** Старый build ниже относится к checkpoint `fcdd8837`, содержит этот startup blocker и остаётся незапущенным. Его Passed означает только успешную компиляцию. Старые receipts и static assessment сохранены без изменений; исходный review verdict не переносится на новый source. Сейчас разрешены только source fix и статическая оценка, новая сборка ожидает final review049ff и решения root.
+**Актуальное продолжение: [final fix двух P2](final-fix/README.md).** Review43 frozen `049ff242643240a8bd57006fa1b1ad8ee240fb1b` завершён: startup guard и strict bundle signature. Startup source исправлен вf152e7d, diagnostic signing добавлен отдельно. Root разрешил одну final fix build после статических guards; её receipt будет отдельным. Старый build ниже относится к checkpoint `fcdd8837`, содержит оба P2 и остаётся незапущенным. Его Passed означает только успешную компиляцию. Старые receipts и static assessment сохранены без изменений; старый verdict не переносится на новый source.
 
 **Никакого запуска host/CUA/held-case в этой подготовке нет.** Разрешена одна сборка≤180s, output≤1GiB, fresh reserve6GiB+forecast1GiB, STOP<6GiB. После сборки code/report/receipt передаются независимому review43. Root отдельно решает публикацию exact SHA и один actual UI case. Remote PR55 до нового root guard не обновлять; новый feature PR не создавать.
 
@@ -56,10 +56,10 @@ Output root: `/private/var/folders/f6/hwzbqsn10fn6p6gx8d5vmnfm0000gn/T/golos-mem
 Offline audit без compiler/launch:
 
 ```sh
-python3 -B research/panel-gate-diagnostics-37/p2-initial-attempt/assess.py --check
+python3 -B research/panel-gate-diagnostics-37/final-fix/prepare.py --check
 ```
 
-Он проверяет защищённые source bytes, delta и порядок переходов по фактическому source, сохранность старых build receipts, hash старого бинаря и отсутствие runtime library. Исходный `validate.py` сохранён для frozen049ff и намеренно требует равенства working source старому compiled checkpoint; на исправленном source это условие больше не выполняется. Ни одна статическая оценка не проверяет поведение неисполненного case. Перед новой сборкой нужны final review049ff и решение root, а перед actual launch — независимый delta-review нового exact SHA и отдельное разрешение.
+Он проверяет protected source, сохранность startup fix/старых build receipts/старого бинаря, отсутствие runtime library, точные копии review049ff и normal-builder AST. Исходный `validate.py` сохранён для frozen049ff и намеренно требует равенства working source старому compiled checkpoint; на исправленном source это условие больше не выполняется. Startup-only `p2-initial-attempt/assess.py` сохранён дляf152e7d и требует прежнего builder; новая packaging delta оценивается отдельно. Ни одна статическая оценка не проверяет неисполненный runtime case. Для actual launch нужны независимый delta-review нового exact SHA и отдельное решение root.
 
 ## Статус и передача
 
