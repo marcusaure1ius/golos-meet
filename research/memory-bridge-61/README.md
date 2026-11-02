@@ -6,6 +6,8 @@
 
 Отдельные managed worktree `61-memory-bridge-test-diagnostics` и ветка `codex/61-memory-bridge-test-diagnostics` созданы после fetch от принятого `fc2a92956fd50bd791e4926d5b388c8fe39f84d4`. GitHub подтвердил merged PR60 checked `ceeb98b5dd1c39dc774c810c82e834ae38fdfc72`; ancestry и пустой полный tree diff checked→preview проверены. Панель55 не включена в основу. Её worktree/head `50e22e00504ec2f87628464c9ed68fa8c4bb09e7`, safehost и evidence не изменялись.
 
+Пока шла реализация, target preview продвинулся до `7be254c4a1eceb28755ad60d718a4ed72cb21179` через merged test-only PR62 checked `c9831bc4e15aecd42f95f11454e1b19f34a9ae63`. Fresh API это подтвердил, GitHub считает PR63 clean/mergeable. Изменения62 не включались в ветку61 и не откатываются: production diff fc2→7be пустой, но shared SQLiteFixtureScope/tests обновились. Здесь full проверяет дерево61 на базеfc2, не combined61+62; оценка совместимости/необходимой combined проверки остаётся независимому reviewer/координатору.
+
 `AGENTS.md`, `CLAUDE.md`, этап4 `DEVELOPMENT_PLAN.md`, issues61/37/5 и навыки golos-task/review прочитаны. Agent Board не используется. Main/PR8draft не изменялись; автор PR не сливает. Следующие fixture58 партии не включались.
 
 Production control flow/policies/CAS/stop/timeouts не меняются. Изменения в worker и bridge обёрнуты в DEBUG; новый observer также целиком DEBUG. В Release нет observation/gate API. Единственный controlled gate — DEBUG-only опциональный per-instance hook между `changed()` и прежним guard перед `start()`, nil по умолчанию. Нет глобальной startup barrier или ожидания готовности в runtime.
