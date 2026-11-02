@@ -2,7 +2,40 @@
 
 Результат — диагностический test contract и управляемые controls, а не исправление установленного production-дефекта. Причина старого ready-source timeout и эпизодов OCR остаётся неизвестной. Новый успешный full не доказывает их исправление.
 
-**Текущая комбинация после принятого PR62: full FAILED, 2 coverage timeouts.** Reviewable diagnostic contract не означает прохождения mandatory full. Последние исходники `e38a65a09adb1a335578ec5fa71dff073d773aa0`; [final-after62/checks](results/final-after62/checks.json). Изменения после него — только evidence/отчёт.
+**Текущая комбинация после исправления review P2 и принятого PR64: full FAILED, те же 2 coverage timeouts.** Проверенные исходники `0901a1b8a1400233897f2f6b4bc1f19d6057a584`; [актуальные checks](results/p2-ack/checks.json). Позднейшие изменения — evidence и отчёт. Старые failed reports сохранены без перезаписи.
+
+## Исправление review P2: ACK после overflow
+
+Независимый reviewer проверил `c4678c3c396d0d942aa5d4a0b9e6f2b2ace6f524` и подтвердил один P2: `trace.has()` искал completion в raw timeline, ограниченном 4096 rows. Настоящий ACK после заполнения журнала терялся для ожидания. Дополнительных P1/P2 в том ревью нет; verdict не переносится на новый SHA.
+
+В собственном native before-repro на c467 + сохранённый probe worker действительно started и отдельный observer получил `configuration.start.return`, но `trace.has()` вернул false. Тест Failed ровно на false absence. [Before summary](results/p2-ack/before/summary.json), source probe, stdout, exact attachments и timeline сохранены. Первая sandbox-попытка остановилась на package/compiler cache permissions до тестов; её log также сохранён отдельно. Native before был один.
+
+Исправление только в тестовом коде:
+
+- Raw evidence по-прежнему ограничено 4096 rows + dropped counter. Оно больше не управляет startup/deinit/gate/producer ожиданиями.
+- Отдельный одноразовый ACK receipt хранит максимум одно matching event; trace доставляет его до проверки cap и хранит максимум 32 weak subscriptions. Нет replay из старого timeline. Освобождённые/consumed subscriptions удаляются; превышение лимита — отдельная ошибка.
+- Startup receipt привязан к bridge/worker/configuration; текущий native worker run проверяется при чтении и consumption. Старый scope/другая generation и consumed receipt дают явную ошибку. Deinit receipt относится только к одному уникальному bridge lifetime/worker и присоединяется один раз.
+- Паузы контролируются actual MainActor flags. Publication сначала ждёт actual producer idle, затем проверяет evidence с точными worker/run/attempt. Отсутствующий raw event после truncation даёт `evidenceOverflow`, а не false absence/timeout.
+- Regression cases: saturation + настоящий native start-return/5s held timeout/recovery/deinit join; второй native configuration; foreign owner/kind/config/run/attempt, consumption/replay и subscription bound. Error/cancel controls теперь тоже исполняются после saturation. Исходный normal coverage fence и его 5s не менялись.
+
+Принятая `ec77fea89c480eb1d0db7a5cbc2a1ff452d5bc46` (PR64 checked `3561d0cbd81a9a48284274d746b5e1541128d53d`) включена обычным merge `b21e2d0` до final source commit. Fresh API/fetch/ancestry и empty full tree checked64→preview проверены. Это только QuestionUIFixture; production/Rust delta от старого c467 пустой. Непроверенные следующие партии58 не брались.
+
+| Проверка P2 | Фактический результат |
+|---|---|
+| Native before на c467 + probe | 1 test/1 run Failed: ACK получен, bounded lookup false |
+| Targeted после ACK fix + accepted64 | 32 tests/44 runs Passed, 0failed/skips/expected/runtimeWarnings |
+| Единственный final `make check` на0901a1b | **Failed:**457 total tests;451ordinary passed +4existing expected +2failed;636passed runs +12expected +2failed;0skips/runtimeWarnings |
+| Overflow/configuration controls в final full | Passed; error/cancel после overflow также Passed |
+| Selected native lifecycle targeted / full | В каждом7 roots/7opens/7native close0/7unlink после close;0scope errors |
+| Attachments targeted / full |55 /255 exact scope/bridge byte matches; full41OCR inputs verified по hash/bytes |
+| Full free-space minimum |6,517,932,032bytes (~6.07GiB), shared-volume telemetry |
+
+Targeted был до последнего уточнения publication evidence по run/attempt; это уточнение проверено final full. Проверки не повторялись для получения green. Final full bundle: `/tmp/golos61-p2-final-preserved.xcresult`. Все raw log/stdout/attachments/scopes/bridge reports упакованы lossless; архивы повторно прочитаны и побайтовые SHA members сверены. [Collector](collect_p2.py) только экспортирует уже завершённые результаты.
+
+Два actual failures снова: `original-ready-event/ready-source coverage` и `controlled-owner-release/direct restart coverage`. **У обоих `timelineDropped=0`**, в обоих physical snapshot entered/fakeCalls0; bridge weakAlive=true в original и false намеренно в owner-release. Worker started/leased и durable running, показания неатомарные. Это не объясняет задержку до adapter и не доказывает historical root cause. P2 переполнения к этим двум отказам не относится. Их rich captures сохранены в [full audit](results/p2-ack/full/audit.json) и raw bridge archive.
+
+Global stdout final:69SQLite failure lines/6unlink warnings/3e5rt lines. Selected7scopes clean; общие remaining SQLite/OCR gates не сняты. Нет изменений production, увеличения timeout, expected/skip для bridge/OCR, extra OCR probes, GUI, пользовательских данных, облака или новых моделей. Main/PR8draft/панель55/safehost прежние. Нужен независимый delta review нового SHA; автор PR не сливает.
+
 
 ## Основа и границы
 
@@ -10,7 +43,7 @@
 
 Пока шла реализация, target preview продвинулся до `7be254c4a1eceb28755ad60d718a4ed72cb21179` через merged test-only PR62 checked `c9831bc4e15aecd42f95f11454e1b19f34a9ae63`. Fresh API/ancestry/empty full tree diff проверены. По явной команде координатора эта основа включена обычным merge `b8d44a2e8aa0342158f3ccaae043cae1804862c5`, без конфликтов. Production/Rust diff fc2→7be пустой; shared SQLiteFixtureScope/tests обновились. Прежний passed full наfc2 сохранён отдельно; выполнены combined checks, результаты ниже. Дальнейшие непринятые #58 ветки не включались.
 
-`AGENTS.md`, `CLAUDE.md`, этап4 `DEVELOPMENT_PLAN.md`, issues61/37/5 и навыки golos-task/review прочитаны. Agent Board не используется. Main/PR8draft не изменялись; автор PR не сливает. Следующие fixture58 партии не включались.
+`AGENTS.md`, `CLAUDE.md`, этап4 `DEVELOPMENT_PLAN.md`, issues61/37/5 и навыки golos-task/review прочитаны. Agent Board не используется. Main/PR8draft не изменялись; автор PR не сливает. После принятой PR64 следующие непринятые fixture58 партии не включались.
 
 Production control flow/policies/CAS/stop/timeouts не меняются. Изменения в worker и bridge обёрнуты в DEBUG; новый observer также целиком DEBUG. В Release нет observation/gate API. Единственный controlled gate — DEBUG-only опциональный per-instance hook между `changed()` и прежним guard перед `start()`, nil по умолчанию. Нет глобальной startup barrier или ожидания готовности в runtime.
 
@@ -56,7 +89,7 @@ Observer nil не вызывает построение больших snapshot 
 
 В full controlled coverage failure записан через5.360s после начала именно ожидания; case elapsed8.864s включает подготовку/другие действия.5s deadline не расширялся: возобновление actor после deadline зависит от scheduler. Это измерение конкретного запуска, не универсальная задержка и не диагноз historical timeout.
 
-## Последняя интеграция и фактические отказы
+## История интеграции PR62 и фактических отказов
 
 | Проверка после62 | Результат |
 |---|---|
@@ -77,9 +110,9 @@ Final full выполнили один раз после этой подтвер
 
 Все неатомарные readings/timestamps и полные timelines сохранены. На финальном дереве OCR-тесты прошли, но known OCR gate других runs не снят. Global stdout final содержит69 SQLite failure lines/26unlink warnings/3e5rt lines; selected5scopes clean. Existing expected outcomes4tests/12runs относятся к принятым negative SQLite helper tests; bridge/OCR не expected и не skipped.
 
-Raw failed bundles сохранены также `/tmp/golos61-after62-preserved.xcresult` и `/tmp/golos61-final-preserved.xcresult`. Архивы содержат reports/scopes/attachments/migration, raw gzip stdout/logs, member hashes. [Final checks](results/final-after62/checks.json) — актуальный результат; initial checks ниже исторические.
+Raw failed bundles сохранены также `/tmp/golos61-after62-preserved.xcresult` и `/tmp/golos61-final-preserved.xcresult`. Архивы содержат reports/scopes/attachments/migration, raw gzip stdout/logs, member hashes. [Final-after62 checks](results/final-after62/checks.json) — сохранённый результат до P2; актуальные checks P2 приведены выше.
 
-Всего было3 full на трёх разных деревьях: initialfc2, integrated62, затем подтверждённая control-only race fix. Каждая новая основа/правка и каждый красный результат выделены. Это не повтор одного SHA до зелёного. Release audit остаётся применим: production source после62/test-only fix побайтово тот же, что при Release build.
+До review P2 было3 full на трёх разных деревьях: initialfc2, integrated62, затем подтверждённая control-only race fix. Каждая новая основа/правка и каждый красный результат выделены. После принятой PR64 и исправления P2 выполнен ещё один full, также Failed (см. выше). Это не повтор одного SHA до зелёного. Release audit остаётся применим: production source после62/test-only fix побайтово тот же, что при Release build.
 
 ## Первоначальные проверки наfc2 (сохранены)
 
