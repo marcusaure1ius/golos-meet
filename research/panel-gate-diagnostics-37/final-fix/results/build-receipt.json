@@ -1,0 +1,63 @@
+{
+  "utc": "2026-11-02T14:12:35.863979+00:00",
+  "authorization": "Root final review049ff: ONE combined startup+signature fix build; no launch",
+  "status": "Final fix build/signature verify Passed; NOT launched; runtime NOT RUN",
+  "build_started": true,
+  "host_launched": false,
+  "actual_case_executed": false,
+  "remote55_preflight": {
+    "command": [
+      "git",
+      "ls-remote",
+      "--heads",
+      "origin",
+      "refs/heads/codex/37-project-memory-panel"
+    ],
+    "exit_code": 0,
+    "stdout": "24b49b067fcda107e397ed4f2461f9bb23de322f\trefs/heads/codex/37-project-memory-panel\n",
+    "stderr": ""
+  },
+  "inventory": {
+    "xcodebuild": {
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "swiftc": {
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "swift-frontend": {
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": ""
+    }
+  },
+  "code_head": "2febb801cd211db850eb3ce8dba70741a526d5a0",
+  "base": "24b49b067fcda107e397ed4f2461f9bb23de322f",
+  "command": [
+    "python3",
+    "research/build_memory_panel_preview.py",
+    "--gate-diagnostics",
+    "--gate-root",
+    "/private/var/folders/f6/hwzbqsn10fn6p6gx8d5vmnfm0000gn/T/golos-memory-gate37-a19e1b2b2d6b4518abd9614c7f16130f",
+    "--derived-data",
+    "/private/tmp/golos37recovery-derived"
+  ],
+  "output_root": "/private/var/folders/f6/hwzbqsn10fn6p6gx8d5vmnfm0000gn/T/golos-memory-gate37-a19e1b2b2d6b4518abd9614c7f16130f",
+  "diagnostic_source_sha256": {
+    "research/MemoryPanelGateDiagnostics.swift": "7c2ff146a126fdaded2fd9e6ffd90dc8d9cbdd9ae093d5ef3009e6f657dc8dba",
+    "research/build_memory_panel_preview.py": "663b6e42a8789db8996850623dfc9d2d3f6cb94fbf6b49ab743c60543718d032"
+  },
+  "preflight_free_bytes": 91046187008,
+  "reserve_bytes": 6442450944,
+  "forecast_bytes": 1073741824,
+  "output_budget_bytes": 1073741824,
+  "build_budget_seconds": 180,
+  "pid": 76711,
+  "exit_code": 0,
+  "elapsed": 29.36929187500209,
+  "post_free_bytes": 90710740992,
+  "output_bytes": 334455314
+}

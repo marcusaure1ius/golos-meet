@@ -1,0 +1,10 @@
+Этот build НЕ разрешает запуск. Сначала независимое exact-SHA review и отдельное решение root.
+После разрешённого запуска: одна fresh library, один consent и один physical held call.
+1. Открыть Память, Подготовить контроль удержания; дождаться token ACK.
+2. Очередь → Просмотреть контекст. Спокойно прочитать весь context, затем один раз Разрешить.
+3. Дождаться видимого physical-held ACK + сохранённого first running; выбрать Приватный в actual Picker.
+4. Не нажимать Release: coordinator делает это только после durable early cancel END<20s.
+5. После physical return/history0/calls1: К проекту → Память → Очередь → Retry при необходимости → новый preview.
+Второго согласия не давать. После send весь actual case ограничен45s, подготовка5мин.
+Любой timeout/read/write/overflow/identity gap — INCONCLUSIVE. Cleanup не означает proof.
+Не очищать и не переиспользовать библиотеку. Не запускать обычное приложение, OCR, сеть, ASR.

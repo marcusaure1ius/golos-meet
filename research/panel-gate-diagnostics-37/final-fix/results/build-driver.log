@@ -1,0 +1,5 @@
+APP=/private/var/folders/f6/hwzbqsn10fn6p6gx8d5vmnfm0000gn/T/golos-memory-gate37-a19e1b2b2d6b4518abd9614c7f16130f/Golos Memory Gate Diagnostics.app
+BUNDLE=com.golos.memory-gate37.e09a046874694f3ba87b32616c963c6f
+ROOT=/private/var/folders/f6/hwzbqsn10fn6p6gx8d5vmnfm0000gn/T/golos-memory-gate37-a19e1b2b2d6b4518abd9614c7f16130f/library
+BUILD_LOG=/private/var/folders/f6/hwzbqsn10fn6p6gx8d5vmnfm0000gn/T/golos-memory-gate37-a19e1b2b2d6b4518abd9614c7f16130f/build.log
+SOURCE_ALLOWLIST=/private/var/folders/f6/hwzbqsn10fn6p6gx8d5vmnfm0000gn/T/golos-memory-gate37-a19e1b2b2d6b4518abd9614c7f16130f/source-allowlist.txt

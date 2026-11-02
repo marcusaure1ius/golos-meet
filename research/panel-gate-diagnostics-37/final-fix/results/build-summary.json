@@ -1,0 +1,18 @@
+{
+  "status": "One final fix build and deep strict signature verify Passed; runtime NOT RUN",
+  "code_head": "2febb801cd211db850eb3ce8dba70741a526d5a0",
+  "source_manifest_sha256": "ee1dddb5698539a1bed1287c1db0d8263ea75b5a854a8cbcb615acbd70c9350f",
+  "app": "/private/var/folders/f6/hwzbqsn10fn6p6gx8d5vmnfm0000gn/T/golos-memory-gate37-a19e1b2b2d6b4518abd9614c7f16130f/Golos Memory Gate Diagnostics.app",
+  "bundle": "com.golos.memory-gate37.e09a046874694f3ba87b32616c963c6f",
+  "binary_sha256_before_sign": "1244171ace0b471810eb0c3d85e81ec3cff4f9bab2970ba3630822a08287050e",
+  "binary_sha256_after_sign": "ae7f8d0e29241bf61deaa0c95cc5829f3f08c4b08ead04d2fdc07d25b6043094",
+  "elapsed": 29.36929187500209,
+  "output_bytes": 334455314,
+  "telemetry_samples": 59,
+  "minimum_free_bytes": 90710740992,
+  "signature_commands": 4,
+  "strict_verify_exit_code": 0,
+  "old_bundle_unmodified_and_unlaunched": true,
+  "host_launched": false,
+  "actual_case_executed": false
+}

@@ -2,7 +2,7 @@
 
 Это отдельная host-only часть той же feature PR55, base `24b49b067fcda107e397ed4f2461f9bb23de322f`, accepted preview `23b1da158304a2c0c596752d9150e489b1884fb4`. Новый managed worktree/branch `codex/37-panel-gate-diagnostics`. Production, Swift-тесты, Rust, Makefile, deadlines и privacy guards должны оставаться побайтово равными24b. Старые worktrees, reviewer app, completed seed и evidence не изменяются.
 
-**Актуальное продолжение: [final fix двух P2](final-fix/README.md).** Review43 frozen `049ff242643240a8bd57006fa1b1ad8ee240fb1b` завершён: startup guard и strict bundle signature. Startup source исправлен вf152e7d, diagnostic signing добавлен отдельно. Root разрешил одну final fix build после статических guards; её receipt будет отдельным. Старый build ниже относится к checkpoint `fcdd8837`, содержит оба P2 и остаётся незапущенным. Его Passed означает только успешную компиляцию. Старые receipts и static assessment сохранены без изменений; старый verdict не переносится на новый source.
+**Актуальное продолжение: [final fix двух P2](final-fix/README.md).** Review43 frozen `049ff242643240a8bd57006fa1b1ad8ee240fb1b` завершён: startup guard и strict bundle signature. Startup source исправлен в f152e7d, diagnostic signing добавлен отдельно. Разрешённая root одна final fix build checkpoint **2febb801** прошла за 29,369 с, deep strict signature verify exit 0; её receipts отдельные, runtime NOT RUN. Старый build ниже относится к checkpoint `fcdd8837`, содержит оба P2 и остаётся незапущенным. Его Passed означает только успешную компиляцию. Старые receipts и static assessment сохранены без изменений; старый verdict не переносится на новый source.
 
 **Никакого запуска host/CUA/held-case в этой подготовке нет.** Разрешена одна сборка≤180s, output≤1GiB, fresh reserve6GiB+forecast1GiB, STOP<6GiB. После сборки code/report/receipt передаются независимому review43. Root отдельно решает публикацию exact SHA и один actual UI case. Remote PR55 до нового root guard не обновлять; новый feature PR не создавать.
 
@@ -40,7 +40,7 @@ Apple описывает публикацию `@Published` в willSet, до пр
 
 | Проверка | Фактический результат |
 |---|---|
-| Сборка |Одна попытка, exit0,37.436s; повторов/full/test matrix не было |
+| Сборка |Одна попытка, exit 0,37.436s; повторов/full/test matrix не было |
 | Outputs |334724977B (~319MiB), ниже1GiB |
 | Space |74samples; preflight91507605504B, minimum91202404352B; reserve6GiB+forecast1GiB, STOP не сработал |
 | Compiler |0warning lines /0error lines в сохранённом raw build.log |
@@ -65,6 +65,6 @@ python3 -B research/panel-gate-diagnostics-37/final-fix/prepare.py --check
 
 Static assessment: [results/static-assessment.json.gz](results/static-assessment.json.gz). Результат единственного build сохранён в results/build-receipt.json и raw build.log. Meaningful compile failure не исправляется с новым автоматическим build; incomplete не выдаётся за Passed.
 
-P2 delta: [отчёт](p2-initial-attempt/README.md), [отдельная статическая оценка](p2-initial-attempt/static-assessment.json). Fix не изменяет production, tests, privacy, deadline, transport count или автоматические действия пользователя. Новый source UNBUILT / case NOT RUN; независимое ревью продолжается на frozen049ff, затем требуется delta-review актуального SHA.
+Startup-only P2 delta f152e7d: [исторический отчёт](p2-initial-attempt/README.md), [его статическая оценка](p2-initial-attempt/static-assessment.json). Совместный final fix checkpoint 2febb801 собран отдельно, signature verify0; [current report/receipts](final-fix/README.md). Production, tests, privacy, deadlines, transport count и автоматические действия пользователя не меняются. Runtime case NOT RUN; review049ff завершён с двумя P2, новый exact SHA требует independent43 delta-review.
 
 Normal singleton composition и width-extrema не проверяются этим диагностическим case. Прежние FINAL24b/noP1P2 и старые inconclusive/0call captures сохраняют свои исходы. Не требуется от человека повторять старый неинструментированный путь или ждать команды чата между timed действиями.
