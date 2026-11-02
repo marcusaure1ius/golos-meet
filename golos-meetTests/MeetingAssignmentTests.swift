@@ -14,7 +14,7 @@ private actor AssignmentFixtureEncoder: LocalPassageEmbedding {
     }
 }
 
-@MainActor @Suite struct MeetingAssignmentTests {
+@MainActor @Suite(SQLiteFixtureTrait()) struct MeetingAssignmentTests {
     private struct Fixture {
         let root: URL
         let store: ProjectStore
@@ -23,16 +23,32 @@ private actor AssignmentFixtureEncoder: LocalPassageEmbedding {
         let service: MeetingAssignmentService
         let encoder = AssignmentFixtureEncoder()
         var url: URL { root.appendingPathComponent("knowledge.sqlite") }
-        init(budget: Int = 2_000, comparisons: Int = 100_000) throws {
+        init(budget: Int = 2_000, comparisons: Int = 100_000, inspect: LocalIndexingService.Inspector? = nil) throws {
             root = FileManager.default.temporaryDirectory.appendingPathComponent("assignment-fixture-\(UUID())")
             try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
+            SQLiteFixtureScope.current?.register(root: root)
             store = ProjectStore(url: root.appendingPathComponent("knowledge.sqlite"))
+            SQLiteFixtureScope.current?.register(store: store)
             importer = DocumentImporter(store: store, root: root.appendingPathComponent("copies"))
             service = MeetingAssignmentService(store: store, meetingsRoot: root.appendingPathComponent("meetings"), documentsRoot: root.appendingPathComponent("copies"), windowBudget: budget, comparisonBudget: comparisons)
             let encoder = self.encoder
-            indexer = LocalIndexingService(store: store, meetingsRoot: root.appendingPathComponent("meetings"), inspect: {
+            indexer = LocalIndexingService(store: store, meetingsRoot: root.appendingPathComponent("meetings"), inspect: inspect ?? {
                 .init(model: .init(id: encoder.modelID, dimensions: encoder.dimensions), folder: nil, load: { encoder })
             })
+            if let scope = SQLiteFixtureScope.current {
+                let indexer = self.indexer
+                scope.onFinish { [weak indexer, weak scope] in
+                    guard let indexer else { return }
+                    scope?.note("assignment-indexer-stop-requested")
+                    await indexer.stop(); await indexer.waitUntilIdle()
+                    scope?.note("assignment-indexer-stopped")
+                }
+            }
+        }
+        func reopenedStore() -> ProjectStore {
+            let reopened = ProjectStore(url: url)
+            SQLiteFixtureScope.current?.register(store: reopened)
+            return reopened
         }
         func document(_ text: String, project: UUID) async throws {
             let file = root.appendingPathComponent("\(UUID()).txt")
@@ -55,7 +71,11 @@ private actor AssignmentFixtureEncoder: LocalPassageEmbedding {
             await indexer.start(); await indexer.waitUntilIdle()
             return p
         }
-        func cleanup() async { await indexer.stop(); try? FileManager.default.removeItem(at: root) }
+        func cleanup() async {
+            SQLiteFixtureScope.current?.note("assignment-indexer-stop-requested")
+            await indexer.stop(); await indexer.waitUntilIdle()
+            SQLiteFixtureScope.current?.note("assignment-indexer-stopped")
+        }
     }
 
     @Test func automaticManyToManyPersistsAndRepeatingSameCalculationDoesNotChurnEpoch() async throws {
@@ -68,7 +88,7 @@ private actor AssignmentFixtureEncoder: LocalPassageEmbedding {
             let plan = try #require(try await f.service.prepare(meetingID: "target"))
             #expect(plan.result.assignedProjectIDs == [a.id, b.id])
             #expect(try await f.service.commit(plan) == .applied)
-            let reopened = ProjectStore(url: f.url)
+            let reopened = f.reopenedStore()
             #expect(try await reopened.snapshot().meetingProjects["target"] == [a.id, b.id])
             #expect(try await reopened.meetingAssignmentCheckpoint().decisions["target"]?.origin == .automatic)
             let again = try #require(try await f.service.prepare(meetingID: "target"))
@@ -92,7 +112,7 @@ private actor AssignmentFixtureEncoder: LocalPassageEmbedding {
             await #expect(throws: (any Error).self) { try await f.service.commit(plan) }
             try await f.store.requestEmbeddingReindex(.init(kind: .meeting, externalID: "target"))
             await f.indexer.changed(); await f.indexer.waitUntilIdle()
-            let restarted = ProjectStore(url: f.url)
+            let restarted = f.reopenedStore()
             #expect(try await restarted.snapshot().meetingProjects["target"] ?? [] == selection)
             #expect(try await restarted.meetingAssignmentCheckpoint().decisions["target"]?.origin == .manual)
             #expect(try await f.service.prepare(meetingID: "target") == nil)
@@ -188,7 +208,7 @@ private actor AssignmentFixtureEncoder: LocalPassageEmbedding {
             #expect(renamed.result.assignedProjectIDs == [p.id])
             #expect(try await f.service.commit(renamed) == .applied)
             try await f.store.assignMeeting("target", to: [])
-            let reopened = ProjectStore(url: f.url)
+            let reopened = f.reopenedStore()
             #expect(try await reopened.meetingAssignmentCheckpoint().decisions["target"]?.origin == .manual)
             #expect(try await f.service.prepare(meetingID: "target") == nil)
         } catch { await f.cleanup(); throw error }
@@ -313,11 +333,14 @@ private actor AssignmentFixtureEncoder: LocalPassageEmbedding {
             try db.execute("PRAGMA user_version=4")
             try db.execute("CREATE TABLE meeting_decisions_v5(sentinel TEXT)")
             try db.execute("INSERT INTO meeting_decisions_v5 VALUES ('keep')")
-            await #expect(throws: ProjectStoreError.self) { try await ProjectStore(url: f.url).snapshot() }
+            let scope = try #require(SQLiteFixtureScope.current)
+            await scope.expectingFailureOnNewConnection(at: f.url, phase: .prepare, operation: .create, result: 1, extended: 1) {
+                await #expect(throws: ProjectStoreError.self) { try await f.reopenedStore().snapshot() }
+            }
             #expect(try db.rows("PRAGMA user_version") == [["4"]])
             #expect(try db.rows("SELECT sentinel FROM meeting_decisions_v5") == [["keep"]])
             try db.execute("DROP TABLE meeting_decisions_v5")
-            let restarted = ProjectStore(url: f.url)
+            let restarted = f.reopenedStore()
             #expect(try await restarted.snapshot().meetingProjects["target"] == [a.id, b.id])
             let checkpoint = try await restarted.meetingAssignmentCheckpoint()
             #expect(checkpoint.decisions["inbox"]?.origin == .manual && checkpoint.decisions["target"]?.origin == .manual)
@@ -325,5 +348,52 @@ private actor AssignmentFixtureEncoder: LocalPassageEmbedding {
             #expect(try await restarted.documents().count == 1)
         } catch { await f.cleanup(); throw error }
         await f.cleanup()
+    }
+}
+
+@MainActor extension MeetingAssignmentTests {
+    private enum FixtureBodyError: Error { case sentinel }
+    private func interruptedFixtureBody(scope: SQLiteFixtureScope, entered: IndexGate, release: IndexGate, cancel: Bool) async throws {
+        let f = try Fixture(inspect: {
+            await entered.signal(); await release.wait()
+            return nil
+        })
+        _ = try await f.store.createProject(name: "Synthetic lifecycle")
+        let reopened = f.reopenedStore()
+        #expect(try await reopened.snapshot().projects.count == 1)
+        await f.indexer.start(); await entered.wait()
+        // Leave an actually suspended index worker behind on either exit path.
+        // The scope's weak cleanup request must stop/join it after this body exits.
+        if cancel { withUnsafeCurrentTask { $0?.cancel() }; try Task.checkCancellation() }
+        throw FixtureBodyError.sentinel
+    }
+    @Test(arguments: [false, true]) func fixtureThrowAndCancellationDrainSuspendedIndexerBeforeNativeCloseAndUnlink(cancel: Bool) async throws {
+        let scope = SQLiteFixtureScope(test: "assignment-interrupted-body"), entered = IndexGate(), release = IndexGate()
+        try await SQLiteFixtureScope.$current.withValue(scope) {
+            try await ProjectDatabase.$lifecycleObserver.withValue({ scope.observe($0) }) {
+                let body = await Task { () -> Result<Void, any Error> in
+                    do { try await interruptedFixtureBody(scope: scope, entered: entered, release: release, cancel: cancel); return .success(()) }
+                    catch { return .failure(error) }
+                }.value
+                let rootName = try #require(scope.trace.first { $0["stage"] == "root-owned" }?["root"])
+                let root = FileManager.default.temporaryDirectory.appendingPathComponent(rootName)
+                let cleanup = Task { try await scope.finish() }
+                let deadline = ContinuousClock.now + .seconds(3)
+                while !scope.trace.contains(where: { $0["stage"] == "assignment-indexer-stop-requested" }), ContinuousClock.now < deadline { await Task.yield() }
+                #expect(scope.trace.contains { $0["stage"] == "assignment-indexer-stop-requested" })
+                #expect(FileManager.default.fileExists(atPath: root.path))
+                #expect(!scope.trace.contains { $0["stage"] == "root-removed" })
+                // One reopened store has closed, but the suspended worker still
+                // owns the primary store. No native force-close is available.
+                #expect(scope.trace.filter { $0["stage"] == "opened" }.count == 2)
+                #expect(scope.trace.filter { $0["stage"] == "closed" }.count == 1)
+                await release.signal(); try await cleanup.value
+                #expect(FileManager.default.fileExists(atPath: root.path) == false)
+                #expect(scope.trace.filter { $0["stage"] == "closed" && $0["result"] == "0" }.count == 2)
+                #expect(!scope.trace.contains { $0["stage"] == "sqlite-failure" })
+                if cancel { #expect(throws: CancellationError.self) { try body.get() } }
+                else { #expect(throws: FixtureBodyError.sentinel) { try body.get() } }
+            }
+        }
     }
 }

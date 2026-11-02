@@ -1,0 +1,22 @@
+{
+  "command": [
+    "make",
+    "check",
+    "DERIVED_DATA=/private/tmp/golos58assignment-derived"
+  ],
+  "cwd": "<user-home>/.codex/worktrees/58-assignment-fixture-lifecycle/golos-meet",
+  "source_sha256": {
+    "golos-meetTests/MeetingAssignmentTests.swift": "ea121655c0c0ec42a7f57baea05598dd6363e31fb6bd61aab80500de8029b094",
+    "golos-meetTests/SQLiteFixtureScope.swift": "4a77deea563a53eb81f7c64d5651f53da1755478c836149da87ba96ee0b7ad8e",
+    "golos-meetTests/SQLiteAsyncFaultExpectationTests.swift": "53417245b15be4018b97018cdb1b5c20972011946b991ca5e54a9e7c74c7db4b"
+  },
+  "base": "fc2a92956fd50bd791e4926d5b388c8fe39f84d4",
+  "safe_test_environment": {
+    "TEST_RUNNER_GOLOS_FIXTURE_EVIDENCE": "/private/tmp/golos58assignment-full-events",
+    "TEST_RUNNER_GOLOS_MEET_E5_FOLDER": "/tmp/golos-embedding-native/e5-small",
+    "TEST_RUNNER_GOLOS_MEET_RENDER_TALK_SETTINGS": "1",
+    "TEST_RUNNER_GOLOS_MEET_MENU_PREVIEW": "1"
+  },
+  "exit_code": 2,
+  "elapsed": 90.14304691605503
+}

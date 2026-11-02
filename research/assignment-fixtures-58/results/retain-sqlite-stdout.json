@@ -1,0 +1,3 @@
+[
+  "2026-11-02 07:17:38.458047+0300 Golos Meet[30643:7686878] [library] SQLite failure {\"connection\":\"9E915CE6-EA2D-4AC8-AFE1-206C5DB2DF5D\",\"elapsedMilliseconds\":0.22266671294346452,\"extended\":1,\"operation\":\"create\",\"phase\":\"prepare\",\"result\":1,\"transaction\":\"82B4257A-CCD8-4157-BF95-3F1637F88703\",\"transactionElapsedMilliseconds\":0.25533337611705065,\"transactionPhase\":\"work\"}"
+]
