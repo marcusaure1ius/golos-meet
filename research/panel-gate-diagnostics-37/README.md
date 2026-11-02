@@ -59,6 +59,6 @@ python3 -B research/panel-gate-diagnostics-37/validate.py
 
 ## Статус и передача
 
-Static assessment: [results/static-assessment.json](results/static-assessment.json). Результат единственного build сохранён в results/build-receipt.json и raw build.log. Meaningful compile failure не исправляется с новым автоматическим build; incomplete не выдаётся за Passed.
+Static assessment: [results/static-assessment.json.gz](results/static-assessment.json.gz). Результат единственного build сохранён в results/build-receipt.json и raw build.log. Meaningful compile failure не исправляется с новым автоматическим build; incomplete не выдаётся за Passed.
 
 Normal singleton composition и width-extrema не проверяются этим диагностическим case. Прежние FINAL24b/noP1P2 и старые inconclusive/0call captures сохраняют свои исходы. Не требуется от человека повторять старый неинструментированный путь или ждать команды чата между timed действиями.
