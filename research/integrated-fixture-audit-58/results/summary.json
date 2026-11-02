@@ -1,0 +1,52 @@
+{
+  "devicesAndConfigurations" : [
+    {
+      "device" : {
+        "architecture" : "arm64",
+        "deviceId" : "00006040-000C51D93404801C",
+        "deviceName" : "My Mac",
+        "modelName" : "MacBook Pro",
+        "osBuildNumber" : "26A434",
+        "osVersion" : "27.0.1",
+        "platform" : "macOS"
+      },
+      "expectedFailures" : 12,
+      "failedTests" : 0,
+      "passedTests" : 644,
+      "skippedTests" : 0,
+      "testPlanConfiguration" : {
+        "configurationId" : "1",
+        "configurationName" : "Test Scheme Action"
+      }
+    }
+  ],
+  "environmentDescription" : "golos-meet · Built with macOS 27.0.1",
+  "expectedFailures" : 4,
+  "failedTests" : 0,
+  "finishTime" : 1793611225.754,
+  "passedTests" : 455,
+  "result" : "Passed",
+  "runtimeWarnings" : [
+
+  ],
+  "skippedTests" : 0,
+  "startTime" : 1793611174.889,
+  "statistics" : [
+    {
+      "subtitle" : "253 test runs",
+      "title" : "56 tests ran with dynamic parameters"
+    }
+  ],
+  "testFailures" : [
+
+  ],
+  "title" : "Test - golos-meet",
+  "topInsights" : [
+    {
+      "category" : "Longest Test Runs",
+      "impact" : "6% of duration",
+      "text" : "11 longest test runs with outlier durations exceeding 6.01s (three standard deviations)"
+    }
+  ],
+  "totalTestCount" : 459
+}
