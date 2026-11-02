@@ -1,0 +1,33 @@
+{
+  "before": {
+    "vnode": 22,
+    "families": {
+      "assignment-fixture": 22
+    },
+    "extended6922": 0
+  },
+  "retain": {
+    "vnode": 0,
+    "families": {},
+    "extended6922": 0
+  },
+  "after": {
+    "vnode": 0,
+    "families": {},
+    "extended6922": 0
+  },
+  "final-targeted": {
+    "vnode": 0,
+    "families": {},
+    "extended6922": 0
+  },
+  "full": {
+    "vnode": 22,
+    "families": {
+      "knowledge-search": 5,
+      "index-service": 2,
+      "questions-ui": 15
+    },
+    "extended6922": 0
+  }
+}
