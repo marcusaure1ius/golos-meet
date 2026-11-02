@@ -2,11 +2,13 @@
 
 Результат — диагностический test contract и управляемые controls, а не исправление установленного production-дефекта. Причина старого ready-source timeout и эпизодов OCR остаётся неизвестной. Новый успешный full не доказывает их исправление.
 
+**Текущая комбинация после принятого PR62: full FAILED, 2 coverage timeouts.** Reviewable diagnostic contract не означает прохождения mandatory full. Последние исходники `e38a65a09adb1a335578ec5fa71dff073d773aa0`; [final-after62/checks](results/final-after62/checks.json). Изменения после него — только evidence/отчёт.
+
 ## Основа и границы
 
 Отдельные managed worktree `61-memory-bridge-test-diagnostics` и ветка `codex/61-memory-bridge-test-diagnostics` созданы после fetch от принятого `fc2a92956fd50bd791e4926d5b388c8fe39f84d4`. GitHub подтвердил merged PR60 checked `ceeb98b5dd1c39dc774c810c82e834ae38fdfc72`; ancestry и пустой полный tree diff checked→preview проверены. Панель55 не включена в основу. Её worktree/head `50e22e00504ec2f87628464c9ed68fa8c4bb09e7`, safehost и evidence не изменялись.
 
-Пока шла реализация, target preview продвинулся до `7be254c4a1eceb28755ad60d718a4ed72cb21179` через merged test-only PR62 checked `c9831bc4e15aecd42f95f11454e1b19f34a9ae63`. Fresh API это подтвердил, GitHub считает PR63 clean/mergeable. Изменения62 не включались в ветку61 и не откатываются: production diff fc2→7be пустой, но shared SQLiteFixtureScope/tests обновились. Здесь full проверяет дерево61 на базеfc2, не combined61+62; оценка совместимости/необходимой combined проверки остаётся независимому reviewer/координатору.
+Пока шла реализация, target preview продвинулся до `7be254c4a1eceb28755ad60d718a4ed72cb21179` через merged test-only PR62 checked `c9831bc4e15aecd42f95f11454e1b19f34a9ae63`. Fresh API/ancestry/empty full tree diff проверены. По явной команде координатора эта основа включена обычным merge `b8d44a2e8aa0342158f3ccaae043cae1804862c5`, без конфликтов. Production/Rust diff fc2→7be пустой; shared SQLiteFixtureScope/tests обновились. Прежний passed full наfc2 сохранён отдельно; выполнены combined checks, результаты ниже. Дальнейшие непринятые #58 ветки не включались.
 
 `AGENTS.md`, `CLAUDE.md`, этап4 `DEVELOPMENT_PLAN.md`, issues61/37/5 и навыки golos-task/review прочитаны. Agent Board не используется. Main/PR8draft не изменялись; автор PR не сливает. Следующие fixture58 партии не включались.
 
@@ -26,7 +28,7 @@ Production control flow/policies/CAS/stop/timeouts не меняются. Изм
 
 Timeline покрывает event receipt до main-actor hop и последующий main hop, config changed/start begin/return, discovery, claim, active attempt, injected transport enter/return и service publication/unchanged/insufficient return. Возврат `worker.start()` обозначен именно как возврат с observed run/started fields, а не как полная готовность всей очереди. Revision>0 по-прежнему только initial snapshot fence. Durable runtime generation уже существует после миграции; сама по себе она также не подтверждает startup.
 
-Observer nil не вызывает построение больших snapshot dictionaries. Запись ограничена4096 rows; число отброшенных rows сохраняется, не скрывается. Physical enter/return означает вызов внедрённого ChatCompleter, **не живой HTTP**; отдельно сохраняется fakeCalls, чтобы не смешать вход в adapter с прохождением beforeSending guard.
+Observer nil не вызывает построение больших snapshot dictionaries. Запись ограничена4096 rows; число отброшенных rows сохраняется, не скрывается. Physical enter/return означает вызов внедрённого ChatCompleter, **не живой HTTP**; отдельно сохраняется fakeCalls, чтобы не смешать вход в adapter с прохождением beforeSending guard. У return-event timestamp относится к возврату, а fields сохраняют binding snapshot входа (run/attempt), не повторный snapshot состояния при возврате.
 
 ## Failure recorder
 
@@ -54,9 +56,34 @@ Observer nil не вызывает построение больших snapshot 
 
 В full controlled coverage failure записан через5.360s после начала именно ожидания; case elapsed8.864s включает подготовку/другие действия.5s deadline не расширялся: возобновление actor после deadline зависит от scheduler. Это измерение конкретного запуска, не универсальная задержка и не диагноз historical timeout.
 
-## Проверки
+## Последняя интеграция и фактические отказы
 
-Проверенное дерево исходников: `d1aeb2f7bc30aa5de69e1f1d8e4d36f76af61041`. После него добавляются только отчёт/evidence.
+| Проверка после62 | Результат |
+|---|---|
+| Targeted после исправления control assertion |29tests/41runs Passed,0fail/skips/runtimeWarnings |
+| Первый combined full, source b8d44a2 |Failed: total452,446ordinary passed +4reported expected +2failed;626passed runs +12expected +2failed;0skips/runtimeWarnings |
+| Final combined full, source e38a65a |**Failed с теми же counts**, исходный ready-source timeout и новый direct restart coverage timeout; control publication assertion прошёл |
+| Native lifecycle selected5cases final |5roots/5native close0/5unlink, close до удаления,0scope errors |
+| Final attachments |309,227scope/bridge byte matches,41OCR input hash/bytes verified |
+| Final free-space minimum |7,682,637,824bytes (~7.15GiB), shared-volume telemetry |
+
+Первый combined full получил обычный ready-source timeout и обнаружил дефект **самого нового control assertion**: durable completed уже читался, а service caller ещё не вернулся, поэтому немедленный `trace.has(publication.inserted.return)` был false. В финальном timeline того же owner событие уже присутствовало. Исходный failed source/summary/activities/whole bundle сохранены в [after62-before-fix](results/after62-before-fix). Исправлено только ожидание отдельного return acknowledgement в новом control (те же5s); исходные coverage fences и production не менялись. Targeted после этого прошёл.
+
+Final full выполнили один раз после этой подтверждённой правки. Он всё ещё failed: (1) original-ready-event/ready-source coverage, (2) controlled-owner-release/direct restart coverage. Оба теперь действительно исполнили rich recorder до unwind. Никакого rerun после этого final и ослабления5s нет.
+
+В новом original episode bridge weakAlive=true, enabled/started=true, startup-return config совпадал с текущим, event получен, job leased/active и durable running/cursor0 с тем же run/attempt. При physical snapshot entered/returned/fakeCalls=0. В final capture ещё не было update.begin, то есть не доказано, запускалась ли task preparation или где именно она ожидала. В предыдущем combined episode update.begin был, physical.enter появился позже во время неатомарного capture. Это разные наблюдения **новых эпизодов**, не объяснение старых failures.
+
+В direct-restart episode bridge weakAlive=false намеренно: deinit/stop исходного owner завершился до direct restart, worker получил новый run и lease, started=true/durable running, physical counts0 на момент capture. Recovery до5s в этом full не прошёл. Не объявляем это потерей event, неожиданным deinit, причиной OCR или подтверждённым SQLite/executor defect. Нужна отдельная ограниченная интерпретация actual evidence координатором/reviewer; production workaround не добавляется.
+
+Все неатомарные readings/timestamps и полные timelines сохранены. На финальном дереве OCR-тесты прошли, но known OCR gate других runs не снят. Global stdout final содержит69 SQLite failure lines/26unlink warnings/3e5rt lines; selected5scopes clean. Existing expected outcomes4tests/12runs относятся к принятым negative SQLite helper tests; bridge/OCR не expected и не skipped.
+
+Raw failed bundles сохранены также `/tmp/golos61-after62-preserved.xcresult` и `/tmp/golos61-final-preserved.xcresult`. Архивы содержат reports/scopes/attachments/migration, raw gzip stdout/logs, member hashes. [Final checks](results/final-after62/checks.json) — актуальный результат; initial checks ниже исторические.
+
+Всего было3 full на трёх разных деревьях: initialfc2, integrated62, затем подтверждённая control-only race fix. Каждая новая основа/правка и каждый красный результат выделены. Это не повтор одного SHA до зелёного. Release audit остаётся применим: production source после62/test-only fix побайтово тот же, что при Release build.
+
+## Первоначальные проверки наfc2 (сохранены)
+
+Первоначальное проверенное дерево исходников: `d1aeb2f7bc30aa5de69e1f1d8e4d36f76af61041`. После него добавляются только отчёт/evidence.
 
 | Проверка | Результат |
 |---|---|
@@ -74,7 +101,7 @@ Expected outcomes полного набора принадлежат **уже п
 
 Global stdout не объявляется чистым:55 SQLite failure lines,40unlink warnings других fixture families и3e5rt diagnostic lines сохранены целиком и в excerpt. Negative tests и незавершённая общая #58 диагностика отдельно; пяти selected scopes эти ошибки не приписываются. Весь system logarchive не публикуется.
 
-Один full после final source diff, без rerun-until-green. Первый targeted build предшествовал финальным read-marker/error/cancel additions и отдельно сохранён как iteration; final targeted и full покрывают final source. Release/full runner раз в секунду записывает free-space telemetry и не чистит/перезапускает ничего. Метрика относится к shared volume, не доказывает, кто занял пространство. Extra OCR probes=0. Новых весов/моделей не скачивали.
+Первоначальный full наfc2 — один запуск; subsequent combined runs перечислены отдельно выше, без rerun-until-green. Первый targeted build предшествовал финальным read-marker/error/cancel additions и отдельно сохранён как iteration; final targeted и full покрывают final source. Release/full runner раз в секунду записывает free-space telemetry и не чистит/перезапускает ничего. Метрика относится к shared volume, не доказывает, кто занял пространство. Extra OCR probes=0. Новых весов/моделей не скачивали.
 
 ## Артефакты и воспроизведение
 
@@ -91,4 +118,4 @@ python3 research/memory-bridge-61/run_check.py full --prefix /tmp/golos61-review
 
 ## Передача
 
-Самопроверка не выявила нового production finding; отдельный reviewer должен проверить exact новый SHA: DEBUG-only isolation/Release absence, owner lifetime/context, failure path и native lifecycle, без смешивания negative controls с historical causes. #61/37/#5 не закрывать по одному зелёному запуску; решение по диагностическому контракту и остающемуся bridge gate принимает координатор после независимого review. PR55 и общая interactive/OCR проверка остаются отдельными.
+Самопроверка не установила production root cause; mandatory combined full остаётся failed. Отдельный reviewer должен проверить exact новый SHA: DEBUG-only isolation/Release absence, owner lifetime/context, failure path и native lifecycle, без смешивания negative controls с historical causes. #61/37/#5 не закрывать по одному зелёному запуску; решение по диагностическому контракту и остающемуся bridge gate принимает координатор после независимого review. PR55 и общая interactive/OCR проверка остаются отдельными.
