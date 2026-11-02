@@ -1,0 +1,22 @@
+{
+  "before": {
+    "vnode_lines": 0,
+    "families": {},
+    "extended6922_lines": 0
+  },
+  "targeted": {
+    "vnode_lines": 0,
+    "families": {},
+    "extended6922_lines": 0
+  },
+  "full": {
+    "vnode_lines": 38,
+    "families": {
+      "index-service": 5,
+      "knowledge-search": 5,
+      "assignment-fixture": 13,
+      "questions-ui": 15
+    },
+    "extended6922_lines": 0
+  }
+}

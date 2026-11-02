@@ -42,14 +42,23 @@ import Testing
         root = FileManager.default.temporaryDirectory.appendingPathComponent("question-service-\(UUID())")
         try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
         let meetings = root.appendingPathComponent("meetings"), documents = root.appendingPathComponent("copies")
+        let scope = try #require(SQLiteFixtureScope.current)
+        scope.register(root: root)
         store = ProjectStore(url: root.appendingPathComponent("knowledge.sqlite"))
+        scope.register(store: store)
         importer = DocumentImporter(store: store, root: documents)
         search = KnowledgeSearchService(store: store, meetingsRoot: meetings, documentsRoot: documents,
                                         queryEmbedding: query)
         service = KnowledgeQuestionService(store: store, search: search, meetingsRoot: meetings,
                                            documentsRoot: documents, client: spy, model: "synthetic-only")
+        scope.onFinish { @MainActor [weak self] in self?.cleanup() }
     }
-    func cleanup() { service.cancel(); try? FileManager.default.removeItem(at: root) }
+    func cleanup() {
+        service.cancel()
+        // Callback fixtures may capture self, including when an assertion throws.
+        spy.beforeGate = nil; spy.afterSend = nil
+        SQLiteFixtureScope.current?.note("question-cancel-and-callback-release")
+    }
     func project(_ name: String = "Проект", policy: ProjectCloudPolicy = .askEveryTime) async throws -> KnowledgeProject {
         let p = try await store.createProject(name: name)
         try await store.setCloudPolicy(policy, for: p.id)
@@ -63,12 +72,14 @@ import Testing
     func sql(_ statement: String) throws {
         var db: OpaquePointer?
         guard sqlite3_open(root.appendingPathComponent("knowledge.sqlite").path, &db) == SQLITE_OK else { throw CocoaError(.fileWriteUnknown) }
-        defer { sqlite3_close(db) }
+        let connection = UUID(), scope = SQLiteFixtureScope.current
+        scope?.observe(.opened(connection, root.appendingPathComponent("knowledge.sqlite")))
+        defer { let result = sqlite3_close(db); scope?.observe(.closed(connection, result)) }
         guard sqlite3_exec(db, statement, nil, nil, nil) == SQLITE_OK else { throw CocoaError(.fileWriteUnknown) }
     }
 }
 
-@MainActor @Suite struct KnowledgeQuestionServiceTests {
+@MainActor @Suite(SQLiteFixtureTrait()) struct KnowledgeQuestionServiceTests {
     @Test func retrievalEgressAnswerAndOpeningUseOnlySelectedVersionedFragmentsWithoutWeightsOrNetwork() async throws {
         let f = try QuestionFixture(); defer { f.cleanup() }
         let p = try await f.project(), q = try await f.project("Сосед", policy: .allowSelectedContext)
@@ -294,5 +305,40 @@ import Testing
         _ = try await f.service.answer(request)
         let json = try JSONSerialization.jsonObject(with: Data(try #require(f.spy.messages.last?.content).utf8)) as? [String: Any]
         #expect((json?["fragments"] as? [[String: Any]])?.count == 12)
+    }
+}
+
+@MainActor @Suite struct QuestionFixtureLifecycleTests {
+    private enum CallbackFailure: Error { case expected }
+    private func exerciseCallback(_ mode: String) async throws {
+        let f = try QuestionFixture(); defer { f.cleanup() }
+        let project = try await f.project(policy: .allowSelectedContext)
+        _ = try await f.document(owners: [project.id])
+        let request = try await f.service.prepare(question: "Релиз", projectID: project.id)
+        if mode == "throw" {
+            f.spy.beforeGate = { _ = f.root; throw CallbackFailure.expected }
+            _ = try await f.service.answer(request)
+        } else {
+            let entered = IndexGate(), release = IndexGate()
+            // Deliberately capture the fixture and ignore cooperative cancellation.
+            f.spy.afterSend = { _ = f.root; await entered.signal(); await release.wait() }
+            let pending = Task { try await f.service.answer(request) }
+            await entered.wait(); pending.cancel(); await release.signal()
+            await #expect(throws: CancellationError.self) { try await pending.value }
+        }
+    }
+    @Test(arguments: ["throw", "cancel"])
+    func throwingAndCancelledCallbacksReleaseFixtureBeforeRootRemoval(_ mode: String) async throws {
+        let scope = SQLiteFixtureScope(test: "question-callback-\(mode)")
+        try await SQLiteFixtureScope.$current.withValue(scope) {
+            try await ProjectDatabase.$lifecycleObserver.withValue({ scope.observe($0) }) {
+                if mode == "throw" {
+                    await #expect(throws: CallbackFailure.expected) { try await exerciseCallback(mode) }
+                } else { try await exerciseCallback(mode) }
+                try await scope.finish()
+            }
+        }
+        #expect(scope.trace.filter { $0["stage"] == "root-removed" && $0["exists"] == "false" }.count == 1)
+        #expect(!scope.trace.contains { $0["stage"] == "sqlite-failure" || $0["stage"] == "teardown-timeout" })
     }
 }

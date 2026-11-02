@@ -46,6 +46,56 @@ nonisolated final class SQLiteFixtureScope: @unchecked Sendable {
             failures.append(diagnostic.message)
         }
     }
+    private final class ConnectionIdentity: @unchecked Sendable {
+        private let lock = NSLock()
+        private var value: UUID?
+        func opened(_ id: UUID) { lock.withLock { value = id } }
+        var id: UUID? { lock.withLock { value } }
+    }
+    /// Return the real ID emitted by this particular native open, rather than
+    /// guessing from the latest event or temporarily disabling observation.
+    func openConnection(at url: URL) throws -> (ProjectDatabase, UUID) {
+        let identity = ConnectionIdentity()
+        let db = try ProjectDatabase.$lifecycleObserver.withValue({ [self] event in
+            observe(event)
+            if case .opened(let id, _) = event { identity.opened(id) }
+        }) { try ProjectDatabase(url: url) }
+        return (db, try #require(identity.id))
+    }
+    /// Acknowledge exactly one synchronous, asserted fault on a known connection.
+    /// All raw diagnostics stay in the trace; other connections, extra errors,
+    /// different codes/stages or a later fault remain teardown failures.
+    func expectingFailure(connection: UUID, phase: ProjectDatabase.Diagnostic.Phase,
+                          operation: ProjectDatabase.Diagnostic.Operation, result: Int32, extended: Int32,
+                          performing body: () throws -> Void) rethrows {
+        let start = lock.withLock { events.count }
+        let expectation = UUID().uuidString
+        defer {
+            let accepted = lock.withLock {
+                let matches = events.indices.dropFirst(start).filter { index in
+                    guard events[index]["stage"] == "sqlite-failure", events[index]["expected"] != "true",
+                          let raw = events[index]["diagnostic"],
+                          let value = try? JSONDecoder().decode(ProjectDatabase.Diagnostic.self, from: Data(raw.utf8)) else { return false }
+                    return value.connection == connection && value.phase == phase && value.operation == operation
+                        && value.result == result && value.extended == extended
+                }
+                var accepted = false
+                if matches.count == 1, let index = matches.first, let raw = events[index]["diagnostic"],
+                   let failure = failures.firstIndex(of: raw) {
+                    failures.remove(at: failure)
+                    events[index]["expected"] = "true"
+                    events[index]["acceptedBy"] = expectation
+                    event("expected-sqlite-failure", ["diagnostic": raw, "expectation": expectation, "eventIndex": String(index)])
+                    accepted = true
+                }
+                event("fault-expectation-checked", ["expectation": expectation, "connection": connection.uuidString,
+                      "matchingUnconsumed": String(matches.count), "accepted": String(accepted)])
+                return accepted
+            }
+            #expect(accepted, "Expected one newly accepted exact SQLite fault; consumed events cannot satisfy another expectation")
+        }
+        try body()
+    }
     func onFinish(_ cleanup: @escaping @Sendable () async -> Void) {
         lock.withLock { cleanupRequests.append(cleanup) }
     }
