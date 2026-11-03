@@ -1,0 +1,76 @@
+from pathlib import Path
+import datetime,hashlib,json,os,signal,subprocess,sys,time
+
+ROOT=Path(__file__).resolve().parent
+REPO=Path('/Users/alfa/.codex/worktrees/67-isolated-preview/golos-meet')
+DD=ROOT/'DerivedData'
+stage=sys.argv[1]
+assert stage in {'targeted','full'}
+OUT=ROOT/stage;OUT.mkdir()
+def utc():return datetime.datetime.now(datetime.timezone.utc).isoformat()
+def free():
+    s=os.statvfs(ROOT);return s.f_bavail*s.f_frsize
+def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+def git(*args):return subprocess.check_output(['git',*args],cwd=REPO,text=True).strip()
+receipt=dict(stage=stage,utc=utc(),source_head=git('rev-parse','HEAD'),derived_data=str(DD),reserve_bytes=6*1024**3,forecast_bytes=8*1024**3,
+    status='preflight incomplete',test_started=False,app_user_launch=False,package_build=False,asr_e2e=False,new_model_sessions=False)
+receipt_path=OUT/'receipt.json'
+with receipt_path.open('x') as f:json.dump(receipt,f,indent=2);f.write('\n')
+def save():receipt_path.write_text(json.dumps(receipt,indent=2)+'\n')
+child=None;failure=None
+try:
+    assert not git('status','--porcelain'),'dirty source checkpoint'
+    assert free()>=receipt['reserve_bytes']+receipt['forecast_bytes'],'reserve+forecast'
+    inventory={}
+    for name in ['xcodebuild','swiftc','swift-frontend']:
+        p=subprocess.run(['pgrep','-x',name],capture_output=True,text=True)
+        inventory[name]=dict(exit_code=p.returncode,stdout=p.stdout,stderr=p.stderr)
+    receipt.update(inventory=inventory,df_before=subprocess.check_output(['/bin/df','-k',str(ROOT)],text=True),free_before=free());save()
+    assert all(v['exit_code']==1 for v in inventory.values()),'not serialized/inventory unavailable; exit3 is not absence'
+    if stage=='targeted':
+        assert not DD.exists();DD.mkdir()
+        source=Path('/private/tmp/golos37recovery-derived/SourcePackages')
+        command=['/bin/cp','-cR',str(source),str(DD/'SourcePackages')]
+        p=subprocess.run(command,capture_output=True,text=True)
+        receipt['public_package_cache_clone']=dict(command=command,exit_code=p.returncode,stdout=p.stdout,stderr=p.stderr);save()
+        assert p.returncode==0,'cache clone failed'
+    else:
+        prior=json.loads((ROOT/'targeted/receipt.json').read_text())
+        assert prior.get('exit_code')==0 and prior['source_head']==receipt['source_head'],'targeted did not pass exact source'
+    inputs=['Makefile','golos-meet/Util/AppProfile.swift','golos-meet/Util/AppRuntime.swift','golos-meet/Util/AppPaths.swift','golos-meet/Util/Keychain.swift','golos-meet/golos_meetApp.swift','golos-meet/UI/Settings/UISettings.swift','golos-meet/Core/ASR/ASRModel.swift','golos-meetTests/AppProfileTests.swift','golos-meetTests/TestHostIsolationTests.swift','research/preview-package/package_preview.py']
+    hashes={p:sha(REPO/p) for p in inputs}
+    env=os.environ.copy();removed=[]
+    for key in list(env):
+        if key.startswith(('GOLOS_','TEST_RUNNER_GOLOS_')) or key in {'OPENROUTER_API_KEY','MAKEFLAGS','MFLAGS','MAKEOVERRIDES','GNUMAKEFLAGS'}:
+            removed.append(key);env.pop(key)
+    receipt.update(removed_environment_names=sorted(removed),source_sha256=hashes)
+    if stage=='targeted':
+        command=['xcodebuild','test','-scheme','golos-meet','-destination','platform=macOS','-derivedDataPath',str(DD),'-resultBundlePath',str(OUT/'targeted.xcresult'),
+            '-only-testing:golos-meetTests/AppProfileTests','-only-testing:golos-meetTests/TestHostIsolationTests','-only-testing:golos-meetTests/AppPathsTests','CODE_SIGNING_ALLOWED=NO']
+    else:command=['make','check','DERIVED_DATA='+str(DD)]
+    receipt.update(command=command,test_started=True,free_at_test_start=free());save();start=time.monotonic()
+    with (OUT/'stdout.txt').open('x') as log:
+        child=subprocess.Popen(command,cwd=REPO,env=env,stdout=log,stderr=subprocess.STDOUT,start_new_session=True)
+        receipt['pid']=child.pid;save()
+        while child.poll() is None:
+            row=dict(utc=utc(),elapsed=time.monotonic()-start,free_bytes=free())
+            with (OUT/'disk.jsonl').open('a') as f:f.write(json.dumps(row)+'\n')
+            if row['free_bytes']<receipt['reserve_bytes'] or row['elapsed']>1800:
+                receipt['stop_reason']=row;save();os.killpg(child.pid,signal.SIGTERM)
+                try:child.wait(timeout=5)
+                except subprocess.TimeoutExpired:os.killpg(child.pid,signal.SIGKILL)
+                break
+            time.sleep(1)
+        code=child.wait()
+    receipt.update(exit_code=code,elapsed=time.monotonic()-start,free_after=free(),df_after=subprocess.check_output(['/bin/df','-k',str(ROOT)],text=True))
+    save()
+    assert all(sha(REPO/p)==h for p,h in hashes.items()),'source changed during checks'
+    assert code==0 and 'stop_reason' not in receipt,'checks failed/incomplete; preserve/no rerun-until-green'
+    receipt['status']='Passed; safe XCTest host; no QA package/app user launch'
+except Exception as exc:
+    failure=repr(exc);receipt.update(status='STOP failed/incomplete; preserve for assessment',failure=failure)
+finally:
+    if child is not None and child.poll() is None:os.killpg(child.pid,signal.SIGTERM);child.wait(timeout=5)
+    receipt['stdout_sha256']=sha(OUT/'stdout.txt') if (OUT/'stdout.txt').exists() else None
+    save();print(json.dumps(receipt,indent=2))
+sys.exit(1 if failure else 0)

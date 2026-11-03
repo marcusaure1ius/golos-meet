@@ -1,0 +1,59 @@
+{
+  "stage": "full",
+  "utc": "2026-11-03T09:06:11.674301+00:00",
+  "source_head": "7451f7816468c6e2ddce1e547118c2d049d2faa7",
+  "derived_data": "/private/tmp/golos67-checks-3cd3512178b64cac975d697f7fc4d8fc/DerivedData",
+  "reserve_bytes": 6442450944,
+  "forecast_bytes": 8589934592,
+  "status": "Passed; safe XCTest host; no QA package/app user launch",
+  "test_started": true,
+  "app_user_launch": false,
+  "package_build": false,
+  "asr_e2e": false,
+  "new_model_sessions": false,
+  "inventory": {
+    "xcodebuild": {
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "swiftc": {
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "swift-frontend": {
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": ""
+    }
+  },
+  "df_before": "Filesystem   1024-blocks      Used Available Capacity iused     ifree %iused  Mounted on\n/dev/disk3s5   482797652 373237852  74455848    84% 4155328 744558480    1%   /System/Volumes/Data\n",
+  "free_before": 76242788352,
+  "removed_environment_names": [],
+  "source_sha256": {
+    "Makefile": "d3e21dcc4e3830d39e8b868c9984174680d187b61ef958fdde6541d4da0c7d6d",
+    "golos-meet/Util/AppProfile.swift": "52a525b7728cf314fb747b54a0b709b3e0b12e6d3bfe03481cac8cdd7b77f8d5",
+    "golos-meet/Util/AppRuntime.swift": "0efb895f5c6ade8949e72f9d34b703aa6a35d132a09228466a7b0cc46f21c0e1",
+    "golos-meet/Util/AppPaths.swift": "dd37ae854239fbbadae031ec096a28a5f422c6c7796510e01237be5e8f84c0f2",
+    "golos-meet/Util/Keychain.swift": "949dc3ef927c16c437b4a91c27902827d0117aec9b0d320586e8fc8f3f3687d2",
+    "golos-meet/golos_meetApp.swift": "8df25d79bb2979ac76517b0fe5f998e6014cb96c4bb9ac2fa58da8a6bf306cd8",
+    "golos-meet/UI/Settings/UISettings.swift": "077ae53b54b44d206d86909d15f7bb8b5fca031a8e3cee363555edac1528b179",
+    "golos-meet/Core/ASR/ASRModel.swift": "78f127e03efce7b5ad93b9db0b2deaf4eb7b526afae0cde0562074d4b1202ccd",
+    "golos-meetTests/AppProfileTests.swift": "942a26bd2819c229d4c1abb822e726b0eea572714987a759817e845f91443013",
+    "golos-meetTests/TestHostIsolationTests.swift": "ec2aee10e3ba5d0ad6cd51f3bb6c3cbb1f81f2924dd23224cd8dd7a39c41cc7b",
+    "research/preview-package/package_preview.py": "37ca0f6c4d9759692a52ae014d1e174fd74d2200939d8e1ae75fda948c9bda5f"
+  },
+  "command": [
+    "make",
+    "check",
+    "DERIVED_DATA=/private/tmp/golos67-checks-3cd3512178b64cac975d697f7fc4d8fc/DerivedData"
+  ],
+  "free_at_test_start": 76242788352,
+  "pid": 66498,
+  "exit_code": 0,
+  "elapsed": 23.121077708012308,
+  "free_after": 76192813056,
+  "df_after": "Filesystem   1024-blocks      Used Available Capacity iused     ifree %iused  Mounted on\n/dev/disk3s5   482797652 373286664  74407036    84% 4157598 744070360    1%   /System/Volumes/Data\n",
+  "stdout_sha256": "eb3a0451ec8dee3699e55eb2f4780ce6c742052335a98ac9ca5bb904e35b69d8"
+}

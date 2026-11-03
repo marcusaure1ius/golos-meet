@@ -1,0 +1,70 @@
+{
+  "source_checkpoint": "7451f7816468c6e2ddce1e547118c2d049d2faa7",
+  "python_guard_tests": 8,
+  "python_guard_result": "Passed; output recorded in chat",
+  "checks": {
+    "targeted": {
+      "source_head": "7451f7816468c6e2ddce1e547118c2d049d2faa7",
+      "result": "Passed",
+      "total_tests": 8,
+      "passed": 8,
+      "failed": 0,
+      "skipped": 0,
+      "expected": 0,
+      "runs": {
+        "Passed": 8
+      },
+      "executed_runs": 8,
+      "runtime_warnings": [],
+      "test_failures": [],
+      "elapsed": 40.17778254199948,
+      "minimum_free_bytes": 76291493888,
+      "disk_samples": 40,
+      "stdout_sha256": "9b52ebac8921921d2cd4b6d6599b885ffc33f59a03d4bb13db71f83c840262b8",
+      "compiler_warning_lines": 155,
+      "changed_source_warning_lines": [],
+      "raw_sqlite_failure_lines": 0,
+      "raw_e5rt_lines": 0,
+      "skipped_cases": []
+    },
+    "full": {
+      "source_head": "7451f7816468c6e2ddce1e547118c2d049d2faa7",
+      "result": "Passed",
+      "total_tests": 463,
+      "passed": 453,
+      "failed": 0,
+      "skipped": 6,
+      "expected": 4,
+      "runs": {
+        "Passed": 642,
+        "Skipped": 6,
+        "Expected Failure": 12
+      },
+      "executed_runs": 654,
+      "runtime_warnings": [],
+      "test_failures": [],
+      "elapsed": 23.121077708012308,
+      "minimum_free_bytes": 76140343296,
+      "disk_samples": 23,
+      "stdout_sha256": "eb3a0451ec8dee3699e55eb2f4780ce6c742052335a98ac9ca5bb904e35b69d8",
+      "compiler_warning_lines": 0,
+      "changed_source_warning_lines": [],
+      "raw_sqlite_failure_lines": 18,
+      "raw_e5rt_lines": 0,
+      "skipped_cases": [
+        "MenuBarRenderTests/nativeMenuConstructionAndRendering()",
+        "EmbeddingIndexNativeTests/persistsRealDocumentAndMeetingWindowsAndRejectsFilesystemChangesDuringCalculation()",
+        "KnowledgeSearchNativeTests/nativeProjectImportFindPageAndReplicaThenRejectUpdatedSources()",
+        "TalkConnectionRenderTests/renderConnectionStates()",
+        "LocalIndexingNativeTests/nativeQueueResumesAfterInstallationWatchesTranscriptAndKeepsSameModelCache()",
+        "E5NativeTests/nativeParityRussianRetrievalAndLongPassageCoverage()"
+      ]
+    }
+  },
+  "package_built": false,
+  "qa_app_launched": false,
+  "combined55_snapshot": false,
+  "rust_source_changed": false,
+  "model_optins": false,
+  "local_results_root": "/private/tmp/golos67-checks-3cd3512178b64cac975d697f7fc4d8fc"
+}

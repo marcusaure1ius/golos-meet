@@ -65,8 +65,59 @@ Swift `AppProfileTests` проверяют normal/QA/test namespace separation, 
 pure values без реальных data/Keychain/network. Existing TestHostIsolationTests
 дополнены проверкой profile и defaults domain.
 
-Targeted Swift + обязательный `make check` ещё предстоят. Для них используются
-собственный DerivedData, fresh space forecast/reserve6GiB, serialized build и
-STOP<6GiB. Real ASR E2E исключён штатной целью; opt-in E5/model sessions отключены.
-Известный historical failure при full сохраняется и требует root assessment,
-не повторного full ради зелёного результата.
+Оба Swift запуска завершены на exact source checkpoint
+**`7451f7816468c6e2ddce1e547118c2d049d2faa7`**. После них изменяются только
+docs/evidence. [Machine-readable checks](results/checks.json) и оба полных raw
+logs/test trees сохранены, без повторного full.
+
+| Проверка | Фактический результат |
+|---|---|
+| Focused Swift |**8 tests /8 runs Passed**, failed/skipped0, runtimeWarnings0;40.178s с cold compile |
+| Обязательный `make check` |**Passed**,463 test cases =453 passed +4 expected negative +6 opt-in skips; failed0/testFailures[]/runtimeWarnings0 |
+| Full parameterized runs |654 исполненных =642 passed +12 expected negative;6 skipped, всего660 run entries |
+| Full process |Exit0,23.121s, один full без повторов |
+| Resource guard |Свой DerivedData, clone только public SourcePackages; forecast8GiB сверх reserve6GiB, serialized inventory, STOP<6GiB не сработал |
+| Space |Targeted40samples/min76291493888 B; full23samples/min76140343296 B |
+| Source |Input SHA до/после совпали; Rust/Xcode project и default normal bundle settings не менялись |
+| Product/runtime |QA package НЕ собран; отдельная QA app не запускалась, combined55 snapshot пока не создавался |
+
+Шесть skips — четыре opt-in public E5/native inference и два opt-in native UI
+render suites. Они намеренно не включались: root запретил новые model sessions
+и дополнительные UI/OCR probes. Real ASR E2E исключён штатной целью. Отдельного
+живого ASR/LLM/recording результата не заявляется. Обычные synthetic OCR тесты в
+make check исполнились без отдельной probe/matrix. Существующие Keychain tests
+использовали только штатный test-host service, не рабочие секреты.
+
+Первая компиляция содержит155 compiler warning lines (пакеты/ранее существующие
+файлы), в изменённых Swift source warning lines0. Incremental full compiler
+warning lines0. Raw full log содержит18 строк, соответствующих фильтру
+SQLite+failure/error; e5rt0. Они сохранены без глобального подавления или новой
+атрибуции; успешный summary не объявляет объяснёнными исторические #56/#61.
+Эта задача не расширяется в новый fixture/SQLite diagnostic audit.
+
+При первом static xcresult export sandbox отказал записи внутреннего TestReport
+cache. Сохранён [export denial](results/export-initial-sandbox-denial.json);
+последующий static export получил нужный файловый доступ. Тесты при этом не
+повторялись. Whole xcresults остаются в task-owned temporary DerivedData/result
+paths из receipts; JSON summary/trees/raw stdout/telemetry/source hashes в git.
+
+Raw/evidence: [targeted receipt](results/targeted/receipt.json),
+[full receipt](results/full/receipt.json), [full summary](results/full/summary.json),
+[full stdout](results/full/stdout.txt.gz), [full test tree](results/full/tests.json.gz),
+[artifact hashes](results/artifact-sha256.json). Test runner сохранён как
+`check-runner.py.txt` для воспроизводимости команд/guards, а не как продуктовый UI.
+
+## Передача
+
+Source подготовлен для independent exact-SHA review; author self-check не заменяет
+его. По указанию root review43 параллельно читает исходный7451f78 без build/runtime;
+docs-only final SHA требует итогового delta-review. PR направляется в
+`codex/product-preview`, с `Refs #67`, поскольку package/combined/audit/delivery
+критерии ещё впереди. Автор ничего не сливает и не меняет статусы55/8.
+
+После независимого source review root отдельно готовит локальное сочетание
+reviewed55+reviewed67, не затрагивая shared branches. Только после этого — отдельно
+разрешённый один package build и независимый unzip/static/dependency/sign/CLI
+audit. Конечная передача пользователю — одна `Golos Meet QA.app` с простой
+инструкцией, пустыми отдельными data/settings/models/Keychain и честным пределом
+доступных без моделей/ключей функций. Никаких новых диагностических human cases.

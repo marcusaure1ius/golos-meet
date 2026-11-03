@@ -1,0 +1,15 @@
+{
+  "kind": "static xcresult export, not a test run",
+  "message": "xcresulttool sandbox permission denied writing internal TestReport cache; no test rerun",
+  "failed_command": [
+    "xcrun",
+    "xcresulttool",
+    "get",
+    "test-results",
+    "summary",
+    "--path",
+    "/private/tmp/golos67-checks-3cd3512178b64cac975d697f7fc4d8fc/targeted/targeted.xcresult",
+    "--format",
+    "json"
+  ]
+}
