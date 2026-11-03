@@ -11,7 +11,9 @@ struct golos_meetApp: App {
             if let library = state.library {
                 ProductionRootView(library: library)
             } else {
-                EmptyView()
+                if let error = state.configurationError {
+                    ContentUnavailableView("Не удалось открыть QA-копию",systemImage:"exclamationmark.triangle",description:Text(error))
+                } else { EmptyView() }
             }
         }
         .windowStyle(.hiddenTitleBar)
@@ -22,7 +24,14 @@ struct golos_meetApp: App {
 /// Preserve one library across windows, without constructing it in the test host.
 @MainActor
 final class AppLibraryState: ObservableObject {
-    let library: MeetingLibrary? = AppRuntime.isTestHost ? nil : MeetingLibrary()
+    let library: MeetingLibrary?
+    let configurationError: String?
+    init() {
+        guard !AppRuntime.isTestHost else { library = nil; configurationError = nil; return }
+        guard AppRuntime.profileFailure == nil else { library = nil; configurationError = AppRuntime.profileFailure; return }
+        configurationError = nil
+        library = MeetingLibrary()
+    }
 }
 
 /// Do not construct settings or processing UI in a test host.
@@ -44,6 +53,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private(set) var coordinator: AppCoordinator?
     func applicationDidFinishLaunching(_ notification: Notification) {
         guard !AppRuntime.isTestHost else { return }
+        guard AppRuntime.profileFailure == nil else { NSApp.setActivationPolicy(.regular); return }
         let coordinator = AppCoordinator()
         self.coordinator = coordinator
         NSApp.setActivationPolicy(.regular)   // обычное приложение в Dock
@@ -63,6 +73,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationWillTerminate(_ notification: Notification) {
         guard !AppRuntime.isTestHost else { return }
+        guard AppRuntime.profileFailure == nil else { return }
         coordinator?.prepareForTermination()
         ProductionMemoryQueue.shared?.stop()
         ProductionAssignments.shared?.stop()
@@ -78,6 +89,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     /// потом отпустить приложение. Если финализация не уложилась в ~3 с (зависший диск) —
     /// отпускаем всё равно: недописанную запись спасёт StartupRescue при следующем запуске.
     func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
+        guard !AppRuntime.isTestHost else { return .terminateNow }
+        guard AppRuntime.profileFailure == nil else { return .terminateNow }
         ProductionMemoryQueue.shared?.stop()
         coordinator?.prepareForTermination()
         guard let coordinator, coordinator.recorder.isRecording else { return .terminateNow }

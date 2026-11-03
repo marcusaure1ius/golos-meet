@@ -62,6 +62,69 @@ class PackagingGuards(unittest.TestCase):
         self.assertFalse(output.exists())
         self.assertIn("Preview packaging failed", result.stderr)
 
+    def test_isolated_profile_metadata_is_explicit_and_preserves_other_fields(self):
+        identifier = "0123456789abcdef0123456789abcdef"
+        original = plistlib.loads((self.app / "Contents/Info.plist").read_bytes())
+        profile = packager.apply_qa_metadata(self.app, identifier)
+        info = plistlib.loads((self.app / "Contents/Info.plist").read_bytes())
+        self.assertEqual(info["CFBundleExecutable"], original["CFBundleExecutable"])
+        self.assertEqual(profile["app_support_component"], "golos-meet-qa-" + identifier)
+        self.assertEqual(profile["keychain_service"], "golos-meet.qa." + identifier)
+        self.assertEqual(info["GolosRuntimeProfile"], "isolated-qa-v1")
+        self.assertEqual(info["CFBundleName"], "Golos Meet QA")
+        self.assertEqual(profile["user_defaults_domain"], info["CFBundleIdentifier"])
+        packager.validate_identity(info, identifier)
+        with self.assertRaisesRegex(RuntimeError, "normal bundle/profile"):
+            packager.validate_identity(info)
+        for key in ["GolosRuntimeProfile", "GolosPreviewIdentifier", "CFBundleDisplayName", "CFBundleName"]:
+            broken = dict(info);broken.pop(key)
+            with self.subTest(missing=key), self.assertRaisesRegex(RuntimeError, "Invalid isolated QA"):
+                packager.validate_identity(broken, identifier)
+        with self.assertRaisesRegex(RuntimeError, "Invalid isolated QA"):
+            packager.validate_identity(info, "b" * 32)
+        for invalid in ["../normal", "", "A" * 32, "c" * 33]:
+            with self.subTest(identifier=invalid), self.assertRaisesRegex(RuntimeError, "Invalid isolated QA identifier"):
+                packager.qa_profile(invalid)
+
+    def test_invalid_isolation_option_stops_before_git_or_output(self):
+        output = self.root / "invalid-mode-no-output"
+        result = subprocess.run([sys.executable, str(SCRIPT), "--output", str(output)],
+                                env=dict(os.environ, PREVIEW_ISOLATED_QA="not-a-mode"),capture_output=True,text=True)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertFalse(output.exists())
+        self.assertIn("PREVIEW_ISOLATED_QA must be 0 or 1", result.stderr)
+
+    def test_isolated_mode_rejects_old_source_before_build(self):
+        snapshot = self.root / "old-snapshot"
+        snapshot.mkdir()
+        with self.assertRaisesRegex(RuntimeError, "same committed packager"):
+            packager.verify_isolated_source(snapshot)
+        archived = snapshot / "research/preview-package/package_preview.py"
+        archived.parent.mkdir(parents=True)
+        shutil.copy2(SCRIPT, archived)
+        with self.assertRaisesRegex(RuntimeError, "same committed packager"):
+            packager.verify_isolated_source(snapshot)
+        profile = snapshot / "golos-meet/Util/AppProfile.swift"
+        profile.parent.mkdir(parents=True)
+        profile.write_text('let contract = "isolated-qa-v1"')
+        checked = packager.verify_isolated_source(snapshot)
+        self.assertEqual(checked["archived_packager_sha256"], packager.sha256(SCRIPT))
+        archived.write_text("old packager")
+        with self.assertRaisesRegex(RuntimeError, "same committed packager"):
+            packager.verify_isolated_source(snapshot)
+
+    def test_nested_resource_containers_are_signed_before_root(self):
+        nested = self.resources / "Outer.bundle" / "Inner.bundle"
+        nested.mkdir(parents=True)
+        (self.resources / "golos-asr").write_bytes(bytes.fromhex("feedfacf") + b"synthetic sidecar")
+        with patch.object(packager, "run") as run, patch.object(packager.subprocess, "run", return_value=subprocess.CompletedProcess([],0,"golos-asr synthetic","")):
+            packager.sign_and_smoke(self.app, self.root)
+        commands = [list(c.args) for c in run.call_args_list]
+        targets = [c[-1] for c in commands if "--sign" in c]
+        self.assertLess(targets.index(str(nested)), targets.index(str(nested.parent)))
+        self.assertLess(targets.index(str(nested.parent)), targets.index(str(self.app)))
+        self.assertEqual(commands[-1], ["/usr/bin/codesign","--verify","--deep","--strict",str(self.app)])
+
 
 class MakeArgumentTransport(unittest.TestCase):
     def test_real_make_to_python_preserves_literal_parameters(self):
@@ -80,7 +143,7 @@ class MakeArgumentTransport(unittest.TestCase):
             git.write_text("#!" + sys.executable + "\n" +
                            "import json, os, sys\n" +
                            "with open(os.environ['ARGUMENT_CAPTURE'], 'a') as log:\n" +
-                           "    log.write(json.dumps({'argv': sys.argv[1:], 'env': {k: os.environ[k] for k in ['PREVIEW_REF', 'PREVIEW_OUTPUT', 'MAKEFLAGS', 'MFLAGS', 'MAKEOVERRIDES', 'GNUMAKEFLAGS'] if k in os.environ}}) + '\\n')\n" +
+                           "    log.write(json.dumps({'argv': sys.argv[1:], 'env': {k: os.environ[k] for k in ['PREVIEW_REF', 'PREVIEW_OUTPUT', 'PREVIEW_ISOLATED_QA', 'MAKEFLAGS', 'MFLAGS', 'MAKEOVERRIDES', 'GNUMAKEFLAGS'] if k in os.environ}}) + '\\n')\n" +
                            "if sys.argv[1] == 'rev-parse':\n" +
                            "    print('a' * 40)\n" +
                            "else:\n" +
@@ -92,6 +155,7 @@ class MakeArgumentTransport(unittest.TestCase):
                        ARGUMENT_CAPTURE=str(capture), PYTHONDONTWRITEBYTECODE="1")
             env.pop("PREVIEW_REF", None)
             env.pop("PREVIEW_OUTPUT", None)
+            env.pop("PREVIEW_ISOLATED_QA", None)
             created_outputs = set()
             for input_kind in ["command-line", "environment", "defaults"]:
                 with self.subTest(input_kind=input_kind):
@@ -104,9 +168,9 @@ class MakeArgumentTransport(unittest.TestCase):
                     command = ["/usr/bin/make", "--no-print-directory", "preview-package"]
                     case_env = env.copy()
                     if input_kind == "command-line":
-                        command += ["PREVIEW_REF=" + ref, "PREVIEW_OUTPUT=" + str(output)]
+                        command += ["PREVIEW_REF=" + ref, "PREVIEW_OUTPUT=" + str(output), "PREVIEW_ISOLATED_QA=1"]
                     elif input_kind == "environment":
-                        case_env.update(PREVIEW_REF=ref, PREVIEW_OUTPUT=str(output))
+                        case_env.update(PREVIEW_REF=ref, PREVIEW_OUTPUT=str(output), PREVIEW_ISOLATED_QA="1")
                     else:
                         ref = "HEAD"
                         output = workspace / ".build/preview"

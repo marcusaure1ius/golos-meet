@@ -20,16 +20,16 @@ final class UISettings: ObservableObject {
     }
 
     @Published var themeMode: ThemeMode {
-        didSet { UserDefaults.standard.set(themeMode.rawValue, forKey: "ui.themeMode") }
+        didSet { AppPreferences.current.set(themeMode.rawValue, forKey: "ui.themeMode") }
     }
     @Published var modelChoice: ASRModelChoice {
-        didSet { UserDefaults.standard.set(modelChoice.rawValue, forKey: "asrModelChoice") }
+        didSet { AppPreferences.current.set(modelChoice.rawValue, forKey: "asrModelChoice") }
     }
     @Published var llmEnabled: Bool {
-        didSet { UserDefaults.standard.set(llmEnabled, forKey: "llm.enabled") }
+        didSet { AppPreferences.current.set(llmEnabled, forKey: "llm.enabled") }
     }
     @Published var llmModel: String {
-        didSet { UserDefaults.standard.set(llmModel, forKey: "llm.model") }
+        didSet { AppPreferences.current.set(llmModel, forKey: "llm.model") }
     }
 
     /// API-ключ OpenRouter — хранится в Keychain, не в UserDefaults.
@@ -39,7 +39,7 @@ final class UISettings: ObservableObject {
     }
 
     private init() {
-        let d = UserDefaults.standard
+        let d = AppPreferences.current
         themeMode = d.string(forKey: "ui.themeMode").flatMap(ThemeMode.init) ?? .auto
         modelChoice = d.string(forKey: "asrModelChoice").flatMap(ASRModelChoice.init) ?? .speed
         llmEnabled = (d.object(forKey: "llm.enabled") as? Bool) ?? true

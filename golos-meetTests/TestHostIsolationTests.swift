@@ -25,6 +25,8 @@ import Testing
         #expect(AppPaths.meetingsRoot.deletingLastPathComponent() == AppPaths.appSupport)
         #expect(AppPaths.modelsRoot.deletingLastPathComponent() == AppPaths.appSupport)
         #expect(Keychain.service.hasPrefix("golos-meet.tests."))
+        #expect(AppRuntime.requireProfile() == .testing(AppRuntime.testStorage.lastPathComponent))
+        #expect(AppRuntime.requireProfile().preferencesDomain.hasPrefix("com.golos.golos-meet.tests."))
 
         let id = "isolation-\(UUID())"
         let folder = AppPaths.meetingDir(id)

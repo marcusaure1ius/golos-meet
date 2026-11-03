@@ -5,16 +5,23 @@ import Security
 enum Keychain {
     enum Failure: LocalizedError {
         case operationFailed
-        var errorDescription: String? { "Не удалось обратиться к Keychain. Разрешите доступ и повторите действие." }
+        case invalidProfile
+        var errorDescription: String? {
+            switch self {
+            case .operationFailed: "Не удалось обратиться к Keychain. Разрешите доступ и повторите действие."
+            case .invalidProfile: "Профиль этой копии приложения не позволяет открыть Keychain."
+            }
+        }
     }
-    static let service = AppRuntime.isTestHost
-        ? "golos-meet.tests.\(AppRuntime.testStorage.lastPathComponent)" : "golos-meet"
+    private static var serviceResolution: Result<String, Error> { AppRuntime.profileResolution.map(\.keychainService) }
+    static var service: String { AppRuntime.requireProfile().keychainService }
     static let openRouterAccount = "openrouter-api-key"
     static let talkAccount = "kontur-talk-api-key"
 
     /// Checked operations for connection settings: never claim a secret was saved
     /// when macOS denied access. The error deliberately contains no secret/data.
     static func readChecked(account: String) throws -> Data? {
+        guard case .success(let service) = serviceResolution else { throw Failure.invalidProfile }
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrService as String: service,
@@ -30,6 +37,7 @@ enum Keychain {
     }
 
     static func writeChecked(_ data: Data?, account: String) throws {
+        guard case .success(let service) = serviceResolution else { throw Failure.invalidProfile }
         let base: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrService as String: service,
@@ -50,6 +58,7 @@ enum Keychain {
     }
 
     static func get(account: String) -> String? {
+        guard case .success(let service) = serviceResolution else { return nil }
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrService as String: service,
@@ -65,6 +74,7 @@ enum Keychain {
 
     /// nil или пустая строка → удалить запись.
     static func set(_ value: String?, account: String) {
+        guard case .success(let service) = serviceResolution else { return }
         guard let value, !value.isEmpty else { delete(account: account); return }
         let base: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
@@ -82,6 +92,7 @@ enum Keychain {
     }
 
     static func delete(account: String) {
+        guard case .success(let service) = serviceResolution else { return }
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrService as String: service,

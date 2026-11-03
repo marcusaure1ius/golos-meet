@@ -1,5 +1,45 @@
 # Preview-пакет для общей проверки (#25)
 
+## Отдельная QA-копия (#67)
+
+Для общей проверки рядом с рабочей версией используйте явный isolated QA режим:
+
+```sh
+make preview-package PREVIEW_ISOLATED_QA=1 PREVIEW_REF=<проверенный-SHA> PREVIEW_OUTPUT=/private/tmp/golos-qa
+```
+
+Прямой Python-вариант: `--isolated-qa --ref <SHA> --output <каталог>`. При
+`PREVIEW_ISOLATED_QA=0` сохраняется прежняя normal упаковка; она не получает
+изоляцию просто от слова preview в имени ZIP. Значение переменной строго0/1,
+оно передаётся Make как данные и удаляется до вложенных tools.
+
+QA-пакет содержит одну `Golos Meet QA.app`, manifest/inventory и короткую
+[инструкцию](ISOLATED_QA.md). На каждый пакет создаётся новый32lowercasehex ID.
+Metadata: `GolosRuntimeProfile=isolated-qa-v1`, `GolosPreviewIdentifier=<ID>`,
+`CFBundleIdentifier=com.golos.golos-meet.qa.<ID>`, видимые CFBundleName/DisplayName
+`Golos Meet QA`. Runtime выводит AppSupport `golos-meet-qa-<ID>`, preferences
+domain равный bundle id и Keychain service `golos-meet.qa.<ID>`. Произвольного
+путь/env override профиля нет. Test-host определяется первым и сохраняет
+temporary paths/service; normal target/module/id/paths/service не меняются.
+Повреждённая или неполная QA metadata блокирует рабочую инициализацию, вместо
+перехода к production данным. Preferences UI/ASR также используют этот profile.
+
+Отдельный bundle id задаётся уже временной Xcode build-app. Все QA metadata
+завершаются до добавления sidecar, inside-out signing и strict verify. Установки,
+запуска app и доступа к пользовательским data/Keychain в упаковщике нет. Manifest
+содержит явный isolation_profile и его namespaces. В source PR67 package build
+не выполняется: root отдельно разрешает один build после exact-source review
+и локального проверенного сочетания с PR55; shared preview/main и draft-статус
+PR55 этим не меняются.
+
+Папка QA моделей изначально пустая. Рабочие веса/данные/настройки/ключи не
+копируются, symlink к production models не создаётся. E5 выбирается пользователем;
+автоматическая установка ASR-весов не подключена, ModelManager этим PR не
+добавляется. Для ASR пользователь отдельно подготавливает выбранные веса.
+Build/sign/CLI smoke не доказывают реальную транскрибацию или облачную работу.
+
+Ниже сохранён исходный workflow normal packaging и технический план проверки.
+
 Пакет собирает **коммит**, а не незакоммиченные файлы рабочего дерева. Он не
 означает готовности этапов 1–4: индекс, поиск и память ещё разрабатываются.
 После принятия всех функциональных PR в `codex/product-preview` пакет нужно
