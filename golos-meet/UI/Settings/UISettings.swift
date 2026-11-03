@@ -6,6 +6,7 @@ import SwiftUI
 @MainActor
 final class UISettings: ObservableObject {
     static let shared = UISettings()
+    private let defaults: UserDefaults
 
     enum ThemeMode: String, CaseIterable, Identifiable {
         case auto, light, dark
@@ -20,16 +21,16 @@ final class UISettings: ObservableObject {
     }
 
     @Published var themeMode: ThemeMode {
-        didSet { AppPreferences.current.set(themeMode.rawValue, forKey: "ui.themeMode") }
+        didSet { defaults.set(themeMode.rawValue, forKey: "ui.themeMode") }
     }
     @Published var modelChoice: ASRModelChoice {
-        didSet { AppPreferences.current.set(modelChoice.rawValue, forKey: "asrModelChoice") }
+        didSet { defaults.set(modelChoice.rawValue, forKey: "asrModelChoice") }
     }
     @Published var llmEnabled: Bool {
-        didSet { AppPreferences.current.set(llmEnabled, forKey: "llm.enabled") }
+        didSet { defaults.set(llmEnabled, forKey: "llm.enabled") }
     }
     @Published var llmModel: String {
-        didSet { AppPreferences.current.set(llmModel, forKey: "llm.model") }
+        didSet { defaults.set(llmModel, forKey: "llm.model") }
     }
 
     /// API-ключ OpenRouter — хранится в Keychain, не в UserDefaults.
@@ -38,8 +39,11 @@ final class UISettings: ObservableObject {
         set { Keychain.set(newValue, account: Keychain.openRouterAccount) }
     }
 
-    private init() {
-        let d = AppPreferences.current
+    private convenience init() { self.init(defaults:AppPreferences.current) }
+
+    init(defaults: UserDefaults) {
+        self.defaults = defaults
+        let d = defaults
         themeMode = d.string(forKey: "ui.themeMode").flatMap(ThemeMode.init) ?? .auto
         modelChoice = d.string(forKey: "asrModelChoice").flatMap(ASRModelChoice.init) ?? .speed
         llmEnabled = (d.object(forKey: "llm.enabled") as? Bool) ?? true

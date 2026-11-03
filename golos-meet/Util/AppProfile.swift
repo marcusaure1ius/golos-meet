@@ -70,12 +70,28 @@ nonisolated enum AppProfile: Equatable, Sendable {
 }
 
 enum AppPreferences {
-    static let current: UserDefaults = {
-        let profile = AppRuntime.requireProfile()
-        if profile == .normal { return .standard }
-        guard let defaults = UserDefaults(suiteName:profile.preferencesDomain) else {
-            preconditionFailure("Cannot create isolated preferences domain")
+    enum Failure: Error { case unavailableTestSuite }
+
+    /// Normal and QA own their app domain; Apple forbids passing that bundle ID
+    /// to init(suiteName:). Only the separate XCTest domain is a named suite.
+    static func resolve(_ resolution: Result<AppProfile, Error>,
+                        standard: () -> UserDefaults,
+                        suite: (String) -> UserDefaults?) throws -> UserDefaults {
+        switch try resolution.get() {
+        case .normal, .isolatedQA:
+            return standard()
+        case .testing(let identifier):
+            let profile = AppProfile.testing(identifier)
+            guard let defaults = suite(profile.preferencesDomain) else { throw Failure.unavailableTestSuite }
+            return defaults
         }
-        return defaults
+    }
+
+    static let current: UserDefaults = {
+        do {
+            return try resolve(AppRuntime.profileResolution,standard:{ .standard },suite:{ UserDefaults(suiteName:$0) })
+        } catch {
+            preconditionFailure("Cannot resolve validated preferences store")
+        }
     }()
 }
