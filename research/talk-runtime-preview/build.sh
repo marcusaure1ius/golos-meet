@@ -1,7 +1,7 @@
 #!/bin/sh
 set -eu
 TASK_REPO_ROOT=$(CDPATH= cd -- "$(dirname -- "$0")/../.." && pwd)
-TASK_PREVIEW_ROOT=/tmp/golos-talk-runtime-preview
+TASK_PREVIEW_ROOT=${GOLOS_TALK_PREVIEW_ROOT:-/tmp/golos-talk-runtime-preview}
 TASK_PREVIEW_APP="$TASK_PREVIEW_ROOT/Golos Talk Runtime Preview.app"
 mkdir -p "$TASK_PREVIEW_APP/Contents/MacOS" "$TASK_PREVIEW_ROOT/ModuleCache"
 cat > "$TASK_PREVIEW_APP/Contents/Info.plist" <<'PLIST'
@@ -24,6 +24,10 @@ xcrun swiftc -parse-as-library -swift-version 5 -default-isolation MainActor -mo
  "$TASK_REPO_ROOT/golos-meet/Core/Talk/TalkRequestBudget.swift" \
  "$TASK_REPO_ROOT/golos-meet/Core/Talk/TalkRecordingMode.swift" \
  "$TASK_REPO_ROOT/golos-meet/Core/Talk/TalkRoomObserver.swift" \
+ "$TASK_REPO_ROOT/golos-meet/Core/Talk/TalkAutomaticMode.swift" \
+ "$TASK_REPO_ROOT/golos-meet/Core/Talk/TalkAutomaticObserver.swift" \
+ "$TASK_REPO_ROOT/golos-meet/Core/Talk/TalkNativeRoomSource.swift" \
+ "$TASK_REPO_ROOT/golos-meet/Util/Logger.swift" \
  "$TASK_REPO_ROOT/golos-meet/Core/RecordingState.swift" \
  "$TASK_REPO_ROOT/golos-meet/UI/MenuBar/MenuBarModel.swift" \
  "$TASK_REPO_ROOT/golos-meet/UI/MenuBar/MenuBarController.swift" \

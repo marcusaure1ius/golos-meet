@@ -39,8 +39,8 @@ private final class TalkStubProtocol: URLProtocol {
         #expect(result.domainTitle == "Проект")
     }
 
-    @Test func readsOnlineParticipants() async throws {
-        let result = try await client().onlineUsers(room: "project123")
+    @Test(arguments: ["project123", "team_room"]) func readsOnlineParticipants(room: String) async throws {
+        let result = try await client().onlineUsers(room: room)
         #expect(result.onlineUsers.first?.uniqueId == "u1")
     }
 

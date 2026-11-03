@@ -129,9 +129,7 @@ nonisolated struct TalkAPIClient: Sendable {
     }
 
     func onlineUsers(room: String) async throws -> TalkOnlineUsers {
-        guard !room.isEmpty, room.unicodeScalars.allSatisfy({
-            (97...122).contains($0.value) || (48...57).contains($0.value)
-        }) else { throw TalkAPIError.invalidRoom }
+        guard try TalkRoomConfiguration.room(room, origin: server) == room else { throw TalkAPIError.invalidRoom }
         let result: TalkOnlineUsers = try await get(path: "api/Rooms/\(room)/online-users")
         try result.validate()
         return result

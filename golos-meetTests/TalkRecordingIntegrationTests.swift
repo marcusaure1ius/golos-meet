@@ -77,7 +77,8 @@ private actor RecordingReplies {
     var sourceAlive = true
     var processGuard: TalkAudioProcessGuard?
 
-    init(realSystemTrack: Bool = false, fetch: TalkRoomObserver.Fetch? = nil, clock: RecordingTestClock = RecordingTestClock(), initialSelection: TalkRuntimeSelection? = nil) throws {
+    init(realSystemTrack: Bool = false, fetch: TalkRoomObserver.Fetch? = nil, clock: RecordingTestClock = RecordingTestClock(), initialSelection: TalkRuntimeSelection? = nil,
+         automaticObserver: TalkAutomaticObserver? = nil, automaticStatus: TalkAutomaticStatus? = nil) throws {
         time = clock
         selection = try initialSelection ?? .api(Self.config())
         observer = TalkRoomObserver(clock: time.clock, fetch: fetch ?? { [replies] _, _ in try await replies.fetch() })
@@ -96,7 +97,8 @@ private actor RecordingReplies {
         coordinator = AppCoordinator(dependencies: .init(recorder: recorder, state: state, observer: observer,
                                                        selection: { [weak self] in self?.selection ?? .unavailable },
                                                        now: { [time] in Date(timeIntervalSince1970: 1_000_000 + time.now) },
-                                                       startLegacy: { [weak self] _ in self?.legacyStarts += 1 }))
+                                                       startLegacy: { [weak self] _ in self?.legacyStarts += 1 },
+                                                       automaticObserver: automaticObserver, automaticStatus: automaticStatus))
         coordinator.start()
     }
     static func config(room: String = "alpha", token: String = "talkusr.synthetic", userKey: String = "owner") throws -> TalkRoomConfiguration {
@@ -114,6 +116,27 @@ private actor RecordingReplies {
 }
 
 @Suite @MainActor struct TalkRecordingIntegrationTests {
+    @Test func automaticDiagnosticPublishesPresenceWithoutStartingEitherRecorder() async throws {
+        let clock = RecordingTestClock(), replies = RecordingReplies(), status = TalkAutomaticStatus()
+        let automatic = TalkAutomaticObserver(clock: clock.clock, read: { .documents(["https://recording.example/auto_room"]) },
+                                              fetch: { _, _ in try await replies.fetch() })
+        let config = try TalkAutomaticConfiguration(credential: RecordingFixture.config().credential, userKey: "owner")
+        let f = try RecordingFixture(clock: clock, initialSelection: .automatic(config, enabled: true),
+                                     automaticObserver: automatic, automaticStatus: status)
+        await wait { await replies.count == 1 }; try await replies.reply()
+        await wait { automatic.observation.presence == .present(rooms: ["auto_room"]) }
+        for _ in 0..<10 { f.coordinator.pulse(); f.coordinator.update(audio: true, window: true) }
+        #expect(status.observation.presence == .present(rooms: ["auto_room"]))
+        #expect(f.folders.isEmpty && f.queued == 0 && f.mic.starts == 0 && f.sys.starts == 0 && f.legacyStarts == 0)
+        f.coordinator.willSleep(); #expect(status.observation.presence == .unknown(.paused))
+        f.coordinator.didWake(); await wait { await replies.count == 2 }; try await replies.reply(present: false)
+        await wait { automatic.observation.presence == .absent }; f.coordinator.pulse()
+        #expect(status.observation.presence == .absent)
+        #expect(f.folders.isEmpty && f.legacyStarts == 0)
+        f.selection = .automatic(nil, enabled: false); f.coordinator.reloadConfiguration()
+        #expect(status.observation == .stopped && f.legacyStarts == 0)
+        await f.close()
+    }
     private func wait(_ predicate: () async -> Bool) async {
         for _ in 0..<6000 { if await predicate() { return }; await Task.yield() }
         #expect(await predicate(), "Production-coordinator сценарий не достиг ожидаемого состояния")

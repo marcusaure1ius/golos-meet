@@ -67,13 +67,15 @@ final class TalkConnectionModel: ObservableObject {
     init(store: (any TalkCredentialStoring)? = nil,
          preferences: (any TalkPreferencesStoring)? = nil,
          mode: (any TalkRecordingModeStoring)? = nil,
+         automaticMode: (any TalkAutomaticModeStoring)? = nil,
          lookup: TalkMeetingSettingsModel.Lookup? = nil,
          checkProfile: @escaping @Sendable (TalkCredential) async throws -> Void = { credential in
              _ = try await TalkAPIClient(server: credential.server, token: credential.token).profile()
          }) {
         let store = store ?? TalkKeychainStore()
         self.store = store
-        self.meetingSettings = TalkMeetingSettingsModel(preferences: preferences ?? TalkPreferencesFileStore(), credentials: store, mode: mode, lookup: lookup)
+        self.meetingSettings = TalkMeetingSettingsModel(preferences: preferences ?? TalkPreferencesFileStore(), credentials: store, mode: mode,
+                                                      automaticMode: automaticMode, lookup: lookup)
         self.checkProfile = checkProfile
         do {
             if let credential = try store.load() {

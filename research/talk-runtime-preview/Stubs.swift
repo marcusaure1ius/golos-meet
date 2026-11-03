@@ -24,3 +24,9 @@ enum Keychain {
     func load() throws -> Bool { enabled }
     func save(_ value: Bool) throws { enabled = value }
 }
+
+@MainActor final class PreviewAutomaticMode: TalkAutomaticModeStoring {
+    private var enabled = false
+    func load() throws -> Bool? { enabled }
+    func save(_ value: Bool) throws { enabled = value }
+}

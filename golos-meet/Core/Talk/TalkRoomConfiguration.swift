@@ -22,7 +22,7 @@ nonisolated struct TalkRoomConfiguration: Equatable, Sendable {
         self.userKey = userKey
     }
 
-    private static func room(_ input: String, origin: URL) throws -> String {
+    static func room(_ input: String, origin: URL) throws -> String {
         let value = input.trimmingCharacters(in: .whitespacesAndNewlines)
         var room = value
         if value.contains("://") {
@@ -36,7 +36,7 @@ nonisolated struct TalkRoomConfiguration: Equatable, Sendable {
             if room.hasSuffix("/") { room.removeLast() }
         }
         guard !room.isEmpty, room.utf8.count <= 128, room.unicodeScalars.allSatisfy({
-            (97...122).contains($0.value) || (48...57).contains($0.value)
+            (97...122).contains($0.value) || (48...57).contains($0.value) || $0 == "_"
         }) else { throw TalkAPIError.invalidRoom }
         return room
     }

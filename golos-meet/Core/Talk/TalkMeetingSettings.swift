@@ -41,6 +41,10 @@ nonisolated struct TalkMeetingPreferences: Codable, Equatable {
     @Published private(set) var apiEnabled = false
     @Published private(set) var modeError: String?
     @Published private(set) var message: String?
+    @Published private(set) var automaticDetectionEnabled = false
+    @Published private(set) var automaticDetectionSelected = false
+    @Published private(set) var automaticModeError: String?
+    private let automaticMode: any TalkAutomaticModeStoring
     private let credentials: any TalkCredentialStoring
     private let mode: any TalkRecordingModeStoring
     private let store: any TalkPreferencesStoring
@@ -51,10 +55,12 @@ nonisolated struct TalkMeetingPreferences: Codable, Equatable {
     private var task: Task<Void, Never>?
     private var modeListener: UUID?
 
-    init(preferences: any TalkPreferencesStoring, credentials: any TalkCredentialStoring, mode: (any TalkRecordingModeStoring)? = nil, lookup: Lookup? = nil) {
+    init(preferences: any TalkPreferencesStoring, credentials: any TalkCredentialStoring, mode: (any TalkRecordingModeStoring)? = nil,
+         automaticMode: (any TalkAutomaticModeStoring)? = nil, lookup: Lookup? = nil) {
         self.credentials = credentials
         store = preferences
         self.mode = mode ?? TalkRecordingModeFileStore()
+        self.automaticMode = automaticMode ?? TalkAutomaticModeFileStore()
         do { apiEnabled = try self.mode.load() }
         catch { modeError = "Не удалось прочитать режим автозаписи. Выберите и сохраните режим заново." }
         let testHost = AppRuntime.isTestHost
@@ -62,11 +68,41 @@ nonisolated struct TalkMeetingPreferences: Codable, Equatable {
             guard !testHost else { throw TalkAPIError.invalidResponse }
             return try await TalkAPIClient(server: credential.server, token: credential.token).users(email: email)
         }
+        refreshAutomaticMode()
         modeListener = TalkSettingsChanges.observe { [weak self] in
             guard let self else { return }
+            self.refreshAutomaticMode()
             do { self.apiEnabled = try self.mode.load(); self.modeError = nil }
             catch { self.modeError = "Не удалось прочитать режим автозаписи. Сохраните выбор заново." }
             self.refreshBinding()
+        }
+    }
+    private func refreshAutomaticMode() {
+        do {
+            let value = try automaticMode.load()
+            automaticDetectionEnabled = value == true; automaticDetectionSelected = value != nil; automaticModeError = nil
+        }
+        catch { automaticModeError = "Не удалось прочитать режим определения встреч. Сохраните выбор заново." }
+    }
+
+    @discardableResult func setAutomaticDetectionEnabled(_ enabled: Bool) -> Bool {
+        do {
+            if enabled {
+                let current = try requireCurrentCredential()
+                guard let account = try savedPreferences(for: current)?.account else { throw TalkAPIError.noToken }
+                _ = try TalkAutomaticConfiguration(credential: current, userKey: account.key)
+            }
+            try automaticMode.save(enabled)
+            automaticDetectionEnabled = enabled; automaticDetectionSelected = true; automaticModeError = nil
+            message = nil
+            TalkSettingsChanges.post()
+            return true
+        } catch {
+            if bindingInvalidated { automaticModeError = TalkAPIError.connectionChanged.localizedDescription }
+            else if error is TalkAPIError || error is TalkRoomConfigurationError {
+                automaticModeError = "Сохраните ключ и подтвердите свой аккаунт."
+            } else { automaticModeError = "Не удалось сохранить режим. Повторите попытку." }
+            return false
         }
     }
     deinit {
@@ -157,7 +193,7 @@ nonisolated struct TalkMeetingPreferences: Codable, Equatable {
     }
     func roomError(_ input: String) -> String? {
         do { _ = try normalized(input); return nil }
-        catch { return "Нужен ID из строчных латинских букв и цифр или ссылка этого пространства без параметров." }
+        catch { return "Нужен ID из строчных латинских букв, цифр и подчёркиваний или ссылка этого пространства без параметров." }
     }
     func addRoom() { rooms.append(Room(input: "")) }
     func removeRoom(_ id: UUID) { rooms.removeAll { $0.id == id } }
