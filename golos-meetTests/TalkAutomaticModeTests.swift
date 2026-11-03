@@ -19,7 +19,8 @@ import Testing
     func save(_ value: TalkMeetingPreferences?) throws { self.value = value }
 }
 @MainActor private struct AutoOldMode: TalkRecordingModeStoring {
-    func load() throws -> Bool { true }
+    var enabled = true
+    func load() throws -> Bool { enabled }
     func save(_ value: Bool) throws { Issue.record("New diagnostic mode must not modify legacy recording preferences") }
 }
 
@@ -73,5 +74,16 @@ import Testing
         try store.save(true); #expect(try store.load() == true)
         try Data("broken".utf8).write(to: store.url)
         #expect(throws: (any Error).self) { try store.load() }
+    }
+
+    @Test(arguments: [false, true]) func canLeaveEitherOldModeWithoutPATOrAccount(apiEnabled: Bool) {
+        let mode = AutoMode(), credentials = AutoCredentials(), preferences = AutoPreferences()
+        credentials.value = nil
+        let old = AutoOldMode(enabled: apiEnabled)
+        let model = TalkMeetingSettingsModel(preferences: preferences, credentials: credentials, mode: old, automaticMode: mode)
+        #expect(!model.automaticDetectionSelected && !model.isBound)
+        #expect(model.setAutomaticDetectionEnabled(false))
+        #expect(model.automaticDetectionSelected && mode.value == false)
+        #expect(TalkRuntimeSettings.load(mode: old, credentials: credentials, preferences: preferences, automaticMode: mode) == .automatic(nil, enabled: false))
     }
 }

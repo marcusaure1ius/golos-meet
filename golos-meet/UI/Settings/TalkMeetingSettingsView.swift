@@ -25,9 +25,9 @@ import SwiftUI
                         Link("Открыть настройки macOS", destination: URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility")!)
                     }
                     if let error = model.automaticModeError { Text(error).foregroundStyle(p.danger) }
-                    if !model.automaticDetectionSelected && model.apiEnabled && model.isReadyForAPI {
+                    if !model.automaticDetectionSelected {
                         Divider()
-                        Text("Ранее настроенная автозапись пока действует.")
+                        Text(previousModeDescription)
                         Button("Перейти в режим без записи") { model.setAutomaticDetectionEnabled(false) }
                             .buttonStyle(GhostButton())
                     }
@@ -71,10 +71,22 @@ import SwiftUI
     }
 
     private var automaticDescription: String {
+        if model.automaticModeError != nil { return "Определение встреч недоступно." }
         if !model.isBound { return "Сначала сохраните ключ подключения." }
         if model.confirmed == nil { return "Подтвердите свой аккаунт ниже." }
+        if !model.automaticDetectionSelected { return "Новый режим ещё не выбран." }
         if !model.automaticDetectionEnabled { return "Определение встреч выключено." }
         return status.observation.text
+    }
+
+    private var previousModeDescription: String {
+        if model.automaticModeError != nil { return "Не удалось прочитать выбранный режим." }
+        if model.modeError != nil { return "Прежняя автозапись недоступна." }
+        if model.apiEnabled {
+            return model.isReadyForAPI ? "Прежняя автозапись по списку комнат пока действует."
+                : "Прежняя автозапись ожидает настройки."
+        }
+        return "Пока действует прежняя автозапись по активности Толка."
     }
 
     @ViewBuilder private var searchContent: some View {

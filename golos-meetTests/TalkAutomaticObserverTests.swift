@@ -71,6 +71,10 @@ private actor AutomaticReplies {
         #expect(childReads == 1)
         let room = Node(role: "AXWebArea", url: "https://auto.example/new_room")
         #expect(try scanner.scan([room]) == ["https://auto.example/new_room"])
+        // A readable home document cannot hide an inaccessible second window.
+        #expect(throws: (any Error).self) {
+            try scanner.scan([.init(role: "AXWindow", children: [document]), .init(role: "AXWindow")])
+        }
     }
 
     @Test func scannerMissingURLsIncompleteTreesAndBoundsNeverBecomeEmptySuccess() throws {
@@ -149,6 +153,38 @@ private actor AutomaticReplies {
         await wait { await replies.count == 3 }; #expect(await replies.calls.last?.room == "alpha"); try await replies.reply()
         await wait { await replies.count == 4 }; #expect(await replies.calls.last?.room == "beta"); try await replies.reply(["owner"])
         await wait { observer.observation.presence == .present(rooms: ["beta"]) }
+        observer.stop()
+    }
+
+    @Test func activeCandidateSurvivesPauseResumeAndEqualConfigureOnHomeDocument() async throws {
+        let native = AutomaticNative(), replies = AutomaticReplies(), time = AutomaticClock(), binding = try config()
+        let observer = TalkAutomaticObserver(clock: time.clock, read: { await native.read() }, fetch: { try await replies.fetch($0, $1) })
+        observer.configure(binding); observer.start()
+        await wait { await replies.count == 1 }; try await replies.reply(["owner"])
+        await wait { observer.observation.presence == .present(rooms: ["team_room"]) }
+        observer.pause(); await native.set(.documents(["https://auto.example/"])); observer.resume()
+        await wait { await replies.count == 2 }
+        #expect(observer.observation.presence == .unknown(.checking))
+        #expect(await replies.calls.last?.room == "team_room")
+        try await replies.reply(["owner"])
+        await wait { observer.observation.presence == .present(rooms: ["team_room"]) }
+        observer.configure(binding)
+        await wait { await replies.count == 3 }; try await replies.reply()
+        await wait { observer.observation.presence == .absent }
+        observer.stop()
+    }
+
+    @Test func candidateDiscoveredBeforePendingAPIRemainsAvailableAfterPause() async throws {
+        let native = AutomaticNative(), replies = AutomaticReplies(), time = AutomaticClock()
+        let observer = TalkAutomaticObserver(clock: time.clock, read: { await native.read() }, fetch: { try await replies.fetch($0, $1) })
+        observer.configure(try config()); observer.start()
+        await wait { await replies.count == 1 }
+        observer.pause(); await native.set(.documents(["https://auto.example/"])); observer.resume()
+        try await replies.reply(["owner"])
+        await wait { await replies.count == 2 }
+        #expect(observer.observation.presence == .unknown(.checking))
+        #expect(await replies.calls.last?.room == "team_room")
+        try await replies.reply(); await wait { observer.observation.presence == .absent }
         observer.stop()
     }
 

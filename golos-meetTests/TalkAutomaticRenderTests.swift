@@ -7,10 +7,12 @@ import Testing
     let credential = TalkCredential(server: URL(string: "https://render.example")!, token: "talkusr.synthetic", version: UUID())
     let account = TalkUserAccount(key: "synthetic-owner", login: "test.owner", firstname: "Анна", surname: "Тестовая", email: "owner@example.ru")
     var hasAccount = true
-    func load() throws -> TalkCredential? { credential }
+    var hasCredential = true
+    var automaticMode: Bool? = true
+    func load() throws -> TalkCredential? { hasCredential ? credential : nil }
     func load() throws -> TalkMeetingPreferences? { .init(schemaVersion: 1, origin: credential.server, connectionVersion: credential.version!, rooms: [], account: hasAccount ? account : nil) }
     func load() throws -> Bool { false }
-    func load() throws -> Bool? { true }
+    func load() throws -> Bool? { automaticMode }
     func save(_ value: TalkCredential?) throws {}
     func save(_ value: TalkMeetingPreferences?) throws {}
     func save(_ enabled: Bool) throws {}
@@ -29,13 +31,15 @@ import Testing
             ("present", .init(presence: .present(rooms: ["synthetic_room"]))),
             ("absent", .init(presence: .absent)),
             ("api-error", .init(presence: .unknown(.unauthorized))),
-            ("no-account", .stopped)
+            ("no-account", .stopped),
+            ("legacy-unconfigured", .stopped)
         ]
         for dark in [false, true] {
             for (name, observation) in states {
                 let store = AutomaticRenderStore(); store.hasAccount = name != "no-account"
+                if name == "legacy-unconfigured" { store.hasCredential = false; store.hasAccount = false; store.automaticMode = nil }
                 let model = TalkMeetingSettingsModel(preferences: store, credentials: store, mode: store, automaticMode: store)
-                model.bind(store.credential)
+                if store.hasCredential { model.bind(store.credential) }
                 let status = TalkAutomaticStatus(); status.observation = observation
                 let palette = dark ? Palette.dark : Palette.light
                 let content = TalkMeetingSettingsView(model: model, status: status)

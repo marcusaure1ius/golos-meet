@@ -21,7 +21,9 @@ nonisolated struct TalkAutomaticObservation: Equatable, Sendable {
 
     var text: String {
         switch nativeIssue {
-        case .permissionRequired: return "Разрешите Golos Meet «Универсальный доступ»."
+        case .permissionRequired:
+            let app = Bundle.main.object(forInfoDictionaryKey: "CFBundleDisplayName") as? String ?? "Golos Meet"
+            return "Разрешите \(app) «Универсальный доступ»."
         case .unavailable: return "Окно Толка недоступно. Участие пока неизвестно."
         case .limitReached: return "Закройте лишние окна Толка или перезапустите определение встреч."
         case nil: break
@@ -55,6 +57,7 @@ nonisolated struct TalkAutomaticObservation: Equatable, Sendable {
     private var worker: Task<Void, Never>?
     private var workerID: UUID?
     private var latest = TalkAutomaticObservation.stopped
+    private var retainedRooms: Set<String> = []
 
     var observation: TalkAutomaticObservation {
         if let time = latest.checkedAt, clock.now() - time >= freshness {
@@ -75,9 +78,12 @@ nonisolated struct TalkAutomaticObservation: Equatable, Sendable {
     }
     deinit { worker?.cancel() }
 
-    func configure(_ config: TalkAutomaticConfiguration) { configuration = config; invalidate(); launch() }
+    func configure(_ config: TalkAutomaticConfiguration) {
+        if configuration != config { retainedRooms.removeAll() }
+        configuration = config; invalidate(); launch()
+    }
     func start() { guard !enabled else { return }; enabled = true; invalidate(); launch() }
-    func stop() { enabled = false; invalidate() }
+    func stop() { enabled = false; retainedRooms.removeAll(); invalidate() }
     func pause() { paused = true; invalidate() }
     func resume() { guard paused else { return }; paused = false; invalidate(); launch() }
     private func invalidate() {
@@ -91,7 +97,7 @@ nonisolated struct TalkAutomaticObservation: Equatable, Sendable {
         workerID = id
         worker = Task { [weak self] in
             // Keep confirmed active rooms until a complete negative API cycle.
-            var retained: Set<String> = []
+            var retained = self?.retainedRooms ?? []
             while !Task.isCancelled {
                 let began = clock.now()
                 let native = await read()
@@ -109,7 +115,10 @@ nonisolated struct TalkAutomaticObservation: Equatable, Sendable {
                         && !TalkDiscoveredRoom.isNonMeetingPage($0, origin: config.credential.server) }
                     // An uncertain/partial cycle must not forget a newly seen
                     // room when its document disappears before the next retry.
-                    if rooms.count <= 10 { retained.formUnion(discovered) }
+                    if rooms.count <= 10 {
+                        retained.formUnion(discovered)
+                        self?.retainedRooms = retained // Survives pause during a pending API request.
+                    }
                     if unreadable { next.nativeIssue = .unavailable }
                     else if rooms.count > 10 { next.nativeIssue = .limitReached }
                     else {
@@ -140,6 +149,7 @@ nonisolated struct TalkAutomaticObservation: Equatable, Sendable {
                     }
                 }
                 guard !Task.isCancelled, self?.generation == current else { break }
+                self?.retainedRooms = retained
                 if self?.latest.presence != next.presence || self?.latest.nativeIssue != next.nativeIssue {
                     let event: String
                     switch next.presence {

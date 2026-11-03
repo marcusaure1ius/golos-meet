@@ -20,20 +20,26 @@ nonisolated struct TalkDocumentScanner<Node> {
 
     func scan(_ windows: [Node]) throws -> [String] {
         let began = now()
-        var stack = windows.map { ($0, 0) }, urls: [String] = []
+        var urls: [String] = []
         var visited = 0
         guard windows.count <= 16 else { throw ScanError.limit }
-        while let (node, depth) = stack.popLast() {
-            visited += 1
-            guard visited <= nodeLimit, depth <= depthLimit, now() - began < secondsLimit else { throw ScanError.limit }
-            if try role(node) == "AXWebArea" {
-                guard let value = try url(node), !value.isEmpty else { throw ScanError.unavailable }
-                urls.append(value)
-                continue
+        for window in windows {
+            var stack = [(window, 0)], foundDocument = false
+            while let (node, depth) = stack.popLast() {
+                visited += 1
+                guard visited <= nodeLimit, depth <= depthLimit, now() - began < secondsLimit else { throw ScanError.limit }
+                if try role(node) == "AXWebArea" {
+                    guard let value = try url(node), !value.isEmpty else { throw ScanError.unavailable }
+                    urls.append(value); foundDocument = true
+                    continue
+                }
+                let values = try children(node)
+                guard values.count <= nodeLimit - visited else { throw ScanError.limit }
+                stack.append(contentsOf: values.map { ($0, depth + 1) })
             }
-            let values = try children(node)
-            guard values.count <= nodeLimit - visited else { throw ScanError.limit }
-            stack.append(contentsOf: values.map { ($0, depth + 1) })
+            // A readable home window cannot hide another inaccessible call
+            // window. No partial window set may prove absence.
+            guard foundDocument else { throw ScanError.unavailable }
         }
         guard !urls.isEmpty, now() - began < secondsLimit else { throw ScanError.unavailable }
         return urls
@@ -61,8 +67,11 @@ nonisolated struct TalkNativeRoomSource: Sendable {
                 var windows: [AXUIElement] = []
                 for pid in pids {
                     let app = AXUIElementCreateApplication(pid)
-                    AXUIElementSetMessagingTimeout(app, 0.15)
-                    windows += try attribute(app, kAXWindowsAttribute) as? [AXUIElement] ?? []
+                    guard let values = try attribute(app, kAXWindowsAttribute) as? [AXUIElement], !values.isEmpty else {
+                        return .unknown(.unavailable)
+                    }
+                    guard windows.count + values.count <= 16 else { return .unknown(.limitReached) }
+                    windows += values
                 }
                 let scanner = TalkDocumentScanner<AXUIElement>(
                     role: { try attribute($0, kAXRoleAttribute) as? String },
@@ -81,6 +90,10 @@ nonisolated struct TalkNativeRoomSource: Sendable {
     }
 
     private static func attribute(_ element: AXUIElement, _ name: String) throws -> CFTypeRef? {
+        // Timeout is per AX object, not inherited by its descendants.
+        guard AXUIElementSetMessagingTimeout(element, 0.15) == .success else {
+            throw TalkDocumentScanner<AXUIElement>.ScanError.unavailable
+        }
         var value: CFTypeRef?
         let error = AXUIElementCopyAttributeValue(element, name as CFString, &value)
         switch error {
