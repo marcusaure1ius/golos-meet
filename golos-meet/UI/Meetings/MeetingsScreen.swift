@@ -49,21 +49,8 @@ struct MeetingsScreen: View {
                         DocumentContentView(scope: scope)
                     } else if scope != .all && (projects.isLoading || !projects.isLoaded || projects.loadError != nil) {
                         projectLibraryState
-                    } else if filteredMeetings.isEmpty && isFilterActive {
-                        ContentUnavailableView("Ничего не найдено", systemImage: "magnifyingglass")
-                            .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    } else if filteredMeetings.isEmpty && scope != .all {
-                        ContentUnavailableView(scope == .inbox ? "Во Входящих нет встреч" : "В проекте пока нет встреч",
-                                               systemImage: scope == .inbox ? "tray" : "folder",
-                                               description: Text(scope == .inbox
-                                                   ? "Здесь появятся встречи без назначенных проектов."
-                                                   : "Откройте встречу в разделе «Встречи» и выберите её проекты."))
-                            .frame(maxWidth: .infinity, maxHeight: .infinity)
                     } else {
-                        switch mode {
-                        case .feed:     MeetingFeedView(meetings: filteredMeetings, now: Date()) { selected = $0 }
-                        case .calendar: MeetingCalendarView(meetings: filteredMeetings) { selected = $0 }
-                        }
+                        meetingContent
                     }
                 }
             }
@@ -77,6 +64,35 @@ struct MeetingsScreen: View {
         }
         .onChange(of: processor.completedJobsCount) { _, _ in library.reload() }   // после каждой задачи — подтянуть статусы/заголовки
         .onChange(of: recordingState.live?.id) { _, _ in library.reload() }   // старт/стоп записи — показать/убрать живую карточку
+    }
+
+    private struct FeedFilter: Hashable {
+        let query: String
+        let period: MeetingPeriod
+        let scope: ProjectMeetingScope
+    }
+
+    @ViewBuilder private var meetingContent: some View {
+        let meetings = filteredMeetings
+        if meetings.isEmpty && isFilterActive {
+            ContentUnavailableView("Ничего не найдено", systemImage: "magnifyingglass")
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+        } else if meetings.isEmpty && scope != .all {
+            ContentUnavailableView(scope == .inbox ? "Во Входящих нет встреч" : "В проекте пока нет встреч",
+                                   systemImage: scope == .inbox ? "tray" : "folder",
+                                   description: Text(scope == .inbox
+                                       ? "Здесь появятся встречи без назначенных проектов."
+                                       : "Откройте встречу в разделе «Встречи» и выберите её проекты."))
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+        } else {
+            switch mode {
+            case .feed:
+                MeetingFeedView(meetings: meetings, now: Date()) { selected = $0 }
+                    .id(FeedFilter(query: query, period: period, scope: scope))
+            case .calendar:
+                MeetingCalendarView(meetings: meetings) { selected = $0 }
+            }
+        }
     }
 
     /// «Обновить»: перечитать ленту и поставить в очередь всё недоделанное.
