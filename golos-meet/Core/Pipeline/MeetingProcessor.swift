@@ -230,6 +230,6 @@ final class MeetingProcessor: ObservableObject {
         let key = Keychain.get(account: Keychain.openRouterAccount) ?? ""
         guard !key.isEmpty else { return nil }
         let client = OpenRouterClient(apiKey: key)
-        return InsightsGenerator(client: client, model: settings.llmModel)
+        return InsightsGenerator(client: client, model: settings.meetingModel.rawValue)
     }
 }
