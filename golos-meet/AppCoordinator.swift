@@ -13,12 +13,16 @@ final class AppCoordinator: MeetingDetectorDelegate {
         let now: () -> Date
         var startLegacy: (@escaping (Bool?, Bool?) -> Void) -> Void = { _ in }
         var stopLegacy: () -> Void = {}
+        var automaticObserver: TalkAutomaticObserver? = nil
+        var automaticStatus: TalkAutomaticStatus? = nil
     }
     private enum Owner { case api, legacy, manual }
     let detector: MeetingDetector
     let recorder: Recorder
     private let state: RecordingState
     private let observer: TalkRoomObserver
+    private let automaticObserver: TalkAutomaticObserver
+    private let automaticStatus: TalkAutomaticStatus
     private let loadSelection: () -> TalkRuntimeSelection
     private let now: () -> Date
     private let startLegacy: (@escaping (Bool?, Bool?) -> Void) -> Void
@@ -47,10 +51,13 @@ final class AppCoordinator: MeetingDetectorDelegate {
         synthetic = dependencies != nil
         detector = MeetingDetector(graceSeconds: graceSeconds)
         if let dependencies {
+            automaticObserver = dependencies.automaticObserver ?? TalkAutomaticObserver()
+            automaticStatus = dependencies.automaticStatus ?? TalkAutomaticStatus()
             recorder = dependencies.recorder; state = dependencies.state; observer = dependencies.observer
             loadSelection = dependencies.selection; now = dependencies.now
             startLegacy = dependencies.startLegacy; stopLegacy = dependencies.stopLegacy
         } else {
+            automaticObserver = TalkAutomaticObserver(); automaticStatus = .shared
             recorder = Recorder(); state = .shared; observer = TalkRoomObserver()
             loadSelection = { TalkRuntimeSettings.production() }; now = { Date() }
             let audio = AudioProcessMonitor(), window = WindowMonitor()
@@ -97,7 +104,7 @@ final class AppCoordinator: MeetingDetectorDelegate {
         let next = loadSelection()
         guard !hasLoadedSelection || next != selection else { return }
         hasLoadedSelection = true
-        stopLegacy(); observer.stop(); detector.reset()
+        stopLegacy(); observer.stop(); automaticObserver.stop(); automaticStatus.observation = .stopped; detector.reset()
         lastAudioActive = false; lastWindowActive = false
         // A manual recording belongs to the user, not to a changing API config.
         if owner != .manual { interruptSegment() }
@@ -108,6 +115,15 @@ final class AppCoordinator: MeetingDetectorDelegate {
     private func applySelection() {
         guard running, !quitting, !sleeping else { return }
         switch selection {
+        case .automatic(let config, let enabled):
+            if let config {
+                automaticObserver.configure(config); automaticObserver.resume(); automaticObserver.start()
+                automaticStatus.observation = automaticObserver.observation
+                detectionLine = automaticObserver.observation.text
+            } else {
+                automaticStatus.observation = .stopped
+                detectionLine = enabled ? "Определение встреч: подтвердите аккаунт в настройках" : "Определение встреч выключено"
+            }
         case .legacy:
             detectionLine = "Автодетект: эвристика аудио и окон Толка"
             startLegacy { [weak self] audio, window in self?.update(audio: audio, window: window) }
@@ -123,6 +139,11 @@ final class AppCoordinator: MeetingDetectorDelegate {
     /// Tests drive this same entry point with an injected monotonic clock.
     func pulse() {
         guard running, !quitting, !sleeping else { return }
+        if case .automatic(.some, _) = selection {
+            // Diagnostic mode never forwards positive/negative states to Recorder.
+            automaticStatus.observation = automaticObserver.observation
+            detectionLine = automaticObserver.observation.text
+        }
         if case .api(.some) = selection {
             let presence = observer.observation.presence
             detectionLine = presence.statusText
@@ -185,7 +206,8 @@ final class AppCoordinator: MeetingDetectorDelegate {
 
     func willSleep() {
         guard running, !quitting else { return }
-        sleeping = true; observer.pause(); stopLegacy(); detector.reset()
+        sleeping = true; observer.pause(); automaticObserver.pause(); stopLegacy(); detector.reset()
+        automaticStatus.observation = automaticObserver.observation
         detectionLine = "Автозапись: пауза на время сна"
         interruptSegment(); renderMenu()
     }
@@ -202,7 +224,7 @@ final class AppCoordinator: MeetingDetectorDelegate {
     func prepareForTermination() {
         guard running else { return }
         quitting = true; running = false
-        observer.stop(); stopLegacy(); detector.reset()
+        observer.stop(); automaticObserver.stop(); automaticStatus.observation = .stopped; stopLegacy(); detector.reset()
         timer?.invalidate(); timer = nil
         if let settingsListener { TalkSettingsChanges.remove(settingsListener) }; settingsListener = nil
         sleepTokens.forEach { NSWorkspace.shared.notificationCenter.removeObserver($0) }; sleepTokens = []

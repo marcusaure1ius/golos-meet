@@ -31,13 +31,23 @@ import Foundation
 nonisolated enum TalkRuntimeSelection: Equatable {
     case legacy
     case api(TalkRoomConfiguration?)
+    case automatic(TalkAutomaticConfiguration?, enabled: Bool)
     case unavailable
 }
 
 @MainActor enum TalkRuntimeSettings {
     static func load(mode: any TalkRecordingModeStoring, credentials: any TalkCredentialStoring,
-                     preferences: any TalkPreferencesStoring) -> TalkRuntimeSelection {
+                     preferences: any TalkPreferencesStoring,
+                     automaticMode: (any TalkAutomaticModeStoring)? = nil) -> TalkRuntimeSelection {
         do {
+            if let enabled = try automaticMode?.load() {
+                guard enabled else { return .automatic(nil, enabled: false) }
+                guard let credential = try credentials.load(), let version = credential.version,
+                      let value = try preferences.load(), value.schemaVersion == 1,
+                      value.origin == credential.server, value.connectionVersion == version,
+                      let account = value.account else { return .automatic(nil, enabled: true) }
+                return .automatic(try TalkAutomaticConfiguration(credential: credential, userKey: account.key), enabled: true)
+            }
             guard try mode.load() else { return .legacy }
             guard let credential = try credentials.load(), let version = credential.version,
                   let value = try preferences.load(), value.schemaVersion == 1,
@@ -50,7 +60,8 @@ nonisolated enum TalkRuntimeSelection: Equatable {
     static func production() -> TalkRuntimeSelection {
         // Must precede even constructing default stores/paths.
         guard !AppRuntime.isTestHost else { return .unavailable }
-        return load(mode: TalkRecordingModeFileStore(), credentials: TalkKeychainStore(), preferences: TalkPreferencesFileStore())
+        return load(mode: TalkRecordingModeFileStore(), credentials: TalkKeychainStore(), preferences: TalkPreferencesFileStore(),
+                    automaticMode: TalkAutomaticModeFileStore())
     }
 }
 

@@ -18,3 +18,13 @@ enum Keychain {
     func load() throws -> TalkMeetingPreferences? { value }
     func save(_ value: TalkMeetingPreferences?) throws { self.value = value }
 }
+
+@MainActor final class PreviewMode: TalkRecordingModeStoring {
+    func load() throws -> Bool { false }
+    func save(_ value: Bool) throws {}
+}
+@MainActor final class PreviewAutomaticMode: TalkAutomaticModeStoring {
+    private var enabled = false
+    func load() throws -> Bool? { enabled }
+    func save(_ value: Bool) throws { enabled = value }
+}

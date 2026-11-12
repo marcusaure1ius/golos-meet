@@ -7,7 +7,7 @@ import SwiftUI
     static func make(_ state: String) -> TalkConnectionModel {
         let credentials = PreviewCredentials(), preferences = PreviewPreferences()
         let account = TalkUserAccount(key: "synthetic-owner", login: "test.user", firstname: "Анна", surname: "Тестовая", email: "anna@example.ru")
-        let model = TalkConnectionModel(store: credentials, preferences: preferences, lookup: { _, _ in
+        let model = TalkConnectionModel(store: credentials, preferences: preferences, mode: PreviewMode(), automaticMode: PreviewAutomaticMode(), lookup: { _, _ in
             if state == "loading" { try await Task.sleep(for: .seconds(120)) }
             if state == "error" { throw TalkAPIError.forbidden }
             if state == "empty" { return [] }

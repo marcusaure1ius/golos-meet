@@ -3,46 +3,37 @@ import SwiftUI
 @MainActor struct TalkMeetingSettingsView: View {
     @Environment(\.palette) private var p
     @ObservedObject var model: TalkMeetingSettingsModel
+    @ObservedObject private var status: TalkAutomaticStatus
+
+    init(model: TalkMeetingSettingsModel, status: TalkAutomaticStatus? = nil) {
+        self.model = model; self.status = status ?? .shared
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            GSectionHeader("Комнаты для API-режима", desc: "Укажите до 10 комнат того же пространства. Ссылки с параметрами не подходят.")
+            GSectionHeader("Определение встреч")
             GCard {
                 VStack(alignment: .leading, spacing: 12) {
-                    if !model.isBound {
-                        Text("Сначала сохраните PAT для этого пространства.")
-                    } else if model.rooms.isEmpty {
-                        Text("Комнат пока нет. Добавьте ID или ссылку комнаты.")
+                    Toggle("Определять встречи автоматически", isOn: Binding(
+                        get: { model.automaticDetectionEnabled }, set: { model.setAutomaticDetectionEnabled($0) }))
+                        .toggleStyle(.switch)
+                        .disabled(!model.automaticDetectionEnabled && (!model.isBound || model.confirmed == nil))
+                    Text("Комната определяется в приложении Толка. Этот режим не включает запись.")
+                        .foregroundStyle(p.muted)
+                    Text(automaticDescription).accessibilityIdentifier("talk-automatic-status")
+                    if model.automaticDetectionEnabled, status.observation.nativeIssue == .permissionRequired {
+                        Link("Открыть настройки macOS", destination: URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility")!)
                     }
-                    ForEach(Array(model.rooms.enumerated()), id: \.element.id) { index, room in
-                        VStack(alignment: .leading, spacing: 5) {
-                            HStack(spacing: 10) {
-                                TextField("ID или ссылка комнаты", text: Binding(
-                                    get: { model.rooms.first(where: { $0.id == room.id })?.input ?? "" },
-                                    set: { value in if let i = model.rooms.firstIndex(where: { $0.id == room.id }) { model.rooms[i].input = value } }))
-                                    .textFieldStyle(.roundedBorder)
-                                    .autocorrectionDisabled()
-                                    .accessibilityLabel("Комната \(index + 1)")
-                                Button { model.removeRoom(room.id) } label: { Image(systemName: "trash") }
-                                    .buttonStyle(.borderless)
-                                    .accessibilityLabel("Удалить комнату \(index + 1)")
-                            }
-                            if let error = model.roomError(room.input) {
-                                Text(error).foregroundStyle(p.danger).fixedSize(horizontal: false, vertical: true)
-                            }
-                        }
-                    }
-                    HStack {
-                        Button("Добавить комнату") { model.addRoom() }.buttonStyle(GhostButton())
-                            .disabled(!model.isBound || model.rooms.count >= 10)
-                        Spacer()
-                        Button("Сохранить комнаты") { model.saveRooms() }.buttonStyle(PrimaryButton())
-                            .disabled(!canSaveRooms)
-                            .opacity(canSaveRooms ? 1 : 0.45)
+                    if let error = model.automaticModeError { Text(error).foregroundStyle(p.danger) }
+                    if !model.automaticDetectionSelected {
+                        Divider()
+                        Text(previousModeDescription)
+                        Button("Перейти в режим без записи") { model.setAutomaticDetectionEnabled(false) }
+                            .buttonStyle(GhostButton())
                     }
                 }.padding(17).frame(maxWidth: .infinity, alignment: .leading)
             }
-            GSectionHeader("Мой аккаунт", desc: "Найдите себя по рабочей почте и подтвердите карточку. Имя само по себе не определяет аккаунт.")
+            GSectionHeader("Мой аккаунт", desc: "Один раз найдите себя по рабочей почте и подтвердите карточку.")
             GCard {
                 VStack(alignment: .leading, spacing: 12) {
                     if let account = model.confirmed {
@@ -65,7 +56,7 @@ import SwiftUI
                         }
                     }
                     searchContent
-                    Text("Подтверждение сохраняет выбранный аккаунт. API не устанавливает, кому принадлежит введённый PAT.")
+                    Text("Выберите аккаунт, под которым звоните в Толке.")
                         .foregroundStyle(p.muted).fixedSize(horizontal: false, vertical: true)
                 }.padding(17).frame(maxWidth: .infinity, alignment: .leading)
             }
@@ -73,31 +64,30 @@ import SwiftUI
                 Text(message).accessibilityIdentifier("talk-settings-message")
                     .fixedSize(horizontal: false, vertical: true)
             }
-            GCard {
-                VStack(alignment: .leading, spacing: 10) {
-                    Toggle("Автозапись по API Толка", isOn: Binding(get: { model.apiEnabled }, set: { model.setAPIEnabled($0) }))
-                        .toggleStyle(.switch).accessibilityLabel("Автозапись по API Толка")
-                    Text(modeDescription)
-                        .fixedSize(horizontal: false, vertical: true)
-                    if let error = model.modeError { Text(error).foregroundStyle(p.danger).fixedSize(horizontal: false, vertical: true) }
-                }.padding(17)
-            }
-            Text("API видит участие аккаунта. Этот режим рассчитан на звонки только с этого Mac. Вход с выключенным микрофоном запускает запись; mute и тишина её не останавливают. Обнаружение входа/выхода занимает время опроса: обычно 10–30 секунд, при задержках дольше.")
+            Text("Режим рассчитан на звонки с этого Mac. Проверка участия занимает обычно 10–30 секунд.")
                 .foregroundStyle(p.muted).fixedSize(horizontal: false, vertical: true)
         }
         .font(.system(size: 13)).foregroundStyle(p.ink)
     }
 
-    private var modeDescription: String {
-        if model.modeError != nil { return "Режим не подтверждён. Исправьте ошибку и сохраните выбор заново." }
-        if !model.apiEnabled { return "Выключена. Автозапись использует прежнюю эвристику аудио и окон Толка." }
-        if !model.isReadyForAPI {
-            return "API-режим выбран, но сохранённые комнаты или аккаунт недоступны. Откройте настройки заново и проверьте подключение. Эвристика не используется."
-        }
-        return "Включена для сохранённых комнат и подтверждённого аккаунта. При отсутствии настройки API будет ждать; эвристика не подменяет его."
+    private var automaticDescription: String {
+        if model.automaticModeError != nil { return "Определение встреч недоступно." }
+        if !model.isBound { return "Сначала сохраните ключ подключения." }
+        if model.confirmed == nil { return "Подтвердите свой аккаунт ниже." }
+        if !model.automaticDetectionSelected { return "Новый режим ещё не выбран." }
+        if !model.automaticDetectionEnabled { return "Определение встреч выключено." }
+        return status.observation.text
     }
 
-    private var canSaveRooms: Bool { model.isBound && !model.rooms.contains { model.roomError($0.input) != nil } }
+    private var previousModeDescription: String {
+        if model.automaticModeError != nil { return "Не удалось прочитать выбранный режим." }
+        if model.modeError != nil { return "Прежняя автозапись недоступна." }
+        if model.apiEnabled {
+            return model.isReadyForAPI ? "Прежняя автозапись по списку комнат пока действует."
+                : "Прежняя автозапись ожидает настройки."
+        }
+        return "Пока действует прежняя автозапись по активности Толка."
+    }
 
     @ViewBuilder private var searchContent: some View {
         switch model.search {
