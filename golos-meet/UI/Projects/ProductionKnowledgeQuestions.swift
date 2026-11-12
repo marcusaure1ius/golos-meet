@@ -7,7 +7,7 @@ import SwiftUI
         guard !AppRuntime.isTestHost, let search = ProductionKnowledgeSearch.service else { return nil }
         let store = ProjectLibrary.shared.store
         let meetings = AppPaths.meetingsRoot, documents = AppPaths.appSupport.appendingPathComponent("knowledge")
-        let model = UISettings.shared.llmModel
+        let model = UISettings.shared.generationModel.rawValue
         return KnowledgeQuestionModel(projectID: projectID, providerLabel: "OpenRouter · " + model, center: .default) {
             KnowledgeQuestionService(store: store, search: search, meetingsRoot: meetings, documentsRoot: documents,
                                      client: QuestionOpenRouterClient(), model: model)

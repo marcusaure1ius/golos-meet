@@ -57,13 +57,14 @@ struct SettingsScreen: View {
                             .toggleStyle(.switch)
                             .controlSize(.small)
                     }
-                    GSettingRow("Модель конспектов") {
+                    GSettingRow("Модель генерации",
+                                desc: "Конспекты, вопросы по проекту и память — через OpenRouter.") {
                         Menu {
-                            ForEach(UISettings.MeetingModel.allCases, id: \.self) { model in
-                                Button(model.title) { settings.meetingModel = model }
+                            ForEach(UISettings.GenerationModel.allCases, id: \.self) { model in
+                                Button(model.title) { settings.generationModel = model }
                             }
                         } label: {
-                            GSelectLabel(settings.meetingModel.title)
+                            GSelectLabel(settings.generationModel.title)
                         }
                         .menuStyle(.borderlessButton).menuIndicator(.hidden).fixedSize()
                     }
