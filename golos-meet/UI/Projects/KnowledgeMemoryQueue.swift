@@ -7,10 +7,10 @@ import Combine
         guard !AppRuntime.isTestHost, let indexing = ProductionIndexing.shared else { return nil }
         let settings = UISettings.shared
         let worker = ProjectMemoryQueueWorker(store: ProjectLibrary.shared.store, meetingsRoot: AppPaths.meetingsRoot,
-            documentsRoot: AppPaths.appSupport.appendingPathComponent("knowledge"), client: QuestionOpenRouterClient(), model: settings.llmModel)
-        return KnowledgeMemoryQueue(worker: worker, center: .default, enabled: settings.llmEnabled, model: settings.llmModel,
+            documentsRoot: AppPaths.appSupport.appendingPathComponent("knowledge"), client: QuestionOpenRouterClient(), model: settings.generationModel.rawValue)
+        return KnowledgeMemoryQueue(worker: worker, center: .default, enabled: settings.llmEnabled, model: settings.generationModel.rawValue,
             indexUpdates: { await indexing.service.updates() },
-            configuration: settings.$llmEnabled.combineLatest(settings.$llmModel).eraseToAnyPublisher())
+            configuration: settings.$llmEnabled.combineLatest(settings.$generationModel.map(\.rawValue)).eraseToAnyPublisher())
     }()
 }
 
