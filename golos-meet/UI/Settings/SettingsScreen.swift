@@ -7,9 +7,6 @@ struct SettingsScreen: View {
     @State private var apiKey: String = UISettings.shared.openRouterKey
     @State private var keySaved: Bool = !UISettings.shared.openRouterKey.isEmpty
 
-    /// Доступные LLM-модели (пока одна; список расширяется здесь).
-    private let llmModels = ["qwen/qwen3.6-flash"]
-
     private func persistKey() {
         settings.openRouterKey = apiKey
         keySaved = !apiKey.isEmpty
@@ -60,13 +57,13 @@ struct SettingsScreen: View {
                             .toggleStyle(.switch)
                             .controlSize(.small)
                     }
-                    GSettingRow("Модель") {
+                    GSettingRow("Модель конспектов") {
                         Menu {
-                            ForEach(llmModels, id: \.self) { m in
-                                Button(m) { settings.llmModel = m }
+                            ForEach(UISettings.MeetingModel.allCases, id: \.self) { model in
+                                Button(model.title) { settings.meetingModel = model }
                             }
                         } label: {
-                            GSelectLabel(settings.llmModel)
+                            GSelectLabel(settings.meetingModel.title)
                         }
                         .menuStyle(.borderlessButton).menuIndicator(.hidden).fixedSize()
                     }

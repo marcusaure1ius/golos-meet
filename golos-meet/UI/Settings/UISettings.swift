@@ -28,6 +28,24 @@ final class UISettings: ObservableObject {
     @Published var llmEnabled: Bool {
         didSet { UserDefaults.standard.set(llmEnabled, forKey: "llm.enabled") }
     }
+
+    enum MeetingModel: String, CaseIterable {
+        case deepSeek = "deepseek/deepseek-v4.1-flash"
+        case qwen = "qwen/qwen3.6-flash"
+
+        var title: String {
+            switch self {
+            case .deepSeek: "DeepSeek V4.1 Flash"
+            case .qwen: "Qwen 3.6 Flash"
+            }
+        }
+    }
+
+    @Published var meetingModel: MeetingModel {
+        didSet { UserDefaults.standard.set(meetingModel.rawValue, forKey: "llm.meetingModel") }
+    }
+
+    /// Модель ответов и памяти проекта.
     @Published var llmModel: String {
         didSet { UserDefaults.standard.set(llmModel, forKey: "llm.model") }
     }
@@ -43,6 +61,7 @@ final class UISettings: ObservableObject {
         themeMode = d.string(forKey: "ui.themeMode").flatMap(ThemeMode.init) ?? .auto
         modelChoice = d.string(forKey: "asrModelChoice").flatMap(ASRModelChoice.init) ?? .speed
         llmEnabled = (d.object(forKey: "llm.enabled") as? Bool) ?? true
+        meetingModel = d.string(forKey: "llm.meetingModel").flatMap(MeetingModel.init(rawValue:)) ?? .deepSeek
         llmModel = d.string(forKey: "llm.model") ?? "qwen/qwen3.6-flash"
     }
 }
