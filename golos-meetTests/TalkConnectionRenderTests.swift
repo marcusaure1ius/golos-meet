@@ -4,9 +4,10 @@ import Testing
 @testable import golos_meet
 
 @MainActor
-private struct RenderTalkStore: TalkCredentialStoring {
-    func load() throws -> TalkCredential? { nil }
-    func save(_ credential: TalkCredential?) throws {}
+private final class RenderTalkStore: TalkCredentialStoring {
+    var value: TalkCredential?
+    func load() throws -> TalkCredential? { value }
+    func save(_ credential: TalkCredential?) throws { value = credential }
 }
 
 @MainActor private final class RenderWindowCredentials: TalkCredentialStoring {
@@ -36,10 +37,21 @@ private struct RenderTalkStore: TalkCredentialStoring {
         for dark in [false, true] {
             let empty = TalkConnectionModel(store: RenderTalkStore(), checkProfile: { _ in })
             try render(empty, name: "empty", dark: dark, root: root)
-            let success = TalkConnectionModel(store: RenderTalkStore(), checkProfile: { _ in })
+            let savedStore = RenderTalkStore()
+            let success = TalkConnectionModel(store: savedStore, checkProfile: { _ in })
             success.newToken = "talkusr.synthetic"
+            #expect(success.save())
             await success.verify()
             try render(success, name: "connected", dark: dark, root: root)
+            let reopened = TalkConnectionModel(store: savedStore, checkProfile: { _ in })
+            try render(reopened, name: "saved", dark: dark, root: root)
+            reopened.newToken = "talkusr.replacement"
+            try render(reopened, name: "replacement", dark: dark, root: root)
+            reopened.newToken = ""
+            reopened.serverAddress = "https://other.example"
+            try render(reopened, name: "changed-address", dark: dark, root: root)
+            reopened.delete()
+            try render(reopened, name: "deleted", dark: dark, root: root)
             let failure = TalkConnectionModel(store: RenderTalkStore(), checkProfile: { _ in throw TalkAPIError.unauthorized })
             failure.newToken = "talkusr.synthetic"
             await failure.verify()
@@ -70,6 +82,11 @@ private struct RenderTalkStore: TalkCredentialStoring {
         try FileManager.default.createDirectory(at: handoff, withIntermediateDirectories: true)
         for name in ["stale-window-light.png", "stale-window-dark.png"] {
             try Data(contentsOf: root.appendingPathComponent(name)).write(to: handoff.appendingPathComponent(name))
+        }
+        let connectionHandoff = FileManager.default.temporaryDirectory.appendingPathComponent("golos69-connection-renders")
+        try FileManager.default.createDirectory(at: connectionHandoff, withIntermediateDirectories: true)
+        for file in try FileManager.default.contentsOfDirectory(at: root, includingPropertiesForKeys: nil) {
+            try Data(contentsOf: file).write(to: connectionHandoff.appendingPathComponent(file.lastPathComponent))
         }
         print("Talk settings renders: \(root.path)")
     }

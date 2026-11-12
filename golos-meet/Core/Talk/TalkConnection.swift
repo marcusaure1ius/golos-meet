@@ -43,8 +43,8 @@ final class TalkConnectionModel: ObservableObject {
         var text: String {
             switch self {
             case .unchecked: "Подключение ещё не проверено."
-            case .checking: "Проверяем доступ к профилю…"
-            case .connected: "PAT принят. Доступ к профилю подтверждён."
+            case .checking: "Проверяем подключение…"
+            case .connected: "Доступ к профилю подтверждён."
             case .failed(let message): message
             }
         }
@@ -63,6 +63,14 @@ final class TalkConnectionModel: ObservableObject {
     private let checkProfile: @Sendable (TalkCredential) async throws -> Void
     private var revision = 0
     private var savedSnapshot: TalkCredential?
+
+    /// Presentation only: never put the stored secret or a mask into newToken.
+    var showsSavedKey: Bool {
+        guard hasSavedCredential, newToken.isEmpty, let savedSnapshot,
+              let url = URL(string: serverAddress.trimmingCharacters(in: .whitespacesAndNewlines)),
+              let origin = try? TalkAPIClient.normalizedServer(url) else { return false }
+        return origin == savedSnapshot.server
+    }
 
     init(store: (any TalkCredentialStoring)? = nil,
          preferences: (any TalkPreferencesStoring)? = nil,
@@ -122,7 +130,7 @@ final class TalkConnectionModel: ObservableObject {
             newToken = ""
             hasSavedCredential = true
             meetingSettings.bind(credential)
-            storageMessage = "PAT сохранён в Keychain для этого адреса."
+            storageMessage = "Ключ сохранён."
             TalkSettingsChanges.post()
             return true
         } catch {
@@ -140,7 +148,7 @@ final class TalkConnectionModel: ObservableObject {
             newToken = ""
             hasSavedCredential = false
             meetingSettings.removePreferences()
-            storageMessage = "Сохранённый PAT удалён с этого Mac."
+            storageMessage = "Ключ удалён."
             TalkSettingsChanges.post()
         } catch { diagnostic = .failed(Self.safeMessage(error)) }
     }

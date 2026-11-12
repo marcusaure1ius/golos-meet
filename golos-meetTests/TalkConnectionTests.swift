@@ -44,7 +44,32 @@ private actor PendingTalkCheck {
         #expect(reopened.serverAddress == "https://talk.example")
         #expect(reopened.newToken.isEmpty)
         #expect(reopened.hasSavedCredential)
+        #expect(reopened.showsSavedKey)
         #expect(reopened.diagnostic == .unchecked)
+    }
+
+    @Test func savedKeyIndicatorTracksAddressAndDraftWithoutChangingStoredSecret() {
+        let store = MemoryTalkStore(original)
+        let model = TalkConnectionModel(store: store)
+        #expect(model.showsSavedKey)
+        #expect(model.newToken.isEmpty)
+        model.serverAddress = "https://TALK.example:443/"
+        #expect(model.showsSavedKey)
+        model.serverAddress = "https://other.example"
+        #expect(!model.showsSavedKey)
+        model.serverAddress = original.server.absoluteString
+        #expect(model.showsSavedKey)
+        model.newToken = "talkusr.replacement"
+        #expect(!model.showsSavedKey)
+        #expect(store.credential == original)
+        model.newToken = ""
+        #expect(model.showsSavedKey)
+        #expect(model.save())
+        #expect(store.credential?.token == original.token)
+        model.delete()
+        #expect(!model.showsSavedKey)
+        #expect(model.newToken.isEmpty)
+        #expect(store.credential == nil)
     }
 
     @Test func neverReusesSavedTokenForChangedHost() async {

@@ -11,8 +11,7 @@ struct TalkConnectionSettings: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            GSectionHeader("Подключение к Толку",
-                           desc: "Персональный ключ (PAT) из настроек Толка. Введите его только здесь.")
+            GSectionHeader("Подключение к Толку")
             GCard {
                 GSettingRow("Адрес пространства", showTopDivider: false) {
                     TextField("https://alfabank.ktalk.ru", text: $model.serverAddress)
@@ -21,49 +20,50 @@ struct TalkConnectionSettings: View {
                         .accessibilityLabel("Адрес пространства Толка")
                         .autocorrectionDisabled()
                 }
-                GSettingRow("Персональный ключ",
-                            desc: model.hasSavedCredential
-                                ? "Ключ хранится в Keychain и привязан к сохранённому адресу."
-                                : "Ключ пока не сохранён. Ключ OpenRouter сюда не подходит.") {
-                    SecureField(model.hasSavedCredential ? "Новый PAT для замены" : "talkusr.…",
-                                text: $model.newToken)
-                        .textFieldStyle(.roundedBorder)
-                        .frame(width: 260)
-                        .accessibilityLabel("Персональный ключ Толка")
+                GSettingRow("Персональный ключ") {
+                    HStack(spacing: 8) {
+                        Image(systemName: model.showsSavedKey ? "checkmark.circle.fill" : "circle.dashed")
+                            .font(.system(size: 13))
+                            .foregroundStyle(model.showsSavedKey ? Color.green : p.muted2)
+                            .accessibilityLabel(model.showsSavedKey ? "Ключ сохранён" : "Ключ не сохранён")
+                        SecureField("Персональный ключ Толка", text: $model.newToken,
+                                    prompt: Text(model.showsSavedKey ? "••••••••••••" : "Введите ключ"))
+                            .textFieldStyle(.roundedBorder)
+                            .frame(width: 260)
+                            .accessibilityLabel("Персональный ключ Толка")
+                            .accessibilityHint(model.showsSavedKey ? "Ключ сохранён. Введите другой, чтобы заменить." : "Введите ключ из настроек Толка.")
+                            .help(model.showsSavedKey ? "Ключ сохранён. Введите другой, чтобы заменить." : "Персональный ключ из настроек Толка.")
+                    }
                 }
                 VStack(alignment: .leading, spacing: 12) {
                     HStack(spacing: 10) {
-                        Button("Сохранить PAT") { model.save() }
+                        Button("Сохранить") { model.save() }
                             .buttonStyle(PrimaryButton())
                             .disabled(model.diagnostic == .checking)
-                        Button("Проверить подключение") {
+                        Button("Проверить") {
                             Task { await model.verify() }
                         }
                         .buttonStyle(GhostButton())
+                        .help("Проверить доступ к профилю. Запись не включается.")
                         .disabled(model.diagnostic == .checking)
                         Spacer(minLength: 0)
                         if model.hasSavedCredential {
-                            Button("Удалить PAT") { model.delete() }
+                            Button("Удалить ключ") { model.delete() }
                                 .buttonStyle(GhostButton())
                         }
                     }
-                    if let message = model.storageMessage {
-                        Text(message).foregroundStyle(p.muted)
-                    }
-                    HStack(alignment: .top, spacing: 8) {
-                        if model.diagnostic == .checking {
-                            ProgressView().controlSize(.small)
-                        } else {
-                            Image(systemName: diagnosticIcon)
-                                .foregroundStyle(diagnosticColor)
+                    if let statusText {
+                        HStack(alignment: .top, spacing: 8) {
+                            if model.diagnostic == .checking {
+                                ProgressView().controlSize(.small)
+                            } else {
+                                Image(systemName: diagnosticIcon)
+                                    .foregroundStyle(diagnosticColor)
+                            }
+                            Text(statusText).foregroundStyle(diagnosticColor)
                         }
-                        Text(model.diagnostic.text).foregroundStyle(diagnosticColor)
+                        .accessibilityElement(children: .combine)
                     }
-                    .accessibilityElement(children: .combine)
-                    Text("Проверка отправляет запрос к профилю по указанному адресу. Она не включает автозапись. Режим выбирается ниже после настройки комнат и аккаунта.")
-                        .foregroundStyle(p.muted)
-                    Text("В API-режиме участие определяется без окон и активности микрофона. Ошибка API не считается выходом.")
-                        .foregroundStyle(p.muted)
                 }
                 .font(.system(size: 13))
                 .fixedSize(horizontal: false, vertical: true)
@@ -73,6 +73,10 @@ struct TalkConnectionSettings: View {
             }
             TalkMeetingSettingsView(model: model.meetingSettings).padding(.top, 8)
         }
+    }
+
+    private var statusText: String? {
+        model.diagnostic == .unchecked ? model.storageMessage : model.diagnostic.text
     }
 
     private var diagnosticIcon: String {
