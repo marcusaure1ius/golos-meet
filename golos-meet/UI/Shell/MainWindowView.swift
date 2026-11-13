@@ -7,7 +7,8 @@ struct MainWindowView: View {
     @StateObject private var system = SystemAppearance()
     @StateObject private var projects = ProjectLibrary.shared
     @StateObject private var documents = DocumentLibrary.shared
-    @State private var selection: SidebarSection = .meetings
+    @EnvironmentObject private var library: MeetingLibrary
+    @State private var selection: SidebarSection = .agent
 
     private var effectiveScheme: ColorScheme {
         switch settings.themeMode {
@@ -47,6 +48,7 @@ struct MainWindowView: View {
 
     @ViewBuilder private var paneView: some View {
         switch selection {
+        case .agent: AgentScreen(library: library)
         case .meetings: MeetingsScreen(onSettings: { selection = .settings })
         case .documents: DocumentsScreen()
         case .search: KnowledgeSearchEntry()
