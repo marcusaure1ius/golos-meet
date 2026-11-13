@@ -1,0 +1,9 @@
+{
+  "name": "golos-meet-dsh-spike",
+  "private": true,
+  "description": "Spike: DeepSeek Harness (dsh) over the golos-meet QA archive (issue #94)",
+  "type": "module",
+  "dependencies": {
+    "@deepseek-ai/dsh": "0.2.2-rc.1"
+  }
+}
