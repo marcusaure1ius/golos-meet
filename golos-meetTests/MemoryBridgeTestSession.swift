@@ -280,7 +280,12 @@ extension ProjectStore {
         try await fixture.base.store.memoryQueueSnapshot().jobs.first { $0.source.externalID == "late" }?.completeCoverage == true
     }
     func wait(_ phase: String, controlled: Bool = false, _ condition: () async throws -> Bool) async throws {
-        let end = ContinuousClock.now + .seconds(5)
+        // Дедлайн защищает от реально зависшего ожидания, а не ограничивает нагрузку:
+        // в полном прогоне suite-тесты идут параллельно, и корректному коду может не
+        // хватить 5 с (#61 — synthetic timeout воспроизводится только под нагрузкой,
+        // изолированные прогоны всегда зелёные). Управляемые ожидания (controlled)
+        // намеренно проверяют реальный 5-секундный путь таймаута и сохраняют бюджет.
+        let end = ContinuousClock.now + (controlled ? .seconds(5) : .seconds(60))
         trace.mark("wait.begin", ["phase": phase])
         do {
             var iteration = 0
@@ -340,7 +345,9 @@ extension ProjectStore {
         await gate.signal(); await fixture.cleanup()
         // Join the observed deinit-stop when a bridge was actually released.
         // This does not change worker/bridge production lifetime semantics.
-        let end = ContinuousClock.now + .seconds(5)
+        // Budget is load-tolerant: under a parallel suite run the stop may be
+        // scheduled late without being hung (#61).
+        let end = ContinuousClock.now + .seconds(60)
         do {
             while try !joinDeinit(), ContinuousClock.now < end { await Task.yield() }
             #expect(try joinDeinit())

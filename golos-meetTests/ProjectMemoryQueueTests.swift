@@ -51,7 +51,8 @@ import Testing
         try #require(try await base.store.memoryQueueSnapshot().jobs.first { $0.source.externalID == id })
     }
     func until(_ label: String = "synthetic worker state", _ condition: () async throws -> Bool) async throws {
-        let deadline = ContinuousClock.now.advanced(by:.seconds(5))
+        // Load-tolerant budget (#61): в параллельном прогоне 5 с не хватает корректному коду.
+        let deadline = ContinuousClock.now.advanced(by:.seconds(60))
         while try await !condition() {
             if ContinuousClock.now > deadline { Issue.record("Timed out waiting for \(label)"); throw MemoryQueueError.busy }
             try await Task.sleep(for:.milliseconds(5))
