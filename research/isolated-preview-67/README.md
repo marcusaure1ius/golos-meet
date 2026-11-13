@@ -1,5 +1,8 @@
 # #67 · Отдельный packaged QA profile
 
+> Примечание (ребейз на 6ed86f7, PR #92): артефакты прогонов `results/*`,
+> упомянутые ниже, относятся к проверкам старого SHA и хранились локально вне git;
+> в этот перенос они сознательно не включены — свежие проверки описаны в PR #92.
 База реализации — accepted `23b1da158304a2c0c596752d9150e489b1884fb4`, новый
 managed worktree/branch `67-isolated-preview` / `codex/67-isolated-preview`.
 PR55 `d0e47d0f5ca7c9c380abaf243b11a208aa36d4ab` остаётся отдельным reviewed,
