@@ -197,6 +197,25 @@ private actor SearchFixtureEncoder: LocalPassageEmbedding {
         await f.cleanup()
     }
 
+    /// Пустая реплика («а.», #93 P3) не выдаётся как «близкий фрагмент по
+    /// смыслу»: фрагменты <5 символов после trim отфильтрованы из выдачи,
+    /// содержательные фрагменты остаются на месте.
+    @Test func emptyReplicaChunksAreFilteredOutOfSearchResults() async throws {
+        let f = try Fixture()
+        do {
+            let p = try await f.store.createProject(name: "Прайсинг")
+            _ = try await f.meeting("short", text: "а.")
+            try await f.store.assignMeeting("short", to: [p.id])
+            _ = try await f.meeting("real", text: "релиз на январь", start: 0)
+            try await f.store.assignMeeting("real", to: [p.id])
+            let search = f.service()
+            #expect(try await search.search("а.", scope: .project(p.id)).hits.isEmpty)
+            let real = try await search.search("релиз", scope: .project(p.id))
+            #expect(real.hits.map { $0.chunk.text } == ["релиз на январь"])
+        } catch { await f.cleanup(); throw error }
+        await f.cleanup()
+    }
+
     @Test func querySyntaxIsDataAndLimitsAreExplicit() throws {
         #expect(try KnowledgeSearchQuery.expression("релиз OR \"запуск\" -NOT: NEAR(*)") == "\"релиз\"* OR \"OR\"* OR \"запуск\"* OR \"NOT\"* OR \"NEAR\"*")
         #expect(throws: KnowledgeSearchError.invalidQuery) { try KnowledgeSearchQuery.expression("***") }

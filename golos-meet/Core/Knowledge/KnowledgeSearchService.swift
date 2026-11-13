@@ -94,6 +94,10 @@ actor KnowledgeSearchService {
         var hits: [KnowledgeSearchHit] = [], perSource: [EmbeddingSourceKey: Int] = [:]
         for id in order {
             guard let item = chunks[id], var source = sources[item.source], perSource[item.source, default: 0] < 3 else { continue }
+            // Пустая реплика («а.», «да.») не может быть «близким фрагментом по
+            // смыслу» — это шум релевантности (#93 P3). Фильтр по итогам fusion,
+            // до лимита 30, чтобы место не занимали пустые фрагменты.
+            guard item.chunk.text.trimmingCharacters(in: .whitespacesAndNewlines).count >= 5 else { continue }
             source.title = await reader.title(source)
             hits.append(.init(source: source, chunk: item.chunk, model: model, scope: scope,
                               matchedWords: lexicalRanks[id] != nil, matchedMeaning: semanticRanks[id] != nil,
