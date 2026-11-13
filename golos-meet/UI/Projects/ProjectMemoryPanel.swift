@@ -1,7 +1,8 @@
 import SwiftUI
 
-/// Read-only panel: overview, paged history, queue states and provenance.
-/// Consent, queue actions and manual edits arrive in follow-up parts of #37.
+/// Panel: overview, paged history, queue states, provenance and manual
+/// corrections/retractions. Consent and queue actions arrive in a follow-up
+/// part of #37.
 struct ProjectMemoryPanel: View {
     @ObservedObject var model: ProjectMemoryPanelModel
     @EnvironmentObject private var projects: ProjectLibrary
@@ -11,6 +12,13 @@ struct ProjectMemoryPanel: View {
     @State private var tab = "Обзор"
     @State private var policies = false
     @State private var owners: Set<UUID> = []
+    @State private var editing: MemoryEvent?
+    @State private var retracting = false
+    @State private var text = ""
+    @State private var earliest = Date()
+    @State private var latest = Date()
+    @State private var hasDecisionDate = false
+    @State private var decisionDate = Date()
 
     init(model: ProjectMemoryPanelModel, onBack: (() -> Void)? = nil, onSettings: (() -> Void)? = nil, initialTab: String = "Обзор") {
         self.model = model; self.onBack = onBack; self.onSettings = onSettings; _tab = State(initialValue:initialTab)
@@ -26,7 +34,9 @@ struct ProjectMemoryPanel: View {
                         if model.loading { ProgressView("Проверяем память и источники…").controlSize(.small) }
                         if let notice = model.notice { status("Требуется внимание",notice) }
                         if !model.loading {
-                            if let proof = model.inspected { details(proof) }
+                            if let preview = model.correction { correctionPreview(preview) }
+                            else if let event = editing { editor(event) }
+                            else if let proof = model.inspected { details(proof) }
                             else if model.projectID != nil {
                                 controls
                                 if tab == "Очередь" { jobs }
@@ -44,6 +54,7 @@ struct ProjectMemoryPanel: View {
             }
         }
         .background(p.bg)
+        .onChange(of:model.projectID) { _,_ in editing = nil }
         .sheet(isPresented:$policies) { ProjectCloudSettings(projectIDs:owners,initialID:model.projectID).environmentObject(projects) }
     }
     private var heading: some View {
@@ -125,6 +136,10 @@ struct ProjectMemoryPanel: View {
                 if !row.entry.supersededBy.isEmpty { Text("Сохранено в истории: заменено или отменено другим событием.").font(.system(size:12)).foregroundStyle(p.ink.opacity(0.72)) }
                 VStack(alignment:.leading,spacing:8) {
                     Button("Источники и зависимости") { model.inspect(e) }.buttonStyle(GhostButton()).accessibilityIdentifier("memory.inspect.\(e.id)")
+                    if e.projectID == model.projectID && e.action != .retraction {
+                        Button("Изменить") { edit(e,false) }.buttonStyle(GhostButton()).accessibilityIdentifier("memory.edit.\(e.id)")
+                        Button("Отменить факт") { edit(e,true) }.buttonStyle(GhostButton())
+                    }
                 }.disabled(model.busy)
             }.frame(maxWidth:.infinity,alignment:.leading).padding(14)
         }
@@ -163,6 +178,12 @@ struct ProjectMemoryPanel: View {
                     dates(e)
                     if model.retiredEvents.contains(e.id) { Text("Это утверждение было заменено или отменено. Производный контекст, который использует его, требует пересмотра.").font(.system(size:12)).foregroundStyle(p.danger) }
                     Text("Проект: \(model.projects.first { $0.id == e.projectID }?.name ?? "Недоступен")").font(.system(size:12))
+                    if e.projectID == model.projectID && e.action != .retraction {
+                        VStack(alignment:.leading,spacing:8) {
+                            Button("Исправить утверждение") { edit(e,false) }.buttonStyle(GhostButton())
+                            Button("Отменить утверждение") { edit(e,true) }.buttonStyle(GhostButton())
+                        }.disabled(model.busy)
+                    }
                     Divider()
                 }
             }
@@ -184,6 +205,48 @@ struct ProjectMemoryPanel: View {
             }
         }
     }
+    private func edit(_ event: MemoryEvent,_ retract: Bool) {
+        model.dismissDetails(); editing = event; retracting = retract; text = retract ? "" : event.statement.text
+        earliest = event.statement.deadline?.earliest ?? todayCivilDay; latest = event.statement.deadline?.latest ?? todayCivilDay
+        hasDecisionDate = event.decisionDate != nil; decisionDate = event.decisionDate ?? todayCivilDay
+    }
+    private func editor(_ event: MemoryEvent) -> some View {
+        VStack(alignment:.leading,spacing:14) {
+            GSectionHeader(retracting ? "Ручная отмена утверждения" : "Ручное исправление")
+            Text("Исходное: " + event.statement.text).font(.system(size:14)).textSelection(.enabled)
+            conditions(event.statement)
+            Text("Тип, предмет и условия сохранятся. Изменение останется в истории и не будет автоматически заменено моделью.").font(.system(size:12)).foregroundStyle(p.ink.opacity(0.72))
+            TextField(retracting ? "Причина отмены" : "Исправленный текст",text:$text,axis:.vertical).lineLimit(3...10).textFieldStyle(.roundedBorder).accessibilityIdentifier("memory.edit.text")
+            if event.statement.kind == .deadline && !retracting {
+                DatePicker("Срок с",selection:$earliest,displayedComponents:.date).environment(\.timeZone,TimeZone(secondsFromGMT:0)!)
+                DatePicker("Срок по",selection:$latest,displayedComponents:.date).environment(\.timeZone,TimeZone(secondsFromGMT:0)!)
+                if earliest > latest { Text("Конец периода должен быть не раньше начала.").foregroundStyle(p.danger) }
+            }
+            if !retracting {
+                Toggle("Дата решения известна",isOn:$hasDecisionDate)
+                if hasDecisionDate { DatePicker("Дата решения",selection:$decisionDate,displayedComponents:.date).environment(\.timeZone,TimeZone(secondsFromGMT:0)!) }
+            }
+            Button("Проверить и показать изменение") {
+                model.prepareCorrection(event,text:text,retract:retracting,earliest:earliest,latest:latest,decision:hasDecisionDate && !retracting ? decisionDate : nil)
+            }.buttonStyle(PrimaryButton()).disabled(model.busy || text.trimmingCharacters(in:.whitespacesAndNewlines).isEmpty || (!retracting && event.statement.kind == .deadline && earliest > latest))
+                .accessibilityIdentifier("memory.edit.prepare")
+            Button("Закрыть редактор") { editing = nil; model.cancelAction() }.buttonStyle(GhostButton())
+        }
+    }
+    private func correctionPreview(_ preview: MemoryCorrectionPreview) -> some View {
+        VStack(alignment:.leading,spacing:14) {
+            GSectionHeader("Проверенное изменение · только на этом Mac")
+            Text("Было: " + preview.event.statement.text).font(.system(size:14))
+            Text((preview.draft.action == .retraction ? "Отмена: " : "Станет: ") + preview.draft.statement.text).font(.system(size:14,weight:.semibold)).textSelection(.enabled)
+            conditions(preview.draft.statement)
+            if let range = preview.draft.statement.deadline { Text("Срок: \(day(range.earliest)) — \(day(range.latest))") }
+            Text(preview.draft.decisionDate.map { "Дата решения: " + day($0) } ?? "Дата решения неизвестна")
+            Text("Сохраняем исходное событие, происхождение и все \(preview.lease.sources.count) опорных фрагментов. Перед записью повторно проверим файлы и версию памяти. Это действие не закрывает внешние задачи.").font(.system(size:12)).foregroundStyle(p.ink.opacity(0.72))
+            ForEach(Array(preview.lease.sources.enumerated()),id:\.offset) { _,ref in Text(ref.title + " · " + KnowledgeSearchLocation.label(ref.chunk)).font(.system(size:12)) }
+            Button(preview.draft.action == .retraction ? "Подтвердить ручную отмену" : "Сохранить ручное исправление") { editing = nil; model.publishCorrection() }.buttonStyle(PrimaryButton()).disabled(model.busy).accessibilityIdentifier("memory.edit.commit")
+            Button("Отменить изменение") { editing = nil; model.cancelAction() }.buttonStyle(GhostButton())
+        }
+    }
     @ViewBuilder private func conditions(_ statement: MemoryStatement) -> some View {
         if !statement.conditions.isEmpty {
             Text("Условия: " + statement.conditions.sorted { $0.key < $1.key }.map { $0.key + ": " + $0.value }.joined(separator:"; "))
@@ -198,6 +261,11 @@ struct ProjectMemoryPanel: View {
     }
     private func day(_ value: Date) -> String { value.formatted(Date.FormatStyle(date:.abbreviated,time:.omitted,locale:Locale(identifier:"ru_RU"),timeZone:TimeZone(secondsFromGMT:0)!)) }
     private func importDay(_ value: Date) -> String { value.formatted(Date.FormatStyle(date:.abbreviated,time:.omitted).locale(Locale(identifier:"ru_RU"))) }
+    private var todayCivilDay: Date {
+        let local = Calendar(identifier:.gregorian).dateComponents([.year,.month,.day],from:Date())
+        var utc = Calendar(identifier:.gregorian); utc.timeZone = TimeZone(secondsFromGMT:0)!
+        return utc.date(from:local) ?? utc.startOfDay(for:Date())
+    }
     private func status(_ title: String,_ detail: String) -> some View {
         VStack(alignment:.leading,spacing:6) { Text(title).font(.system(size:15,weight:.semibold)); Text(detail).font(.system(size:13)).foregroundStyle(p.ink.opacity(0.72)) }.frame(maxWidth:.infinity,alignment:.leading)
     }
