@@ -44,22 +44,40 @@ enum MeetingArchiver {
             let wav = dir.appendingPathComponent(name + ".wav")
             guard fm.fileExists(atPath: wav.path) else { continue }
             let m4a = dir.appendingPathComponent(name + ".m4a")
+            // Существующий .m4a рядом с живым .wav — артефакт прерванной попытки
+            // (краш между переименованием и удалением WAV): заменяем, иначе
+            // moveItem в занятое имя роняет каждый следующий проход.
+            if fm.fileExists(atPath: m4a.path) { try fm.removeItem(at: m4a) }
             try convertWavToAAC(source: wav, output: m4a)
             try fm.removeItem(at: wav)
         }
-        try setArchivedFlag(at: dir, true)
+        // Флаг — только когда сжаты все существующие дорожки (честность UI-подсказки).
+        if isFullyCompressed(dir) {
+            try setArchivedFlag(at: dir, true)
+        }
+    }
+
+    /// Все дорожки либо сжаты (`.m4a` без `.wav`), либо отсутствуют;
+    /// хотя бы одна дорожка существует.
+    static func isFullyCompressed(_ dir: URL) -> Bool {
+        let fm = FileManager.default
+        var hasTrack = false
+        for name in trackNames {
+            let hasWav = fm.fileExists(atPath: dir.appendingPathComponent(name + ".wav").path)
+            let hasM4a = fm.fileExists(atPath: dir.appendingPathComponent(name + ".m4a").path)
+            if hasWav || hasM4a { hasTrack = true }
+            if hasWav && hasM4a { return false }   // промежуточное состояние
+            if hasWav && !hasM4a { return false }  // несжатая дорожка
+        }
+        return hasTrack
     }
 
     /// Crash-восстановление: `.m4a` уже на диске, WAV удалён, а флаг в meta не успели
     /// записать (сбой между удалением WAV и записью meta). Дополняет флаг; чтению
     /// это не критично (читатель принимает оба формата), но статус в UI должен быть честным.
+    /// Флаг ставится только при полной архивации всех дорожек.
     static func repairMetaFlag(at dir: URL) {
-        let fm = FileManager.default
-        let hasCompressedOnly = trackNames.contains { name in
-            !fm.fileExists(atPath: dir.appendingPathComponent(name + ".wav").path)
-                && fm.fileExists(atPath: dir.appendingPathComponent(name + ".m4a").path)
-        }
-        guard hasCompressedOnly,
+        guard isFullyCompressed(dir),
               let data = try? Data(contentsOf: dir.appendingPathComponent("meta.json")),
               var meta = try? MeetingMeta.decoded(data),
               meta.archivedAudio != true

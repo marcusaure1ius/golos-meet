@@ -158,6 +158,44 @@ import Foundation
         let meta = try MeetingMeta.decoded(try Data(contentsOf: dir.appendingPathComponent("meta.json")))
         #expect(meta.archivedAudio == nil)
     }
+
+    @Test func crashBetweenRenameAndWavRemovalRecoversOnNextAttempt() async throws {
+        let root = try makeRoot()
+        let dir = try await makeOldMeeting(in: root, id: "2026-01-01_10-00-00")
+        try await writeWav(dir.appendingPathComponent("mic.wav"), seconds: 1.0)
+        // Артефакт краша: m4a уже переименован, но wav ещё не удалён (мусорный контент).
+        try Data(count: 128).write(to: dir.appendingPathComponent("mic.m4a"))
+
+        // Следующий проход обязан сойтись, а не падать вечно на занятом имени.
+        try MeetingArchiver.archiveMeeting(at: dir)
+
+        let fm = FileManager.default
+        #expect(!fm.fileExists(atPath: dir.appendingPathComponent("mic.wav").path))
+        #expect(fm.fileExists(atPath: dir.appendingPathComponent("mic.m4a").path))
+        let player = MeetingPlayer(folder: dir)
+        #expect(player.hasAudio)
+        #expect(abs(player.duration - 1.0) < 0.3)
+        let meta = try MeetingMeta.decoded(try Data(contentsOf: dir.appendingPathComponent("meta.json")))
+        #expect(meta.archivedAudio == true)
+    }
+
+    @Test func flagStaysFalseWhenOneTrackRemainsUncompressed() async throws {
+        let root = try makeRoot()
+        let dir = try await makeOldMeeting(in: root, id: "2026-01-01_10-00-00")
+        // mic уже сжат (wav удалён), system.wav перманентно бит → конвертация падает.
+        try Data(count: 128).write(to: dir.appendingPathComponent("mic.m4a"))
+        try Data(count: 128).write(to: dir.appendingPathComponent("system.wav"))
+
+        #expect(throws: (any Error).self) {
+            try MeetingArchiver.archiveMeeting(at: dir)
+        }
+        let meta = try MeetingMeta.decoded(try Data(contentsOf: dir.appendingPathComponent("meta.json")))
+        #expect(meta.archivedAudio == nil)
+        // repairMetaFlag тоже не должен лгать о частичной архивации.
+        MeetingArchiver.repairMetaFlag(at: dir)
+        let repaired = try MeetingMeta.decoded(try Data(contentsOf: dir.appendingPathComponent("meta.json")))
+        #expect(repaired.archivedAudio == nil)
+    }
 }
 
 @MainActor
