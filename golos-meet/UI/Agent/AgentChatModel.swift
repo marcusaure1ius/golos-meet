@@ -1,12 +1,18 @@
 import Foundation
 import Combine
 
-/// Модель чат-потока «Агент» (issue #94, ночной спринт W3).
+/// Модель чат-потока «Агент» (issue #94, ночной спринт W3/W4).
 ///
 /// Демо-режим: детерминированный мок-агент поверх реальных данных QA-архива
 /// через принятые сервисы (`MeetingLibrary`, поисковый индекс). Облачных
 /// вызовов нет; narration и tool-шаги повторяют структуру будущих событий
 /// dsh-рантайма (W1), чтобы подключить реального агента за один слой.
+///
+/// Consent-in-chat (W4): запросы на отправку контекста проекта выдаются
+/// narration + карточкой согласия с кнопками прямо в сообщении. Политики
+/// per-project читаются из принятого слоя (`ProjectLibrary` → `ProjectStore`,
+/// тот же API, что использует панель памяти); разовое согласие относится
+/// только к конкретному запросу и не меняет политику проекта (#37).
 @MainActor
 final class AgentChatModel: ObservableObject {
     @Published private(set) var items: [AgentChatItem] = []
@@ -16,11 +22,21 @@ final class AgentChatModel: ObservableObject {
     /// Задержка между шагами narration (в тестах — .zero).
     private let stepDelay: Duration
     private let library: MeetingLibrary
+    /// Принятый слой проектов/политик (панель памяти использует тот же API).
+    private let projects: ProjectLibrary?
     private var runTask: Task<Void, Never>?
 
-    init(library: MeetingLibrary, stepDelay: Duration = .milliseconds(350)) {
+    init(library: MeetingLibrary, projects: ProjectLibrary? = nil, stepDelay: Duration = .milliseconds(350)) {
         self.library = library
+        self.projects = projects
         self.stepDelay = stepDelay
+    }
+
+    /// Общее число шагов во всех блоках .toolSteps. Растёт и при добавлении
+    /// шага в существующий блок — лента должна доскролливать и на это
+    /// (P3 ревью #97: onChange(items.count) этого не ловит).
+    var totalToolSteps: Int {
+        items.reduce(0) { if case .toolSteps(_, _, let steps) = $1 { $0 + steps.count } else { $0 } }
     }
 
     func stop() {
@@ -61,7 +77,9 @@ final class AgentChatModel: ObservableObject {
             return
         }
 
-        if Self.isSummaryIntent(query) {
+        if Self.isMemoryConsolidationIntent(query) {
+            await answerWithMemoryConsolidation(summaries: summaries, query: text)
+        } else if Self.isSummaryIntent(query) {
             await answerWithSummary(summaries: summaries, query: query)
         } else if Self.isProjectIntent(query) {
             await answerWithProjectSuggestion(summaries: summaries, query: text)
@@ -69,6 +87,125 @@ final class AgentChatModel: ObservableObject {
             await answerWithSearch(summaries: summaries, query: query)
         }
         if !Task.isCancelled { isThinking = false }
+    }
+
+    // MARK: - Consent-in-chat: сведение памяти проекта (#94, фаза 2)
+
+    private func answerWithMemoryConsolidation(summaries: [MeetingSummary], query: String) async {
+        guard let projects else {
+            items.append(.agentMessage(
+                id: UUID(),
+                text: "Работа с памятью проекта недоступна: слой проектов не подключён к агенту. Откройте панель памяти проекта, чтобы управлять согласиями.",
+                time: Date()))
+            return
+        }
+        let snapshot = projects.snapshot
+        let tokens = Self.queryTokens(query.lowercased()).filter { !Self.memoryIntentWords.contains($0) }
+        let candidates = snapshot.projects.filter { project in
+            tokens.isEmpty || tokens.contains { project.name.localizedCaseInsensitiveContains($0) }
+        }
+        guard let project = candidates.first else {
+            let names = snapshot.projects.map { "«\($0.name)»" }.joined(separator: ", ")
+            items.append(.agentMessage(
+                id: UUID(),
+                text: names.isEmpty
+                    ? "Пока нет ни одного проекта, память которого можно сводить. Создайте проект и назначьте ему встречи."
+                    : "Проект с таким названием не нашёлся. Доступные проекты: \(names).",
+                time: Date()))
+            return
+        }
+
+        await step("Собираю фрагменты проекта «\(project.name)»", result: nil)
+        let assigned = summaries.filter { summary in
+            (snapshot.meetingProjects[summary.id] ?? []).contains(project.id)
+        }
+        var fragments: [String] = []
+        for summary in assigned {
+            if Task.isCancelled { return }
+            do {
+                let segments = try library.transcriptSegments(for: summary.id)
+                fragments.append(contentsOf: segments.map(\.text))
+            } catch {
+                // Честный сбой чтения данных: не маскируем пустотой (П5 SPEC.md,
+                // оживляем ветку .failure из ревью #97).
+                items.append(.failure(
+                    id: UUID(),
+                    text: "Не удалось прочитать расшифровку встречи «\(summary.title)»: \(error.localizedDescription). Ничего не отправлялось — проверьте данные и повторите."))
+                return
+            }
+        }
+        let filtered = Self.presentableFragments(fragments)
+        if assigned.isEmpty {
+            items.append(.agentMessage(
+                id: UUID(),
+                text: "В проекте «\(project.name)» пока нет встреч, назначенных ему. Назначьте встречи проекту — тогда я смогу собрать их фрагменты для памяти.",
+                time: Date()))
+            return
+        }
+
+        // Политика проекта — из принятого хранилища, как это делает панель памяти.
+        switch project.cloudPolicy {
+        case .allowSelectedContext:
+            await narrate("Политика проекта разрешает отправку выбранного контекта — новое согласие не требуется.")
+            await showConsentContext(project: project, fragments: filtered)
+            items.append(.agentMessage(
+                id: UUID(),
+                text: "Контекст проекта «\(project.name)» (\(filtered.count) \(Self.pluralFragments(filtered.count))) разрешён к отправке в OpenRouter по политике проекта. В демо-режиме реальная генерация сводки не выполняется — её сделает агентный рантайм после подключения.",
+                time: Date()))
+        case .localOnly:
+            await narrate("Собрал \(filtered.count) \(Self.pluralFragments(filtered.count)) проекта «\(project.name)», но отправлять их нельзя.")
+            items.append(.consent(AgentConsentRequest(
+                projectID: project.id, projectName: project.name,
+                fragmentCount: filtered.count, fragments: Array(filtered.prefix(Self.maxConsentFragments)),
+                recipient: Self.consentRecipient, policyLabel: project.cloudPolicy.questionLabel,
+                allowsOneTimeApproval: false)))
+        case .askEveryTime:
+            await narrate("Собрал \(filtered.count) \(Self.pluralFragments(filtered.count)) из \(assigned.count) \(Self.pluralMeetings(assigned.count)) проекта «\(project.name)». Для сведения памяти их нужно отправить в OpenRouter — нужно ваше разрешение.")
+            items.append(.consent(AgentConsentRequest(
+                projectID: project.id, projectName: project.name,
+                fragmentCount: filtered.count, fragments: Array(filtered.prefix(Self.maxConsentFragments)),
+                recipient: Self.consentRecipient, policyLabel: project.cloudPolicy.questionLabel)))
+        }
+    }
+
+    /// Raw-контекст согласия — карточкой с раскрытием (12 фрагментов, как в QA).
+    private func showConsentContext(project: KnowledgeProject, fragments: [String]) async {
+        items.append(.artifact(AgentArtifact(
+            kind: .rawContext,
+            title: "Контекст проекта «\(project.name)»",
+            meta: "\(fragments.count) \(Self.pluralFragments(fragments.count)) расшифровок · получатель OpenRouter",
+            body: "Фрагменты транскриптов встреч проекта, собранные локально. Дата источника неизвестна: поисковый слой не даёт проверенной даты для этих фрагментов.",
+            points: Array(fragments.prefix(Self.maxConsentFragments)),
+            sourceLabel: "Источники: транскрипты встреч проекта",
+            meetingID: nil)))
+        await pause()
+    }
+
+    /// «Разрешить эту часть»: разовое согласие для этого запроса. Политика
+    /// проекта перечитывается из принятого слоя перед решением — если она
+    /// изменилась, согласие не выдаётся и запрашивается заново.
+    func approveConsent(_ requestID: UUID) {
+        guard let index = items.firstIndex(where: { $0.id == requestID }),
+              case .consent(var request) = items[index], request.state == .pending else { return }
+        let policy = projects?.snapshot.projects.first { $0.id == request.projectID }?.cloudPolicy
+        guard policy == .askEveryTime || policy == .allowSelectedContext else {
+            request.resolve(.denied)
+            items[index] = .consent(request)
+            items.append(.narration(id: UUID(), text: "Политика проекта запрещает отправку: разовое согласие не отменяет запрет владельца."))
+            return
+        }
+        request.resolve(.approved)
+        items[index] = .consent(request)
+        items.append(.narration(id: UUID(), text: "Разрешение учтено для этого запроса (политика проекта осталась «\(request.policyLabel)»). Реальную отправку в \(request.recipient) выполнит агентный рантайм; в демо-режиме сеть не используется."))
+    }
+
+    /// «Отменить»: ни один фрагмент не покидает устройство.
+    func cancelConsent(_ requestID: UUID) {
+        guard let index = items.firstIndex(where: { $0.id == requestID }),
+              case .consent(var request) = items[index], request.state == .pending else { return }
+        request.resolve(.cancelled)
+        items[index] = .consent(request)
+        items.append(.narration(id: UUID(), text: "Отправка отменена. Ни один фрагмент проекта «\(request.projectName)» не покинул устройство."))
     }
 
     private func answerWithSearch(summaries: [MeetingSummary], query: String) async {
@@ -172,7 +309,9 @@ final class AgentChatModel: ObservableObject {
         await toolStepBlock(label: label, result: result)
     }
 
-    private func toolStepBlock(label: String, result: String?) async {
+    /// Добавляет шаг в последний блок .toolSteps (или открывает новый блок).
+    /// Внутренний, чтобы тесты проверяли рост счётчика скролла (ревью #97).
+    func toolStepBlock(label: String, result: String?) async {
         let step = AgentToolStep(label: label, result: result)
         // Группируем подряд идущие шаги в один свёрнутый блок.
         if case .toolSteps(_, _, var steps)? = items.last {
@@ -192,6 +331,34 @@ final class AgentChatModel: ObservableObject {
     // MARK: - Детерминированные правила
 
     private static let intentWords: Set<String> = ["найди", "найти", "поищи", "поиск", "покажи", "показать", "спроси", "спросить", "мне", "по"]
+
+    /// Слова интента сведения памяти — сами по себе не имя проекта.
+    private static let memoryIntentWords: Set<String> = ["сведи", "свести", "своди", "сводка", "память", "памятью", "проекта", "проект"]
+
+    /// Сколько фрагментов контекста показывается в карточке (как в QA #93).
+    static let maxConsentFragments = 12
+    /// Честный получатель для consent-карточки (генерация — OpenRouter).
+    static let consentRecipient = "OpenRouter"
+
+    private static func isMemoryConsolidationIntent(_ query: String) -> Bool {
+        ["сведи", "свести", "своди", "сводка", "свед", "памят"].contains { query.contains($0) }
+    }
+
+    /// Пустые реплики («а.», «да.») не являются содержательным фрагментом
+    /// контекста — фильтр <5 символов после trim (#93 P3).
+    static func presentableFragments(_ texts: [String]) -> [String] {
+        texts.map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+            .filter { $0.count >= 5 }
+    }
+
+    static func pluralFragments(_ n: Int) -> String {
+        if (11...14).contains(n % 100) { return "фрагментов" }
+        switch n % 10 {
+        case 1: return "фрагмент"
+        case 2, 3, 4: return "фрагмента"
+        default: return "фрагментов"
+        }
+    }
 
     private static func isSummaryIntent(_ query: String) -> Bool {
         ["договорил", "конспект", "итог", "резюме", "action", "пункты"].contains { query.contains($0) }

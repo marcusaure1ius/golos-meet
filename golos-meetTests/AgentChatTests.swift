@@ -237,3 +237,236 @@ private struct AgentChatFixture {
         }
     }
 }
+
+/// Сценарии согласия в чате (issue #94 W4): карточка → действие → состояние.
+/// Политики per-project — в принятом слое (ProjectStore на временном пути),
+/// тот же API, что использует панель памяти; рабочие данные не затрагиваются.
+@MainActor
+@Suite(.serialized)
+struct AgentConsentTests {
+    @MainActor private struct Fixture {
+        let root: URL
+        let store: ProjectStore
+        let projects: ProjectLibrary
+        let library: MeetingLibrary
+
+        init() throws {
+            root = FileManager.default.temporaryDirectory
+                .appendingPathComponent("agent-consent-\(UUID().uuidString)", isDirectory: true)
+            try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
+            store = ProjectStore(url: root.appendingPathComponent("knowledge.sqlite"))
+            projects = ProjectLibrary(store: store)
+            library = MeetingLibrary(root: root)
+        }
+
+        /// Встреча с транскриптом из текстов сегментов.
+        func meeting(_ id: String, title: String, segments: [String]) throws {
+            let dir = root.appendingPathComponent(id, isDirectory: true)
+            try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+            let meta = MeetingMeta(id: id, source: "talk", startedAt: Date(timeIntervalSince1970: 1_763_000_000),
+                                   endedAt: Date(timeIntervalSince1970: 1_763_002_000),
+                                   durationSeconds: 2000, status: .ready,
+                                   asrModel: "gigaam-v3", title: title, schemaVersion: 1)
+            try MeetingMeta.encoded(meta).write(to: dir.appendingPathComponent("meta.json"), options: .atomic)
+            let parts = segments.enumerated().map { index, text in
+                ["start": Double(index * 10), "end": Double(index * 10 + 9),
+                 "speaker": index % 2 == 0 ? "me" : "participants", "text": text]
+            }
+            try JSONSerialization.data(withJSONObject: ["meetingId": id, "asrModel": "gigaam-v3", "segments": parts])
+                .write(to: dir.appendingPathComponent("transcript.json"), options: .atomic)
+        }
+
+        func cleanup() {
+            try? FileManager.default.removeItem(at: root)
+        }
+    }
+
+    private func consentCard(_ model: AgentChatModel) -> AgentConsentRequest? {
+        model.items.compactMap { item -> AgentConsentRequest? in
+            if case .consent(let request) = item { return request }
+            return nil
+        }.first
+    }
+
+    /// «Свести память проекта X» → narration + карточка согласия; пустые
+    /// сегменты (<5 симв.) в контекст не попадают (#93 P3); на «Разрешить эту
+    /// часть» — состояние карточки меняется, политика проекта в accepted-хранилище
+    /// не меняется (разовое согласие #37).
+    @Test func consolidationShowsConsentCardAndApprovalKeepsStorePolicy() async throws {
+        let f = try Fixture()
+        let project = try await f.store.createProject(name: "Прайсинг")
+        try await f.store.setCloudPolicy(.askEveryTime, for: project.id)
+        try await f.store.assignMeeting("2026-11-05_10-00-00", to: [project.id])
+        try f.meeting("2026-11-05_10-00-00", title: "Прайсинг ноября",
+                      segments: ["Обсудили прайсинг и скидки", "а.", "  ", "Договорились о скидке 10%"])
+        await f.projects.reload()
+
+        let model = AgentChatModel(library: f.library, projects: f.projects, stepDelay: .zero)
+        model.draft = "сведи память проекта прайсинг"
+        model.send()
+        try await AgentChatTests.waitIdle(model)
+
+        let request = try #require(consentCard(model), "Ожидалась карточка согласия")
+        #expect(request.state == .pending)
+        #expect(request.projectID == project.id)
+        #expect(request.projectName == "Прайсинг")
+        #expect(request.recipient == "OpenRouter")
+        #expect(request.sourceDateKnown == false)
+        #expect(request.allowsOneTimeApproval == true)
+        // Пустые реплики («а.», пробелы) отфильтрованы из контекста (#93 P3).
+        #expect(request.fragmentCount == 2)
+        #expect(request.fragments == ["Обсудили прайсинг и скидки", "Договорились о скидке 10%"])
+        #expect(model.items.contains { if case .narration(_, let text) = $0 { return text.contains("нужно") } else { return false } })
+
+        // Действие: «Разрешить эту часть».
+        model.approveConsent(request.id)
+        let approved = try #require(consentCard(model))
+        #expect(approved.state == .approved)
+        #expect(model.items.contains { if case .narration(_, let text) = $0 { return text.contains("не используется") } else { return false } })
+        // Политика в принятом хранилище осталась «Спрашивать каждый раз»:
+        // разовое согласие не превращается в постоянный допуск (#37).
+        let snapshot = try await f.store.snapshot()
+        #expect(snapshot.projects.first { $0.id == project.id }?.cloudPolicy == .askEveryTime)
+        f.cleanup()
+    }
+
+    /// «Отменить» — карточка в состоянии отмены, ничего не отправлялось.
+    @Test func cancelConsentMarksCardCancelled() async throws {
+        let f = try Fixture()
+        let project = try await f.store.createProject(name: "Ретро")
+        try await f.store.setCloudPolicy(.askEveryTime, for: project.id)
+        try await f.store.assignMeeting("2026-11-05_10-00-00", to: [project.id])
+        try f.meeting("2026-11-05_10-00-00", title: "Ретро ноября", segments: ["Обсудили ретроспективу команды"])
+        await f.projects.reload()
+
+        let model = AgentChatModel(library: f.library, projects: f.projects, stepDelay: .zero)
+        model.draft = "сведи память проекта ретро"
+        model.send()
+        try await AgentChatTests.waitIdle(model)
+        let request = try #require(consentCard(model))
+        model.cancelConsent(request.id)
+        let cancelled = try #require(consentCard(model))
+        #expect(cancelled.state == .cancelled)
+        #expect(model.items.contains { if case .narration(_, let text) = $0 { return text.contains("не покинул устройство") } else { return false } })
+        f.cleanup()
+    }
+
+    /// Политика «Только локально» — запрет владельца: разовое согласие
+    /// невозможно, кнопка разрешения не предлагается, повторное решение
+    /// в модель фиксирует denied (принятое поведение #35/#37).
+    @Test func localOnlyPolicyDeniesOneTimeApproval() async throws {
+        let f = try Fixture()
+        let project = try await f.store.createProject(name: "Секретный")
+        try await f.store.assignMeeting("2026-11-05_10-00-00", to: [project.id])
+        try f.meeting("2026-11-05_10-00-00", title: "Внутренний разбор", segments: ["Обсудили внутренние документы"])
+        await f.projects.reload()
+
+        let model = AgentChatModel(library: f.library, projects: f.projects, stepDelay: .zero)
+        model.draft = "сведи память проекта секретный"
+        model.send()
+        try await AgentChatTests.waitIdle(model)
+        let request = try #require(consentCard(model))
+        #expect(request.allowsOneTimeApproval == false)
+        #expect(request.policyLabel == "Только на этом Mac")
+        model.approveConsent(request.id)
+        let denied = try #require(consentCard(model))
+        #expect(denied.state == .denied)
+        let snapshot = try await f.store.snapshot()
+        #expect(snapshot.projects.first { $0.id == project.id }?.cloudPolicy == .localOnly)
+        f.cleanup()
+    }
+
+    /// Политика «Разрешать выбранный контекст» — карточка согласия не нужна:
+    /// честная пометка демо-режима и raw-контекст карточкой с раскрытием.
+    @Test func allowSelectedContextPolicySkipsConsentCardAndShowsRawContext() async throws {
+        let f = try Fixture()
+        let project = try await f.store.createProject(name: "Запуск")
+        try await f.store.setCloudPolicy(.allowSelectedContext, for: project.id)
+        try await f.store.assignMeeting("2026-11-05_10-00-00", to: [project.id])
+        try f.meeting("2026-11-05_10-00-00", title: "Запуск ноября", segments: ["Обсудили план запуска на ноябрь"])
+        await f.projects.reload()
+
+        let model = AgentChatModel(library: f.library, projects: f.projects, stepDelay: .zero)
+        model.draft = "сведи память проекта запуск"
+        model.send()
+        try await AgentChatTests.waitIdle(model)
+        #expect(consentCard(model) == nil)
+        #expect(model.items.contains { if case .artifact(let a) = $0 { return a.kind == .rawContext && a.points.count == 1 } else { return false } })
+        #expect(model.items.contains { if case .agentMessage(_, let text, _) = $0 { return text.contains("не выполняется") } else { return false } })
+        f.cleanup()
+    }
+
+    /// Повреждённый transcript.json — честный сбой в потоке (.failure),
+    /// никаких выдуманных фрагментов и отправок.
+    @Test func corruptTranscriptProducesHonestFailure() async throws {
+        let f = try Fixture()
+        let project = try await f.store.createProject(name: "Битый")
+        try await f.store.setCloudPolicy(.askEveryTime, for: project.id)
+        try await f.store.assignMeeting("2026-11-05_10-00-00", to: [project.id])
+        try f.meeting("2026-11-05_10-00-00", title: "Битая встреча", segments: ["Обсудили что-то важное"])
+        // Портим расшифровку после создания встречи.
+        try Data("{broken json".utf8).write(to: f.root.appendingPathComponent("2026-11-05_10-00-00", isDirectory: true)
+            .appendingPathComponent("transcript.json"), options: .atomic)
+        await f.projects.reload()
+
+        let model = AgentChatModel(library: f.library, projects: f.projects, stepDelay: .zero)
+        model.draft = "сведи память проекта битый"
+        model.send()
+        try await AgentChatTests.waitIdle(model)
+        #expect(consentCard(model) == nil)
+        #expect(model.items.contains { if case .failure(_, let text) = $0 { return text.contains("Не удалось прочитать") && text.contains("Ничего не отправлялось") } else { return false } })
+        f.cleanup()
+    }
+
+    /// Проект без назначенных встреч — честный ответ без карточки.
+    @Test func projectWithoutMeetingsGivesHonestAnswer() async throws {
+        let f = try Fixture()
+        _ = try await f.store.createProject(name: "Пустой")
+        await f.projects.reload()
+        try f.meeting("2026-11-05_10-00-00", title: "Ничья встреча", segments: ["Обсудили что-то"])
+
+        let model = AgentChatModel(library: f.library, projects: f.projects, stepDelay: .zero)
+        model.draft = "сведи память проекта пустой"
+        model.send()
+        try await AgentChatTests.waitIdle(model)
+        #expect(consentCard(model) == nil)
+        #expect(model.items.contains { if case .agentMessage(_, let text, _) = $0 { return text.contains("нет встреч") } else { return false } })
+        f.cleanup()
+    }
+
+    /// Неизвестный проект — честный ответ со списком доступных проектов.
+    @Test func unknownProjectGivesHonestAnswerWithAvailableNames() async throws {
+        let f = try Fixture()
+        _ = try await f.store.createProject(name: "Альфа")
+        // Встреча в архиве нужна, чтобы сценарий дошёл до поиска проекта.
+        try f.meeting("2026-11-05_10-00-00", title: "Обычная встреча", segments: ["Обсудили что-то"])
+        await f.projects.reload()
+        let model = AgentChatModel(library: f.library, projects: f.projects, stepDelay: .zero)
+        model.draft = "сведи память проекта омега"
+        model.send()
+        try await AgentChatTests.waitIdle(model)
+        #expect(consentCard(model) == nil)
+        #expect(model.items.contains { if case .agentMessage(_, let text, _) = $0 { return text.contains("не нашёлся") && text.contains("«Альфа»") } else { return false } })
+        f.cleanup()
+    }
+
+    /// Фильтр пустых сегментов (#93 P3): реплики короче 5 символов после
+    /// trim не считаются содержательным фрагментом.
+    @Test func presentableFragmentsFilterShortSegments() {
+        #expect(AgentChatModel.presentableFragments(["а.", "да", "  ", "Прайсинг утвердили", " ок "]) == ["Прайсинг утвердили"])
+        #expect(AgentChatModel.presentableFragments([]) == [])
+    }
+
+    /// Скролл-счётчик шагов учитывает добавление в существующий блок
+    /// .toolSteps (P3 ревью #97): items.count при этом не меняется.
+    @Test func totalToolStepsCountsStepsInsideExistingBlock() async throws {
+        let model = AgentChatModel(library: MeetingLibrary(root: FileManager.default.temporaryDirectory), stepDelay: .zero)
+        #expect(model.totalToolSteps == 0)
+        await model.toolStepBlock(label: "Шаг 1", result: nil)
+        #expect(model.totalToolSteps == 1)
+        let countBefore = model.items.count
+        await model.toolStepBlock(label: "Шаг 2", result: "ок")
+        #expect(model.totalToolSteps == 2)
+        #expect(model.items.count == countBefore, "шаг дописан в существующий блок")
+    }
+}

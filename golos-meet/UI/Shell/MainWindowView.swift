@@ -48,7 +48,7 @@ struct MainWindowView: View {
 
     @ViewBuilder private var paneView: some View {
         switch selection {
-        case .agent: AgentScreen(library: library)
+        case .agent: AgentScreen(library: library, projects: projects)
         case .meetings: MeetingsScreen(onSettings: { selection = .settings })
         case .documents: DocumentsScreen()
         case .search: KnowledgeSearchEntry()

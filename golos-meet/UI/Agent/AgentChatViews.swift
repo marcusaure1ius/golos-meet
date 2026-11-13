@@ -10,8 +10,8 @@ import AppKit
 struct AgentScreen: View {
     @StateObject private var model: AgentChatModel
 
-    init(library: MeetingLibrary) {
-        _model = StateObject(wrappedValue: AgentChatModel(library: library))
+    init(library: MeetingLibrary, projects: ProjectLibrary? = nil) {
+        _model = StateObject(wrappedValue: AgentChatModel(library: library, projects: projects))
     }
 
     /// Для превью и рендер-тестов.
@@ -135,7 +135,13 @@ struct AgentChatView: View {
             }
             // Новый элемент потока всегда подтягивает ленту к концу
             // (упрощение macOS 14.4; AutoClaw keeps bottom-follow, П1 SPEC.md).
+            // Добавление шага в существующий блок .toolSteps не меняет items.count,
+            // поэтому следим и за суммарным числом шагов (P3 ревью #97).
             .onChange(of: model.items.count) { _, _ in
+                guard let last = model.items.last else { return }
+                proxy.scrollTo(last.id, anchor: .bottom)
+            }
+            .onChange(of: model.totalToolSteps) { _, _ in
                 guard let last = model.items.last else { return }
                 proxy.scrollTo(last.id, anchor: .bottom)
             }
@@ -192,6 +198,11 @@ struct AgentChatView: View {
         case .artifact(let artifact):
             AgentArtifactCard(artifact: artifact)
 
+        case .consent(let request):
+            AgentConsentCard(request: request,
+                             onApprove: { model.approveConsent(request.id) },
+                             onCancel: { model.cancelConsent(request.id) })
+
         case .failure(_, let text):
             HStack(spacing: 8) {
                 Image(systemName: "exclamationmark.triangle")
@@ -247,6 +258,140 @@ struct AgentChatView: View {
 
     private var canSend: Bool {
         !model.draft.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+    }
+}
+
+// MARK: - Карточка согласия в потоке (П5 SPEC.md, consent-in-chat #94)
+
+struct AgentConsentCard: View {
+    @Environment(\.palette) private var p
+    let request: AgentConsentRequest
+    let onApprove: () -> Void
+    let onCancel: () -> Void
+    @State private var contextExpanded = false
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            HStack(alignment: .center, spacing: 10) {
+                Image(systemName: "hand.raiser")
+                    .font(.system(size: 14))
+                    .foregroundStyle(p.accent)
+                    .frame(width: 30, height: 30)
+                    .background(p.cardSel)
+                    .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Нужно разрешение на отправку")
+                        .font(.system(size: 14, weight: .semibold))
+                        .foregroundStyle(p.ink)
+                    Text("Проект «\(request.projectName)» · \(request.fragmentCount) \(AgentChatModel.pluralFragments(request.fragmentCount)) контекста")
+                        .font(.system(size: 12))
+                        .foregroundStyle(p.muted)
+                }
+                Spacer(minLength: 0)
+            }
+            VStack(alignment: .leading, spacing: 4) {
+                Text("Получатель: \(request.recipient) — генерация сводки памяти проекта.")
+                    .font(.system(size: 13))
+                    .foregroundStyle(p.ink)
+                Text("Дата источника неизвестна: поисковый слой не даёт проверенной даты для этих фрагментов.")
+                    .font(.system(size: 13))
+                    .foregroundStyle(p.muted)
+                Text("Политика проекта: \(request.policyLabel).")
+                    .font(.system(size: 13))
+                    .foregroundStyle(p.muted)
+            }
+            if !request.fragments.isEmpty {
+                // Raw-контекст — карточкой с раскрытием (12 фрагментов, как в QA #93).
+                Button {
+                    contextExpanded.toggle()
+                } label: {
+                    HStack(spacing: 6) {
+                        Image(systemName: contextExpanded ? "chevron.down" : "chevron.right")
+                            .font(.system(size: 10))
+                            .foregroundStyle(p.muted)
+                            .frame(width: 12)
+                        Text("Что отправляется: \(request.fragments.count) \(request.fragments.count == 1 ? "фрагмент" : "фрагмента")")
+                            .font(.system(size: 12.5, weight: .medium))
+                            .foregroundStyle(p.muted)
+                        Spacer(minLength: 0)
+                    }
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel("\(contextExpanded ? "Свернуть" : "Раскрыть") отправляемый контекст, фрагментов: \(request.fragments.count)")
+                if contextExpanded {
+                    VStack(alignment: .leading, spacing: 4) {
+                        ForEach(Array(request.fragments.enumerated()), id: \.offset) { _, fragment in
+                            Text("– \(fragment)")
+                                .font(.system(size: 12))
+                                .foregroundStyle(p.muted)
+                                .lineSpacing(2.4)
+                                .frame(maxWidth: 600, alignment: .leading)
+                        }
+                    }
+                    .padding(.leading, 20)
+                }
+            }
+            statusOrActions
+        }
+        .padding(14)
+        .frame(maxWidth: 640, alignment: .leading)
+        .background(p.card)
+        .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+        .overlay(
+            RoundedRectangle(cornerRadius: 12, style: .continuous)
+                .strokeBorder(p.border, lineWidth: 1)
+        )
+        .accessibilityElement(children: .contain)
+        .accessibilityLabel("Карточка согласия: отправка \(request.fragmentCount) фрагментов проекта «\(request.projectName)» в \(request.recipient)")
+    }
+
+    @ViewBuilder private var statusOrActions: some View {
+        switch request.state {
+        case .pending:
+            if request.allowsOneTimeApproval {
+                HStack(spacing: 10) {
+                    Button(action: onApprove) {
+                        Text("Разрешить эту часть")
+                            .font(.system(size: 12.5, weight: .medium))
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 6)
+                            .background(p.btn)
+                            .foregroundStyle(p.btnInk)
+                            .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityLabel("Разрешить эту часть отправки")
+                    Button(action: onCancel) {
+                        Text("Отменить")
+                            .font(.system(size: 12.5))
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 6)
+                            .background(p.cardSel)
+                            .foregroundStyle(p.ink)
+                            .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityLabel("Отменить отправку")
+                    Spacer(minLength: 0)
+                }
+            } else {
+                Text("Политика «\(request.policyLabel)» запрещает отправку. Разовое согласие не отменяет запрет владельца — изменить политику можно в настройках проекта.")
+                    .font(.system(size: 12.5))
+                    .foregroundStyle(p.danger)
+            }
+        case .approved:
+            Label("Разрешено для этого запроса. Политика проекта не менялась; реальную отправку выполнит агентный рантайм.", systemImage: "checkmark.circle")
+                .font(.system(size: 12.5))
+                .foregroundStyle(p.ink)
+        case .cancelled:
+            Label("Отменено. Ничего не отправлялось.", systemImage: "xmark.circle")
+                .font(.system(size: 12.5))
+                .foregroundStyle(p.muted)
+        case .denied:
+            Label("Отправка запрещена политикой владельца проекта.", systemImage: "xmark.shield")
+                .font(.system(size: 12.5))
+                .foregroundStyle(p.danger)
+        }
     }
 }
 
@@ -316,6 +461,7 @@ struct AgentArtifactCard: View {
         case .meeting: return "waveform"
         case .summary: return "doc.text"
         case .projectSuggestion: return "folder.badge.plus"
+        case .rawContext: return "list.bullet.rectangle"
         }
     }
 

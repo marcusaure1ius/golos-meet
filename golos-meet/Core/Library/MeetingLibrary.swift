@@ -71,4 +71,13 @@ final class MeetingLibrary: ObservableObject {
         guard let data = try? Data(contentsOf: url) else { return nil }
         return try? MeetingInsights.decoded(data)
     }
+
+    /// Сегменты расшифровки для контекста агента (#94): в отличие от
+    /// `transcript(for:)` ошибка чтения/декодирования не глушится —
+    /// агент обязан показать честный сбой в потоке, а не притворную пустоту.
+    func transcriptSegments(for id: String) throws -> [TranscriptSegment] {
+        let url = root.appendingPathComponent(id, isDirectory: true).appendingPathComponent("transcript.json")
+        let data = try Data(contentsOf: url)
+        return try JSONDecoder().decode(Transcript.self, from: data).segments
+    }
 }
