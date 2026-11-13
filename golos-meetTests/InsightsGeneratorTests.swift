@@ -89,4 +89,109 @@ extension InsightsGeneratorTests {
         }
         #expect(called == false)   // сеть не дёргали
     }
+
+    // MARK: Пост-фильтр дегенеративных повторов (issue #93)
+
+    /// Синтетический аналог реального дефекта: модель выдаёт один пункт,
+    /// разросшийся в ~15 повторов одной мысли, плюс дубликаты самого пункта.
+    /// Фильтр должен превратить это в короткий чистый список (≤5 пунктов).
+    @Test func degenerateRepeatsCollapseToCleanList() async throws {
+        let core = "Отправить Юле список продуктов в личку к пятнице."
+        let degenerate = Array(repeating: core, count: 12).joined(separator: " ")
+        let json = """
+        {"title":"Список продуктов","summary":"Обсудили состав.","actionPoints":[
+          {"text":"\(degenerate)","owner":null},
+          {"text":"\(core)","owner":"Денис"},
+          {"text":"\(core)","owner":"Alice"},
+          {"text":"\(core)","owner":null},
+          {"text":"Подготовить отчёт по кластерам к пятнице.","owner":"Мария"}
+        ]}
+        """
+        let gen = InsightsGenerator(client: StubCompleter(reply: json), model: "m")
+        let ins = try await gen.generate(from: Self.sampleTranscript(), meetingId: "M", now: .now)
+        #expect(ins.actionPoints.count == 2)
+        #expect(ins.actionPoints[0].text == core)
+        #expect(ins.actionPoints[0].owner == nil)   // owner первого вхождения сохранён
+        #expect(ins.actionPoints[1].text == "Подготовить отчёт по кластерам к пятнице.")
+        #expect(ins.actionPoints[1].owner == "Мария")
+        #expect(ins.title == "Список продуктов")    // title/summary не тронуты
+        #expect(ins.summary == "Обсудили состав.")
+    }
+
+    /// Дегенерация внутри одного пункта с разными (не буквальными) предложениями
+    /// обрезается лимитом числа предложений и длины пункта.
+    @Test func bloatedPointIsTruncatedBySentenceAndLengthLimits() {
+        let nouns = ["продукты", "кластеры", "бюджет", "отчёт", "дизайн", "поиск", "импорт", "модели"]
+        let sentences = (0..<8).map {
+            "Шаг \($0): согласовать состав блока «\(nouns[$0])» и направить итог команде проекта."
+        }
+        let bloated = sentences.joined(separator: " ")
+        let trimmed = InsightsGenerator.trimPointRepeats(bloated)
+        #expect(InsightsGenerator.splitSentences(trimmed).count <= InsightsGenerator.maxSentencesPerPoint)
+        #expect(trimmed.count <= InsightsGenerator.hardPointCap)
+        // Первое предложение сохраняется как итоговая формулировка.
+        #expect(trimmed.hasPrefix("Шаг 0:"))
+        // Предложения за лимитом вырезаются целиком, а не сокращаются частично.
+        #expect(!trimmed.contains("дизайн"))
+        #expect(trimmed.contains("продукты"))
+    }
+
+    /// Разные договорённости не схлопываются порогом сходства.
+    @Test func distinctPointsSurviveDeduplication() {
+        let points: [(String, String?)] = [
+            ("Отправить список продуктов Юле в личку.", nil),
+            ("Подготовить отчёт по кластерам к пятнице.", "Мария"),
+            ("Уточнить бюджет у финансов до конца месяца.", nil),
+        ]
+        let sanitized = InsightsGenerator.sanitizePoints(points)
+        #expect(sanitized.count == 3)
+        #expect(sanitized.map(\.0) == points.map(\.0))
+        #expect(sanitized.map(\.1) == points.map(\.1))
+    }
+
+    /// Граничный случай: пустой список пунктов остаётся пустым.
+    @Test func emptyActionPointsStaysEmpty() async throws {
+        let json = "{\"title\":\"Т\",\"summary\":\"С\",\"actionPoints\":[]}"
+        let gen = InsightsGenerator(client: StubCompleter(reply: json), model: "m")
+        let ins = try await gen.generate(from: Self.sampleTranscript(), meetingId: "M", now: .now)
+        #expect(ins.actionPoints.isEmpty)
+        #expect(InsightsGenerator.sanitizePoints([]).isEmpty)
+    }
+
+    /// Граничный случай: один пункт с owner=null проходит без изменений.
+    @Test func singlePointWithNullOwnerIsPreserved() async throws {
+        let json = """
+        {"title":"Т","summary":"С","actionPoints":[{"text":"Позвонить поставщику.","owner":null}]}
+        """
+        let gen = InsightsGenerator(client: StubCompleter(reply: json), model: "m")
+        let ins = try await gen.generate(from: Self.sampleTranscript(), meetingId: "M", now: .now)
+        #expect(ins.actionPoints.count == 1)
+        #expect(ins.actionPoints[0].text == "Позвонить поставщику.")
+        #expect(ins.actionPoints[0].owner == nil)
+    }
+
+    /// Число пунктов ограничено `maxPoints` даже при потоке уникальных задач.
+    @Test func parseCapsPointCountAtMaxPoints() {
+        let nouns = ["продукты", "кластеры", "бюджет", "отчёт", "дизайн", "поиск", "импорт", "модели", "бэкап"]
+        let items = (0..<9).map {
+            "{\"text\":\"Задача номер \($0) — проверить «\(nouns[$0])» до конца недели.\",\"owner\":null}"
+        }
+        let json = "{\"title\":\"Т\",\"summary\":\"С\",\"actionPoints\":[\(items.joined(separator: ","))]}"
+        let parsed = InsightsGenerator.parse(json)
+        #expect(parsed?.points.count == InsightsGenerator.maxPoints)
+    }
+
+    /// Предложение без терминатора и пунктуационные обрывки не ломают фильтр.
+    @Test func trimPointRepeatsHandlesUnterminatedAndEmptySentences() {
+        // Дубль без завершающей точки в конце текста.
+        let text = "Отправить отчёт в личку к пятнице. Отправить отчёт в личку к пятнице"
+        let trimmed = InsightsGenerator.trimPointRepeats(text)
+        #expect(trimmed == "Отправить отчёт в личку к пятнице.")
+        // Пункты без содержательных токенов («а.») дедуплицируются между собой,
+        // осмысленный сосед не теряется.
+        let sanitized = InsightsGenerator.sanitizePoints([("а.", nil), ("а.", nil), ("Позвонить поставщику.", nil)])
+        #expect(sanitized.count == 2)
+        #expect(sanitized[0].0 == "а.")
+        #expect(sanitized[0].1 == nil)
+    }
 }
