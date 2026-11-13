@@ -68,6 +68,17 @@ struct SettingsScreen: View {
                         }
                         .menuStyle(.borderlessButton).menuIndicator(.hidden).fixedSize()
                     }
+                    GSettingRow("Архив записей",
+                                desc: "Встречи старше срока сжимаются; расшифровки и поиск остаются доступны.") {
+                        Menu {
+                            ForEach([30, 60, 90, 180, 365], id: \.self) { days in
+                                Button("\(days) дн.") { settings.archiveDays = days }
+                            }
+                        } label: {
+                            GSelectLabel("\(settings.archiveDays) дн.")
+                        }
+                        .menuStyle(.borderlessButton).menuIndicator(.hidden).fixedSize()
+                    }
                     GSettingRow("Ключ OpenRouter",
                                 desc: keySaved ? "Сохранён в Keychain." : "Хранится в Keychain, не в настройках.") {
                         HStack(spacing: 8) {

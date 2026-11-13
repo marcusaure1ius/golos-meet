@@ -28,6 +28,10 @@ final class UISettings: ObservableObject {
     @Published var llmEnabled: Bool {
         didSet { UserDefaults.standard.set(llmEnabled, forKey: "llm.enabled") }
     }
+    /// Порог архивации записей в днях: готовые встречи старше срока сжимаются (#83).
+    @Published var archiveDays: Int {
+        didSet { defaults.set(archiveDays, forKey: "archive.days") }
+    }
 
     enum GenerationModel: String, CaseIterable {
         case deepSeek = "deepseek/deepseek-v4.1-flash"
@@ -61,7 +65,14 @@ final class UISettings: ObservableObject {
         themeMode = d.string(forKey: "ui.themeMode").flatMap(ThemeMode.init) ?? .auto
         modelChoice = d.string(forKey: "asrModelChoice").flatMap(ASRModelChoice.init) ?? .speed
         llmEnabled = (d.object(forKey: "llm.enabled") as? Bool) ?? true
+        archiveDays = Self.loadArchiveDays(from: d)
         generationModel = Self.loadGenerationModel(from: d)
+    }
+
+    /// Порог архивации: сохранённое значение или дефолт 90 дней; мусорное — дефолт.
+    private static func loadArchiveDays(from d: UserDefaults) -> Int {
+        guard let days = d.object(forKey: "archive.days") as? Int, days > 0 else { return 90 }
+        return days
     }
 
     /// Миграция двух прежних ключей: новый ключ → «модель конспектов»
