@@ -174,9 +174,64 @@ import Testing
         f.model.open(try #require(f.model.inspected?.sources.first)); try await f.settle(); try capture("checked-source")
         f.model.back(); f.model.dismissDetails(); try await f.settle()
         try capture("history",tab:"История")
+        f.model.prepareCorrection(event,text:"Срок уточнён вручную",retract:false,earliest:f.base.day("2026-12-05"),latest:f.base.day("2026-12-05"),decision:nil)
+        try await f.settle(); try capture("manual-preview",height:1400)
+        f.model.cancelAction(); try capture("cancelled")
         try await f.open(empty); try capture("empty")
         try JSONSerialization.data(withJSONObject:manifest,options:[.prettyPrinted,.sortedKeys]).write(to:root.appendingPathComponent("render-manifest.json"))
-        #expect(manifest.count == 14 && f.base.spy.calls == 1)
+        #expect(manifest.count == 18 && f.base.spy.calls == 1)
+        await f.cleanup()
+    }
+
+    @Test func manualCorrectionAndRetractionKeepHistoryAndManualPrecedence() async throws {
+        let f = try MemoryPanelFixture(), p = try await f.base.project()
+        _ = try await f.base.document(owners:[p]); await f.worker.start(); await f.worker.waitUntilIdle(); try await f.open(p)
+        let original = try #require(f.model.heads.first?.entry.event)
+        f.model.prepareCorrection(original,text:"Релиз подтверждён вручную",retract:false,earliest:f.base.day("2026-12-05"),latest:f.base.day("2026-12-05"),decision:nil)
+        try await f.settle(); #expect(f.model.correction?.event.id == original.id && f.base.spy.calls == 1)
+        f.model.publishCorrection(); try await f.settle(); await f.worker.waitUntilIdle(); f.model.reload(); try await f.settle()
+        let manual = try #require(f.model.heads.first?.entry.event)
+        #expect(manual.origin == .manual && f.model.heads.first?.head?.manualSelection == true)
+        #expect(manual.statement.deadline?.earliest == f.base.day("2026-12-05") && manual.decisionDate == nil)
+        f.model.prepareCorrection(manual,text:"Срок больше не действует",retract:true,earliest:nil,latest:nil,decision:nil)
+        try await f.settle(); f.model.publishCorrection(); try await f.settle(); await f.worker.waitUntilIdle(); f.model.reload(); try await f.settle()
+        let history = try await f.base.history.history(projectID:p)
+        #expect(history.entries.contains { $0.event.id == original.id })
+        #expect(history.entries.contains { $0.event.action == .retraction && $0.event.origin == .manual })
+        #expect(f.model.heads.allSatisfy { !$0.usable })
+        #expect(f.base.spy.calls == 1)
+        await f.cleanup()
+    }
+
+    @Test func manualPreviewCASRejectsJournalChangeInsteadOfOverwritingIt() async throws {
+        let f = try MemoryPanelFixture(), p = try await f.base.project()
+        let doc = try await f.base.document(owners:[p]); await f.worker.start(); await f.worker.waitUntilIdle(); try await f.open(p)
+        let original = try #require(f.model.heads.first?.entry.event)
+        f.model.prepareCorrection(original,text:"Старое подготовленное исправление",retract:false,earliest:original.statement.deadline?.earliest,latest:original.statement.deadline?.latest,decision:nil)
+        try await f.settle(); #expect(f.model.correction != nil)
+        let hit = try await f.base.hit(doc.uuidString,project:p), lease = try await f.base.history.begin(projectID:p,producerKey:"external",hits:[hit])
+        _ = try await f.base.history.publish([.init(statement:.init(subject:"other",kind:.agreement,conditions:[:],text:"Новая версия"),evidenceChunkIDs:[hit.id])],lease:lease)
+        f.model.publishCorrection(); try await f.settle()
+        let events = try await f.base.history.history(projectID:p)
+        #expect(events.entries.count == 2 && !events.entries.contains { $0.event.statement.text == "Старое подготовленное исправление" })
+        #expect(f.model.correction == nil && f.model.stale)
+        await f.cleanup()
+    }
+
+    @Test func manualDateOnlyControlsPersistCanonicalCivilDaysWithoutImportDateSubstitution() async throws {
+        let f = try MemoryPanelFixture(), p = try await f.base.project()
+        _ = try await f.base.document(owners:[p]); await f.worker.start(); await f.worker.waitUntilIdle(); await f.worker.stop(); try await f.open(p)
+        let event = try #require(f.model.heads.first?.entry.event)
+        f.model.prepareCorrection(event,text:"Срок подтверждён пользователем",retract:false,
+            earliest:f.base.day("2026-12-05").addingTimeInterval(20*3600),latest:f.base.day("2026-12-05").addingTimeInterval(22*3600),decision:f.base.day("2026-11-20").addingTimeInterval(17*3600))
+        try await f.settle()
+        #expect(f.model.correction?.draft.statement.deadline?.earliest == f.base.day("2026-12-05"))
+        #expect(f.model.correction?.draft.decisionDate == f.base.day("2026-11-20"))
+        f.model.publishCorrection(); try await f.settle()
+        let stored = try #require(try await f.base.history.history(projectID:p).entries.first?.event)
+        #expect(stored.origin == .manual && stored.decisionDate == f.base.day("2026-11-20"))
+        #expect(stored.statement.deadline?.latest == f.base.day("2026-12-05") && stored.sources.allSatisfy { $0.sourceDate == nil })
+        #expect(f.base.spy.calls == 1)
         await f.cleanup()
     }
 }

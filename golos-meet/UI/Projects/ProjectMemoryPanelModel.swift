@@ -8,6 +8,13 @@ nonisolated struct MemoryPanelEntry: Identifiable, Sendable {
     var id: UUID { entry.event.id }
     var usable: Bool { head?.usableAsCurrent == true && ancestry == .current }
 }
+nonisolated struct MemoryCorrectionPreview: Identifiable, Sendable {
+    let id: UUID
+    let event: MemoryEvent
+    let lease: MemoryLease
+    let draft: MemoryDraft
+    let stamp: String
+}
 
 /// Read-only panel state for project memory. This first part renders the
 /// overview, paged history, queue states and provenance; no consent or manual
@@ -32,6 +39,7 @@ nonisolated struct MemoryPanelEntry: Identifiable, Sendable {
     @Published private(set) var page: Int64?
     @Published private(set) var inspected: MemoryProvenance?
     @Published private(set) var inspectedState: MemoryEvidenceState?
+    @Published private(set) var correction: MemoryCorrectionPreview?
     @Published private(set) var relatedEvents: [MemoryEvent] = []
     @Published private(set) var retiredEvents: Set<UUID> = []
     @Published private(set) var linksLimited = false
@@ -102,7 +110,7 @@ nonisolated struct MemoryPanelEntry: Identifiable, Sendable {
     func close() { active = false; watching?.cancel(); polling?.cancel(); invalidateActions() }
     func invalidateActions() {
         generation = UUID(); operation?.cancel(); operation = nil; busy = false
-        inspected = nil; inspectedState = nil; relatedEvents = []; retiredEvents = []; linksLimited = false; destination = nil
+        inspected = nil; inspectedState = nil; correction = nil; relatedEvents = []; retiredEvents = []; linksLimited = false; destination = nil
     }
     private func invalidate() { invalidateActions(); heads = []; history = []; queue = .init(); sourceTitles = [:]; sourceOwners = [:]; stale = true; stamp = nil; watchedSources = [] }
     func reload(before: Int64? = nil) {
@@ -237,5 +245,43 @@ nonisolated struct MemoryPanelEntry: Identifiable, Sendable {
     }
     func back() { destination = nil }
     func dismissDetails() { invalidateActions() }
+    func cancelAction() { invalidateActions(); notice = "Действие отменено." }
+    /// Manual correction/retraction keeps the original event and its
+    /// provenance; the draft is checked against the lease before any preview
+    /// is shown, and the stamp is revalidated right before publishing.
+    func prepareCorrection(_ event: MemoryEvent, text: String, retract: Bool, earliest: Date?, latest: Date?, decision: Date?) {
+        guard event.projectID == projectID, event.action != .retraction, !busy, !text.trimmingCharacters(in:.whitespacesAndNewlines).isEmpty else { return }
+        let id = begin()
+        operation = Task {
+            do {
+                let lease = try await journal.beginCorrection(eventID:event.id,intentID:UUID())
+                if !retract, event.statement.kind == .deadline, earliest == nil || latest == nil { throw ProjectMemoryError.invalid }
+                guard earliest?.timeIntervalSince1970.isFinite != false, latest?.timeIntervalSince1970.isFinite != false, decision?.timeIntervalSince1970.isFinite != false else { throw ProjectMemoryError.invalid }
+                // These controls edit civil days, matching extractor ISO days;
+                // extracted/import instants remain separate and are never used.
+                var calendar = Calendar(identifier:.gregorian); calendar.timeZone = TimeZone(secondsFromGMT:0)!
+                let range = !retract && event.statement.kind == .deadline ? MemoryDateRange(earliest:calendar.startOfDay(for:earliest!),latest:calendar.startOfDay(for:latest!)) : nil
+                let statement = MemoryStatement(subject:event.statement.subject,kind:event.statement.kind,conditions:event.statement.conditions,text:text,deadline:range)
+                let draft = MemoryDraft(statement:statement,evidenceChunkIDs:Set(event.evidenceChunkIDs),decisionDate:decision.map { calendar.startOfDay(for:$0) },
+                    links:retract ? [.init(targetID:event.id,kind:.retracts)] : [],action:retract ? .retraction : .assertion)
+                guard retract || statement.deadline.map({ $0.earliest <= $0.latest }) != false else { throw ProjectMemoryError.invalid }
+                try MemorySQL.validate(draft,lease:lease)
+                let token = try await store.memoryPanelStamp(); try await store.validateMemoryLease(lease); try current(id)
+                stamp = token; correction = .init(id:UUID(),event:event,lease:lease,draft:draft,stamp:token)
+                watchedSources = lease.sources
+                watchedIdentities = Dictionary(lease.sources.map { (fileKey($0),$0.fileStamp) },uniquingKeysWith:{ a,_ in a }); busy = false
+            } catch { fail(error,id:id) }
+        }
+    }
+    func publishCorrection() {
+        guard !busy, let pending = correction else { return }; let id = generation; correction = nil; busy = true
+        operation = Task {
+            do {
+                guard try await store.memoryPanelStamp() == pending.stamp else { throw ProjectMemoryError.stale }
+                try current(id); _ = try await journal.publish([pending.draft],lease:pending.lease); try current(id)
+                await worker.changed(); try current(id); busy = false; reload()
+            } catch { fail(error,id:id) }
+        }
+    }
     deinit { operation?.cancel(); watching?.cancel(); polling?.cancel() }
 }
