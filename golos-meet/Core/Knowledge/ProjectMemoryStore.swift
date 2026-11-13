@@ -63,7 +63,11 @@ extension ProjectStore {
                     guard lease.origin == .manual || target.origin != .manual else { throw ProjectMemoryError.invalid }
                     guard [.replaces, .retracts, .corrects].contains(link.kind), target.projectID == lease.projectID,
                           try MemoryEncoding.slot(target.statement) == slot,
-                          link.kind != .corrects || link.targetID == lease.manualTargetID else { throw ProjectMemoryError.invalid }
+                          link.kind != .corrects || link.targetID == lease.manualTargetID,
+                          // A retraction already is a closed historical action:
+                          // retracting a retraction is rejected at the store level,
+                          // the original assertion stays the target of record.
+                          link.kind != .retracts || target.action != .retraction else { throw ProjectMemoryError.invalid }
                 }
                 // Bound the resulting assertion set, after planned retirements.
                 // Retractions are historical actions, not positive candidates.

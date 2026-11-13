@@ -100,6 +100,23 @@ import Testing
 }
 
 @MainActor @Suite(SQLiteFixtureTrait()) struct ProjectMemoryUpdateTests {
+    @Test func storeRejectsRetractingARetraction() async throws {
+        let f = try UpdateFixture(); defer { f.cleanup() }; let p = try await f.project()
+        try await f.meeting("one", text: "Релиз 2026-11-26", owners: [p]); let h = try await f.hit("one", project: p)
+        let statement = MemoryStatement(subject: "release:sever", kind: .deadline, conditions: [:], text: "Релиз 2026-11-26",
+            deadline: .init(earliest: f.day("2026-11-26"), latest: f.day("2026-11-26")))
+        let seed = try await f.history.begin(projectID: p, producerKey: "a", hits: [h])
+        let original = try #require(try await f.history.publish([.init(statement: statement, evidenceChunkIDs: [h.id])], lease: seed).eventIDs.first)
+        let first = try await f.history.begin(projectID: p, producerKey: "r1", hits: [h])
+        let retraction = try #require(try await f.history.publish([.init(statement: .init(subject: "release:sever", kind: .deadline, conditions: [:], text: "Отменено после проверки"),
+            evidenceChunkIDs: [h.id], links: [.init(targetID: original, kind: .retracts)], action: .retraction)], lease: first).eventIDs.first)
+        let second = try await f.history.begin(projectID: p, producerKey: "r2", hits: [h], parentEventIDs: [retraction])
+        await #expect(throws: ProjectMemoryError.invalid) {
+            try await f.history.publish([.init(statement: .init(subject: "release:sever", kind: .deadline, conditions: [:], text: "Отмена отмены"),
+                evidenceChunkIDs: [h.id], links: [.init(targetID: retraction, kind: .retracts)], action: .retraction)], lease: second)
+        }
+    }
+
     @Test func sequentialReadyMeetingsUpdateJournalKeepConflictDatesAndCompletionAsClaim() async throws {
         let f = try UpdateFixture(); defer { f.cleanup() }; let p = try await f.project()
         try await f.meeting("one", text: "Релиз 2026-11-26", owners: [p]); let h1 = try await f.hit("one", project: p)
