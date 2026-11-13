@@ -149,7 +149,7 @@ struct ProjectMemoryPanel: View {
     private var jobs: some View {
         VStack(alignment:.leading,spacing:14) {
             if let message = model.queue.message { status("Очередь",message) }
-            if model.queue.backpressured { status("Список ограничен","Показано до 256 источников по всему хранилищу; в списке — задания выбранного проекта. Отложенные задания продолжают обрабатываться; этот список не является полным покрытием архива.") }
+            if model.queue.backpressured { status("Список ограничен","Показаны задания выбранного проекта — до 256 строк. Одновременно ждут свободного места не более 128 источников по всему хранилищу. Отложенные задания продолжают обрабатываться; этот список не является полным покрытием архива.") }
             if model.queue.jobs.isEmpty { status("Заданий пока нет","Дождитесь готовности локального индекса и назначения источников проекту. Пустая очередь сама по себе не подтверждает полноту памяти.") }
             ForEach(model.queue.jobs) { job in
                 GCard {
@@ -328,7 +328,10 @@ struct ProjectMemoryPanel: View {
     private func openPolicies(_ job: MemoryQueueJob? = nil) {
         let raw = job.map { model.sourceOwners[$0.source] ?? [] } ?? Set(model.sourceOwners.values.flatMap { $0 })
         owners = model.request?.ownerProjectIDs ?? Set(model.heads.flatMap { $0.entry.event.ownerProjectIDs }).union(raw).union(model.projectID.map { [$0] } ?? [])
-        model.cancelAction(); policies = true
+        // A policy change invalidates a prepared consent, so cancel it with an
+        // explicit notice; without a pending action, close quietly.
+        if model.request != nil || model.correction != nil || model.busy { model.cancelAction() } else { model.invalidateActions() }
+        policies = true
     }
     private func owners(_ ids: Set<UUID>,in request: MemoryUpdateRequest) -> String { request.checkpoint.projects.filter { ids.contains($0.id) }.map { $0.name + " — " + $0.cloudPolicy.questionLabel }.joined(separator:"; ") }
 }

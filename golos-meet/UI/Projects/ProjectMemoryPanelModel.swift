@@ -175,7 +175,9 @@ nonisolated struct MemoryCorrectionPreview: Identifiable, Sendable {
     private func changedIfNeeded() async {
         let generationAtStart = generation
         do {
-            if let request, !worker.hasPreview(request.id) { invalidate(); reload(); return }
+            // A denied request never holds a worker preview, but its full
+            // explanation must stay on screen until the user dismisses it.
+            if let request, !request.denied, !worker.hasPreview(request.id) { invalidate(); reload(); return }
             let token = generation, latest = try await store.memoryPanelStamp()
             var changed = latest != stamp
             for source in watchedSources {
