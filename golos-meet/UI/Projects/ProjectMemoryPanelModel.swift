@@ -40,6 +40,7 @@ nonisolated struct MemoryCorrectionPreview: Identifiable, Sendable {
     @Published private(set) var inspected: MemoryProvenance?
     @Published private(set) var inspectedState: MemoryEvidenceState?
     @Published private(set) var correction: MemoryCorrectionPreview?
+    @Published private(set) var request: MemoryUpdateRequest?
     @Published private(set) var relatedEvents: [MemoryEvent] = []
     @Published private(set) var retiredEvents: Set<UUID> = []
     @Published private(set) var linksLimited = false
@@ -58,6 +59,7 @@ nonisolated struct MemoryCorrectionPreview: Identifiable, Sendable {
     private var subscription: KnowledgeIndexSubscription?
     private var configuration: AnyCancellable?
     private var stamp: String?
+    private var sending: UUID?
     private var watchedSources: [MemorySourceReference] = []
     private var watchedIdentities: [String:String] = [:]
     private var active = false
@@ -83,6 +85,7 @@ nonisolated struct MemoryCorrectionPreview: Identifiable, Sendable {
     }
     var visibleHeads: [MemoryPanelEntry] { heads.filter { matches($0.entry.event) } }
     var visibleHistory: [MemoryPanelEntry] { history.filter { matches($0.entry.event) } }
+    var canSend: Bool { enabled && !busy && request.map { !$0.denied && worker.canApprovePreview($0.id) } == true }
     private func matches(_ event: MemoryEvent) -> Bool {
         filter.isEmpty || (event.statement.text + " " + event.statement.subject).localizedCaseInsensitiveContains(filter)
     }
@@ -94,9 +97,9 @@ nonisolated struct MemoryCorrectionPreview: Identifiable, Sendable {
                 if !busy && !loading { await changedIfNeeded() }
                 if let project = projectID {
                     let token = generation
-                    let latest = projectQueue(project)
-                    guard active, !Task.isCancelled, token == generation, projectID == project else { continue }
-                    queue = latest
+                    // Do not overwrite a fresh reload's queue with a stale read.
+                    guard !loading, active, !Task.isCancelled, token == generation, projectID == project else { continue }
+                    queue = (try? await store.memoryQueueSnapshot(projectID:project)) ?? .init(message:"Не удалось прочитать очередь проекта.")
                 }
             }
         }
@@ -110,6 +113,9 @@ nonisolated struct MemoryCorrectionPreview: Identifiable, Sendable {
     func close() { active = false; watching?.cancel(); polling?.cancel(); invalidateActions() }
     func invalidateActions() {
         generation = UUID(); operation?.cancel(); operation = nil; busy = false
+        if let request { Task { [worker] in await worker.discardPreview(request.id) } }
+        if let sending { Task { [worker] in await worker.cancelApproval(sending) } }
+        request = nil; sending = nil
         inspected = nil; inspectedState = nil; correction = nil; relatedEvents = []; retiredEvents = []; linksLimited = false; destination = nil
     }
     private func invalidate() { invalidateActions(); heads = []; history = []; queue = .init(); sourceTitles = [:]; sourceOwners = [:]; stale = true; stamp = nil; watchedSources = [] }
@@ -144,7 +150,7 @@ nonisolated struct MemoryCorrectionPreview: Identifiable, Sendable {
                     let state = try await store.memoryPanelAncestryState(row.event.id)
                     checkedHistory.append(.init(entry:row,head:nil,ancestry:state))
                 }
-                let work = projectQueue(project)
+                let work = try await store.memoryQueueSnapshot(projectID:project)
                 let references = Array(Dictionary((h.heads.map(\.entry.event) + rows.entries.map(\.event)).flatMap(\.sources).map { (fileKey($0),$0) },uniquingKeysWith:{ a,_ in a }).values)
                 var identities: [String:String] = [:], unavailable: Set<String> = []
                 for source in references {
@@ -169,25 +175,27 @@ nonisolated struct MemoryCorrectionPreview: Identifiable, Sendable {
     private func changedIfNeeded() async {
         let generationAtStart = generation
         do {
+            // A denied request never holds a worker preview, but its full
+            // explanation must stay on screen until the user dismisses it.
+            if let request, !request.denied, !worker.hasPreview(request.id) { invalidate(); reload(); return }
             let token = generation, latest = try await store.memoryPanelStamp()
             var changed = latest != stamp
             for source in watchedSources {
                 if ((try? await reader.identity(source.readerHit().source)) ?? "unavailable") != watchedIdentities[fileKey(source)] { changed = true; break }
             }
             guard token == generation, !busy, !loading else { return }
-            if changed { invalidate(); reload() }
+            guard changed else { return }
+            // A prepared consent or manual draft is never discarded silently:
+            // keep it and let the explicit CAS check reject it if it really
+            // applies to changed data.
+            if request != nil || correction != nil {
+                stale = true
+                if notice == nil { notice = "Контекст изменился. Перед отправкой проверьте подготовленное действие; при применении оно будет проверено заново." }
+            } else { invalidate(); reload() }
         } catch {
             guard active, generationAtStart == generation else { return }
             invalidate(); notice = "Не удалось проверить актуальность памяти. Обновите панель."
         }
-    }
-    /// Read-only view of the durable queue limited to this project. The full
-    /// snapshot keeps its own conservative limit; a project-scoped store filter
-    /// arrives together with queue actions.
-    private func projectQueue(_ project: UUID) -> MemoryQueueSnapshot {
-        let full = worker.snapshot()
-        return .init(jobs: full.jobs.filter { $0.projectID == project }, revision: full.revision,
-                     message: full.message, backpressured: full.backpressured)
     }
     nonisolated private func fileKey(_ source:MemorySourceReference) -> String { source.key.rawValue + "|" + source.revision }
     private func current(_ id: UUID) throws { try Task.checkCancellation(); guard generation == id else { throw ProjectMemoryError.stale } }
@@ -196,6 +204,7 @@ nonisolated struct MemoryCorrectionPreview: Identifiable, Sendable {
         guard generation == id else { return }
         invalidateActions()
         if error is CancellationError { notice = "Действие отменено." }
+        else if error as? MemoryQueueError == .busy { notice = "Очередь завершает предыдущую операцию. Подготовьте контекст ещё раз после её завершения." }
         else if error as? ProjectMemoryError == .stale || error as? MemoryUpdateError == .stale || error is KnowledgeSearchError {
             stale = true; heads = []; history = []; notice = "Источник или память изменились. Обновите панель и повторите действие заново."
         } else { notice = "Не удалось выполнить действие. Память сохранена; проверьте источник, разрешения и настройки, затем обновите панель." }
@@ -245,7 +254,54 @@ nonisolated struct MemoryCorrectionPreview: Identifiable, Sendable {
     }
     func back() { destination = nil }
     func dismissDetails() { invalidateActions() }
-    func cancelAction() { invalidateActions(); notice = "Действие отменено." }
+    func cancelAction() { invalidateActions(); notice = "Действие отменено. Для отправки подготовьте новый контекст." }
+    /// A fresh exact batch preview is requested explicitly; the worker keeps at
+    /// most one and the job pauses durably at .needsConsent until decided.
+    func prepare(_ job: MemoryQueueJob) {
+        guard enabled, !busy, job.projectID == projectID else { return }; let id = begin()
+        operation = Task {
+            var prepared: MemoryUpdateRequest?
+            do {
+                prepared = try await worker.preparePreview(job.sequence)
+                try current(id)
+                guard let prepared else { return }
+                stamp = try await store.memoryPanelStamp(); try current(id)
+                request = prepared; watchedSources = prepared.consumedSources
+                watchedIdentities = Dictionary(prepared.consumedSources.map { (fileKey($0),$0.fileStamp) },uniquingKeysWith:{ a,_ in a }); busy = false
+            } catch {
+                if let prepared { await worker.discardPreview(prepared.id) }
+                fail(error,id:id)
+            }
+        }
+    }
+    func send() {
+        guard canSend, let pending = request else { return }
+        let id = generation; busy = true; notice = nil
+        sending = pending.id
+        request = nil
+        operation = Task {
+            do {
+                guard try await store.memoryPanelStamp() == stamp else { throw ProjectMemoryError.stale }
+                try current(id)
+                try await worker.approvePreview(pending.id); try current(id)
+                sending = nil; busy = false; reload()
+            } catch { await worker.discardPreview(pending.id); fail(error,id:id) }
+        }
+    }
+    func cancel(_ job: MemoryQueueJob) {
+        guard job.projectID == projectID, !busy else { return }; let id = begin()
+        operation = Task {
+            await worker.cancel(job.sequence)
+            do { try current(id); busy = false; reload() } catch { fail(error,id:id) }
+        }
+    }
+    func retry(_ job: MemoryQueueJob) {
+        guard job.projectID == projectID, !busy else { return }; let id = begin()
+        operation = Task {
+            await worker.retry(job.sequence)
+            do { try current(id); busy = false; reload() } catch { fail(error,id:id) }
+        }
+    }
     /// Manual correction/retraction keeps the original event and its
     /// provenance; the draft is checked against the lease before any preview
     /// is shown, and the stamp is revalidated right before publishing.

@@ -34,7 +34,8 @@ struct ProjectMemoryPanel: View {
                         if model.loading { ProgressView("Проверяем память и источники…").controlSize(.small) }
                         if let notice = model.notice { status("Требуется внимание",notice) }
                         if !model.loading {
-                            if let preview = model.correction { correctionPreview(preview) }
+                            if let preview = model.request { context(preview) }
+                            else if let preview = model.correction { correctionPreview(preview) }
                             else if let event = editing { editor(event) }
                             else if let proof = model.inspected { details(proof) }
                             else if model.projectID != nil {
@@ -47,7 +48,7 @@ struct ProjectMemoryPanel: View {
                             }
                         }
                         if model.busy {
-                            HStack { ProgressView("Проверяем источник…").controlSize(.small) }
+                            HStack { ProgressView("Выполняем действие…").controlSize(.small); Button("Отменить действие") { model.cancelAction() }.buttonStyle(GhostButton()) }
                         }
                     }.padding(24).frame(maxWidth:900,alignment:.leading).frame(maxWidth:.infinity,alignment:.leading)
                 }
@@ -74,6 +75,7 @@ struct ProjectMemoryPanel: View {
             }.accessibilityIdentifier("memory.project")
             HStack {
                 Button("Разрешения") { openPolicies() }.buttonStyle(GhostButton()).disabled(model.projectID == nil || model.loading || model.busy)
+                    .help("Локальная политика облака проекта: разрешение отправки материалов и памяти внешнему сервису. Записывается на этом Mac, память и источники не меняет.")
                 if let onSettings { Button("Настройки",action:onSettings).buttonStyle(GhostButton()) }
             }
             Text("Утверждения из готовых материалов. Запись и расшифровка работают независимо.").font(.system(size:12)).foregroundStyle(p.ink.opacity(0.72))
@@ -147,7 +149,7 @@ struct ProjectMemoryPanel: View {
     private var jobs: some View {
         VStack(alignment:.leading,spacing:14) {
             if let message = model.queue.message { status("Очередь",message) }
-            if model.queue.backpressured { status("Список ограничен","Показано до 256 источников этого проекта. Отложенные задания продолжают обрабатываться; этот список не является полным покрытием архива.") }
+            if model.queue.backpressured { status("Список ограничен","Показаны задания выбранного проекта — до 256 строк. Одновременно ждут свободного места не более 128 источников по всему хранилищу. Отложенные задания продолжают обрабатываться; этот список не является полным покрытием архива.") }
             if model.queue.jobs.isEmpty { status("Заданий пока нет","Дождитесь готовности локального индекса и назначения источников проекту. Пустая очередь сама по себе не подтверждает полноту памяти.") }
             ForEach(model.queue.jobs) { job in
                 GCard {
@@ -161,10 +163,63 @@ struct ProjectMemoryPanel: View {
                             Text("Повтор не исправляет устаревшую цепочку. Проверьте зависимость и явно отмените или исправьте неверное утверждение, сохранив историю.").font(.system(size:12))
                             Button("Проверить утверждения") { tab = "Обзор"; model.reload() }.buttonStyle(GhostButton())
                         }
-                        if job.state == .denied { Button("Разрешения владельцев") { openPolicies(job) }.buttonStyle(GhostButton()).disabled(model.busy) }
+                        VStack(alignment:.leading,spacing:8) {
+                            if job.state == .needsConsent {
+                                Button("Просмотреть контекст") { model.prepare(job) }.buttonStyle(PrimaryButton()).disabled(!model.enabled || model.busy)
+                                    .accessibilityIdentifier("memory.prepare.\(job.sequence)")
+                            }
+                            if [.failed,.limited,.cancelled,.waiting].contains(job.state) { Button("Повторить обработку") { model.retry(job) }.buttonStyle(GhostButton()).disabled(model.busy) }
+                            if [.queued,.running,.partial,.backpressured,.needsConsent,.waiting].contains(job.state) { Button("Отменить обработку") { model.cancel(job) }.buttonStyle(GhostButton()).disabled(model.busy) }
+                            if job.state == .denied { Button("Разрешения владельцев") { openPolicies(job) }.buttonStyle(GhostButton()).disabled(model.busy) }
+                        }
                     }.padding(14).frame(maxWidth:.infinity,alignment:.leading)
                 }
             }
+        }
+    }
+    /// Full raw + derived context of this exact batch, shown before a one-time
+    /// consent. Nothing is sent until the explicit per-part approval below.
+    private func context(_ request: MemoryUpdateRequest) -> some View {
+        VStack(alignment:.leading,spacing:16) {
+            GSectionHeader("Выбранный контекст одной части")
+            Text("Получатель: \(model.provider). \(request.fragments.count) сырых фрагментов и \(request.parents.count) событий памяти. JSON: \(request.payload.count) символов / \(request.payload.utf8.count) байт.").font(.system(size:13))
+            Text("Передадим имя проекта, выбранные тексты, заголовки, локации и метаданные ниже. Скрытые исходные зависимости производной памяти не добавляются как сырой текст.").font(.system(size:12)).foregroundStyle(p.ink.opacity(0.72))
+            ForEach(request.checkpoint.projects) { owner in
+                Text("\(owner.name) — \(owner.cloudPolicy.questionLabel)").font(.system(size:13,weight:.semibold))
+            }
+            ForEach(Array(request.fragments.enumerated()),id:\.element.id) { i,hit in
+                VStack(alignment:.leading,spacing:6) {
+                    Text("S\(i+1) · \(hit.source.title) · \(KnowledgeSearchLocation.label(hit.chunk))").font(.system(size:13,weight:.semibold))
+                    Text("Дата источника неизвестна").font(.system(size:12)).foregroundStyle(p.ink.opacity(0.72))
+                    if let doc = hit.source.document { Text("Импорт: \(importDay(doc.importedAt)) — не дата решения").font(.system(size:12)).foregroundStyle(p.ink.opacity(0.72)) }
+                    Text("Владельцы: " + owners(hit.source.owners,in:request)).font(.system(size:12)).foregroundStyle(p.ink.opacity(0.72))
+                    Text(hit.chunk.text).font(.system(size:14)).textSelection(.enabled)
+                }
+                Divider()
+            }
+            ForEach(Array(request.parents.enumerated()),id:\.element.id) { i,e in
+                VStack(alignment:.leading,spacing:6) {
+                    Text("M\(i+1) · \(e.statement.kind.panelTitle)").font(.system(size:13,weight:.semibold))
+                    Text(e.statement.text).font(.system(size:14)).textSelection(.enabled)
+                    Text("Условия: " + e.statement.conditions.sorted { $0.key < $1.key }.map { $0.key + ": " + $0.value }.joined(separator:", ")).font(.system(size:12))
+                    if let range = e.statement.deadline { Text("Срок: \(day(range.earliest)) — \(day(range.latest))").font(.system(size:13,weight:.semibold)) }
+                    Text("Владельцы производного контекста: " + owners(Set(e.ownerProjectIDs),in:request)).font(.system(size:12)).foregroundStyle(p.ink.opacity(0.72))
+                    dates(e)
+                }
+                Divider()
+            }
+            Text("Полное происхождение: \(request.consumedSources.count) опорных фрагментов. Разрешения всех их первоначальных и текущих владельцев проверяются перед каждой отправкой.").font(.system(size:12)).foregroundStyle(p.ink.opacity(0.72))
+            ForEach(Array(request.consumedSources.enumerated()),id:\.offset) { _,ref in Text(ref.title + " · " + KnowledgeSearchLocation.label(ref.chunk)).font(.system(size:12)) }
+            DisclosureGroup("Точный JSON запроса") { Text(request.payload).font(.system(size:11,design:.monospaced)).textSelection(.enabled) }
+            if request.denied { status("Отправка запрещена","Один из владельцев выбрал локальную обработку. Разовое согласие не отменяет запрет.") }
+            else {
+                Text("Отмена остановит дальнейшую работу, но не отзывает уже отправленные данные.").font(.system(size:12)).foregroundStyle(p.ink.opacity(0.72))
+                Text("Разрешение действует только для этой точной части. Следующая часть, изменённый контекст и перезапуск потребуют нового согласия.").font(.system(size:13,weight:.semibold))
+                if !model.canSend { Text("Очередь завершает другую операцию либо контекст изменился. Отправка сейчас недоступна.").font(.system(size:12)).foregroundStyle(p.ink.opacity(0.72)) }
+                Button("Разрешить отправку этой части") { model.send() }.buttonStyle(PrimaryButton()).disabled(!model.canSend)
+                    .accessibilityIdentifier("memory.send")
+            }
+            Button("Отменить подготовку") { model.cancelAction() }.buttonStyle(GhostButton())
         }
     }
     private func details(_ proof: MemoryProvenance) -> some View {
@@ -272,9 +327,13 @@ struct ProjectMemoryPanel: View {
     private func sourceTitle(_ source: EmbeddingSourceKey) -> String { model.sourceTitles[source] ?? model.heads.flatMap { $0.entry.event.sources }.first { $0.key == source }?.title ?? (source.kind == .meeting ? "Встреча \(source.externalID)" : "Документ \(source.externalID.prefix(8))") }
     private func openPolicies(_ job: MemoryQueueJob? = nil) {
         let raw = job.map { model.sourceOwners[$0.source] ?? [] } ?? Set(model.sourceOwners.values.flatMap { $0 })
-        owners = Set(model.heads.flatMap { $0.entry.event.ownerProjectIDs }).union(raw).union(model.projectID.map { [$0] } ?? [])
+        owners = model.request?.ownerProjectIDs ?? Set(model.heads.flatMap { $0.entry.event.ownerProjectIDs }).union(raw).union(model.projectID.map { [$0] } ?? [])
+        // A policy change invalidates a prepared consent, so cancel it with an
+        // explicit notice; without a pending action, close quietly.
+        if model.request != nil || model.correction != nil || model.busy { model.cancelAction() } else { model.invalidateActions() }
         policies = true
     }
+    private func owners(_ ids: Set<UUID>,in request: MemoryUpdateRequest) -> String { request.checkpoint.projects.filter { ids.contains($0.id) }.map { $0.name + " — " + $0.cloudPolicy.questionLabel }.joined(separator:"; ") }
 }
 
 extension MemoryFactKind {

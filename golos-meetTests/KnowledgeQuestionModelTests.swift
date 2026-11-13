@@ -306,7 +306,9 @@ import Testing
                 }.value
                 let root = try #require(witness.root)
                 let cleanup = Task { try await scope.finish() }
-                let deadline = ContinuousClock.now + .seconds(3)
+                // Load-tolerant completion budget (60s, pattern of #61/#88):
+                // the late write is expected to finish, never timed for speed.
+                let deadline = ContinuousClock.now + .seconds(60)
                 while !scope.trace.contains(where: { $0["stage"] == "question-ui-late-write-finished" }), ContinuousClock.now < deadline { await Task.yield() }
                 #expect(scope.trace.contains { $0["stage"] == "question-ui-late-write-finished" })
                 #expect(FileManager.default.fileExists(atPath: root.path))

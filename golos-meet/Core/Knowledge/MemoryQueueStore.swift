@@ -9,10 +9,10 @@ extension ProjectStore {
             return run
         }
     }
-    func memoryQueueSnapshot(limit: Int = 256) throws -> MemoryQueueSnapshot {
+    func memoryQueueSnapshot(projectID: UUID? = nil, limit: Int = 256) throws -> MemoryQueueSnapshot {
         guard (1...256).contains(limit) else { throw MemoryQueueError.budget }
         return try memoryTransaction { db in
-            let rows = try db.rows(MemoryQueueSQL.select + " ORDER BY sequence LIMIT ?", bindings: [String(limit + 1)])
+            let rows = try db.rows(MemoryQueueSQL.select + (projectID == nil ? "" : " WHERE project_id=?") + " ORDER BY sequence LIMIT ?", bindings: (projectID.map { [$0.uuidString] } ?? []) + [String(limit + 1)])
             return .init(jobs: try rows.prefix(limit).map(MemoryQueueSQL.job), backpressured: rows.count > limit || rows.contains(where: { $0[6] == "backpressured" }))
         }
     }
