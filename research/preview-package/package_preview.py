@@ -13,10 +13,56 @@ import shutil
 import subprocess
 import sys
 import tempfile
+import uuid
 
 REPO = Path(__file__).resolve().parents[2]
 MACHO_MAGIC = {bytes.fromhex(s) for s in (
     "feedface", "cefaedfe", "feedfacf", "cffaedfe", "cafebabe", "bebafeca", "cafebabf", "bfbafeca")}
+
+def qa_profile(identifier):
+    if not re.fullmatch(r"[0-9a-f]{32}", identifier):
+        raise RuntimeError("Invalid isolated QA identifier")
+    return {"kind": "isolated-qa-v1", "identifier": identifier,
+            "bundle_id": "com.golos.golos-meet.qa." + identifier,
+            "display_name": "Golos Meet QA", "app_support_component": "golos-meet-qa-" + identifier,
+            "user_defaults_domain": "com.golos.golos-meet.qa." + identifier,
+            "keychain_service": "golos-meet.qa." + identifier}
+
+def apply_qa_metadata(app, identifier):
+    profile = qa_profile(identifier)
+    path = app / "Contents/Info.plist"
+    with path.open("rb") as stream:
+        info = plistlib.load(stream)
+    info.update(CFBundleIdentifier=profile["bundle_id"], CFBundleDisplayName=profile["display_name"],
+                CFBundleName=profile["display_name"], GolosRuntimeProfile=profile["kind"],
+                GolosPreviewIdentifier=identifier)
+    with path.open("wb") as stream:
+        plistlib.dump(info, stream)
+    return profile
+
+def validate_identity(info, qa_identifier=None):
+    if qa_identifier is None:
+        if (info.get("CFBundleIdentifier") != "com.golos.golos-meet"
+                or any(k in info for k in ("GolosRuntimeProfile", "GolosPreviewIdentifier"))
+                or info.get("CFBundleDisplayName") == "Golos Meet QA"
+                or info.get("CFBundleName") == "Golos Meet QA"):
+            raise RuntimeError("Unexpected normal bundle/profile identity")
+    else:
+        profile = qa_profile(qa_identifier)
+        expected = {"CFBundleIdentifier": profile["bundle_id"], "CFBundleDisplayName": profile["display_name"],
+                    "CFBundleName": profile["display_name"], "GolosRuntimeProfile": profile["kind"],
+                    "GolosPreviewIdentifier": qa_identifier}
+        if any(info.get(k) != v for k, v in expected.items()):
+            raise RuntimeError("Invalid isolated QA profile metadata")
+
+def verify_isolated_source(source):
+    # A new packager must not label an old binary that still uses production data.
+    archived_packager = source / "research/preview-package/package_preview.py"
+    profile = source / "golos-meet/Util/AppProfile.swift"
+    if (not archived_packager.is_file() or sha256(archived_packager) != sha256(Path(__file__))
+            or not profile.is_file() or '"isolated-qa-v1"' not in profile.read_text()):
+        raise RuntimeError("Isolated QA requires the same committed packager and runtime profile source")
+    return {"runtime_profile_sha256": sha256(profile), "archived_packager_sha256": sha256(archived_packager)}
 
 
 def run(*args, cwd=None):
@@ -78,10 +124,12 @@ def sign_and_smoke(app, work):
             continue
         with path.open("rb") as stream:
             if stream.read(4) in MACHO_MAGIC:
-                run("/usr/bin/codesign", "--force", "--sign", "-", str(path))
-    for framework in app.glob("Contents/Frameworks/*.framework"):
-        run("/usr/bin/codesign", "--force", "--sign", "-", str(framework))
-    run("/usr/bin/codesign", "--force", "--sign", "-", str(app))
+                run("/usr/bin/codesign", "--force", "--sign", "-", "--timestamp=none", str(path))
+    containers = [p for p in app.rglob("*") if p.is_dir() and not p.is_symlink()
+                  and p.suffix in {".framework", ".bundle", ".app", ".xpc", ".appex"}]
+    for container in sorted(containers, key=lambda p: len(p.parts), reverse=True):
+        run("/usr/bin/codesign", "--force", "--sign", "-", "--timestamp=none", str(container))
+    run("/usr/bin/codesign", "--force", "--sign", "-", "--timestamp=none", str(app))
     run("/usr/bin/codesign", "--verify", "--deep", "--strict", str(app))
     smoke = work / "sidecar-smoke"
     smoke.mkdir()
@@ -98,12 +146,11 @@ def sign_and_smoke(app, work):
     return report
 
 
-def inspect_bundle(app):
+def inspect_bundle(app, qa_identifier=None):
     """Static inspection only. Reject external symlinks and non-system dylibs."""
     with (app / "Contents/Info.plist").open("rb") as stream:
         info = plistlib.load(stream)
-    if info.get("CFBundleIdentifier") != "com.golos.golos-meet":
-        raise RuntimeError("Unexpected bundle ID")
+    validate_identity(info, qa_identifier)
     executable = app / "Contents/MacOS" / info["CFBundleExecutable"]
     if not executable.is_file():
         raise RuntimeError("Missing app executable")
@@ -177,16 +224,23 @@ def main():
     # overrides to nested build tools, which may themselves invoke Make.
     ref_default = os.environ.pop("PREVIEW_REF", "HEAD")
     output_default = os.environ.pop("PREVIEW_OUTPUT", None)
+    isolated_default = os.environ.pop("PREVIEW_ISOLATED_QA", "0")
     for key in ("MAKEFLAGS", "MFLAGS", "MAKEOVERRIDES", "GNUMAKEFLAGS"):
         os.environ.pop(key, None)
     parser = argparse.ArgumentParser(description=__doc__)
+    if isolated_default not in {"0", "1"}:
+        parser.error("PREVIEW_ISOLATED_QA must be 0 or 1")
     parser.add_argument("--ref", default=ref_default,
                         help="Committed source ref (default: PREVIEW_REF or HEAD)")
     parser.add_argument("--output", type=Path, default=output_default,
                         help="Parent for a new unique build/output directory (or PREVIEW_OUTPUT)")
+    parser.add_argument("--isolated-qa", action="store_true", default=isolated_default == "1",
+                        help="Package one separate Golos Meet QA with isolated data/settings/Keychain")
     args = parser.parse_args()
     if args.output is None:
         parser.error("--output or PREVIEW_OUTPUT is required")
+    identifier = uuid.uuid4().hex if args.isolated_qa else None
+    profile = qa_profile(identifier) if identifier else {"kind": "normal"}
     commit = run("git", "rev-parse", "--verify", "--end-of-options", args.ref + "^{commit}", cwd=REPO)
     output = args.output.expanduser().resolve()
     output.mkdir(parents=True, exist_ok=True)
@@ -199,6 +253,7 @@ def main():
     subprocess.run(["git", "archive", "--format=tar", "-o", str(archive), commit], cwd=REPO, check=True)
     subprocess.run(["/usr/bin/tar", "-xf", str(archive), "-C", str(source)], check=True)
     archive.unlink()
+    profile_source = verify_isolated_source(source) if identifier else None
     pins = source / "golos-meet.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved"
     pins_hash = sha256(pins)
     cargo_lock_hash = sha256(source / "asr/Cargo.lock")
@@ -206,6 +261,9 @@ def main():
     command = ["xcodebuild", "build", "-project", str(source / "golos-meet.xcodeproj"),
                "-scheme", "golos-meet", "-configuration", "Debug", "-destination", "platform=macOS",
                "-derivedDataPath", str(derived), "-onlyUsePackageVersionsFromResolvedFile", "CODE_SIGNING_ALLOWED=NO"]
+    if identifier:
+        # Even the temporary Xcode product must have a distinct registration identity.
+        command.append("PRODUCT_BUNDLE_IDENTIFIER=" + profile["bundle_id"])
     product = derived / "Build/Products/Debug/Golos Meet.app"
     try:
         with (work / "build.log").open("w") as log:
@@ -218,15 +276,17 @@ def main():
         raise RuntimeError("Build changed Package.resolved; refusing a non-pinned package")
     payload = work / f"Golos-Meet-preview-{commit[:12]}"
     payload.mkdir()
-    app = payload / product.name
+    app = payload / ("Golos Meet QA.app" if identifier else product.name)
     subprocess.run(["/usr/bin/ditto", str(product), str(app)], check=True)
+    if identifier:
+        apply_qa_metadata(app, identifier)
     rust = build_sidecar(source, work, app)
     if sha256(source / "asr/Cargo.lock") != cargo_lock_hash:
         raise RuntimeError("Build changed Cargo.lock")
     # Inspect before signing, then hash the final signed bytes.
-    inspect_bundle(app)
+    inspect_bundle(app, identifier)
     rust["packaged_cli_smoke"] = sign_and_smoke(app, work)
-    info, binaries, inventory = inspect_bundle(app)
+    info, binaries, inventory = inspect_bundle(app, identifier)
     sidecar = app / "Contents/Resources/golos-asr"
     manifest = {
         "source_sha": commit, "source_tree": run("git", "rev-parse", commit + "^{tree}", cwd=REPO),
@@ -236,13 +296,16 @@ def main():
         "xcode": run("xcodebuild", "-version"), "macos": run("/usr/bin/sw_vers", "-productVersion"),
         "build_command": command, "configuration": "Debug", "code_signing": "ad-hoc local preview; no notarization",
         "bundle_id": info["CFBundleIdentifier"], "executable": info["CFBundleExecutable"],
+        "isolation_profile": profile,
+        "isolation_source_contract": profile_source,
         "app_launched": False, "temporary_build_registration_removed": True, "model_weights_included": False, "user_data_included": False,
         "asr_sidecar_included": sidecar.is_file(), "whole_product_ready": False,
         "runtime_checks": binaries, "asr_sidecar": rust,
     }
     (payload / "manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n")
     (payload / "bundle-inventory.json").write_text(json.dumps(inventory, ensure_ascii=False, indent=2) + "\n")
-    subprocess.run(["/usr/bin/ditto", str(Path(__file__).with_name("README.md")), str(payload / "MANUAL_CHECK.md")], check=True)
+    instructions = "ISOLATED_QA.md" if identifier else "README.md"
+    subprocess.run(["/usr/bin/ditto", str(Path(__file__).with_name(instructions)), str(payload / "MANUAL_CHECK.md")], check=True)
     package = work / (payload.name + ".zip")
     subprocess.run(["/usr/bin/ditto", "-c", "-k", "--sequesterRsrc", "--keepParent", str(payload), str(package)], check=True)
     (work / "package.sha256").write_text(f"{sha256(package)}  {package.name}\n")
