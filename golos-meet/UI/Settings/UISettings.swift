@@ -5,7 +5,7 @@ import SwiftUI
 /// с `ASRSettings.current`, поэтому выбор в настройках и в пайплайне согласован.
 @MainActor
 final class UISettings: ObservableObject {
-    static let shared = UISettings()
+    static let shared = UISettings(defaults: AppPreferences.current)
 
     enum ThemeMode: String, CaseIterable, Identifiable {
         case auto, light, dark
@@ -20,13 +20,13 @@ final class UISettings: ObservableObject {
     }
 
     @Published var themeMode: ThemeMode {
-        didSet { UserDefaults.standard.set(themeMode.rawValue, forKey: "ui.themeMode") }
+        didSet { defaults.set(themeMode.rawValue, forKey: "ui.themeMode") }
     }
     @Published var modelChoice: ASRModelChoice {
-        didSet { UserDefaults.standard.set(modelChoice.rawValue, forKey: "asrModelChoice") }
+        didSet { defaults.set(modelChoice.rawValue, forKey: "asrModelChoice") }
     }
     @Published var llmEnabled: Bool {
-        didSet { UserDefaults.standard.set(llmEnabled, forKey: "llm.enabled") }
+        didSet { defaults.set(llmEnabled, forKey: "llm.enabled") }
     }
     /// Порог архивации записей в днях: готовые встречи старше срока сжимаются (#83).
     @Published var archiveDays: Int {
@@ -58,8 +58,9 @@ final class UISettings: ObservableObject {
 
     private let defaults: UserDefaults
 
-    /// Внутренний для тестов; в приложении — только `shared`.
-    init(defaults: UserDefaults = .standard) {
+    /// В приложении — только `shared` с валидированным профилем backend;
+    /// прямой init — для тестов и изолированных проверок.
+    init(defaults: UserDefaults) {
         self.defaults = defaults
         let d = defaults
         themeMode = d.string(forKey: "ui.themeMode").flatMap(ThemeMode.init) ?? .auto
