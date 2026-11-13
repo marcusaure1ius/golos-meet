@@ -20,6 +20,14 @@ final class MeetingLibrary: ObservableObject {
     /// Поисковый текст встречи (через ленивый индекс; root — как у библиотеки).
     func searchText(for id: String) -> String { searchIndex.text(for: id, root: root) }
 
+    /// Есть ли у встречи дорожка `base.<ext>` хотя бы в одном расширении.
+    static func hasTrack(_ bases: [String], extensions exts: [String], in dir: URL) -> Bool {
+        let fm = FileManager.default
+        return bases.contains { base in
+            exts.contains { fm.fileExists(atPath: dir.appendingPathComponent("\(base).\($0)").path) }
+        }
+    }
+
     /// Чистое сканирование каталога встреч (тестируется на временной папке).
     static func scan(root: URL) -> [MeetingSummary] {
         let fm = FileManager.default
@@ -34,12 +42,14 @@ final class MeetingLibrary: ObservableObject {
             let id = dir.lastPathComponent
             let meta = (try? Data(contentsOf: dir.appendingPathComponent("meta.json")))
                 .flatMap { try? MeetingMeta.decoded($0) }
-            let hasAudio = fm.fileExists(atPath: dir.appendingPathComponent("mic.wav").path)
-                        || fm.fileExists(atPath: dir.appendingPathComponent("system.wav").path)
+            // Аудио есть в несжатом (.wav) или сжатом архивном (.m4a, #83) виде.
+            let hasAudio = MeetingLibrary.hasTrack(["mic", "system"], extensions: ["wav", "m4a"], in: dir)
             let hasTranscript = fm.fileExists(atPath: dir.appendingPathComponent("transcript.json").path)
             let hasInsights = fm.fileExists(atPath: dir.appendingPathComponent("insights.json").path)
             guard meta != nil || hasAudio || hasTranscript else { continue }
-            let summary = MeetingSummary.make(folderId: id, meta: meta, hasAudio: hasAudio, hasTranscript: hasTranscript, hasInsights: hasInsights)
+            let summary = MeetingSummary.make(folderId: id, meta: meta, hasAudio: hasAudio,
+                                              hasTranscript: hasTranscript, hasInsights: hasInsights,
+                                              hasArchivedAudio: meta?.archivedAudio == true)
             // Отброшенные (короче порога) не листим вовсе — папка на диске остаётся.
             guard summary.status != .discarded else { continue }
             result.append(summary)

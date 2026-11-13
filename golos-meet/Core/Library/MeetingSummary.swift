@@ -37,6 +37,8 @@ struct MeetingSummary: Identifiable, Equatable {
     var metaStatus: MeetingStatus? = nil
     /// Есть ли на диске хотя бы одна аудио-дорожка.
     var hasAudio: Bool = false
+    /// Аудио сжато в архив (`.m4a` вместо `.wav`, #83).
+    var hasArchivedAudio: Bool = false
     let asrModel: String?
     let hasTranscript: Bool
     let hasInsights: Bool
@@ -50,7 +52,8 @@ struct MeetingSummary: Identifiable, Equatable {
                      meta: MeetingMeta?,
                      hasAudio: Bool,
                      hasTranscript: Bool,
-                     hasInsights: Bool = false) -> MeetingSummary {
+                     hasInsights: Bool = false,
+                     hasArchivedAudio: Bool = false) -> MeetingSummary {
         let startedAt = meta?.startedAt ?? parseId(folderId) ?? Date(timeIntervalSince1970: 0)
         let status = effectiveStatus(metaStatus: meta?.status, hasAudio: hasAudio,
                                      hasTranscript: hasTranscript, hasInsights: hasInsights)
@@ -63,6 +66,7 @@ struct MeetingSummary: Identifiable, Equatable {
             status: status,
             metaStatus: meta?.status,
             hasAudio: hasAudio,
+            hasArchivedAudio: hasArchivedAudio,
             asrModel: meta?.asrModel,
             hasTranscript: hasTranscript,
             hasInsights: hasInsights)

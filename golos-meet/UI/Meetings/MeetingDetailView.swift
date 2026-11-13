@@ -308,7 +308,13 @@ struct MeetingDetailView: View {
                     Text("Action points ещё не сгенерированы.")
                         .font(.system(size: 13)).foregroundStyle(p.muted2)
                 }
-                if let player { PlayerView(player: player) }
+                if let player {
+                    if meeting.hasArchivedAudio {
+                        Label("Аудио сжато в архиве", systemImage: "archivebox")
+                            .font(.system(size: 12)).foregroundStyle(p.muted2)
+                    }
+                    PlayerView(player: player)
+                }
                 TranscriptView(transcript: t, onSeek: player.map { pl in { pl.seek(to: $0); if !pl.isPlaying { pl.toggle() } } })
             }
         } else {

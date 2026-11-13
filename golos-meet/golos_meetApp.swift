@@ -56,6 +56,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         ProductionIndexing.shared?.start()
         ProductionAssignments.shared?.start()
         ProductionMemoryQueue.shared?.start()
+        ProductionArchive.shared?.start()
         if ProcessInfo.processInfo.environment["GOLOS_MEET_BACKFILL"] == "1" {
             Backfill.run()
         }
@@ -67,6 +68,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         ProductionMemoryQueue.shared?.stop()
         ProductionAssignments.shared?.stop()
         ProductionIndexing.shared?.stop()
+        ProductionArchive.shared?.stop()
     }
 
     /// Клик по значку в Dock при закрытом окне — воссоздать окно WindowGroup.
@@ -79,6 +81,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     /// отпускаем всё равно: недописанную запись спасёт StartupRescue при следующем запуске.
     func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
         ProductionMemoryQueue.shared?.stop()
+        ProductionArchive.shared?.stop()
         coordinator?.prepareForTermination()
         guard let coordinator, coordinator.recorder.isRecording else { return .terminateNow }
         let recorder = coordinator.recorder
