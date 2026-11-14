@@ -669,6 +669,12 @@ extension ProjectStore {
         }
     }
 
+    /// «Убрать» на карточке провала (issue #101): попытка удалена по требованию
+    /// пользователя. Записи других попыток остаются в store как механика повтора.
+    func deleteImport(id: UUID) throws {
+        try open().execute("DELETE FROM document_imports WHERE id = ?", bindings: [id.uuidString])
+    }
+
     /// Check by bytes, never by filename. Historical bytes identify an existing
     /// document too; importing an old copy does not roll back its current version.
     func matchingDocument(contentHash: String) throws -> UUID? {

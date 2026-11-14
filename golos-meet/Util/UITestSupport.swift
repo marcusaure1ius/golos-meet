@@ -57,10 +57,11 @@ enum UITestSupport {
         for child in children { try? FileManager.default.removeItem(at: child) }
     }
 
-    /// Сидирование состояний ошибки импорта через принятый store (E-06):
-    /// три строки в document_imports изолированной SQLite, реальные русские
-    /// тексты продукта — без exception-ов. Синхронно на старте: сиды обязаны
-    /// попасть в store до первого reload UI.
+    /// Сидирование истории попыток импорта через принятый store (E-06, issue #101):
+    /// терминальные строки в document_imports изолированной SQLite, включая старую
+    /// запись с английским exception-текстом. UI больше не показывает историю
+    /// попыток — сиды проверяют, что она не возвращается на экран.
+    /// Синхронно на старте: сиды обязаны попасть в store до первого reload UI.
     private static func seedImportErrors() {
         let store = ProjectStore(url: AppPaths.appSupport.appendingPathComponent("knowledge.sqlite"))
         let seeds: [(String, DocumentImportState, String)] = [
@@ -68,7 +69,9 @@ enum UITestSupport {
              DocumentExtractionError.noText.errorDescription ?? "В документе не найден текст."),
             ("notes.docx", .cancelled, "Импорт отменён."),
             ("report.pdf", .interrupted,
-             "Импорт был прерван. Выберите файл и импортируйте его снова.")
+             "Импорт был прерван. Выберите файл и импортируйте его снова."),
+            ("legacy.pdf", .failed,
+             "The operation couldn't be completed. (TextRecognition.CRImageReaderError error 1.)")
         ]
         let done = DispatchSemaphore(value: 0)
         Task.detached(priority: .userInitiated) {

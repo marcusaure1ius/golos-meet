@@ -29,15 +29,32 @@ private struct DocumentListContent: View {
     @Environment(\.palette) private var p
 
     private var visibleDocuments: [LibraryDocument] { documents.documents(in: scope) }
+    private func jobOwners(_ job: DocumentImportJob) -> Set<UUID> {
+        job.targetID.flatMap { target in documents.documents.first { $0.id == target }?.projectIDs } ?? job.projectIDs
+    }
     private var visibleJobs: [DocumentImportJob] {
         queue.jobs.filter { job in
-            let owners = job.targetID.flatMap { target in documents.documents.first { $0.id == target }?.projectIDs } ?? job.projectIDs
+            let owners = jobOwners(job)
             switch scope {
             case .all: return true
             case .inbox: return owners.isEmpty
             case .project(let id): return owners.contains(id)
             }
         }
+    }
+    /// Прогресс-строки: провалы рендерятся отдельными транзиентными карточками.
+    private var visibleJobRows: [DocumentImportJob] { visibleJobs.filter { $0.state != .failed } }
+    /// Транзиентные карточки провала (issue #101): последние три провала сессии;
+    /// история попыток из store в UI не возвращается.
+    private var visibleFailures: [DocumentImportJob] {
+        Array(queue.recentFailures.filter { job in
+            let owners = jobOwners(job)
+            switch scope {
+            case .all: return true
+            case .inbox: return owners.isEmpty
+            case .project(let id): return owners.contains(id)
+            }
+        }.reversed())
     }
 
     var body: some View {
@@ -65,14 +82,15 @@ private struct DocumentListContent: View {
                     } else {
                         ScrollView {
                             LazyVStack(alignment: .leading, spacing: 16) {
-                                if !visibleJobs.isEmpty {
+                                if !visibleJobRows.isEmpty {
                                     ScrollView {
                                         VStack(spacing: 10) {
-                                            ForEach(visibleJobs.reversed()) { job in ImportJobRow(job: job, queue: queue) }
+                                            ForEach(visibleJobRows.reversed()) { job in ImportJobRow(job: job, queue: queue) }
                                         }
-                                    }.frame(height: min(CGFloat(visibleJobs.count) * 90, 220))
+                                    }.frame(height: min(CGFloat(visibleJobRows.count) * 90, 220))
                                     Divider().padding(.vertical, 4)
                                 }
+                                ForEach(visibleFailures) { job in ImportFailureCard(job: job, queue: queue) }
                                 if visibleDocuments.isEmpty {
                                     ContentUnavailableView("Пока нет документов", systemImage: "doc.text",
                                         description: Text("Импортируйте DOCX, PDF, изображение или текст. Копия и извлечённый текст останутся на этом Mac."))
@@ -93,14 +111,6 @@ private struct DocumentListContent: View {
                                             }.padding(16)
                                         }
                                     }.buttonStyle(.plain)
-                                }
-                                let jobIDs = Set(queue.jobs.map(\.id))
-                                let interrupted = documents.attempts.filter { !jobIDs.contains($0.id) && [.interrupted, .failed, .cancelled].contains($0.state) }
-                                if scope == .all, !interrupted.isEmpty {
-                                    GSectionHeader("Предыдущие попытки импорта", desc: "Выберите файл для повтора нужной попытки.")
-                                    ForEach(interrupted) { attempt in
-                                        SavedImportAttemptRow(attempt: attempt)
-                                    }
                                 }
                             }.padding(.horizontal, 56).padding(.bottom, 32)
                         }
@@ -123,39 +133,32 @@ private struct DocumentListContent: View {
     }
 }
 
-private struct SavedImportAttemptRow: View {
-    let attempt: DocumentImportAttempt
-    @EnvironmentObject private var documents: DocumentLibrary
+/// Транзиентная карточка провала импорта (issue #101): показывается один раз
+/// в момент провала, исчезает после успешного повтора или «Убрать» (попытка
+/// удаляется из store). Постоянного списка проваленных попыток в UI нет.
+private struct ImportFailureCard: View {
+    let job: DocumentImportJob
+    @ObservedObject var queue: DocumentImportQueue
     @Environment(\.palette) private var p
 
-    private var target: LibraryDocument? { documents.documents.first { $0.id == attempt.targetID } }
-    private var targetMissing: Bool { attempt.targetID != nil && target == nil }
-
     var body: some View {
-        HStack(alignment: .top, spacing: 16) {
-            VStack(alignment: .leading, spacing: 4) {
-                Text(attempt.filename).font(.system(size: 13, weight: .semibold)).foregroundStyle(p.ink)
-                if let target {
-                    Text("Обновление «\(target.title)»").font(.system(size: 13)).foregroundStyle(p.ink)
-                } else if targetMissing {
-                    Text("Исходный документ недоступен. Повтор обновления невозможен.")
+        GCard {
+            HStack(alignment: .top, spacing: 12) {
+                Image(systemName: "exclamationmark.triangle.fill")
+                    .foregroundStyle(p.danger).padding(.top, 2)
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(job.url.lastPathComponent)
+                        .font(.system(size: 13, weight: .semibold)).foregroundStyle(p.ink)
+                    Text(job.message.isEmpty ? DocumentImportState.failed.title : job.message)
                         .font(.system(size: 12)).foregroundStyle(p.danger)
-                } else {
-                    Text("Новый документ · Во Входящие").font(.system(size: 12)).foregroundStyle(p.muted)
                 }
-                Text(attempt.message).font(.system(size: 12)).foregroundStyle(p.muted)
-            }
-            Spacer()
-            Button(attempt.targetID == nil ? "Выбрать файл" : "Повторить обновление") {
-                guard !targetMissing else { return }
-                DocumentFilePicker.choose(multiple: false, updating: attempt.targetID != nil, updatingDocumentTitle: target?.title) { urls in
-                    guard let url = urls.first else { return }
-                    Task { await documents.retryImport(attempt, selecting: url) }
-                }
-            }
-            .disabled(targetMissing || !documents.isLoaded || documents.error != nil)
-            .accessibilityLabel(target.map { "Выбрать файл для обновления «\($0.title)»" } ?? "Выбрать файл для повтора импорта «\(attempt.filename)»")
-        }.padding(.vertical, 6)
+                Spacer()
+                Button("Повторить") { Task { await queue.retry(job.id) } }
+                    .accessibilityLabel("Повторить импорт «\(job.url.lastPathComponent)»")
+                Button("Убрать") { Task { await queue.dismissFailure(job.id) } }
+                    .accessibilityLabel("Убрать карточку провала импорта «\(job.url.lastPathComponent)»")
+            }.padding(12)
+        }
     }
 }
 
