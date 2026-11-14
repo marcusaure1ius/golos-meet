@@ -10,8 +10,9 @@ import AppKit
 struct AgentScreen: View {
     @StateObject private var model: AgentChatModel
 
-    init(library: MeetingLibrary, projects: ProjectLibrary? = nil) {
-        _model = StateObject(wrappedValue: AgentChatModel(library: library, projects: projects))
+    init(library: MeetingLibrary, projects: ProjectLibrary? = nil,
+         runtime: DshAgentRuntime? = DshAgentRuntime(root: DshAgentRuntime.defaultRoot())) {
+        _model = StateObject(wrappedValue: AgentChatModel(library: library, projects: projects, runtime: runtime))
     }
 
     /// Для превью и рендер-тестов.
@@ -53,7 +54,7 @@ struct AgentChatView: View {
             Text("Агент")
                 .font(.system(size: 17, weight: .semibold))
                 .foregroundStyle(p.ink)
-            Text("Демо-режим: отвечает по правилам на данных архива, без модели")
+            Text(model.modeDescription)
                 .font(.system(size: 12))
                 .foregroundStyle(p.muted)
                 .lineLimit(1)
@@ -71,7 +72,7 @@ struct AgentChatView: View {
         .padding(.horizontal, 20)
         .padding(.vertical, 12)
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("Экран Агент, демо-режим")
+        .accessibilityLabel("Экран Агент, \(model.modeDescription)")
     }
 
     // MARK: Пустой экран
@@ -310,7 +311,7 @@ struct AgentConsentCard: View {
                             .font(.system(size: 10))
                             .foregroundStyle(p.muted)
                             .frame(width: 12)
-                        Text("Что отправляется: \(request.fragments.count) \(request.fragments.count == 1 ? "фрагмент" : "фрагмента")")
+                        Text("Что отправляется: \(request.fragments.count) \(AgentChatModel.pluralFragments(request.fragments.count))")
                             .font(.system(size: 12.5, weight: .medium))
                             .foregroundStyle(p.muted)
                         Spacer(minLength: 0)
