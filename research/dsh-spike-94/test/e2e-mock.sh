@@ -4,8 +4,13 @@
 # model; dsh runs headless with the spike overlay pointed at the mock and must:
 #   1. register search_meetings + summarize_meeting,
 #   2. execute search_meetings and pass real archive quotes/timecodes back,
-#   3. execute summarize_meeting, whose tool calls the mock LLM REST endpoint
-#      the same way it calls OpenRouter, and pass the summary back.
+#   3. execute summarize_meeting (egress gate allows: meeting mapped to an
+#      allowSelectedContext project), whose tool calls the mock LLM REST
+#      endpoint the same way it calls OpenRouter, and pass the summary back,
+#   4. execute summarize_meeting for a meeting WITHOUT project mapping and
+#      return the honest egress-gate denial without calling the model (#94),
+#   5. include the profile's Russian "answer only in Russian, start with the
+#      content" system instruction in what the model sees (issue #103).
 set -eu
 cd "$(dirname "$0")/.."
 
@@ -15,23 +20,50 @@ export DSH_HOME
 GOLOS_OPENROUTER_BASE_URL="http://127.0.0.1:$PORT/v1"
 export GOLOS_OPENROUTER_BASE_URL
 
-node test/mock-llm.mjs "$PORT" &
-MOCK_PID=$!
-trap 'kill "$MOCK_PID" 2>/dev/null' EXIT
-sleep 1
+# The mock reads MOCK_TOOL from its own environment (which tool it forces the
+# agent to call), so it restarts per case.
+MOCK_PID=""
+start_mock() {
+  MOCK_TOOL="$1" node test/mock-llm.mjs "$PORT" &
+  MOCK_PID=$!
+  sleep 1
+}
+stop_mock() {
+  if [ -n "$MOCK_PID" ]; then
+    kill "$MOCK_PID" 2>/dev/null || true
+    wait "$MOCK_PID" 2>/dev/null || true
+  fi
+  MOCK_PID=""
+  sleep 0.3
+}
+trap 'stop_mock' EXIT
 
 run_case() {
-  MOCK_TOOL="$1" OPENROUTER_API_KEY=mock-key npx --no-install @deepseek-ai/dsh headless \
+  OPENROUTER_API_KEY=mock-key npx --no-install @deepseek-ai/dsh headless \
     --patch ./test/dsh-patch.mock.yml "О чём договорились по прайсингу за ноябрь?" 2>/dev/null
 }
 
 FAIL=0
-OUT1=$(run_case search_meetings)
-echo "--- search_meetings: $OUT1"
-case "$OUT1" in *MOCK-E2E-OK*) echo "PASS: search_meetings" ;; *) echo "FAIL: search_meetings"; FAIL=1 ;; esac
+check() {
+  case "$2" in *MOCK-E2E-OK*) echo "PASS: $1" ;; *) echo "FAIL: $1"; FAIL=1 ;; esac
+}
 
-OUT2=$(run_case summarize_meeting)
+start_mock search_meetings
+OUT1=$(run_case)
+echo "--- search_meetings: $OUT1"
+check search_meetings "$OUT1"
+stop_mock
+
+start_mock summarize_meeting
+OUT2=$(run_case)
 echo "--- summarize_meeting: $OUT2"
-case "$OUT2" in *MOCK-E2E-OK*) echo "PASS: summarize_meeting" ;; *) echo "FAIL: summarize_meeting"; FAIL=1 ;; esac
+check summarize_meeting "$OUT2"
+stop_mock
+
+start_mock summarize_denied
+OUT3=$(run_case)
+echo "--- summarize_denied: $OUT3"
+check summarize_denied "$OUT3"
+stop_mock
 
 exit "$FAIL"

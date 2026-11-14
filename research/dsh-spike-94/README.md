@@ -11,11 +11,12 @@
 | --- | --- |
 | `package.json` | пиновка `@deepseek-ai/dsh` версии **0.2.2-rc.1** (npm, MIT, developer preview) |
 | `plugins/golos-qa/index.js` | dsh-плагин с двумя инструментами: `search_meetings`, `summarize_meeting` |
-| `dsh-patch.yml` | оверлей web-профиля: регистрация плагина, модель OpenRouter `deepseek/deepseek-v4.1-flash`, отключение телеметрии |
+| `dsh-patch.yml` | оверлей web-профиля: регистрация плагина, персона «отвечай по-русски, сразу с содержимого» (#103), модель OpenRouter `deepseek/deepseek-v4.1-flash`, отключение телеметрии |
 | `run-web.sh` | запуск web UI dsh (порт 3080) с ключом OpenRouter из QA-Keychain |
 | `test/mock-llm.mjs` | локальный OpenAI-совместимый стриминговый mock-LLM для e2e без ключа |
-| `test/dsh-patch.mock.yml` | тестовый оверлей: маршрут openrouter → mock |
-| `test/e2e-mock.sh` | e2e-проверка обеих инструментов через mock |
+| `test/dsh-patch.mock.yml` | тестовый оверлей: маршрут openrouter → mock + та же персона |
+| `test/e2e-mock.sh` | e2e-проверка обоих инструментов и системной инструкции через mock |
+| `THIRD_PARTY_LICENSES.md` | нотисы сторонних компонентов (dsh/Cordis MIT, транзитивные зависимости) |
 
 Инструменты работают напрямую с QA-хранилищем
 `~/Library/Application Support/golos-meet-qa-b2c0b2c1c6e2413cba82e061cdb9cd97`
@@ -28,8 +29,21 @@
   с fallback на OR и ранжированием по числу совпавших слов.
 - **summarize_meeting** — читает `meetings/<id>/transcript.json`, сжимает моделью
   (прямой REST-вызов OpenRouter, модель `deepseek/deepseek-v4.1-flash`).
+  Перед облачным вызовом проверяет **egress-границу** (#94, принцип
+  «согласие на облако — per-project» из PRODUCT_VISION §3.2): политику
+  проектов встречи читает из того же knowledge.sqlite (READ-ONLY,
+  `projects.cloud_policy` + `meeting_projects`; значения совпадают с
+  `ProjectCloudPolicy` приложения). Вызов модели происходит только если
+  **каждый** проект встречи имеет `allowSelectedContext`; `localOnly`,
+  `askEveryTime`, отсутствие привязки встречи к проекту, отсутствие таблиц
+  политики или недоступное хранилище — честный инструмент-результат
+  «отправка запрещена политикой проекта» без вызова модели (fail closed).
+  Схема политики в реальном QA-архиве проверена (2026-11-14): таблицы
+  существуют, значения — `localOnly`/`askEveryTime`/`allowSelectedContext`.
+- **search_meetings** — только локальный FTS5-запрос; облачного egress нет,
+  гейт его не касается.
 
-## Секреты
+## Секреты и язык ответа
 
 Ключ OpenRouter живёт в QA-Keychain
 (`golos-meet.qa.b2c0b2c1c6e2413cba82e061cdb9cd97` / `openrouter-api-key`) и
@@ -37,6 +51,14 @@
 dsh (`run-web.sh` достаёт его `security find-generic-password -w` в момент
 запуска). Ключ не хранится в файлах, логах и конфигах: `dsh-patch.yml` содержит
 только имя переменной (`apiKeyEnv: OPENROUTER_API_KEY`).
+
+Язык ответа (#103): персона `system-prompt.personaPrefix` в `dsh-patch.yml`
+требует отвечать только по-русски и начинать сразу с содержимого, без
+английских мета-фраз («I have enough grounded material…»); цитаты — дословно
+с таймкодами. Второй слой страховки — фильтр `stripLeadingPreamble` в
+`DshAgentRuntime.swift` (приложение) обрезает ведущую ASCII-преамбулу до
+первого заголовка/кириллического символа, если она короче 200 символов.
+Оба слоя проверены mock-e2e и Swift-тестами.
 
 ## Запуск
 
@@ -57,11 +79,23 @@ npm install          # ставит @deepseek-ai/dsh@0.2.2-rc.1
 
 ## Проверки
 
-- **e2e без ключа (mock):** `test/e2e-mock.sh` — поднимает локальный mock-LLM,
-  гоняет dsh headless через оба инструмента и проверяет, что реальные цитаты и
-  таймкоды из архива дошли до модели (`PASS: search_meetings`,
-  `PASS: summarize_meeting`). Полный цикл «профиль → плагин → tool-вызов →
-  результат в модель → ответ» проверен этим способом.
+- **e2e без ключа (mock):** `test/e2e-mock.sh` — поднимает локальный mock-LLM
+  (отдельный экземпляр на сценарий) и гоняет dsh headless в трёх случаях:
+  - `PASS: search_meetings` — реальные цитаты и таймкоды архива дошли до модели;
+  - `PASS: summarize_meeting` — встреча, привязанная к проекту с
+    `allowSelectedContext`: плагин вызывает модель (тот же REST-путь, что и
+    OpenRouter), сводка дошла до агента;
+  - `PASS: summarize_denied` — встреча без привязки к проекту: egress-гейт
+    вернул честный отказ «отправка запрещена политикой проекта», модель
+    не вызывалась.
+  Во всех случаях mock дополнительно проверяет, что русская инструкция
+  персона («Отвечай только на русском языке…», #103) входит в system prompt
+  запроса. Полный цикл «профиль → плагин → tool-вызов → результат в модель →
+  ответ» проверен этим способом.
+
+  Замечание: до 2026-11-14 mock получал `MOCK_TOOL` из окружения dsh, а не
+  своего, поэтому оба сценария гоняли только `search_meetings`; это
+  исправлено (mock перезапускается на сценарий).
 - **Маршрут OpenRouter:** с фиктивным ключом dsh доводит запрос до
   `https://openrouter.ai/api/v1` и получает их 401 на невалидный ключ — то есть
   резолв модели `deepseek/deepseek-v4.1-flash` и передача env-ключа работают.
