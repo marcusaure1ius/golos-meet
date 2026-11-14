@@ -1,5 +1,14 @@
 import Foundation
 
+private extension Character {
+    /// Кириллица: основной блок U+0400–U+04FF (включая «ё») и
+    /// дополнение U+0500–U+052F.
+    var isCyrillic: Bool {
+        guard let value = unicodeScalars.first?.value else { return false }
+        return (0x0400...0x04FF).contains(value) || (0x0500...0x052F).contains(value)
+    }
+}
+
 /// Реальный агентный рантайм: локальный dsh headless (issue #94).
 ///
 /// Один процесс на вопрос; инструменты search_meetings / summarize_meeting
@@ -50,6 +59,41 @@ final class DshAgentRuntime: Sendable {
     /// Чистая функция для тестов: argv запуска без шелла (инъекции исключены).
     func buildArguments(question: String) -> [String] {
         ["npx", "--no-install", "@deepseek-ai/dsh", "headless", "--patch", "./dsh-patch.yml", question]
+    }
+
+    /// Максимальная длина преамбулы, которую можно безопасно обрезать (#103):
+    /// длинная «преамбула» скорее содержательный ответ, её не трогаем.
+    private static let maxPreambleLength = 200
+
+    /// Обрезает ведущую английскую служебную преамбулу модели (#103):
+    /// «I have enough grounded material. Here's the answer…» до первого
+    /// markdown-заголовка (`#` в начале строки) или первого кириллического
+    /// символа. Обрезаем только если преамбула короче 200 символов и граница
+    /// найдена; иначе возвращаем ответ как есть (не рискуем содержимым).
+    static func stripLeadingPreamble(_ answer: String) -> String {
+        guard let boundary = firstContentBoundary(in: answer) else { return answer }
+        let preambleStart = answer.startIndex
+        let distance = answer.distance(from: preambleStart, to: boundary)
+        guard distance < maxPreambleLength else { return answer }
+        return String(answer[boundary...]).trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+
+    /// Первый индекс, с которого начинается содержимое: заголовок markdown
+    /// (`#` в начале строки) или кириллический символ. nil — границы нет
+    /// (ответ целиком ASCII без заголовков) — тогда ничего не обрезаем.
+    private static func firstContentBoundary(in answer: String) -> String.Index? {
+        var atLineStart = true
+        for index in answer.indices {
+            let character = answer[index]
+            if atLineStart, character == "#" {
+                return index
+            }
+            if character.isCyrillic {
+                return index
+            }
+            atLineStart = character.isNewline
+        }
+        return nil
     }
 
     /// Задаёт вопрос агенту и возвращает финальный ответ (stdout процесса).
@@ -104,6 +148,9 @@ final class DshAgentRuntime: Sendable {
             let diag = String(data: await diagnostics ?? Data(), encoding: .utf8) ?? ""
             throw DshError.emptyResponse(String(diag.suffix(300)))
         }
-        return answer
+        // Второй уровень защиты от английской преамбулы модели (#103):
+        // системная инструкция в dsh-профиле — основной слой, этот фильтр
+        // страхует чат, если модель всё же начала с мета-фразы.
+        return Self.stripLeadingPreamble(answer)
     }
 }

@@ -4,8 +4,19 @@
  * Two model-facing tools:
  *  - search_meetings: FTS5 query over the QA knowledge.sqlite
  *    (table knowledge_fts), returns quotes + timecodes + source meeting ids.
+ *    Purely local: no cloud egress, the egress gate below does not apply.
  *  - summarize_meeting: reads meetings/<id>/transcript.json and returns a
  *    compressed summary via the OpenRouter chat API (DeepSeek V4.1 Flash).
+ *
+ * Egress gate (issue #94, PRODUCT_VISION §3.2 "согласие на облако —
+ * per-project"): before any cloud call summarize_meeting reads the cloud
+ * policy of the meeting's projects from the QA knowledge.sqlite (READ-ONLY;
+ * tables projects.cloud_policy + meeting_projects, values mirror the app's
+ * ProjectCloudPolicy: localOnly | askEveryTime | allowSelectedContext).
+ * Only allowSelectedContext for EVERY project of the meeting permits the
+ * call; anything else (including missing mapping, missing tables or an
+ * unreadable database) returns an honest tool result "sending denied by
+ * project policy" and the model is never called — fail closed.
  *
  * The OpenRouter key arrives only through the process environment
  * (OPENROUTER_API_KEY); this file never reads, stores, or logs it.
@@ -75,6 +86,55 @@ async function meetingTitle(meetingId) {
   } catch {
     return null
   }
+}
+
+/**
+ * Egress gate: cloud policy of every project a meeting belongs to.
+ * Reads the same READ-ONLY knowledge.sqlite the search tool uses.
+ * Returns { allowed, reason } — `reason` is a user-facing Russian text for
+ * the honest denial; unknown state never permits the call (fail closed).
+ */
+function meetingCloudPolicy(meetingId) {
+  let db
+  try {
+    db = openArchiveDb()
+  } catch (error) {
+    return {
+      allowed: false,
+      reason: `не удалось открыть хранилище политик knowledge.sqlite (${String(error).slice(0, 200)}); облачная политика неизвестна, отправка запрещена по умолчанию`,
+    }
+  }
+  let rows
+  try {
+    rows = db.prepare(
+      'SELECT p.name AS name, p.cloud_policy AS policy ' +
+      'FROM meeting_projects mp JOIN projects p ON p.id = mp.project_id ' +
+      'WHERE mp.meeting_id = ?',
+    ).all(meetingId)
+  } catch (error) {
+    return {
+      allowed: false,
+      reason: `в хранилище нет таблиц политики (projects/meeting_projects): ${String(error).slice(0, 200)}; облачная политика неизвестна, отправка запрещена по умолчанию`,
+    }
+  }
+  if (rows.length === 0) {
+    return {
+      allowed: false,
+      reason: 'встреча не привязана ни к одному проекту — облачная политика неизвестна (по умолчанию localOnly), отправка запрещена',
+    }
+  }
+  const denied = rows.filter((row) => row.policy !== 'allowSelectedContext')
+  if (denied.length > 0) {
+    const labels = denied.map((row) => {
+      const label = row.policy === 'localOnly' ? 'только на этом Mac' : 'нужно разовое согласие'
+      return `«${row.name}» (${label})`
+    })
+    return {
+      allowed: false,
+      reason: `политика проекта ${labels.join(', ')} не разрешает отправку материалов в облако`,
+    }
+  }
+  return { allowed: true, reason: '' }
 }
 
 export const search_meetings = {
@@ -224,7 +284,9 @@ export const summarize_meeting = {
   description:
     'Сжатая сводка одной встречи QA-архива Golos Meet по её id (формат YYYY-MM-DD_HH-MM-SS). ' +
     'Читает полный транскрипт и сжимает его моделью (DeepSeek V4.1 Flash через OpenRouter): ' +
-    'о чём говорили, ключевые договорённости и решения. search_meetings возвращает нужные meetingId.',
+    'о чём говорили, ключевые договорённости и решения. search_meetings возвращает нужные meetingId. ' +
+    'Перед отправкой в облако проверяет политику проекта встречи: если она запрещает облачную ' +
+    'обработку (или неизвестна), возвращает отказ «отправка запрещена политикой проекта» и модель не вызывается.',
   parameters: {
     type: 'object',
     properties: {
@@ -241,10 +303,18 @@ export const summarize_meeting = {
         meetingId: { type: 'string' },
         segments: { type: 'number' },
         summary: { type: 'string' },
+        denied: { type: 'boolean', description: 'true — облачная отправка запрещена политикой проекта; сводка не строилась.' },
+        deniedReason: { type: 'string', description: 'Человеческое объяснение отказа.' },
       },
       required: ['meetingId', 'segments', 'summary'],
     },
     render(_args, value) {
+      if (value.denied) {
+        return [{
+          type: 'text',
+          text: `Отправка встречи ${value.meetingId} во внешнюю модель запрещена политикой проекта: ${value.deniedReason}. Сводка не строилась; используйте search_meetings — он работает локально.`,
+        }]
+      }
       return [{ type: 'text', text: `Сводка встречи ${value.meetingId} (${value.segments} реплик):\n\n${value.summary}` }]
     },
   },
@@ -252,6 +322,11 @@ export const summarize_meeting = {
   async execute(args, exec) {
     if (typeof args.meetingId !== 'string' || !/^[\w-]+$/.test(args.meetingId)) {
       throw new Error('summarize_meeting: meetingId must be a folder id like 2026-11-10_14-01-40')
+    }
+    // Egress gate (#94): honest tool result, no exception, no model call.
+    const policy = meetingCloudPolicy(args.meetingId)
+    if (!policy.allowed) {
+      return { meetingId: args.meetingId, segments: 0, summary: '', denied: true, deniedReason: policy.reason }
     }
     const apiKey = process.env.OPENROUTER_API_KEY
     if (typeof apiKey !== 'string' || apiKey === '') {
@@ -285,6 +360,7 @@ export const summarize_meeting = {
       'Ты — ассистент по встречам Golos Meet. Сжми транскрипт встречи в сводку на русском: ' +
       '1) тема встречи одним предложением; 2) ключевые договорённости и решения списком (без повторов); ' +
       '3) важные цифры, сроки и ответственных. Не выдумывай: всё, что не прозвучало, не упоминай. ' +
+      'Начинай сразу с содержимого, без служебных фраз о задаче или наличии материала. ' +
       'Отвечай готовым текстом без markdown-разметки заголовков уровня #.'
     const userPrompt = `Транскрипт встречи ${args.meetingId}:\n\n${text}\nСделай сводку.${focus}`
 
