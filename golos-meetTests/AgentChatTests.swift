@@ -470,3 +470,90 @@ struct AgentConsentTests {
         #expect(model.items.count == countBefore, "шаг дописан в существующий блок")
     }
 }
+
+/// Markdown-рендер ответов агента (issue #120): ##/###/bold/цитаты/списки/
+/// `code` стилизуются атрибутами по дизайн-языку golos, кривой markdown
+/// не роняет рендер (plain-фолбэк).
+@Suite struct AgentChatMarkdownTests {
+    private let palette = Palette.light
+
+    private func runBody(_ text: AttributedString, _ run: AttributedString.Runs.Run) -> String {
+        String(text[run.range].characters)
+    }
+
+    private func hasBlockQuote(_ intent: PresentationIntent?) -> Bool {
+        intent?.components.contains {
+            if case .blockQuote = $0.kind { return true }
+            return false
+        } ?? false
+    }
+
+    private func isFirstListItem(_ intent: PresentationIntent?) -> Bool {
+        intent?.components.contains {
+            if case .listItem(let ordinal) = $0.kind { return ordinal == 1 }
+            return false
+        } ?? false
+    }
+
+    /// ##/### → заголовок-шрифт без блочного intent (SwiftUI не раздувает),
+    /// **bold** → stronglyEmphasized, `code` → моно-подложка, цитата → muted
+    /// с сохранённым blockquote-отступом, списки → listItem с нумерацией.
+    @Test func markdownStylesHeadingsBoldQuotesListsAndCode() throws {
+        let markdown = """
+        ## Итоги встречи
+
+        **Прайсинг** утвердили, скидка `10%`.
+
+        > Скидка действует с ноября
+
+        1. Отправить прайс
+        2. Обновить дашборд
+        """
+        let text = AgentMarkdown.attributed(markdown, palette: palette)
+        let runs = Array(text.runs)
+
+        let heading = try #require(runs.first { runBody(text, $0).contains("Итоги") })
+        #expect(heading.presentationIntent == nil, "заголовок без блочного intent: размер задаём сами")
+        #expect(heading.font != nil)
+        #expect(heading.foregroundColor == palette.ink)
+
+        let bold = try #require(runs.first { runBody(text, $0).contains("Прайсинг") })
+        #expect(bold.inlinePresentationIntent?.contains(.stronglyEmphasized) == true)
+
+        let code = try #require(runs.first { runBody(text, $0).contains("10%") })
+        #expect(code.inlinePresentationIntent?.contains(.code) == true)
+        #expect(code.backgroundColor == palette.cardSel)
+        #expect(code.font != nil)
+
+        let quote = try #require(runs.first { runBody(text, $0).contains("действует с ноября") })
+        #expect(quote.foregroundColor == palette.muted)
+        #expect(hasBlockQuote(quote.presentationIntent),
+                "blockquote-отступ сохранён для нативного рендера")
+
+        let listItem = try #require(runs.first { runBody(text, $0).contains("Отправить прайс") })
+        #expect(isFirstListItem(listItem.presentationIntent))
+    }
+
+    /// Кривой markdown (незакрытая разметка) не роняет рендер: атрибуты
+    /// считаются, весь исходный текст сохраняется.
+    @Test func brokenMarkdownDoesNotCrashAndKeepsContent() throws {
+        let markdown = "## Незакрытая **разметка и `битый код"
+        let text = AgentMarkdown.attributed(markdown, palette: palette)
+        let body = String(text.characters)
+        #expect(body.contains("Незакрытая"))
+        #expect(body.contains("разметка"))
+        for run in text.runs {
+            _ = run.presentationIntent
+            _ = run.foregroundColor
+        }
+    }
+
+    /// Plain-фолбэк: исходный текст без блочной/инлайн-разметки, цвет — ink.
+    @Test func plainFallbackKeepsRawTextWithoutMarkdownAttributes() {
+        let text = AgentMarkdown.plain("## текст **жирный** с символами", palette: palette)
+        #expect(String(text.characters) == "## текст **жирный** с символами")
+        #expect(text.foregroundColor == palette.ink)
+        #expect(text.runs.allSatisfy { $0.presentationIntent == nil })
+        #expect(text.runs.allSatisfy { $0.inlinePresentationIntent == nil })
+    }
+}
