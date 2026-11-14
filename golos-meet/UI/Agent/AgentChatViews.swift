@@ -10,8 +10,9 @@ import AppKit
 struct AgentScreen: View {
     @StateObject private var model: AgentChatModel
 
-    init(library: MeetingLibrary, projects: ProjectLibrary? = nil) {
-        _model = StateObject(wrappedValue: AgentChatModel(library: library, projects: projects))
+    init(library: MeetingLibrary, projects: ProjectLibrary? = nil,
+         runtime: DshAgentRuntime? = DshAgentRuntime(root: DshAgentRuntime.defaultRoot())) {
+        _model = StateObject(wrappedValue: AgentChatModel(library: library, projects: projects, runtime: runtime))
     }
 
     /// Для превью и рендер-тестов.

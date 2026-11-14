@@ -7,8 +7,7 @@ import Foundation
 /// модель — DeepSeek V4.1 Flash через OpenRouter. Ключ передаётся ТОЛЬКО
 /// через переменную окружения процесса (никогда в файлы/логи/argv),
 /// источником служит Keychain профиля приложения.
-@MainActor
-final class DshAgentRuntime {
+final class DshAgentRuntime: Sendable {
     enum DshError: LocalizedError {
         case emptyResponse(String)
         case timedOut
@@ -54,6 +53,9 @@ final class DshAgentRuntime {
     }
 
     /// Задаёт вопрос агенту и возвращает финальный ответ (stdout процесса).
+    /// Ждёт ЗАВЕРШЕНИЯ процесса, гоняясь с таймаутом 5 минут: ответ, готовый
+    /// раньше, возвращается сразу; по таймауту процесс останавливается и
+    /// бросается `.timedOut` (частичный ответ молча не возвращается).
     func ask(_ question: String, apiKey: String) async throws -> String {
         let process = Process()
         process.executableURL = URL(fileURLWithPath: "/usr/bin/env")
@@ -69,17 +71,27 @@ final class DshAgentRuntime {
         try process.run()
         defer { if process.isRunning { process.terminate() } }
 
+        final class TimeoutFlag: @unchecked Sendable { var didTimeOut = false }
+        let flag = TimeoutFlag()
+
         async let output: Data? = Task.detached(priority: .utility) {
             try? stdout.fileHandleForReading.readDataToEndOfFile()
         }.value
         async let diagnostics: Data? = Task.detached(priority: .utility) {
             try? stderr.fileHandleForReading.readDataToEndOfFile()
         }.value
+        let waiter = Task.detached(priority: .utility) { process.waitUntilExit() }
+        let watchdog = Task { [flag] in
+            try? await Task.sleep(for: .seconds(300))
+            if !Task.isCancelled, process.isRunning {
+                flag.didTimeOut = true
+                process.terminate()
+            }
+        }
+        _ = await waiter.value
+        watchdog.cancel()
 
-        // Таймаут 5 минут: dsh сам держит агентный цикл модели (~30–90 с),
-        // больший бюджет нужен только на очень длинных вопросах.
-        try await Task.sleep(for: .seconds(300))
-        if process.isRunning { process.terminate() }
+        if flag.didTimeOut { throw DshError.timedOut }
 
         let answer = String(data: await output ?? Data(), encoding: .utf8) ?? ""
         guard !answer.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
