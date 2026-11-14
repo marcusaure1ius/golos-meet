@@ -38,6 +38,7 @@ struct SettingsScreen: View {
                             GSelectLabel(settings.themeMode.title)
                         }
                         .menuStyle(.borderlessButton).menuIndicator(.hidden).fixedSize()
+                        .accessibilityLabel("Тема")
                     }
                 }
                 TalkConnectionSettings()

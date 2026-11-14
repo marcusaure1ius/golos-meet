@@ -5,7 +5,7 @@ import Combine
 @main
 struct golos_meetApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-    @StateObject private var state = AppLibraryState()
+    @ObservedObject private var state = AppLibraryState.shared
     var body: some Scene {
         WindowGroup {
             if let library = state.library {
@@ -22,20 +22,26 @@ struct golos_meetApp: App {
 }
 
 /// Preserve one library across windows, without constructing it in the test host.
+/// В UI-test shell (#105) окно строится, но над тем же изолированным временным
+/// хранилищем — детектор, спасение и автообработка не запускаются.
 @MainActor
 final class AppLibraryState: ObservableObject {
+    static let shared = AppLibraryState()
     let library: MeetingLibrary?
     let configurationError: String?
     init() {
-        guard !AppRuntime.isTestHost else { library = nil; configurationError = nil; return }
+        if AppRuntime.isTestHost && !AppRuntime.uiTestShell {
+            library = nil; configurationError = nil; return
+        }
         guard AppRuntime.profileFailure == nil else { library = nil; configurationError = AppRuntime.profileFailure; return }
         configurationError = nil
         library = MeetingLibrary()
     }
 }
 
-/// Do not construct settings or processing UI in a test host.
-private struct ProductionRootView: View {
+/// Do not construct settings or processing UI in a unit-test host; the UI-test
+/// shell (#105) builds the same production root over isolated storage.
+struct ProductionRootView: View {
     @ObservedObject var library: MeetingLibrary
     @StateObject private var processor = MeetingProcessor.shared
     @StateObject private var recordingState = RecordingState.shared
@@ -51,8 +57,23 @@ private struct ProductionRootView: View {
 @MainActor
 final class AppDelegate: NSObject, NSApplicationDelegate {
     private(set) var coordinator: AppCoordinator?
+
+    /// UI-test shell: раннер XCUITest запускает приложение в фоне; политика
+    /// должна стать regular до создания первого окна WindowGroup, иначе
+    /// стартовое окно не создаётся вовсе (applicationWillFinishLaunching —
+    /// последняя точка до этого).
+    func applicationWillFinishLaunching(_ notification: Notification) {
+        if AppRuntime.uiTestShell { NSApp.setActivationPolicy(.regular) }
+    }
+
     func applicationDidFinishLaunching(_ notification: Notification) {
-        guard !AppRuntime.isTestHost else { return }
+        if AppRuntime.isTestHost {
+            if AppRuntime.uiTestShell {
+                UITestSupport.activate()
+                UITestSupport.presentWindowIfNeeded()
+            }
+            return
+        }
         guard AppRuntime.profileFailure == nil else { NSApp.setActivationPolicy(.regular); return }
         let coordinator = AppCoordinator()
         self.coordinator = coordinator
