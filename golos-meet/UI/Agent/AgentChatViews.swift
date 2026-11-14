@@ -1,6 +1,82 @@
 import SwiftUI
 import AppKit
 
+// MARK: - Markdown-рендер ответов агента (issue #120)
+
+/// Ответ агента приходит как markdown (## заголовки, **bold**, > цитаты,
+/// нумерованные списки, `code`), но показывался сырыми символами (#120).
+/// Рендерим через `AttributedString(markdown:)` с блочной структурой и
+/// стилизуем по дизайн-языку golos: заголовки не крупнее основного текста
+/// (иерархия — весом), цитаты — muted, код — моноширинный на мягкой подложке.
+/// На ошибке разбора — plain-фолбэк: показываем исходный текст как есть.
+enum AgentMarkdown {
+    /// Базовый размер текста ответа (совпадает со шрифтом ленты чата).
+    static let bodyFontSize: CGFloat = 14
+
+    /// Стилизованный AttributedString; на ошибке парсинга — plain-текст.
+    static func attributed(_ markdown: String, palette: Palette) -> AttributedString {
+        let parsed: AttributedString
+        do {
+            parsed = try AttributedString(
+                markdown: markdown,
+                options: AttributedString.MarkdownParsingOptions(interpretedSyntax: .full))
+        } catch {
+            return plain(markdown, palette: palette)
+        }
+        return styled(parsed, palette: palette)
+    }
+
+    /// Plain-фолбэк: исходный текст без форматирования (#120, «не падать»).
+    static func plain(_ text: String, palette: Palette) -> AttributedString {
+        var result = AttributedString(text)
+        result.foregroundColor = palette.ink
+        return result
+    }
+
+    /// Стилистика golos. Блочный intent оставляем у списков и цитат
+    /// (SwiftUI рисует маркеры списков и отступ цитаты), у заголовков —
+    /// снимаем (иначе SwiftUI раздувает их своими размерами) и задаём
+    /// шрифт сами.
+    static func styled(_ source: AttributedString, palette: Palette) -> AttributedString {
+        var text = source
+        for run in Array(text.runs) {
+            let range = run.range
+            if run.inlinePresentationIntent?.contains(.code) == true {
+                text[range].font = .system(size: codeFontSize, design: .monospaced)
+                text[range].backgroundColor = palette.cardSel
+            }
+            guard let intent = run.presentationIntent else { continue }
+            for component in intent.components {
+                switch component.kind {
+                case .header(let level):
+                    text[range].font = .system(size: headerFontSize(level), weight: .semibold)
+                    text[range].foregroundColor = palette.ink
+                    text[range].presentationIntent = nil
+                case .blockQuote:
+                    text[range].foregroundColor = palette.muted
+                case .codeBlock:
+                    text[range].font = .system(size: codeFontSize, design: .monospaced)
+                    text[range].backgroundColor = palette.cardSel
+                default:
+                    break
+                }
+            }
+        }
+        return text
+    }
+
+    private static let codeFontSize: CGFloat = bodyFontSize - 1.5
+
+    /// Иерархия заголовков весом, а не размером: чуть крупнее текста максимум.
+    private static func headerFontSize(_ level: Int) -> CGFloat {
+        switch level {
+        case 1: return bodyFontSize + 1
+        case 2: return bodyFontSize + 0.5
+        default: return bodyFontSize
+        }
+    }
+}
+
 // MARK: - Экран «Агент» (issue #94)
 //
 // Чат-оболочка по паттернам AutoClaw (research/agent-ui-94/SPEC.md):
@@ -168,7 +244,9 @@ struct AgentChatView: View {
 
         case .agentMessage(_, let text, _):
             VStack(alignment: .leading, spacing: 4) {
-                Text(text)
+                // Markdown (#120): заголовки/bold/цитаты/списки/`code` —
+                // форматированием; сбой разбора показывает исходный текст.
+                Text(AgentMarkdown.attributed(text, palette: p))
                     .font(.system(size: 14))
                     .foregroundStyle(p.ink)
                     .lineSpacing(3)
