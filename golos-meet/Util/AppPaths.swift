@@ -24,6 +24,21 @@ enum AppPaths {
         meetingsRoot.appendingPathComponent(id, isDirectory: true)
     }
 
+    /// `…/golos-meet/agent/` — каталог агент-профиля (issue #117).
+    static var agentRoot: URL {
+        let dir = appSupport.appendingPathComponent("agent", isDirectory: true)
+        try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+        return dir
+    }
+
+    /// `…/golos-meet/agent/sessions/` — JSON-файлы сессий чата «Агент»
+    /// (одна сессия = один файл `<uuid>.json`, как meetings/).
+    static var agentSessionsRoot: URL {
+        let dir = agentRoot.appendingPathComponent("sessions", isDirectory: true)
+        try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+        return dir
+    }
+
     /// `…/golos-meet/models/`
     static var modelsRoot: URL {
         let dir = appSupport.appendingPathComponent("models", isDirectory: true)

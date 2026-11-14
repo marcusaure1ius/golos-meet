@@ -1,5 +1,6 @@
 import Foundation
 import Combine
+import os
 
 /// Модель чат-потока «Агент» (issue #94, ночной спринт W3/W4).
 ///
@@ -19,6 +20,14 @@ final class AgentChatModel: ObservableObject {
     @Published var draft: String = ""
     @Published private(set) var isThinking = false
 
+    /// Идентификатор текущей сессии (issue #117). Меняется при «Новый чат»
+    /// и при выборе сессии из истории.
+    @Published private(set) var sessionID: UUID
+    /// Авто-заголовок текущей сессии из первого вопроса; nil, пока вопросов нет.
+    @Published private(set) var sessionTitle: String?
+    /// Последние сессии для меню «История» (свежие сверху, по mtime файла).
+    @Published private(set) var recentSessions: [AgentSessionSummary] = []
+
     /// Задержка между шагами narration (в тестах — .zero).
     private let stepDelay: Duration
     private let library: MeetingLibrary
@@ -29,14 +38,26 @@ final class AgentChatModel: ObservableObject {
     private let runtimeAPIKey: @MainActor () -> String
     private var runTask: Task<Void, Never>?
 
+    /// Хранилище сессий на диске; nil → персистентность выключена
+    /// (в тестах и превью поток живёт только в памяти).
+    private let store: AgentSessionsStore?
+    /// Текущая сессия (метаданные + поток, синхронно с items).
+    private var session: AgentSession
+    /// Сохранение после каждого изменения потока.
+    private var persistCancellable: AnyCancellable?
+
     /// Режим чата для шапки и accessibility.
     let modeDescription: String
+
+    /// Включено ли сохранение сессий на диск (UI показывает меню истории).
+    var hasSessionPersistence: Bool { store != nil }
 
     init(library: MeetingLibrary,
          projects: ProjectLibrary? = nil,
          stepDelay: Duration = .milliseconds(350),
          runtime: DshAgentRuntime? = nil,
-         runtimeAPIKey: (@MainActor () -> String)? = nil) {
+         runtimeAPIKey: (@MainActor () -> String)? = nil,
+         store: AgentSessionsStore? = nil) {
         self.library = library
         self.projects = projects
         self.stepDelay = stepDelay
@@ -50,6 +71,29 @@ final class AgentChatModel: ObservableObject {
         self.modeDescription = live
             ? "Живой агент · DeepSeek V4.1 Flash"
             : "Демо-режим: отвечает по правилам на данных архива, без модели"
+
+        // Восстановление последней сессии по mtime (issue #117); без хранилища —
+        // чистый поток в памяти.
+        if let store {
+            self.store = store
+            let restored = store.latestSessionID().flatMap { store.load(id: $0) }
+            self.session = restored ?? AgentSession()
+        } else {
+            self.store = nil
+            self.session = AgentSession()
+        }
+        self.sessionID = self.session.id
+        self.sessionTitle = self.session.title
+        self.items = self.session.items
+        refreshRecentSessions()
+
+        if store != nil {
+            // Любое изменение потока (append и правка consent-карточки) —
+            // сохранение атомарное; debounce не нужен, файлы маленькие.
+            persistCancellable = $items.sink { [weak self] items in
+                self?.persistIfNeeded(items: items)
+            }
+        }
     }
 
     /// Общее число шагов во всех блоках .toolSteps. Растёт и при добавлении
@@ -65,11 +109,89 @@ final class AgentChatModel: ObservableObject {
         isThinking = false
     }
 
+    // MARK: - Сессии чата (issue #117)
+
+    /// «Новый чат»: чистый поток; текущая сессия остаётся на диске (она уже
+    /// сохранена после каждого изменения потока) и доступна в истории.
+    func startNewSession() {
+        runTask?.cancel()
+        runTask = nil
+        isThinking = false
+        let fresh = AgentSession()
+        session = fresh
+        sessionID = fresh.id
+        sessionTitle = nil
+        items = []
+        refreshRecentSessions()
+    }
+
+    /// Переключение на сессию из истории: поток загружается с диска.
+    /// Неизвестная/повреждённая сессия — текущая остаётся без изменений.
+    func openSession(id: UUID) {
+        guard id != sessionID, let store, let loaded = store.load(id: id) else { return }
+        runTask?.cancel()
+        runTask = nil
+        isThinking = false
+        session = loaded
+        sessionID = loaded.id
+        sessionTitle = loaded.title
+        items = loaded.items
+    }
+
+    /// Удаление сессии из истории. Удаление текущей сессии означает «новый чат»:
+    /// её поток больше не восстановить из хранилища.
+    func deleteSession(id: UUID) {
+        guard let store else { return }
+        try? store.delete(id: id)
+        if id == sessionID {
+            startNewSession()
+        } else {
+            refreshRecentSessions()
+        }
+    }
+
+    /// Сохранение после каждого изменения потока: атомарная запись файла
+    /// сессии. Пустой поток без изменений не записывается (не создаём пустые
+    /// файлы при старте), восстановленная сессия не перезаписывается без правок.
+    private func persistIfNeeded(items: [AgentChatItem]) {
+        guard let store, items != session.items else { return }
+        session.items = items
+        do {
+            try store.save(session)
+        } catch {
+            Log.library.error("agent session save failed: \(error.localizedDescription, privacy: .public)")
+        }
+        refreshRecentSessions()
+    }
+
+    private func refreshRecentSessions() {
+        guard let store else { return }
+        recentSessions = store.summaries()
+    }
+
+    /// Авто-заголовок из первого вопроса: первая строка, trimmed, ≤60 символов.
+    static let maxTitleLength = 60
+
+    static func autoTitle(from text: String) -> String {
+        let firstLine = text.split(separator: "\n", omittingEmptySubsequences: true)
+            .first.map(String.init) ?? text
+        let trimmed = firstLine.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else { return "Новый чат" }
+        guard trimmed.count > maxTitleLength else { return trimmed }
+        return String(trimmed.prefix(maxTitleLength)) + "…"
+    }
+
     func send() {
         let text = draft.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !text.isEmpty else { return }
         draft = ""
         runTask?.cancel()
+        // Авто-заголовок — из первого вопроса сессии.
+        if sessionTitle == nil {
+            let title = Self.autoTitle(from: text)
+            session.title = title
+            sessionTitle = title
+        }
         items.append(.userMessage(id: UUID(), text: text, time: Date()))
         isThinking = true
         runTask = Task { [weak self] in

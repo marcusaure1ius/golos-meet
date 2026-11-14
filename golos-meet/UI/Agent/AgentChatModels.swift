@@ -8,7 +8,8 @@ import Foundation
 // narration (П3), артефакты-карточки (П4), сообщения (П2), согласие (П5).
 
 /// Один шаг инструментальной работы агента (команда/действие с результатом).
-struct AgentToolStep: Identifiable, Equatable {
+/// Codable — сессии чата сохраняются на диск (issue #117).
+struct AgentToolStep: Identifiable, Equatable, Codable {
     let id: UUID
     let label: String
     let result: String?
@@ -21,8 +22,9 @@ struct AgentToolStep: Identifiable, Equatable {
 }
 
 /// Карточка-артефакт, встроенная в поток (П4 SPEC.md).
-struct AgentArtifact: Identifiable, Equatable {
-    enum Kind: Equatable {
+/// Codable — сессии чата сохраняются на диск (issue #117).
+struct AgentArtifact: Identifiable, Equatable, Codable {
+    enum Kind: Equatable, Codable {
         case meeting            // найденная встреча
         case summary            // конспект встречи
         case projectSuggestion  // предложение проекта
@@ -59,8 +61,8 @@ struct AgentArtifact: Identifiable, Equatable {
 /// разрешение не превращается в постоянный допуск). Состояние карточки
 /// обновляется после действия пользователя; текущая политика читается из
 /// того же API, что использует панель памяти (ProjectLibrary/ProjectStore).
-struct AgentConsentRequest: Identifiable, Equatable {
-    enum State: Equatable {
+struct AgentConsentRequest: Identifiable, Equatable, Codable {
+    enum State: Equatable, Codable {
         case pending    // ждёт решения пользователя
         case approved   // «Разрешить эту часть» — разовое согласие этого запроса
         case cancelled  // «Отменить» — ничего не отправлялось
@@ -105,7 +107,11 @@ struct AgentConsentRequest: Identifiable, Equatable {
 }
 
 /// Элемент чат-потока «Агент».
-enum AgentChatItem: Identifiable, Equatable {
+/// Codable (автосинтез для enum с associated values, Swift 5.5+): все полезные
+/// нагрузки сериализуемы, включая consent-карточку — resolved-состояние
+/// (`approved/cancelled/denied`) сохраняется как есть, поэтому восстановленная
+/// сессия честно показывает уже решённые согласия, а не «ожидающие» (issue #117).
+enum AgentChatItem: Identifiable, Equatable, Codable {
     case userMessage(id: UUID, text: String, time: Date)
     case agentMessage(id: UUID, text: String, time: Date)
     case narration(id: UUID, text: String)
