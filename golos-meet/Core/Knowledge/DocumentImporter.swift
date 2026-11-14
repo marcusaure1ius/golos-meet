@@ -88,9 +88,21 @@ actor DocumentImporter {
             return result
         } catch {
             let state: DocumentImportState = error is CancellationError ? .cancelled : .failed
-            try? await store.updateImport(id: id, state: state, message: error is CancellationError ? "Импорт отменён; прежняя версия сохранена." : error.localizedDescription)
+            try? await store.updateImport(id: id, state: state, message: error is CancellationError ? "Импорт отменён; прежняя версия сохранена." : Self.userMessage(for: error))
             throw error
         }
+    }
+
+    /// History rows are user-facing: raw framework errors (e.g. Vision's
+    /// CRImageReaderError) fall back to English exception text like
+    /// "The operation couldn't be completed. (... error 1.)" — replace that with
+    /// an honest Russian reason (issue #101).
+    nonisolated static func userMessage(for error: Error) -> String {
+        if let localized = error as? LocalizedError,
+           let text = localized.errorDescription, !text.isEmpty {
+            return text
+        }
+        return "Не удалось импортировать документ. Проверьте файл и повторите попытку."
     }
 
     /// Strictly derived paths avoid opening arbitrary locations from a damaged DB.

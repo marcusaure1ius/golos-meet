@@ -12,6 +12,7 @@ nonisolated enum DocumentExtractionError: LocalizedError, Equatable {
     case lockedPDF
     case tooManyPages
     case noText
+    case ocrUnavailable
 
     var errorDescription: String? {
         switch self {
@@ -21,13 +22,16 @@ nonisolated enum DocumentExtractionError: LocalizedError, Equatable {
         case .lockedPDF: return "PDF защищён паролем. Импортируйте копию без пароля."
         case .tooManyPages: return "В PDF больше 500 страниц. Разделите его на части."
         case .noText: return "В документе не найден текст, доступный для индексации."
+        case .ocrUnavailable: return "Не удалось распознать скан страницы — повторите попытку."
         }
     }
 }
 
+typealias OCRWork = @Sendable (CGImage) throws -> String
+
 /// Blocking framework work must not occupy Swift's cooperative executor.
 /// A separate serial queue preserves this actor's ordering; other extractor
-/// instances still run independently. No global OCR lock or request retry.
+/// instances still run independently. No global OCR lock.
 private nonisolated final class DocumentExtractionExecutor: SerialExecutor {
     private let queue = DispatchQueue(label: "com.golos.meet.document-extraction", qos: .utility)
     func enqueue(_ job: consuming ExecutorJob) {
@@ -37,13 +41,50 @@ private nonisolated final class DocumentExtractionExecutor: SerialExecutor {
 }
 
 /// File parsing and OCR are serialized per instance off the main actor. No network dependency.
+/// OCR runs with retries: Vision on macOS 27 fails transiently (CRImageReaderError,
+/// e5rtError, timeouts — issue #56); a fresh request usually succeeds. Retries and
+/// the pause between them run on this actor's private executor, never the
+/// cooperative pool.
 actor LocalDocumentExtractor {
     private nonisolated let extractionExecutor = DocumentExtractionExecutor()
     nonisolated var unownedExecutor: UnownedSerialExecutor { extractionExecutor.asUnownedSerialExecutor() }
 
     static let maximumBytes = 50 * 1024 * 1024
+    static let ocrAttempts = 3
+    static let ocrRetryPause: Duration = .milliseconds(300)
 
-    func extract(from url: URL, progress: (@Sendable (Int, Int) -> Void)? = nil) throws -> ExtractedDocument {
+    private nonisolated let ocr: OCRWork
+    private nonisolated let retryPause: Duration
+
+    init(ocr: OCRWork? = nil, retryPause: Duration? = nil) {
+        self.ocr = ocr ?? Self.systemOCR
+        self.retryPause = retryPause ?? Self.ocrRetryPause
+    }
+
+    /// The real Vision call. Runs on the extraction executor via the actor.
+    nonisolated static func systemOCR(_ image: CGImage) throws -> String {
+        let request = VNRecognizeTextRequest()
+        request.recognitionLevel = .accurate
+        request.usesLanguageCorrection = true
+        let supported = try request.supportedRecognitionLanguages()
+        request.recognitionLanguages = ["ru-RU", "en-US"].filter(supported.contains)
+        request.automaticallyDetectsLanguage = true
+        try VNImageRequestHandler(cgImage: image).perform([request])
+        return (request.results ?? []).compactMap { $0.topCandidates(1).first?.string }.joined(separator: "\n")
+    }
+
+    /// Collapse consecutive page numbers so warnings stay readable.
+    nonisolated static func pageRanges(_ pages: [Int]) -> [(Int, Int)] {
+        let sorted = pages.sorted()
+        var ranges: [(Int, Int)] = []
+        for page in sorted {
+            if let last = ranges.last, last.1 == page - 1 { ranges[ranges.count - 1].1 = page }
+            else { ranges.append((page, page)) }
+        }
+        return ranges
+    }
+
+    func extract(from url: URL, progress: (@Sendable (Int, Int) -> Void)? = nil) async throws -> ExtractedDocument {
         try Task.checkCancellation()
         let attributes = try FileManager.default.attributesOfItem(atPath: url.path)
         guard let size = attributes[.size] as? NSNumber,
@@ -73,12 +114,15 @@ actor LocalDocumentExtractor {
             guard !pdf.isLocked else { throw DocumentExtractionError.lockedPDF }
             guard pdf.pageCount <= 500 else { throw DocumentExtractionError.tooManyPages }
             blocks = []
+            var ocrFailedWithNative: [Int] = []
+            var ocrFailedWithoutText: [Int] = []
             for i in 0..<pdf.pageCount {
                 try Task.checkCancellation()
                 progress?(i, pdf.pageCount)
                 guard let page = pdf.page(at: i) else { throw DocumentExtractionError.invalidDocument }
                 let native = page.string?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
                 var text = native
+                var ocrFailed = false
                 // A nonempty text layer can contain only a footer over a scanned page.
                 // OCR the rendered page as well; keep native text and append only new lines.
                 do {
@@ -86,16 +130,35 @@ actor LocalDocumentExtractor {
                     guard let cgImage = image.cgImage(forProposedRect: nil, context: nil, hints: nil) else {
                         throw DocumentExtractionError.invalidDocument
                     }
-                    text = Self.merging(native: native, recognized: try recognize(cgImage))
+                    text = Self.merging(native: native, recognized: try await recognize(cgImage))
                 } catch is CancellationError {
                     throw CancellationError()
                 } catch {
-                    guard !native.isEmpty else { throw error }
-                    warnings.append("На странице \(i + 1) OCR недоступен; извлечён только текстовый слой, содержимое изображений может отсутствовать.")
+                    // Retries already ran in recognize(). A persistent Vision failure
+                    // must not abort the whole import (issue #101): degrade to the
+                    // native text layer and mark the page honestly.
+                    ocrFailed = true
+                    if native.isEmpty { ocrFailedWithoutText.append(i + 1) }
+                    else { ocrFailedWithNative.append(i + 1) }
                 }
                 if !text.isEmpty { blocks.append(.init(text: text, location: .init(page: i + 1))) }
-                else { warnings.append("На странице \(i + 1) не найден текст.") }
+                else if !ocrFailed { warnings.append("На странице \(i + 1) не найден текст.") }
                 progress?(i + 1, pdf.pageCount)
+            }
+            for (start, end) in Self.pageRanges(ocrFailedWithNative) {
+                warnings.append(start == end
+                    ? "Страница \(start) не распознана (скан недоступен); извлечён только текстовый слой, содержимое изображений может отсутствовать."
+                    : "Страницы \(start)–\(end) не распознаны (скан недоступен); извлечён только текстовый слой, содержимое изображений может отсутствовать.")
+            }
+            for (start, end) in Self.pageRanges(ocrFailedWithoutText) {
+                warnings.append(start == end
+                    ? "Страница \(start) не распознана (скан недоступен)."
+                    : "Страницы \(start)–\(end) не распознаны (скан недоступен).")
+            }
+            // Nothing recoverable anywhere: report the honest Russian reason
+            // instead of the English Vision exception.
+            if blocks.isEmpty, !(ocrFailedWithoutText.isEmpty && ocrFailedWithNative.isEmpty) {
+                throw DocumentExtractionError.ocrUnavailable
             }
         case "png", "jpg", "jpeg", "tif", "tiff", "heic":
             guard let source = CGImageSourceCreateWithData(data as CFData, nil),
@@ -105,7 +168,15 @@ actor LocalDocumentExtractor {
                     kCGImageSourceThumbnailMaxPixelSize: 3000,
                   ] as CFDictionary) else { throw DocumentExtractionError.invalidDocument }
             progress?(0, 1)
-            blocks = [ExtractedTextBlock(text: try recognize(image), location: .init(page: 1))]
+            do {
+                blocks = [ExtractedTextBlock(text: try await recognize(image), location: .init(page: 1))]
+            } catch is CancellationError {
+                throw CancellationError()
+            } catch {
+                // A standalone scan has no native layer to fall back to; retries
+                // already ran, so the user gets the honest Russian reason.
+                throw DocumentExtractionError.ocrUnavailable
+            }
             progress?(1, 1)
         default:
             throw DocumentExtractionError.unsupportedFormat(url.pathExtension.lowercased())
@@ -141,16 +212,27 @@ actor LocalDocumentExtractor {
         return result
     }
 
-    private func recognize(_ image: CGImage) throws -> String {
+    /// Retry transient OCR failures on this actor's private executor (issue #101,
+    /// pattern from #57): Vision on macOS 27 fails intermittently, so a short
+    /// pause and a fresh request usually recover. Cancellation is never retried.
+    private func recognize(_ image: CGImage) async throws -> String {
         try Task.checkCancellation()
-        let request = VNRecognizeTextRequest()
-        request.recognitionLevel = .accurate
-        request.usesLanguageCorrection = true
-        let supported = try request.supportedRecognitionLanguages()
-        request.recognitionLanguages = ["ru-RU", "en-US"].filter(supported.contains)
-        request.automaticallyDetectsLanguage = true
-        try VNImageRequestHandler(cgImage: image).perform([request])
-        try Task.checkCancellation()
-        return (request.results ?? []).compactMap { $0.topCandidates(1).first?.string }.joined(separator: "\n")
+        var lastError: Error = DocumentExtractionError.ocrUnavailable
+        for attempt in 1...Self.ocrAttempts {
+            do {
+                try Task.checkCancellation()
+                let text = try ocr(image)
+                try Task.checkCancellation()
+                return text
+            } catch is CancellationError {
+                throw CancellationError()
+            } catch {
+                lastError = error
+                if attempt < Self.ocrAttempts {
+                    try await Task.sleep(for: retryPause)
+                }
+            }
+        }
+        throw lastError
     }
 }
