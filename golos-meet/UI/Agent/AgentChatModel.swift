@@ -24,12 +24,32 @@ final class AgentChatModel: ObservableObject {
     private let library: MeetingLibrary
     /// Принятый слой проектов/политик (панель памяти использует тот же API).
     private let projects: ProjectLibrary?
+    /// Реальный рантайм dsh; nil → чат работает в демо-режиме на правилах.
+    private let runtime: DshAgentRuntime?
+    private let runtimeAPIKey: @MainActor () -> String
     private var runTask: Task<Void, Never>?
 
-    init(library: MeetingLibrary, projects: ProjectLibrary? = nil, stepDelay: Duration = .milliseconds(350)) {
+    /// Режим чата для шапки и accessibility.
+    let modeDescription: String
+
+    init(library: MeetingLibrary,
+         projects: ProjectLibrary? = nil,
+         stepDelay: Duration = .milliseconds(350),
+         runtime: DshAgentRuntime? = nil,
+         runtimeAPIKey: (@MainActor () -> String)? = nil) {
         self.library = library
         self.projects = projects
         self.stepDelay = stepDelay
+        self.runtime = runtime
+        if let runtimeAPIKey {
+            self.runtimeAPIKey = runtimeAPIKey
+        } else {
+            self.runtimeAPIKey = { UISettings.shared.openRouterKey }
+        }
+        let live = runtime != nil && !self.runtimeAPIKey().isEmpty
+        self.modeDescription = live
+            ? "Живой агент · DeepSeek V4.1 Flash через dsh"
+            : "Демо-режим: отвечает по правилам на данных архива, без модели"
     }
 
     /// Общее число шагов во всех блоках .toolSteps. Растёт и при добавлении
@@ -60,6 +80,13 @@ final class AgentChatModel: ObservableObject {
     // MARK: - Детерминированный мок-агент
 
     private func run(text: String) async {
+        // Реальный рантайм: вопрос уходит в dsh headless (агентный цикл с
+        // инструментами search_meetings / summarize_meeting над QA-архивом).
+        if let runtime, !runtimeAPIKey().isEmpty {
+            await runWithRuntime(text: text, runtime: runtime)
+            if !Task.isCancelled { isThinking = false }
+            return
+        }
         library.reload()
         let query = text.lowercased()
         let summaries = library.summaries.filter { $0.hasTranscript && $0.status == .ready }
@@ -87,6 +114,28 @@ final class AgentChatModel: ObservableObject {
             await answerWithSearch(summaries: summaries, query: query)
         }
         if !Task.isCancelled { isThinking = false }
+    }
+
+    // MARK: - Реальный рантайм dsh (issue #94)
+
+    private func runWithRuntime(text: String, runtime: DshAgentRuntime) async {
+        await narrate("Запускаю агента: DeepSeek V4.1 Flash через dsh…")
+        await step("Ищу по архиву инструментами search_meetings / summarize_meeting", result: nil)
+        guard !Task.isCancelled else { return }
+        do {
+            let answer = try await runtime.ask(text, apiKey: runtimeAPIKey())
+            guard !Task.isCancelled else { return }
+            items.append(.agentMessage(
+                id: UUID(),
+                text: answer.trimmingCharacters(in: .whitespacesAndNewlines),
+                time: Date()))
+        } catch is CancellationError {
+            return
+        } catch {
+            items.append(.failure(
+                id: UUID(),
+                text: "Агентный рантайм не смог ответить: \(error.localizedDescription). Ничего не отправлялось сверх вопроса — попробуйте переформулировать или повторите позже."))
+        }
     }
 
     // MARK: - Consent-in-chat: сведение памяти проекта (#94, фаза 2)
@@ -146,7 +195,7 @@ final class AgentChatModel: ObservableObject {
         // Политика проекта — из принятого хранилища, как это делает панель памяти.
         switch project.cloudPolicy {
         case .allowSelectedContext:
-            await narrate("Политика проекта разрешает отправку выбранного контекта — новое согласие не требуется.")
+            await narrate("Политика проекта разрешает отправку выбранного контекста — новое согласие не требуется.")
             await showConsentContext(project: project, fragments: filtered)
             items.append(.agentMessage(
                 id: UUID(),
