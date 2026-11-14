@@ -119,6 +119,8 @@ struct MeetingsScreen: View {
             HStack {
                 Text(screenTitle).font(.system(size: 26, weight: .semibold)).tracking(-0.3).foregroundStyle(p.ink)
                     .lineLimit(2)
+                    .truncationMode(.tail)
+                    .layoutPriority(1)
                 Spacer()
                 if scope != .all {
                     if questionProjectID != nil {
