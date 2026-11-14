@@ -239,7 +239,12 @@ def main():
     args = parser.parse_args()
     if args.output is None:
         parser.error("--output or PREVIEW_OUTPUT is required")
-    identifier = uuid.uuid4().hex if args.isolated_qa else None
+    # PREVIEW_QA_ID — пин идентификатора изолированного QA-профиля: без него
+    # каждая сборка получает свежий uuid и чистый профиль данных/Keychain.
+    pinned_qa = os.environ.pop("PREVIEW_QA_ID", None)
+    identifier = (pinned_qa or uuid.uuid4().hex) if args.isolated_qa else None
+    if pinned_qa and not args.isolated_qa:
+        parser.error("PREVIEW_QA_ID requires --isolated-qa / PREVIEW_ISOLATED_QA=1")
     profile = qa_profile(identifier) if identifier else {"kind": "normal"}
     commit = run("git", "rev-parse", "--verify", "--end-of-options", args.ref + "^{commit}", cwd=REPO)
     output = args.output.expanduser().resolve()
