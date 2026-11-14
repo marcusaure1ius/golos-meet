@@ -10,7 +10,10 @@
 #   4. execute summarize_meeting for a meeting WITHOUT project mapping and
 #      return the honest egress-gate denial without calling the model (#94),
 #   5. include the profile's Russian "answer only in Russian, start with the
-#      content" system instruction in what the model sees (issue #103).
+#      content" system instruction in what the model sees (issue #103),
+#   6. see NO tools besides search_meetings/summarize_meeting in the catalog:
+#      the mock fails the case if any built-in harness tool reaches the
+#      request (issue #119 "no built-in tools" contract).
 set -eu
 cd "$(dirname "$0")/.."
 

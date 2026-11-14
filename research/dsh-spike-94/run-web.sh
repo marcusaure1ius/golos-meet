@@ -4,6 +4,9 @@
 # Boots the "golos" dsh profile (a copy of the shipped web profile) with the
 # spike overlay ./dsh-patch.yml: the golos-qa plugin (search_meetings,
 # summarize_meeting) and the OpenRouter DeepSeek V4.1 Flash default model.
+# The overlay also enforces the "no built-in tools" profile contract (#119):
+# every built-in dsh tool (filesystem, terminal, web, skills, subagents, …)
+# is disabled, so the agent can reach only the QA archive and this directory.
 #
 # The OpenRouter key is pulled from the QA Keychain item into the process
 # environment of dsh only. It is never written to a file, a log, or this script.
