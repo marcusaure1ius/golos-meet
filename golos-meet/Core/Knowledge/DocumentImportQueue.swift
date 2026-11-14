@@ -36,7 +36,7 @@ final class DocumentImportQueue: ObservableObject {
             let job = DocumentImportJob(id: UUID(), url: url, projectIDs: projectIDs, targetID: targetID)
             jobs.append(job)
             do { try await store.startImport(id: job.id, filename: url.lastPathComponent, targetID: targetID, state: .queued) }
-            catch { update(job.id) { $0.state = .failed; $0.message = error.localizedDescription } }
+            catch { update(job.id) { $0.state = .failed; $0.message = DocumentImporter.userMessage(for: error) } }
         }
         startNext()
     }
@@ -77,7 +77,7 @@ final class DocumentImportQueue: ObservableObject {
             } catch {
                 update(job.id) {
                     $0.state = error is CancellationError ? .cancelled : .failed
-                    $0.message = error is CancellationError ? "Импорт отменён; предыдущая версия сохранена." : error.localizedDescription
+                    $0.message = error is CancellationError ? "Импорт отменён; предыдущая версия сохранена." : DocumentImporter.userMessage(for: error)
                 }
             }
             activeID = nil
