@@ -1,9 +1,20 @@
 # Test-only overlay: points the openrouter route at the local mock LLM.
 # Used by test/e2e-mock.sh; not part of the real run (dsh-patch.yml).
+# The system-prompt row mirrors dsh-patch.yml so the mock can assert that
+# the Russian "no preamble" instruction (#103) reaches the model.
 - insert:
     - id: golos-qa
       name: ../plugins/golos-qa/index.js
       config: {}
+- id: system-prompt
+  config:
+    personaPrefix: >-
+      Ты — ассистент по встречам Golos Meet (модель {{model}}). Отвечай только
+      на русском языке. Начинай ответ сразу с содержимого: без служебных
+      фраз о наличии материала, планировании или инструментах (например,
+      «I have enough grounded material» или «Here's the answer»). Цитаты из
+      встреч приводи дословно, с таймкодами и указанием встречи-источника.
+      Не выдумывай: если данных недостаточно, честно скажи об этом.
 - id: agent-default-model
   config:
     provider: openrouter

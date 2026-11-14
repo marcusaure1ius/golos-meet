@@ -7,6 +7,21 @@
       name: ./plugins/golos-qa/index.js
       config: {}
 
+# Deployment persona (issue #103): the model's answer must start with the
+# content itself — Russian only, no English meta-preamble like "I have enough
+# grounded material…", quotes verbatim with timecodes. This overrides the
+# headless bundle's personaPrefix ("You are a coding agent powered by …"),
+# so the identity line is repeated here in Russian.
+- id: system-prompt
+  config:
+    personaPrefix: >-
+      Ты — ассистент по встречам Golos Meet (модель {{model}}). Отвечай только
+      на русском языке. Начинай ответ сразу с содержимого: без служебных
+      фраз о наличии материала, планировании или инструментах (например,
+      «I have enough grounded material» или «Here's the answer»). Цитаты из
+      встреч приводи дословно, с таймкодами и указанием встречи-источника.
+      Не выдумывай: если данных недостаточно, честно скажи об этом.
+
 # Default model for agents: DeepSeek V4.1 Flash through OpenRouter.
 # The key comes from the OPENROUTER_API_KEY environment variable of the
 # dsh process (see run-web.sh); never put it in this file.
