@@ -52,7 +52,7 @@ struct KnowledgeQuestionScreen: View {
                 Spacer()
                 Button("Разрешения") { openPolicies() }.buttonStyle(GhostButton()).disabled(model.projectID == nil)
             }
-            Text("Найдём материалы на этом Mac. Для ответа можно отправить выбранные фрагменты в \(model.providerLabel).")
+            Text("Найдём материалы на этом Mac. Для ответа можно отправить выбранные фрагменты в облако через OpenRouter.")
                 .font(.system(size: 14)).foregroundStyle(p.ink.opacity(0.75))
         }
     }
