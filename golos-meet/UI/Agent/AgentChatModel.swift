@@ -48,7 +48,7 @@ final class AgentChatModel: ObservableObject {
         }
         let live = runtime != nil && !self.runtimeAPIKey().isEmpty
         self.modeDescription = live
-            ? "Живой агент · DeepSeek V4.1 Flash через dsh"
+            ? "Живой агент · DeepSeek V4.1 Flash"
             : "Демо-режим: отвечает по правилам на данных архива, без модели"
     }
 
@@ -119,7 +119,7 @@ final class AgentChatModel: ObservableObject {
     // MARK: - Реальный рантайм dsh (issue #94)
 
     private func runWithRuntime(text: String, runtime: DshAgentRuntime) async {
-        await narrate("Запускаю агента: DeepSeek V4.1 Flash через dsh…")
+        await narrate("Запускаю агента с моделью DeepSeek V4.1 Flash…")
         await step("Ищу по архиву инструментами search_meetings / summarize_meeting", result: nil)
         guard !Task.isCancelled else { return }
         do {

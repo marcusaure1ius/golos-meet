@@ -92,6 +92,8 @@ struct SidebarView: View {
     private func navRow(_ title: String, icon: String, destination: SidebarSection) -> some View {
         Button { selection = destination } label: {
             GNavRow(icon: icon, title: title, selected: selection == destination)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
         .accessibilityAddTraits(selection == destination ? .isSelected : [])

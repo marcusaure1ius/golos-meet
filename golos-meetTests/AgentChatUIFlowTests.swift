@@ -62,7 +62,7 @@ import Testing
         let live = AgentChatModel(library: MeetingLibrary(root: root),
                                   runtime: runtime,
                                   runtimeAPIKey: { "synthetic-key" })
-        #expect(live.modeDescription == "Живой агент · DeepSeek V4.1 Flash через dsh")
+        #expect(live.modeDescription == "Живой агент · DeepSeek V4.1 Flash")
 
         if let output = ProcessInfo.processInfo.environment["GOLOS_MEET_RENDER_AGENT_CHAT"], !output.isEmpty {
             let renderRoot = URL(fileURLWithPath: output)
