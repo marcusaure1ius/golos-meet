@@ -63,7 +63,11 @@ const server = http.createServer((request, response) => {
     }
     const requestedTools = (payload.tools ?? []).map((tool) => tool?.function?.name).filter(Boolean)
     const hasSpikes = requestedTools.includes('search_meetings') && requestedTools.includes('summarize_meeting')
-    console.log(`[mock] model=${payload.model ?? '?'} tools=${requestedTools.length} spike-tools=${hasSpikes}`)
+    // Issue #119: the model-visible catalog must contain ONLY the golos-qa
+    // tools — any built-in harness tool here is a contract violation (it gave
+    // the agent filesystem/terminal reach and triggered TCC prompts).
+    const nonGolosTools = requestedTools.filter((name) => name !== 'search_meetings' && name !== 'summarize_meeting')
+    console.log(`[mock] model=${payload.model ?? '?'} tools=${requestedTools.length} spike-tools=${hasSpikes} non-golos-tools=${nonGolosTools.length ? nonGolosTools.join(',') : 'none'}`)
 
     const messages = payload.messages ?? []
     const toolMessage = messages.find((message) => message.role === 'tool')
@@ -103,6 +107,7 @@ const server = http.createServer((request, response) => {
           : 'MOCK-E2E-FAIL: tool result did not contain expected archive data.'
       }
       if (!hasLanguageInstruction) valid = false
+      if (nonGolosTools.length > 0) valid = false
       console.log(`[mock] verdict: ${valid ? 'OK' : 'FAIL'}`)
       sseChunks(
         response,

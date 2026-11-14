@@ -2,6 +2,14 @@
 # Used by test/e2e-mock.sh; not part of the real run (dsh-patch.yml).
 # The system-prompt row mirrors dsh-patch.yml so the mock can assert that
 # the Russian "no preamble" instruction (#103) reaches the model.
+#
+# Issue #119: this overlay runs the HEADLESS profile (dsh-base only, no web
+# bundle), where the built-in tool rows are active at the host plane, so the
+# same "no built-in tools" disable list from dsh-patch.yml is mirrored here.
+# The preset-* overrides are intentionally absent: headless composes its agent
+# process-wide from the host rows and refuses preset-backed sessions, and the
+# preset declaration rows would stay pending without the web bundle's
+# agentPresets service.
 - insert:
     - id: golos-qa
       name: ../plugins/golos-qa/index.js
@@ -10,7 +18,7 @@
   config:
     personaPrefix: >-
       Ты — ассистент по встречам Golos Meet (модель {{model}}). Отвечай только
-      на русском языке. Начинай ответ сразу с содержимого: без служебных
+      на русском языке. Начинай ответ сразу с содержимым: без служебных
       фраз о наличии материала, планировании или инструментах (например,
       «I have enough grounded material» или «Here's the answer»). Цитаты из
       встреч приводи дословно, с таймкодами и указанием встречи-источника.
@@ -28,4 +36,46 @@
 - id: otel
   disabled: true
 - id: session-telemetry-otel
+  disabled: true
+# No built-in tools at the host plane (issue #119; see dsh-patch.yml for the
+# annotated list).
+- id: tool-plugin-manager
+  disabled: true
+- id: tool-bash
+  disabled: true
+- id: tool-pwsh
+  disabled: true
+- id: tool-jobs
+  disabled: true
+- id: tool-fs
+  disabled: true
+- id: tool-fs-search
+  disabled: true
+- id: skill-filesystem
+  disabled: true
+- id: tool-skill
+  disabled: true
+- id: command-goal
+  disabled: true
+- id: tool-goal
+  disabled: true
+- id: plan-mode
+  disabled: true
+- id: tool-subagent-control
+  disabled: true
+- id: tool-subagent
+  disabled: true
+- id: tool-subagent-fork
+  disabled: true
+- id: workflow-ptc
+  disabled: true
+- id: tool-workflow
+  disabled: true
+- id: tool-todo
+  disabled: true
+- id: tool-web
+  disabled: true
+- id: tool-working-directory
+  disabled: true
+- id: mcp-resources
   disabled: true
