@@ -88,7 +88,13 @@ final class DshAgentRuntime: Sendable {
                 process.terminate()
             }
         }
-        _ = await waiter.value
+        // Отмена вызывающей задачи (стоп в чате) останавливает процесс dsh:
+        // иначе облачный вызов продолжал бы тратить токены после видимой отмены.
+        _ = await withTaskCancellationHandler {
+            await waiter.value
+        } onCancel: {
+            if process.isRunning { process.terminate() }
+        }
         watchdog.cancel()
 
         if flag.didTimeOut { throw DshError.timedOut }
