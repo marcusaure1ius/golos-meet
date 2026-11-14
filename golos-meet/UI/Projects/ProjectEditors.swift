@@ -27,7 +27,7 @@ struct CreateProjectSheet: View {
                     Text(projects.path(for: project.id)).tag(Optional(project.id))
                 }
             }
-            Text("Встречи и документы проекта хранятся локально.")
+            Text("Вложенный проект появится в дереве слева как подпапка.")
                 .font(.system(size: 13)).foregroundStyle(p.muted)
             if let error { Text(error).foregroundStyle(p.danger).font(.system(size: 13)).accessibilityIdentifier("projectEditorError") }
             HStack {
