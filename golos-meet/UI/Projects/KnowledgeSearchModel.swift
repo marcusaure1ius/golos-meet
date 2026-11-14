@@ -3,7 +3,16 @@ import Combine
 
 @MainActor enum ProductionKnowledgeSearch {
     static let service: KnowledgeSearchService? = {
-        guard !AppRuntime.isTestHost, let indexing = ProductionIndexing.shared else { return nil }
+        if AppRuntime.isTestHost {
+            // UI-test shell (#105): живой поиск по пустому изолированному
+            // хранилищу; семантика честно сообщает про отсутствие модели,
+            // индексация и загрузка модели не запускаются.
+            guard AppRuntime.uiTestShell else { return nil }
+            return KnowledgeSearchService(store: ProjectLibrary.shared.store, meetingsRoot: AppPaths.meetingsRoot,
+                documentsRoot: AppPaths.appSupport.appendingPathComponent("knowledge"),
+                queryEmbedding: { _ in throw LocalIndexingError.missingModel })
+        }
+        guard let indexing = ProductionIndexing.shared else { return nil }
         let runtime = indexing.service
         return KnowledgeSearchService(store: ProjectLibrary.shared.store, meetingsRoot: AppPaths.meetingsRoot,
             documentsRoot: AppPaths.appSupport.appendingPathComponent("knowledge"),

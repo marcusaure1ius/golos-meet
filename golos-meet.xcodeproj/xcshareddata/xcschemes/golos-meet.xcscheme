@@ -40,6 +40,17 @@
                ReferencedContainer = "container:golos-meet.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "75EC79782FE330CD00D3BFD9"
+               BuildableName = "golos-meetUITests.xctest"
+               BlueprintName = "golos-meetUITests"
+               ReferencedContainer = "container:golos-meet.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <!-- Test hosts must remain isolated even when individual test selections change.
            Real ASR E2E is opt-in via explicit local environment paths. -->

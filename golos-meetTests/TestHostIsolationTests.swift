@@ -19,6 +19,19 @@ import Testing
         #expect(ProductionKnowledgeQuestions.makeModel() == nil)
     }
 
+    @Test func uiTestShellRequiresTestModeAndKeepsIdentifierContract() {
+        // Shell никогда не активируется вне изоляции test host (#105).
+        #expect(!AppRuntime.uiTestShell(environment: ["GOLOS_MEET_UI_E2E": "1"]))
+        #expect(!AppRuntime.uiTestShell(environment: ["GOLOS_MEET_TEST_MODE": "1"]))
+        #expect(AppRuntime.uiTestShell(environment: ["GOLOS_MEET_TEST_MODE": "1", "GOLOS_MEET_UI_E2E": "1"]))
+        // Стабильный идентификатор сценария: charset как у тестового профиля.
+        #expect(AppRuntime.uiTestIdentifier(environment: ["GOLOS_MEET_UI_E2E_ID": "e09-theme"]) == "uitest-e09-theme")
+        #expect(AppRuntime.uiTestIdentifier(environment: ["GOLOS_MEET_UI_E2E_ID": "../production"]) == nil)
+        #expect(AppRuntime.uiTestIdentifier(environment: ["GOLOS_MEET_UI_E2E_ID": "пробел"]) == nil)
+        #expect(AppRuntime.uiTestIdentifier(environment: ["GOLOS_MEET_UI_E2E_ID": String(repeating: "a", count: 33)]) == nil)
+        #expect(AppRuntime.uiTestIdentifier(environment: [:]) == nil)
+    }
+
     @Test func defaultPathsAndLibraryUseTemporaryStorage() throws {
         let root = AppPaths.appSupport.resolvingSymlinksInPath()
         let temporary = FileManager.default.temporaryDirectory.resolvingSymlinksInPath()
