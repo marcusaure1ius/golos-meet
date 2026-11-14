@@ -1,0 +1,12 @@
+{
+  "stdout_parts": 1,
+  "vnode_unlinked_lines": 83,
+  "extended6922_lines": 0,
+  "remaining_root_families": {
+    "question-service": 29,
+    "knowledge-search": 8,
+    "memory-history": 19,
+    "assignment-fixture": 13,
+    "questions-ui": 12
+  }
+}

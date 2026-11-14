@@ -1,0 +1,14 @@
+{
+  "log_had_bundle_reference": false,
+  "run_start": "2026-11-02T06:48:50.906069+00:00",
+  "candidates": [
+    {
+      "path": "/private/tmp/golos58si-derived/Logs/Test/Test-golos-meet-2026.11.02_09-48-56-+0300.xcresult",
+      "mtime": 1793602136.0659626
+    }
+  ],
+  "selected": "/private/tmp/golos58si-derived/Logs/Test/Test-golos-meet-2026.11.02_09-48-56-+0300.xcresult",
+  "preserved": "/private/tmp/golos58si-preserved-partial-full.xcresult",
+  "bytes": 1589164,
+  "status": "interrupted; no completed full result"
+}

@@ -1,0 +1,108 @@
+{
+  "date": "2026-11-02",
+  "issue": 37,
+  "pr": 54,
+  "reviewed_before_sha": "aa4ac4b1129ba4e4485e0253c741975b0787dc3c",
+  "base": "b118fccda792bd3fcef7f2169e103cdcaa77d909",
+  "finding": "P2: completed/partial queue coverage ignored retirement of actually consumed memory ancestry.",
+  "fix": "Persist bounded consumed closure; verify retirement status on reconcile/guard; distinguish and durably retain actual own retirement publisher IDs in same journal transaction; verify their own retirement too; reconcile after consent publication; unknown legacy proof resets once.",
+  "full": {
+    "xcresult": "/Users/alfa/.codex/worktrees/project-memory-queue/golos-meet/.build/xcode/Logs/Test/Test-golos-meet-2026.11.02_01-15-43-+0300.xcresult",
+    "result": "Passed",
+    "tests": 429,
+    "runs": 603,
+    "failed": 0,
+    "skipped": 0,
+    "runtime_warnings": [],
+    "failures": []
+  },
+  "targeted": {
+    "xcresult": "/Users/alfa/.codex/worktrees/project-memory-queue/golos-meet/.build/xcode/Logs/Test/Test-golos-meet-2026.11.02_01-16-25-+0300.xcresult",
+    "result": "Passed",
+    "tests": 28,
+    "runs": 39,
+    "failed": 0,
+    "skipped": 0,
+    "runtime_warnings": [],
+    "failures": []
+  },
+  "full_command": "TEST_RUNNER_GOLOS_MEET_E5_FOLDER=/tmp/golos-embedding-native/e5-small TEST_RUNNER_GOLOS_MEET_RENDER_TALK_SETTINGS=1 TEST_RUNNER_GOLOS_MEET_MENU_PREVIEW=1 TEST_RUNNER_GOLOS_MEET_MIGRATION_TRACE_DIR=/tmp/golos54-ancestor-full-traces make check",
+  "targeted_command": "xcodebuild test -scheme golos-meet -destination 'platform=macOS' -derivedDataPath .build/xcode -only-testing:golos-meetTests/ProjectMemoryQueueTests -only-testing:golos-meetTests/MemoryQueueMigrationTests CODE_SIGNING_ALLOWED=NO",
+  "full_log": "/tmp/golos54-ancestor-full-check.log",
+  "targeted_log": "/tmp/golos54-ancestor-final-targeted.log",
+  "driver": {
+    "command": "python3 research/memory-queue-37/ancestor-retirement/run_driver.py",
+    "result": "Passed",
+    "actual_worker_store_service": true,
+    "network": "deny network*",
+    "before_calls": 2,
+    "before_coverage": "completed/samecycle despite stale ancestry",
+    "after_calls": 3,
+    "after_coverage": "newcycle/completed; own replacer samecycle; repeat/restart quiet; old batch/history preserved",
+    "source_hash": "cd48848dbe92cb35e23a49acd54986b5627ef92b2500b54b1a6b2c0c354d028b"
+  },
+  "initial_targeted_iterations": [
+    {
+      "xcresult": "/Users/alfa/.codex/worktrees/project-memory-queue/golos-meet/.build/xcode/Logs/Test/Test-golos-meet-2026.11.02_01-13-10-+0300.xcresult",
+      "result": "Failed",
+      "tests": 25,
+      "runs": 36,
+      "failed": 1,
+      "skipped": 0,
+      "runtime_warnings": [],
+      "failures": [
+        {
+          "failureText": "Caught error: .busy",
+          "targetName": "golos-meetTests",
+          "testIdentifier": 23,
+          "testIdentifierString": "ProjectMemoryQueueTests/externalModelRetirementResetsOnlyDependentCoverageAndKeepsOwnBatchHistory(_:_:)",
+          "testIdentifierURL": "test://com.apple.xcode/golos-meet/golos-meetTests/ProjectMemoryQueueTests/externalModelRetirementResetsOnlyDependentCoverageAndKeepsOwnBatchHistory(_:_:)",
+          "testName": "externalModelRetirementResetsOnlyDependentCoverageAndKeepsOwnBatchHistory(_:_:)"
+        }
+      ]
+    },
+    {
+      "xcresult": "/Users/alfa/.codex/worktrees/project-memory-queue/golos-meet/.build/xcode/Logs/Test/Test-golos-meet-2026.11.02_01-14-12-+0300.xcresult",
+      "result": "Failed",
+      "tests": 27,
+      "runs": 38,
+      "failed": 1,
+      "skipped": 0,
+      "runtime_warnings": [],
+      "failures": [
+        {
+          "failureText": "Expectation failed: reset.cycle != before.cycle && reset.input == before.input\nreset.cycle != before.cycle → false\nreset.input == before.input → <not evaluated>",
+          "targetName": "golos-meetTests",
+          "testIdentifier": 24,
+          "testIdentifierString": "ProjectMemoryQueueTests/externalModelRetirementResetsOnlyDependentCoverageAndKeepsOwnBatchHistory(_:_:)",
+          "testIdentifierURL": "test://com.apple.xcode/golos-meet/golos-meetTests/ProjectMemoryQueueTests/externalModelRetirementResetsOnlyDependentCoverageAndKeepsOwnBatchHistory(_:_:)",
+          "testName": "externalModelRetirementResetsOnlyDependentCoverageAndKeepsOwnBatchHistory(_:_:)"
+        }
+      ]
+    }
+  ],
+  "iteration_notes": [
+    "First no-escalation Xcode invocation could not write existing global package caches; rerun with normal build permission.",
+    "Initial tests called approve before serial preview lane was idle; corrected fixture calls.",
+    "Partial regression then exposed missing reconciliation after explicit-consent publish; production worker fixed.",
+    "Initial own driver added async assertions inside boolean autoclosure; corrected before final run."
+  ],
+  "traces": {
+    "07CF2BD0-843B-4A67-99AE-338950607996.jsonl": "ec129c4032c06ed84488536767a759b4c441a531281b1199b4d8bc90de0c55cd",
+    "23CB572A-AA82-4245-A672-7E6D8F6771AD.jsonl": "f372ccde5ab801c2a5f190d9be7dec24d031f4cc0e9e956336df4cca7b18be04",
+    "56DA5B8F-D4DB-4221-9C5E-EB836CEB5EF1.jsonl": "7fb0909d48ec40d374ab5dd942fe4fe887dcf13e0573eddb253087287af7b5d1",
+    "70F6F4C9-BAFF-41DB-A417-27B62E79D5C3.jsonl": "831e39fc92a1c83c7188c63cd642f4a416af7db20319bf7de9bc5b317e9c914e",
+    "AB1268BB-AC3E-4211-BF52-6CE6335B1244.jsonl": "19f3eaf1ffa005afebb9828fe23f94a1f0d86f6dee05cb635c4e31f1ad8ada0a",
+    "B33C1D3C-875A-45BE-8725-BD10D144DEF3.jsonl": "8cb40ffc113c98731f5400370d297895495481e52e2f7809da502e454b12cde9",
+    "BC2FC8EE-642E-4DFA-9EC5-70386C8F024C.jsonl": "1a3ff72eff946db1cc3f922f52f602902f47cbf181eb942903e476c569763a63",
+    "CBFF2FC5-BA52-4310-9B00-B327F4F23CEA.jsonl": "640717a6108a3f8e71114563b9b283d0da43d72bafa24f87ecad95c05746bdb2",
+    "E341150E-153D-47F1-888F-2DC11FE520FE.jsonl": "2d8bfe7816aef4a59a86449836997e02a072ba5b30fe194fac0480191c7b5774"
+  },
+  "limits": [
+    "No production app, real cloud/Keychain/userdata/capture/ASR/newweights.",
+    "Synthetic2D storage readiness in driver; existing public E5 native tests in full check.",
+    "If an intermediate selected head itself has stale ancestry, dependent coverage resets to stale/cursor0 without sending it; user must refresh context.",
+    "Schema remains8; pre-fix unknown proof resets work once without deleting history.",
+    "Author fix and tests do not replace independent review of new SHA."
+  ]
+}

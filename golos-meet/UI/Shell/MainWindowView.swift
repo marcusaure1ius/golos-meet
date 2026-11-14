@@ -5,7 +5,10 @@ import AppKit
 struct MainWindowView: View {
     @ObservedObject private var settings = UISettings.shared
     @StateObject private var system = SystemAppearance()
-    @State private var selection: SidebarSection = .meetings
+    @StateObject private var projects = ProjectLibrary.shared
+    @StateObject private var documents = DocumentLibrary.shared
+    @EnvironmentObject private var library: MeetingLibrary
+    @State private var selection: SidebarSection = .agent
 
     private var effectiveScheme: ColorScheme {
         switch settings.themeMode {
@@ -24,6 +27,9 @@ struct MainWindowView: View {
         // Без сплошного фона: за сайдбаром — вибрантность, за контентом — его непрозрачный фон.
         .background(WindowConfigurator())
         .environment(\.palette, p)
+        .environmentObject(projects)
+        .environmentObject(documents)
+        .task { await projects.reload(); await documents.reload() }
         .preferredColorScheme(effectiveScheme)
         .frame(minWidth: 1000, minHeight: 680)
         .ignoresSafeArea()
@@ -42,7 +48,13 @@ struct MainWindowView: View {
 
     @ViewBuilder private var paneView: some View {
         switch selection {
-        case .meetings: MeetingsScreen()
+        case .agent: AgentScreen(library: library, projects: projects)
+        case .meetings: MeetingsScreen(onSettings: { selection = .settings })
+        case .documents: DocumentsScreen()
+        case .search: KnowledgeSearchEntry()
+        case .questions: KnowledgeQuestionEntry(onSettings: { selection = .settings })
+        case .inbox: MeetingsScreen(scope: .inbox, onSettings: { selection = .settings })
+        case .project(let id): MeetingsScreen(scope: .project(id), onSettings: { selection = .settings }).id(id)
         case .settings: SettingsScreen()
         }
     }

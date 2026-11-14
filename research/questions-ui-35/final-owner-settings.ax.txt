@@ -1,0 +1,24 @@
+Window: "", App: Golos Questions Preview.
+0 sheet Secondary Actions: Raise
+	1 container
+		2 text Облачные разрешения Для общего источника нужно разрешение каждого проекта-владельца. Выберите проект и сохраните его режим явно.
+		3 pop up button Проект-владелец, Value: Север
+			4 menu Secondary Actions: Cancel
+				5 Лира, ID: menuAction:
+				6 Север, ID: menuAction:
+		7 Отправка выбранных фрагментов в OpenRouter
+			8 radio button Description: Только на этом Mac, Value: 0
+			9 radio button (selected) Description: Спрашивать каждый раз, Value: 1
+			10 radio button Description: Разрешать выбранный контекст, Value: 0
+		11 text «Спрашивать каждый раз» разрешает только подтверждённый вопрос. «Разрешать выбранный контекст» сохраняется для этого проекта. Режимы других владельцев остаются отдельными.
+		12 button Готово
+		13 button Сохранить режим
+14 menu bar
+	15 Golos Questions Preview
+	16 File
+	17 Edit
+	18 View
+	19 Window
+	20 Help
+
+The focused UI element is 0 sheet Secondary Actions: Raise

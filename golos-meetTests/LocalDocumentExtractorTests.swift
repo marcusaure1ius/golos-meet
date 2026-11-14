@@ -1,0 +1,252 @@
+import Foundation
+import AppKit
+import PDFKit
+import CryptoKit
+import Testing
+@testable import golos_meet
+
+@MainActor
+@Suite struct LocalDocumentExtractorTests {
+    private func withFolder(_ body: (URL) async throws -> Void) async throws {
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent("knowledge-\(UUID())")
+        try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: root) }
+        try await body(root)
+    }
+
+    private func extractWithEvidence(from url: URL) async throws -> ExtractedDocument {
+        let id = UUID().uuidString
+        let bytes = try Data(contentsOf: url)
+        let started = ProcessInfo.processInfo.systemUptime
+        var report: [String: Any] = ["id": id, "test": Test.current?.name ?? "unknown", "inputBytes": bytes.count,
+            "inputSHA256": SHA256.hash(data: bytes).map { String(format: "%02x", $0) }.joined(),
+            "wallStart": Date().timeIntervalSince1970]
+        Attachment.record(bytes, named: "ocr-\(id)-input.\(url.pathExtension)")
+        func record() throws {
+            report["elapsedSeconds"] = ProcessInfo.processInfo.systemUptime - started
+            let data = try JSONSerialization.data(withJSONObject: report, options: [.sortedKeys, .prettyPrinted])
+            Attachment.record(data, named: "ocr-\(id)-result.json")
+        }
+        do {
+            let result = try await LocalDocumentExtractor().extract(from: url)
+            report["stage"] = "extract-returned"
+            report["blocks"] = result.blocks.map(\.text)
+            report["lines"] = result.blocks.flatMap { $0.text.components(separatedBy: .newlines) }
+            report["warnings"] = result.warnings
+            try record()
+            return result
+        } catch {
+            let failure = error as NSError
+            report["stage"] = "extract-threw"
+            report["error"] = String(describing: error)
+            report["errorDomain"] = failure.domain
+            report["errorCode"] = failure.code
+            report["errorDescription"] = failure.localizedDescription
+            try record()
+            throw error
+        }
+    }
+
+    @Test func extractionErrorStillAttachesExactInputAndOriginalError() async throws {
+        try await withFolder { root in
+            let input = root.appendingPathComponent("invalid.png")
+            try Data([0, 1, 2, 3]).write(to: input)
+            await #expect(throws: DocumentExtractionError.invalidDocument) {
+                _ = try await extractWithEvidence(from: input)
+            }
+        }
+    }
+
+    @Test func concurrentOCRDoesNotOccupyTheCooperativePool() async throws {
+        try await withThrowingTaskGroup(of: Void.self) { group in
+            for _ in 0..<32 {
+                group.addTask { try await self.extractsTextFromPNGUsingLocalOCR(text: "Project Alpha budget approved") }
+            }
+            try await group.waitForAll()
+        }
+    }
+
+    @Test func extractsRussianUTF8AndKeepsContentRevisionStable() async throws {
+        try await withFolder { root in
+            let url = root.appendingPathComponent("Решения.md")
+            let text = "# Проект\n\nРешили проверить расчёты до пятницы."
+            try Data(text.utf8).write(to: url)
+            let extractor = LocalDocumentExtractor()
+            let first = try await extractor.extract(from: url)
+            let again = try await extractor.extract(from: url)
+            #expect(first.blocks.map(\.text).joined() == text)
+            #expect(first.title == "Решения")
+            #expect(first.contentHash == again.contentHash)
+            try Data((text + "\nНовая версия.").utf8).write(to: url)
+            let updated = try await extractor.extract(from: url)
+            #expect(first.contentHash != updated.contentHash)
+        }
+    }
+
+    @Test func extractsDOCXLocally() async throws {
+        try await withFolder { root in
+            let url = root.appendingPathComponent("Требования.docx")
+            let text = "Описание проекта\nСрок запуска — ноябрь."
+            let attributed = NSAttributedString(string: text)
+            let data = try attributed.data(from: NSRange(location: 0, length: attributed.length),
+                documentAttributes: [.documentType: NSAttributedString.DocumentType.officeOpenXML])
+            try data.write(to: url)
+            let result = try await LocalDocumentExtractor().extract(from: url)
+            #expect(result.blocks.map(\.text).joined(separator: "\n").contains("Срок запуска"))
+            #expect(result.blocks.allSatisfy { $0.location.paragraph != nil })
+            #expect(!result.warnings.isEmpty)
+        }
+    }
+
+    @Test func PDFRetainsOneBasedPageLocations() async throws {
+        try await withFolder { root in
+            let url = root.appendingPathComponent("Решения.pdf")
+            let data = NSMutableData()
+            var bounds = CGRect(x: 0, y: 0, width: 600, height: 800)
+            let consumer = try #require(CGDataConsumer(data: data))
+            let context = try #require(CGContext(consumer: consumer, mediaBox: &bounds, nil))
+            for text in ["Project alpha launch", "Decision: ship in November"] {
+                context.beginPDFPage(nil)
+                let graphics = NSGraphicsContext(cgContext: context, flipped: false)
+                NSGraphicsContext.saveGraphicsState()
+                NSGraphicsContext.current = graphics
+                (text as NSString).draw(at: CGPoint(x: 40, y: 700),
+                    withAttributes: [.font: NSFont.systemFont(ofSize: 20), .foregroundColor: NSColor.black])
+                NSGraphicsContext.restoreGraphicsState()
+                context.endPDFPage()
+            }
+            context.closePDF()
+            try (data as Data).write(to: url)
+            let result = try await extractWithEvidence(from: url)
+            #expect(result.blocks.map(\.location.page) == [1, 2])
+            #expect(result.blocks[1].text.contains("November"))
+        }
+    }
+
+    @Test(arguments: ["Project Alpha budget approved", "Решение: запуск проекта в ноябре"])
+    func extractsTextFromPNGUsingLocalOCR(text: String) async throws {
+        try await withFolder { root in
+            let url = root.appendingPathComponent("scan.png")
+            let bitmap = try #require(NSBitmapImageRep(bitmapDataPlanes: nil, pixelsWide: 1600, pixelsHigh: 300,
+                bitsPerSample: 8, samplesPerPixel: 4, hasAlpha: true, isPlanar: false,
+                colorSpaceName: .deviceRGB, bytesPerRow: 0, bitsPerPixel: 0))
+            NSGraphicsContext.saveGraphicsState()
+            NSGraphicsContext.current = NSGraphicsContext(bitmapImageRep: bitmap)
+            NSColor.white.setFill()
+            NSRect(x: 0, y: 0, width: 1600, height: 300).fill()
+            (text as NSString).draw(at: CGPoint(x: 50, y: 130),
+                withAttributes: [.font: NSFont.systemFont(ofSize: 64), .foregroundColor: NSColor.black])
+            NSGraphicsContext.restoreGraphicsState()
+            let png = try #require(bitmap.representation(using: .png, properties: [:]))
+            try png.write(to: url)
+            let result = try await extractWithEvidence(from: url)
+            let expected = text.hasPrefix("Решение") ? "ноябре" : "budget approved"
+            #expect(result.blocks.first?.text.lowercased().contains(expected) == true)
+        }
+    }
+
+    @Test(arguments: [
+        ("Page 1", "Decision: launch postponed to December", false),
+        ("Page 1", "Decision: launch postponed to December", true),
+        ("Not approved", "Approved", false),
+        ("2026", "20", false),
+        ("2026", "26", false),
+    ])
+    func mixedPDFExtractsScanAndDoesNotDuplicateTextLayer(native: String, scanned: String, duplicateNative: Bool) async throws {
+        try await withFolder { root in
+            let url = root.appendingPathComponent("mixed.pdf")
+            let decision = scanned
+            let bitmap = try #require(NSBitmapImageRep(bitmapDataPlanes: nil, pixelsWide: 1200, pixelsHigh: 600,
+                bitsPerSample: 8, samplesPerPixel: 4, hasAlpha: true, isPlanar: false,
+                colorSpaceName: .deviceRGB, bytesPerRow: 0, bitsPerPixel: 0))
+            NSGraphicsContext.saveGraphicsState()
+            NSGraphicsContext.current = NSGraphicsContext(bitmapImageRep: bitmap)
+            NSColor.white.setFill()
+            NSRect(x: 0, y: 0, width: 1200, height: 600).fill()
+            (decision as NSString).draw(at: CGPoint(x: 40, y: 250),
+                withAttributes: [.font: NSFont.systemFont(ofSize: 40), .foregroundColor: NSColor.black])
+            NSGraphicsContext.restoreGraphicsState()
+            let image = NSImage(size: NSSize(width: 1200, height: 600))
+            image.addRepresentation(bitmap)
+            let data = NSMutableData()
+            var bounds = CGRect(x: 0, y: 0, width: 600, height: 800)
+            let consumer = try #require(CGDataConsumer(data: data))
+            let context = try #require(CGContext(consumer: consumer, mediaBox: &bounds, nil))
+            context.beginPDFPage(nil)
+            NSGraphicsContext.saveGraphicsState()
+            NSGraphicsContext.current = NSGraphicsContext(cgContext: context, flipped: false)
+            image.draw(in: NSRect(x: 0, y: 300, width: 600, height: 300))
+            (native as NSString).draw(at: CGPoint(x: 250, y: 40),
+                withAttributes: [.font: NSFont.systemFont(ofSize: 16), .foregroundColor: NSColor.black])
+            if duplicateNative {
+                // The native layer overlays the same raster text, as in a searchable scan.
+                (decision as NSString).draw(at: CGPoint(x: 20, y: 425),
+                    withAttributes: [.font: NSFont.systemFont(ofSize: 20), .foregroundColor: NSColor.black])
+            }
+            NSGraphicsContext.restoreGraphicsState()
+            context.endPDFPage()
+            context.closePDF()
+            try (data as Data).write(to: url)
+            let page = try #require(PDFDocument(data: data as Data)?.page(at: 0))
+            let nativeLines = (page.string ?? "").components(separatedBy: .newlines)
+            #expect(nativeLines.contains(native))
+            #expect(nativeLines.contains(scanned) == duplicateNative)
+            let result = try await extractWithEvidence(from: url)
+            let text = result.blocks.map(\.text).joined(separator: "\n")
+            let lines = text.components(separatedBy: .newlines)
+            #expect(lines.filter { $0 == scanned }.count == 1)
+            #expect(lines.filter { $0 == native }.count == 1)
+            #expect(result.blocks.map(\.location.page) == [1])
+        }
+    }
+
+    @Test(arguments: [
+        ("Not approved", "Approved", "Not approved\nApproved"),
+        ("2026", "20\n26", "2026\n20\n26"),
+        ("AB\nCD", "BC", "AB\nCD\nBC"),
+        ("AB", "A\nB", "AB\nA\nB"),
+        ("-20", "20", "-20\n20"),
+        ("1.5", "15", "1.5\n15"),
+        ("US", "us", "US\nus"),
+    ])
+    func mergingPreservesDistinctStatementsAndValues(native: String, recognized: String, expected: String) {
+        #expect(LocalDocumentExtractor.merging(native: native, recognized: recognized) == expected)
+    }
+
+    @Test func mergingSuppressesOnlyMatchingNativeOccurrences() {
+        // One duplicate from the native layer is removed; repeated OCR table cells remain.
+        #expect(LocalDocumentExtractor.merging(native: "20", recognized: "20\n20") == "20\n20")
+        #expect(LocalDocumentExtractor.merging(native: "20\n20", recognized: "20\n20") == "20\n20")
+        #expect(LocalDocumentExtractor.merging(native: "", recognized: "26\n26") == "26\n26")
+        #expect(LocalDocumentExtractor.merging(native: "Decision:  launch approved", recognized: "Decision: launch approved")
+                == "Decision:  launch approved")
+    }
+
+    @Test func rejectsOversizedFileBeforeLoadingItsContents() async throws {
+        try await withFolder { root in
+            let url = root.appendingPathComponent("oversized.txt")
+            try Data().write(to: url)
+            let handle = try FileHandle(forWritingTo: url)
+            try handle.truncate(atOffset: 50 * 1024 * 1024 + 1)
+            try handle.close()
+            await #expect(throws: DocumentExtractionError.fileTooLarge) {
+                _ = try await LocalDocumentExtractor().extract(from: url)
+            }
+        }
+    }
+
+    @Test func rejectsEmptyAndUnsupportedDocuments() async throws {
+        try await withFolder { root in
+            let empty = root.appendingPathComponent("empty.txt")
+            try Data(" \n\t".utf8).write(to: empty)
+            await #expect(throws: DocumentExtractionError.noText) {
+                _ = try await LocalDocumentExtractor().extract(from: empty)
+            }
+            let unsupported = root.appendingPathComponent("data.zip")
+            try Data([0, 1]).write(to: unsupported)
+            await #expect(throws: DocumentExtractionError.unsupportedFormat("zip")) {
+                _ = try await LocalDocumentExtractor().extract(from: unsupported)
+            }
+        }
+    }
+}

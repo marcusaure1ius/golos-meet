@@ -1,0 +1,80 @@
+{
+  "question-service": {
+    "root-owned": 34,
+    "opened": 39,
+    "closed0": 39,
+    "root-removed": 34
+  },
+  "fault-expectation": {
+    "root-owned": 24,
+    "opened": 48,
+    "closed0": 48,
+    "root-removed": 24
+  },
+  "memory-update": {
+    "root-owned": 81,
+    "opened": 138,
+    "closed0": 138,
+    "root-removed": 81
+  },
+  "assignment-runtime": {
+    "root-owned": 13,
+    "opened": 15,
+    "closed0": 15,
+    "root-removed": 13
+  },
+  "memory-history": {
+    "root-owned": 25,
+    "opened": 54,
+    "closed0": 54,
+    "root-removed": 25
+  },
+  "assignment-fault": {
+    "root-owned": 9,
+    "opened": 26,
+    "closed0": 26,
+    "root-removed": 9
+  },
+  "assignment-fixture": {
+    "root-owned": 25,
+    "opened": 44,
+    "closed0": 44,
+    "root-removed": 25
+  },
+  "questions-ui": {
+    "root-owned": 22,
+    "opened": 29,
+    "closed0": 29,
+    "root-removed": 22
+  },
+  "index-service": {
+    "root-owned": 9,
+    "opened": 13,
+    "closed0": 13,
+    "root-removed": 9
+  },
+  "knowledge-search": {
+    "root-owned": 13,
+    "opened": 24,
+    "closed0": 24,
+    "root-removed": 13
+  },
+  "fixture-lifecycle": {
+    "root-owned": 2,
+    "opened": 2,
+    "closed0": 2,
+    "root-removed": 2
+  },
+  "index-hooks": {
+    "root-owned": 3,
+    "opened": 2,
+    "closed0": 2,
+    "root-removed": 3
+  },
+  "native-index-queue": {
+    "root-owned": 1,
+    "opened": 2,
+    "closed0": 2,
+    "root-removed": 1
+  }
+}

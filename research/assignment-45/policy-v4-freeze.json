@@ -1,0 +1,18 @@
+{
+  "policy": "trusted-aliases-margin-e5-v4",
+  "selection_data": "original calibration plus calibration rename reproduction; viewed v3 evaluation is now regression, not fresh final evaluation",
+  "thresholds": {
+    "semantic": 0.88,
+    "explicit": 0.9,
+    "proposal": 0.82,
+    "margin": 0.04,
+    "shared_terms": 3,
+    "distinctive_terms": 2,
+    "term_coverage": 0.5
+  },
+  "frozen_sources": {
+    "golos-meet/Core/Knowledge/MeetingAssignmentPolicy.swift": "916d3d8d31e718fe7d48b875235e424210a901630583249befa1d502de066f1d",
+    "golos-meet/Core/Knowledge/MeetingAssignmentService.swift": "d805beb26c5b2f6ec8be7d0687172dbe3aee3090ad94e984157ab167bf18fb48"
+  },
+  "fresh_evaluation_sha256": "91532d18c14f6fdc096bd17e0126eeb2a29d0be21e3141dabf0fb659da9ba302"
+}

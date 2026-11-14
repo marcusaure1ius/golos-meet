@@ -1,0 +1,7 @@
+{"result":0,"milliseconds":0.3816667012870312,"name":"acquire","strictPool":false,"extended":0}
+{"milliseconds":0.7852916605770588,"name":"schedule","strictPool":false,"scheduledMilliseconds":0.7849583635106683}
+{"milliseconds":0.9167083189822733,"name":"release-start","strictPool":false}
+{"milliseconds":1.0212916531600058,"name":"release-lock-before","result":0,"strictPool":false,"lockState":2}
+{"milliseconds":1.0826250072568655,"extended":0,"name":"rollback-result","result":0,"strictPool":false}
+{"milliseconds":1.1261249892413616,"name":"release-lock-after","result":0,"strictPool":false,"lockState":0}
+{"milliseconds":1.1935416841879487,"name":"close-result","result":0,"strictPool":false}

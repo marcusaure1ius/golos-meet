@@ -5,7 +5,7 @@ import SwiftUI
 /// с `ASRSettings.current`, поэтому выбор в настройках и в пайплайне согласован.
 @MainActor
 final class UISettings: ObservableObject {
-    static let shared = UISettings()
+    static let shared = UISettings(defaults: AppPreferences.current)
 
     enum ThemeMode: String, CaseIterable, Identifiable {
         case auto, light, dark
@@ -20,16 +20,34 @@ final class UISettings: ObservableObject {
     }
 
     @Published var themeMode: ThemeMode {
-        didSet { UserDefaults.standard.set(themeMode.rawValue, forKey: "ui.themeMode") }
+        didSet { defaults.set(themeMode.rawValue, forKey: "ui.themeMode") }
     }
     @Published var modelChoice: ASRModelChoice {
-        didSet { UserDefaults.standard.set(modelChoice.rawValue, forKey: "asrModelChoice") }
+        didSet { defaults.set(modelChoice.rawValue, forKey: "asrModelChoice") }
     }
     @Published var llmEnabled: Bool {
-        didSet { UserDefaults.standard.set(llmEnabled, forKey: "llm.enabled") }
+        didSet { defaults.set(llmEnabled, forKey: "llm.enabled") }
     }
-    @Published var llmModel: String {
-        didSet { UserDefaults.standard.set(llmModel, forKey: "llm.model") }
+    /// Порог архивации записей в днях: готовые встречи старше срока сжимаются (#83).
+    @Published var archiveDays: Int {
+        didSet { defaults.set(archiveDays, forKey: "archive.days") }
+    }
+
+    enum GenerationModel: String, CaseIterable {
+        case deepSeek = "deepseek/deepseek-v4.1-flash"
+        case qwen = "qwen/qwen3.6-flash"
+
+        var title: String {
+            switch self {
+            case .deepSeek: "DeepSeek V4.1 Flash"
+            case .qwen: "Qwen 3.6 Flash"
+            }
+        }
+    }
+
+    /// Единая модель генерации: конспекты, вопросы и память проекта.
+    @Published var generationModel: GenerationModel {
+        didSet { defaults.set(generationModel.rawValue, forKey: "llm.generationModel") }
     }
 
     /// API-ключ OpenRouter — хранится в Keychain, не в UserDefaults.
@@ -38,11 +56,32 @@ final class UISettings: ObservableObject {
         set { Keychain.set(newValue, account: Keychain.openRouterAccount) }
     }
 
-    private init() {
-        let d = UserDefaults.standard
+    private let defaults: UserDefaults
+
+    /// В приложении — только `shared` с валидированным профилем backend;
+    /// прямой init — для тестов и изолированных проверок.
+    init(defaults: UserDefaults) {
+        self.defaults = defaults
+        let d = defaults
         themeMode = d.string(forKey: "ui.themeMode").flatMap(ThemeMode.init) ?? .auto
         modelChoice = d.string(forKey: "asrModelChoice").flatMap(ASRModelChoice.init) ?? .speed
         llmEnabled = (d.object(forKey: "llm.enabled") as? Bool) ?? true
-        llmModel = d.string(forKey: "llm.model") ?? "qwen/qwen3.6-flash"
+        archiveDays = Self.loadArchiveDays(from: d)
+        generationModel = Self.loadGenerationModel(from: d)
+    }
+
+    /// Порог архивации: сохранённое значение или дефолт 90 дней; мусорное — дефолт.
+    private static func loadArchiveDays(from d: UserDefaults) -> Int {
+        guard let days = d.object(forKey: "archive.days") as? Int, days > 0 else { return 90 }
+        return days
+    }
+
+    /// Миграция двух прежних ключей: новый ключ → «модель конспектов»
+    /// (последний явный выбор пользователя) → прежняя общая модель → дефолт.
+    private static func loadGenerationModel(from d: UserDefaults) -> GenerationModel {
+        if let raw = d.string(forKey: "llm.generationModel"), let model = GenerationModel(rawValue: raw) { return model }
+        if let raw = d.string(forKey: "llm.meetingModel"), let model = GenerationModel(rawValue: raw) { return model }
+        if let raw = d.string(forKey: "llm.model"), let model = GenerationModel(rawValue: raw) { return model }
+        return .deepSeek
     }
 }

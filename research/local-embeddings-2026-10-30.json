@@ -1,0 +1,27 @@
+{
+  "model": "intfloat/multilingual-e5-small",
+  "revision": "fd1525a9fd15316a2d503bf26ab031a61d056e98",
+  "runtime": "onnxruntime CPU, 4 threads",
+  "platform": "macOS-27.0.1-arm64-arm-64bit",
+  "machine": "arm64",
+  "packages": {
+    "numpy": "2.5.4",
+    "onnxruntime": "1.31.1",
+    "tokenizers": "0.23.3",
+    "huggingface-hub": "2.4.0"
+  },
+  "dimensions": 384,
+  "public_weights_bytes": 487351240,
+  "download_or_cache_seconds": 0.000680875004036352,
+  "session_load_seconds": 0.47105420799925923,
+  "index_passages": 10,
+  "index_seconds": 0.02409679199627135,
+  "query_median_ms": 2.378375495027285,
+  "query_max_ms": 2.9095000063534826,
+  "peak_rss_mb": 1444.34375,
+  "synthetic_questions": 8,
+  "top1_hits": 7,
+  "top5_hits": 8,
+  "scope": "Synthetic feasibility smoke test; no production quality claim; no user data transmitted.",
+  "offline": true
+}

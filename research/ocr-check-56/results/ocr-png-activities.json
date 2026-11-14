@@ -1,0 +1,63 @@
+{
+  "testIdentifier" : "LocalDocumentExtractorTests/extractsTextFromPNGUsingLocalOCR(text:)",
+  "testIdentifierURL" : "test://com.apple.xcode/golos-meet/golos-meetTests/LocalDocumentExtractorTests/extractsTextFromPNGUsingLocalOCR(text:)",
+  "testName" : "extractsTextFromPNGUsingLocalOCR(text:)",
+  "testRuns" : [
+    {
+      "activities" : [
+
+      ],
+      "arguments" : [
+        {
+          "value" : "\"Project Alpha budget approved\""
+        }
+      ],
+      "device" : {
+        "architecture" : "arm64",
+        "deviceId" : "00006040-000C51D93404801C",
+        "deviceName" : "My Mac",
+        "modelName" : "MacBook Pro",
+        "osBuildNumber" : "26A434",
+        "osVersion" : "27.0.1",
+        "platform" : "macOS"
+      },
+      "testPlanConfiguration" : {
+        "configurationId" : "1",
+        "configurationName" : "Test Scheme Action"
+      }
+    },
+    {
+      "activities" : [
+        {
+          "childActivities" : [
+            {
+              "isAssociatedWithFailure" : false,
+              "title" : ""
+            }
+          ],
+          "isAssociatedWithFailure" : true,
+          "startTime" : 1793575858.317,
+          "title" : "Caught error: .e5rtError(\"e5rt_stream_completion_handler call failed\", 10)"
+        }
+      ],
+      "arguments" : [
+        {
+          "value" : "\"Решение: запуск проекта в ноябре\""
+        }
+      ],
+      "device" : {
+        "architecture" : "arm64",
+        "deviceId" : "00006040-000C51D93404801C",
+        "deviceName" : "My Mac",
+        "modelName" : "MacBook Pro",
+        "osBuildNumber" : "26A434",
+        "osVersion" : "27.0.1",
+        "platform" : "macOS"
+      },
+      "testPlanConfiguration" : {
+        "configurationId" : "1",
+        "configurationName" : "Test Scheme Action"
+      }
+    }
+  ]
+}

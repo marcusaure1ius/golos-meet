@@ -7,9 +7,6 @@ struct SettingsScreen: View {
     @State private var apiKey: String = UISettings.shared.openRouterKey
     @State private var keySaved: Bool = !UISettings.shared.openRouterKey.isEmpty
 
-    /// Доступные LLM-модели (пока одна; список расширяется здесь).
-    private let llmModels = ["qwen/qwen3.6-flash"]
-
     private func persistKey() {
         settings.openRouterKey = apiKey
         keySaved = !apiKey.isEmpty
@@ -18,7 +15,7 @@ struct SettingsScreen: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
-                GSectionHeader("Настройки", desc: "Модель распознавания и оформление.")
+                GSectionHeader("Настройки", desc: "Распознавание, подключения и оформление.")
                 GCard {
                     GSettingRow("Модель распознавания",
                                 desc: "Скорость — GigaAM; Качество — Whisper.",
@@ -43,6 +40,14 @@ struct SettingsScreen: View {
                         .menuStyle(.borderlessButton).menuIndicator(.hidden).fixedSize()
                     }
                 }
+                TalkConnectionSettings()
+                    .padding(.top, 12)
+                EmbeddingModelSettings()
+                    .padding(.top, 12)
+                if let indexing = ProductionIndexing.shared {
+                    IndexingSettings(indexing: indexing)
+                        .padding(.top, 12)
+                }
                 GCard {
                     GSettingRow("Генерировать автоматически",
                                 desc: "Заголовок, конспект и задачи через OpenRouter после расшифровки.",
@@ -52,13 +57,25 @@ struct SettingsScreen: View {
                             .toggleStyle(.switch)
                             .controlSize(.small)
                     }
-                    GSettingRow("Модель") {
+                    GSettingRow("Модель генерации",
+                                desc: "Конспекты, вопросы по проекту и память — через OpenRouter.") {
                         Menu {
-                            ForEach(llmModels, id: \.self) { m in
-                                Button(m) { settings.llmModel = m }
+                            ForEach(UISettings.GenerationModel.allCases, id: \.self) { model in
+                                Button(model.title) { settings.generationModel = model }
                             }
                         } label: {
-                            GSelectLabel(settings.llmModel)
+                            GSelectLabel(settings.generationModel.title)
+                        }
+                        .menuStyle(.borderlessButton).menuIndicator(.hidden).fixedSize()
+                    }
+                    GSettingRow("Архив записей",
+                                desc: "Встречи старше срока сжимаются; расшифровки и поиск остаются доступны.") {
+                        Menu {
+                            ForEach([30, 60, 90, 180, 365], id: \.self) { days in
+                                Button("\(days) дн.") { settings.archiveDays = days }
+                            }
+                        } label: {
+                            GSelectLabel("\(settings.archiveDays) дн.")
                         }
                         .menuStyle(.borderlessButton).menuIndicator(.hidden).fixedSize()
                     }

@@ -52,32 +52,43 @@ Set this alongside `GOLOS_MEET_ASR_BIN` in the Xcode scheme environment.
 
 ---
 
-## Production Bundling (Deferred to M5)
+## Preview packaging (#25)
 
-**Status:** TODO — manual setup in Xcode GUI (no safe CLI tooling for objectVersion 77 pbxproj).
+Воспроизводимая упаковка для локальной проверки выполняется отдельно от проекта
+Xcode; его build phases и `project.pbxproj` менять не требуется:
 
-### When to Bundle
+```sh
+make preview-package PREVIEW_REF=<проверенный-SHA> PREVIEW_OUTPUT=/private/tmp/golos-preview
+```
 
-When preparing a distributable build (≈M5), add the sidecar to the app bundle so `Bundle.main.url(forResource:"golos-asr")` resolves without env overrides.
+Скрипт [package_preview.py](../research/preview-package/package_preview.py)
+извлекает указанный git-коммит в новый каталог, собирает app с отдельным
+DerivedData и запускает `cargo build --release --locked --jobs 2` для **того же
+снимка** `asr/` с отдельным target-dir. Затем копирует только полученный binary
+в `Golos Meet.app/Contents/Resources/golos-asr`. Этот путь уже поддерживается
+`AppPaths.sidecarBinary`; внешний binary из установленного приложения не нужен
+и не копируется.
 
-### Steps (Manual in Xcode)
+Динамические зависимости sidecar проверяются отдельно от Swift ONNX framework.
+Текущий закреплённый Rust build связывает ORT/Whisper статически и требует только
+системные dylib. Если `otool` обнаружит несистемную зависимость, команда
+завершится ошибкой с её именем; сначала потребуется явно добавить упаковку
+этого runtime соответствующей версии. Swift ONNX не считается заменой Rust runtime.
 
-1. Open `golos-meet.xcodeproj` in Xcode
-2. Select target `golos-meet`
-3. Go to Build Phases
-4. Add a new "Run Script" phase **before** "Copy Bundle Resources"
-5. Paste this script:
-   ```sh
-   set -e
-   cd "$SRCROOT/asr"
-   cargo build --release
-   cp target/release/golos-asr "$BUILT_PRODUCTS_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH/golos-asr"
-   ```
-6. Save and rebuild
+Упакованная копия получает ad-hoc подпись и проходит статические проверки
+архитектур, dylib-путей и `codesign --verify --deep --strict`. Только binary
+из этой копии запускается с `--version`/`--help`: `Args::parse` завершает процесс
+до `Session::new`, открытия аудио и загрузки модели. App не запускается,
+модели не скачиваются и не включаются. Этот smoke не подтверждает транскрибацию.
 
-### Why Deferred
+В manifest записываются source SHA, Cargo.lock hash, версии Rust/Cargo, команда
+сборки и хеш исходного binary; инвентарь хранит хеши подписанных файлов.
+Notarization, публикация и установка не выполняются. Debug/ad-hoc пакет
+предназначен для согласованной локальной проверки, не является готовым релизом.
+После завершения всех функциональных PR нужен новый пакет проверенного preview.
 
-The project uses Xcode objectVersion 77. There is no safe, stable CLI tooling (`xcodeproj`, `xcodeprojtools`) that can reliably add build phases without corrupting the project file. Hand-editing `project.pbxproj` is error-prone. The deferred step ensures the bundling is done in Xcode's GUI, where the safety checks are built-in.
+План ручной проверки, ограничения временной библиотеки и моделей — в
+[инструкции preview](../research/preview-package/README.md).
 
 ---
 
@@ -105,5 +116,5 @@ The project uses Xcode objectVersion 77. There is no safe, stable CLI tooling (`
 ## Notes
 
 - **Dev:** Use env var + `cargo build --release` to iterate quickly
-- **Prod:** Bundle via Xcode GUI (step above) for distributable builds
+- **Preview:** `make preview-package` includes the sidecar from the same source SHA without modifying Xcode build phases; release distribution remains separate.
 - **Model:** Always ensure the GigaAM model is present; the sidecar will not start without it

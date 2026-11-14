@@ -4,9 +4,11 @@ import AppKit
 /// Иконка краснеет во время записи. Решения — в `MenuBarModel`, здесь только рендер.
 @MainActor
 final class MenuBarController {
-    private var statusItem: NSStatusItem?
+    private(set) var statusItem: NSStatusItem?
     private var statusLineItem: NSMenuItem?
     private var startStopItem: NSMenuItem?
+    private var tracksItem: NSMenuItem?
+    private var detectionItem: NSMenuItem?
     private let target: MenuBarTarget
 
     init(onToggleRecording: @escaping () -> Void,
@@ -21,6 +23,11 @@ final class MenuBarController {
         item.menu = makeMenu()
         statusItem = item
         render(.from(live: nil, now: Date()))
+    }
+
+    func uninstall() {
+        if let statusItem { NSStatusBar.system.removeStatusItem(statusItem) }
+        statusItem = nil
     }
 
     /// Значок строки меню = иконка из Dock без фона: залитый «пузырёк» с хвостом,
@@ -72,11 +79,19 @@ final class MenuBarController {
     }
 
     func render(_ model: MenuBarModel) {
+        detectionItem?.title = model.detectionLine
+        detectionItem?.isHidden = model.detectionLine.isEmpty || model.detectionLine == model.statusLine
         statusLineItem?.title = model.statusLine
         startStopItem?.title = model.startStopTitle
+        startStopItem?.isEnabled = model.canToggle
+        tracksItem?.title = model.tracksLine
+        tracksItem?.isHidden = model.tracksLine.isEmpty
         guard let btn = statusItem?.button else { return }
         btn.image?.isTemplate = !model.iconRecording
         btn.contentTintColor = model.iconRecording ? NSColor.systemRed : nil
+        btn.title = model.buttonTitle.isEmpty ? "" : " \(model.buttonTitle)"
+        btn.font = NSFont.monospacedDigitSystemFont(ofSize: 12, weight: .regular)
+        btn.toolTip = model.statusLine
     }
 
     private func makeMenu() -> NSMenu {
@@ -86,6 +101,12 @@ final class MenuBarController {
         let status = NSMenuItem(title: "Автодетект активен", action: nil, keyEquivalent: "")
         status.isEnabled = false
         menu.addItem(status); statusLineItem = status
+        let tracks = NSMenuItem(title: "", action: nil, keyEquivalent: "")
+        tracks.isEnabled = false
+        menu.addItem(tracks); tracksItem = tracks
+        let detection = NSMenuItem(title: "", action: nil, keyEquivalent: "")
+        detection.isEnabled = false
+        menu.addItem(detection); detectionItem = detection
 
         menu.addItem(.separator())
 

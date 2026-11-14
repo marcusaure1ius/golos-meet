@@ -1,0 +1,25 @@
+{
+  "configuration" : "Debug XCTest process; concurrent non-ML tests also ran",
+  "disk_bytes" : 487352505,
+  "index_10_seconds" : 0.056150583346607164,
+  "limitations" : "Synthetic smoke set, not representative archive quality. No model comparison in this first part.",
+  "load_seconds" : 1.6443914583360311,
+  "model_id" : "multilingual-e5-small@fd1525a9fd15316a2d503bf26ab031a61d056e98\/unigram-v1\/mean-l2\/512\/overlap64",
+  "passages" : 10,
+  "peak_process_rss_bytes" : 1389150208,
+  "query_ms" : [
+    3.9718750049360096,
+    4.0821250004228204,
+    4.0494166605640203,
+    4.2165000049863011,
+    4.1166666778735816,
+    4.4225000019650906,
+    4.7658333496656269,
+    3.8406250241678208
+  ],
+  "questions" : 8,
+  "runtime" : "ONNX Runtime 1.24.2, CPU 2 threads",
+  "tokenizer" : "Swift Transformers 1.3.5",
+  "top1_hits" : 7,
+  "top5_hits" : 8
+}

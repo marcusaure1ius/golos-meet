@@ -1,0 +1,28 @@
+
+@MainActor @Suite(QuestionUIObservationTrait()) struct QuestionUIHeldBeforeProbe {
+    @Test func lateNativeWriteAfterCleanupIsObservedWithoutChangingItsOutcome() async throws {
+        let f = try QuestionUIFixture()
+        _ = try await f.setup()
+        let entered = IndexGate(), release = IndexGate(), returned = IndexGate(), store = f.store
+        let observer = QuestionUIObservation.current
+        f.spy.waitAfterSend = {
+            await entered.signal(); await release.wait()
+            observer?.note("late-write-enter", ["rootExists":String(FileManager.default.fileExists(atPath:f.root.path))])
+            do {
+                _ = try await store.createProject(name: "Synthetic late lifecycle probe")
+                observer?.note("late-write-succeeded")
+            } catch {
+                observer?.note("late-write-threw", ["errorType":String(reflecting:type(of:error))])
+            }
+            await returned.signal()
+        }
+        f.model.prepare(); try await f.settle(); f.model.send(); await entered.wait()
+        f.cleanup()
+        observer?.note("cleanup-returned-while-transport-held")
+        await release.signal(); await returned.wait()
+        #expect(f.model.result == nil && !f.model.busy)
+        // Probe-only release of the intentional callback→fixture cycle. The
+        // accepted cleanup's own behaviour remains unchanged above.
+        f.spy.waitAfterSend = nil
+    }
+}

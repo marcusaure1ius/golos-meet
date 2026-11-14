@@ -1,0 +1,68 @@
+{
+  "testIdentifier": "ProjectMemoryQueueTests/concreteMetadataBridgeReceivesReadyEventWithoutLaunchingApplication()",
+  "testIdentifierURL": "test://com.apple.xcode/golos-meet/golos-meetTests/ProjectMemoryQueueTests/concreteMetadataBridgeReceivesReadyEventWithoutLaunchingApplication()",
+  "testName": "concreteMetadataBridgeReceivesReadyEventWithoutLaunchingApplication()",
+  "testRuns": [
+    {
+      "activities": [
+        {
+          "childActivities": [
+            {
+              "isAssociatedWithFailure": false,
+              "title": ""
+            }
+          ],
+          "isAssociatedWithFailure": true,
+          "startTime": 1793589859.926,
+          "title": "Issue recorded: Timed out waiting for metadata bridge ready-source coverage"
+        },
+        {
+          "activityType": "com.apple.dt.xctest.activity-type.attachmentContainer",
+          "attachments": [
+            {
+              "lifetime": "keepAlways",
+              "name": "sqlite-fixture-A25BD2BB-241A-412F-89F8-63037D6EAE34_0_B6541959-264C-4A33-AA89-42E3962F1A09.json",
+              "payloadId": "0~OlvoRwWKqhxZfXxGn1w8OYD40gfi1tfqeKO8Gky5eaaT7IXfJyP_DA1i3diZLeNR5oLQDnUGoLqL1WVhvRu-zw==",
+              "timestamp": 1793589862.283,
+              "uuid": "461EF27C-87AB-4486-A662-36970D774C9B"
+            }
+          ],
+          "childActivities": [
+            {
+              "isAssociatedWithFailure": false,
+              "startTime": 1793589862.283,
+              "title": "sqlite-fixture-A25BD2BB-241A-412F-89F8-63037D6EAE34.json"
+            }
+          ],
+          "isAssociatedWithFailure": false,
+          "startTime": 1793589862.283,
+          "title": "Added attachment name sqlite-fixture-A25BD2BB-241A-412F-89F8-63037D6EAE34.json"
+        },
+        {
+          "childActivities": [
+            {
+              "isAssociatedWithFailure": false,
+              "title": ""
+            }
+          ],
+          "isAssociatedWithFailure": true,
+          "startTime": 1793589862.284,
+          "title": "Caught error: .busy"
+        }
+      ],
+      "device": {
+        "architecture": "arm64",
+        "deviceId": "00006040-000C51D93404801C",
+        "deviceName": "My Mac",
+        "modelName": "MacBook Pro",
+        "osBuildNumber": "26A434",
+        "osVersion": "27.0.1",
+        "platform": "macOS"
+      },
+      "testPlanConfiguration": {
+        "configurationId": "1",
+        "configurationName": "Test Scheme Action"
+      }
+    }
+  ]
+}

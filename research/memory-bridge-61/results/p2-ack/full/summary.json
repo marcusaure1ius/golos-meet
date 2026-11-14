@@ -1,0 +1,72 @@
+{
+  "devicesAndConfigurations" : [
+    {
+      "device" : {
+        "architecture" : "arm64",
+        "deviceId" : "00006040-000C51D93404801C",
+        "deviceName" : "My Mac",
+        "modelName" : "MacBook Pro",
+        "osBuildNumber" : "26A434",
+        "osVersion" : "27.0.1",
+        "platform" : "macOS"
+      },
+      "expectedFailures" : 12,
+      "failedTests" : 2,
+      "passedTests" : 636,
+      "skippedTests" : 0,
+      "testPlanConfiguration" : {
+        "configurationId" : "1",
+        "configurationName" : "Test Scheme Action"
+      }
+    }
+  ],
+  "environmentDescription" : "golos-meet · Built with macOS 27.0.1",
+  "expectedFailures" : 4,
+  "failedTests" : 2,
+  "finishTime" : 1793600956.761,
+  "passedTests" : 451,
+  "result" : "Failed",
+  "runtimeWarnings" : [
+
+  ],
+  "skippedTests" : 0,
+  "startTime" : 1793600893.227,
+  "statistics" : [
+    {
+      "subtitle" : "247 test runs",
+      "title" : "54 tests ran with dynamic parameters"
+    }
+  ],
+  "testFailures" : [
+    {
+      "failureText" : "Issue recorded: Timed out waiting for ready-source coverage",
+      "targetName" : "golos-meetTests",
+      "testIdentifier" : 279,
+      "testIdentifierString" : "ProjectMemoryQueueTests/concreteMetadataBridgeReceivesReadyEventWithoutLaunchingApplication()",
+      "testIdentifierURL" : "test://com.apple.xcode/golos-meet/golos-meetTests/ProjectMemoryQueueTests/concreteMetadataBridgeReceivesReadyEventWithoutLaunchingApplication()",
+      "testName" : "concreteMetadataBridgeReceivesReadyEventWithoutLaunchingApplication()"
+    },
+    {
+      "failureText" : "Issue recorded: Timed out waiting for direct restart coverage",
+      "targetName" : "golos-meetTests",
+      "testIdentifier" : 25,
+      "testIdentifierString" : "MemoryBridgeDiagnosticsTests/releasingSoleOwnerIsAttributedToCreatingObserverAndDirectRestartRecovers()",
+      "testIdentifierURL" : "test://com.apple.xcode/golos-meet/golos-meetTests/MemoryBridgeDiagnosticsTests/releasingSoleOwnerIsAttributedToCreatingObserverAndDirectRestartRecovers()",
+      "testName" : "releasingSoleOwnerIsAttributedToCreatingObserverAndDirectRestartRecovers()"
+    }
+  ],
+  "title" : "Test - golos-meet",
+  "topInsights" : [
+    {
+      "category" : "Common Failures",
+      "impact" : "100% of failures",
+      "text" : "2 runs of 2 tests failed with Caught error: .busy"
+    },
+    {
+      "category" : "Longest Test Runs",
+      "impact" : "19% of duration",
+      "text" : "13 longest test runs with outlier durations exceeding 22.57s (three standard deviations)"
+    }
+  ],
+  "totalTestCount" : 457
+}

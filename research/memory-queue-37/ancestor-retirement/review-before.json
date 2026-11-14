@@ -1,0 +1,78 @@
+{
+  "pr": 54,
+  "sha": "aa4ac4b1129ba4e4485e0253c741975b0787dc3c",
+  "base": "b118fccda792bd3fcef7f2169e103cdcaa77d909",
+  "verdict": "fixes_required",
+  "findings": [
+    {
+      "priority": "P2",
+      "file": "golos-meet/Core/Knowledge/MemoryQueueStore.swift",
+      "line": 195,
+      "mechanism": "Durable dependencies retain sources/jobs/policies/manual but omit consumed memory event/ancestor retirement; completed dependent job stays samecycle/complete after its model parent explicitly replaced by worker from another source, while accepted service rejects stored derivedevent as stale",
+      "driver": "/tmp/Review54AncestorDriver.swift",
+      "log": "/tmp/review54-ancestor-driver.log",
+      "database_root": "/tmp/review54-887699CC-50EC-45D3-941C-5926751FED9E"
+    }
+  ],
+  "own_full": {
+    "tests": 425,
+    "runs": 596,
+    "failures": 0,
+    "skips": 0,
+    "runtimeWarnings": []
+  },
+  "own_driver": {
+    "exit": 0,
+    "network": "deny network*",
+    "long25_batches": [
+      12,
+      12,
+      1
+    ],
+    "jsonheavy25_batches": [
+      11,
+      11,
+      3
+    ],
+    "insufficient": "durablequiet afterretry/events/restart",
+    "consent": "fresh12+1 afterrestart,oldrequest rejected",
+    "noncooperative": "durableinvalidated before release,maxphysical1,retry waits,onlyvalidresultpublished",
+    "configuration": "coldstartdisabled;oldenable insideobservedSQLiteBEGIN blockedbyrealreservedlock→disable gives0calls;nextenableONLYfinalmodel",
+    "fairness": "all260 sources behindhot128/snapshot256 completed with drainbudgetyield;maxphysical1"
+  },
+  "driver_initial_fixture_error": {
+    "description": "Forced unwrap of not-yet-discovered job while polling after enable; own fixture changed to optional poll, repository unchanged",
+    "source": "/tmp/Review54Driver-initial-poll.swift",
+    "log": "/tmp/review54-driver-initial-poll.log"
+  },
+  "genuine_fixture": {
+    "schema": 7,
+    "accepted_source_hashes_verified": 37,
+    "seed_verified": true,
+    "all6fixturefiles_verified": true,
+    "queue_objects": false
+  },
+  "migration_traces": {
+    "own9": "5positive2negative+actualsharedreaderrollback/commitcontrols audited",
+    "author9": "same audited"
+  },
+  "paths": {
+    "full_summary": "/tmp/review54-summary.json",
+    "full_log": "/tmp/review54-check.log",
+    "native_driver": "/tmp/Review54Driver.swift",
+    "native_log": "/tmp/review54-driver.log",
+    "trace_auditor": "/tmp/review54_audit_traces.py"
+  },
+  "limits": [
+    "NoGUI/CUA/productionapp/realKeychain/userdata/capture/ASR/livecloud/newmodels",
+    "Drivers use actualSQLite/service/worker and unchanged injectedbridgebody, synthetic2D readiness notinference;fullE5 separate",
+    "Noncooperative adapter may block onephysicaloperation untilreturn, no latepublication",
+    "Panel pending;37/5notclosed",
+    "Semanticquality/realarchive throughput/livecall not proven",
+    "FS/SQLite/server non-atomic,cancel cannotrecall bytes"
+  ],
+  "final_head_verified": true,
+  "own_worktree_clean": true,
+  "origin_main": "bd6191c7960ae017e8063795f19e2348cdc35bd9",
+  "local_main_preexisting": "d93ffdfdd3221dd6cfe62a45ce3bdc6d18f9e545"
+}

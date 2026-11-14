@@ -1,0 +1,100 @@
+{
+  "baseline-full": {
+    "xcresult": "/tmp/golos56-baseline-derived/Logs/Test/Test-golos-meet-2026.11.02_03-03-26-+0300.xcresult",
+    "result": "Passed",
+    "passed_tests": 429,
+    "failed_tests": 0,
+    "skipped_tests": 0,
+    "passed_runs": 603,
+    "failures": [],
+    "warnings": [
+      {
+        "issueType": "Runtime Warning",
+        "message": "[Internal] Thread running at User-initiated quality-of-service class waiting on a thread without a QoS class specified (base priority 0). Investigate ways to avoid priority inversions",
+        "sourceURL": "file://<user-home>/.codex/worktrees/56-ocr-check-diagnostics/golos-meet/golos-meetTests/LocalDocumentExtractorTests.swift"
+      }
+    ]
+  },
+  "baseline-instrumented-full": {
+    "xcresult": "/tmp/golos56-baseline-instrumented-derived/Logs/Test/Test-golos-meet-2026.11.02_03-05-26-+0300.xcresult",
+    "result": "Passed",
+    "passed_tests": 429,
+    "failed_tests": 0,
+    "skipped_tests": 0,
+    "passed_runs": 603,
+    "failures": [],
+    "warnings": [
+      {
+        "issueType": "Runtime Warning",
+        "message": "[Internal] Thread running at User-initiated quality-of-service class waiting on a thread without a QoS class specified (base priority 0). Investigate ways to avoid priority inversions",
+        "sourceURL": "file:///tmp/golos56-baseline-test-copy/golos-meetTests/LocalDocumentExtractorTests.swift"
+      }
+    ]
+  },
+  "candidate-instrumented-full": {
+    "xcresult": "/tmp/golos56-candidate-derived/Logs/Test/Test-golos-meet-2026.11.02_03-06-32-+0300.xcresult",
+    "result": "Passed",
+    "passed_tests": 447,
+    "failed_tests": 0,
+    "skipped_tests": 0,
+    "passed_runs": 621,
+    "failures": [],
+    "warnings": [
+      {
+        "issueType": "Runtime Warning",
+        "message": "[Internal] Thread running at User-initiated quality-of-service class waiting on a thread without a QoS class specified (base priority 0). Investigate ways to avoid priority inversions",
+        "sourceURL": "file:///tmp/golos56-candidate-test-copy/golos-meetTests/LocalDocumentExtractorTests.swift"
+      }
+    ]
+  },
+  "sqlite-lifecycle": {
+    "xcresult": "/tmp/golos56-sqlite-derived/Logs/Test/Test-golos-meet-2026.11.02_03-11-30-+0300.xcresult",
+    "result": "Passed",
+    "passed_tests": 43,
+    "failed_tests": 0,
+    "skipped_tests": 0,
+    "passed_runs": 78,
+    "failures": [],
+    "warnings": []
+  },
+  "sqlite-retained": {
+    "xcresult": "/tmp/golos56-sqlite-derived/Logs/Test/Test-golos-meet-2026.11.02_03-35-43-+0300.xcresult",
+    "result": "Passed",
+    "passed_tests": 43,
+    "failed_tests": 0,
+    "skipped_tests": 0,
+    "passed_runs": 78,
+    "failures": [],
+    "warnings": []
+  },
+  "final-targeted": {
+    "xcresult": "/tmp/golos56-fix-derived/Logs/Test/Test-golos-meet-2026.11.02_03-44-39-+0300.xcresult",
+    "result": "Passed",
+    "passed_tests": 20,
+    "failed_tests": 0,
+    "skipped_tests": 0,
+    "passed_runs": 33,
+    "failures": [],
+    "warnings": []
+  },
+  "final-proof-full": {
+    "xcresult": "/tmp/golos56-fix-derived/Logs/Test/Test-golos-meet-2026.11.02_03-50-52-+0300.xcresult",
+    "result": "Passed",
+    "passed_tests": 431,
+    "failed_tests": 0,
+    "skipped_tests": 0,
+    "passed_runs": 605,
+    "failures": [],
+    "warnings": []
+  },
+  "candidate-overlay-full": {
+    "xcresult": "/tmp/golos56-candidate-derived/Logs/Test/Test-golos-meet-2026.11.02_03-51-17-+0300.xcresult",
+    "result": "Passed",
+    "passed_tests": 449,
+    "failed_tests": 0,
+    "skipped_tests": 0,
+    "passed_runs": 623,
+    "failures": [],
+    "warnings": []
+  }
+}

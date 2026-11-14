@@ -1,41 +1,57 @@
 import AVFoundation
 import CoreAudio
-import os
 
-/// Захват микрофона → 16kHz mono Int16 LE PCM → чанки в `WavWriter`.
-/// Адаптация `golos/Core/AudioCapture.swift`: без level/voice-processing/выбора устройства,
-/// чанки идут не в AsyncStream, а напрямую в переданный writer.
+/// Backend readiness means AVAudioEngine successfully started, even when muted.
+@MainActor
 final class MicCaptureTrack: AudioTrack {
+    var onFailure: (() -> Void)?
     private let engine = AVAudioEngine()
-    private var writer: WavWriter?
-    private var isRunning = false
+    private var sink: PCMWriteSink?
+    private var installedTap = false
+    private var configurationObserver: NSObjectProtocol?
 
-    func start(into writer: WavWriter) throws {
-        guard !isRunning else { return }
-        self.writer = writer
-
-        let input = engine.inputNode
-        let inputFormat = input.outputFormat(forBus: 0)
-        guard let converter = AVAudioConverter(from: inputFormat, to: PCM16Converter.targetFormat) else {
-            throw NSError(domain: "MicCaptureTrack", code: -1,
-                          userInfo: [NSLocalizedDescriptionKey: "не удалось создать AVAudioConverter"])
+    func start(into writer: WavWriter) async throws {
+        guard sink == nil else { return }
+        let failure: @Sendable () -> Void = { [weak self] in
+            Task { @MainActor [weak self] in self?.onFailure?() }
         }
-        input.installTap(onBus: 0, bufferSize: 4096, format: inputFormat) { [weak self] buf, _ in
-            guard let self, let writer = self.writer,
-                  let data = PCM16Converter.int16Data(from: buf, using: converter) else { return }
-            Task { await writer.append(data) }
+        let sink = PCMWriteSink(writer: writer, onFailure: failure)
+        self.sink = sink
+        do {
+            let input = engine.inputNode
+            let inputFormat = input.outputFormat(forBus: 0)
+            guard inputFormat.sampleRate > 0, inputFormat.channelCount > 0,
+                  let converter = AVAudioConverter(from: inputFormat, to: PCM16Converter.targetFormat) else {
+                throw NSError(domain: "MicCaptureTrack", code: -1)
+            }
+            input.installTap(onBus: 0, bufferSize: 4096, format: inputFormat) { buf, _ in
+                guard let data = PCM16Converter.int16Data(from: buf, using: converter) else {
+                    failure(); return
+                }
+                sink.append(data)
+            }
+            installedTap = true
+            try engine.start()
+            configurationObserver = NotificationCenter.default.addObserver(
+                forName: .AVAudioEngineConfigurationChange, object: engine, queue: .main
+            ) { [weak self] _ in
+                Task { @MainActor in self?.onFailure?() }
+            }
+        } catch {
+            await stop()
+            throw error
         }
-        try engine.start()
-        isRunning = true
-        Log.recorder.info("MicCaptureTrack started; inputFmt=\(String(describing: inputFormat), privacy: .public)")
     }
 
-    func stop() {
-        guard isRunning else { return }
-        engine.inputNode.removeTap(onBus: 0)
+    func stop() async {
+        if let configurationObserver {
+            NotificationCenter.default.removeObserver(configurationObserver)
+            self.configurationObserver = nil
+        }
+        if installedTap { engine.inputNode.removeTap(onBus: 0); installedTap = false }
         engine.stop()
-        isRunning = false
-        writer = nil
-        Log.recorder.info("MicCaptureTrack stopped")
+        let old = sink
+        sink = nil
+        await old?.close()
     }
 }

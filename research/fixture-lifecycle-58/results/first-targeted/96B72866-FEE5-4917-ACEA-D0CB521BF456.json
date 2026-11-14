@@ -1,0 +1,74 @@
+[
+  {
+    "stage" : "scope-created",
+    "test" : "externalModelRetirementResetsOnlyDependentCoverageAndKeepsOwnBatchHistory(_:_:)",
+    "uptime" : "332466.490779875"
+  },
+  {
+    "root" : "memory-update-DFB405B8-7C62-40C5-8F66-79E66FC5CA80",
+    "stage" : "root-owned",
+    "uptime" : "332466.51479708333"
+  },
+  {
+    "stage" : "store-owned",
+    "uptime" : "332466.515047125"
+  },
+  {
+    "connection" : "D29EE396-8CC4-4F51-856F-E1D93DA7613D",
+    "root" : "memory-update-DFB405B8-7C62-40C5-8F66-79E66FC5CA80",
+    "stage" : "opened",
+    "uptime" : "332466.5338864167"
+  },
+  {
+    "connection" : "FE4CCE9D-8D4D-4268-A9B9-4704FA97B01D",
+    "root" : "memory-update-DFB405B8-7C62-40C5-8F66-79E66FC5CA80",
+    "stage" : "opened",
+    "uptime" : "332466.919332375"
+  },
+  {
+    "connection" : "29854EEC-A8D8-45AB-90A0-8A8D0F868BC4",
+    "root" : "memory-update-DFB405B8-7C62-40C5-8F66-79E66FC5CA80",
+    "stage" : "opened",
+    "uptime" : "332466.92251975"
+  },
+  {
+    "connection" : "0BF125E4-DB88-4532-89E4-980C233668C1",
+    "root" : "memory-update-DFB405B8-7C62-40C5-8F66-79E66FC5CA80",
+    "stage" : "opened",
+    "uptime" : "332467.11261058337"
+  },
+  {
+    "connection" : "0BF125E4-DB88-4532-89E4-980C233668C1",
+    "result" : "0",
+    "stage" : "closed",
+    "uptime" : "332467.119585125"
+  },
+  {
+    "connection" : "29854EEC-A8D8-45AB-90A0-8A8D0F868BC4",
+    "result" : "0",
+    "stage" : "closed",
+    "uptime" : "332467.1196614167"
+  },
+  {
+    "connection" : "FE4CCE9D-8D4D-4268-A9B9-4704FA97B01D",
+    "result" : "0",
+    "stage" : "closed",
+    "uptime" : "332467.1197138334"
+  },
+  {
+    "connection" : "D29EE396-8CC4-4F51-856F-E1D93DA7613D",
+    "result" : "0",
+    "stage" : "closed",
+    "uptime" : "332467.11980262503"
+  },
+  {
+    "stage" : "body-finished",
+    "uptime" : "332467.11982708337"
+  },
+  {
+    "exists" : "false",
+    "root" : "memory-update-DFB405B8-7C62-40C5-8F66-79E66FC5CA80",
+    "stage" : "root-removed",
+    "uptime" : "332467.120634625"
+  }
+]

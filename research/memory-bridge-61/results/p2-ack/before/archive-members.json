@@ -1,0 +1,32 @@
+{
+  "scopes": {
+    "738C4B74-77C8-47BC-B556-A90300A9D312.json": {
+      "sha256": "747c3aa9a4deba643ce2e885b9b460515e6c478d805102a04fc4f4a006095e2d",
+      "bytes": 1196
+    }
+  },
+  "bridge": {
+    "bridge61-4598E6AE-5A1B-4763-9E35-ED39D1667DC9-timeline.json": {
+      "sha256": "11f713933976d2ca65b58de8ba7203542208cdbacd1bdd62d2e03d3656f67502",
+      "bytes": 1398957
+    }
+  },
+  "attachments": {
+    "AB73D8BA-C0BF-4917-8787-6EB882971F95.json": {
+      "sha256": "11f713933976d2ca65b58de8ba7203542208cdbacd1bdd62d2e03d3656f67502",
+      "bytes": 1398957
+    },
+    "DB07A2D4-D29D-4BC6-8BAD-C9C45A39792D.json": {
+      "sha256": "747c3aa9a4deba643ce2e885b9b460515e6c478d805102a04fc4f4a006095e2d",
+      "bytes": 1196
+    },
+    "F16C55BB-5902-4051-9F81-F029943736EA.txt": {
+      "sha256": "7602b39a33228bce2dc1f35840d86fe618fbabf6ef93d70e4d5b01f3820e1941",
+      "bytes": 325
+    },
+    "manifest.json": {
+      "sha256": "dfb427b59f2027a9bb5f3b133a5ea80518357c64af2409b142b3311007c814f3",
+      "bytes": 1555
+    }
+  }
+}

@@ -1,0 +1,273 @@
+{
+  "algorithm" : "explicit-name-margin-e5-v2",
+  "auto_threshold" : 0.90000000000000002,
+  "cases" : [
+    {
+      "actual" : [
+        "amber"
+      ],
+      "expected" : [
+        "amber"
+      ],
+      "id" : "e-amber",
+      "milliseconds" : 7.3907083133235574,
+      "scores" : [
+        {
+          "competing_similarity" : 0.83775359099311963,
+          "context_kind" : "document",
+          "context_text" : "Проект Янтарь: переносим складской учёт в новую систему. Проверяем остатки товаров, маркировку и обмен с кассами.",
+          "explicit_name" : true,
+          "meeting_text" : "По проекту Янтарь обсуждали перенос складского учёта. Надо проверить остатки, маркировку товаров и обмен данными с кассами.",
+          "project" : "amber",
+          "similarity" : 0.95821425940926452
+        }
+      ],
+      "suggested_topic" : null
+    },
+    {
+      "actual" : [
+        "orbit"
+      ],
+      "expected" : [
+        "orbit"
+      ],
+      "id" : "e-orbit",
+      "milliseconds" : 7.6907500042580068,
+      "scores" : [
+        {
+          "competing_similarity" : 0.83064678453525598,
+          "context_kind" : "meeting",
+          "context_text" : "Проект Орбита: запускаем спутниковую связь для судов. Проверяем антенну, радиоканал и покрытие в северных морях.",
+          "explicit_name" : true,
+          "meeting_text" : "Команда проекта Орбита проверила антенну и радиоканал спутниковой связи для судов в северных морях.",
+          "project" : "orbit",
+          "similarity" : 0.95293058118638529
+        }
+      ],
+      "suggested_topic" : null
+    },
+    {
+      "actual" : [
+        "amber",
+        "orbit"
+      ],
+      "expected" : [
+        "amber",
+        "orbit"
+      ],
+      "id" : "e-both",
+      "milliseconds" : 7.0276666665449739,
+      "scores" : [
+        {
+          "competing_similarity" : 0.85334252183007098,
+          "context_kind" : "document",
+          "context_text" : "Проект Янтарь: переносим складской учёт в новую систему. Проверяем остатки товаров, маркировку и обмен с кассами.",
+          "explicit_name" : true,
+          "meeting_text" : "Янтарь: перенос складского учёта в новую систему. Проверяем товарные остатки, маркировку и обмен с кассами.",
+          "project" : "amber",
+          "similarity" : 0.9798555854600336
+        },
+        {
+          "competing_similarity" : 0.85432051696170064,
+          "context_kind" : "meeting",
+          "context_text" : "Проект Орбита: запускаем спутниковую связь для судов. Проверяем антенну, радиоканал и покрытие в северных морях.",
+          "explicit_name" : true,
+          "meeting_text" : "Орбита: запускаем для судов спутниковую связь. Проверяем радиоканал, антенну и покрытие в северных морях.",
+          "project" : "orbit",
+          "similarity" : 0.98421977886372014
+        }
+      ],
+      "suggested_topic" : null
+    },
+    {
+      "actual" : [
+
+      ],
+      "expected" : [
+
+      ],
+      "id" : "e-implicit",
+      "milliseconds" : 7.0407500024884939,
+      "scores" : [
+        {
+          "competing_similarity" : 0.85553681814228133,
+          "context_kind" : "document",
+          "context_text" : "Проект Янтарь: переносим складской учёт в новую систему. Проверяем остатки товаров, маркировку и обмен с кассами.",
+          "explicit_name" : false,
+          "meeting_text" : "Переносим учёт товаров со старого склада, сверяем маркировку и остатки, тестируем передачу данных в кассы.",
+          "project" : "amber",
+          "similarity" : 0.91635225682917087
+        }
+      ],
+      "suggested_topic" : null
+    },
+    {
+      "actual" : [
+
+      ],
+      "expected" : [
+
+      ],
+      "id" : "e-ambiguous",
+      "milliseconds" : 7.5494583288673311,
+      "scores" : [
+        {
+          "competing_similarity" : 0.96890120673203806,
+          "context_kind" : "document",
+          "context_text" : "Проект Платформа: строим конвейер аналитики платежей и витрины данных.",
+          "explicit_name" : false,
+          "meeting_text" : "Платформа: обсуждали конвейер аналитики платежей и построение витрин данных.",
+          "project" : "platform-b",
+          "similarity" : 0.96890120673203806
+        },
+        {
+          "competing_similarity" : 0.96890120673203806,
+          "context_kind" : "document",
+          "context_text" : "Проект Платформа: строим конвейер аналитики платежей и витрины данных.",
+          "explicit_name" : false,
+          "meeting_text" : "Платформа: обсуждали конвейер аналитики платежей и построение витрин данных.",
+          "project" : "platform-a",
+          "similarity" : 0.96890120673203806
+        }
+      ],
+      "suggested_topic" : null
+    },
+    {
+      "actual" : [
+
+      ],
+      "expected" : [
+
+      ],
+      "id" : "e-common",
+      "milliseconds" : 7.0464999880641699,
+      "scores" : [
+
+      ],
+      "suggested_topic" : "На проекте надо согласовать бюджет, назначить ответственных и уложиться в срок. Давайте обновим план"
+    },
+    {
+      "actual" : [
+
+      ],
+      "expected" : [
+
+      ],
+      "id" : "e-name-only",
+      "milliseconds" : 7.5212916708551347,
+      "scores" : [
+
+      ],
+      "suggested_topic" : "Янтарь встретили в названии выставки украшений. Обсуждали браслеты, серебро и витрины ювелирного маг"
+    },
+    {
+      "actual" : [
+
+      ],
+      "expected" : [
+
+      ],
+      "id" : "e-negation",
+      "milliseconds" : 7.4240000103600323,
+      "scores" : [
+        {
+          "competing_similarity" : 0.84640699305674172,
+          "context_kind" : "document",
+          "context_text" : "Проект Янтарь: переносим складской учёт в новую систему. Проверяем остатки товаров, маркировку и обмен с кассами.",
+          "explicit_name" : false,
+          "meeting_text" : "Проект Янтарь не относится к теме этой встречи. Перенос складского учёта, маркировку, остатки и обмен с кассами здесь не обсуждаем.",
+          "project" : "amber",
+          "similarity" : 0.92172196002001205
+        }
+      ],
+      "suggested_topic" : null
+    },
+    {
+      "actual" : [
+
+      ],
+      "expected" : [
+
+      ],
+      "id" : "e-novel",
+      "milliseconds" : 7.0527499774470925,
+      "scores" : [
+
+      ],
+      "suggested_topic" : "Открываем новую пекарню в районе, выбираем рецепты хлеба, оборудование для теста и график доставки м"
+    },
+    {
+      "actual" : [
+
+      ],
+      "expected" : [
+
+      ],
+      "id" : "e-name-prefix",
+      "milliseconds" : 7.1254166832659394,
+      "scores" : [
+
+      ],
+      "suggested_topic" : "Орбитация планеты и траектории астероидов: научный семинар по небесной механике."
+    },
+    {
+      "actual" : [
+
+      ],
+      "expected" : [
+
+      ],
+      "id" : "e-different-topic",
+      "milliseconds" : 7.4555416649673134,
+      "scores" : [
+        {
+          "competing_similarity" : 0.91908292877448172,
+          "context_kind" : "document",
+          "context_text" : "Проект Янтарь: переносим складской учёт в новую систему. Проверяем остатки товаров, маркировку и обмен с кассами.",
+          "explicit_name" : false,
+          "meeting_text" : "Проект Орбита: переносим складской учёт в новую систему. Проверяем остатки товаров, маркировку и обмен с кассами.",
+          "project" : "amber",
+          "similarity" : 0.93661454923419452
+        },
+        {
+          "competing_similarity" : 0.93661454923419452,
+          "context_kind" : "meeting",
+          "context_text" : "Проект Орбита: запускаем спутниковую связь для судов. Проверяем антенну, радиоканал и покрытие в северных морях.",
+          "explicit_name" : true,
+          "meeting_text" : "Проект Орбита: переносим складской учёт в новую систему. Проверяем остатки товаров, маркировку и обмен с кассами.",
+          "project" : "orbit",
+          "similarity" : 0.91908292877448172
+        }
+      ],
+      "suggested_topic" : null
+    },
+    {
+      "actual" : [
+
+      ],
+      "expected" : [
+
+      ],
+      "id" : "e-unrelated",
+      "milliseconds" : 6.7074999969918281,
+      "scores" : [
+
+      ],
+      "suggested_topic" : "Выбрали маршрут похода в горы, взяли палатки и согласовали продукты на неделю."
+    }
+  ],
+  "cold_index_seconds" : 1.160397166677285,
+  "corpus_sha256" : "5bfea0841b58181eca855cbd81d0e3f141949a51850a88e2563dd91b1bf8db30",
+  "false_positive_links" : 0,
+  "idempotence_checked" : true,
+  "manual_inbox_restart_checked" : true,
+  "missed_links" : 0,
+  "model_id" : "multilingual-e5-small@fd1525a9fd15316a2d503bf26ab031a61d056e98\/unigram-v1\/mean-l2\/512\/overlap64",
+  "partition" : "regression",
+  "peak_cli_rss_bytes" : 1846034432,
+  "production_wiring" : false,
+  "proposal_threshold" : 0.90000000000000002,
+  "required_margin" : 0.040000000000000001,
+  "synthetic_only" : true,
+  "true_positive_links" : 4
+}

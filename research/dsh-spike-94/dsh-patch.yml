@@ -1,0 +1,29 @@
+# Golos Meet spike overlay for the dsh web profile (issue #94).
+# Applied with: dsh golos --patch ./dsh-patch.yml
+# The insert path is anchored relative to this file by the dsh loader.
+
+- insert:
+    - id: golos-qa
+      name: ./plugins/golos-qa/index.js
+      config: {}
+
+# Default model for agents: DeepSeek V4.1 Flash through OpenRouter.
+# The key comes from the OPENROUTER_API_KEY environment variable of the
+# dsh process (see run-web.sh); never put it in this file.
+- id: agent-default-model
+  config:
+    provider: openrouter
+    model: deepseek/deepseek-v4.1-flash
+
+# Register the OpenRouter route for the pi-ai adapter: the credential comes
+# from the OPENROUTER_API_KEY environment variable, the endpoint and wire
+# protocol default to the installed pi-ai catalog entry for openrouter.
+- id: llm-pi-ai
+  config:
+    providers:
+      openrouter:
+        apiKeyEnv: OPENROUTER_API_KEY
+
+# Night-run hygiene: no telemetry egress from the spike.
+- id: otel
+  disabled: true

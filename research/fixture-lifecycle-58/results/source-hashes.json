@@ -1,0 +1,10 @@
+{
+  "golos-meet/Core/Knowledge/ProjectStore.swift": "67b1522a7d181f2413cdd84ab591ac8873c03dc037518a844ac2676e079c0212",
+  "golos-meetTests/MeetingAssignmentRuntimeTests.swift": "3016b9f226269e9b822ccf738df178846c953c0e35fea77ad0d0b15e756af6f4",
+  "golos-meetTests/SQLiteFixtureLifecycleTests.swift": "1c30b05da9ef060c6dcdc158e463fc31b915b6c5ad6dce86df8d9cb50f8761d0",
+  "golos-meetTests/ProjectMemoryQueueTests.swift": "3bdce7d35ae179c1689e8f2c8da6c09322039238b7b3c0dbb30602dd241b139a",
+  "golos-meetTests/IndexingProductionHooksTests.swift": "2f1782b5a2e0d9bd0be210201d983dacd9ce0295abdadf4af2caa9d9766d1092",
+  "golos-meetTests/LocalIndexingNativeTests.swift": "af012479f1c46e4b4d41aee88462b792c411214c31f9c3b49461f4fe03c98890",
+  "golos-meetTests/ProjectMemoryUpdateTests.swift": "1994f99a6603b45a33e90ff0bcd7857a165fed9282a606025f8a8624e08db62b",
+  "golos-meetTests/SQLiteFixtureScope.swift": "fca5b5ba0b988ce64885a0683aaa6418967efdcff2078fc1ff12e663c1c26a49"
+}

@@ -1,0 +1,909 @@
+[
+  {
+    "invocation": "B4FB23E9-8F23-4A4D-8191-4E4415F8E234",
+    "test": "LocalDocumentExtractorTests/extractsTextFromPNGUsingLocalOCR(text:)",
+    "input_sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+    "input_bytes": 23567,
+    "result": {
+      "blocks": [
+        "Project Alpha budget approved"
+      ],
+      "elapsedSeconds": 39.719095208332874,
+      "id": "B4FB23E9-8F23-4A4D-8191-4E4415F8E234",
+      "inputBytes": 23567,
+      "inputSHA256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+      "lines": [
+        "Project Alpha budget approved"
+      ],
+      "stage": "extract-returned",
+      "test": "extractsTextFromPNGUsingLocalOCR(text:)",
+      "wallStart": 1793600904.1528192,
+      "warnings": []
+    }
+  },
+  {
+    "invocation": "AA18D366-2F3D-4F0B-84BE-73DB6E44FE90",
+    "test": "LocalDocumentExtractorTests/extractsTextFromPNGUsingLocalOCR(text:)",
+    "input_sha256": "666a19cf8a8ac85e56ccabc0cc911b5d0f570b22c534aff08c942531e46b9b5a",
+    "input_bytes": 23283,
+    "result": {
+      "blocks": [
+        "Решение: запуск проекта в ноябре"
+      ],
+      "elapsedSeconds": 39.43680187501013,
+      "id": "AA18D366-2F3D-4F0B-84BE-73DB6E44FE90",
+      "inputBytes": 23283,
+      "inputSHA256": "666a19cf8a8ac85e56ccabc0cc911b5d0f570b22c534aff08c942531e46b9b5a",
+      "lines": [
+        "Решение: запуск проекта в ноябре"
+      ],
+      "stage": "extract-returned",
+      "test": "extractsTextFromPNGUsingLocalOCR(text:)",
+      "wallStart": 1793600904.1568708,
+      "warnings": []
+    }
+  },
+  {
+    "invocation": "6ED5BB0D-80AF-4954-ABB3-E4533F64D60A",
+    "test": "LocalDocumentExtractorTests/concurrentOCRDoesNotOccupyTheCooperativePool()",
+    "input_sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+    "input_bytes": 23567,
+    "result": {
+      "blocks": [
+        "Project Alpha budget approved"
+      ],
+      "elapsedSeconds": 39.895236416661646,
+      "id": "6ED5BB0D-80AF-4954-ABB3-E4533F64D60A",
+      "inputBytes": 23567,
+      "inputSHA256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+      "lines": [
+        "Project Alpha budget approved"
+      ],
+      "stage": "extract-returned",
+      "test": "concurrentOCRDoesNotOccupyTheCooperativePool()",
+      "wallStart": 1793600904.748087,
+      "warnings": []
+    }
+  },
+  {
+    "invocation": "EF69BF7F-AEBB-4D6F-AD9E-A13048D7C3E8",
+    "test": "LocalDocumentExtractorTests/concurrentOCRDoesNotOccupyTheCooperativePool()",
+    "input_sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+    "input_bytes": 23567,
+    "result": {
+      "blocks": [
+        "Project Alpha budget approved"
+      ],
+      "elapsedSeconds": 40.309828208293766,
+      "id": "EF69BF7F-AEBB-4D6F-AD9E-A13048D7C3E8",
+      "inputBytes": 23567,
+      "inputSHA256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+      "lines": [
+        "Project Alpha budget approved"
+      ],
+      "stage": "extract-returned",
+      "test": "concurrentOCRDoesNotOccupyTheCooperativePool()",
+      "wallStart": 1793600904.744677,
+      "warnings": []
+    }
+  },
+  {
+    "invocation": "C7B302BC-54AB-43E3-AEA7-9ADA88D813A1",
+    "test": "LocalDocumentExtractorTests/concurrentOCRDoesNotOccupyTheCooperativePool()",
+    "input_sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+    "input_bytes": 23567,
+    "result": {
+      "blocks": [
+        "Project Alpha budget approved"
+      ],
+      "elapsedSeconds": 40.06881720828824,
+      "id": "C7B302BC-54AB-43E3-AEA7-9ADA88D813A1",
+      "inputBytes": 23567,
+      "inputSHA256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+      "lines": [
+        "Project Alpha budget approved"
+      ],
+      "stage": "extract-returned",
+      "test": "concurrentOCRDoesNotOccupyTheCooperativePool()",
+      "wallStart": 1793600904.740828,
+      "warnings": []
+    }
+  },
+  {
+    "invocation": "3E7F7625-989E-4C6D-9185-4AD05E95703A",
+    "test": "LocalDocumentExtractorTests/concurrentOCRDoesNotOccupyTheCooperativePool()",
+    "input_sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+    "input_bytes": 23567,
+    "result": {
+      "blocks": [
+        "Project Alpha budget approved"
+      ],
+      "elapsedSeconds": 39.56686424999498,
+      "id": "3E7F7625-989E-4C6D-9185-4AD05E95703A",
+      "inputBytes": 23567,
+      "inputSHA256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+      "lines": [
+        "Project Alpha budget approved"
+      ],
+      "stage": "extract-returned",
+      "test": "concurrentOCRDoesNotOccupyTheCooperativePool()",
+      "wallStart": 1793600904.7373428,
+      "warnings": []
+    }
+  },
+  {
+    "invocation": "8AD0E5A8-9B00-427C-A2B7-0CB272AFD61C",
+    "test": "LocalDocumentExtractorTests/concurrentOCRDoesNotOccupyTheCooperativePool()",
+    "input_sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+    "input_bytes": 23567,
+    "result": {
+      "blocks": [
+        "Project Alpha budget approved"
+      ],
+      "elapsedSeconds": 40.221878166659735,
+      "id": "8AD0E5A8-9B00-427C-A2B7-0CB272AFD61C",
+      "inputBytes": 23567,
+      "inputSHA256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+      "lines": [
+        "Project Alpha budget approved"
+      ],
+      "stage": "extract-returned",
+      "test": "concurrentOCRDoesNotOccupyTheCooperativePool()",
+      "wallStart": 1793600904.733716,
+      "warnings": []
+    }
+  },
+  {
+    "invocation": "0AC54F04-FDE9-43A5-A00C-17E317586E03",
+    "test": "LocalDocumentExtractorTests/concurrentOCRDoesNotOccupyTheCooperativePool()",
+    "input_sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+    "input_bytes": 23567,
+    "result": {
+      "blocks": [
+        "Project Alpha budget approved"
+      ],
+      "elapsedSeconds": 40.02648254163796,
+      "id": "0AC54F04-FDE9-43A5-A00C-17E317586E03",
+      "inputBytes": 23567,
+      "inputSHA256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+      "lines": [
+        "Project Alpha budget approved"
+      ],
+      "stage": "extract-returned",
+      "test": "concurrentOCRDoesNotOccupyTheCooperativePool()",
+      "wallStart": 1793600904.716444,
+      "warnings": []
+    }
+  },
+  {
+    "invocation": "EABFCC1D-B001-454C-9E07-F79878E75721",
+    "test": "LocalDocumentExtractorTests/concurrentOCRDoesNotOccupyTheCooperativePool()",
+    "input_sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+    "input_bytes": 23567,
+    "result": {
+      "blocks": [
+        "Project Alpha budget approved"
+      ],
+      "elapsedSeconds": 39.321712083299644,
+      "id": "EABFCC1D-B001-454C-9E07-F79878E75721",
+      "inputBytes": 23567,
+      "inputSHA256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+      "lines": [
+        "Project Alpha budget approved"
+      ],
+      "stage": "extract-returned",
+      "test": "concurrentOCRDoesNotOccupyTheCooperativePool()",
+      "wallStart": 1793600904.712872,
+      "warnings": []
+    }
+  },
+  {
+    "invocation": "42CF68F5-B6BC-4717-BE4F-E8310443BF14",
+    "test": "LocalDocumentExtractorTests/concurrentOCRDoesNotOccupyTheCooperativePool()",
+    "input_sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+    "input_bytes": 23567,
+    "result": {
+      "blocks": [
+        "Project Alpha budget approved"
+      ],
+      "elapsedSeconds": 39.06385558331385,
+      "id": "42CF68F5-B6BC-4717-BE4F-E8310443BF14",
+      "inputBytes": 23567,
+      "inputSHA256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+      "lines": [
+        "Project Alpha budget approved"
+      ],
+      "stage": "extract-returned",
+      "test": "concurrentOCRDoesNotOccupyTheCooperativePool()",
+      "wallStart": 1793600904.709324,
+      "warnings": []
+    }
+  },
+  {
+    "invocation": "06FEAB63-C6B8-4A72-8881-E1AA6919E16C",
+    "test": "LocalDocumentExtractorTests/concurrentOCRDoesNotOccupyTheCooperativePool()",
+    "input_sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+    "input_bytes": 23567,
+    "result": {
+      "blocks": [
+        "Project Alpha budget approved"
+      ],
+      "elapsedSeconds": 39.53281824995065,
+      "id": "06FEAB63-C6B8-4A72-8881-E1AA6919E16C",
+      "inputBytes": 23567,
+      "inputSHA256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+      "lines": [
+        "Project Alpha budget approved"
+      ],
+      "stage": "extract-returned",
+      "test": "concurrentOCRDoesNotOccupyTheCooperativePool()",
+      "wallStart": 1793600904.7056131,
+      "warnings": []
+    }
+  },
+  {
+    "invocation": "D3D3DA44-7DF3-4E7B-A1D9-63C13B7363D8",
+    "test": "LocalDocumentExtractorTests/concurrentOCRDoesNotOccupyTheCooperativePool()",
+    "input_sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+    "input_bytes": 23567,
+    "result": {
+      "blocks": [
+        "Project Alpha budget approved"
+      ],
+      "elapsedSeconds": 39.66722987504909,
+      "id": "D3D3DA44-7DF3-4E7B-A1D9-63C13B7363D8",
+      "inputBytes": 23567,
+      "inputSHA256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+      "lines": [
+        "Project Alpha budget approved"
+      ],
+      "stage": "extract-returned",
+      "test": "concurrentOCRDoesNotOccupyTheCooperativePool()",
+      "wallStart": 1793600904.7020888,
+      "warnings": []
+    }
+  },
+  {
+    "invocation": "BB21DEE3-DFA8-44B7-A426-1E935FC7FAB2",
+    "test": "LocalDocumentExtractorTests/concurrentOCRDoesNotOccupyTheCooperativePool()",
+    "input_sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+    "input_bytes": 23567,
+    "result": {
+      "blocks": [
+        "Project Alpha budget approved"
+      ],
+      "elapsedSeconds": 40.14479187497636,
+      "id": "BB21DEE3-DFA8-44B7-A426-1E935FC7FAB2",
+      "inputBytes": 23567,
+      "inputSHA256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+      "lines": [
+        "Project Alpha budget approved"
+      ],
+      "stage": "extract-returned",
+      "test": "concurrentOCRDoesNotOccupyTheCooperativePool()",
+      "wallStart": 1793600904.698571,
+      "warnings": []
+    }
+  },
+  {
+    "invocation": "C08EFE73-7AB2-4398-A2B3-C3452BB87D39",
+    "test": "LocalDocumentExtractorTests/concurrentOCRDoesNotOccupyTheCooperativePool()",
+    "input_sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+    "input_bytes": 23567,
+    "result": {
+      "blocks": [
+        "Project Alpha budget approved"
+      ],
+      "elapsedSeconds": 39.783005458361,
+      "id": "C08EFE73-7AB2-4398-A2B3-C3452BB87D39",
+      "inputBytes": 23567,
+      "inputSHA256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+      "lines": [
+        "Project Alpha budget approved"
+      ],
+      "stage": "extract-returned",
+      "test": "concurrentOCRDoesNotOccupyTheCooperativePool()",
+      "wallStart": 1793600904.6950011,
+      "warnings": []
+    }
+  },
+  {
+    "invocation": "3226C55F-5497-4F83-B7C0-A9FF66380E88",
+    "test": "LocalDocumentExtractorTests/concurrentOCRDoesNotOccupyTheCooperativePool()",
+    "input_sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+    "input_bytes": 23567,
+    "result": {
+      "blocks": [
+        "Project Alpha budget approved"
+      ],
+      "elapsedSeconds": 40.085719958355185,
+      "id": "3226C55F-5497-4F83-B7C0-A9FF66380E88",
+      "inputBytes": 23567,
+      "inputSHA256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+      "lines": [
+        "Project Alpha budget approved"
+      ],
+      "stage": "extract-returned",
+      "test": "concurrentOCRDoesNotOccupyTheCooperativePool()",
+      "wallStart": 1793600904.6912699,
+      "warnings": []
+    }
+  },
+  {
+    "invocation": "2ACCA830-EB1A-4AFE-96E5-D059F5C4A2E9",
+    "test": "LocalDocumentExtractorTests/concurrentOCRDoesNotOccupyTheCooperativePool()",
+    "input_sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+    "input_bytes": 23567,
+    "result": {
+      "blocks": [
+        "Project Alpha budget approved"
+      ],
+      "elapsedSeconds": 40.30189287499525,
+      "id": "2ACCA830-EB1A-4AFE-96E5-D059F5C4A2E9",
+      "inputBytes": 23567,
+      "inputSHA256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+      "lines": [
+        "Project Alpha budget approved"
+      ],
+      "stage": "extract-returned",
+      "test": "concurrentOCRDoesNotOccupyTheCooperativePool()",
+      "wallStart": 1793600904.6876621,
+      "warnings": []
+    }
+  },
+  {
+    "invocation": "E8F56017-942A-40E0-89DD-6FCFE4AB5A3D",
+    "test": "LocalDocumentExtractorTests/concurrentOCRDoesNotOccupyTheCooperativePool()",
+    "input_sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+    "input_bytes": 23567,
+    "result": {
+      "blocks": [
+        "Project Alpha budget approved"
+      ],
+      "elapsedSeconds": 40.338562916673254,
+      "id": "E8F56017-942A-40E0-89DD-6FCFE4AB5A3D",
+      "inputBytes": 23567,
+      "inputSHA256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+      "lines": [
+        "Project Alpha budget approved"
+      ],
+      "stage": "extract-returned",
+      "test": "concurrentOCRDoesNotOccupyTheCooperativePool()",
+      "wallStart": 1793600904.684026,
+      "warnings": []
+    }
+  },
+  {
+    "invocation": "950140BE-5764-4C52-B0CC-82BA527E9046",
+    "test": "LocalDocumentExtractorTests/concurrentOCRDoesNotOccupyTheCooperativePool()",
+    "input_sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+    "input_bytes": 23567,
+    "result": {
+      "blocks": [
+        "Project Alpha budget approved"
+      ],
+      "elapsedSeconds": 39.89745862502605,
+      "id": "950140BE-5764-4C52-B0CC-82BA527E9046",
+      "inputBytes": 23567,
+      "inputSHA256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+      "lines": [
+        "Project Alpha budget approved"
+      ],
+      "stage": "extract-returned",
+      "test": "concurrentOCRDoesNotOccupyTheCooperativePool()",
+      "wallStart": 1793600904.68045,
+      "warnings": []
+    }
+  },
+  {
+    "invocation": "A010DB1F-6BA8-46C9-BCE9-280FCC182E11",
+    "test": "LocalDocumentExtractorTests/concurrentOCRDoesNotOccupyTheCooperativePool()",
+    "input_sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+    "input_bytes": 23567,
+    "result": {
+      "blocks": [
+        "Project Alpha budget approved"
+      ],
+      "elapsedSeconds": 39.226813583343755,
+      "id": "A010DB1F-6BA8-46C9-BCE9-280FCC182E11",
+      "inputBytes": 23567,
+      "inputSHA256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+      "lines": [
+        "Project Alpha budget approved"
+      ],
+      "stage": "extract-returned",
+      "test": "concurrentOCRDoesNotOccupyTheCooperativePool()",
+      "wallStart": 1793600904.676663,
+      "warnings": []
+    }
+  },
+  {
+    "invocation": "9332BE62-66C2-4F35-9AFF-7FBE76C2C479",
+    "test": "LocalDocumentExtractorTests/concurrentOCRDoesNotOccupyTheCooperativePool()",
+    "input_sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+    "input_bytes": 23567,
+    "result": {
+      "blocks": [
+        "Project Alpha budget approved"
+      ],
+      "elapsedSeconds": 39.13300062500639,
+      "id": "9332BE62-66C2-4F35-9AFF-7FBE76C2C479",
+      "inputBytes": 23567,
+      "inputSHA256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+      "lines": [
+        "Project Alpha budget approved"
+      ],
+      "stage": "extract-returned",
+      "test": "concurrentOCRDoesNotOccupyTheCooperativePool()",
+      "wallStart": 1793600904.673034,
+      "warnings": []
+    }
+  },
+  {
+    "invocation": "8B43B4E0-B8F0-46DB-BECC-5761F5BADBAE",
+    "test": "LocalDocumentExtractorTests/concurrentOCRDoesNotOccupyTheCooperativePool()",
+    "input_sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+    "input_bytes": 23567,
+    "result": {
+      "blocks": [
+        "Project Alpha budget approved"
+      ],
+      "elapsedSeconds": 39.8758944166475,
+      "id": "8B43B4E0-B8F0-46DB-BECC-5761F5BADBAE",
+      "inputBytes": 23567,
+      "inputSHA256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+      "lines": [
+        "Project Alpha budget approved"
+      ],
+      "stage": "extract-returned",
+      "test": "concurrentOCRDoesNotOccupyTheCooperativePool()",
+      "wallStart": 1793600904.6692228,
+      "warnings": []
+    }
+  },
+  {
+    "invocation": "FFC895E1-2224-446B-BD47-6232AF60932B",
+    "test": "LocalDocumentExtractorTests/concurrentOCRDoesNotOccupyTheCooperativePool()",
+    "input_sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+    "input_bytes": 23567,
+    "result": {
+      "blocks": [
+        "Project Alpha budget approved"
+      ],
+      "elapsedSeconds": 39.30345145834144,
+      "id": "FFC895E1-2224-446B-BD47-6232AF60932B",
+      "inputBytes": 23567,
+      "inputSHA256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+      "lines": [
+        "Project Alpha budget approved"
+      ],
+      "stage": "extract-returned",
+      "test": "concurrentOCRDoesNotOccupyTheCooperativePool()",
+      "wallStart": 1793600904.665491,
+      "warnings": []
+    }
+  },
+  {
+    "invocation": "1F3B4F2B-3093-4014-A929-CE3D1CDA8923",
+    "test": "LocalDocumentExtractorTests/concurrentOCRDoesNotOccupyTheCooperativePool()",
+    "input_sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+    "input_bytes": 23567,
+    "result": {
+      "blocks": [
+        "Project Alpha budget approved"
+      ],
+      "elapsedSeconds": 40.015216499974485,
+      "id": "1F3B4F2B-3093-4014-A929-CE3D1CDA8923",
+      "inputBytes": 23567,
+      "inputSHA256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+      "lines": [
+        "Project Alpha budget approved"
+      ],
+      "stage": "extract-returned",
+      "test": "concurrentOCRDoesNotOccupyTheCooperativePool()",
+      "wallStart": 1793600904.661226,
+      "warnings": []
+    }
+  },
+  {
+    "invocation": "3D3518D6-3D65-4465-8A2B-0625921E9517",
+    "test": "LocalDocumentExtractorTests/concurrentOCRDoesNotOccupyTheCooperativePool()",
+    "input_sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+    "input_bytes": 23567,
+    "result": {
+      "blocks": [
+        "Project Alpha budget approved"
+      ],
+      "elapsedSeconds": 39.443613958370406,
+      "id": "3D3518D6-3D65-4465-8A2B-0625921E9517",
+      "inputBytes": 23567,
+      "inputSHA256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+      "lines": [
+        "Project Alpha budget approved"
+      ],
+      "stage": "extract-returned",
+      "test": "concurrentOCRDoesNotOccupyTheCooperativePool()",
+      "wallStart": 1793600904.657157,
+      "warnings": []
+    }
+  },
+  {
+    "invocation": "4F1B2C6E-8FDC-4756-BBC5-5AE4A40590D9",
+    "test": "LocalDocumentExtractorTests/concurrentOCRDoesNotOccupyTheCooperativePool()",
+    "input_sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+    "input_bytes": 23567,
+    "result": {
+      "blocks": [
+        "Project Alpha budget approved"
+      ],
+      "elapsedSeconds": 40.056306083337404,
+      "id": "4F1B2C6E-8FDC-4756-BBC5-5AE4A40590D9",
+      "inputBytes": 23567,
+      "inputSHA256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+      "lines": [
+        "Project Alpha budget approved"
+      ],
+      "stage": "extract-returned",
+      "test": "concurrentOCRDoesNotOccupyTheCooperativePool()",
+      "wallStart": 1793600904.653342,
+      "warnings": []
+    }
+  },
+  {
+    "invocation": "99939E60-56AF-4496-B948-2991AC0B4614",
+    "test": "LocalDocumentExtractorTests/concurrentOCRDoesNotOccupyTheCooperativePool()",
+    "input_sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+    "input_bytes": 23567,
+    "result": {
+      "blocks": [
+        "Project Alpha budget approved"
+      ],
+      "elapsedSeconds": 39.287714749982115,
+      "id": "99939E60-56AF-4496-B948-2991AC0B4614",
+      "inputBytes": 23567,
+      "inputSHA256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+      "lines": [
+        "Project Alpha budget approved"
+      ],
+      "stage": "extract-returned",
+      "test": "concurrentOCRDoesNotOccupyTheCooperativePool()",
+      "wallStart": 1793600904.6490989,
+      "warnings": []
+    }
+  },
+  {
+    "invocation": "D5B759E3-7515-4393-A5B7-A1A9C2C8F52A",
+    "test": "LocalDocumentExtractorTests/concurrentOCRDoesNotOccupyTheCooperativePool()",
+    "input_sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+    "input_bytes": 23567,
+    "result": {
+      "blocks": [
+        "Project Alpha budget approved"
+      ],
+      "elapsedSeconds": 39.19394479168113,
+      "id": "D5B759E3-7515-4393-A5B7-A1A9C2C8F52A",
+      "inputBytes": 23567,
+      "inputSHA256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+      "lines": [
+        "Project Alpha budget approved"
+      ],
+      "stage": "extract-returned",
+      "test": "concurrentOCRDoesNotOccupyTheCooperativePool()",
+      "wallStart": 1793600904.645208,
+      "warnings": []
+    }
+  },
+  {
+    "invocation": "3D6E2D8A-83B9-46C0-AC77-B3DB32975BEC",
+    "test": "LocalDocumentExtractorTests/concurrentOCRDoesNotOccupyTheCooperativePool()",
+    "input_sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+    "input_bytes": 23567,
+    "result": {
+      "blocks": [
+        "Project Alpha budget approved"
+      ],
+      "elapsedSeconds": 39.87047670833999,
+      "id": "3D6E2D8A-83B9-46C0-AC77-B3DB32975BEC",
+      "inputBytes": 23567,
+      "inputSHA256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+      "lines": [
+        "Project Alpha budget approved"
+      ],
+      "stage": "extract-returned",
+      "test": "concurrentOCRDoesNotOccupyTheCooperativePool()",
+      "wallStart": 1793600904.640359,
+      "warnings": []
+    }
+  },
+  {
+    "invocation": "B4E441F8-EDDB-4495-97F7-3E552B46094F",
+    "test": "LocalDocumentExtractorTests/concurrentOCRDoesNotOccupyTheCooperativePool()",
+    "input_sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+    "input_bytes": 23567,
+    "result": {
+      "blocks": [
+        "Project Alpha budget approved"
+      ],
+      "elapsedSeconds": 39.41549654165283,
+      "id": "B4E441F8-EDDB-4495-97F7-3E552B46094F",
+      "inputBytes": 23567,
+      "inputSHA256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+      "lines": [
+        "Project Alpha budget approved"
+      ],
+      "stage": "extract-returned",
+      "test": "concurrentOCRDoesNotOccupyTheCooperativePool()",
+      "wallStart": 1793600904.586461,
+      "warnings": []
+    }
+  },
+  {
+    "invocation": "F3F2CE6F-6FDE-4048-B4DC-DC8751524510",
+    "test": "LocalDocumentExtractorTests/concurrentOCRDoesNotOccupyTheCooperativePool()",
+    "input_sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+    "input_bytes": 23567,
+    "result": {
+      "blocks": [
+        "Project Alpha budget approved"
+      ],
+      "elapsedSeconds": 39.55073212494608,
+      "id": "F3F2CE6F-6FDE-4048-B4DC-DC8751524510",
+      "inputBytes": 23567,
+      "inputSHA256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+      "lines": [
+        "Project Alpha budget approved"
+      ],
+      "stage": "extract-returned",
+      "test": "concurrentOCRDoesNotOccupyTheCooperativePool()",
+      "wallStart": 1793600904.582419,
+      "warnings": []
+    }
+  },
+  {
+    "invocation": "982879EF-618F-4176-BD69-F52CDF9353A3",
+    "test": "LocalDocumentExtractorTests/concurrentOCRDoesNotOccupyTheCooperativePool()",
+    "input_sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+    "input_bytes": 23567,
+    "result": {
+      "blocks": [
+        "Project Alpha budget approved"
+      ],
+      "elapsedSeconds": 39.75774641666794,
+      "id": "982879EF-618F-4176-BD69-F52CDF9353A3",
+      "inputBytes": 23567,
+      "inputSHA256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+      "lines": [
+        "Project Alpha budget approved"
+      ],
+      "stage": "extract-returned",
+      "test": "concurrentOCRDoesNotOccupyTheCooperativePool()",
+      "wallStart": 1793600904.579076,
+      "warnings": []
+    }
+  },
+  {
+    "invocation": "09D87412-0D3F-4EBF-A76F-47FA2856B31F",
+    "test": "LocalDocumentExtractorTests/concurrentOCRDoesNotOccupyTheCooperativePool()",
+    "input_sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+    "input_bytes": 23567,
+    "result": {
+      "blocks": [
+        "Project Alpha budget approved"
+      ],
+      "elapsedSeconds": 39.695202291652095,
+      "id": "09D87412-0D3F-4EBF-A76F-47FA2856B31F",
+      "inputBytes": 23567,
+      "inputSHA256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+      "lines": [
+        "Project Alpha budget approved"
+      ],
+      "stage": "extract-returned",
+      "test": "concurrentOCRDoesNotOccupyTheCooperativePool()",
+      "wallStart": 1793600904.575543,
+      "warnings": []
+    }
+  },
+  {
+    "invocation": "638C2E86-47DA-449D-8E17-13E3BDA6F483",
+    "test": "LocalDocumentExtractorTests/concurrentOCRDoesNotOccupyTheCooperativePool()",
+    "input_sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+    "input_bytes": 23567,
+    "result": {
+      "blocks": [
+        "Project Alpha budget approved"
+      ],
+      "elapsedSeconds": 39.496052083326504,
+      "id": "638C2E86-47DA-449D-8E17-13E3BDA6F483",
+      "inputBytes": 23567,
+      "inputSHA256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+      "lines": [
+        "Project Alpha budget approved"
+      ],
+      "stage": "extract-returned",
+      "test": "concurrentOCRDoesNotOccupyTheCooperativePool()",
+      "wallStart": 1793600904.571847,
+      "warnings": []
+    }
+  },
+  {
+    "invocation": "F086779F-9348-4565-B5C4-2310A09C1037",
+    "test": "LocalDocumentExtractorTests/concurrentOCRDoesNotOccupyTheCooperativePool()",
+    "input_sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+    "input_bytes": 23567,
+    "result": {
+      "blocks": [
+        "Project Alpha budget approved"
+      ],
+      "elapsedSeconds": 40.043400541646406,
+      "id": "F086779F-9348-4565-B5C4-2310A09C1037",
+      "inputBytes": 23567,
+      "inputSHA256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+      "lines": [
+        "Project Alpha budget approved"
+      ],
+      "stage": "extract-returned",
+      "test": "concurrentOCRDoesNotOccupyTheCooperativePool()",
+      "wallStart": 1793600904.567223,
+      "warnings": []
+    }
+  },
+  {
+    "invocation": "3C92BE40-C6EB-46E7-8FCA-019A9DBC9F7C",
+    "test": "LocalDocumentExtractorTests/PDFRetainsOneBasedPageLocations()",
+    "input_sha256": "39fbadef1b058bd97c3f0756dea1cf0207789267b2d86750367ee7b183ec2f19",
+    "input_bytes": 8205,
+    "result": {
+      "blocks": [
+        "Project alpha launch",
+        "Decision: ship in November"
+      ],
+      "elapsedSeconds": 41.32205241668271,
+      "id": "3C92BE40-C6EB-46E7-8FCA-019A9DBC9F7C",
+      "inputBytes": 8205,
+      "inputSHA256": "39fbadef1b058bd97c3f0756dea1cf0207789267b2d86750367ee7b183ec2f19",
+      "lines": [
+        "Project alpha launch",
+        "Decision: ship in November"
+      ],
+      "stage": "extract-returned",
+      "test": "PDFRetainsOneBasedPageLocations()",
+      "wallStart": 1793600904.159507,
+      "warnings": []
+    }
+  },
+  {
+    "invocation": "60FD49D5-7601-48C7-A4CD-BD2090D104D2",
+    "test": "LocalDocumentExtractorTests/extractionErrorStillAttachesExactInputAndOriginalError()",
+    "input_sha256": "054edec1d0211f624fed0cbca9d4f9400b0e491c43742af2c5b0abebf0c990d8",
+    "input_bytes": 4,
+    "result": {
+      "elapsedSeconds": 0.39340612501837313,
+      "error": "invalidDocument",
+      "errorCode": 2,
+      "errorDescription": "Не удалось прочитать документ. Проверьте, что файл открывается.",
+      "errorDomain": "golos_meet.DocumentExtractionError",
+      "id": "60FD49D5-7601-48C7-A4CD-BD2090D104D2",
+      "inputBytes": 4,
+      "inputSHA256": "054edec1d0211f624fed0cbca9d4f9400b0e491c43742af2c5b0abebf0c990d8",
+      "stage": "extract-threw",
+      "test": "extractionErrorStillAttachesExactInputAndOriginalError()",
+      "wallStart": 1793600904.169547
+    }
+  },
+  {
+    "invocation": "CC1492BD-F244-4C2E-8B8C-793377BBEE2E",
+    "test": "LocalDocumentExtractorTests/mixedPDFExtractsScanAndDoesNotDuplicateTextLayer(native:scanned:duplicateNative:)",
+    "input_sha256": "4dec38477c68419e055b0ffb64ec1dc515d872a7d695015eece49a724714de13",
+    "input_bytes": 31299,
+    "result": {
+      "blocks": [
+        "Decision: launch postponed to December\nPage 1\nDecision: launch postporebttoDeeembler"
+      ],
+      "elapsedSeconds": 40.2638951666886,
+      "id": "CC1492BD-F244-4C2E-8B8C-793377BBEE2E",
+      "inputBytes": 31299,
+      "inputSHA256": "4dec38477c68419e055b0ffb64ec1dc515d872a7d695015eece49a724714de13",
+      "lines": [
+        "Decision: launch postponed to December",
+        "Page 1",
+        "Decision: launch postporebttoDeeembler"
+      ],
+      "stage": "extract-returned",
+      "test": "mixedPDFExtractsScanAndDoesNotDuplicateTextLayer(native:scanned:duplicateNative:)",
+      "wallStart": 1793600904.182198,
+      "warnings": []
+    }
+  },
+  {
+    "invocation": "50297DB4-BB42-47EB-87A0-83F211AB44A9",
+    "test": "LocalDocumentExtractorTests/mixedPDFExtractsScanAndDoesNotDuplicateTextLayer(native:scanned:duplicateNative:)",
+    "input_sha256": "6fecfaa8164ba0095b0a7b1080e9e029db16619debb4db2c436435f58a3afe77",
+    "input_bytes": 28138,
+    "result": {
+      "blocks": [
+        "Page 1\nDecision: launch postponed to December"
+      ],
+      "elapsedSeconds": 40.729198833345436,
+      "id": "50297DB4-BB42-47EB-87A0-83F211AB44A9",
+      "inputBytes": 28138,
+      "inputSHA256": "6fecfaa8164ba0095b0a7b1080e9e029db16619debb4db2c436435f58a3afe77",
+      "lines": [
+        "Page 1",
+        "Decision: launch postponed to December"
+      ],
+      "stage": "extract-returned",
+      "test": "mixedPDFExtractsScanAndDoesNotDuplicateTextLayer(native:scanned:duplicateNative:)",
+      "wallStart": 1793600904.19189,
+      "warnings": []
+    }
+  },
+  {
+    "invocation": "BD12CBAA-AF6A-4561-8EBE-FE607303D0C5",
+    "test": "LocalDocumentExtractorTests/mixedPDFExtractsScanAndDoesNotDuplicateTextLayer(native:scanned:duplicateNative:)",
+    "input_sha256": "b9ea683a4f3dfa266eb181e7629669e1d5f4319c2dfd61da84f197d846be24ef",
+    "input_bytes": 21549,
+    "result": {
+      "blocks": [
+        "2026\n26"
+      ],
+      "elapsedSeconds": 41.05875858332729,
+      "id": "BD12CBAA-AF6A-4561-8EBE-FE607303D0C5",
+      "inputBytes": 21549,
+      "inputSHA256": "b9ea683a4f3dfa266eb181e7629669e1d5f4319c2dfd61da84f197d846be24ef",
+      "lines": [
+        "2026",
+        "26"
+      ],
+      "stage": "extract-returned",
+      "test": "mixedPDFExtractsScanAndDoesNotDuplicateTextLayer(native:scanned:duplicateNative:)",
+      "wallStart": 1793600904.203394,
+      "warnings": []
+    }
+  },
+  {
+    "invocation": "5E187574-8D80-43C5-A3DC-4FC1CEFFFC02",
+    "test": "LocalDocumentExtractorTests/mixedPDFExtractsScanAndDoesNotDuplicateTextLayer(native:scanned:duplicateNative:)",
+    "input_sha256": "2f4488c4d37b4c41d4fbabc879a271755ff4c6e0aacc0314095b14495d36b1fc",
+    "input_bytes": 24231,
+    "result": {
+      "blocks": [
+        "Not approved\nApproved"
+      ],
+      "elapsedSeconds": 40.91015941667138,
+      "id": "5E187574-8D80-43C5-A3DC-4FC1CEFFFC02",
+      "inputBytes": 24231,
+      "inputSHA256": "2f4488c4d37b4c41d4fbabc879a271755ff4c6e0aacc0314095b14495d36b1fc",
+      "lines": [
+        "Not approved",
+        "Approved"
+      ],
+      "stage": "extract-returned",
+      "test": "mixedPDFExtractsScanAndDoesNotDuplicateTextLayer(native:scanned:duplicateNative:)",
+      "wallStart": 1793600904.2148,
+      "warnings": []
+    }
+  },
+  {
+    "invocation": "AD7AAA74-ABC6-491E-AF82-F297A45612FB",
+    "test": "LocalDocumentExtractorTests/mixedPDFExtractsScanAndDoesNotDuplicateTextLayer(native:scanned:duplicateNative:)",
+    "input_sha256": "5ab50e1c0b486dc77523ecde390398dcf9161ef3ef97ce7a66b46606fba0c51d",
+    "input_bytes": 21495,
+    "result": {
+      "blocks": [
+        "2026\n20"
+      ],
+      "elapsedSeconds": 40.96586637501605,
+      "id": "AD7AAA74-ABC6-491E-AF82-F297A45612FB",
+      "inputBytes": 21495,
+      "inputSHA256": "5ab50e1c0b486dc77523ecde390398dcf9161ef3ef97ce7a66b46606fba0c51d",
+      "lines": [
+        "2026",
+        "20"
+      ],
+      "stage": "extract-returned",
+      "test": "mixedPDFExtractsScanAndDoesNotDuplicateTextLayer(native:scanned:duplicateNative:)",
+      "wallStart": 1793600904.226613,
+      "warnings": []
+    }
+  }
+]

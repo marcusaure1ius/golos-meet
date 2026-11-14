@@ -8,6 +8,9 @@ actor WavWriter {
     private let sampleRate: Int
     private let channels: Int
     private var dataBytes: UInt32 = 0
+    private var closed = false
+    private var appendFailed = false
+    enum Failure: Error { case appendFailed }
 
     init(url: URL, sampleRate: Int = 16_000, channels: Int = 1) throws {
         self.url = url
@@ -18,20 +21,28 @@ actor WavWriter {
         try handle.write(contentsOf: Self.header(dataBytes: 0, sampleRate: sampleRate, channels: channels))
     }
 
-    func append(_ pcm: Data) {
-        guard !pcm.isEmpty else { return }
+    @discardableResult
+    func append(_ pcm: Data) -> Bool {
+        guard !closed else { return false }
+        guard !pcm.isEmpty else { return true }
         do {
             try handle.write(contentsOf: pcm)
             dataBytes &+= UInt32(pcm.count)
+            return true
         } catch {
+            appendFailed = true
             Log.recorder.error("WavWriter append failed: \(error.localizedDescription, privacy: .public)")
+            return false
         }
     }
 
     func finalize() throws {
+        guard !closed else { return }
+        defer { closed = true; try? handle.close() }
         try handle.seek(toOffset: 0)
         try handle.write(contentsOf: Self.header(dataBytes: dataBytes, sampleRate: sampleRate, channels: channels))
-        try handle.close()
+        try handle.synchronize()
+        if appendFailed { throw Failure.appendFailed }
     }
 
     /// Канонический 44-байтный WAV/PCM16 header.

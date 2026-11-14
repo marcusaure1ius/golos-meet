@@ -1,0 +1,561 @@
+{
+  "baseline-probe": {
+    "ref": "24b75f63bad8429aec00331c4968d6963a09bc09",
+    "sources": {
+      "golos-meet/Core/Knowledge/LocalDocumentExtractor.swift": "a7bff15b63b1aad4eba1af5d875a0176e6a23acbb6028bc11d40c4a86e668d5d",
+      "golos-meet/Core/Knowledge/KnowledgeModels.swift": "a57c0b230f82c90e830e13f829ebfc72ddee3f94da71a904bf6b9eb96da5b5d8",
+      "golos-meetTests/LocalDocumentExtractorTests.swift": "ebcca43b12cd5db1017f12a4affa49975eaf0dd2d2a391cd0d722a0e87305a4e"
+    },
+    "trace_patches": [
+      [
+        "                var text = native",
+        "                ProbeTrace.event(\"pdf-native\", [\"page\": i + 1, \"native\": native])\n                var text = native"
+      ],
+      [
+        "        let request = VNRecognizeTextRequest()",
+        "        try ProbeTrace.image(\"ocr-input\", image)\n        let request = VNRecognizeTextRequest()"
+      ],
+      [
+        "        try VNImageRequestHandler(cgImage: image).perform([request])",
+        "        try ProbeTrace.configure(request)\n        ProbeTrace.event(\"perform-begin\")\n        do { try VNImageRequestHandler(cgImage: image).perform([request]) }\n        catch { ProbeTrace.error(\"perform-error\", error); throw error }\n        ProbeTrace.observations(request)"
+      ],
+      [
+        "                    guard !native.isEmpty else { throw error }",
+        "                    ProbeTrace.error(\"pdf-ocr-catch\", error)\n                    guard !native.isEmpty else { throw error }"
+      ]
+    ],
+    "instrumented_extractor_sha256": "a652e8c2b0e32233b11f298aaa6f6e630a0df8def64d9627fc6b8f8bd3a48230",
+    "probe_sha256": "727576f95f6c5c179a929ebcb45a64a61b4d08c567f611cba49c37c4565f4707",
+    "fixture_helper_sha256": "2a23fe2347484aedbf345ac73ce4887f1bb490b2938ce461a9fd068ecad00d4a",
+    "command": [
+      "swiftc",
+      "-O",
+      "-parse-as-library",
+      "-o",
+      "/private/tmp/golos56-baseline-probe/ocr-probe",
+      "/private/tmp/golos56-baseline-probe/Extractor.swift",
+      "/private/tmp/golos56-baseline-probe/Models.swift",
+      "/private/tmp/golos56-baseline-probe/Fixtures.swift",
+      "/Users/alfa/.codex/worktrees/56-ocr-check-diagnostics/golos-meet/research/ocr-check-56/Probe.swift"
+    ]
+  },
+  "candidate-probe": {
+    "ref": "ee48e1d1f319f29d2a54f4f3d19488f492da061f",
+    "sources": {
+      "golos-meet/Core/Knowledge/LocalDocumentExtractor.swift": "a7bff15b63b1aad4eba1af5d875a0176e6a23acbb6028bc11d40c4a86e668d5d",
+      "golos-meet/Core/Knowledge/KnowledgeModels.swift": "a57c0b230f82c90e830e13f829ebfc72ddee3f94da71a904bf6b9eb96da5b5d8",
+      "golos-meetTests/LocalDocumentExtractorTests.swift": "ebcca43b12cd5db1017f12a4affa49975eaf0dd2d2a391cd0d722a0e87305a4e"
+    },
+    "trace_patches": [
+      [
+        "                var text = native",
+        "                ProbeTrace.event(\"pdf-native\", [\"page\": i + 1, \"native\": native])\n                var text = native"
+      ],
+      [
+        "        let request = VNRecognizeTextRequest()",
+        "        try ProbeTrace.image(\"ocr-input\", image)\n        let request = VNRecognizeTextRequest()"
+      ],
+      [
+        "        try VNImageRequestHandler(cgImage: image).perform([request])",
+        "        try ProbeTrace.configure(request)\n        ProbeTrace.event(\"perform-begin\")\n        do { try VNImageRequestHandler(cgImage: image).perform([request]) }\n        catch { ProbeTrace.error(\"perform-error\", error); throw error }\n        ProbeTrace.observations(request)"
+      ],
+      [
+        "                    guard !native.isEmpty else { throw error }",
+        "                    ProbeTrace.error(\"pdf-ocr-catch\", error)\n                    guard !native.isEmpty else { throw error }"
+      ]
+    ],
+    "instrumented_extractor_sha256": "a652e8c2b0e32233b11f298aaa6f6e630a0df8def64d9627fc6b8f8bd3a48230",
+    "probe_sha256": "727576f95f6c5c179a929ebcb45a64a61b4d08c567f611cba49c37c4565f4707",
+    "fixture_helper_sha256": "2a23fe2347484aedbf345ac73ce4887f1bb490b2938ce461a9fd068ecad00d4a",
+    "command": [
+      "swiftc",
+      "-O",
+      "-parse-as-library",
+      "-o",
+      "/private/tmp/golos56-candidate-probe/ocr-probe",
+      "/private/tmp/golos56-candidate-probe/Extractor.swift",
+      "/private/tmp/golos56-candidate-probe/Models.swift",
+      "/private/tmp/golos56-candidate-probe/Fixtures.swift",
+      "/Users/alfa/.codex/worktrees/56-ocr-check-diagnostics/golos-meet/research/ocr-check-56/Probe.swift"
+    ]
+  },
+  "traced-baseline-probe": {
+    "ref": "24b75f63bad8429aec00331c4968d6963a09bc09",
+    "sources": {
+      "golos-meet/Core/Knowledge/LocalDocumentExtractor.swift": "a7bff15b63b1aad4eba1af5d875a0176e6a23acbb6028bc11d40c4a86e668d5d",
+      "golos-meet/Core/Knowledge/KnowledgeModels.swift": "a57c0b230f82c90e830e13f829ebfc72ddee3f94da71a904bf6b9eb96da5b5d8",
+      "golos-meetTests/LocalDocumentExtractorTests.swift": "ebcca43b12cd5db1017f12a4affa49975eaf0dd2d2a391cd0d722a0e87305a4e"
+    },
+    "trace_patches": [
+      [
+        "                var text = native",
+        "                ProbeTrace.event(\"pdf-native\", [\"page\": i + 1, \"native\": native])\n                var text = native"
+      ],
+      [
+        "        let request = VNRecognizeTextRequest()",
+        "        try ProbeTrace.image(\"ocr-input\", image)\n        let request = VNRecognizeTextRequest()"
+      ],
+      [
+        "        try VNImageRequestHandler(cgImage: image).perform([request])",
+        "        try ProbeTrace.configure(request)\n        ProbeTrace.event(\"perform-begin\")\n        do { try VNImageRequestHandler(cgImage: image).perform([request]) }\n        catch { ProbeTrace.error(\"perform-error\", error); throw error }\n        ProbeTrace.observations(request)"
+      ],
+      [
+        "                    guard !native.isEmpty else { throw error }",
+        "                    ProbeTrace.error(\"pdf-ocr-catch\", error)\n                    guard !native.isEmpty else { throw error }"
+      ],
+      [
+        "        let hash = SHA256.hash(data: data)",
+        "        let priorTraceScope = ProbeTrace.threadScope\n        defer { ProbeTrace.threadScope = priorTraceScope }\n        try ProbeTrace.beginInput(data, url.pathExtension)\n        let hash = SHA256.hash(data: data)"
+      ],
+      [
+        "        return ExtractedDocument(title:",
+        "        ProbeTrace.event(\"extract-result\", [\"lines\": blocks.map(\\.text), \"warnings\": warnings])\n        return ExtractedDocument(title:"
+      ]
+    ],
+    "instrumented_extractor_sha256": "65d2f9a9d14be2f8a8879975f4c333950d8a00a5b3e7579713f1aa7e619dccb9",
+    "probe_sha256": "1140e15ab80768104165c6193ffa4a7f704f89193f1197dc4e44748ec32e6e08",
+    "fixture_helper_sha256": "2a23fe2347484aedbf345ac73ce4887f1bb490b2938ce461a9fd068ecad00d4a",
+    "command": [
+      "swiftc",
+      "-O",
+      "-parse-as-library",
+      "-o",
+      "/private/tmp/golos56-traced-baseline-probe/ocr-probe",
+      "/private/tmp/golos56-traced-baseline-probe/Extractor.swift",
+      "/private/tmp/golos56-traced-baseline-probe/Models.swift",
+      "/private/tmp/golos56-traced-baseline-probe/Fixtures.swift",
+      "/Users/alfa/.codex/worktrees/56-ocr-check-diagnostics/golos-meet/research/ocr-check-56/Probe.swift"
+    ]
+  },
+  "final-probe": {
+    "ref": "24b75f63bad8429aec00331c4968d6963a09bc09",
+    "sources": {
+      "golos-meet/Core/Knowledge/LocalDocumentExtractor.swift": "a7bff15b63b1aad4eba1af5d875a0176e6a23acbb6028bc11d40c4a86e668d5d",
+      "golos-meet/Core/Knowledge/KnowledgeModels.swift": "a57c0b230f82c90e830e13f829ebfc72ddee3f94da71a904bf6b9eb96da5b5d8",
+      "golos-meetTests/LocalDocumentExtractorTests.swift": "ebcca43b12cd5db1017f12a4affa49975eaf0dd2d2a391cd0d722a0e87305a4e"
+    },
+    "trace_patches": [
+      [
+        "                var text = native",
+        "                ProbeTrace.event(\"pdf-native\", [\"page\": i + 1, \"native\": native])\n                var text = native"
+      ],
+      [
+        "        let request = VNRecognizeTextRequest()",
+        "        try ProbeTrace.image(\"ocr-input\", image)\n        let request = VNRecognizeTextRequest()"
+      ],
+      [
+        "        try VNImageRequestHandler(cgImage: image).perform([request])",
+        "        try ProbeTrace.configure(request)\n        ProbeTrace.event(\"perform-begin\")\n        do { try VNImageRequestHandler(cgImage: image).perform([request]) }\n        catch { ProbeTrace.error(\"perform-error\", error); throw error }\n        ProbeTrace.observations(request)"
+      ],
+      [
+        "                    guard !native.isEmpty else { throw error }",
+        "                    ProbeTrace.error(\"pdf-ocr-catch\", error)\n                    guard !native.isEmpty else { throw error }"
+      ],
+      [
+        "        let hash = SHA256.hash(data: data)",
+        "        let priorTraceScope = ProbeTrace.threadScope\n        defer { ProbeTrace.threadScope = priorTraceScope }\n        try ProbeTrace.beginInput(data, url.pathExtension)\n        let hash = SHA256.hash(data: data)"
+      ],
+      [
+        "        return ExtractedDocument(title:",
+        "        ProbeTrace.event(\"extract-result\", [\"lines\": blocks.map(\\.text), \"warnings\": warnings])\n        return ExtractedDocument(title:"
+      ]
+    ],
+    "instrumented_extractor_sha256": "65d2f9a9d14be2f8a8879975f4c333950d8a00a5b3e7579713f1aa7e619dccb9",
+    "probe_sha256": "4d356478dc4a1e406d33342daf2b0794a899800435ec0c8341394b25c1f9e542",
+    "fixture_helper_sha256": "2a23fe2347484aedbf345ac73ce4887f1bb490b2938ce461a9fd068ecad00d4a",
+    "command": [
+      "swiftc",
+      "-O",
+      "-parse-as-library",
+      "-o",
+      "/private/tmp/golos56-final-probe/ocr-probe",
+      "/private/tmp/golos56-final-probe/Extractor.swift",
+      "/private/tmp/golos56-final-probe/Models.swift",
+      "/private/tmp/golos56-final-probe/Fixtures.swift",
+      "/private/tmp/golos56-final-probe/Probe.swift"
+    ]
+  },
+  "executor-probe": {
+    "ref": "24b75f63bad8429aec00331c4968d6963a09bc09",
+    "sources": {
+      "golos-meet/Core/Knowledge/LocalDocumentExtractor.swift": "a7bff15b63b1aad4eba1af5d875a0176e6a23acbb6028bc11d40c4a86e668d5d",
+      "golos-meet/Core/Knowledge/KnowledgeModels.swift": "a57c0b230f82c90e830e13f829ebfc72ddee3f94da71a904bf6b9eb96da5b5d8",
+      "golos-meetTests/LocalDocumentExtractorTests.swift": "ebcca43b12cd5db1017f12a4affa49975eaf0dd2d2a391cd0d722a0e87305a4e"
+    },
+    "trace_patches": [
+      [
+        "                var text = native",
+        "                ProbeTrace.event(\"pdf-native\", [\"page\": i + 1, \"native\": native])\n                var text = native"
+      ],
+      [
+        "        let request = VNRecognizeTextRequest()",
+        "        try ProbeTrace.image(\"ocr-input\", image)\n        let request = VNRecognizeTextRequest()"
+      ],
+      [
+        "        try VNImageRequestHandler(cgImage: image).perform([request])",
+        "        try ProbeTrace.configure(request)\n        ProbeTrace.event(\"perform-begin\")\n        do { try VNImageRequestHandler(cgImage: image).perform([request]) }\n        catch { ProbeTrace.error(\"perform-error\", error); throw error }\n        ProbeTrace.observations(request)"
+      ],
+      [
+        "                    guard !native.isEmpty else { throw error }",
+        "                    ProbeTrace.error(\"pdf-ocr-catch\", error)\n                    guard !native.isEmpty else { throw error }"
+      ],
+      [
+        "        let hash = SHA256.hash(data: data)",
+        "        let priorTraceScope = ProbeTrace.threadScope\n        defer { ProbeTrace.threadScope = priorTraceScope }\n        try ProbeTrace.beginInput(data, url.pathExtension)\n        let hash = SHA256.hash(data: data)"
+      ],
+      [
+        "        return ExtractedDocument(title:",
+        "        ProbeTrace.event(\"extract-result\", [\"lines\": blocks.map(\\.text), \"warnings\": warnings])\n        return ExtractedDocument(title:"
+      ]
+    ],
+    "instrumented_extractor_sha256": "65d2f9a9d14be2f8a8879975f4c333950d8a00a5b3e7579713f1aa7e619dccb9",
+    "probe_sha256": "62a03f2b4a8e7c6a816e656ddf60f7d8d8d3fb20c3cc1d3d0ca8dda7f4a1303f",
+    "fixture_helper_sha256": "2a23fe2347484aedbf345ac73ce4887f1bb490b2938ce461a9fd068ecad00d4a",
+    "command": [
+      "swiftc",
+      "-O",
+      "-parse-as-library",
+      "-o",
+      "/private/tmp/golos56-executor-probe/ocr-probe",
+      "/private/tmp/golos56-executor-probe/Extractor.swift",
+      "/private/tmp/golos56-executor-probe/Models.swift",
+      "/private/tmp/golos56-executor-probe/Fixtures.swift",
+      "/private/tmp/golos56-executor-probe/Probe.swift",
+      "/Users/alfa/.codex/worktrees/56-ocr-check-diagnostics/golos-meet/research/ocr-check-56/ProbeExecutor.swift"
+    ]
+  },
+  "queue-probe": {
+    "ref": "24b75f63bad8429aec00331c4968d6963a09bc09",
+    "queue_executor_control": true,
+    "sources": {
+      "golos-meet/Core/Knowledge/LocalDocumentExtractor.swift": "a7bff15b63b1aad4eba1af5d875a0176e6a23acbb6028bc11d40c4a86e668d5d",
+      "golos-meet/Core/Knowledge/KnowledgeModels.swift": "a57c0b230f82c90e830e13f829ebfc72ddee3f94da71a904bf6b9eb96da5b5d8",
+      "golos-meetTests/LocalDocumentExtractorTests.swift": "ebcca43b12cd5db1017f12a4affa49975eaf0dd2d2a391cd0d722a0e87305a4e"
+    },
+    "trace_patches": [
+      [
+        "                var text = native",
+        "                ProbeTrace.event(\"pdf-native\", [\"page\": i + 1, \"native\": native])\n                var text = native"
+      ],
+      [
+        "        let request = VNRecognizeTextRequest()",
+        "        try ProbeTrace.image(\"ocr-input\", image)\n        let request = VNRecognizeTextRequest()"
+      ],
+      [
+        "        try VNImageRequestHandler(cgImage: image).perform([request])",
+        "        try ProbeTrace.configure(request)\n        ProbeTrace.event(\"perform-begin\")\n        do { try VNImageRequestHandler(cgImage: image).perform([request]) }\n        catch { ProbeTrace.error(\"perform-error\", error); throw error }\n        ProbeTrace.observations(request)"
+      ],
+      [
+        "                    guard !native.isEmpty else { throw error }",
+        "                    ProbeTrace.error(\"pdf-ocr-catch\", error)\n                    guard !native.isEmpty else { throw error }"
+      ],
+      [
+        "        let hash = SHA256.hash(data: data)",
+        "        let priorTraceScope = ProbeTrace.threadScope\n        defer { ProbeTrace.threadScope = priorTraceScope }\n        try ProbeTrace.beginInput(data, url.pathExtension)\n        let hash = SHA256.hash(data: data)"
+      ],
+      [
+        "        return ExtractedDocument(title:",
+        "        ProbeTrace.event(\"extract-result\", [\"lines\": blocks.map(\\.text), \"warnings\": warnings])\n        return ExtractedDocument(title:"
+      ]
+    ],
+    "instrumented_extractor_sha256": "f1bc4f44e57846e1020d4248519a1d7132d1f25c4f7f16066f416f1fa401f461",
+    "probe_sha256": "62a03f2b4a8e7c6a816e656ddf60f7d8d8d3fb20c3cc1d3d0ca8dda7f4a1303f",
+    "fixture_helper_sha256": "2a23fe2347484aedbf345ac73ce4887f1bb490b2938ce461a9fd068ecad00d4a",
+    "command": [
+      "swiftc",
+      "-target",
+      "arm64-apple-macos14.4",
+      "-O",
+      "-parse-as-library",
+      "-o",
+      "/private/tmp/golos56-queue-probe/ocr-probe",
+      "/private/tmp/golos56-queue-probe/Extractor.swift",
+      "/private/tmp/golos56-queue-probe/Models.swift",
+      "/private/tmp/golos56-queue-probe/Fixtures.swift",
+      "/private/tmp/golos56-queue-probe/Probe.swift",
+      "/Users/alfa/.codex/worktrees/56-ocr-check-diagnostics/golos-meet/research/ocr-check-56/ProbeExecutor.swift"
+    ]
+  },
+  "worker-probe": {
+    "ref": "24b75f63bad8429aec00331c4968d6963a09bc09",
+    "queue_executor_control": true,
+    "sources": {
+      "golos-meet/Core/Knowledge/LocalDocumentExtractor.swift": "a7bff15b63b1aad4eba1af5d875a0176e6a23acbb6028bc11d40c4a86e668d5d",
+      "golos-meet/Core/Knowledge/KnowledgeModels.swift": "a57c0b230f82c90e830e13f829ebfc72ddee3f94da71a904bf6b9eb96da5b5d8",
+      "golos-meetTests/LocalDocumentExtractorTests.swift": "ebcca43b12cd5db1017f12a4affa49975eaf0dd2d2a391cd0d722a0e87305a4e"
+    },
+    "trace_patches": [
+      [
+        "                var text = native",
+        "                ProbeTrace.event(\"pdf-native\", [\"page\": i + 1, \"native\": native])\n                var text = native"
+      ],
+      [
+        "        let request = VNRecognizeTextRequest()",
+        "        try ProbeTrace.image(\"ocr-input\", image)\n        let request = VNRecognizeTextRequest()"
+      ],
+      [
+        "        try VNImageRequestHandler(cgImage: image).perform([request])",
+        "        try ProbeTrace.configure(request)\n        ProbeTrace.event(\"perform-begin\")\n        do { try VNImageRequestHandler(cgImage: image).perform([request]) }\n        catch { ProbeTrace.error(\"perform-error\", error); throw error }\n        ProbeTrace.observations(request)"
+      ],
+      [
+        "                    guard !native.isEmpty else { throw error }",
+        "                    ProbeTrace.error(\"pdf-ocr-catch\", error)\n                    guard !native.isEmpty else { throw error }"
+      ],
+      [
+        "        let hash = SHA256.hash(data: data)",
+        "        let priorTraceScope = ProbeTrace.threadScope\n        defer { ProbeTrace.threadScope = priorTraceScope }\n        try ProbeTrace.beginInput(data, url.pathExtension)\n        let hash = SHA256.hash(data: data)"
+      ],
+      [
+        "        return ExtractedDocument(title:",
+        "        ProbeTrace.event(\"extract-result\", [\"lines\": blocks.map(\\.text), \"warnings\": warnings])\n        return ExtractedDocument(title:"
+      ]
+    ],
+    "instrumented_extractor_sha256": "4a7d55bed7d604a51e26067b95f0c7648c969db863ec583c1809ade6a4e8cb48",
+    "probe_sha256": "62a03f2b4a8e7c6a816e656ddf60f7d8d8d3fb20c3cc1d3d0ca8dda7f4a1303f",
+    "fixture_helper_sha256": "2a23fe2347484aedbf345ac73ce4887f1bb490b2938ce461a9fd068ecad00d4a",
+    "command": [
+      "swiftc",
+      "-target",
+      "arm64-apple-macos14.4",
+      "-O",
+      "-parse-as-library",
+      "-o",
+      "/private/tmp/golos56-worker-probe/ocr-probe",
+      "/private/tmp/golos56-worker-probe/Extractor.swift",
+      "/private/tmp/golos56-worker-probe/Models.swift",
+      "/private/tmp/golos56-worker-probe/Fixtures.swift",
+      "/private/tmp/golos56-worker-probe/Probe.swift",
+      "/Users/alfa/.codex/worktrees/56-ocr-check-diagnostics/golos-meet/research/ocr-check-56/ProbeExecutor.swift"
+    ]
+  },
+  "matched-reference-probe": {
+    "ref": "24b75f63bad8429aec00331c4968d6963a09bc09",
+    "queue_executor_control": false,
+    "sources": {
+      "golos-meet/Core/Knowledge/LocalDocumentExtractor.swift": "a7bff15b63b1aad4eba1af5d875a0176e6a23acbb6028bc11d40c4a86e668d5d",
+      "golos-meet/Core/Knowledge/KnowledgeModels.swift": "a57c0b230f82c90e830e13f829ebfc72ddee3f94da71a904bf6b9eb96da5b5d8",
+      "golos-meetTests/LocalDocumentExtractorTests.swift": "ebcca43b12cd5db1017f12a4affa49975eaf0dd2d2a391cd0d722a0e87305a4e"
+    },
+    "trace_patches": [
+      [
+        "                var text = native",
+        "                ProbeTrace.event(\"pdf-native\", [\"page\": i + 1, \"native\": native])\n                var text = native"
+      ],
+      [
+        "        let request = VNRecognizeTextRequest()",
+        "        try ProbeTrace.image(\"ocr-input\", image)\n        let request = VNRecognizeTextRequest()"
+      ],
+      [
+        "        try VNImageRequestHandler(cgImage: image).perform([request])",
+        "        try ProbeTrace.configure(request)\n        ProbeTrace.event(\"perform-begin\")\n        do { try VNImageRequestHandler(cgImage: image).perform([request]) }\n        catch { ProbeTrace.error(\"perform-error\", error); throw error }\n        ProbeTrace.observations(request)"
+      ],
+      [
+        "                    guard !native.isEmpty else { throw error }",
+        "                    ProbeTrace.error(\"pdf-ocr-catch\", error)\n                    guard !native.isEmpty else { throw error }"
+      ],
+      [
+        "        let hash = SHA256.hash(data: data)",
+        "        let priorTraceScope = ProbeTrace.threadScope\n        defer { ProbeTrace.threadScope = priorTraceScope }\n        try ProbeTrace.beginInput(data, url.pathExtension)\n        let hash = SHA256.hash(data: data)"
+      ],
+      [
+        "        return ExtractedDocument(title:",
+        "        ProbeTrace.event(\"extract-result\", [\"lines\": blocks.map(\\.text), \"warnings\": warnings])\n        return ExtractedDocument(title:"
+      ]
+    ],
+    "instrumented_extractor_sha256": "65d2f9a9d14be2f8a8879975f4c333950d8a00a5b3e7579713f1aa7e619dccb9",
+    "probe_sha256": "87647a6c25bdd980622e7ae2779c7b4d8804527554959239e6578d6fbcb7102b",
+    "fixture_helper_sha256": "2a23fe2347484aedbf345ac73ce4887f1bb490b2938ce461a9fd068ecad00d4a",
+    "command": [
+      "swiftc",
+      "-target",
+      "arm64-apple-macos14.4",
+      "-O",
+      "-parse-as-library",
+      "-o",
+      "/private/tmp/golos56-matched-reference-probe/ocr-probe",
+      "/private/tmp/golos56-matched-reference-probe/Extractor.swift",
+      "/private/tmp/golos56-matched-reference-probe/Models.swift",
+      "/private/tmp/golos56-matched-reference-probe/Fixtures.swift",
+      "/private/tmp/golos56-matched-reference-probe/Probe.swift",
+      "/Users/alfa/.codex/worktrees/56-ocr-check-diagnostics/golos-meet/research/ocr-check-56/ProbeExecutor.swift"
+    ]
+  },
+  "matched-queue-probe": {
+    "ref": "24b75f63bad8429aec00331c4968d6963a09bc09",
+    "queue_executor_control": true,
+    "sources": {
+      "golos-meet/Core/Knowledge/LocalDocumentExtractor.swift": "a7bff15b63b1aad4eba1af5d875a0176e6a23acbb6028bc11d40c4a86e668d5d",
+      "golos-meet/Core/Knowledge/KnowledgeModels.swift": "a57c0b230f82c90e830e13f829ebfc72ddee3f94da71a904bf6b9eb96da5b5d8",
+      "golos-meetTests/LocalDocumentExtractorTests.swift": "ebcca43b12cd5db1017f12a4affa49975eaf0dd2d2a391cd0d722a0e87305a4e"
+    },
+    "trace_patches": [
+      [
+        "                var text = native",
+        "                ProbeTrace.event(\"pdf-native\", [\"page\": i + 1, \"native\": native])\n                var text = native"
+      ],
+      [
+        "        let request = VNRecognizeTextRequest()",
+        "        try ProbeTrace.image(\"ocr-input\", image)\n        let request = VNRecognizeTextRequest()"
+      ],
+      [
+        "        try VNImageRequestHandler(cgImage: image).perform([request])",
+        "        try ProbeTrace.configure(request)\n        ProbeTrace.event(\"perform-begin\")\n        do { try VNImageRequestHandler(cgImage: image).perform([request]) }\n        catch { ProbeTrace.error(\"perform-error\", error); throw error }\n        ProbeTrace.observations(request)"
+      ],
+      [
+        "                    guard !native.isEmpty else { throw error }",
+        "                    ProbeTrace.error(\"pdf-ocr-catch\", error)\n                    guard !native.isEmpty else { throw error }"
+      ],
+      [
+        "        let hash = SHA256.hash(data: data)",
+        "        let priorTraceScope = ProbeTrace.threadScope\n        defer { ProbeTrace.threadScope = priorTraceScope }\n        try ProbeTrace.beginInput(data, url.pathExtension)\n        let hash = SHA256.hash(data: data)"
+      ],
+      [
+        "        return ExtractedDocument(title:",
+        "        ProbeTrace.event(\"extract-result\", [\"lines\": blocks.map(\\.text), \"warnings\": warnings])\n        return ExtractedDocument(title:"
+      ]
+    ],
+    "instrumented_extractor_sha256": "b3906133164e13aee697e35182fb5f5fac1041182c10d0a95ecb08e775cfea54",
+    "probe_sha256": "87647a6c25bdd980622e7ae2779c7b4d8804527554959239e6578d6fbcb7102b",
+    "fixture_helper_sha256": "2a23fe2347484aedbf345ac73ce4887f1bb490b2938ce461a9fd068ecad00d4a",
+    "command": [
+      "swiftc",
+      "-target",
+      "arm64-apple-macos14.4",
+      "-O",
+      "-parse-as-library",
+      "-o",
+      "/private/tmp/golos56-matched-queue-probe/ocr-probe",
+      "/private/tmp/golos56-matched-queue-probe/Extractor.swift",
+      "/private/tmp/golos56-matched-queue-probe/Models.swift",
+      "/private/tmp/golos56-matched-queue-probe/Fixtures.swift",
+      "/private/tmp/golos56-matched-queue-probe/Probe.swift",
+      "/Users/alfa/.codex/worktrees/56-ocr-check-diagnostics/golos-meet/research/ocr-check-56/ProbeExecutor.swift"
+    ]
+  },
+  "baseline-test-copy/diagnostic-copy.json": {
+    "ref": "24b75f63bad8429aec00331c4968d6963a09bc09",
+    "source_sha256": "a7bff15b63b1aad4eba1af5d875a0176e6a23acbb6028bc11d40c4a86e668d5d",
+    "patched_sha256": "65d2f9a9d14be2f8a8879975f4c333950d8a00a5b3e7579713f1aa7e619dccb9",
+    "trace_sha256": "c67adf5ef65bed0de3cb40fb28429db104fea2f389319da780838160fc0c081b",
+    "patches": [
+      [
+        "                var text = native",
+        "                ProbeTrace.event(\"pdf-native\", [\"page\": i + 1, \"native\": native])\n                var text = native"
+      ],
+      [
+        "        let request = VNRecognizeTextRequest()",
+        "        try ProbeTrace.image(\"ocr-input\", image)\n        let request = VNRecognizeTextRequest()"
+      ],
+      [
+        "        try VNImageRequestHandler(cgImage: image).perform([request])",
+        "        try ProbeTrace.configure(request)\n        ProbeTrace.event(\"perform-begin\")\n        do { try VNImageRequestHandler(cgImage: image).perform([request]) }\n        catch { ProbeTrace.error(\"perform-error\", error); throw error }\n        ProbeTrace.observations(request)"
+      ],
+      [
+        "                    guard !native.isEmpty else { throw error }",
+        "                    ProbeTrace.error(\"pdf-ocr-catch\", error)\n                    guard !native.isEmpty else { throw error }"
+      ],
+      [
+        "        let hash = SHA256.hash(data: data)",
+        "        let priorTraceScope = ProbeTrace.threadScope\n        defer { ProbeTrace.threadScope = priorTraceScope }\n        try ProbeTrace.beginInput(data, url.pathExtension)\n        let hash = SHA256.hash(data: data)"
+      ],
+      [
+        "        return ExtractedDocument(title:",
+        "        ProbeTrace.event(\"extract-result\", [\"lines\": blocks.map(\\.text), \"warnings\": warnings])\n        return ExtractedDocument(title:"
+      ]
+    ],
+    "production_branch_modified": false
+  },
+  "baseline-test-copy/sqlite-diagnostic-copy.json": {
+    "changes": [
+      {
+        "path": "golos-meet/Core/Knowledge/ProjectStore.swift",
+        "before_sha256": "aecfd1ab6dd3c4a40c36c45a9c605bf89c073ed52bfdb193f3dd436b0bc8ae9a",
+        "old": "        handle = db\n",
+        "new": "        handle = db\n        SQLiteDiag56.created(connection, url)\n"
+      },
+      {
+        "path": "golos-meet/Core/Knowledge/ProjectStore.swift",
+        "before_sha256": "813a37204f4d2ac25ccec66ff31493ae0dc0d4111ba9cb358b6a7023f50c4fdf",
+        "old": "        sqlite3_close(handle)\n",
+        "new": "        SQLiteDiag56.closed(connection)\n        sqlite3_close(handle)\n"
+      },
+      {
+        "path": "golos-meet/Core/Knowledge/ProjectStore.swift",
+        "before_sha256": "077122ce63c70ea32a132bc6c10ddf986bcb2efb72d71a3a76905c28023c1d3e",
+        "old": "        let message = diagnostic.message",
+        "new": "        SQLiteDiag56.failure(connection, operation: operation.rawValue, result: result, extended: extended)\n        let message = diagnostic.message"
+      },
+      {
+        "path": "golos-meetTests/ProjectMemoryUpdateTests.swift",
+        "before_sha256": "c1671405305fc70c7bb9434876e3e0a6d6eba0de0ca03503e786bcb32efa6014",
+        "old": "        store = ProjectStore(url: root.appendingPathComponent(\"knowledge.sqlite\"))",
+        "new": "        SQLiteDiag56.fixture(root, test: Test.current?.name ?? \"unknown\")\n        store = ProjectStore(url: root.appendingPathComponent(\"knowledge.sqlite\"))"
+      },
+      {
+        "path": "golos-meetTests/ProjectMemoryUpdateTests.swift",
+        "before_sha256": "78c98e61c0c658c2bd490c3387b7c3cd219a9e01005f6b3dd1fd6fa26201116d",
+        "old": "    func cleanup() { service.cancel(); try? FileManager.default.removeItem(at: root) }",
+        "new": "    func cleanup() { service.cancel(); try? FileManager.default.removeItem(at: root); SQLiteDiag56.removed(root) }"
+      },
+      {
+        "path": "golos-meetTests/IndexingProductionHooksTests.swift",
+        "before_sha256": "a064ccc15afe18abaad1dc64961f2f2fe348f716c47aee6c584717fed32d6780",
+        "old": "        return root\n",
+        "new": "        SQLiteDiag56.fixture(root, test: Test.current?.name ?? \"unknown\")\n        return root\n"
+      }
+    ],
+    "helper_sha256": "8f14e32faafa12a7c1e5875f0440ee1e25035ba351d1f64011e3eef98f29651c",
+    "branch_production_modified": false
+  },
+  "baseline-test-copy/sqlite-retention-control.json": {
+    "golos-meetTests/ProjectMemoryUpdateTests.swift": {
+      "before_sha256": "92c9fedc047841ab49e087539d6025597b3efbe0df49f2a04d8e77cf145bbf10",
+      "replacements": 1
+    },
+    "golos-meetTests/IndexingProductionHooksTests.swift": {
+      "before_sha256": "8c28eac989605fbf7775b2ff26efd1e360986393a1c6268e009c5c810be7b07a",
+      "replacements": 3
+    }
+  },
+  "candidate-test-copy/diagnostic-copy.json": {
+    "ref": "ee48e1d1f319f29d2a54f4f3d19488f492da061f",
+    "source_sha256": "a7bff15b63b1aad4eba1af5d875a0176e6a23acbb6028bc11d40c4a86e668d5d",
+    "patched_sha256": "65d2f9a9d14be2f8a8879975f4c333950d8a00a5b3e7579713f1aa7e619dccb9",
+    "trace_sha256": "c67adf5ef65bed0de3cb40fb28429db104fea2f389319da780838160fc0c081b",
+    "patches": [
+      [
+        "                var text = native",
+        "                ProbeTrace.event(\"pdf-native\", [\"page\": i + 1, \"native\": native])\n                var text = native"
+      ],
+      [
+        "        let request = VNRecognizeTextRequest()",
+        "        try ProbeTrace.image(\"ocr-input\", image)\n        let request = VNRecognizeTextRequest()"
+      ],
+      [
+        "        try VNImageRequestHandler(cgImage: image).perform([request])",
+        "        try ProbeTrace.configure(request)\n        ProbeTrace.event(\"perform-begin\")\n        do { try VNImageRequestHandler(cgImage: image).perform([request]) }\n        catch { ProbeTrace.error(\"perform-error\", error); throw error }\n        ProbeTrace.observations(request)"
+      ],
+      [
+        "                    guard !native.isEmpty else { throw error }",
+        "                    ProbeTrace.error(\"pdf-ocr-catch\", error)\n                    guard !native.isEmpty else { throw error }"
+      ],
+      [
+        "        let hash = SHA256.hash(data: data)",
+        "        let priorTraceScope = ProbeTrace.threadScope\n        defer { ProbeTrace.threadScope = priorTraceScope }\n        try ProbeTrace.beginInput(data, url.pathExtension)\n        let hash = SHA256.hash(data: data)"
+      ],
+      [
+        "        return ExtractedDocument(title:",
+        "        ProbeTrace.event(\"extract-result\", [\"lines\": blocks.map(\\.text), \"warnings\": warnings])\n        return ExtractedDocument(title:"
+      ]
+    ],
+    "production_branch_modified": false
+  },
+  "candidate-test-copy/overlay-fix.json": {
+    "candidate_ref": "ee48e1d1f319f29d2a54f4f3d19488f492da061f",
+    "overlay_sources": {
+      "LocalDocumentExtractor.swift": "7d1feaf7ca612d69926f2c35252f7f250845fc022486c2de3a7ab0c87a2c9c7a",
+      "LocalDocumentExtractorTests.swift": "4fedea02e6e0116f790bc6f7016882e6544ee8ee96e7ba0919994f19a89f2d86"
+    },
+    "author_checkout_modified": false
+  }
+}

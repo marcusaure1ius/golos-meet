@@ -1,0 +1,1792 @@
+{
+  "scope_count": 177,
+  "scopes": [
+    {
+      "id": "260F6676-5C1C-4711-BF35-488E0743DAF7",
+      "test": "MemoryHistoryFixtureLifecycleTests/throwingHistoryBodyPreservesErrorAndClosesStoreBeforeUnlink()",
+      "sha256": "2b043f9739e7607ec1670ac859c4960ceea86df50275eac899da458af2962c82"
+    },
+    {
+      "id": "7900CE96-0899-4AFA-B837-51FBE30FFAFA",
+      "test": "MemoryHistoryFixtureLifecycleTests/exactJournalFaultDoesNotAuthorizeForeignConnectionOrLaterError()",
+      "sha256": "5bab70949ff5f40273587fd20edd6ec9c18affa1b97e7c8776581b83d10bdafc"
+    },
+    {
+      "id": "50777692-976A-4C15-A32F-1A699BEF7EBD",
+      "test": "SQLiteFixtureLifecycleTests/throwingBodyReleasesStoreAndPreservesOriginalFailure()",
+      "sha256": "e596f922a80407f7333c6170f3fac39b411353cebff54774c073c9fed0f94a1a"
+    },
+    {
+      "id": "BA46EE53-F830-4CB4-99C4-D13B92AEB7BA",
+      "test": "SQLiteFixtureLifecycleTests/cleanupWaitsForLateTaskWriteAndNativeCloseBeforeUnlink()",
+      "sha256": "b3db200ca73c4b07952728301531d482a716dcec2ba8198fe7b9645df70f5d52"
+    },
+    {
+      "id": "2A43097C-8370-41A6-9873-385EC8EF831A",
+      "test": "ProjectMemoryQueueTests/capAndInvalidReplyLeaveCursorUnchangedAndDoNotRetryOnDuplicateEvents()",
+      "sha256": "52d92b4acef27067ed51744314287aa904506dfc2e6a07904d4c49ca4d30978a"
+    },
+    {
+      "id": "18ADC99B-8D86-4693-8E1C-41F4059A7E2A",
+      "test": "ProjectMemoryQueueTests/durableQueueFenceRejectsLateTransportWithoutRelyingOnTaskCancellation(_:)",
+      "sha256": "970b2e9568db0c5b823ecf4e4b1fa566773ade1ac45cf9f0f046be79d5cae31b"
+    },
+    {
+      "id": "E8C97A47-EF1F-4F6B-8B96-7A723E15BDE5",
+      "test": "ProjectMemoryQueueTests/durableQueueFenceRejectsLateTransportWithoutRelyingOnTaskCancellation(_:)",
+      "sha256": "48f86aa16f793fb5afe18646bdda260b7e47799958eb07c2c0ea7e203e3da303"
+    },
+    {
+      "id": "A63409FF-65C2-4EA0-8CC5-D4F3AAC602AA",
+      "test": "ProjectMemoryQueueTests/durableQueueFenceRejectsLateTransportWithoutRelyingOnTaskCancellation(_:)",
+      "sha256": "3b407c816aa96f5bb7502be303ad7c59cfc5c5e57b0987900080664c3632b2a0"
+    },
+    {
+      "id": "8C06F4AF-0E4F-4107-AC03-A73BB65D0656",
+      "test": "ProjectMemoryQueueTests/durableQueueFenceRejectsLateTransportWithoutRelyingOnTaskCancellation(_:)",
+      "sha256": "df175b71c7e285fa662ee12f52f9d95096dd1abf018078f3679ff8964f871b77"
+    },
+    {
+      "id": "A0C6C972-4953-4428-A07D-AEA170E6C060",
+      "test": "ProjectMemoryQueueTests/durableQueueFenceRejectsLateTransportWithoutRelyingOnTaskCancellation(_:)",
+      "sha256": "eaf2250f7692eb01755b74c6afc6e6cd69970b286a429f01b5fdcfa90781c27e"
+    },
+    {
+      "id": "F5683818-E43F-4B15-AFEB-30EC9AFCD86B",
+      "test": "ProjectMemoryQueueTests/durableQueueFenceRejectsLateTransportWithoutRelyingOnTaskCancellation(_:)",
+      "sha256": "13cf5aedd91ca73057a97937af0a04add35b9edfcad913e877fa4287dc0c8ad3"
+    },
+    {
+      "id": "5B5159BE-5935-4211-8AA2-830B1E9E17C2",
+      "test": "ProjectMemoryQueueTests/durableQueueFenceRejectsLateTransportWithoutRelyingOnTaskCancellation(_:)",
+      "sha256": "a853e1634a49f91acc867c257be19371c46372904c2725cee3ca45f77ea16147"
+    },
+    {
+      "id": "9220D05B-ED96-4CAA-95E8-97EE0B5247CF",
+      "test": "ProjectMemoryQueueTests/durableQueueFenceRejectsLateTransportWithoutRelyingOnTaskCancellation(_:)",
+      "sha256": "1f5f38276b55185f398fd9969aea96a38d8267f7aef6ca86d1c25ec7ee3c0925"
+    },
+    {
+      "id": "49162F72-14BB-4216-AF4D-C3152FD7DBEB",
+      "test": "ProjectMemoryQueueTests/injectedDeadlineFencesLateReplyAndDoesNotStartOverlappingAttempt()",
+      "sha256": "5d6b4d46a1e80c299bb51aef79634f4b7f7eeafc8f145e000682a5c9e4f9b58f"
+    },
+    {
+      "id": "4395EC38-F6BE-4C30-87CD-3C750CFBEB21",
+      "test": "ProjectMemoryQueueTests/queueFenceRejectsSkippedChunksEvenIfCallerClaimsWholeBatch()",
+      "sha256": "6a9595ab278dbd4c2eea78e9f46aa342a76b2aa612550e4486d7284b94e025fb"
+    },
+    {
+      "id": "F00E75DA-EFF3-45B2-9DF9-EE291DEED267",
+      "test": "ProjectMemoryQueueTests/oneTimeConsentIsFreshForEachBatchAndNotRestoredAsBackgroundPermission()",
+      "sha256": "9c0f13c9ec4bbf5fb80c0acd04365d6680e327ff2cf1b207f0cdbad2b997af95"
+    },
+    {
+      "id": "52D460E5-6CD0-44D1-A452-041102DD393C",
+      "test": "ProjectMemoryQueueTests/manualHeadSurvivesQueuedExtractionAndOnlyAffectedJobStartsNewCycle()",
+      "sha256": "09e55b1f73250b7764b26e09450e84ec7735db6f4dfee41aac6e5a8286fe1176"
+    },
+    {
+      "id": "35DA6ECF-3F37-49D8-96A5-6AFA633ED92B",
+      "test": "ProjectMemoryQueueTests/workerRechecksAllOwnersBeforeEveryTransportAttempt()",
+      "sha256": "b551a01943bd216f1e01dcd8e6f30117de0cc889c80d327bb56d971fef94243c"
+    },
+    {
+      "id": "D10E7D21-BC6B-4CB8-91FD-B66EB1645934",
+      "test": "ProjectMemoryQueueTests/externalModelRetirementResetsOnlyDependentCoverageAndKeepsOwnBatchHistory(_:_:)",
+      "sha256": "af3899659da0f454f9d0dc503624ab8a835a1dee7e80e8f1bda60bd073f881b9"
+    },
+    {
+      "id": "71B291D8-E94D-4CB5-A9A9-CE664C0D3ECC",
+      "test": "ProjectMemoryQueueTests/externalModelRetirementResetsOnlyDependentCoverageAndKeepsOwnBatchHistory(_:_:)",
+      "sha256": "d64e5fdb9ee65bc1cb08d93abba14ff4df4d0fd7044b80acc69ef7839635ad4b"
+    },
+    {
+      "id": "624EC92D-5E6B-49BE-92DF-1CBC2155E0F7",
+      "test": "ProjectMemoryQueueTests/externalModelRetirementResetsOnlyDependentCoverageAndKeepsOwnBatchHistory(_:_:)",
+      "sha256": "1efc75b18c0b81e2d3fa156f93fe93df1c3380c600535227e1cc0df36c871b1d"
+    },
+    {
+      "id": "2519813E-E57B-4830-B36D-660F10E10E0B",
+      "test": "ProjectMemoryQueueTests/externalModelRetirementResetsOnlyDependentCoverageAndKeepsOwnBatchHistory(_:_:)",
+      "sha256": "bd79c05b93f7c41b7aeba0369d1f839deaa181bf4f8b0ccb466a57f39d2f9937"
+    },
+    {
+      "id": "9E3A2A51-9384-41BD-AD20-F72C848DABC4",
+      "test": "ProjectMemoryQueueTests/invalidBatchRollsBackJournalAndCursorWhileErrorWaitsForExplicitRetry()",
+      "sha256": "ee1d5e8466aafff76dc549c92871c2f58a09b2da3691616366621dd8668379cf"
+    },
+    {
+      "id": "40F3C1AC-5637-48DE-B317-2B387E94E53F",
+      "test": "ProjectMemoryQueueTests/longSourceCoversEveryChunkWithDurableBatchesAndNoSelfRegeneration()",
+      "sha256": "04455d7742ae5f266362c09d815b2cbd0d96a1bd307bd74438e007cbcc69a048"
+    },
+    {
+      "id": "EA721B23-4AF1-4538-AEA4-9FC6DE7815C9",
+      "test": "ProjectMemoryQueueTests/sequentialWorkerUpdatesKeepConflictingDeadlinesAndCompletionAsClaim()",
+      "sha256": "09c12745ec3d864af54c55f88aff07f45ec3730c24205b76c7a5a9ca5e69493f"
+    },
+    {
+      "id": "419D8B73-04E1-40E8-A9B2-2A348A2C5FC9",
+      "test": "ProjectMemoryQueueTests/latestDisabledConfigurationWinsQueuedEnableAndBridgeStop()",
+      "sha256": "3e4007ffda8c62eb10d15c3104f227d872739edaa2562fe94aeda48018afc9de"
+    },
+    {
+      "id": "92524DD8-CF34-4BFE-9898-D7901B33B9CF",
+      "test": "ProjectMemoryQueueTests/restartMidSourceKeepsCompletedCursorAndFencesNoncooperativeOldRun()",
+      "sha256": "c43bef474b8148087c0110ff7733387c1eea6f09db21c2f7aa5f488b3143d03b"
+    },
+    {
+      "id": "BC161AF4-781D-4458-858A-CD9CDB4B5038",
+      "test": "ProjectMemoryQueueTests/roundRobinDoesNotStarveShortSourceBehindManyBatches()",
+      "sha256": "1cead0b68dca4d6f74ed0d9f998173d58f076f450578b63457f9ff3e7fd65f1b"
+    },
+    {
+      "id": "7187C8EE-8FA1-4AC3-B09A-80E8587A9BB2",
+      "test": "ProjectMemoryQueueTests/rawAndDerivedPrivateOwnersDenyWorkerWithoutReadingKeysOrCallingTransport()",
+      "sha256": "a705dc08ecbce6bb698b28aa16386b16cf018ff2ab6a8d457dff1f281cbd3524"
+    },
+    {
+      "id": "FDD6BD4F-8ADC-46DE-AF15-8F73473D6320",
+      "test": "ProjectMemoryQueueTests/cancelRetryDrainsNoncooperativeAdapterBeforeStartingNextAttempt()",
+      "sha256": "1b71f35933617474d6993192f073d6ba2f060faf9a5c359561ee796a8468f40b"
+    },
+    {
+      "id": "A25BD2BB-241A-412F-89F8-63037D6EAE34",
+      "test": "ProjectMemoryQueueTests/concreteMetadataBridgeReceivesReadyEventWithoutLaunchingApplication()",
+      "sha256": "ed838f0a14a890b59fdb22e23cff82c8479e0e667533c2faa31108c981055ec2"
+    },
+    {
+      "id": "117217DC-8536-4870-BFA1-B8A37247D24F",
+      "test": "ProjectMemoryQueueTests/ownRetirementExemptionDoesNotHideLaterExternalRetirementOfItsPublisher()",
+      "sha256": "5a220d58c88722fc7ceb2a335d96c6157054e5fa2222f7b957e9f2ba9a993728"
+    },
+    {
+      "id": "977FD48B-9BA4-44EA-ABAB-4A6CF5B8E783",
+      "test": "ProjectMemoryQueueTests/changeBetweenBatchesStartsNewCycleAndNeverReportsOldPartialAsComplete(_:)",
+      "sha256": "187b80b4fabf8e83f94fa049b27b9969b4f47a3dae414f3171d5e66a10e08d4e"
+    },
+    {
+      "id": "710E823D-FB3B-4713-943D-63097074EB82",
+      "test": "ProjectMemoryQueueTests/changeBetweenBatchesStartsNewCycleAndNeverReportsOldPartialAsComplete(_:)",
+      "sha256": "d70d632727e1f888409c2de5cc8b2fd4774b4ed0cdd50ea75af28e410e679706"
+    },
+    {
+      "id": "780331AF-5962-418A-88B5-C6420080045D",
+      "test": "ProjectMemoryQueueTests/metadataAndIndexSubscriptionsCoalesceAndSettingsCanStopThenResumeSameWorker()",
+      "sha256": "82ecfeac8b6e552c602d2e97fc33f320a9945b5815b966b2dbb26fedfd41d18f"
+    },
+    {
+      "id": "D6DDB729-5D04-4E61-B4EE-A3748068BD9E",
+      "test": "ProjectMemoryQueueTests/insufficientCoveragePersistsAndRestartDoesNotAskModelAgain()",
+      "sha256": "598de1e97b7e36d24d8eacedce276dbaf146e788bfcaa83c066e1edf56672dbd"
+    },
+    {
+      "id": "74BE32A0-EAE3-4C67-9DBE-C81FEA7EB99E",
+      "test": "ProjectMemoryQueueTests/preexistingExactJournalBatchRecordsUnchangedDispositionWithoutSendingAgain()",
+      "sha256": "74edba5cf29c4d125f3156115f0325100aaf875ffde8ea547bf0d4fdc7ba17ff"
+    },
+    {
+      "id": "5935F77B-7352-4388-8C6F-070D97177BD6",
+      "test": "ProjectMemoryQueueTests/discoveryHasBoundedHotWindowAndDeferredJobIsClaimableWithoutDroppingMetadata()",
+      "sha256": "e4c9a0f94200a941de1a406eeb3e699c71727d679b58efb20aabccec62c048d4"
+    },
+    {
+      "id": "DC04C631-47EC-463C-90AE-0118ED0609D9",
+      "test": "ProjectMemoryQueueTests/adaptiveJSONBudgetProcessesLongQuotedSourceWithoutSilentSkip()",
+      "sha256": "779787ba6cb4dbb207efcccd5edc273af0710b51810a35e5acac47bf98380cad"
+    },
+    {
+      "id": "B18F8860-2E77-47B6-8FA4-E37951EB6345",
+      "test": "ProjectMemoryQueueTests/retirementOfTransitiveAncestorResetsCoverageEvenWhenItWasNotSelectedAsMemory()",
+      "sha256": "685d011dadba39f4d6179999b1fa67fa006ea28f88ad4647744aae04a40fac8c"
+    },
+    {
+      "id": "8C985978-FB6E-4C25-A9EE-67DDE7DA6BF3",
+      "test": "ProjectMemoryQueueTests/changedAncestorInvalidatesPendingExactConsentAndLegacyCoverageIsResetOnce()",
+      "sha256": "294bd2e7ab3c9f6eb8bec9ec7e156e063b34ace520b3ce463502baa79a510a4f"
+    },
+    {
+      "id": "50C6F8D6-0326-43BC-A4EF-5B2EB3482DEB",
+      "test": "SQLiteFaultExpectationTests/allowanceDoesNotAbsorbForeignLateExtraOrMismatchedFault(_:)",
+      "sha256": "29650e182c2514fa2fdbe593d47dee43ee727b537d920f193ca1ffecb9df8605"
+    },
+    {
+      "id": "172C8556-2595-406F-A0F3-58A4B115E32E",
+      "test": "SQLiteFaultExpectationTests/allowanceDoesNotAbsorbForeignLateExtraOrMismatchedFault(_:)",
+      "sha256": "100dcf247b324f399bf16061e571535baa518f7eaf82679ab487f6bb08d240e5"
+    },
+    {
+      "id": "DB9C9872-FF20-45A4-AC68-B8A000750ABF",
+      "test": "SQLiteFaultExpectationTests/allowanceDoesNotAbsorbForeignLateExtraOrMismatchedFault(_:)",
+      "sha256": "b5f66a24e80deceb33a2e95d968251e46820d0b86e24138efb2bad0ed414bb1f"
+    },
+    {
+      "id": "90661914-CD54-4245-8B1A-7628992E868C",
+      "test": "SQLiteFaultExpectationTests/allowanceDoesNotAbsorbForeignLateExtraOrMismatchedFault(_:)",
+      "sha256": "885ec7d6adc7272f76bc84d544c2948845388d2e49f888a8bf8deb4d9bcf87f2"
+    },
+    {
+      "id": "0ABBD1EE-6C08-420A-8422-F180281E15AE",
+      "test": "SQLiteFaultExpectationTests/allowanceDoesNotAbsorbForeignLateExtraOrMismatchedFault(_:)",
+      "sha256": "e054c6ce15f78d1dd54ca5988dc74627a7fb1bdce7d243e6a211b46a4bb95ab1"
+    },
+    {
+      "id": "F787E91B-E001-414D-AA66-4EE73209A453",
+      "test": "SQLiteFaultExpectationTests/allowanceDoesNotAbsorbForeignLateExtraOrMismatchedFault(_:)",
+      "sha256": "5861153c40fa2a3b34835a7814c8a9db2ef8173dd8fdaece0339d21849b375f0"
+    },
+    {
+      "id": "B272FA48-1A7D-447A-8323-B5C3F7135F14",
+      "test": "SQLiteFaultExpectationTests/twelveOverlappingNativeScopesKeepSingleUseAcceptancesSeparate()",
+      "sha256": "06c7a63e37718640b5d0e0f11eb3e0c27fd5ee50d783e03f4c798ef628938312"
+    },
+    {
+      "id": "26AFE605-9FF1-4B13-B828-280477EC9714",
+      "test": "SQLiteFaultExpectationTests/twelveOverlappingNativeScopesKeepSingleUseAcceptancesSeparate()",
+      "sha256": "5b6809490687ccf3b0e229b854faa1c1c0365e9f7e01941adfee130ac7ee4eb4"
+    },
+    {
+      "id": "F8460391-E39B-4227-9A08-9C87C5039077",
+      "test": "SQLiteFaultExpectationTests/twelveOverlappingNativeScopesKeepSingleUseAcceptancesSeparate()",
+      "sha256": "6d87c878846413c2e7db29d887c8122ef46ac28c9af9bf7d637c1f37d3757fdf"
+    },
+    {
+      "id": "C55A5D58-0F85-4874-B13C-D5179A72D126",
+      "test": "SQLiteFaultExpectationTests/twelveOverlappingNativeScopesKeepSingleUseAcceptancesSeparate()",
+      "sha256": "4a87911f1f15798a9a31279c7529697c40979474d542564d7fef64a5aed41f59"
+    },
+    {
+      "id": "3D8C3011-FEA8-4855-9E70-8AF635DED1FB",
+      "test": "SQLiteFaultExpectationTests/twelveOverlappingNativeScopesKeepSingleUseAcceptancesSeparate()",
+      "sha256": "7884a41331deceae1d4da0e62e7fdc49df654aad1a5fde6b7d68fab8316d8742"
+    },
+    {
+      "id": "EB6F0902-CDA3-4AF2-A25A-3D4E50DEB321",
+      "test": "SQLiteFaultExpectationTests/twelveOverlappingNativeScopesKeepSingleUseAcceptancesSeparate()",
+      "sha256": "bc5288f578fb45d16dd5073ef82bcf05af0430245b965479bfb13ef451dd8ab0"
+    },
+    {
+      "id": "5AA79737-377C-40F1-9797-1C6F9DFA5665",
+      "test": "SQLiteFaultExpectationTests/twelveOverlappingNativeScopesKeepSingleUseAcceptancesSeparate()",
+      "sha256": "af70f0487771c93618a87c6e88605a730d924c748c37c346fb360fc00aee297c"
+    },
+    {
+      "id": "91D9D006-88B0-42F9-8AAA-10F19DDFB0A5",
+      "test": "SQLiteFaultExpectationTests/twelveOverlappingNativeScopesKeepSingleUseAcceptancesSeparate()",
+      "sha256": "217f9133599796b0eae062dc359854f9fc2a9c760f2573d79b64b33460a73b1a"
+    },
+    {
+      "id": "06BC4F0B-886C-446E-81DD-AD6CDC1FFA96",
+      "test": "SQLiteFaultExpectationTests/twelveOverlappingNativeScopesKeepSingleUseAcceptancesSeparate()",
+      "sha256": "e55421d74048de48fc28e112660c7dd4001cb563b526eda37254d9c004aaf0b6"
+    },
+    {
+      "id": "52C60420-392A-4B0A-8EBA-44ED69EBC2D8",
+      "test": "SQLiteFaultExpectationTests/twelveOverlappingNativeScopesKeepSingleUseAcceptancesSeparate()",
+      "sha256": "a47203878a93850930225b7c56cccf5851a317729ca33ec3fe0b649b25c017f0"
+    },
+    {
+      "id": "00A8ADCB-5B28-4D60-969A-2227AF232FDE",
+      "test": "SQLiteFaultExpectationTests/twelveOverlappingNativeScopesKeepSingleUseAcceptancesSeparate()",
+      "sha256": "9b9a64d3d40ef3c3e4e51684a79589c30504dce788b0a5eddd2ce582eef410a6"
+    },
+    {
+      "id": "E9349650-F566-4C56-9978-5A8860125DF7",
+      "test": "SQLiteFaultExpectationTests/twelveOverlappingNativeScopesKeepSingleUseAcceptancesSeparate()",
+      "sha256": "4f0d1e283ab6b46687c03c63f512b9b41f0c7270729406b1d5588789e574885b"
+    },
+    {
+      "id": "A7DED875-78F0-4D23-9082-CEC9F8010BEF",
+      "test": "SQLiteFaultExpectationTests/nestedExpectationRejectsMissingOuterFaultAfterInnerConsumedSoleEvent()",
+      "sha256": "09f9f10f5dba6e2f5656331f36ca14c95c949d76bedf5b42eff49187375e93f1"
+    },
+    {
+      "id": "B0409A47-C4FA-42C6-AB94-095AD5296682",
+      "test": "SQLiteFaultExpectationTests/exactOneExpectationRejectsMissingAndDuplicateNativeFaults(_:)",
+      "sha256": "2841538026a65753b475321a65963375cba143988f3c52ff28f8345fa815aac6"
+    },
+    {
+      "id": "4F3761C4-4705-492C-BB4C-E446686D15EC",
+      "test": "SQLiteFaultExpectationTests/exactOneExpectationRejectsMissingAndDuplicateNativeFaults(_:)",
+      "sha256": "f27de68eefe7c9281f384583d9f13c4c6f2de21aec4f416a1d45dc2b1aaab6f8"
+    },
+    {
+      "id": "87723F1E-B6B2-43B5-ACE1-C0145791D349",
+      "test": "SQLiteFaultExpectationTests/thrownBodyKeepsOriginalErrorAfterAcceptingOneNewFault()",
+      "sha256": "18093f4124b8a656dc186fa93881c45fba6a0adc6959753fb9ee4d4cd1527064"
+    },
+    {
+      "id": "7BAA50CC-0FE4-4A78-ADC0-B77E25991B26",
+      "test": "SQLiteFaultExpectationTests/nestedExpectationsAcceptTwoDistinctNativeFaults(_:)",
+      "sha256": "20b7f3ef274b4faa42102f5bba52d53d22a1a14be634d04127853c5c7e6e8a63"
+    },
+    {
+      "id": "42F3C26B-9AF7-472B-B628-DCDD470D62A8",
+      "test": "SQLiteFaultExpectationTests/nestedExpectationsAcceptTwoDistinctNativeFaults(_:)",
+      "sha256": "0566f28e658fca1ab82ba6f24ecaba4f44782ed5b57ba7f80172cdbfc768b222"
+    },
+    {
+      "id": "2BC080D1-34C8-4221-A919-BC4C11AAE79D",
+      "test": "QuestionFixtureLifecycleTests/throwingAndCancelledCallbacksReleaseFixtureBeforeRootRemoval(_:)",
+      "sha256": "bf2f170abd58179863ecde200b89fa4180cc413569d2c023ebb74dbc270aa9c0"
+    },
+    {
+      "id": "52A4E4BC-D03B-412A-AF06-CEAAA6B0F58F",
+      "test": "QuestionFixtureLifecycleTests/throwingAndCancelledCallbacksReleaseFixtureBeforeRootRemoval(_:)",
+      "sha256": "4afb1eede870f958cfdadedf91b9a4a0763bbe6f58156ca1e0dba8f360ec7475"
+    },
+    {
+      "id": "9618F3A0-232B-4633-8675-6F3934CCD116",
+      "test": "KnowledgeQuestionServiceTests/finalTransportGateRejectsChangesAfterConsent(_:)",
+      "sha256": "9f6c47824c217ab2845131644b20f2958733aaf883adf8f991bdc05bc2537106"
+    },
+    {
+      "id": "70EBFF0C-3964-476E-8038-DDB2AF9F881F",
+      "test": "KnowledgeQuestionServiceTests/finalTransportGateRejectsChangesAfterConsent(_:)",
+      "sha256": "6ca570ba95b7ad096d3b27ca20448b30c49d0cda505c4410e14927ca70caf6e0"
+    },
+    {
+      "id": "B1816366-1D58-4080-81C0-5DC28DC02839",
+      "test": "KnowledgeQuestionServiceTests/finalTransportGateRejectsChangesAfterConsent(_:)",
+      "sha256": "0e124342939d59b82784306af96617a0b919993c3cc41dfd741201fbe4a1aeed"
+    },
+    {
+      "id": "9F3AD1B8-A565-40A8-9063-A498D678D311",
+      "test": "KnowledgeQuestionServiceTests/finalTransportGateRejectsChangesAfterConsent(_:)",
+      "sha256": "171f06047f8050002e21a3b44ee33e36d94bc185fcbb54c7b79530cb5cbebb1d"
+    },
+    {
+      "id": "733991DA-C820-4849-BB0C-9BB692A7FDCD",
+      "test": "KnowledgeQuestionServiceTests/finalTransportGateRejectsChangesAfterConsent(_:)",
+      "sha256": "19c61fd5e156a6ad82d68639d5ca0a6cb97c50fbf44784d70649c088ba1209fe"
+    },
+    {
+      "id": "C0C9BA60-9B94-4749-A79B-7F303AA2E5F2",
+      "test": "KnowledgeQuestionServiceTests/finalTransportGateRejectsChangesAfterConsent(_:)",
+      "sha256": "8cf5bb8947067e80f85b645f66699891acee01a7630274387280d1ea43e4501c"
+    },
+    {
+      "id": "E9FC00DB-8B6D-4757-A6C3-5C88AA76CE7B",
+      "test": "KnowledgeQuestionServiceTests/finalTransportGateRejectsChangesAfterConsent(_:)",
+      "sha256": "5af5c9f67c32c8f83197168b554666e7673579d4d1d17c0579b882842d13b4c3"
+    },
+    {
+      "id": "2328AAEB-7434-4F24-8B6C-85FA3D86192D",
+      "test": "KnowledgeQuestionServiceTests/finalTransportGateRejectsChangesAfterConsent(_:)",
+      "sha256": "95bda5f80bcd11fec8bacb3a9a42e8351ebbb3632f20456bf0bc99612cdbdc37"
+    },
+    {
+      "id": "ED3D57A4-449F-425C-928B-D295BD18213C",
+      "test": "KnowledgeQuestionServiceTests/finalTransportGateRejectsChangesAfterConsent(_:)",
+      "sha256": "275d9150764b2db69311db81e86b2e88e2cb9ad2df45482b685c2cbff58127a7"
+    },
+    {
+      "id": "803B3B9D-1B80-431C-A1C2-20A24992A8B8",
+      "test": "KnowledgeQuestionServiceTests/finalTransportGateRejectsChangesAfterConsent(_:)",
+      "sha256": "aef129a3af578f267a2d947c4b3a2ed507b410cbab1a5344df88fe618315afe8"
+    },
+    {
+      "id": "A9EF96B0-595C-4120-BCEA-7079AD1E78B9",
+      "test": "KnowledgeQuestionServiceTests/meetingCitationKeepsExactReplicaAndRejectsTranscriptRecreation()",
+      "sha256": "855fccbe927da450b8b2fbed8cbcdc2a4362980c04f9dae741c7e7ca4d108364"
+    },
+    {
+      "id": "68A95DEE-7F9B-46E8-83A1-0591C4702489",
+      "test": "KnowledgeQuestionServiceTests/consentIsSingleUseAndBoundToExactQuestionProjectAndService()",
+      "sha256": "720182032dbe8851420d5e871d0b04fafa4fa19ddb102b5eedd73db8f9c41885"
+    },
+    {
+      "id": "435377EB-7D33-4318-95DD-99B1827F41A4",
+      "test": "KnowledgeQuestionServiceTests/answerValidationAndProviderErrorsAreExplicit(_:)",
+      "sha256": "378386863cadb4b07a06d13555370f3d99c9d8cc8600747c4c56a08f58e8b70b"
+    },
+    {
+      "id": "64AE71D0-CB55-40FB-89DD-959A89F5129F",
+      "test": "KnowledgeQuestionServiceTests/answerValidationAndProviderErrorsAreExplicit(_:)",
+      "sha256": "ed64bb32158955c1db25e9684b88b8e59cfc3b8a8c4a30f9cb01dbb9589b585c"
+    },
+    {
+      "id": "95CF7939-8374-4DCA-8FF2-04E4471609E3",
+      "test": "KnowledgeQuestionServiceTests/answerValidationAndProviderErrorsAreExplicit(_:)",
+      "sha256": "4ad7b58d4f6c62eb0c7c22025249e122901fae37babae6f75f2109a0e8d12fc9"
+    },
+    {
+      "id": "B64EAFC7-29DB-42E7-82A5-E6F8EB93AF8A",
+      "test": "KnowledgeQuestionServiceTests/answerValidationAndProviderErrorsAreExplicit(_:)",
+      "sha256": "56b4e8888b8cbf232216b67cad6cffe7b56eaa350f85c65e4a1e284def5f4a10"
+    },
+    {
+      "id": "1D2E4BBF-7287-4296-9563-6ACF21952474",
+      "test": "KnowledgeQuestionServiceTests/answerValidationAndProviderErrorsAreExplicit(_:)",
+      "sha256": "ce82aec2d8f4cbb509b75b5fc68fd58483f50eb039b5e9ac7120973603aa23e4"
+    },
+    {
+      "id": "18D7A442-35C2-4F3E-9594-958C1E65C889",
+      "test": "KnowledgeQuestionServiceTests/answerValidationAndProviderErrorsAreExplicit(_:)",
+      "sha256": "72cfa2b3cfe05966b970b57e555b8fe0f326dfb621fd33337afe8f060f1c044b"
+    },
+    {
+      "id": "31C2F8D8-2ED9-483B-8001-F04BB1671B42",
+      "test": "KnowledgeQuestionServiceTests/answerValidationAndProviderErrorsAreExplicit(_:)",
+      "sha256": "fc4b2d1a911c84835ad829ed29335d4fc67e5c8b7b3edbd5b2dc81c7331f0236"
+    },
+    {
+      "id": "4D20B75D-F6E0-4048-B65C-808DCA481727",
+      "test": "KnowledgeQuestionServiceTests/cancellationAndLateRepliesCannotPublish(_:)",
+      "sha256": "f84c9cf28236826ef6c178879e2c99f08c5a52dc7583eb27ee924a5056a10bb7"
+    },
+    {
+      "id": "9215F99E-F757-4D55-9E51-8947F0751455",
+      "test": "KnowledgeQuestionServiceTests/cancellationAndLateRepliesCannotPublish(_:)",
+      "sha256": "135ebd17d522ed9c97b2a3051fc295757325c327b4f9bf1220e6fcd1b9443244"
+    },
+    {
+      "id": "CA75779E-6B76-4735-8AB3-CF5BA962F7A7",
+      "test": "KnowledgeQuestionServiceTests/cancellationAndLateRepliesCannotPublish(_:)",
+      "sha256": "31ba6914170677b28642d5668e43956e42fe88a254a33186a046521e045c85ed"
+    },
+    {
+      "id": "848ED6E5-C03F-4910-85A8-D602DBDB7742",
+      "test": "KnowledgeQuestionServiceTests/cancellationAndLateRepliesCannotPublish(_:)",
+      "sha256": "9a2cb0dfbf95fc027fbb83595821882f2fa6ddd71aba6fdafba1c52919723524"
+    },
+    {
+      "id": "F691A67C-64F8-4761-AD7B-72841A6D92F6",
+      "test": "KnowledgeQuestionServiceTests/cancellationAndLateRepliesCannotPublish(_:)",
+      "sha256": "5005fb19c79774cb346598ace7ab7d2fd814b43ebb2d32122699ca3593962e4c"
+    },
+    {
+      "id": "E5FC4241-4023-4FAB-BDC7-B43E23ADEAE5",
+      "test": "KnowledgeQuestionServiceTests/changesDuringAsynchronousRetrievalCannotProduceReusablePreview(_:)",
+      "sha256": "b88641d1d18d94dc1a3f24ca29bfa6f8231c8d2ad0fe83894b49df0a185b584a"
+    },
+    {
+      "id": "EB278083-E3BE-4F4D-AD5B-50E436BD9CF1",
+      "test": "KnowledgeQuestionServiceTests/changesDuringAsynchronousRetrievalCannotProduceReusablePreview(_:)",
+      "sha256": "de3e8e09d518b7787c001ec4e3cb77cf3d2df4ce710fa204286f9613dfe49af4"
+    },
+    {
+      "id": "E7631B9B-0CB3-46E6-841A-16CA816502BA",
+      "test": "KnowledgeQuestionServiceTests/changesDuringAsynchronousRetrievalCannotProduceReusablePreview(_:)",
+      "sha256": "044889ddb1d972579f8df0658d27db2b5cd5d51fb07913b9f1b9d626db1d5106"
+    },
+    {
+      "id": "D3F16F06-43B2-4078-81C1-55BFE317743B",
+      "test": "KnowledgeQuestionServiceTests/changesDuringAsynchronousRetrievalCannotProduceReusablePreview(_:)",
+      "sha256": "f8451686bcc4b223c5f2292039e60eb81a32b3d61ef244312832a95348920b40"
+    },
+    {
+      "id": "49990FDA-6D3E-4E0F-B00B-738562C6EAB4",
+      "test": "KnowledgeQuestionServiceTests/everyOwnerMustBeKnownAndAllowed(_:)",
+      "sha256": "e926dd008cb255b554e5a5fbec640a01c1b375e0f539261d7d81691a0eaf5ade"
+    },
+    {
+      "id": "B6A3C89D-4023-49E2-9957-C9F36E6D698A",
+      "test": "KnowledgeQuestionServiceTests/everyOwnerMustBeKnownAndAllowed(_:)",
+      "sha256": "566df71cc4149d9570c33cfcc9facd8f47ec4f26d576adbd3320c4dd0f278bd7"
+    },
+    {
+      "id": "4206D483-BC10-4E0E-B0B9-A10BFD6C1C90",
+      "test": "KnowledgeQuestionServiceTests/retrievalEgressAnswerAndOpeningUseOnlySelectedVersionedFragmentsWithoutWeightsOrNetwork()",
+      "sha256": "1c0aba91cd36bd285863aded88975dbfd4f0598a1ae69e91a1e0bc2739d29c7b"
+    },
+    {
+      "id": "9AE2CAFA-11B8-430F-B003-31FAC2A76F80",
+      "test": "KnowledgeQuestionServiceTests/emptyContextAndInvalidQueriesNeverReachTransportAndPreviewIsBounded()",
+      "sha256": "d30ae65f4e513a121f1bbb6cba38ffb110f5c6b3e6970929ca03c477dde9a431"
+    },
+    {
+      "id": "4996755B-1EAB-4328-B7EC-F42604A87CB3",
+      "test": "LocalIndexingNativeTests/nativeQueueResumesAfterInstallationWatchesTranscriptAndKeepsSameModelCache()",
+      "sha256": "7067ed3826e834ba469dc1e7ea33444c434882ae5ec418851c0f6b1454438ad0"
+    },
+    {
+      "id": "15B0534F-CEF1-4C7F-861C-1DD1C6C1182C",
+      "test": "MeetingAssignmentRuntimeTests/cancellationSurvivesRestartAndLateNoncooperativePublisherCannotRestoreLinks()",
+      "sha256": "f406bcb5cc0fbad31541f9f19c7fda751fb61c48b76ab974837cf4f821eab510"
+    },
+    {
+      "id": "0FEE681E-9060-4928-9E62-A988ECB9FE24",
+      "test": "MeetingAssignmentRuntimeTests/indexUpdateBridgeRunsWhileNoScreenIsOpenAndManualEventsDoNotReindex()",
+      "sha256": "0ecb299011014565ee219613bf1a13761450ad6703cede10cc467f8dec607c42"
+    },
+    {
+      "id": "71876F64-8C18-4424-988F-07857FBC6393",
+      "test": "MeetingAssignmentRuntimeTests/unrelatedIndexCompletionAutomaticallyRetriesSupersededPlanWithoutUserAction()",
+      "sha256": "52549dcc363fbdae5fcebef4a01b28322b39b5e7f9e59e6f69c613faeb01fc67"
+    },
+    {
+      "id": "2ED77185-C117-4CA3-8AF5-D34E7D5B7A98",
+      "test": "MeetingAssignmentRuntimeTests/openingSavedEvidenceRequiresCurrentRuntimeAndBothSourceRevisions(change:)",
+      "sha256": "6818ded47dc1a66d2ca1044895d8c7d3a40f50de1ae13d2ccc71a41276ce1908"
+    },
+    {
+      "id": "C9987447-B19D-40C6-8210-6DF856E7CD8B",
+      "test": "MeetingAssignmentRuntimeTests/openingSavedEvidenceRequiresCurrentRuntimeAndBothSourceRevisions(change:)",
+      "sha256": "4bbcce1d261b809c43b9d5ad0ed0a79c80f2d2082d6316be2e0c90f8d3b17ee6"
+    },
+    {
+      "id": "C218619B-0A02-4C68-A05B-DCB308854983",
+      "test": "MeetingAssignmentRuntimeTests/openingSavedEvidenceRequiresCurrentRuntimeAndBothSourceRevisions(change:)",
+      "sha256": "19bd1fe32f97f85968e50efa6490b146c67aa88b5d07149ca1c6be176e33a357"
+    },
+    {
+      "id": "6A72A316-3D81-4960-8C39-BB48D0536501",
+      "test": "MeetingAssignmentRuntimeTests/openingSavedEvidenceRequiresCurrentRuntimeAndBothSourceRevisions(change:)",
+      "sha256": "0f210223c00bafbe70895bea262943f5a471bb553725ff3b71cb6d92d8fa841a"
+    },
+    {
+      "id": "F8902EE0-E040-4954-9796-465F63B8DF41",
+      "test": "MeetingAssignmentRuntimeTests/openingSavedEvidenceRequiresCurrentRuntimeAndBothSourceRevisions(change:)",
+      "sha256": "f553666469a11044a529b8248b4db7a359290872693f89cef56082363e8713c5"
+    },
+    {
+      "id": "ABF2F9FA-D2EB-4675-AC0B-B56F60565E26",
+      "test": "MeetingAssignmentRuntimeTests/failureDoesNotStarveFollowingMeetingsAndChangedSourceAutomaticallyRetries()",
+      "sha256": "c67a634f0e4f25566ab470532db2591feed3e568c556c3c6838be3f24e9da19b"
+    },
+    {
+      "id": "95BCDDC5-B74D-4569-997B-F4B737BA00E5",
+      "test": "MeetingAssignmentRuntimeTests/deadlineFencesAnUncooperativeCalculationBeforeRetry()",
+      "sha256": "e9e6ac81247cce532372e7b4651de15aa2e7d8140c24b057915b06c8dae2f1cf"
+    },
+    {
+      "id": "F55FB8B4-D61C-44F8-9F0C-09F17B0A17CF",
+      "test": "MeetingAssignmentRuntimeTests/readyIndexIsAutomaticallyAssignedWithoutMeetingScreenAndStaleLinksAreRemovedUntilRecovery()",
+      "sha256": "b98fdca0b36cb0281ff7a13417336cd8d5425e168fdffe559f1d2d19ff91fdf8"
+    },
+    {
+      "id": "6D3407B8-3505-4286-8478-0C3C42CEB798",
+      "test": "MeetingAssignmentRuntimeTests/stopRestartDoesNotOverlapOldCalculationAndManualInboxWinsItsLateResult()",
+      "sha256": "a7d9e2df7fd0dce32fcd17c012d77557ca2a621bea7bf05cc41f850b4574058b"
+    },
+    {
+      "id": "D6F67624-066C-4133-BF9E-CF8F30C2CF51",
+      "test": "MeetingAssignmentRuntimeTests/missingRuntimeRemovesAutomaticLinksAndRecoverySchedulesSameReadyVectorsAgain()",
+      "sha256": "98e9509065ae63898e6b784fd5ae44d4d4c5ea0e3032c99aeabba0516f42759a"
+    },
+    {
+      "id": "BB67B3BF-E788-432D-A803-79F86B94E4BA",
+      "test": "ProjectMemoryHistoryTests/invalidBatchRollsBackAllRowsAndImmutableJournalAndPaginationAreReal()",
+      "sha256": "4a0dec5145fdea015cb1fbc9f32d0413b003fcd0fee9bd7fb9ee91cec9132a02"
+    },
+    {
+      "id": "161BA1B1-0998-4406-8CCE-B920101C4AF5",
+      "test": "ProjectMemoryHistoryTests/legacy257CanRecoverByExplicitManualRetirementsWithoutDiscardingHistory(_:)",
+      "sha256": "356a66b11419de366e66b918f16011db6c48248f61ef5adb5e06d702e473b930"
+    },
+    {
+      "id": "B789AC1E-CA3E-4ADB-94CC-0142C8F74D13",
+      "test": "ProjectMemoryHistoryTests/legacy257CanRecoverByExplicitManualRetirementsWithoutDiscardingHistory(_:)",
+      "sha256": "b15900547ad1441d357d07980abc1416d3b6ad1e041c3ba8a20e05f3d3e155d7"
+    },
+    {
+      "id": "F70871A1-D8E7-4FFA-8F19-ED7EB256AC8E",
+      "test": "ProjectMemoryHistoryTests/compatibleRangesConditionsAndWordingAreNotInventedConflicts(_:)",
+      "sha256": "75facac9dd24240896859e4bc719ad6377e9c9a08ccb35ee5dbf1c62a95cc4ed"
+    },
+    {
+      "id": "9A4CF317-E977-452D-851B-793A1AA6F422",
+      "test": "ProjectMemoryHistoryTests/compatibleRangesConditionsAndWordingAreNotInventedConflicts(_:)",
+      "sha256": "9c6eba5a0d4f275424db66582833735b39e2572506c072a463322caa878b0d4d"
+    },
+    {
+      "id": "33F8D820-7A25-4D93-BD1B-E49F54EF1A03",
+      "test": "ProjectMemoryHistoryTests/compatibleRangesConditionsAndWordingAreNotInventedConflicts(_:)",
+      "sha256": "ee0f3cb7e7b905faeb8d8e46b7d35ab3089abdba9aa41a0584dcdef9941034e6"
+    },
+    {
+      "id": "03E39CC1-25A8-4582-9DCC-C07C8C9D7D8F",
+      "test": "ProjectMemoryHistoryTests/finalCandidateBudgetAllows256Rejects257AndRollsBackAnOverflowLateInBatch()",
+      "sha256": "bfd01dc5ce1cc8011b4bab46bf48eff155b06d0ad88d49b31bbde0facb1c8656"
+    },
+    {
+      "id": "766812B3-2CC1-41FD-8BE9-629C6BE92ACF",
+      "test": "ProjectMemoryHistoryTests/manualCorrectionSurvivesRestartReindexReplayAndNewModelVersionWithCompleteLineage()",
+      "sha256": "a79941092bda85978cf456e339d7b72b2a4a1cab4ad4bcb175008fc3206f8afe"
+    },
+    {
+      "id": "07BA832A-BA41-4CB6-A2FC-8B7A279EC576",
+      "test": "ProjectMemoryHistoryTests/cancelledPublicationDoesNotAppendAnyHistoryOrSelection()",
+      "sha256": "f7f716883fb1903543c1169796fb07851362f7188a66b15921e0c9f0dc4fbf03"
+    },
+    {
+      "id": "58D95740-F3E9-4BF7-A0F3-E62F4BD49F64",
+      "test": "ProjectMemoryHistoryTests/retractionIsVisibleHistoryButNotACurrentPositiveFactAndModelCannotRetireManualSelection()",
+      "sha256": "d8a26524d76678ddee8ad992f3d65a74dc709d3e992a630b93cb3dd28c0c95c9"
+    },
+    {
+      "id": "2331218C-3DDF-483B-AD88-308E3244A398",
+      "test": "ProjectMemoryHistoryTests/delayedPublicationCannotReplaceNewStateAndStoredHistoryBecomesNoncurrent(_:)",
+      "sha256": "fba84d087d9f1db92c80835d3c9a6743ea15a4b1f88a17c6520ccff82d54c92e"
+    },
+    {
+      "id": "E9EED39D-133E-4C7A-B1E8-51966C98171E",
+      "test": "ProjectMemoryHistoryTests/delayedPublicationCannotReplaceNewStateAndStoredHistoryBecomesNoncurrent(_:)",
+      "sha256": "aaa78442369ab943f02a21a4fdabfe8cabc7d4fdee48919822f270244de4176d"
+    },
+    {
+      "id": "18E81C5B-936C-4BF1-9837-3CCCADCBCEBE",
+      "test": "ProjectMemoryHistoryTests/delayedPublicationCannotReplaceNewStateAndStoredHistoryBecomesNoncurrent(_:)",
+      "sha256": "69208768201d58ca16e8534c687497aa15c676a36b1ea8edc0161963a6d56e40"
+    },
+    {
+      "id": "65DCB220-A044-4A17-A8AF-E279CFEAAB22",
+      "test": "ProjectMemoryHistoryTests/delayedPublicationCannotReplaceNewStateAndStoredHistoryBecomesNoncurrent(_:)",
+      "sha256": "4bfc22525006fba2fd26cd8f739b2d53b69a76546cffdebe18ee31cdfe7af70e"
+    },
+    {
+      "id": "4FFEA112-3CFA-47B0-9CE0-C87589815F0E",
+      "test": "ProjectMemoryHistoryTests/delayedPublicationCannotReplaceNewStateAndStoredHistoryBecomesNoncurrent(_:)",
+      "sha256": "bb42a5cd499e7b174cde045b20214c9a4ef5c4a34a151035f841d8a2710f6495"
+    },
+    {
+      "id": "140233DF-BB7B-4B41-BD9A-9DCFA3D6BC35",
+      "test": "ProjectMemoryHistoryTests/delayedPublicationCannotReplaceNewStateAndStoredHistoryBecomesNoncurrent(_:)",
+      "sha256": "63f0a8f736cf656c59a8397343d2c2652550eb1174a440305c603de964b13942"
+    },
+    {
+      "id": "E5E27FF9-34A6-49F4-933E-5F9C8171C3E1",
+      "test": "ProjectMemoryHistoryTests/delayedPublicationCannotReplaceNewStateAndStoredHistoryBecomesNoncurrent(_:)",
+      "sha256": "010427955a2a327a4c669333ad74f05d5631cbfae45d95ed1d7de05524964238"
+    },
+    {
+      "id": "6337FC39-26DD-4ECB-A66F-61D5E6859FEE",
+      "test": "ProjectMemoryHistoryTests/delayedPublicationCannotReplaceNewStateAndStoredHistoryBecomesNoncurrent(_:)",
+      "sha256": "52774de66cb257170acaf3dedbd73718f4fe6a229060c00790c72e93d918cbfb"
+    },
+    {
+      "id": "8E9FDD82-84FF-45CA-8645-9E66E38957B7",
+      "test": "ProjectMemoryHistoryTests/explicitReplacementRetainsOldClaimAndCompletionClaimDoesNotChangeExternalOrLocalTask()",
+      "sha256": "96de05df9952c15a7043812e3ec3094c0550d5ce6cc33d1248b7361c67a84f07"
+    },
+    {
+      "id": "D8223F80-9EA7-4CC1-87DC-1E1BCEE78B43",
+      "test": "ProjectMemoryHistoryTests/selectionReadCannotReturnAnOlderHeadAfterConcurrentPublication()",
+      "sha256": "a53dd92ef433a9900ec16a9bbc08aae77b4c28aa9d44ee92cace7d4aeb7d82ee"
+    },
+    {
+      "id": "3B301D26-C0F9-451C-8957-49D8381A5398",
+      "test": "ProjectMemoryHistoryTests/manualCorrectionAndRetractionWorkAt256WithoutLosingPrecedenceOrBudget()",
+      "sha256": "d145aae38e3b9d3c5dd411d5f73c068906532d5d29937d3be05024cb37c5a4ad"
+    },
+    {
+      "id": "23851F62-2706-4B84-9C3C-7556C18B26B3",
+      "test": "ProjectMemoryHistoryTests/sequentialMeetingsKeepBothDatedAssertionsAndRealStructuredDeadlineConflict()",
+      "sha256": "d7ed118f6099915e429e287891cee88532706901549760f3e386612b48e1f77a"
+    },
+    {
+      "id": "4A0D5345-9084-4F61-8F92-A1140C5A9F6E",
+      "test": "ProjectMemoryHistoryTests/derivedCrossProjectAndManualTextCannotHideOriginalOwnerEvenAfterRemovalOrDeletion()",
+      "sha256": "1507d2289c4b76a132e648c851ce269be59b0e1f563830c0bcd7f44cc841978c"
+    },
+    {
+      "id": "4609E01D-8A07-4536-AED2-A6F3761A7F97",
+      "test": "ProjectMemoryUpdateTests/ancestorManualEditFencesDeepDerivedContextButCurrentCorrectionRetainsItsOwnHistory()",
+      "sha256": "18eebe82a524a5e7e1751f2d6ff8fe00d7d44e1a82622a9f9ab26bf7806695bb"
+    },
+    {
+      "id": "FFE2E6F9-0B03-4EE0-A673-9C96B0ED7646",
+      "test": "ProjectMemoryUpdateTests/limitedJournalHasExplicitTerminalStateWithoutDeletionOrAutomaticRetry()",
+      "sha256": "819df0fe9d3c839b0af9637f310cc9ffd3de006401be5a4b11a56034aa5ff18e"
+    },
+    {
+      "id": "A1DA0BB8-67A4-44F1-AED3-3EAE410BD481",
+      "test": "ProjectMemoryUpdateTests/insufficientEvidenceNotReadyAndBudgetHaveExplicitStatesAndZeroHistory()",
+      "sha256": "20b73e27097471b2f1897b8dc67656d2962699fd59b357b3d79a6e4ef7c0ebb2"
+    },
+    {
+      "id": "F67D0A3A-9B0B-488C-A0A0-885165436A5C",
+      "test": "ProjectMemoryUpdateTests/changesAtTransportBoundaryPreventSendingOrPublishing(_:)",
+      "sha256": "2827ffbe820b4cfe75d44d5ffb189172adc3474c48d8ee7c8ea28a86dcbf9f30"
+    },
+    {
+      "id": "7AF25074-5A43-4F2F-B39E-D322FC453F9C",
+      "test": "ProjectMemoryUpdateTests/changesAtTransportBoundaryPreventSendingOrPublishing(_:)",
+      "sha256": "b14af666d35cf21f5d1074fffd432769349c0241bebe1fe363cecf42b432a275"
+    },
+    {
+      "id": "FFE6EA4B-EA78-441E-BEA0-107EF87B1335",
+      "test": "ProjectMemoryUpdateTests/changesAtTransportBoundaryPreventSendingOrPublishing(_:)",
+      "sha256": "43f12ac0d24b882728b117c3e51df524f37a3a771a65d1342899043eb3ddbed4"
+    },
+    {
+      "id": "8FC3D3F0-52C6-4F33-A36E-F16CF61D0F34",
+      "test": "ProjectMemoryUpdateTests/changesAtTransportBoundaryPreventSendingOrPublishing(_:)",
+      "sha256": "3c6fefe87012d2372fc6aad4d588a7c4efc924a0edc7f01b52c25f5ae670c93b"
+    },
+    {
+      "id": "5ECD422C-B401-4D3A-B58B-C6CC42386344",
+      "test": "ProjectMemoryUpdateTests/changesAtTransportBoundaryPreventSendingOrPublishing(_:)",
+      "sha256": "3f2ece33aff9bb988ce6a208be37b89d214b8a2c71259c5da4e90b8108ccade8"
+    },
+    {
+      "id": "EBE951D0-5CD3-4902-8D15-7D4A638E3CB6",
+      "test": "ProjectMemoryUpdateTests/changesAtTransportBoundaryPreventSendingOrPublishing(_:)",
+      "sha256": "9c751aafd1c3072b207bfc00303bfc7d463aa846e1c6e33aa1023245b3e68481"
+    },
+    {
+      "id": "C51CE465-B730-46AA-BCF4-4F254A13FB3E",
+      "test": "ProjectMemoryUpdateTests/changesAtTransportBoundaryPreventSendingOrPublishing(_:)",
+      "sha256": "3fb8ebf669b66cdd9f3226eec11207f2da72898022849d940cca0a405d00a7c4"
+    },
+    {
+      "id": "D8D300B1-F95C-4B61-B9D1-3EFE704F0693",
+      "test": "ProjectMemoryUpdateTests/changesAtTransportBoundaryPreventSendingOrPublishing(_:)",
+      "sha256": "72519982b8aa78c80de323cceabbc1adc0921ab36369a35bfd72d0ebd86f2857"
+    },
+    {
+      "id": "E038370D-9B39-4593-B497-B1CD5B4542FD",
+      "test": "ProjectMemoryUpdateTests/changesAtTransportBoundaryPreventSendingOrPublishing(_:)",
+      "sha256": "dd93fa1b0f620bb76c8a0537645a228a7c1229fce37000512697df6471121820"
+    },
+    {
+      "id": "5D97088B-27BB-4F89-B4B3-8B93E93811D4",
+      "test": "ProjectMemoryUpdateTests/changesAtTransportBoundaryPreventSendingOrPublishing(_:)",
+      "sha256": "7f1e6b5bb2a4800f30bed0e5f970cba98b0cbb1b0f183b3a43e1cbd5d709e74e"
+    },
+    {
+      "id": "6030A085-128D-4C7E-8FB4-0965C419C7BE",
+      "test": "ProjectMemoryUpdateTests/changesAtTransportBoundaryPreventSendingOrPublishing(_:)",
+      "sha256": "2cfa619ef231e03f1733134fe458779b1b2b7da2159039029a78b141e41fe21a"
+    },
+    {
+      "id": "5D3F8483-E228-4827-80E4-FDD739D8E6D8",
+      "test": "ProjectMemoryUpdateTests/changesAtTransportBoundaryPreventSendingOrPublishing(_:)",
+      "sha256": "3719a20662b25f6528944b473dbd11a303ec39d2fe0e3ed0b335b81c260339d4"
+    },
+    {
+      "id": "A77BB4EA-1D11-4F5E-BB70-7F3969C9A9AA",
+      "test": "ProjectMemoryUpdateTests/finalJournalTransactionRechecksModelAndForeignMemoryEvenAfterEarlierValidation(_:)",
+      "sha256": "a2c313e590002526e0d0c90f8c0ed75248ed1c3e52ff9098db330fc531bf09bf"
+    },
+    {
+      "id": "364706D5-2918-4E2D-9F95-37050576A9B4",
+      "test": "ProjectMemoryUpdateTests/finalJournalTransactionRechecksModelAndForeignMemoryEvenAfterEarlierValidation(_:)",
+      "sha256": "dbe1d0075511af0c35a29bce0f9eec29e899b5d42a003f89871885724b0ace12"
+    },
+    {
+      "id": "E590C635-1E2E-4911-A970-B9281216FD7F",
+      "test": "ProjectMemoryUpdateTests/explicitReplacementRetractionAndManualPrecedenceKeepHistoryThroughActualExtractor()",
+      "sha256": "9d9105143197a1bdc28488b437f9bb11dd601425bdf0545f29a13a6e57e3b294"
+    },
+    {
+      "id": "384BA4AE-4541-4C4F-A064-8DFD010BDE0A",
+      "test": "ProjectMemoryUpdateTests/selectedInputChangesWithinSameFullClosureProduceNewFactsAndExactReplayAfterRestart(_:)",
+      "sha256": "3f1125be48736ba6c5a6d8f1f73a26ab788671dc305b38f8f641f48916024fb2"
+    },
+    {
+      "id": "1E3D7890-F15B-4DFB-8DA1-644935794B60",
+      "test": "ProjectMemoryUpdateTests/selectedInputChangesWithinSameFullClosureProduceNewFactsAndExactReplayAfterRestart(_:)",
+      "sha256": "634f9a7c0da56e7f5b955058fc50e0b685dfbc5630177f699a9f6b8603df04fe"
+    },
+    {
+      "id": "32326DFA-15ED-45B1-B91A-9670E0BEA5BF",
+      "test": "ProjectMemoryUpdateTests/selectedInputChangesWithinSameFullClosureProduceNewFactsAndExactReplayAfterRestart(_:)",
+      "sha256": "408a25ad09f22eae0e2deaaac97c72cdce6aabf6334353e7d8d6dc746f986409"
+    },
+    {
+      "id": "6C1C0A90-9A08-4411-B64F-4C8CBEE440F5",
+      "test": "ProjectMemoryUpdateTests/selectedInputChangesWithinSameFullClosureProduceNewFactsAndExactReplayAfterRestart(_:)",
+      "sha256": "d3da22de41312d45565d3db2165356b818c21672fd096cc83ca9b23a72a62532"
+    },
+    {
+      "id": "3221EEE1-35CC-4A58-8362-6D966AC0F932",
+      "test": "ProjectMemoryUpdateTests/consentIsRequestSessionScopedConsumedOnFailureAndReplaySurvivesRestartWithoutExtraCloud()",
+      "sha256": "db863081b3d6be9035a96bd2f082ed4a2e921e487fd6628b34ae07b6f73fe593"
+    },
+    {
+      "id": "426EE089-7CCA-405D-A512-83C9B445AB6E",
+      "test": "ProjectMemoryUpdateTests/cancellationOfNoncooperativeTransportCannotAppendAndNewSessionRequiresNewConsent()",
+      "sha256": "2eab6e8d911d74ed3a678100ab783b40f5d4fa08a870d0c4a3bf87e50c813a9c"
+    },
+    {
+      "id": "AE4D46C8-9897-437F-B223-FFBAEFF9D444",
+      "test": "ProjectMemoryUpdateTests/sequentialReadyMeetingsUpdateJournalKeepConflictDatesAndCompletionAsClaim()",
+      "sha256": "959e1a0264372689b442e982faa49f1e43eefd74ed77b2dda7289cb17e3aa4ca"
+    },
+    {
+      "id": "C7C11B56-4EA9-45EE-B8D7-DC5EAC0B8EAD",
+      "test": "ProjectMemoryUpdateTests/ambiguousLegacyServiceBatchIsRetainedButCannotAuthorizeSelectedInputReplay()",
+      "sha256": "47f7964970d56abae97247663ce7265c6128a9769a0bcf4c4b0101a77fc13f55"
+    },
+    {
+      "id": "79D16E24-350A-4DE8-A837-6BF8946E0B82",
+      "test": "ProjectMemoryUpdateTests/everyRetryAndLateReplyRecheckAllOwnersAndForeignParentMemory()",
+      "sha256": "948331e71ecae582984cc5c53ef1b49c5877cbc446fbddfe4d1fa8d9d8081492"
+    },
+    {
+      "id": "02D09293-2CDB-4190-86BB-7CBE0B15CB1D",
+      "test": "ProjectMemoryUpdateTests/invalidStructuredResponseNeverPartiallyPublishes(_:)",
+      "sha256": "d0abfd8075e9cd505654c51db1be2ef9f9cb44e3fe599d062bb4385a65b31b7b"
+    },
+    {
+      "id": "D4D1D166-BD20-4E87-B4D7-36FC425CD2A8",
+      "test": "ProjectMemoryUpdateTests/invalidStructuredResponseNeverPartiallyPublishes(_:)",
+      "sha256": "ba8518cb1421140dc6e4c7c777c681c9c7f7082116a979f7974ddc8243ea4a54"
+    },
+    {
+      "id": "A0E067CC-4ADB-4BF8-9622-DBF49D3555E5",
+      "test": "ProjectMemoryUpdateTests/invalidStructuredResponseNeverPartiallyPublishes(_:)",
+      "sha256": "e65918205d37e1a420eb63a7a90eceeea0e2602ea2a143844f4a332dc0566e9f"
+    },
+    {
+      "id": "E495CF80-16CA-4496-A16E-8FD3451B837E",
+      "test": "ProjectMemoryUpdateTests/invalidStructuredResponseNeverPartiallyPublishes(_:)",
+      "sha256": "679b760775a553301dae91fc6db837493843ce552e6feec0df36f765e35d3e24"
+    },
+    {
+      "id": "87032131-6ABE-479C-8D1F-0394A7366036",
+      "test": "ProjectMemoryUpdateTests/invalidStructuredResponseNeverPartiallyPublishes(_:)",
+      "sha256": "de6b789abb65fc4d0cb9e1b6767d19fa360a43cc3a39df7f38066ad57ecd275d"
+    },
+    {
+      "id": "A613FF75-C002-46F7-B2F4-D5E12DD2CFB9",
+      "test": "ProjectMemoryUpdateTests/invalidStructuredResponseNeverPartiallyPublishes(_:)",
+      "sha256": "1aac618e25277c4615d5d5f5520f8845cf2465731fdeec1bd4a782c08f63f8ff"
+    },
+    {
+      "id": "DF8CCF2E-58C7-455E-9400-EDD746A6BD71",
+      "test": "ProjectMemoryUpdateTests/invalidStructuredResponseNeverPartiallyPublishes(_:)",
+      "sha256": "7de7fbd71a3fab1aadb0e2f51c7d39e8488a4042de77cb4aae6f6381d8fe3a63"
+    },
+    {
+      "id": "55FD6A71-BFC2-425B-AB59-2ED5EBA92E08",
+      "test": "ProjectMemoryUpdateTests/invalidStructuredResponseNeverPartiallyPublishes(_:)",
+      "sha256": "3e7120dc20c5776da8de38c4d751f98332c5eedaffb66d21e42a04ed5f94ca0b"
+    },
+    {
+      "id": "F9636BCE-F554-4624-8CB8-BD01CB9D4483",
+      "test": "ProjectMemoryUpdateTests/invalidStructuredResponseNeverPartiallyPublishes(_:)",
+      "sha256": "995f8f55779d108aea8cbef8d97f57a51da655f5bd00fdb7d39c663b8a22305a"
+    },
+    {
+      "id": "3DD62E24-2113-4C67-926F-CD28B2542480",
+      "test": "ProjectMemoryUpdateTests/invalidStructuredResponseNeverPartiallyPublishes(_:)",
+      "sha256": "07d864825cbbb273ab26414ea13f53abb7fb1014b60b4e42ccb271add31c472e"
+    },
+    {
+      "id": "5B1A4633-5B43-4A25-8EDB-57E645237313",
+      "test": "ProjectMemoryUpdateTests/rawAndDerivedOwnersBlockCloudAndOnlyExplicitPayloadLeavesAfterPolicyChange()",
+      "sha256": "65d99335bb1380ba4320b9274cd048fdd61ae339289886c960cbdd8eb9adbdca"
+    },
+    {
+      "id": "F89198B3-9EA6-4725-8D37-C77E819C2D2E",
+      "test": "IndexingProductionHooksTests/defaultProducerHooksRunWithoutViewsAndTranscriptDoesNotWaitForLLMOrIndexing()",
+      "sha256": "47587a8c91794c2c9f65d0e5a802360dc4ad698ae53b83576650479d8083a2bc"
+    },
+    {
+      "id": "02864EA3-ED36-475F-BF6D-D343470CA4DF",
+      "test": "IndexingProductionHooksTests/eventPathKeepsDeletedAliasesAndFinalSymlinkInsideWatchedPrefix()",
+      "sha256": "e57202dd9e648b75e7fa88c41e609abfc3f8468d124c3b6f1f75d5ef8cc025c6"
+    },
+    {
+      "id": "4A66D44C-D4AF-4B28-8A05-6FA2330A2086",
+      "test": "IndexingProductionHooksTests/actualFileMonitorReconcilesExternalAtomicAndInPlaceTranscriptChangesWithoutUI()",
+      "sha256": "8e1beaf594b5201363fac453621ee37b00c8eb3ed7a62d93627d850f48ae2e06"
+    }
+  ],
+  "ocr_attachment_count": 82,
+  "ocr_invocations": 41,
+  "ocr": {
+    "81F462AC-DE69-4E69-AEA1-1638B31CBEAD": {
+      "test": "LocalDocumentExtractorTests/PDFRetainsOneBasedPageLocations()",
+      "result": {
+        "blocks": [
+          "Project alpha launch",
+          "Decision: ship in November"
+        ],
+        "elapsedSeconds": 39.50855329167098,
+        "id": "81F462AC-DE69-4E69-AEA1-1638B31CBEAD",
+        "inputBytes": 8205,
+        "inputSHA256": "5e301b4536e1c74d313d78b7a4dc32a8719c502f6fe7fd01389c60fc2ab98dfd",
+        "lines": [
+          "Project alpha launch",
+          "Decision: ship in November"
+        ],
+        "stage": "extract-returned",
+        "test": "PDFRetainsOneBasedPageLocations()",
+        "wallStart": 1793589852.694704,
+        "warnings": [
+          "На странице 1 OCR недоступен; извлечён только текстовый слой, содержимое изображений может отсутствовать.",
+          "На странице 2 OCR недоступен; извлечён только текстовый слой, содержимое изображений может отсутствовать."
+        ]
+      },
+      "input": {
+        "asset": "5e301b4536e1c74d313d78b7a4dc32a8719c502f6fe7fd01389c60fc2ab98dfd.pdf",
+        "sha256": "5e301b4536e1c74d313d78b7a4dc32a8719c502f6fe7fd01389c60fc2ab98dfd",
+        "bytes": 8205
+      }
+    },
+    "414C18D5-4729-4266-98A4-882FE36B6D36": {
+      "test": "LocalDocumentExtractorTests/extractsTextFromPNGUsingLocalOCR(text:)",
+      "result": {
+        "blocks": [
+          "Project Alpha budget approved"
+        ],
+        "elapsedSeconds": 39.33055229164893,
+        "id": "414C18D5-4729-4266-98A4-882FE36B6D36",
+        "inputBytes": 23567,
+        "inputSHA256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "lines": [
+          "Project Alpha budget approved"
+        ],
+        "stage": "extract-returned",
+        "test": "extractsTextFromPNGUsingLocalOCR(text:)",
+        "wallStart": 1793589852.699364,
+        "warnings": []
+      },
+      "input": {
+        "asset": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8.png",
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "bytes": 23567
+      }
+    },
+    "AE315F0C-024D-4935-91AF-E9B71F6CEB26": {
+      "test": "LocalDocumentExtractorTests/extractsTextFromPNGUsingLocalOCR(text:)",
+      "result": {
+        "elapsedSeconds": 39.36026108334772,
+        "error": "e5rtError(\"e5rt_execution_stream_operation_create_precompiled_compute_operation_with_options call failed\", 13)",
+        "errorCode": 1,
+        "errorDescription": "The operation couldn’t be completed. (TextRecognition.CRImageReaderError error 1.)",
+        "errorDomain": "TextRecognition.CRImageReaderError",
+        "id": "AE315F0C-024D-4935-91AF-E9B71F6CEB26",
+        "inputBytes": 23283,
+        "inputSHA256": "666a19cf8a8ac85e56ccabc0cc911b5d0f570b22c534aff08c942531e46b9b5a",
+        "stage": "extract-threw",
+        "test": "extractsTextFromPNGUsingLocalOCR(text:)",
+        "wallStart": 1793589852.704313
+      },
+      "input": {
+        "asset": "666a19cf8a8ac85e56ccabc0cc911b5d0f570b22c534aff08c942531e46b9b5a.png",
+        "sha256": "666a19cf8a8ac85e56ccabc0cc911b5d0f570b22c534aff08c942531e46b9b5a",
+        "bytes": 23283
+      }
+    },
+    "DFF3B6C0-5D0F-46A5-A4A2-BA916FE13CB2": {
+      "test": "LocalDocumentExtractorTests/extractionErrorStillAttachesExactInputAndOriginalError()",
+      "result": {
+        "elapsedSeconds": 0.8593339999788441,
+        "error": "invalidDocument",
+        "errorCode": 2,
+        "errorDescription": "Не удалось прочитать документ. Проверьте, что файл открывается.",
+        "errorDomain": "golos_meet.DocumentExtractionError",
+        "id": "DFF3B6C0-5D0F-46A5-A4A2-BA916FE13CB2",
+        "inputBytes": 4,
+        "inputSHA256": "054edec1d0211f624fed0cbca9d4f9400b0e491c43742af2c5b0abebf0c990d8",
+        "stage": "extract-threw",
+        "test": "extractionErrorStillAttachesExactInputAndOriginalError()",
+        "wallStart": 1793589852.7052522
+      },
+      "input": {
+        "asset": "054edec1d0211f624fed0cbca9d4f9400b0e491c43742af2c5b0abebf0c990d8.png",
+        "sha256": "054edec1d0211f624fed0cbca9d4f9400b0e491c43742af2c5b0abebf0c990d8",
+        "bytes": 4
+      }
+    },
+    "32065588-C22D-49A2-9E3E-E04709DFCFA4": {
+      "test": "LocalDocumentExtractorTests/concurrentOCRDoesNotOccupyTheCooperativePool()",
+      "result": {
+        "elapsedSeconds": 38.829723791684955,
+        "error": "e5rtError(\"e5rt_execution_stream_operation_create_precompiled_compute_operation_with_options call failed\", 13)",
+        "errorCode": 1,
+        "errorDescription": "The operation couldn’t be completed. (TextRecognition.CRImageReaderError error 1.)",
+        "errorDomain": "TextRecognition.CRImageReaderError",
+        "id": "32065588-C22D-49A2-9E3E-E04709DFCFA4",
+        "inputBytes": 23567,
+        "inputSHA256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "stage": "extract-threw",
+        "test": "concurrentOCRDoesNotOccupyTheCooperativePool()",
+        "wallStart": 1793589853.359519
+      },
+      "input": {
+        "asset": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8.png",
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "bytes": 23567
+      }
+    },
+    "BE30DBCE-D875-4A7F-B086-EDAEC3C86B64": {
+      "test": "LocalDocumentExtractorTests/concurrentOCRDoesNotOccupyTheCooperativePool()",
+      "result": {
+        "elapsedSeconds": 38.751324374985415,
+        "error": "e5rtError(\"e5rt_execution_stream_operation_create_precompiled_compute_operation_with_options call failed\", 13)",
+        "errorCode": 1,
+        "errorDescription": "The operation couldn’t be completed. (TextRecognition.CRImageReaderError error 1.)",
+        "errorDomain": "TextRecognition.CRImageReaderError",
+        "id": "BE30DBCE-D875-4A7F-B086-EDAEC3C86B64",
+        "inputBytes": 23567,
+        "inputSHA256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "stage": "extract-threw",
+        "test": "concurrentOCRDoesNotOccupyTheCooperativePool()",
+        "wallStart": 1793589853.435545
+      },
+      "input": {
+        "asset": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8.png",
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "bytes": 23567
+      }
+    },
+    "EF898374-982D-45BE-80B9-8D3AD99F674F": {
+      "test": "LocalDocumentExtractorTests/concurrentOCRDoesNotOccupyTheCooperativePool()",
+      "result": {
+        "elapsedSeconds": 38.75972425000509,
+        "error": "e5rtError(\"e5rt_execution_stream_operation_create_precompiled_compute_operation_with_options call failed\", 13)",
+        "errorCode": 1,
+        "errorDescription": "The operation couldn’t be completed. (TextRecognition.CRImageReaderError error 1.)",
+        "errorDomain": "TextRecognition.CRImageReaderError",
+        "id": "EF898374-982D-45BE-80B9-8D3AD99F674F",
+        "inputBytes": 23567,
+        "inputSHA256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "stage": "extract-threw",
+        "test": "concurrentOCRDoesNotOccupyTheCooperativePool()",
+        "wallStart": 1793589853.424492
+      },
+      "input": {
+        "asset": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8.png",
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "bytes": 23567
+      }
+    },
+    "4CCD2D3F-E5F2-49D7-A80C-AA72694AB60B": {
+      "test": "LocalDocumentExtractorTests/concurrentOCRDoesNotOccupyTheCooperativePool()",
+      "result": {
+        "elapsedSeconds": 38.80338370834943,
+        "error": "e5rtError(\"e5rt_execution_stream_operation_create_precompiled_compute_operation_with_options call failed\", 13)",
+        "errorCode": 1,
+        "errorDescription": "The operation couldn’t be completed. (TextRecognition.CRImageReaderError error 1.)",
+        "errorDomain": "TextRecognition.CRImageReaderError",
+        "id": "4CCD2D3F-E5F2-49D7-A80C-AA72694AB60B",
+        "inputBytes": 23567,
+        "inputSHA256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "stage": "extract-threw",
+        "test": "concurrentOCRDoesNotOccupyTheCooperativePool()",
+        "wallStart": 1793589853.3781981
+      },
+      "input": {
+        "asset": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8.png",
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "bytes": 23567
+      }
+    },
+    "E799D3A6-0D37-4C8C-9CF2-D90B427BA31B": {
+      "test": "LocalDocumentExtractorTests/concurrentOCRDoesNotOccupyTheCooperativePool()",
+      "result": {
+        "elapsedSeconds": 38.80793291667942,
+        "error": "e5rtError(\"e5rt_execution_stream_operation_create_precompiled_compute_operation_with_options call failed\", 13)",
+        "errorCode": 1,
+        "errorDescription": "The operation couldn’t be completed. (TextRecognition.CRImageReaderError error 1.)",
+        "errorDomain": "TextRecognition.CRImageReaderError",
+        "id": "E799D3A6-0D37-4C8C-9CF2-D90B427BA31B",
+        "inputBytes": 23567,
+        "inputSHA256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "stage": "extract-threw",
+        "test": "concurrentOCRDoesNotOccupyTheCooperativePool()",
+        "wallStart": 1793589853.370802
+      },
+      "input": {
+        "asset": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8.png",
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "bytes": 23567
+      }
+    },
+    "6BD6FB18-0DF9-41FE-8C68-E2697D12FABD": {
+      "test": "LocalDocumentExtractorTests/concurrentOCRDoesNotOccupyTheCooperativePool()",
+      "result": {
+        "elapsedSeconds": 38.75596612499794,
+        "error": "e5rtError(\"e5rt_execution_stream_operation_create_precompiled_compute_operation_with_options call failed\", 13)",
+        "errorCode": 1,
+        "errorDescription": "The operation couldn’t be completed. (TextRecognition.CRImageReaderError error 1.)",
+        "errorDomain": "TextRecognition.CRImageReaderError",
+        "id": "6BD6FB18-0DF9-41FE-8C68-E2697D12FABD",
+        "inputBytes": 23567,
+        "inputSHA256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "stage": "extract-threw",
+        "test": "concurrentOCRDoesNotOccupyTheCooperativePool()",
+        "wallStart": 1793589853.419735
+      },
+      "input": {
+        "asset": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8.png",
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "bytes": 23567
+      }
+    },
+    "D15F7D75-40B6-4BE4-8F24-6500BCAE3CA0": {
+      "test": "LocalDocumentExtractorTests/concurrentOCRDoesNotOccupyTheCooperativePool()",
+      "result": {
+        "elapsedSeconds": 38.8098128749989,
+        "error": "e5rtError(\"e5rt_execution_stream_operation_create_precompiled_compute_operation_with_options call failed\", 13)",
+        "errorCode": 1,
+        "errorDescription": "The operation couldn’t be completed. (TextRecognition.CRImageReaderError error 1.)",
+        "errorDomain": "TextRecognition.CRImageReaderError",
+        "id": "D15F7D75-40B6-4BE4-8F24-6500BCAE3CA0",
+        "inputBytes": 23567,
+        "inputSHA256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "stage": "extract-threw",
+        "test": "concurrentOCRDoesNotOccupyTheCooperativePool()",
+        "wallStart": 1793589853.3631039
+      },
+      "input": {
+        "asset": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8.png",
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "bytes": 23567
+      }
+    },
+    "BF655302-3DE3-48F7-A5E0-6AA69B416737": {
+      "test": "LocalDocumentExtractorTests/concurrentOCRDoesNotOccupyTheCooperativePool()",
+      "result": {
+        "elapsedSeconds": 38.788709499989636,
+        "error": "e5rtError(\"e5rt_execution_stream_operation_create_precompiled_compute_operation_with_options call failed\", 13)",
+        "errorCode": 1,
+        "errorDescription": "The operation couldn’t be completed. (TextRecognition.CRImageReaderError error 1.)",
+        "errorDomain": "TextRecognition.CRImageReaderError",
+        "id": "BF655302-3DE3-48F7-A5E0-6AA69B416737",
+        "inputBytes": 23567,
+        "inputSHA256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "stage": "extract-threw",
+        "test": "concurrentOCRDoesNotOccupyTheCooperativePool()",
+        "wallStart": 1793589853.381757
+      },
+      "input": {
+        "asset": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8.png",
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "bytes": 23567
+      }
+    },
+    "7133DA62-DD66-421D-B2C3-AFF1E03C7AC5": {
+      "test": "LocalDocumentExtractorTests/concurrentOCRDoesNotOccupyTheCooperativePool()",
+      "result": {
+        "elapsedSeconds": 38.77461174997734,
+        "error": "e5rtError(\"e5rt_execution_stream_operation_create_precompiled_compute_operation_with_options call failed\", 13)",
+        "errorCode": 1,
+        "errorDescription": "The operation couldn’t be completed. (TextRecognition.CRImageReaderError error 1.)",
+        "errorDomain": "TextRecognition.CRImageReaderError",
+        "id": "7133DA62-DD66-421D-B2C3-AFF1E03C7AC5",
+        "inputBytes": 23567,
+        "inputSHA256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "stage": "extract-threw",
+        "test": "concurrentOCRDoesNotOccupyTheCooperativePool()",
+        "wallStart": 1793589853.392737
+      },
+      "input": {
+        "asset": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8.png",
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "bytes": 23567
+      }
+    },
+    "F19E3F20-68EF-4058-93D4-6DAB8890BC1F": {
+      "test": "LocalDocumentExtractorTests/concurrentOCRDoesNotOccupyTheCooperativePool()",
+      "result": {
+        "elapsedSeconds": 38.73579283332219,
+        "error": "e5rtError(\"e5rt_execution_stream_operation_create_precompiled_compute_operation_with_options call failed\", 13)",
+        "errorCode": 1,
+        "errorDescription": "The operation couldn’t be completed. (TextRecognition.CRImageReaderError error 1.)",
+        "errorDomain": "TextRecognition.CRImageReaderError",
+        "id": "F19E3F20-68EF-4058-93D4-6DAB8890BC1F",
+        "inputBytes": 23567,
+        "inputSHA256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "stage": "extract-threw",
+        "test": "concurrentOCRDoesNotOccupyTheCooperativePool()",
+        "wallStart": 1793589853.428108
+      },
+      "input": {
+        "asset": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8.png",
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "bytes": 23567
+      }
+    },
+    "6FEF7E6A-40DF-44CE-B7FA-551C493902CF": {
+      "test": "LocalDocumentExtractorTests/concurrentOCRDoesNotOccupyTheCooperativePool()",
+      "result": {
+        "elapsedSeconds": 38.752760000003036,
+        "error": "e5rtError(\"e5rt_execution_stream_operation_create_precompiled_compute_operation_with_options call failed\", 13)",
+        "errorCode": 1,
+        "errorDescription": "The operation couldn’t be completed. (TextRecognition.CRImageReaderError error 1.)",
+        "errorDomain": "TextRecognition.CRImageReaderError",
+        "id": "6FEF7E6A-40DF-44CE-B7FA-551C493902CF",
+        "inputBytes": 23567,
+        "inputSHA256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "stage": "extract-threw",
+        "test": "concurrentOCRDoesNotOccupyTheCooperativePool()",
+        "wallStart": 1793589853.408587
+      },
+      "input": {
+        "asset": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8.png",
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "bytes": 23567
+      }
+    },
+    "50A6C20D-72B2-4C09-A9E8-515F39A36FDB": {
+      "test": "LocalDocumentExtractorTests/concurrentOCRDoesNotOccupyTheCooperativePool()",
+      "result": {
+        "elapsedSeconds": 38.80235424998682,
+        "error": "e5rtError(\"e5rt_execution_stream_operation_create_precompiled_compute_operation_with_options call failed\", 13)",
+        "errorCode": 1,
+        "errorDescription": "The operation couldn’t be completed. (TextRecognition.CRImageReaderError error 1.)",
+        "errorDomain": "TextRecognition.CRImageReaderError",
+        "id": "50A6C20D-72B2-4C09-A9E8-515F39A36FDB",
+        "inputBytes": 23567,
+        "inputSHA256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "stage": "extract-threw",
+        "test": "concurrentOCRDoesNotOccupyTheCooperativePool()",
+        "wallStart": 1793589853.355946
+      },
+      "input": {
+        "asset": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8.png",
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "bytes": 23567
+      }
+    },
+    "A3658171-7F32-4A08-BB4F-7CE93C54DAED": {
+      "test": "LocalDocumentExtractorTests/concurrentOCRDoesNotOccupyTheCooperativePool()",
+      "result": {
+        "elapsedSeconds": 38.723666750011034,
+        "error": "e5rtError(\"e5rt_execution_stream_operation_create_precompiled_compute_operation_with_options call failed\", 13)",
+        "errorCode": 1,
+        "errorDescription": "The operation couldn’t be completed. (TextRecognition.CRImageReaderError error 1.)",
+        "errorDomain": "TextRecognition.CRImageReaderError",
+        "id": "A3658171-7F32-4A08-BB4F-7CE93C54DAED",
+        "inputBytes": 23567,
+        "inputSHA256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "stage": "extract-threw",
+        "test": "concurrentOCRDoesNotOccupyTheCooperativePool()",
+        "wallStart": 1793589853.431754
+      },
+      "input": {
+        "asset": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8.png",
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "bytes": 23567
+      }
+    },
+    "2A2B6E72-90AD-4490-80C4-DBDA3C3F4D2C": {
+      "test": "LocalDocumentExtractorTests/concurrentOCRDoesNotOccupyTheCooperativePool()",
+      "result": {
+        "elapsedSeconds": 38.73613366665086,
+        "error": "e5rtError(\"e5rt_execution_stream_operation_create_precompiled_compute_operation_with_options call failed\", 13)",
+        "errorCode": 1,
+        "errorDescription": "The operation couldn’t be completed. (TextRecognition.CRImageReaderError error 1.)",
+        "errorDomain": "TextRecognition.CRImageReaderError",
+        "id": "2A2B6E72-90AD-4490-80C4-DBDA3C3F4D2C",
+        "inputBytes": 23567,
+        "inputSHA256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "stage": "extract-threw",
+        "test": "concurrentOCRDoesNotOccupyTheCooperativePool()",
+        "wallStart": 1793589853.416006
+      },
+      "input": {
+        "asset": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8.png",
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "bytes": 23567
+      }
+    },
+    "7B6D4994-07DA-4940-AA65-0984EA62E69E": {
+      "test": "LocalDocumentExtractorTests/concurrentOCRDoesNotOccupyTheCooperativePool()",
+      "result": {
+        "elapsedSeconds": 38.74591662501916,
+        "error": "e5rtError(\"e5rt_execution_stream_operation_create_precompiled_compute_operation_with_options call failed\", 13)",
+        "errorCode": 1,
+        "errorDescription": "The operation couldn’t be completed. (TextRecognition.CRImageReaderError error 1.)",
+        "errorDomain": "TextRecognition.CRImageReaderError",
+        "id": "7B6D4994-07DA-4940-AA65-0984EA62E69E",
+        "inputBytes": 23567,
+        "inputSHA256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "stage": "extract-threw",
+        "test": "concurrentOCRDoesNotOccupyTheCooperativePool()",
+        "wallStart": 1793589853.403911
+      },
+      "input": {
+        "asset": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8.png",
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "bytes": 23567
+      }
+    },
+    "A9955685-2C07-4B3D-9571-AB8137C3442D": {
+      "test": "LocalDocumentExtractorTests/concurrentOCRDoesNotOccupyTheCooperativePool()",
+      "result": {
+        "elapsedSeconds": 38.79468854161678,
+        "error": "e5rtError(\"e5rt_execution_stream_operation_create_precompiled_compute_operation_with_options call failed\", 13)",
+        "errorCode": 1,
+        "errorDescription": "The operation couldn’t be completed. (TextRecognition.CRImageReaderError error 1.)",
+        "errorDomain": "TextRecognition.CRImageReaderError",
+        "id": "A9955685-2C07-4B3D-9571-AB8137C3442D",
+        "inputBytes": 23567,
+        "inputSHA256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "stage": "extract-threw",
+        "test": "concurrentOCRDoesNotOccupyTheCooperativePool()",
+        "wallStart": 1793589853.35235
+      },
+      "input": {
+        "asset": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8.png",
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "bytes": 23567
+      }
+    },
+    "F8438231-AF21-4495-8116-017BDFB1D35F": {
+      "test": "LocalDocumentExtractorTests/concurrentOCRDoesNotOccupyTheCooperativePool()",
+      "result": {
+        "elapsedSeconds": 38.747092458361294,
+        "error": "e5rtError(\"e5rt_execution_stream_operation_create_precompiled_compute_operation_with_options call failed\", 13)",
+        "errorCode": 1,
+        "errorDescription": "The operation couldn’t be completed. (TextRecognition.CRImageReaderError error 1.)",
+        "errorDomain": "TextRecognition.CRImageReaderError",
+        "id": "F8438231-AF21-4495-8116-017BDFB1D35F",
+        "inputBytes": 23567,
+        "inputSHA256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "stage": "extract-threw",
+        "test": "concurrentOCRDoesNotOccupyTheCooperativePool()",
+        "wallStart": 1793589853.396472
+      },
+      "input": {
+        "asset": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8.png",
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "bytes": 23567
+      }
+    },
+    "3713D2EA-F46B-4127-8952-A14616DA05E2": {
+      "test": "LocalDocumentExtractorTests/concurrentOCRDoesNotOccupyTheCooperativePool()",
+      "result": {
+        "elapsedSeconds": 38.76601004169788,
+        "error": "e5rtError(\"e5rt_execution_stream_operation_create_precompiled_compute_operation_with_options call failed\", 13)",
+        "errorCode": 1,
+        "errorDescription": "The operation couldn’t be completed. (TextRecognition.CRImageReaderError error 1.)",
+        "errorDomain": "TextRecognition.CRImageReaderError",
+        "id": "3713D2EA-F46B-4127-8952-A14616DA05E2",
+        "inputBytes": 23567,
+        "inputSHA256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "stage": "extract-threw",
+        "test": "concurrentOCRDoesNotOccupyTheCooperativePool()",
+        "wallStart": 1793589853.374449
+      },
+      "input": {
+        "asset": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8.png",
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "bytes": 23567
+      }
+    },
+    "C093F16F-9C6B-4C55-84A2-C38B17DA7477": {
+      "test": "LocalDocumentExtractorTests/concurrentOCRDoesNotOccupyTheCooperativePool()",
+      "result": {
+        "elapsedSeconds": 38.770485291664954,
+        "error": "e5rtError(\"e5rt_execution_stream_operation_create_precompiled_compute_operation_with_options call failed\", 13)",
+        "errorCode": 1,
+        "errorDescription": "The operation couldn’t be completed. (TextRecognition.CRImageReaderError error 1.)",
+        "errorDomain": "TextRecognition.CRImageReaderError",
+        "id": "C093F16F-9C6B-4C55-84A2-C38B17DA7477",
+        "inputBytes": 23567,
+        "inputSHA256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "stage": "extract-threw",
+        "test": "concurrentOCRDoesNotOccupyTheCooperativePool()",
+        "wallStart": 1793589853.366969
+      },
+      "input": {
+        "asset": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8.png",
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "bytes": 23567
+      }
+    },
+    "6BCFCDEC-9465-41A0-AEFF-5A313D35BAAF": {
+      "test": "LocalDocumentExtractorTests/concurrentOCRDoesNotOccupyTheCooperativePool()",
+      "result": {
+        "elapsedSeconds": 38.746187624987215,
+        "error": "e5rtError(\"e5rt_execution_stream_operation_create_precompiled_compute_operation_with_options call failed\", 13)",
+        "errorCode": 1,
+        "errorDescription": "The operation couldn’t be completed. (TextRecognition.CRImageReaderError error 1.)",
+        "errorDomain": "TextRecognition.CRImageReaderError",
+        "id": "6BCFCDEC-9465-41A0-AEFF-5A313D35BAAF",
+        "inputBytes": 23567,
+        "inputSHA256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "stage": "extract-threw",
+        "test": "concurrentOCRDoesNotOccupyTheCooperativePool()",
+        "wallStart": 1793589853.388904
+      },
+      "input": {
+        "asset": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8.png",
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "bytes": 23567
+      }
+    },
+    "2ADE22B1-49E2-4751-8FCC-905AD523DF6D": {
+      "test": "LocalDocumentExtractorTests/concurrentOCRDoesNotOccupyTheCooperativePool()",
+      "result": {
+        "elapsedSeconds": 38.74707904167008,
+        "error": "e5rtError(\"e5rt_execution_stream_operation_create_precompiled_compute_operation_with_options call failed\", 13)",
+        "errorCode": 1,
+        "errorDescription": "The operation couldn’t be completed. (TextRecognition.CRImageReaderError error 1.)",
+        "errorDomain": "TextRecognition.CRImageReaderError",
+        "id": "2ADE22B1-49E2-4751-8FCC-905AD523DF6D",
+        "inputBytes": 23567,
+        "inputSHA256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "stage": "extract-threw",
+        "test": "concurrentOCRDoesNotOccupyTheCooperativePool()",
+        "wallStart": 1793589853.3853102
+      },
+      "input": {
+        "asset": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8.png",
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "bytes": 23567
+      }
+    },
+    "1E7F49E3-FE48-4772-9891-2819D3079310": {
+      "test": "LocalDocumentExtractorTests/concurrentOCRDoesNotOccupyTheCooperativePool()",
+      "result": {
+        "elapsedSeconds": 38.788272916630376,
+        "error": "e5rtError(\"e5rt_execution_stream_operation_create_precompiled_compute_operation_with_options call failed\", 13)",
+        "errorCode": 1,
+        "errorDescription": "The operation couldn’t be completed. (TextRecognition.CRImageReaderError error 1.)",
+        "errorDomain": "TextRecognition.CRImageReaderError",
+        "id": "1E7F49E3-FE48-4772-9891-2819D3079310",
+        "inputBytes": 23567,
+        "inputSHA256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "stage": "extract-threw",
+        "test": "concurrentOCRDoesNotOccupyTheCooperativePool()",
+        "wallStart": 1793589853.340688
+      },
+      "input": {
+        "asset": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8.png",
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "bytes": 23567
+      }
+    },
+    "A2109997-2DE9-40DF-9AA3-871370EEF7DF": {
+      "test": "LocalDocumentExtractorTests/concurrentOCRDoesNotOccupyTheCooperativePool()",
+      "result": {
+        "elapsedSeconds": 38.777303791663144,
+        "error": "e5rtError(\"e5rt_execution_stream_operation_create_precompiled_compute_operation_with_options call failed\", 13)",
+        "errorCode": 1,
+        "errorDescription": "The operation couldn’t be completed. (TextRecognition.CRImageReaderError error 1.)",
+        "errorDomain": "TextRecognition.CRImageReaderError",
+        "id": "A2109997-2DE9-40DF-9AA3-871370EEF7DF",
+        "inputBytes": 23567,
+        "inputSHA256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "stage": "extract-threw",
+        "test": "concurrentOCRDoesNotOccupyTheCooperativePool()",
+        "wallStart": 1793589853.348525
+      },
+      "input": {
+        "asset": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8.png",
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "bytes": 23567
+      }
+    },
+    "81CBA596-DC86-405D-B4C5-1656A4D2DFD3": {
+      "test": "LocalDocumentExtractorTests/concurrentOCRDoesNotOccupyTheCooperativePool()",
+      "result": {
+        "elapsedSeconds": 38.72238908329746,
+        "error": "e5rtError(\"e5rt_execution_stream_operation_create_precompiled_compute_operation_with_options call failed\", 13)",
+        "errorCode": 1,
+        "errorDescription": "The operation couldn’t be completed. (TextRecognition.CRImageReaderError error 1.)",
+        "errorDomain": "TextRecognition.CRImageReaderError",
+        "id": "81CBA596-DC86-405D-B4C5-1656A4D2DFD3",
+        "inputBytes": 23567,
+        "inputSHA256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "stage": "extract-threw",
+        "test": "concurrentOCRDoesNotOccupyTheCooperativePool()",
+        "wallStart": 1793589853.400117
+      },
+      "input": {
+        "asset": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8.png",
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "bytes": 23567
+      }
+    },
+    "DEA7C1F1-6465-40FB-96FB-A53AAD2F0CB0": {
+      "test": "LocalDocumentExtractorTests/concurrentOCRDoesNotOccupyTheCooperativePool()",
+      "result": {
+        "elapsedSeconds": 38.77519508334808,
+        "error": "e5rtError(\"e5rt_execution_stream_operation_create_precompiled_compute_operation_with_options call failed\", 13)",
+        "errorCode": 1,
+        "errorDescription": "The operation couldn’t be completed. (TextRecognition.CRImageReaderError error 1.)",
+        "errorDomain": "TextRecognition.CRImageReaderError",
+        "id": "DEA7C1F1-6465-40FB-96FB-A53AAD2F0CB0",
+        "inputBytes": 23567,
+        "inputSHA256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "stage": "extract-threw",
+        "test": "concurrentOCRDoesNotOccupyTheCooperativePool()",
+        "wallStart": 1793589853.3448029
+      },
+      "input": {
+        "asset": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8.png",
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "bytes": 23567
+      }
+    },
+    "C9CD7789-6E49-4E9A-871C-F4F32A5E11DA": {
+      "test": "LocalDocumentExtractorTests/concurrentOCRDoesNotOccupyTheCooperativePool()",
+      "result": {
+        "elapsedSeconds": 38.79268862499157,
+        "error": "e5rtError(\"e5rt_execution_stream_operation_create_precompiled_compute_operation_with_options call failed\", 13)",
+        "errorCode": 1,
+        "errorDescription": "The operation couldn’t be completed. (TextRecognition.CRImageReaderError error 1.)",
+        "errorDomain": "TextRecognition.CRImageReaderError",
+        "id": "C9CD7789-6E49-4E9A-871C-F4F32A5E11DA",
+        "inputBytes": 23567,
+        "inputSHA256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "stage": "extract-threw",
+        "test": "concurrentOCRDoesNotOccupyTheCooperativePool()",
+        "wallStart": 1793589853.324798
+      },
+      "input": {
+        "asset": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8.png",
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "bytes": 23567
+      }
+    },
+    "31D73C35-FE10-482A-9A22-C07FEBBD009F": {
+      "test": "LocalDocumentExtractorTests/concurrentOCRDoesNotOccupyTheCooperativePool()",
+      "result": {
+        "elapsedSeconds": 38.78244683332741,
+        "error": "e5rtError(\"e5rt_execution_stream_operation_create_precompiled_compute_operation_with_options call failed\", 13)",
+        "errorCode": 1,
+        "errorDescription": "The operation couldn’t be completed. (TextRecognition.CRImageReaderError error 1.)",
+        "errorDomain": "TextRecognition.CRImageReaderError",
+        "id": "31D73C35-FE10-482A-9A22-C07FEBBD009F",
+        "inputBytes": 23567,
+        "inputSHA256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "stage": "extract-threw",
+        "test": "concurrentOCRDoesNotOccupyTheCooperativePool()",
+        "wallStart": 1793589853.3323379
+      },
+      "input": {
+        "asset": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8.png",
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "bytes": 23567
+      }
+    },
+    "DFF0F26D-F2E1-49E4-9C12-117BBDDD00A8": {
+      "test": "LocalDocumentExtractorTests/concurrentOCRDoesNotOccupyTheCooperativePool()",
+      "result": {
+        "elapsedSeconds": 38.78974233334884,
+        "error": "e5rtError(\"e5rt_execution_stream_operation_create_precompiled_compute_operation_with_options call failed\", 13)",
+        "errorCode": 1,
+        "errorDescription": "The operation couldn’t be completed. (TextRecognition.CRImageReaderError error 1.)",
+        "errorDomain": "TextRecognition.CRImageReaderError",
+        "id": "DFF0F26D-F2E1-49E4-9C12-117BBDDD00A8",
+        "inputBytes": 23567,
+        "inputSHA256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "stage": "extract-threw",
+        "test": "concurrentOCRDoesNotOccupyTheCooperativePool()",
+        "wallStart": 1793589853.3211799
+      },
+      "input": {
+        "asset": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8.png",
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "bytes": 23567
+      }
+    },
+    "C1A6F5B6-FDC6-49FA-A5D3-C1E082519B7A": {
+      "test": "LocalDocumentExtractorTests/concurrentOCRDoesNotOccupyTheCooperativePool()",
+      "result": {
+        "elapsedSeconds": 38.695533916703425,
+        "error": "e5rtError(\"e5rt_execution_stream_operation_create_precompiled_compute_operation_with_options call failed\", 13)",
+        "errorCode": 1,
+        "errorDescription": "The operation couldn’t be completed. (TextRecognition.CRImageReaderError error 1.)",
+        "errorDomain": "TextRecognition.CRImageReaderError",
+        "id": "C1A6F5B6-FDC6-49FA-A5D3-C1E082519B7A",
+        "inputBytes": 23567,
+        "inputSHA256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "stage": "extract-threw",
+        "test": "concurrentOCRDoesNotOccupyTheCooperativePool()",
+        "wallStart": 1793589853.412318
+      },
+      "input": {
+        "asset": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8.png",
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "bytes": 23567
+      }
+    },
+    "00FD0020-FCE2-4AAD-B1FC-ADC554FFD793": {
+      "test": "LocalDocumentExtractorTests/concurrentOCRDoesNotOccupyTheCooperativePool()",
+      "result": {
+        "elapsedSeconds": 38.78448437503539,
+        "error": "e5rtError(\"e5rt_execution_stream_operation_create_precompiled_compute_operation_with_options call failed\", 13)",
+        "errorCode": 1,
+        "errorDescription": "The operation couldn’t be completed. (TextRecognition.CRImageReaderError error 1.)",
+        "errorDomain": "TextRecognition.CRImageReaderError",
+        "id": "00FD0020-FCE2-4AAD-B1FC-ADC554FFD793",
+        "inputBytes": 23567,
+        "inputSHA256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "stage": "extract-threw",
+        "test": "concurrentOCRDoesNotOccupyTheCooperativePool()",
+        "wallStart": 1793589853.317524
+      },
+      "input": {
+        "asset": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8.png",
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "bytes": 23567
+      }
+    },
+    "E95269A6-F055-4FB5-BDCC-B5F7E7BC5901": {
+      "test": "LocalDocumentExtractorTests/concurrentOCRDoesNotOccupyTheCooperativePool()",
+      "result": {
+        "elapsedSeconds": 38.78430712496629,
+        "error": "e5rtError(\"e5rt_execution_stream_operation_create_precompiled_compute_operation_with_options call failed\", 13)",
+        "errorCode": 1,
+        "errorDescription": "The operation couldn’t be completed. (TextRecognition.CRImageReaderError error 1.)",
+        "errorDomain": "TextRecognition.CRImageReaderError",
+        "id": "E95269A6-F055-4FB5-BDCC-B5F7E7BC5901",
+        "inputBytes": 23567,
+        "inputSHA256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "stage": "extract-threw",
+        "test": "concurrentOCRDoesNotOccupyTheCooperativePool()",
+        "wallStart": 1793589853.313898
+      },
+      "input": {
+        "asset": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8.png",
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "bytes": 23567
+      }
+    },
+    "6DBE2022-076A-476A-AAA4-3CF86D4FAB58": {
+      "test": "LocalDocumentExtractorTests/concurrentOCRDoesNotOccupyTheCooperativePool()",
+      "result": {
+        "elapsedSeconds": 38.76139129168587,
+        "error": "e5rtError(\"e5rt_execution_stream_operation_create_precompiled_compute_operation_with_options call failed\", 13)",
+        "errorCode": 1,
+        "errorDescription": "The operation couldn’t be completed. (TextRecognition.CRImageReaderError error 1.)",
+        "errorDomain": "TextRecognition.CRImageReaderError",
+        "id": "6DBE2022-076A-476A-AAA4-3CF86D4FAB58",
+        "inputBytes": 23567,
+        "inputSHA256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "stage": "extract-threw",
+        "test": "concurrentOCRDoesNotOccupyTheCooperativePool()",
+        "wallStart": 1793589853.328448
+      },
+      "input": {
+        "asset": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8.png",
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "bytes": 23567
+      }
+    },
+    "58D8914B-E705-4FF1-AEBE-6FCC030A73E9": {
+      "test": "LocalDocumentExtractorTests/mixedPDFExtractsScanAndDoesNotDuplicateTextLayer(native:scanned:duplicateNative:)",
+      "result": {
+        "blocks": [
+          "2026"
+        ],
+        "elapsedSeconds": 39.328041583357845,
+        "id": "58D8914B-E705-4FF1-AEBE-6FCC030A73E9",
+        "inputBytes": 21549,
+        "inputSHA256": "4bc1667b30d59df3e6b6ea753dd5c5000e60dd2950df27b04347786fcb05bfe4",
+        "lines": [
+          "2026"
+        ],
+        "stage": "extract-returned",
+        "test": "mixedPDFExtractsScanAndDoesNotDuplicateTextLayer(native:scanned:duplicateNative:)",
+        "wallStart": 1793589852.7370381,
+        "warnings": [
+          "На странице 1 OCR недоступен; извлечён только текстовый слой, содержимое изображений может отсутствовать."
+        ]
+      },
+      "input": {
+        "asset": "4bc1667b30d59df3e6b6ea753dd5c5000e60dd2950df27b04347786fcb05bfe4.pdf",
+        "sha256": "4bc1667b30d59df3e6b6ea753dd5c5000e60dd2950df27b04347786fcb05bfe4",
+        "bytes": 21549
+      }
+    },
+    "21C03FC6-D945-4733-A173-E7E48986AB2B": {
+      "test": "LocalDocumentExtractorTests/mixedPDFExtractsScanAndDoesNotDuplicateTextLayer(native:scanned:duplicateNative:)",
+      "result": {
+        "blocks": [
+          "Not approved"
+        ],
+        "elapsedSeconds": 39.32806091668317,
+        "id": "21C03FC6-D945-4733-A173-E7E48986AB2B",
+        "inputBytes": 24231,
+        "inputSHA256": "2fcbc054974393a1deb1cfd4f512fbcb8a866134007d199fa4dd836d0506d313",
+        "lines": [
+          "Not approved"
+        ],
+        "stage": "extract-returned",
+        "test": "mixedPDFExtractsScanAndDoesNotDuplicateTextLayer(native:scanned:duplicateNative:)",
+        "wallStart": 1793589852.7494888,
+        "warnings": [
+          "На странице 1 OCR недоступен; извлечён только текстовый слой, содержимое изображений может отсутствовать."
+        ]
+      },
+      "input": {
+        "asset": "2fcbc054974393a1deb1cfd4f512fbcb8a866134007d199fa4dd836d0506d313.pdf",
+        "sha256": "2fcbc054974393a1deb1cfd4f512fbcb8a866134007d199fa4dd836d0506d313",
+        "bytes": 24231
+      }
+    },
+    "0DD5BF61-1E8F-4F31-A95A-31FE2C825D03": {
+      "test": "LocalDocumentExtractorTests/mixedPDFExtractsScanAndDoesNotDuplicateTextLayer(native:scanned:duplicateNative:)",
+      "result": {
+        "blocks": [
+          "Decision: launch postponed to December\nPage 1"
+        ],
+        "elapsedSeconds": 39.30993054166902,
+        "id": "0DD5BF61-1E8F-4F31-A95A-31FE2C825D03",
+        "inputBytes": 31299,
+        "inputSHA256": "fd0561d17ac44a8ce3605315f0ce0a136735989ea71d5ec12069bd873ef3beec",
+        "lines": [
+          "Decision: launch postponed to December",
+          "Page 1"
+        ],
+        "stage": "extract-returned",
+        "test": "mixedPDFExtractsScanAndDoesNotDuplicateTextLayer(native:scanned:duplicateNative:)",
+        "wallStart": 1793589852.7615972,
+        "warnings": [
+          "На странице 1 OCR недоступен; извлечён только текстовый слой, содержимое изображений может отсутствовать."
+        ]
+      },
+      "input": {
+        "asset": "fd0561d17ac44a8ce3605315f0ce0a136735989ea71d5ec12069bd873ef3beec.pdf",
+        "sha256": "fd0561d17ac44a8ce3605315f0ce0a136735989ea71d5ec12069bd873ef3beec",
+        "bytes": 31299
+      }
+    },
+    "90FD891C-519C-4298-868E-91974861474D": {
+      "test": "LocalDocumentExtractorTests/mixedPDFExtractsScanAndDoesNotDuplicateTextLayer(native:scanned:duplicateNative:)",
+      "result": {
+        "blocks": [
+          "Page 1"
+        ],
+        "elapsedSeconds": 39.31124687497504,
+        "id": "90FD891C-519C-4298-868E-91974861474D",
+        "inputBytes": 28138,
+        "inputSHA256": "14ffe26806d9b7380f405e1c720c01f3a268bccc4fc39cae0d377b90b2676e61",
+        "lines": [
+          "Page 1"
+        ],
+        "stage": "extract-returned",
+        "test": "mixedPDFExtractsScanAndDoesNotDuplicateTextLayer(native:scanned:duplicateNative:)",
+        "wallStart": 1793589852.7719898,
+        "warnings": [
+          "На странице 1 OCR недоступен; извлечён только текстовый слой, содержимое изображений может отсутствовать."
+        ]
+      },
+      "input": {
+        "asset": "14ffe26806d9b7380f405e1c720c01f3a268bccc4fc39cae0d377b90b2676e61.pdf",
+        "sha256": "14ffe26806d9b7380f405e1c720c01f3a268bccc4fc39cae0d377b90b2676e61",
+        "bytes": 28138
+      }
+    },
+    "779B69FB-93D0-4908-A0DF-337F16130739": {
+      "test": "LocalDocumentExtractorTests/mixedPDFExtractsScanAndDoesNotDuplicateTextLayer(native:scanned:duplicateNative:)",
+      "result": {
+        "blocks": [
+          "2026"
+        ],
+        "elapsedSeconds": 39.30986525001936,
+        "id": "779B69FB-93D0-4908-A0DF-337F16130739",
+        "inputBytes": 21495,
+        "inputSHA256": "c4d9de27bb2730b989d83ef6eab66bfc802acc0f00a5f919a32b20aad2d932a8",
+        "lines": [
+          "2026"
+        ],
+        "stage": "extract-returned",
+        "test": "mixedPDFExtractsScanAndDoesNotDuplicateTextLayer(native:scanned:duplicateNative:)",
+        "wallStart": 1793589852.7832742,
+        "warnings": [
+          "На странице 1 OCR недоступен; извлечён только текстовый слой, содержимое изображений может отсутствовать."
+        ]
+      },
+      "input": {
+        "asset": "c4d9de27bb2730b989d83ef6eab66bfc802acc0f00a5f919a32b20aad2d932a8.pdf",
+        "sha256": "c4d9de27bb2730b989d83ef6eab66bfc802acc0f00a5f919a32b20aad2d932a8",
+        "bytes": 21495
+      }
+    }
+  }
+}

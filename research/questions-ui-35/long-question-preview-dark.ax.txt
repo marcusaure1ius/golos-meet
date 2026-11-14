@@ -1,0 +1,38 @@
+Window: "Golos Questions Preview · Synthetic", App: Golos Questions Preview.
+0 standard window Golos Questions Preview · Synthetic, ID: SwiftUI.WindowGroup<QuestionsPreview.QuestionPreviewRoot>-1-AppWindow-1, Secondary Actions: Raise
+	1 container
+		2 text Настоящая E5 с диска · synthetic источники · генератор по-прежнему подставной
+		3 pop up button Fake LLM, Value: Ответ
+		4 button Удержать ответ
+		5 button Отпустить
+		6 text Вызовов fake: 7
+		7 switch Тёмная, Value: on
+		8 button Включить E5 с диска
+		9 button Изменить источники
+		10 button Восстановить источники
+		11 scroll area
+			12 text Вопросы по проекту
+			13 button Разрешения
+			14 text Найдём материалы на этом Mac. Для ответа можно отправить выбранные фрагменты в подставной генератор · без сети.
+			15 pop up button Проект, Value: Лира, ID: question.project
+			16 text field (settable) Description: Вопрос по проекту, Placeholder: Например: на какую дату перенесли релиз?, ID: question.text, Value: Прошу учесть решения всех предыдущих встреч, условия запуска и изменения сроков. Прошу учесть решения всех предыдущих встреч, условия запуска и изменения сроков. Прошу учесть решения всех предыдущих встреч, условия запуска и изменения сроков. Прошу учесть решения всех предыдущих встреч, условия запуска и изменения сроков. Прошу учесть решения всех предыдущих встреч, условия запуска и изменения сроков. Когда состоится релиз?
+			17 text Полный вопрос: 427 из 4000 символов
+			18 text field (settable) Description: Короткий запрос для поиска, Value: релиз ноябрь
+			19 text Для локального поиска — до 20 слов и 256 символов. Полный вопрос выше будет сохранён для ответа.
+			20 button Description: Подготовить контекст, ID: question.prepare
+			21 text Нужно разовое разрешение Нажатие кнопки ниже разрешит этот запрос для: Лира, Север. Разрешение не сохранится для следующего вопроса.
+			22 button Description: Разрешить этот запрос и получить ответ, ID: question.send
+			23 text Выбрано 1 из 1 найденных фрагментов · 73 символов текста и заголовков Также передадим полный вопрос, имя проекта, ссылки и метаданные этих фрагментов. Остальные результаты останутся на Mac. [S1] Встреча synthetic Реплика 00:42–00:55 Дата источника неизвестна Релиз перенесли на конец ноября после проверки нагрузки. Владельцы: Лира — Спрашивать каждый раз; Север — Спрашивать каждый раз
+	24 close button
+	25 full screen button Help: this button also has an action to zoom the window, Secondary Actions: zoom the window
+	26 minimize button
+	27 text Golos Questions Preview · Synthetic
+28 menu bar
+	29 Golos Questions Preview
+	30 File
+	31 Edit
+	32 View
+	33 Window
+	34 Help
+
+The focused UI element is 18 text field (settable) Description: Короткий запрос для поиска, Value: релиз ноябрь
