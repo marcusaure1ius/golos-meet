@@ -75,3 +75,22 @@ import Combine
     func back() { destination = nil }
     deinit { operation?.cancel() }
 }
+
+/// Человекочитаемая позиция фрагмента (панель памяти, источник, выдача).
+/// Переехала из удалённого экрана поиска (#123); слой поиска остаётся
+/// ядром инструмента агента.
+nonisolated enum KnowledgeSearchLocation {
+    static func label(_ chunk: KnowledgeChunk) -> String {
+        if let page = chunk.location.page { return "Страница \(page) · Фрагмент \(chunk.ordinal + 1)" }
+        if let start = chunk.location.startSeconds, let end = chunk.location.endSeconds {
+            return "Реплика \(time(start))–\(time(end))"
+        }
+        if let paragraph = chunk.location.paragraph { return "Абзац \(paragraph) · Фрагмент \(chunk.ordinal + 1)" }
+        return "Фрагмент \(chunk.ordinal + 1)"
+    }
+    private static func time(_ value: Double) -> String {
+        guard value.isFinite, value >= 0, value < 3_153_600_000 else { return "—" }
+        let seconds = Int(value)
+        return String(format: "%02d:%02d", seconds / 60, seconds % 60)
+    }
+}
