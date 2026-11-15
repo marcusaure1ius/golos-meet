@@ -3,6 +3,9 @@ import SwiftUI
 struct MeetingsScreen: View {
     var scope: ProjectMeetingScope = .all
     var onSettings: (() -> Void)?
+    /// Подмена принятого assignment store для изолированных проверок;
+    /// в продакшене используется ProductionAssignments.shared.
+    var assignmentsOverride: KnowledgeAssignments? = nil
     @Environment(\.palette) var p
     @EnvironmentObject var library: MeetingLibrary
     @EnvironmentObject var processor: MeetingProcessor
@@ -18,6 +21,9 @@ struct MeetingsScreen: View {
     @State private var showingSearch = false
     @State private var showingQuestions = false
     @State private var showingMemory = false
+    @State private var confirmError: String?
+
+    private var assignments: KnowledgeAssignments? { assignmentsOverride ?? ProductionAssignments.shared }
 
     private enum Mode: String, CaseIterable { case feed = "Лента", calendar = "Календарь" }
 
@@ -60,6 +66,10 @@ struct MeetingsScreen: View {
             ProjectMemoryEntry(projectID:questionProjectID,onBack:{ showingMemory = false },onSettings:onSettings)
         }
         .onAppear { library.reload() }
+        .task {
+            // Входящие читают предложения из принятого assignment store (#45/#46).
+            if scope == .inbox { assignments?.start() }
+        }
         .onChange(of: scenePhase) { _, phase in
             if phase == .active {
                 library.reload()
@@ -82,19 +92,40 @@ struct MeetingsScreen: View {
             ContentUnavailableView("Ничего не найдено", systemImage: "magnifyingglass")
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
         } else if meetings.isEmpty && scope != .all {
-            ContentUnavailableView(scope == .inbox ? "Во Входящих нет встреч" : "В проекте пока нет встреч",
+            ContentUnavailableView(scope == .inbox ? "Пока нет встреч" : "В проекте пока нет встреч",
                                    systemImage: scope == .inbox ? "tray" : "folder",
                                    description: Text(scope == .inbox
-                                       ? "Здесь появятся встречи без назначенных проектов."
+                                       ? "Во Входящих появятся встречи без назначенных проектов: агент предложит проект, когда индекс догонит."
                                        : "Откройте встречу в разделе «Встречи» и выберите её проекты."))
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
         } else {
             switch mode {
             case .feed:
-                MeetingFeedView(meetings: meetings, now: Date()) { selected = $0 }
-                    .id(FeedFilter(query: query, period: period, scope: scope))
+                if scope == .inbox, let assignments {
+                    InboxMeetingsFeed(assignments: assignments, meetings: meetings,
+                                      confirmError: confirmError,
+                                      onSelect: { selected = $0 },
+                                      onConfirm: { confirmProposal($0) })
+                        .id(FeedFilter(query: query, period: period, scope: scope))
+                } else {
+                    MeetingFeedView(meetings: meetings, now: Date()) { selected = $0 }
+                        .id(FeedFilter(query: query, period: period, scope: scope))
+                }
             case .calendar:
                 MeetingCalendarView(meetings: meetings) { selected = $0 }
+            }
+        }
+    }
+
+    /// Подтвердить предложение прямо с карточки Входящих: принятый store
+    /// (`ProjectLibrary.assign`), встреча уходит в проект и исчезает из Входящих.
+    private func confirmProposal(_ proposal: InboxMeetingProposal) {
+        confirmError = nil
+        Task {
+            do {
+                try await projects.assign(meetingID: proposal.meetingID, projectIDs: [proposal.projectID])
+            } catch {
+                confirmError = "Не удалось подтвердить предложение. Откройте встречу и выберите проект вручную."
             }
         }
     }
@@ -145,6 +176,12 @@ struct MeetingsScreen: View {
                     .buttonStyle(GhostButton())
                     .help("Обновить и догнать необработанные встречи")
                 }
+            }
+            if scope == .inbox && !showingDocuments {
+                // Клиентский путь Входящих (#114): объясняем путь прямо на экране.
+                Text("Встречи без проекта. Агент предложит проект — подтвердите на карточке или назначьте вручную.")
+                    .font(.system(size: 13)).foregroundStyle(p.muted)
+                    .frame(maxWidth: .infinity, alignment: .leading)
             }
             if !showingDocuments {
                 HStack(spacing: 10) {
