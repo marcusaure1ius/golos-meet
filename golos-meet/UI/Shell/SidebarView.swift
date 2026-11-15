@@ -1,7 +1,10 @@
 import SwiftUI
 
+/// Секции сайдбара. «Вопросы» и «Поиск» свёрнуты в Агента (#113, #123):
+/// поиск слов — инструмент агента, RAG-вопросы станут его инструментом
+/// после подключения живого рантайма.
 enum SidebarSection: Hashable {
-    case agent, meetings, documents, search, questions, inbox, project(UUID), settings
+    case agent, meetings, documents, inbox, project(UUID), settings
 }
 
 struct SidebarView: View {
@@ -19,8 +22,6 @@ struct SidebarView: View {
                 navRow("Агент", icon: "sparkles", destination: .agent)
                 navRow("Встречи", icon: "waveform", destination: .meetings)
                 navRow("Документы", icon: "doc.text", destination: .documents)
-                navRow("Поиск", icon: "magnifyingglass", destination: .search)
-                navRow("Вопросы", icon: "text.bubble", destination: .questions)
                 navRow("Входящие", icon: "tray", destination: .inbox)
                 HStack {
                     groupHeader("Проекты")

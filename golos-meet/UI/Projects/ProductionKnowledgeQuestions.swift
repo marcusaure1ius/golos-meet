@@ -1,6 +1,10 @@
 import Foundation
 import SwiftUI
 
+/// Продакшн-проводка RAG-пайплайна «Вопросов» (#113/#123). Экран «Вопросы»
+/// удалён и свёрнут в Агента; слой сохраняется как будущий инструмент агента
+/// `answer_question` (контекст → модель → ответ с источниками): модель,
+/// фабрика и клиент не удаляются, семантику согласий покрывают модельные тесты.
 @MainActor enum ProductionKnowledgeQuestions {
     static func makeModel(projectID: UUID? = nil) -> KnowledgeQuestionModel? {
         // Must precede shared library/runtime/settings and any Keychain access.
@@ -32,22 +36,5 @@ struct QuestionOpenRouterClient: ChatCompleter {
         try Task.checkCancellation()
         return try await OpenRouterClient(apiKey: key).complete(model: model, messages: messages,
             responseFormat: responseFormat, beforeSending: beforeSending)
-    }
-}
-
-struct KnowledgeQuestionEntry: View {
-    var initialProjectID: UUID?
-    var onBack: (() -> Void)?
-    var onSettings: (() -> Void)?
-    @State private var model: KnowledgeQuestionModel?
-    @State private var loaded = false
-    var body: some View {
-        ZStack {
-            if let model { KnowledgeQuestionScreen(model: model, onBack: onBack, onSettings: onSettings) }
-            else if loaded { ContentUnavailableView("Вопросы недоступны в тестовом host", systemImage: "text.bubble") }
-            else { ProgressView("Подготавливаем вопросы…") }
-        }.task {
-            if !loaded { model = ProductionKnowledgeQuestions.makeModel(projectID: initialProjectID); loaded = true }
-        }.onDisappear { model?.cancel() }
     }
 }
