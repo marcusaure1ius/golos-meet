@@ -48,11 +48,13 @@ private struct AgentSessionsFixture {
         resolved.resolve(.approved)
 
         let session = AgentSession(
-            createdAt: Date(timeIntervalSince1970: 1_763_000_000),
+            // Дробная часть обязательна: целосекундные даты не поймали бы
+            // усечение субсекундной точности при кодировании (ревью #127).
+            createdAt: Date(timeIntervalSince1970: 1_763_000_000.1234567),
             title: "Найди встречи по слову прайсинг",
             items: [
-                .userMessage(id: UUID(), text: "Найди встречи", time: Date(timeIntervalSince1970: 1)),
-                .agentMessage(id: UUID(), text: "Нашёл 2 встречи", time: Date(timeIntervalSince1970: 2)),
+                .userMessage(id: UUID(), text: "Найди встречи", time: Date(timeIntervalSince1970: 1.9876543)),
+                .agentMessage(id: UUID(), text: "Нашёл 2 встречи", time: Date(timeIntervalSince1970: 2.1234567)),
                 .narration(id: UUID(), text: "Просматриваю архив встреч…"),
                 .toolSteps(id: UUID(), label: "Работа с архивом",
                            steps: [AgentToolStep(label: "Считаю встречи", result: "2 готовы")]),
@@ -320,5 +322,75 @@ private struct AgentSessionsFixture {
         #expect(model.sessionTitle == "Первый заголовок")
         let loaded = try #require(f.store.load(id: model.sessionID))
         #expect(loaded.title == "Первый заголовок")
+    }
+
+    // MARK: - Stale-append из отменённого потока (ревью #127)
+
+    /// «Новый чат» во время стриминга: отмена задачи попадает в окно pause()
+    /// (Task.sleep глотает CancellationError), но ни один последующий append
+    /// не должен утечь в новый поток и в файл новой сессии; файл старой
+    /// сессии не перезаписывается.
+    @Test func newSessionDuringStreamingDoesNotLeakStaleAppends() async throws {
+        let f = try AgentSessionsFixture()
+        defer { f.cleanup() }
+
+        // Реальная задержка шагов: append'ы идут с паузами, как в UI.
+        let model = AgentChatModel(library: f.library, stepDelay: .milliseconds(80), store: f.store)
+        model.draft = "Вопрос во время стриминга"
+        model.send()
+        // Середина потока: narration уже добавлен (t≈0), шаг — на паузе до ≈80 мс.
+        try await Task.sleep(for: .milliseconds(50))
+
+        let oldID = model.sessionID
+        let oldURL = f.storeRoot.appendingPathComponent("\(oldID.uuidString).json")
+        let oldData = try Data(contentsOf: oldURL)
+
+        model.startNewSession()
+        #expect(model.items.isEmpty)
+
+        // Даём отменённой задаче проснуться и «дополнить бы поток»,
+        // если защита сломана.
+        try await Task.sleep(for: .milliseconds(400))
+
+        // В новом потоке нет чужих строк, новый файл не создан.
+        #expect(model.items.isEmpty)
+        #expect(model.sessionID != oldID)
+        #expect(model.sessionTitle == nil)
+        #expect(f.store.load(id: model.sessionID) == nil)
+        // Файл старой сессии не перезаписан побайтово.
+        #expect(try Data(contentsOf: oldURL) == oldData)
+    }
+
+    /// Переключение на историческую сессию во время стриминга: сохранённый
+    /// поток и файл истории не перезаписываются append'ами отменённого потока.
+    @Test func openSessionDuringStreamingDoesNotRewriteHistory() async throws {
+        let f = try AgentSessionsFixture()
+        defer { f.cleanup() }
+
+        let model = AgentChatModel(library: f.library, stepDelay: .zero, store: f.store)
+        model.draft = "Завершённый вопрос"
+        model.send()
+        try await AgentChatTests.waitIdle(model)
+        let historyID = model.sessionID
+        let historyItems = model.items
+        let historyURL = f.storeRoot.appendingPathComponent("\(historyID.uuidString).json")
+        let historyData = try Data(contentsOf: historyURL)
+
+        model.startNewSession()
+        model.draft = "Вопрос с долгим стримингом"
+        model.send()
+        try await Task.sleep(for: .milliseconds(50))
+        // Переключение посреди стриминга.
+        model.openSession(id: historyID)
+        #expect(model.items == historyItems)
+
+        try await Task.sleep(for: .milliseconds(400))
+        // Исторический поток не изменился ни в памяти, ни на диске.
+        #expect(model.items == historyItems)
+        #expect(model.sessionID == historyID)
+        #expect(try Data(contentsOf: historyURL) == historyData)
+        // Стримящаяся сессия не потеряна: её файл существует (append'ы в неё
+        // не пишутся, но сохранённое до переключения — на месте).
+        #expect(f.store.summaries().count == 2)
     }
 }

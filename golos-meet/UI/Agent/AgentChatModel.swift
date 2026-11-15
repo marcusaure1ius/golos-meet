@@ -43,6 +43,12 @@ final class AgentChatModel: ObservableObject {
     private let store: AgentSessionsStore?
     /// Текущая сессия (метаданные + поток, синхронно с items).
     private var session: AgentSession
+    /// Сессия-поколение, к которой относится текущий runTask (ревью #127:
+    /// stale-append). Захватывается в `send()`; отмена задачи попадает в окно
+    /// `pause()` (Task.sleep глотает CancellationError), поэтому каждый append
+    /// в run-пути дополнительно проверяет актуальность — иначе отменённый
+    /// поток дописывает строки в новую/открытую сессию и персистит их.
+    private var runSessionID: UUID = UUID()
     /// Сохранение после каждого изменения потока.
     private var persistCancellable: AnyCancellable?
 
@@ -85,6 +91,7 @@ final class AgentChatModel: ObservableObject {
         self.sessionID = self.session.id
         self.sessionTitle = self.session.title
         self.items = self.session.items
+        self.runSessionID = self.session.id
         refreshRecentSessions()
 
         if store != nil {
@@ -107,6 +114,21 @@ final class AgentChatModel: ObservableObject {
         runTask?.cancel()
         runTask = nil
         isThinking = false
+    }
+
+    // MARK: - Защита run-пути от stale-append (ревью #127)
+
+    /// Поток задачи актуален: не отменён и относится к текущей сессии.
+    /// Второе условие ловит переключение сессии (`startNewSession`/`openSession`),
+    /// при котором отменённая задача могла уже проснуться из `pause()`.
+    private func runIsCurrent() -> Bool {
+        !Task.isCancelled && sessionID == runSessionID
+    }
+
+    /// Append в run-пути: молча пропускается, если поток устарел.
+    private func appendRun(_ item: AgentChatItem) {
+        guard runIsCurrent() else { return }
+        items.append(item)
     }
 
     // MARK: - Сессии чата (issue #117)
@@ -194,6 +216,7 @@ final class AgentChatModel: ObservableObject {
         }
         items.append(.userMessage(id: UUID(), text: text, time: Date()))
         isThinking = true
+        runSessionID = sessionID
         runTask = Task { [weak self] in
             await self?.run(text: text)
         }
@@ -206,7 +229,7 @@ final class AgentChatModel: ObservableObject {
         // инструментами search_meetings / summarize_meeting над QA-архивом).
         if let runtime, !runtimeAPIKey().isEmpty {
             await runWithRuntime(text: text, runtime: runtime)
-            if !Task.isCancelled { isThinking = false }
+            if runIsCurrent() { isThinking = false }
             return
         }
         library.reload()
@@ -215,14 +238,14 @@ final class AgentChatModel: ObservableObject {
 
         await narrate("Просматриваю архив встреч…")
         await step("Считаю расшифрованные встречи", result: "\(summaries.count) встреч готовы")
-        guard !Task.isCancelled else { return }
+        guard runIsCurrent() else { return }
 
         guard !summaries.isEmpty else {
-            items.append(.agentMessage(
+            appendRun(.agentMessage(
                 id: UUID(),
                 text: "В архиве пока нет расшифрованных встреч, поэтому ответить по данным не получится. Запишите встречу и вернитесь к этому вопросу.",
                 time: Date()))
-            isThinking = false
+            if runIsCurrent() { isThinking = false }
             return
         }
 
@@ -235,7 +258,7 @@ final class AgentChatModel: ObservableObject {
         } else {
             await answerWithSearch(summaries: summaries, query: query)
         }
-        if !Task.isCancelled { isThinking = false }
+        if runIsCurrent() { isThinking = false }
     }
 
     // MARK: - Реальный рантайм dsh (issue #94)
@@ -243,18 +266,18 @@ final class AgentChatModel: ObservableObject {
     private func runWithRuntime(text: String, runtime: DshAgentRuntime) async {
         await narrate("Запускаю агента с моделью DeepSeek V4.1 Flash…")
         await step("Ищу по архиву инструментами search_meetings / summarize_meeting", result: nil)
-        guard !Task.isCancelled else { return }
+        guard runIsCurrent() else { return }
         do {
             let answer = try await runtime.ask(text, apiKey: runtimeAPIKey())
-            guard !Task.isCancelled else { return }
-            items.append(.agentMessage(
+            guard runIsCurrent() else { return }
+            appendRun(.agentMessage(
                 id: UUID(),
                 text: answer.trimmingCharacters(in: .whitespacesAndNewlines),
                 time: Date()))
         } catch is CancellationError {
             return
         } catch {
-            items.append(.failure(
+            appendRun(.failure(
                 id: UUID(),
                 text: "Агентный рантайм не смог ответить: \(error.localizedDescription). Ничего не отправлялось сверх вопроса — попробуйте переформулировать или повторите позже."))
         }
@@ -264,7 +287,7 @@ final class AgentChatModel: ObservableObject {
 
     private func answerWithMemoryConsolidation(summaries: [MeetingSummary], query: String) async {
         guard let projects else {
-            items.append(.agentMessage(
+            appendRun(.agentMessage(
                 id: UUID(),
                 text: "Работа с памятью проекта недоступна: слой проектов не подключён к агенту. Откройте панель памяти проекта, чтобы управлять согласиями.",
                 time: Date()))
@@ -277,7 +300,7 @@ final class AgentChatModel: ObservableObject {
         }
         guard let project = candidates.first else {
             let names = snapshot.projects.map { "«\($0.name)»" }.joined(separator: ", ")
-            items.append(.agentMessage(
+            appendRun(.agentMessage(
                 id: UUID(),
                 text: names.isEmpty
                     ? "Пока нет ни одного проекта, память которого можно сводить. Создайте проект и назначьте ему встречи."
@@ -292,14 +315,14 @@ final class AgentChatModel: ObservableObject {
         }
         var fragments: [String] = []
         for summary in assigned {
-            if Task.isCancelled { return }
+            if !runIsCurrent() { return }
             do {
                 let segments = try library.transcriptSegments(for: summary.id)
                 fragments.append(contentsOf: segments.map(\.text))
             } catch {
                 // Честный сбой чтения данных: не маскируем пустотой (П5 SPEC.md,
                 // оживляем ветку .failure из ревью #97).
-                items.append(.failure(
+                appendRun(.failure(
                     id: UUID(),
                     text: "Не удалось прочитать расшифровку встречи «\(summary.title)»: \(error.localizedDescription). Ничего не отправлялось — проверьте данные и повторите."))
                 return
@@ -307,7 +330,7 @@ final class AgentChatModel: ObservableObject {
         }
         let filtered = Self.presentableFragments(fragments)
         if assigned.isEmpty {
-            items.append(.agentMessage(
+            appendRun(.agentMessage(
                 id: UUID(),
                 text: "В проекте «\(project.name)» пока нет встреч, назначенных ему. Назначьте встречи проекту — тогда я смогу собрать их фрагменты для памяти.",
                 time: Date()))
@@ -319,20 +342,20 @@ final class AgentChatModel: ObservableObject {
         case .allowSelectedContext:
             await narrate("Политика проекта разрешает отправку выбранного контекста — новое согласие не требуется.")
             await showConsentContext(project: project, fragments: filtered)
-            items.append(.agentMessage(
+            appendRun(.agentMessage(
                 id: UUID(),
                 text: "Контекст проекта «\(project.name)» (\(filtered.count) \(Self.pluralFragments(filtered.count))) разрешён к отправке в OpenRouter по политике проекта. В демо-режиме реальная генерация сводки не выполняется — её сделает агентный рантайм после подключения.",
                 time: Date()))
         case .localOnly:
             await narrate("Собрал \(filtered.count) \(Self.pluralFragments(filtered.count)) проекта «\(project.name)», но отправлять их нельзя.")
-            items.append(.consent(AgentConsentRequest(
+            appendRun(.consent(AgentConsentRequest(
                 projectID: project.id, projectName: project.name,
                 fragmentCount: filtered.count, fragments: Array(filtered.prefix(Self.maxConsentFragments)),
                 recipient: Self.consentRecipient, policyLabel: project.cloudPolicy.questionLabel,
                 allowsOneTimeApproval: false)))
         case .askEveryTime:
             await narrate("Собрал \(filtered.count) \(Self.pluralFragments(filtered.count)) из \(assigned.count) \(Self.pluralMeetings(assigned.count)) проекта «\(project.name)». Для сведения памяти их нужно отправить в OpenRouter — нужно ваше разрешение.")
-            items.append(.consent(AgentConsentRequest(
+            appendRun(.consent(AgentConsentRequest(
                 projectID: project.id, projectName: project.name,
                 fragmentCount: filtered.count, fragments: Array(filtered.prefix(Self.maxConsentFragments)),
                 recipient: Self.consentRecipient, policyLabel: project.cloudPolicy.questionLabel)))
@@ -341,7 +364,7 @@ final class AgentChatModel: ObservableObject {
 
     /// Raw-контекст согласия — карточкой с раскрытием (12 фрагментов, как в QA).
     private func showConsentContext(project: KnowledgeProject, fragments: [String]) async {
-        items.append(.artifact(AgentArtifact(
+        appendRun(.artifact(AgentArtifact(
             kind: .rawContext,
             title: "Контекст проекта «\(project.name)»",
             meta: "\(fragments.count) \(Self.pluralFragments(fragments.count)) расшифровок · получатель OpenRouter",
@@ -384,7 +407,7 @@ final class AgentChatModel: ObservableObject {
         await step("Ищу по словам: \(tokens.joined(separator: ", "))", result: nil)
         var matches: [(MeetingSummary, String)] = []
         for summary in summaries {
-            if Task.isCancelled { return }
+            if !runIsCurrent() { return }
             let haystack = library.searchText(for: summary.id)
             let hitToken = tokens.first { haystack.contains($0) }
             if let hitToken {
@@ -393,21 +416,21 @@ final class AgentChatModel: ObservableObject {
         }
         await narrate("Готовлю результаты…")
         if matches.isEmpty {
-            items.append(.agentMessage(
+            appendRun(.agentMessage(
                 id: UUID(),
                 text: "По этим словам в расшифровках ничего не нашлось. Попробуйте другое слово из разговора — я ищу по заголовкам, конспектам и транскриптам.",
                 time: Date()))
             return
         }
-        items.append(.agentMessage(
+        appendRun(.agentMessage(
             id: UUID(),
             text: "Нашёл \(matches.count) \(Self.pluralMeetings(matches.count)) по этим словам:",
             time: Date()))
         for (summary, token) in matches.prefix(3) {
-            items.append(.artifact(Self.meetingArtifact(summary, matchedToken: token)))
+            appendRun(.artifact(Self.meetingArtifact(summary, matchedToken: token)))
         }
         if matches.count > 3 {
-            items.append(.narration(id: UUID(), text: "Ещё \(matches.count - 3) встреч — уточните слова, чтобы сузить поиск."))
+            appendRun(.narration(id: UUID(), text: "Ещё \(matches.count - 3) встреч — уточните слова, чтобы сузить поиск."))
         }
     }
 
@@ -417,18 +440,18 @@ final class AgentChatModel: ObservableObject {
         // честно сообщаем (состояние «неизвестно» не маскируется, П8 SPEC.md).
         let withInsights = summaries.first { $0.hasInsights && library.insights(for: $0.id) != nil }
         guard let summary = withInsights, let insights = library.insights(for: summary.id) else {
-            items.append(.agentMessage(
+            appendRun(.agentMessage(
                 id: UUID(),
                 text: "У последних встреч ещё нет конспектов (insights.json). Конспект появится после обработки встречи — спросите позже.",
                 time: Date()))
             return
         }
         await narrate("Собираю итоги и договорённости…")
-        items.append(.agentMessage(
+        appendRun(.agentMessage(
             id: UUID(),
             text: "Вот конспект последней встречи с готовым конспектом:",
             time: Date()))
-        items.append(.artifact(AgentArtifact(
+        appendRun(.artifact(AgentArtifact(
             kind: .summary,
             title: insights.title,
             meta: Self.metaLine(summary),
@@ -448,18 +471,18 @@ final class AgentChatModel: ObservableObject {
         }
         await narrate("Формулирую предложение…")
         guard !candidates.isEmpty else {
-            items.append(.agentMessage(
+            appendRun(.agentMessage(
                 id: UUID(),
                 text: "Чтобы предложить проект, назовите тему — найду встречи по словам и предложу состав проекта.",
                 time: Date()))
             return
         }
         let name = candidates.first?.0.title ?? query
-        items.append(.agentMessage(
+        appendRun(.agentMessage(
             id: UUID(),
             text: "Предлагаю проект по теме «\(name)». Состав — по найденным встречам:",
             time: Date()))
-        items.append(.artifact(AgentArtifact(
+        appendRun(.artifact(AgentArtifact(
             kind: .projectSuggestion,
             title: "Проект: \(name)",
             meta: "\(candidates.count) \(Self.pluralMeetings(candidates.count)) в основе",
@@ -472,7 +495,7 @@ final class AgentChatModel: ObservableObject {
     // MARK: - Шаги narration (П3 SPEC.md)
 
     private func narrate(_ text: String) async {
-        items.append(.narration(id: UUID(), text: text))
+        appendRun(.narration(id: UUID(), text: text))
         await pause()
     }
 
@@ -482,7 +505,11 @@ final class AgentChatModel: ObservableObject {
 
     /// Добавляет шаг в последний блок .toolSteps (или открывает новый блок).
     /// Внутренний, чтобы тесты проверяли рост счётчика скролла (ревью #97).
+    /// Guard актуальности стоит до мутации: рост счётчика шагов не меняет
+    /// `items.count`, поэтому stale-мутация последнего блока не ловится
+    /// больше нигде (ревью #127).
     func toolStepBlock(label: String, result: String?) async {
+        guard runIsCurrent() else { return }
         let step = AgentToolStep(label: label, result: result)
         // Группируем подряд идущие шаги в один свёрнутый блок.
         if case .toolSteps(_, _, var steps)? = items.last {
