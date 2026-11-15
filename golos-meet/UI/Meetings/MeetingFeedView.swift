@@ -1,10 +1,14 @@
 import SwiftUI
 
 /// Лента карточек встреч, сгруппированных по дням.
+/// Во Входящих карточка с готовым предложением агента получает инлайн-CTA
+/// (read-model assignment store, см. `InboxProposalResolver`).
 struct MeetingFeedView: View {
     @Environment(\.palette) var p
     let meetings: [MeetingSummary]
     let now: Date
+    var proposals: [String: InboxMeetingProposal] = [:]
+    var onConfirmProposal: (InboxMeetingProposal) -> Void = { _ in }
     let onSelect: (MeetingSummary) -> Void
     @State private var page = MeetingFeedPage()
 
@@ -23,8 +27,20 @@ struct MeetingFeedView: View {
                             Text(group.label).font(.system(size: 13, weight: .semibold)).foregroundStyle(p.muted)
                             LazyVStack(spacing: 8) {
                                 ForEach(group.meetings) { m in
-                                    Button { onSelect(m) } label: { MeetingCard(meeting: m) }
+                                    if let proposal = proposals[m.id] {
+                                        Button { onSelect(m) } label: {
+                                            MeetingCard(meeting: m) {
+                                                InboxProposalRow(proposal: proposal,
+                                                                 onConfirm: { onConfirmProposal(proposal) },
+                                                                 onOtherOptions: { onSelect(m) })
+                                            }
+                                        }
                                         .buttonStyle(.plain)
+                                        .accessibilityElement(children: .contain)
+                                    } else {
+                                        Button { onSelect(m) } label: { MeetingCard(meeting: m) }
+                                            .buttonStyle(.plain)
+                                    }
                                 }
                             }
                         }
