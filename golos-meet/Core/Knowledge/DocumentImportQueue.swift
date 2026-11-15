@@ -57,6 +57,18 @@ final class DocumentImportQueue: ObservableObject {
         await enqueue(urls: [job.url], projectIDs: job.projectIDs, targetID: job.targetID)
     }
 
+    /// Провалы текущей сессии для транзиентных карточек (issue #101): не больше
+    /// трёх последних, старые вытесняются. История попыток в store в UI не показывается.
+    var recentFailures: [DocumentImportJob] {
+        Array(jobs.filter { $0.state == .failed }.suffix(3))
+    }
+
+    /// «Убрать» на карточке провала: карточка исчезает, попытка удаляется из store.
+    func dismissFailure(_ id: UUID) async {
+        jobs.removeAll { $0.id == id }
+        try? await store.deleteImport(id: id)
+    }
+
     private func startNext() {
         guard activeTask == nil, let job = jobs.first(where: { $0.state == .queued }) else { return }
         activeID = job.id
@@ -73,6 +85,10 @@ final class DocumentImportQueue: ObservableObject {
                     $0.message = result.reused ? "Уже в библиотеке. Повторная копия не добавлена." : "Документ и фрагменты сохранены локально."
                 }
                 completedCount += 1
+                // Успешный повтор снимает карточку исходного провала (issue #101).
+                let superseded = jobs.filter { $0.id != job.id && $0.state == .failed && $0.url == job.url && $0.targetID == job.targetID }
+                jobs.removeAll { superseded.contains($0) }
+                for failed in superseded { try? await store.deleteImport(id: failed.id) }
                 onImported(result.documentID)
             } catch {
                 update(job.id) {
