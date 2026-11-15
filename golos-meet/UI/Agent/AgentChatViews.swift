@@ -87,8 +87,11 @@ struct AgentScreen: View {
     @StateObject private var model: AgentChatModel
 
     init(library: MeetingLibrary, projects: ProjectLibrary? = nil,
-         runtime: DshAgentRuntime? = DshAgentRuntime(root: DshAgentRuntime.defaultRoot())) {
-        _model = StateObject(wrappedValue: AgentChatModel(library: library, projects: projects, runtime: runtime))
+         runtime: DshAgentRuntime? = DshAgentRuntime(root: DshAgentRuntime.defaultRoot()),
+         store: AgentSessionsStore? = nil) {
+        _model = StateObject(wrappedValue: AgentChatModel(
+            library: library, projects: projects, runtime: runtime,
+            store: store ?? AgentSessionsStore()))
     }
 
     /// Для превью и рендер-тестов.
@@ -104,6 +107,8 @@ struct AgentScreen: View {
 struct AgentChatView: View {
     @Environment(\.palette) private var p
     @ObservedObject var model: AgentChatModel
+    /// Сессия, выбранная для удаления в меню истории (до подтверждения).
+    @State private var sessionPendingDelete: AgentSessionSummary?
 
     var body: some View {
         VStack(spacing: 0) {
@@ -123,18 +128,22 @@ struct AgentChatView: View {
 
     private var header: some View {
         HStack(alignment: .center, spacing: 10) {
-            Image(systemName: "sparkles")
-                .font(.system(size: 15, weight: .regular))
-                .foregroundStyle(p.accent)
-                .frame(width: 18, height: 18)
-            Text("Агент")
-                .font(.system(size: 17, weight: .semibold))
-                .foregroundStyle(p.ink)
-            Text(model.modeDescription)
-                .font(.system(size: 12))
-                .foregroundStyle(p.muted)
-                .lineLimit(1)
-                .truncationMode(.tail)
+            HStack(alignment: .center, spacing: 10) {
+                Image(systemName: "sparkles")
+                    .font(.system(size: 15, weight: .regular))
+                    .foregroundStyle(p.accent)
+                    .frame(width: 18, height: 18)
+                Text("Агент")
+                    .font(.system(size: 17, weight: .semibold))
+                    .foregroundStyle(p.ink)
+                Text(model.modeDescription)
+                    .font(.system(size: 12))
+                    .foregroundStyle(p.muted)
+                    .lineLimit(1)
+                    .truncationMode(.tail)
+            }
+            .accessibilityElement(children: .combine)
+            .accessibilityLabel("Экран Агент, \(model.modeDescription)")
             Spacer(minLength: 12)
             if model.isThinking {
                 HStack(spacing: 6) {
@@ -144,12 +153,111 @@ struct AgentChatView: View {
                         .foregroundStyle(p.muted)
                 }
             }
+            if model.hasSessionPersistence {
+                historyMenu
+                newChatButton
+            }
         }
         .padding(.horizontal, 20)
         .padding(.vertical, 12)
-        .accessibilityElement(children: .combine)
-        .accessibilityLabel("Экран Агент, \(model.modeDescription)")
     }
+
+    // MARK: Сессии в шапке (issue #117)
+
+    private var historyMenu: some View {
+        Menu {
+            if model.recentSessions.isEmpty {
+                Text("Нет прошлых сессий")
+            } else {
+                let recent = Array(model.recentSessions.prefix(Self.maxHistoryItems))
+                ForEach(recent) { summary in
+                    Button {
+                        model.openSession(id: summary.id)
+                    } label: {
+                        Label(historyTitle(summary),
+                              systemImage: summary.id == model.sessionID ? "checkmark" : "bubble.left")
+                    }
+                    .disabled(summary.id == model.sessionID)
+                }
+                Divider()
+                Menu("Удалить…") {
+                    ForEach(recent) { summary in
+                        Button(role: .destructive) {
+                            sessionPendingDelete = summary
+                        } label: {
+                            Label(historyTitle(summary), systemImage: "trash")
+                        }
+                    }
+                }
+            }
+        } label: {
+            Image(systemName: "clock.arrow.circlepath")
+                .font(.system(size: 13, weight: .semibold))
+                .foregroundStyle(p.ink)
+                .frame(width: 30, height: 30)
+                .background(p.cardSel)
+                .clipShape(Circle())
+        }
+        .menuStyle(.borderlessButton)
+        .menuIndicator(.hidden)
+        .fixedSize()
+        .accessibilityLabel("История сессий чата")
+        .help("История сессий")
+        .confirmationDialog(deleteDialogTitle, isPresented: deleteConfirmationPresented,
+                            titleVisibility: .visible) {
+            Button("Удалить", role: .destructive) {
+                if let summary = sessionPendingDelete { model.deleteSession(id: summary.id) }
+                sessionPendingDelete = nil
+            }
+            Button("Отмена", role: .cancel) { sessionPendingDelete = nil }
+        } message: {
+            Text("Поток этой сессии будет удалён без возможности восстановления.")
+        }
+    }
+
+    private var newChatButton: some View {
+        Button {
+            model.startNewSession()
+        } label: {
+            Image(systemName: "plus")
+                .font(.system(size: 13, weight: .semibold))
+                .foregroundStyle(p.ink)
+                .frame(width: 30, height: 30)
+                .background(p.cardSel)
+                .clipShape(Circle())
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel("Новый чат")
+        .help("Новый чат")
+    }
+
+    /// Сколько последних сессий показывается в попапе истории.
+    static let maxHistoryItems = 8
+
+    private var deleteConfirmationPresented: Binding<Bool> {
+        Binding(get: { sessionPendingDelete != nil },
+                set: { if !$0 { sessionPendingDelete = nil } })
+    }
+
+    private var deleteDialogTitle: String {
+        guard let title = sessionPendingDelete.map({ historyTitle($0) }) else { return "Удалить сессию?" }
+        return "Удалить сессию «\(title)»?"
+    }
+
+    /// Строка сессии в попапе: авто-заголовок (или «Новый чат» для безымянной)
+    /// + дата последней активности.
+    private func historyTitle(_ summary: AgentSessionSummary) -> String {
+        let title = summary.title ?? "Новый чат"
+        return "\(title) · \(Self.historyDateFormatter.string(from: summary.updatedAt))"
+    }
+
+    private static let historyDateFormatter: DateFormatter = {
+        let f = DateFormatter()
+        f.locale = Locale(identifier: "ru_RU")
+        f.dateStyle = .short
+        f.timeStyle = .short
+        return f
+    }()
 
     // MARK: Пустой экран
 
