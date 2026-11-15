@@ -49,3 +49,15 @@ struct ProjectCloudSettings: View {
         }
     }
 }
+
+/// Пользовательские названия политик облака (экран «Вопросы» удалён — #113/#123;
+/// метка используется настройками разрешений, панелью памяти и чатом Агента).
+extension ProjectCloudPolicy {
+    var questionLabel: String {
+        switch self {
+        case .localOnly: "Только на этом Mac"
+        case .askEveryTime: "Спрашивать каждый раз"
+        case .allowSelectedContext: "Разрешать выбранный контекст"
+        }
+    }
+}

@@ -3,6 +3,9 @@ import SwiftUI
 struct MeetingsScreen: View {
     var scope: ProjectMeetingScope = .all
     var onSettings: (() -> Void)?
+    /// Проектный вход «Вопросы» (#113): кнопка на странице проекта ведёт
+    /// в Агента с предзаполненным контекстом проекта (замена экрана «Вопросов»).
+    var onQuestions: (() -> Void)?
     /// Подмена принятого assignment store для изолированных проверок;
     /// в продакшене используется ProductionAssignments.shared.
     var assignmentsOverride: KnowledgeAssignments? = nil
@@ -18,8 +21,6 @@ struct MeetingsScreen: View {
     @State private var period: MeetingPeriod = .all
     @State private var refreshPulse = false   // разовый оборот, когда догонять нечего
     @State private var showingDocuments = false
-    @State private var showingSearch = false
-    @State private var showingQuestions = false
     @State private var showingMemory = false
     @State private var confirmError: String?
 
@@ -39,11 +40,7 @@ struct MeetingsScreen: View {
 
     var body: some View {
         Group {
-            if showingQuestions {
-                KnowledgeQuestionEntry(initialProjectID: questionProjectID, onBack: { showingQuestions = false }, onSettings: onSettings)
-            } else if showingSearch {
-                KnowledgeSearchEntry(initialScope: searchScope, onBack: { showingSearch = false })
-            } else if let m = selected {
+            if let m = selected {
                 MeetingDetailView(backTitle: screenTitle, onSettings: onSettings, meeting: m) { selected = nil }
             } else {
                 VStack(spacing: 0) {
@@ -156,10 +153,11 @@ struct MeetingsScreen: View {
                 if scope != .all {
                     if questionProjectID != nil {
                         ProjectMemoryOpenButton(title:"Память",systemImage:"text.book.closed",identifier:"project.memory") { showingMemory = true }
-                        Button { showingQuestions = true } label: { Label("Вопросы", systemImage: "text.bubble") }.buttonStyle(GhostButton())
+                        Button { onQuestions?() } label: { Label("Вопросы", systemImage: "text.bubble") }
+                            .buttonStyle(GhostButton())
+                            .accessibilityIdentifier("project.questions")
+                            .help("Открыть Агента с контекстом проекта")
                     }
-                    Button { showingSearch = true } label: { Label("Поиск", systemImage: "magnifyingglass") }
-                        .buttonStyle(GhostButton())
                     Picker("Содержимое", selection: $showingDocuments) {
                         Text("Встречи").tag(false)
                         Text("Документы").tag(true)
@@ -211,14 +209,6 @@ struct MeetingsScreen: View {
     }
 
     private var questionProjectID: UUID? { if case .project(let id) = scope { id } else { nil } }
-
-    private var searchScope: KnowledgeSearchScope {
-        switch scope {
-        case .all: .all
-        case .inbox: .inbox
-        case .project(let id): .project(id)
-        }
-    }
 
     @ViewBuilder private var projectLibraryState: some View {
         if let error = projects.loadError {

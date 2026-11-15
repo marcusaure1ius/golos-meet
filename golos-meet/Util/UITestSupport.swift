@@ -18,6 +18,9 @@ enum UITestSupport {
         if ProcessInfo.processInfo.environment["GOLOS_MEET_UI_E2E_SEED"] == "import-errors" {
             seedImportErrors()
         }
+        if ProcessInfo.processInfo.environment["GOLOS_MEET_UI_E2E_SEED"] == "project" {
+            seedProject()
+        }
         if ProcessInfo.processInfo.environment["GOLOS_MEET_UI_E2E_ACTION"] == "set-theme-dark" {
             // Производственный путь записи настроек (didSet → AppPreferences,
             // тестовый домен) — тот же, что вызывает пункт меню темы.
@@ -80,6 +83,20 @@ enum UITestSupport {
                 try? await store.startImport(id: id, filename: filename, targetID: nil, state: state)
                 try? await store.updateImport(id: id, state: state, message: message)
             }
+            done.signal()
+        }
+        _ = done.wait(timeout: .now() + 10)
+    }
+
+    /// Сидирование проекта через принятый store (E-04, #113/#123): проект
+    /// «Альфа» в изолированной SQLite, чтобы проверить проектный вход
+    /// «Вопросы» → Агент с предзаполненным контекстом. Синхронно на старте —
+    /// до первого reload UI.
+    private static func seedProject() {
+        let store = ProjectStore(url: AppPaths.appSupport.appendingPathComponent("knowledge.sqlite"))
+        let done = DispatchSemaphore(value: 0)
+        Task.detached(priority: .userInitiated) {
+            try? await store.createProject(name: "Альфа")
             done.signal()
         }
         _ = done.wait(timeout: .now() + 10)
