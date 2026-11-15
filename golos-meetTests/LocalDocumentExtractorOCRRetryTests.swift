@@ -50,6 +50,14 @@ import Testing
         NSError(domain: "com.apple.TextRecognition", code: 1)
     }
 
+    private func writePNG(_ url: URL) throws {
+        let bitmap = try #require(NSBitmapImageRep(bitmapDataPlanes: nil, pixelsWide: 40, pixelsHigh: 40,
+            bitsPerSample: 8, samplesPerPixel: 4, hasAlpha: true, isPlanar: false,
+            colorSpaceName: .deviceRGB, bytesPerRow: 0, bitsPerPixel: 0))
+        let data = try #require(bitmap.representation(using: .png, properties: [:]))
+        try data.write(to: url)
+    }
+
     @Test func transientOCRFailureIsRetriedAndImportSucceeds() async throws {
         try await withFolder { root in
             let url = root.appendingPathComponent("Скан.pdf")
@@ -142,6 +150,130 @@ import Testing
         #expect(DocumentImporter.userMessage(for: DocumentExtractionError.ocrUnavailable)
             == "Не удалось распознать скан страницы — повторите попытку.")
         #expect(DocumentImporter.userMessage(for: DocumentExtractionError.fileTooLarge).contains("50 МБ"))
+    }
+
+    // MARK: Таймаут OCR-попытки (issue #101, дополнение пользователя от 15.11)
+
+    /// A Vision engine that never returns (issue #56 on macOS 27) must not spin
+    /// the import forever: every attempt is cut off by the injected timeout,
+    /// the retry cycle runs, and the standalone scan ends in the honest Russian
+    /// failure instead of an endless spinner.
+    @Test func hangingOCREngineTimesOutAndThrowsRussianError() async throws {
+        try await withFolder { root in
+            let url = root.appendingPathComponent("excalidraw.png")
+            try writePNG(url)
+            let counter = OCRCallCounter()
+            let startedAt = Date()
+            let extractor = LocalDocumentExtractor(
+                ocr: { _ in
+                    counter.next()
+                    // Blocking wait that never completes: mirrors a Vision call
+                    // hung past any reasonable time.
+                    DispatchSemaphore(value: 0).wait()
+                    return "никогда не вернётся"
+                },
+                retryPause: .milliseconds(5),
+                attemptTimeout: .milliseconds(100))
+            do {
+                _ = try await extractor.extract(from: url)
+                Issue.record("Импорт должен упасть с честной русской ошибкой после таймаутов")
+            } catch let error as DocumentExtractionError {
+                #expect(error == .ocrUnavailable)
+                #expect(error.localizedDescription == "Не удалось распознать скан страницы — повторите попытку.")
+            }
+            let elapsed = Date().timeIntervalSince(startedAt)
+            #expect(elapsed < 10)
+            #expect(counter.count == LocalDocumentExtractor.ocrAttempts)
+        }
+    }
+
+    /// Same hang over a PDF with a native text layer: after the timeouts the
+    /// import degrades to the native text and marks the page honestly.
+    @Test func hangingOCREngineOnPDFFallsBackToNativeTextAndMarksPage() async throws {
+        try await withFolder { root in
+            let url = root.appendingPathComponent("Отчёт.pdf")
+            try writePDF(url, pages: 1, scannedPages: [], text: "Pricing requirements draft")
+            let counter = OCRCallCounter()
+            let startedAt = Date()
+            let extractor = LocalDocumentExtractor(
+                ocr: { _ in
+                    counter.next()
+                    DispatchSemaphore(value: 0).wait()
+                    return ""
+                },
+                retryPause: .milliseconds(5),
+                attemptTimeout: .milliseconds(100))
+            let result = try await extractor.extract(from: url)
+            let elapsed = Date().timeIntervalSince(startedAt)
+            #expect(elapsed < 10)
+            #expect(counter.count == LocalDocumentExtractor.ocrAttempts)
+            let text = result.blocks.map(\.text).joined(separator: "\n")
+            #expect(text.contains("Pricing requirements draft"))
+            #expect(result.warnings.contains {
+                $0.contains("Страница 1 не распознана") && $0.contains("скан недоступен")
+            })
+            #expect(!result.warnings.contains { $0.contains("TextRecognition") || $0.contains("error 1") })
+        }
+    }
+
+    /// A timed-out attempt is an ordinary failure: after the first attempt
+    /// outlives the injected timeout and then errors, the retry still runs and
+    /// the import succeeds.
+    @Test func timedOutAttemptIsRetriedAndImportSucceeds() async throws {
+        try await withFolder { root in
+            let url = root.appendingPathComponent("Скан.pdf")
+            try writePDF(url, pages: 1, scannedPages: [], text: "Decision: launch in November")
+            let counter = OCRCallCounter()
+            let extractor = LocalDocumentExtractor(
+                ocr: { _ in
+                    counter.next()
+                    if counter.count == 1 {
+                        // First attempt outlives the injected timeout; when it
+                        // eventually fails, the result must be dropped silently.
+                        Thread.sleep(forTimeInterval: 0.5)
+                        throw Self.visionError()
+                    }
+                    return "Распознанная строка скана"
+                },
+                retryPause: .milliseconds(5),
+                attemptTimeout: .milliseconds(100))
+            let result = try await extractor.extract(from: url)
+            #expect(counter.count == 2)
+            let text = result.blocks.map(\.text).joined(separator: "\n")
+            #expect(text.contains("Decision: launch in November"))
+            #expect(text.contains("Распознанная строка скана"))
+            #expect(result.warnings.isEmpty)
+        }
+    }
+
+    /// The hung page-1 attempts keep their in-flight slots forever, so page 2
+    /// must fail fast instead of piling up more abandoned Vision calls: this is
+    /// what keeps a persistently broken Vision (#56) from pinning an unbounded
+    /// number of dispatch threads.
+    @Test func persistentlyHungVisionOnMultiPagePDFStopsAfterSlotCap() async throws {
+        try await withFolder { root in
+            let url = root.appendingPathComponent("Сканы.pdf")
+            try writePDF(url, pages: 2, scannedPages: [], text: "Pricing requirements draft")
+            let counter = OCRCallCounter()
+            let startedAt = Date()
+            let extractor = LocalDocumentExtractor(
+                ocr: { _ in
+                    counter.next()
+                    DispatchSemaphore(value: 0).wait()
+                    return ""
+                },
+                retryPause: .milliseconds(5),
+                attemptTimeout: .milliseconds(100))
+            let result = try await extractor.extract(from: url)
+            let elapsed = Date().timeIntervalSince(startedAt)
+            #expect(elapsed < 10)
+            #expect(counter.count == LocalDocumentExtractor.maxConcurrentOCRCalls)
+            let text = result.blocks.map(\.text).joined(separator: "\n")
+            #expect(text.contains("Pricing requirements draft"))
+            #expect(result.warnings.contains {
+                $0.contains("Страницы 1–2 не распознаны") && $0.contains("скан недоступен")
+            })
+        }
     }
 }
 
