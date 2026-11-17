@@ -36,7 +36,7 @@ struct MeetingMeta: Codable, Equatable {
     var schemaVersion: Int? = nil
     /// Manual, interrupted and failed capture must survive the short-audio filter.
     var preserveAudio: Bool? = nil
-    /// Дорожки сжаты в архив (`.m4a` вместо `.wav`); расшифровка и метаданные не сжаты (#83).
+    /// Дорожки сжаты в архив (`.caf` FLAC вместо `.wav`); расшифровка и метаданные не сжаты (#83, #129).
     var archivedAudio: Bool? = nil
 
     static func encoded(_ meta: MeetingMeta) throws -> Data {

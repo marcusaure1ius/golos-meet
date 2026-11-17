@@ -17,9 +17,10 @@ final class MeetingPlayer: ObservableObject {
 
     init(folder: URL) {
         var loaded: [AVAudioPlayer] = []
-        // Предпочтение несжатому WAV; для архивных встреч (#83) — сжатый .m4a.
+        // Предпочтение несжатому WAV; для архивных встреч (#129) — lossless CAF-FLAC,
+        // AVAudioPlayer воспроизводит его напрямую без распаковки.
         for base in ["mic", "system"] {
-            for ext in ["wav", "m4a"] {
+            for ext in ["wav", "caf"] {
                 let url = folder.appendingPathComponent("\(base).\(ext)")
                 guard FileManager.default.fileExists(atPath: url.path),
                       let p = try? AVAudioPlayer(contentsOf: url) else { continue }
