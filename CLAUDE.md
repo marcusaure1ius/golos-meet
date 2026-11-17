@@ -40,6 +40,7 @@ Rust (`asr/`, вендор из соседнего проекта `golos`): `pro
 ## Данные на диске
 `~/Library/Application Support/golos-meet/`
 - `meetings/<ГГГГ-ММ-ДД_ЧЧ-ММ-СС>/` — `mic.wav`, `system.wav`, `meta.json`, (после обработки) `transcript.json`, `transcript.md`.
+- Архивация (#129): у готовых встреч старше порога (`ArchiveRunner`) `mic.wav`/`system.wav` заменяются на lossless `mic.caf`/`system.caf` (CAF-контейнер, FLAC-данные; кодируется системным `afconvert` — AVAudioFile FLAC не пишет), `meta.archivedAudio = true`. FLAC lossless: WAV восстанавливается без потерь (`MeetingArchiver.restoreWav` — путь будущей переобработки ASR, sidecar читает только WAV); AVAudioPlayer играет `.caf` напрямую.
 - `models/<id>/` — модели ASR.
 
 `meta.json` (источник правды для будущего UI): `id, source, startedAt, endedAt` (**ISO-8601**), `durationSeconds`, `status` (recording|processing|ready|failed|discarded), `asrModel`, `title`, `schemaVersion` (=1). Пишется атомарно; создаётся при старте встречи (status=recording) и обновляется пайплайном. Старые M1-файлы без новых полей декодируются (опциональны).

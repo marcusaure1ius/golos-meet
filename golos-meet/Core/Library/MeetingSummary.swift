@@ -37,7 +37,7 @@ struct MeetingSummary: Identifiable, Equatable {
     var metaStatus: MeetingStatus? = nil
     /// Есть ли на диске хотя бы одна аудио-дорожка.
     var hasAudio: Bool = false
-    /// Аудио сжато в архив (`.m4a` вместо `.wav`, #83).
+    /// Аудио сжато в архив (`.caf` FLAC вместо `.wav`, #129).
     var hasArchivedAudio: Bool = false
     let asrModel: String?
     let hasTranscript: Bool

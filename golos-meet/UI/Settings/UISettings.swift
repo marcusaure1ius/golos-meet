@@ -32,6 +32,12 @@ final class UISettings: ObservableObject {
     @Published var archiveDays: Int {
         didSet { defaults.set(archiveDays, forKey: "archive.days") }
     }
+    /// Авто-архивация включена: готовые встречи старше порога сжимаются в CAF-FLAC
+    /// при запуске и раз в 6 часов (#129). По умолчанию включена — поведение прежнего
+    /// preview, где авто-прогоны шли без выключателя; ручная кнопка работает всегда.
+    @Published var archiveEnabled: Bool {
+        didSet { defaults.set(archiveEnabled, forKey: "archive.enabled") }
+    }
 
     enum GenerationModel: String, CaseIterable {
         case deepSeek = "deepseek/deepseek-v4.1-flash"
@@ -67,6 +73,7 @@ final class UISettings: ObservableObject {
         modelChoice = d.string(forKey: "asrModelChoice").flatMap(ASRModelChoice.init) ?? .speed
         llmEnabled = (d.object(forKey: "llm.enabled") as? Bool) ?? true
         archiveDays = Self.loadArchiveDays(from: d)
+        archiveEnabled = (d.object(forKey: "archive.enabled") as? Bool) ?? true
         generationModel = Self.loadGenerationModel(from: d)
     }
 

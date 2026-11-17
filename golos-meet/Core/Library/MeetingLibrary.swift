@@ -42,8 +42,8 @@ final class MeetingLibrary: ObservableObject {
             let id = dir.lastPathComponent
             let meta = (try? Data(contentsOf: dir.appendingPathComponent("meta.json")))
                 .flatMap { try? MeetingMeta.decoded($0) }
-            // Аудио есть в несжатом (.wav) или сжатом архивном (.m4a, #83) виде.
-            let hasAudio = MeetingLibrary.hasTrack(["mic", "system"], extensions: ["wav", "m4a"], in: dir)
+            // Аудио есть в несжатом (.wav) или lossless архивном (.caf FLAC, #129) виде.
+            let hasAudio = MeetingLibrary.hasTrack(["mic", "system"], extensions: ["wav", "caf"], in: dir)
             let hasTranscript = fm.fileExists(atPath: dir.appendingPathComponent("transcript.json").path)
             let hasInsights = fm.fileExists(atPath: dir.appendingPathComponent("insights.json").path)
             guard meta != nil || hasAudio || hasTranscript else { continue }
