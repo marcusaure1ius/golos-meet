@@ -51,8 +51,12 @@ struct MeetingDetailView: View {
     private var folder: URL { AppPaths.meetingDir(meeting.id) }
 
     private var hasAudio: Bool {
-        FileManager.default.fileExists(atPath: folder.appendingPathComponent("mic.wav").path)
-            || FileManager.default.fileExists(atPath: folder.appendingPathComponent("system.wav").path)
+        // Архивная встреча (#131): lossless CAF-FLAC тоже аудио — плеер и
+        // переобработка остаются доступны.
+        ["wav", "caf"].contains { ext in
+            FileManager.default.fileExists(atPath: folder.appendingPathComponent("mic.\(ext)").path)
+                || FileManager.default.fileExists(atPath: folder.appendingPathComponent("system.\(ext)").path)
+        }
     }
 
     private var actionTitle: String {
@@ -351,6 +355,9 @@ struct MeetingDetailView: View {
     private func runReprocessFlow() {
         Task {
             player?.stop()
+            // Архивная встреча: вернуть WAV из FLAC до постановки в очередь —
+            // sidecar читает только WAV; FLAC lossless, PCM байт-в-байт (#131).
+            try? MeetingArchiver.restoreWav(at: folder)
             let before = liveMeeting.title
             await processor.enqueueAndWait(.process(deleteShortAudio: false), id: meeting.id, folder: folder)
             transcript = library.transcript(for: meeting.id)

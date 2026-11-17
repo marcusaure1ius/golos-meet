@@ -17,12 +17,17 @@ final class MeetingPlayer: ObservableObject {
 
     init(folder: URL) {
         var loaded: [AVAudioPlayer] = []
-        for name in ["mic.wav", "system.wav"] {
-            let url = folder.appendingPathComponent(name)
-            guard FileManager.default.fileExists(atPath: url.path),
-                  let p = try? AVAudioPlayer(contentsOf: url) else { continue }
-            p.prepareToPlay()
-            loaded.append(p)
+        // Предпочтение несжатому WAV; для архивных встреч (#131) — lossless CAF-FLAC,
+        // AVAudioPlayer воспроизводит его напрямую без распаковки.
+        for base in ["mic", "system"] {
+            for ext in ["wav", "caf"] {
+                let url = folder.appendingPathComponent("\(base).\(ext)")
+                guard FileManager.default.fileExists(atPath: url.path),
+                      let p = try? AVAudioPlayer(contentsOf: url) else { continue }
+                p.prepareToPlay()
+                loaded.append(p)
+                break
+            }
         }
         self.players = loaded
         self.duration = loaded.map(\.duration).max() ?? 0

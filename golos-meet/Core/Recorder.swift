@@ -25,6 +25,8 @@ struct MeetingMeta: Codable, Equatable {
     var titleManual: Bool? = nil
     /// Версия схемы; nil у старых meta, записанных до введения поля.
     var schemaVersion: Int? = nil
+    /// Дорожки сжаты в архив (`.caf` FLAC вместо `.wav`); расшифровка и метаданные не сжаты (#131).
+    var archivedAudio: Bool? = nil
 
     static func encoded(_ meta: MeetingMeta) throws -> Data {
         let enc = JSONEncoder()

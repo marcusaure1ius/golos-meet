@@ -31,6 +31,16 @@ final class UISettings: ObservableObject {
     @Published var llmModel: String {
         didSet { UserDefaults.standard.set(llmModel, forKey: "llm.model") }
     }
+    /// Порог архивации записей в днях: готовые встречи старше срока сжимаются (#131).
+    @Published var archiveDays: Int {
+        didSet { UserDefaults.standard.set(archiveDays, forKey: "archive.days") }
+    }
+    /// Авто-архивация включена: готовые встречи старше порога сжимаются в CAF-FLAC
+    /// при запуске и раз в 6 часов (#131). Ручная кнопка «Архивировать сейчас»
+    /// работает независимо от выключателя.
+    @Published var archiveEnabled: Bool {
+        didSet { UserDefaults.standard.set(archiveEnabled, forKey: "archive.enabled") }
+    }
 
     /// API-ключ OpenRouter — хранится в Keychain, не в UserDefaults.
     var openRouterKey: String {
@@ -44,5 +54,12 @@ final class UISettings: ObservableObject {
         modelChoice = d.string(forKey: "asrModelChoice").flatMap(ASRModelChoice.init) ?? .speed
         llmEnabled = (d.object(forKey: "llm.enabled") as? Bool) ?? true
         llmModel = d.string(forKey: "llm.model") ?? "qwen/qwen3.6-flash"
+        // Порог архивации: сохранённое значение или дефолт 90 дней; мусорное — дефолт.
+        if let days = d.object(forKey: "archive.days") as? Int, days > 0 {
+            archiveDays = days
+        } else {
+            archiveDays = 90
+        }
+        archiveEnabled = (d.object(forKey: "archive.enabled") as? Bool) ?? true
     }
 }
