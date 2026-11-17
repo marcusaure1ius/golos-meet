@@ -372,7 +372,9 @@ import AVFoundation
         _ = try await makeMeeting("2026-01-01_10-00-00", daysAgo: 120)
         _ = try await makeMeeting("2026-06-01_10-00-00", daysAgo: 10)
 
-        let runner = ArchiveRunner(root: root, thresholdDays: { 90 })
+        // isEnabled инжектирован: без него дефолт читает UserDefaults.standard —
+        // реальный дом пользователя (в этой базе нет preferences-изоляции).
+        let runner = ArchiveRunner(root: root, thresholdDays: { 90 }, isEnabled: { true })
         let archived = await runner.runOnce()
 
         #expect(archived == 1)
