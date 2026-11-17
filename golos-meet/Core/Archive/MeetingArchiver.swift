@@ -279,6 +279,9 @@ final class ArchiveRunner {
     func stop() {
         task?.cancel()
         task = nil
+        // Идущий проход тоже прерываем — иначе он дорабатывает до конца после stop().
+        runTask?.cancel()
+        runTask = nil
     }
 
     /// Один проход: восстановление флага + архивация кандидатов. Возвращает число
@@ -298,12 +301,13 @@ final class ArchiveRunner {
     private func performRun(now: Date, force: Bool) async -> Int {
         repairFlags()
         guard force || isEnabled() else { return 0 }
-        let busy = busyIds()
         let days = thresholdDays()
         var archived = 0
         for dir in MeetingArchiver.candidates(in: root, olderThanDays: days, now: now) {
             if Task.isCancelled { break }
-            guard !busy.contains(dir.lastPathComponent) else { continue }
+            // busyIds() перечитывается на каждой итерации: встреча, вставшая в
+            // очередь после старта прохода, тоже не должна терять WAV (ревью P2).
+            guard !busyIds().contains(dir.lastPathComponent) else { continue }
             do {
                 try await Task.detached(priority: .utility) {
                     try MeetingArchiver.archiveMeeting(at: dir)
