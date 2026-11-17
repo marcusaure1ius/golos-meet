@@ -8,8 +8,6 @@ struct SidebarView: View {
     @Binding var selection: SidebarSection
     @Environment(\.palette) var p
     @EnvironmentObject private var projects: ProjectLibrary
-    @State private var creating = false
-    @State private var collapsed: Set<UUID> = []
 
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
@@ -17,52 +15,6 @@ struct SidebarView: View {
                 Spacer().frame(height: 48)
                 groupHeader("Golos Meet")
                 navRow("Встречи", icon: "waveform", destination: .meetings)
-                navRow("Документы", icon: "doc.text", destination: .documents)
-                navRow("Поиск", icon: "magnifyingglass", destination: .search)
-                navRow("Вопросы", icon: "text.bubble", destination: .questions)
-                navRow("Входящие", icon: "tray", destination: .inbox)
-                HStack {
-                    groupHeader("Проекты")
-                    Spacer()
-                    Button { creating = true } label: { Image(systemName: "plus") }
-                        .buttonStyle(.plain).foregroundStyle(p.muted)
-                        .padding(8).disabled(!projects.isReady)
-                        .help("Создать проект").accessibilityLabel("Создать проект")
-                }.padding(.top, 16)
-                if let error = projects.loadError {
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text(error).font(.system(size: 12)).foregroundStyle(p.danger)
-                        Button("Повторить") { Task { await projects.reload() } }
-                            .disabled(projects.isLoading)
-                    }.padding(9)
-                } else if !projects.isLoaded {
-                    ProgressView("Загружаю…").controlSize(.small).padding(9)
-                } else if projects.projects.isEmpty {
-                    Button("Создать первый проект") { creating = true }
-                        .buttonStyle(.plain).font(.system(size: 13)).foregroundStyle(p.link)
-                        .padding(9).disabled(!projects.isReady)
-                } else {
-                    ForEach(visibleProjects) { row in
-                        HStack(spacing: 0) {
-                            if row.hasChildren {
-                                Button {
-                                    if collapsed.contains(row.id) { collapsed.remove(row.id) }
-                                    else { collapsed.insert(row.id) }
-                                } label: {
-                                    Image(systemName: collapsed.contains(row.id) ? "chevron.right" : "chevron.down")
-                                        .font(.system(size: 10)).foregroundStyle(p.muted)
-                                        .frame(width: 20, height: 30).contentShape(Rectangle())
-                                }
-                                .buttonStyle(.plain)
-                                .accessibilityLabel("\(collapsed.contains(row.id) ? "Раскрыть" : "Свернуть") проект \(row.project.name)")
-                            } else {
-                                Spacer().frame(width: 20)
-                            }
-                            navRow(row.project.name, icon: "folder", destination: .project(row.id))
-                        }
-                        .padding(.leading, CGFloat(min(row.depth, 6)) * 12)
-                    }
-                }
                 Spacer().frame(height: 24)
                 navRow("Настройки", icon: "gearshape", destination: .settings)
                 Spacer().frame(height: 12)
@@ -72,19 +24,6 @@ struct SidebarView: View {
         .frame(width: 250)
         .background {
             VisualEffectView(material: .sidebar).overlay(p.sidebar.opacity(0.2))
-        }
-        .sheet(isPresented: $creating) {
-            CreateProjectSheet { selection = .project($0.id) }
-        }
-    }
-
-    private var visibleProjects: [ProjectTreeRow] { rows(parentID: nil, depth: 0, seen: []) }
-
-    private func rows(parentID: UUID?, depth: Int, seen: Set<UUID>) -> [ProjectTreeRow] {
-        projects.projects.filter { $0.parentID == parentID && !seen.contains($0.id) }.flatMap { project in
-            let hasChildren = projects.projects.contains { $0.parentID == project.id }
-            let row = ProjectTreeRow(project: project, depth: depth, hasChildren: hasChildren)
-            return [row] + (collapsed.contains(project.id) ? [] : rows(parentID: project.id, depth: depth + 1, seen: seen.union([project.id])))
         }
     }
 
@@ -103,9 +42,6 @@ struct SidebarView: View {
     }
 }
 
-private struct ProjectTreeRow: Identifiable {
-    let project: KnowledgeProject
-    let depth: Int
-    let hasChildren: Bool
-    var id: UUID { project.id }
-}
+// Разделы Документы/Поиск/Вопросы/Входящие/Проекты скрыты по решению пользователя
+// (#131): основной сценарий — Встречи и Настройки. Код и данные разделов сохранены
+// (SidebarSection/MainWindowView без изменений); возврат — откатом этого коммита.
