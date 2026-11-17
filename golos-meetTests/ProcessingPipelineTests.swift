@@ -86,6 +86,22 @@ import Foundation
         #expect(FileManager.default.fileExists(atPath: dir.appendingPathComponent("system.wav").path))
     }
 
+    @Test func archivedMeetingWithoutAudioKeepsTranscript() async throws {
+        let dir = try tempMeeting(duration: 600)
+        let originalTranscript = Data("{\"segments\":[]}".utf8)
+        try originalTranscript.write(to: dir.appendingPathComponent("transcript.json"))
+        // Дорожки удалены (встреча архивирована, #129).
+        try FileManager.default.removeItem(at: dir.appendingPathComponent("mic.wav"))
+        try FileManager.default.removeItem(at: dir.appendingPathComponent("system.wav"))
+
+        let p = ProcessingPipeline(asrFactory: { StubASR() })
+        await p.process(folder: dir)
+
+        // Пустой транскрипт не перезаписал существующий; статус не изменился.
+        #expect(try Data(contentsOf: dir.appendingPathComponent("transcript.json")) == originalTranscript)
+        #expect(try readMeta(dir).status == .recording)
+    }
+
     @Test func backfillModeKeepsShortAudio() async throws {
         let dir = try tempMeeting(duration: 120)
         let p = ProcessingPipeline(asrFactory: { StubASR() },

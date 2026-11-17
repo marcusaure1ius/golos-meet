@@ -33,6 +33,8 @@ enum MeetingArchiver {
             case .recording, .processing, .summarizing: continue
             default: break
             }
+            // «Сохранить аудио» — пользовательская гарантия, архиватор её не пересекает.
+            guard meta?.preserveAudio != true else { continue }
             guard let endedAt = endedAt(of: dir, meta: meta), endedAt < cutoff else { continue }
             result.append(dir)
         }
@@ -95,7 +97,9 @@ enum MeetingArchiver {
     /// Восстанавливает WAV из архивных `.caf`-дорожек встречи (для переобработки ASR:
     /// sidecar читает только WAV). FLAC lossless — декодированный PCM побайтово
     /// равен исходному. `.caf` остаётся на месте: после переобработки следующий
-    /// проход архивации снова сожмёт восстановленные дорожки. Возвращает пути
+    /// проход архивации снова сожмёт восстановленные дорожки. Смешанное состояние
+    /// (caf и живой wav) не трогается — WAV авторитетен. Флаг `archivedAudio`
+    /// сбрасывается, чтобы UI не показывал «сжато» при живом WAV. Возвращает пути
     /// восстановленных файлов.
     @discardableResult
     static func restoreWav(at dir: URL) throws -> [URL] {
@@ -104,9 +108,12 @@ enum MeetingArchiver {
         for name in trackNames {
             let caf = dir.appendingPathComponent(name + ".caf")
             let wav = dir.appendingPathComponent(name + ".wav")
-            guard fm.fileExists(atPath: caf.path) else { continue }
+            guard fm.fileExists(atPath: caf.path), !fm.fileExists(atPath: wav.path) else { continue }
             try decodeFLACToWav(source: caf, output: wav)
             restored.append(wav)
+        }
+        if !restored.isEmpty {
+            try setArchivedFlag(at: dir, false)
         }
         return restored
     }
@@ -242,13 +249,20 @@ final class ArchiveRunner {
     /// Выключатель авто-архивации (#129): ручной запуск из настроек идёт с
     /// `force: true` и выключатель не учитывает.
     private let isEnabled: @MainActor () -> Bool
+    /// Встречи, занятые очередью обработки (в очереди или активны) — архиватор их
+    /// пропускает, чтобы не удалить WAV под идущей переобработкой (#129, ревью P1-1).
+    private let busyIds: @MainActor () -> Set<String>
+    /// Текущий проход — ручной и авто-прогоны сериализуются, а не перекрываются.
+    private var runTask: Task<Int, Never>?
     private var task: Task<Void, Never>?
 
     init(root: URL, thresholdDays: (@MainActor () -> Int)? = nil,
-         isEnabled: (@MainActor () -> Bool)? = nil) {
+         isEnabled: (@MainActor () -> Bool)? = nil,
+         busyIds: (@MainActor () -> Set<String>)? = nil) {
         self.root = root
         self.thresholdDays = thresholdDays ?? { UISettings.shared.archiveDays }
         self.isEnabled = isEnabled ?? { UISettings.shared.archiveEnabled }
+        self.busyIds = busyIds ?? { MeetingProcessor.shared.processing }
     }
 
     func start() {
@@ -269,15 +283,27 @@ final class ArchiveRunner {
 
     /// Один проход: восстановление флага + архивация кандидатов. Возвращает число
     /// архивированных встреч. `force` — ручной запуск из настроек (выключатель
-    /// не учитывается). Вызывается и напрямую в тестах.
+    /// не учитывается). Перекрывающиеся вызовы ждут текущий проход, а не дублируют
+    /// его. Вызывается и напрямую в тестах.
     @discardableResult
     func runOnce(now: Date = Date(), force: Bool = false) async -> Int {
-        guard force || isEnabled() else { return 0 }
+        if let runTask { return await runTask.value }
+        let run = Task<Int, Never> { await self.performRun(now: now, force: force) }
+        runTask = run
+        let result = await run.value
+        runTask = nil
+        return result
+    }
+
+    private func performRun(now: Date, force: Bool) async -> Int {
         repairFlags()
+        guard force || isEnabled() else { return 0 }
+        let busy = busyIds()
         let days = thresholdDays()
         var archived = 0
         for dir in MeetingArchiver.candidates(in: root, olderThanDays: days, now: now) {
             if Task.isCancelled { break }
+            guard !busy.contains(dir.lastPathComponent) else { continue }
             do {
                 try await Task.detached(priority: .utility) {
                     try MeetingArchiver.archiveMeeting(at: dir)

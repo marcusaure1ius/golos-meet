@@ -68,6 +68,16 @@ import AVFoundation
         _ = try await makeMeeting(in: root, id: "2026-01-01_10-00-00", daysAgo: 120)
         #expect(MeetingArchiver.candidates(in: root, olderThanDays: 0).isEmpty)
     }
+
+    @Test func preserveAudioMeetingIsNotCandidate() async throws {
+        let root = try makeRoot()
+        let dir = try await makeMeeting(in: root, id: "2026-01-01_10-00-00", daysAgo: 120)
+        var meta = try MeetingMeta.decoded(try Data(contentsOf: dir.appendingPathComponent("meta.json")))
+        meta.preserveAudio = true
+        try meta.write(to: dir.appendingPathComponent("meta.json"))
+
+        #expect(MeetingArchiver.candidates(in: root, olderThanDays: 90).isEmpty)
+    }
 }
 
 @MainActor
@@ -323,6 +333,27 @@ import AVFoundation
         #expect(try wavPcm(dir.appendingPathComponent("mic.wav")) == original)
         // .caf остаётся на месте — чтению и плееру ничего не сломалось.
         #expect(FileManager.default.fileExists(atPath: dir.appendingPathComponent("mic.caf").path))
+        // Флаг сброшен: при живом WAV UI не должен показывать «сжато» (ревью P2-3).
+        let meta = try MeetingMeta.decoded(try Data(contentsOf: dir.appendingPathComponent("meta.json")))
+        #expect(meta.archivedAudio == false)
+    }
+
+    @Test func restoreSkipsMixedStateWithLiveWav() async throws {
+        let root = try makeRoot()
+        let dir = try await makeOldMeetingDir(root: root, id: "2026-01-01_10-00-00")
+        // Смешанное состояние после сбоя: caf и «живой» wav рядом — WAV авторитетен.
+        try Data(count: 128).write(to: dir.appendingPathComponent("mic.caf"))
+        let liveWav = Data(repeating: 0x42, count: 256)
+        try liveWav.write(to: dir.appendingPathComponent("mic.wav"))
+
+        let restored = try MeetingArchiver.restoreWav(at: dir)
+
+        #expect(restored.isEmpty)
+        // Сырое сравнение: liveWav — не валидный WAV, chunk-парсер здесь неприменим.
+        #expect(try Data(contentsOf: dir.appendingPathComponent("mic.wav")) == liveWav)
+        // Флаг не тронут: полной архивации не было и восстановления не было.
+        let meta = try MeetingMeta.decoded(try Data(contentsOf: dir.appendingPathComponent("meta.json")))
+        #expect(meta.archivedAudio == nil)
     }
 }
 
@@ -386,5 +417,29 @@ import AVFoundation
         #expect(await runner.runOnce(force: true) == 1)
         #expect(!FileManager.default.fileExists(atPath: dir.appendingPathComponent("mic.wav").path))
         #expect(FileManager.default.fileExists(atPath: dir.appendingPathComponent("mic.caf").path))
+    }
+
+    @Test func runnerSkipsMeetingBusyInProcessingQueue() async throws {
+        let root = FileManager.default.temporaryDirectory
+            .appendingPathComponent("archive-run-\(UUID().uuidString)", isDirectory: true)
+        try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: root) }
+        let dir = root.appendingPathComponent("2026-01-01_10-00-00", isDirectory: true)
+        try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+        let ended = Date().addingTimeInterval(-120 * 86_400)
+        let meta = MeetingMeta(id: "2026-01-01_10-00-00", source: "kontur.talk",
+                               startedAt: ended.addingTimeInterval(-120), endedAt: ended,
+                               durationSeconds: 120, status: .ready, asrModel: "gigaam-v3")
+        try MeetingMeta.encoded(meta).write(to: dir.appendingPathComponent("meta.json"))
+        try Data("{\"segments\":[]}".utf8).write(to: dir.appendingPathComponent("transcript.json"))
+        let w = try WavWriter(url: dir.appendingPathComponent("mic.wav"))
+        await w.append(Data(count: 16_000 * 2))
+        try await w.finalize()
+
+        // Встреча в очереди переобработки — архиватор не трогает её WAV (ревью P1-1).
+        let runner = ArchiveRunner(root: root, thresholdDays: { 90 },
+                                   busyIds: { ["2026-01-01_10-00-00"] })
+        #expect(await runner.runOnce() == 0)
+        #expect(FileManager.default.fileExists(atPath: dir.appendingPathComponent("mic.wav").path))
     }
 }
