@@ -34,12 +34,16 @@ final class MeetingLibrary: ObservableObject {
             let id = dir.lastPathComponent
             let meta = (try? Data(contentsOf: dir.appendingPathComponent("meta.json")))
                 .flatMap { try? MeetingMeta.decoded($0) }
+            // Аудио есть в несжатом (.wav) или lossless архивном (.caf FLAC, #131) виде.
             let hasAudio = fm.fileExists(atPath: dir.appendingPathComponent("mic.wav").path)
                         || fm.fileExists(atPath: dir.appendingPathComponent("system.wav").path)
+                        || fm.fileExists(atPath: dir.appendingPathComponent("mic.caf").path)
+                        || fm.fileExists(atPath: dir.appendingPathComponent("system.caf").path)
             let hasTranscript = fm.fileExists(atPath: dir.appendingPathComponent("transcript.json").path)
             let hasInsights = fm.fileExists(atPath: dir.appendingPathComponent("insights.json").path)
             guard meta != nil || hasAudio || hasTranscript else { continue }
-            let summary = MeetingSummary.make(folderId: id, meta: meta, hasAudio: hasAudio, hasTranscript: hasTranscript, hasInsights: hasInsights)
+            let summary = MeetingSummary.make(folderId: id, meta: meta, hasAudio: hasAudio, hasTranscript: hasTranscript, hasInsights: hasInsights,
+                                              hasArchivedAudio: meta?.archivedAudio == true)
             // Отброшенные (короче порога) не листим вовсе — папка на диске остаётся.
             guard summary.status != .discarded else { continue }
             result.append(summary)

@@ -6,9 +6,26 @@ struct SettingsScreen: View {
     @ObservedObject private var settings = UISettings.shared
     @State private var apiKey: String = UISettings.shared.openRouterKey
     @State private var keySaved: Bool = !UISettings.shared.openRouterKey.isEmpty
+    @State private var archivingNow = false
+    @State private var archiveRunResult: String?
 
     /// Доступные LLM-модели (пока одна; список расширяется здесь).
     private let llmModels = ["qwen/qwen3.6-flash"]
+
+    /// Ручной проход архивации (#131): работает и при выключенной авто-архивации,
+    /// явное действие пользователя. Список встреч подтянет статусы на `.onAppear`.
+    private func runArchiveNow() {
+        guard let runner = ProductionArchive.shared, !archivingNow else { return }
+        archivingNow = true
+        archiveRunResult = nil
+        Task {
+            let count = await runner.runOnce(force: true)
+            archiveRunResult = count > 0
+                ? "Сжато встреч: \(count). Аудио теперь в lossless FLAC."
+                : "Готово: встречи старше срока уже сжаты."
+            archivingNow = false
+        }
+    }
 
     private func persistKey() {
         settings.openRouterKey = apiKey
@@ -69,6 +86,36 @@ struct SettingsScreen: View {
                             GSelectLabel(settings.llmModel)
                         }
                         .menuStyle(.borderlessButton).menuIndicator(.hidden).fixedSize()
+                    }
+                    GSettingRow("Архив записей",
+                                desc: "Старые встречи сжимаются в lossless FLAC — прослушивание, расшифровка и переобработка остаются доступны.") {
+                        Toggle("", isOn: $settings.archiveEnabled)
+                            .labelsHidden()
+                            .toggleStyle(.switch)
+                            .controlSize(.small)
+                    }
+                    if settings.archiveEnabled {
+                        GSettingRow("Сжимать записи старше",
+                                    desc: "Авто-архивация при запуске и раз в 6 часов.") {
+                            Menu {
+                                ForEach([30, 60, 90, 180, 365], id: \.self) { days in
+                                    Button("\(days) дн.") { settings.archiveDays = days }
+                                }
+                            } label: {
+                                GSelectLabel("\(settings.archiveDays) дн.")
+                            }
+                            .menuStyle(.borderlessButton).menuIndicator(.hidden).fixedSize()
+                        }
+                    }
+                    GSettingRow("Архивировать сейчас",
+                                desc: archiveRunResult ?? "Один проход по всем встречам, не дожидаясь авто-прогона.") {
+                        if archivingNow {
+                            ProgressView().controlSize(.small)
+                        } else {
+                            Button("Запустить") { runArchiveNow() }
+                                .buttonStyle(GhostButton())
+                                .disabled(ProductionArchive.shared == nil)
+                        }
                     }
                     GSettingRow("Ключ OpenRouter",
                                 desc: keySaved ? "Сохранён в Keychain." : "Хранится в Keychain, не в настройках.") {

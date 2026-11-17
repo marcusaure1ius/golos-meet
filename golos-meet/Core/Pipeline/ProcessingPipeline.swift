@@ -46,6 +46,16 @@ final class ProcessingPipeline {
         }
 
         Log.pipeline.info("processing \(meta.id, privacy: .public) engine=\(self.modelId, privacy: .public)")
+
+        // Обе дорожки отсутствуют (встреча архивирована, #131, или дорожки потеряны) —
+        // ASR выполнять не по чему, а пустой транскрипт нельзя перезаписью «стирать»
+        // существующий. Статус не меняем: встреча остаётся как была.
+        if !FileManager.default.fileExists(atPath: folder.appendingPathComponent("mic.wav").path),
+           !FileManager.default.fileExists(atPath: folder.appendingPathComponent("system.wav").path) {
+            Log.pipeline.info("\(meta.id, privacy: .public): дорожек нет (архив/потеря) — обработка пропущена, транскрипт сохранён")
+            return
+        }
+
         meta.status = .processing
         writePreservingManualTitle(&meta, to: metaURL)
 
