@@ -1,0 +1,97 @@
+{
+  "tested_source": "b8d44a2e8aa0342158f3ccaae043cae1804862c5",
+  "base": "7be254c4a1eceb28755ad60d718a4ed72cb21179",
+  "preserved_xcresult": "/tmp/golos61-after62-preserved.xcresult",
+  "new_episode": [
+    {
+      "scenario": "original-ready-event",
+      "phase": "ready-source coverage",
+      "reads": [
+        {
+          "begin": 345870.3615275833,
+          "end": 345870.3615547917,
+          "fields": {
+            "bridgeID": "F76E8FBF-C8B8-4CFC-9D34-20E673F02EC1",
+            "configurationID": "D8598C8C-2CAC-411A-9875-C39271B1E88A",
+            "dirty": "false",
+            "enabled": "true",
+            "model": "fake-only",
+            "revision": "5",
+            "startReturnedConfigurationID": "D8598C8C-2CAC-411A-9875-C39271B1E88A",
+            "started": "true",
+            "weakAlive": "true",
+            "workerID": "B41CBD40-2F7A-4781-B261-A5B469A9A408",
+            "workerRunID": "BEE7D710-2615-4230-A936-9A84C237414C",
+            "workerStarted": "true"
+          },
+          "name": "bridge.weak/configuration",
+          "rows": []
+        },
+        {
+          "begin": 345870.3615565417,
+          "end": 345870.36156137503,
+          "fields": {
+            "attemptID": "A841A88F-F4E1-47BD-B342-EC127DE5C12E",
+            "count": "1",
+            "cursor": "0",
+            "cycleID": "02A2C190-613D-428C-8333-6AD6E77C4BEC",
+            "draining": "true",
+            "jobGeneration": "B9BE725E-AD9C-4CE8-8121-20AA3494A316",
+            "loadingPreview": "false",
+            "model": "fake-only",
+            "refreshPending": "false",
+            "revision": "5",
+            "runID": "BEE7D710-2615-4230-A936-9A84C237414C",
+            "sequence": "1",
+            "started": "true",
+            "workerID": "B41CBD40-2F7A-4781-B261-A5B469A9A408"
+          },
+          "name": "worker.run/attempt/lease",
+          "rows": []
+        },
+        {
+          "begin": 345870.36156220833,
+          "end": 345870.36156391667,
+          "fields": {
+            "entered": "0",
+            "fakeCalls": "0",
+            "inFlight": "0",
+            "maxPhysical": "0",
+            "returned": "0",
+            "transportID": "8962D1CD-E2A1-4760-A42E-C38FA2F1691B"
+          },
+          "name": "physical.enter/return",
+          "rows": []
+        },
+        {
+          "begin": 345870.3615647917,
+          "end": 345870.3658639167,
+          "fields": {
+            "limited": "false"
+          },
+          "name": "durable.sql",
+          "rows": [
+            {
+              "attemptID": "A841A88F-F4E1-47BD-B342-EC127DE5C12E",
+              "cursor": "0",
+              "cycleID": "02A2C190-613D-428C-8333-6AD6E77C4BEC",
+              "generation": "B9BE725E-AD9C-4CE8-8121-20AA3494A316",
+              "model": "fake-only",
+              "projectID": "8E74AC33-B4C1-4D5C-916A-FF5A382DBD15",
+              "runID": "BEE7D710-2615-4230-A936-9A84C237414C",
+              "sequence": "1",
+              "sourceKey": "meeting:late",
+              "state": "running",
+              "total": "1"
+            }
+          ]
+        }
+      ],
+      "bridgeID": "F76E8FBF-C8B8-4CFC-9D34-20E673F02EC1",
+      "workerID": "B41CBD40-2F7A-4781-B261-A5B469A9A408",
+      "atomic": false,
+      "note": "New episode only. Event/startup/owner liveness observed; active leased attempt running before physical call snapshot. Physical entry occurred later during non-atomic capture; root cause of pre-adapter delay not established."
+    }
+  ],
+  "control_failure": "Durable completed was observed before service return observer. Failed immediate trace.has assertion, but same-owner publication.inserted.return is present in final timeline. Fix waits for this distinct observation, without changing original coverage5s/assertions."
+}

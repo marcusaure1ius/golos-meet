@@ -4,8 +4,19 @@ import os
 
 /// Опрашивает Core Audio раз в `pollInterval` секунд и проверяет, есть ли среди системных
 /// аудио-процессов хотя бы один с bundle id, начинающимся на `bundlePrefix` (kontur.talk),
-/// у которого `kAudioProcessPropertyIsRunning == true`. Результат передаётся в `onActive`.
+/// который **пишет микрофон** (`kAudioProcessPropertyIsRunningInput`). Результат — в `onActive`.
+///
+/// Один только вывод звука встречей не считается: с macOS 27 аудио-сервис Толка
+/// (`kontur.talk.helper`) держит выходной поток открытым и вне звонка — играет цифровую тишину,
+/// `IsRunning` не гаснет → бесконечная «фантомная» запись (замер 15.09: in=0, out=1, окна звонка нет).
 final class AudioProcessMonitor {
+    /// Снимок аудио-флагов одного процесса — вход чистой логики `isTalkInCall`.
+    struct ProcessAudioState {
+        let bundleId: String?
+        let isRunningInput: Bool
+        let isRunningOutput: Bool
+    }
+
     var onActive: ((Bool) -> Void)?
     private let bundlePrefix: String
     private let pollInterval: TimeInterval
@@ -20,6 +31,12 @@ final class AudioProcessMonitor {
     static func matchesTargetBundle(_ bundleId: String?, prefix: String) -> Bool {
         guard let bundleId else { return false }
         return bundleId.lowercased().hasPrefix(prefix.lowercased())
+    }
+
+    /// Толк в звонке ⇔ хоть один его процесс пишет микрофон. Вывод без ввода — не звонок
+    /// (уведомления, «висящий» поток тишины — см. доку класса).
+    static func isTalkInCall(_ processes: [ProcessAudioState], prefix: String) -> Bool {
+        processes.contains { matchesTargetBundle($0.bundleId, prefix: prefix) && $0.isRunningInput }
     }
 
     /// Запускает периодический опрос; при каждом тике вызывает `onActive(isAnyActive)`.
@@ -44,12 +61,13 @@ final class AudioProcessMonitor {
 
     private func isAnyTalkProcessRunning() -> Bool {
         guard let objs = processObjects() else { return false }
-        for obj in objs {
-            let bundle = stringProp(obj, kAudioProcessPropertyBundleID)
-            guard Self.matchesTargetBundle(bundle, prefix: bundlePrefix) else { continue }
-            if (uint32Prop(obj, kAudioProcessPropertyIsRunning) ?? 0) != 0 { return true }
+        let states = objs.map { obj in
+            ProcessAudioState(
+                bundleId: stringProp(obj, kAudioProcessPropertyBundleID),
+                isRunningInput: (uint32Prop(obj, kAudioProcessPropertyIsRunningInput) ?? 0) != 0,
+                isRunningOutput: (uint32Prop(obj, kAudioProcessPropertyIsRunningOutput) ?? 0) != 0)
         }
-        return false
+        return Self.isTalkInCall(states, prefix: bundlePrefix)
     }
 
     private func processObjects() -> [AudioObjectID]? {

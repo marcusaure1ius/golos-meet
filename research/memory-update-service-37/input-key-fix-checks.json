@@ -1,0 +1,59 @@
+{
+  "reviewed_previous_sha": "7981d450c8cd363051804cf9d52e2119c705674e",
+  "base_sha": "75b17ace1d44b712bca9dbb7ffa51fc1eb45311d",
+  "schema": 7,
+  "runs": {
+    "targeted": {
+      "result": "Passed",
+      "tests": 14,
+      "runs": 38,
+      "failed": 0,
+      "skipped": 0,
+      "runtime_warnings": [],
+      "xcresult": "/Users/alfa/.codex/worktrees/project-memory-worker/golos-meet/.build/xcode/Logs/Test/Test-golos-meet-2026.11.01_23-12-01-+0300.xcresult",
+      "raw_log": "/tmp/golos37-input-key-targeted.log",
+      "failures": []
+    },
+    "full": {
+      "result": "Passed",
+      "tests": 400,
+      "runs": 562,
+      "failed": 0,
+      "skipped": 0,
+      "runtime_warnings": [],
+      "xcresult": "/Users/alfa/.codex/worktrees/project-memory-worker/golos-meet/.build/xcode/Logs/Test/Test-golos-meet-2026.11.01_23-14-48-+0300.xcresult",
+      "raw_log": "/tmp/golos37-input-key-check.log",
+      "failures": []
+    }
+  },
+  "migration_trace_files": 7,
+  "fixture_adjustment": {
+    "initial_targeted_xcresult": "Test-golos-meet-2026.11.01_23-10-45-+0300.xcresult",
+    "failure": "binding fixture expected equal payloads but had default titles Встреча a vs Встреча b",
+    "repair": "set real metadata titles equal before retrieval, no production-code adjustment; all four selected-context scenarios then passed"
+  },
+  "actual_reviewer_db_copy_probe": {
+    "result": "Passed",
+    "cloud_spy_calls_A_then_B": 2,
+    "extra_calls_on_restart_replay": 0,
+    "legacy_event_retained": true,
+    "original_db_sha256_before_and_after": "78b3996d68e07eb184e8d4f233f8d0d3619668733952814ed1590704d95e1ee2",
+    "original_db_current_sha256": "78b3996d68e07eb184e8d4f233f8d0d3619668733952814ed1590704d95e1ee2",
+    "raw_log": "/tmp/golos37-input-probe.log",
+    "build_log": "/tmp/golos37-input-probe-build.log"
+  },
+  "previous_independent_full": {
+    "tests": 398,
+    "runs": 557,
+    "failed": 0,
+    "skipped": 0,
+    "runtime_warnings": [
+      "known QoS"
+    ],
+    "reported_by": "independent reviewer via coordinator"
+  },
+  "legacy_journal_fingerprint_changed": false,
+  "production_timeout_retry_fixture_changed": false,
+  "real_cloud_or_data": false,
+  "new_models": false
+}

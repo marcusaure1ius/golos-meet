@@ -1,0 +1,707 @@
+{
+  "events" : [
+    {
+      "detail" : "baseline",
+      "ms" : -8.3353370428085327e-05,
+      "stage" : "case.begin"
+    },
+    {
+      "detail" : "opened(787B0892-1BD1-4730-AA12-5F1939365B69, file:\/\/\/tmp\/review61-bridge\/source-ED9C09D6-185C-4C56-BF12-F887BDAAE935\/knowledge.sqlite)",
+      "ms" : 1.6102499794214964,
+      "stage" : "sqlite.lifecycle"
+    },
+    {
+      "detail" : "",
+      "ms" : 8.5627916851080954,
+      "stage" : "bridge.start"
+    },
+    {
+      "detail" : "",
+      "ms" : 8.5741250077262521,
+      "stage" : "revision.begin"
+    },
+    {
+      "detail" : "",
+      "ms" : 8.7264166795648634,
+      "stage" : "config.changed.begin"
+    },
+    {
+      "detail" : "",
+      "ms" : 8.7382500059902668,
+      "stage" : "worker.changed"
+    },
+    {
+      "detail" : "",
+      "ms" : 8.7683332967571914,
+      "stage" : "worker.reconcile"
+    },
+    {
+      "detail" : "",
+      "ms" : 10.137750010471791,
+      "stage" : "config.changed.return"
+    },
+    {
+      "detail" : "",
+      "ms" : 10.150833346415311,
+      "stage" : "config.start.begin"
+    },
+    {
+      "detail" : "",
+      "ms" : 10.152791684959084,
+      "stage" : "worker.start"
+    },
+    {
+      "detail" : "",
+      "ms" : 10.809250001329929,
+      "stage" : "worker.changed"
+    },
+    {
+      "detail" : "",
+      "ms" : 10.811416665092111,
+      "stage" : "worker.reconcile"
+    },
+    {
+      "detail" : "",
+      "ms" : 11.396166635677218,
+      "stage" : "worker.launch"
+    },
+    {
+      "detail" : "",
+      "ms" : 11.401374998968095,
+      "stage" : "config.start.ack"
+    },
+    {
+      "detail" : "",
+      "ms" : 11.423749965615571,
+      "stage" : "worker.drain"
+    },
+    {
+      "detail" : "",
+      "ms" : 16.204791667405516,
+      "stage" : "revision.end"
+    },
+    {
+      "detail" : "",
+      "ms" : 16.229374974500388,
+      "stage" : "startup.acked.begin"
+    },
+    {
+      "detail" : "",
+      "ms" : 16.2307916325517,
+      "stage" : "startup.acked.end"
+    },
+    {
+      "detail" : "",
+      "ms" : 22.501291648950428,
+      "stage" : "input.ready"
+    },
+    {
+      "detail" : "",
+      "ms" : 22.570458299014717,
+      "stage" : "event.posted"
+    },
+    {
+      "detail" : "",
+      "ms" : 22.572708316147327,
+      "stage" : "coverage.begin"
+    },
+    {
+      "detail" : "alive=true",
+      "ms" : 22.582958335988224,
+      "stage" : "bridge.event.main"
+    },
+    {
+      "detail" : "",
+      "ms" : 22.583750018384308,
+      "stage" : "bridge.changed"
+    },
+    {
+      "detail" : "",
+      "ms" : 125.91533333761618,
+      "stage" : "worker.changed"
+    },
+    {
+      "detail" : "",
+      "ms" : 125.95391663489863,
+      "stage" : "worker.reconcile"
+    },
+    {
+      "detail" : "",
+      "ms" : 130.98487496608868,
+      "stage" : "worker.launch"
+    },
+    {
+      "detail" : "",
+      "ms" : 131.02762500056997,
+      "stage" : "worker.drain"
+    },
+    {
+      "detail" : "DC48A821-1C83-49AF-9EE0-65AB5AB5182D",
+      "ms" : 132.65583332395181,
+      "stage" : "worker.active"
+    },
+    {
+      "detail" : "1",
+      "ms" : 147.02745829708874,
+      "stage" : "physical.call"
+    },
+    {
+      "detail" : "",
+      "ms" : 152.69499999703839,
+      "stage" : "coverage.end"
+    },
+    {
+      "detail" : "",
+      "ms" : 152.86312496755272,
+      "stage" : "worker.reconcile"
+    },
+    {
+      "detail" : "",
+      "ms" : 153.00658333580941,
+      "stage" : "bridge.stop"
+    },
+    {
+      "detail" : "",
+      "ms" : 153.02083332790062,
+      "stage" : "worker.stop"
+    },
+    {
+      "detail" : "",
+      "ms" : 153.03066663909703,
+      "stage" : "worker.stop"
+    },
+    {
+      "detail" : "",
+      "ms" : 153.18545832997188,
+      "stage" : "bridge.deinit"
+    },
+    {
+      "detail" : "baseline",
+      "ms" : 153.21374998893589,
+      "stage" : "case.joined"
+    },
+    {
+      "detail" : "startup-gate",
+      "ms" : 153.22224999545142,
+      "stage" : "case.begin"
+    },
+    {
+      "detail" : "",
+      "ms" : 153.37562497006729,
+      "stage" : "worker.stop"
+    },
+    {
+      "detail" : "opened(2EDCF085-82C8-4A88-A4F4-E4537A0BD78A, file:\/\/\/tmp\/review61-bridge\/source-39115E73-4732-4940-A239-D5633E651825\/knowledge.sqlite)",
+      "ms" : 153.63229165086523,
+      "stage" : "sqlite.lifecycle"
+    },
+    {
+      "detail" : "closed(787B0892-1BD1-4730-AA12-5F1939365B69, 0)",
+      "ms" : 153.68858334841207,
+      "stage" : "sqlite.lifecycle"
+    },
+    {
+      "detail" : "",
+      "ms" : 159.91099999519065,
+      "stage" : "bridge.start"
+    },
+    {
+      "detail" : "",
+      "ms" : 159.92087498307228,
+      "stage" : "revision.begin"
+    },
+    {
+      "detail" : "",
+      "ms" : 159.94583332212642,
+      "stage" : "config.changed.begin"
+    },
+    {
+      "detail" : "",
+      "ms" : 159.94720830349252,
+      "stage" : "worker.changed"
+    },
+    {
+      "detail" : "",
+      "ms" : 159.94829166447744,
+      "stage" : "worker.reconcile"
+    },
+    {
+      "detail" : "",
+      "ms" : 160.57137498864904,
+      "stage" : "config.changed.return"
+    },
+    {
+      "detail" : "",
+      "ms" : 160.57387500768527,
+      "stage" : "startup.gate.enter"
+    },
+    {
+      "detail" : "",
+      "ms" : 165.05491663701832,
+      "stage" : "revision.end"
+    },
+    {
+      "detail" : "",
+      "ms" : 165.06395832402632,
+      "stage" : "startup.paused.begin"
+    },
+    {
+      "detail" : "",
+      "ms" : 165.06495833164081,
+      "stage" : "startup.paused.end"
+    },
+    {
+      "detail" : "",
+      "ms" : 170.39745830697939,
+      "stage" : "input.ready"
+    },
+    {
+      "detail" : "",
+      "ms" : 170.42870831210166,
+      "stage" : "event.posted"
+    },
+    {
+      "detail" : "alive=true",
+      "ms" : 170.43941665906459,
+      "stage" : "bridge.event.main"
+    },
+    {
+      "detail" : "",
+      "ms" : 170.44041666667908,
+      "stage" : "bridge.changed"
+    },
+    {
+      "detail" : "",
+      "ms" : 271.19983331067488,
+      "stage" : "worker.changed"
+    },
+    {
+      "detail" : "",
+      "ms" : 271.21095830807462,
+      "stage" : "worker.reconcile"
+    },
+    {
+      "detail" : "",
+      "ms" : 675.38625001907349,
+      "stage" : "coverage.begin"
+    },
+    {
+      "detail" : "",
+      "ms" : 675.39433331694454,
+      "stage" : "startup.gate.return"
+    },
+    {
+      "detail" : "",
+      "ms" : 675.39641668554395,
+      "stage" : "config.start.begin"
+    },
+    {
+      "detail" : "",
+      "ms" : 675.39766663685441,
+      "stage" : "worker.start"
+    },
+    {
+      "detail" : "",
+      "ms" : 677.51312500331551,
+      "stage" : "worker.changed"
+    },
+    {
+      "detail" : "",
+      "ms" : 677.52049997216091,
+      "stage" : "worker.reconcile"
+    },
+    {
+      "detail" : "",
+      "ms" : 679.71674998989329,
+      "stage" : "worker.launch"
+    },
+    {
+      "detail" : "",
+      "ms" : 679.72687497967854,
+      "stage" : "config.start.ack"
+    },
+    {
+      "detail" : "",
+      "ms" : 679.75579167250544,
+      "stage" : "worker.drain"
+    },
+    {
+      "detail" : "F0C44028-492B-4137-A577-D7D773F00B02",
+      "ms" : 681.24795833136886,
+      "stage" : "worker.active"
+    },
+    {
+      "detail" : "1",
+      "ms" : 693.72491666581482,
+      "stage" : "physical.call"
+    },
+    {
+      "detail" : "",
+      "ms" : 698.28095834236592,
+      "stage" : "coverage.end"
+    },
+    {
+      "detail" : "",
+      "ms" : 698.37349996669218,
+      "stage" : "worker.reconcile"
+    },
+    {
+      "detail" : "",
+      "ms" : 698.40708334231749,
+      "stage" : "bridge.stop"
+    },
+    {
+      "detail" : "",
+      "ms" : 698.41845834162086,
+      "stage" : "worker.stop"
+    },
+    {
+      "detail" : "",
+      "ms" : 698.42633331427351,
+      "stage" : "worker.stop"
+    },
+    {
+      "detail" : "",
+      "ms" : 698.57179163955152,
+      "stage" : "bridge.deinit"
+    },
+    {
+      "detail" : "startup-gate",
+      "ms" : 698.58579162973911,
+      "stage" : "case.joined"
+    },
+    {
+      "detail" : "owner-release",
+      "ms" : 698.59124999493361,
+      "stage" : "case.begin"
+    },
+    {
+      "detail" : "",
+      "ms" : 698.70529166655615,
+      "stage" : "worker.stop"
+    },
+    {
+      "detail" : "closed(2EDCF085-82C8-4A88-A4F4-E4537A0BD78A, 0)",
+      "ms" : 698.96220834925771,
+      "stage" : "sqlite.lifecycle"
+    },
+    {
+      "detail" : "opened(282302FE-A7DC-4C23-96E1-E25A23DBC6C5, file:\/\/\/tmp\/review61-bridge\/source-FFFE02F4-897C-4A6A-868C-5A1C76247850\/knowledge.sqlite)",
+      "ms" : 698.96725000580773,
+      "stage" : "sqlite.lifecycle"
+    },
+    {
+      "detail" : "",
+      "ms" : 704.93675000034273,
+      "stage" : "bridge.start"
+    },
+    {
+      "detail" : "",
+      "ms" : 704.95529164327309,
+      "stage" : "revision.begin"
+    },
+    {
+      "detail" : "",
+      "ms" : 704.98166664037853,
+      "stage" : "config.changed.begin"
+    },
+    {
+      "detail" : "",
+      "ms" : 704.98304167995229,
+      "stage" : "worker.changed"
+    },
+    {
+      "detail" : "",
+      "ms" : 704.98416665941477,
+      "stage" : "worker.reconcile"
+    },
+    {
+      "detail" : "",
+      "ms" : 705.562999995891,
+      "stage" : "config.changed.return"
+    },
+    {
+      "detail" : "",
+      "ms" : 705.56504162959754,
+      "stage" : "config.start.begin"
+    },
+    {
+      "detail" : "",
+      "ms" : 705.56562498677522,
+      "stage" : "worker.start"
+    },
+    {
+      "detail" : "",
+      "ms" : 706.05820830678567,
+      "stage" : "worker.changed"
+    },
+    {
+      "detail" : "",
+      "ms" : 706.06083329766989,
+      "stage" : "worker.reconcile"
+    },
+    {
+      "detail" : "",
+      "ms" : 706.5068333176896,
+      "stage" : "worker.launch"
+    },
+    {
+      "detail" : "",
+      "ms" : 706.51150000048801,
+      "stage" : "config.start.ack"
+    },
+    {
+      "detail" : "",
+      "ms" : 706.51870832080022,
+      "stage" : "worker.drain"
+    },
+    {
+      "detail" : "",
+      "ms" : 712.52879162784666,
+      "stage" : "revision.end"
+    },
+    {
+      "detail" : "",
+      "ms" : 712.53920829622075,
+      "stage" : "startup.acked.begin"
+    },
+    {
+      "detail" : "",
+      "ms" : 712.54008333198726,
+      "stage" : "startup.acked.end"
+    },
+    {
+      "detail" : "",
+      "ms" : 712.54141663666815,
+      "stage" : "bridge.deinit"
+    },
+    {
+      "detail" : "",
+      "ms" : 712.57599996170029,
+      "stage" : "owner.released.begin"
+    },
+    {
+      "detail" : "",
+      "ms" : 712.57729164790362,
+      "stage" : "owner.released.end"
+    },
+    {
+      "detail" : "",
+      "ms" : 712.57799997692928,
+      "stage" : "worker.stopped.begin"
+    },
+    {
+      "detail" : "",
+      "ms" : 712.59745833231136,
+      "stage" : "worker.stop"
+    },
+    {
+      "detail" : "",
+      "ms" : 718.67649996420369,
+      "stage" : "worker.stopped.end"
+    },
+    {
+      "detail" : "",
+      "ms" : 724.95291667291895,
+      "stage" : "input.ready"
+    },
+    {
+      "detail" : "",
+      "ms" : 724.97241664677858,
+      "stage" : "event.posted"
+    },
+    {
+      "detail" : "",
+      "ms" : 1255.6926250108518,
+      "stage" : "recovery.direct.start"
+    },
+    {
+      "detail" : "",
+      "ms" : 1255.6957500055432,
+      "stage" : "worker.start"
+    },
+    {
+      "detail" : "",
+      "ms" : 1256.8276666570455,
+      "stage" : "worker.changed"
+    },
+    {
+      "detail" : "",
+      "ms" : 1256.8346666521393,
+      "stage" : "worker.reconcile"
+    },
+    {
+      "detail" : "",
+      "ms" : 1260.3554999805056,
+      "stage" : "worker.launch"
+    },
+    {
+      "detail" : "",
+      "ms" : 1260.3672916302457,
+      "stage" : "coverage.begin"
+    },
+    {
+      "detail" : "",
+      "ms" : 1260.3830416337587,
+      "stage" : "worker.drain"
+    },
+    {
+      "detail" : "E7E2ACF8-D073-4CA7-BC9B-28F5EA5B3688",
+      "ms" : 1262.2260833159089,
+      "stage" : "worker.active"
+    },
+    {
+      "detail" : "1",
+      "ms" : 1274.0044583333656,
+      "stage" : "physical.call"
+    },
+    {
+      "detail" : "",
+      "ms" : 1278.0844583176076,
+      "stage" : "worker.reconcile"
+    },
+    {
+      "detail" : "",
+      "ms" : 1281.7264999612235,
+      "stage" : "coverage.end"
+    },
+    {
+      "detail" : "",
+      "ms" : 1281.8130416562781,
+      "stage" : "worker.stop"
+    },
+    {
+      "detail" : "owner-release",
+      "ms" : 1281.9307083263993,
+      "stage" : "case.joined"
+    },
+    {
+      "detail" : "closed(282302FE-A7DC-4C23-96E1-E25A23DBC6C5, 0)",
+      "ms" : 1282.0475833141245,
+      "stage" : "sqlite.lifecycle"
+    }
+  ],
+  "failure" : null,
+  "results" : [
+    {
+      "bridgeAliveBeforeExplicitStop" : true,
+      "calls" : 1,
+      "controlState" : {
+
+      },
+      "finalDurable" : [
+        {
+          "complete" : "true",
+          "cursor" : "1",
+          "source" : "late",
+          "state" : "completed",
+          "total" : "1"
+        }
+      ],
+      "maxPhysical" : 1,
+      "name" : "baseline",
+      "releaseObserved" : false,
+      "revisionState" : {
+        "active" : "",
+        "loadingPreview" : false,
+        "message" : "",
+        "preview" : false,
+        "refreshPending" : false,
+        "revision" : 3,
+        "run" : "DF86FCC0-8CE5-42FA-ABC5-34BD1BE25177",
+        "started" : true,
+        "worker" : false
+      }
+    },
+    {
+      "bridgeAliveBeforeExplicitStop" : true,
+      "calls" : 1,
+      "controlState" : {
+        "active" : "",
+        "calls" : 0,
+        "durable" : [
+          {
+            "complete" : "false",
+            "cursor" : "0",
+            "source" : "late",
+            "state" : "queued",
+            "total" : "1"
+          }
+        ],
+        "loadingPreview" : false,
+        "message" : "",
+        "preview" : false,
+        "refreshPending" : false,
+        "revision" : 2,
+        "run" : "",
+        "started" : false,
+        "worker" : false
+      },
+      "finalDurable" : [
+        {
+          "complete" : "true",
+          "cursor" : "1",
+          "source" : "late",
+          "state" : "completed",
+          "total" : "1"
+        }
+      ],
+      "maxPhysical" : 1,
+      "name" : "startup-gate",
+      "releaseObserved" : false,
+      "revisionState" : {
+        "active" : "",
+        "loadingPreview" : false,
+        "message" : "",
+        "preview" : false,
+        "refreshPending" : false,
+        "revision" : 1,
+        "run" : "",
+        "started" : false,
+        "worker" : false
+      }
+    },
+    {
+      "bridgeAliveBeforeExplicitStop" : false,
+      "calls" : 1,
+      "controlState" : {
+        "active" : "",
+        "durable" : [
+
+        ],
+        "loadingPreview" : false,
+        "message" : "",
+        "preview" : false,
+        "refreshPending" : false,
+        "revision" : 4,
+        "run" : "690ED477-3834-4D29-BBD5-A40E06BEAEAD",
+        "started" : false,
+        "worker" : false
+      },
+      "finalDurable" : [
+        {
+          "complete" : "true",
+          "cursor" : "1",
+          "source" : "late",
+          "state" : "completed",
+          "total" : "1"
+        }
+      ],
+      "maxPhysical" : 1,
+      "name" : "owner-release",
+      "releaseObserved" : true,
+      "revisionState" : {
+        "active" : "",
+        "loadingPreview" : false,
+        "message" : "",
+        "preview" : false,
+        "refreshPending" : false,
+        "revision" : 3,
+        "run" : "690ED477-3834-4D29-BBD5-A40E06BEAEAD",
+        "started" : true,
+        "worker" : false
+      }
+    }
+  ],
+  "source" : "fc2a92956fd50bd791e4926d5b388c8fe39f84d4"
+}

@@ -2,8 +2,8 @@ import Foundation
 import os
 
 protocol MeetingDetectorDelegate: AnyObject {
-    /// Возвращает true, если запись реально начата. false → детектор откатывает
-    /// состояние (напр. не удался захват аудио), чтобы не «залипнуть» в мнимой встрече.
+    /// true means startup was accepted. Recorder publishes backend readiness
+    /// separately and calls captureFailed if asynchronous startup later fails.
     func meetingStarted(at: Date, manual: Bool) -> Bool
     func meetingEnded(at: Date)
 }
@@ -68,5 +68,20 @@ final class MeetingDetector {
         suppressUntilInactive = true
         Log.detector.info("meetingEnded (manual)")
         delegate?.meetingEnded(at: date)
+    }
+
+    /// Discard legacy latches when changing mode/sleeping. Capture is finalized
+    /// by the coordinator independently; reset never starts or stops a backend.
+    func reset() {
+        isMeeting = false; manualSession = false; suppressUntilInactive = false; lastActiveAt = nil
+    }
+
+    /// An asynchronous capture failure releases manual/meeting state. Avoid
+    /// repeated permission/start failures until inactivity or a new manual start.
+    func captureFailed() {
+        isMeeting = false
+        manualSession = false
+        lastActiveAt = nil
+        suppressUntilInactive = true
     }
 }

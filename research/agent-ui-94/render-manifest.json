@@ -1,0 +1,38 @@
+[
+  {
+    "file" : "empty-light.png",
+    "height" : 620,
+    "sha256" : "0e0277983e05e9995fcf081707d59690802b008a2e21966ce1018ce41863a42e",
+    "width" : 760
+  },
+  {
+    "file" : "empty-dark.png",
+    "height" : 620,
+    "sha256" : "9cc2c6cb52892f4896c2764ef1886e171a406560a6ee6d18f23d2fb3d486acd2",
+    "width" : 760
+  },
+  {
+    "file" : "conversation-light.png",
+    "height" : 900,
+    "sha256" : "80646fefed50bf94dd97b7356139364c1ba8783ef9c0ae721f1dfa3d09dbc7e1",
+    "width" : 760
+  },
+  {
+    "file" : "conversation-dark.png",
+    "height" : 900,
+    "sha256" : "ae289c769aac2d45218bc84a133925cf310df23c7cc1510fdfee9ea8e5b46a43",
+    "width" : 760
+  },
+  {
+    "file" : "working-light.png",
+    "height" : 700,
+    "sha256" : "8a13a249bbe6780efb7b220ce0174a379440e293ef781e88028a29bb7f4284f8",
+    "width" : 760
+  },
+  {
+    "file" : "working-dark.png",
+    "height" : 700,
+    "sha256" : "2de5ade3f606d7803bd62f2c1707766281fc029a9c00a7f61804900c3a7527a9",
+    "width" : 760
+  }
+]

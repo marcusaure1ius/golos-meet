@@ -1,0 +1,112 @@
+{
+  "testIdentifier" : "ProjectMemoryQueueTests/concreteMetadataBridgeReceivesReadyEventWithoutLaunchingApplication()",
+  "testIdentifierURL" : "test://com.apple.xcode/golos-meet/golos-meetTests/ProjectMemoryQueueTests/concreteMetadataBridgeReceivesReadyEventWithoutLaunchingApplication()",
+  "testName" : "concreteMetadataBridgeReceivesReadyEventWithoutLaunchingApplication()",
+  "testRuns" : [
+    {
+      "activities" : [
+        {
+          "childActivities" : [
+            {
+              "isAssociatedWithFailure" : false,
+              "title" : ""
+            }
+          ],
+          "isAssociatedWithFailure" : true,
+          "startTime" : 1793595605.794,
+          "title" : "Issue recorded: Timed out waiting for ready-source coverage"
+        },
+        {
+          "activityType" : "com.apple.dt.xctest.activity-type.attachmentContainer",
+          "attachments" : [
+            {
+              "lifetime" : "keepAlways",
+              "name" : "bridge61-175587D9-ADB4-4B63-AA87-52A7B27CE90E-failure_0_590C6599-1969-47E1-99B0-F6F9DC0C52D4.json",
+              "payloadId" : "0~bOL6i1W-OSXvGNnekP8yfng3REFtnjsE92ZSMxhptbBGQuriTND3pVHD4OcRFun3UpVoo6OES_KE2M9Jk-3tpg==",
+              "timestamp" : 1793595605.801,
+              "uuid" : "D2295033-F38F-4170-8E75-81A3EFCEC7B8"
+            }
+          ],
+          "childActivities" : [
+            {
+              "isAssociatedWithFailure" : false,
+              "startTime" : 1793595605.801,
+              "title" : "bridge61-175587D9-ADB4-4B63-AA87-52A7B27CE90E-failure.json"
+            }
+          ],
+          "isAssociatedWithFailure" : false,
+          "startTime" : 1793595605.801,
+          "title" : "Added attachment name bridge61-175587D9-ADB4-4B63-AA87-52A7B27CE90E-failure.json"
+        },
+        {
+          "activityType" : "com.apple.dt.xctest.activity-type.attachmentContainer",
+          "attachments" : [
+            {
+              "lifetime" : "keepAlways",
+              "name" : "bridge61-175587D9-ADB4-4B63-AA87-52A7B27CE90E-timeline_0_44BC2E57-67B2-4502-AABD-8DCD4EC952C3.json",
+              "payloadId" : "0~EWxeWYg7E6bxzwXAAfof3PEClwZXshdynvan-DVlqSKOSCSC0I-lP2WWBbq0BRBkZjiBOQCs7u1IqX4jJzJ9cA==",
+              "timestamp" : 1793595606.6,
+              "uuid" : "77BECA68-DEB6-4700-AE84-8CA751E50023"
+            }
+          ],
+          "childActivities" : [
+            {
+              "isAssociatedWithFailure" : false,
+              "startTime" : 1793595606.6,
+              "title" : "bridge61-175587D9-ADB4-4B63-AA87-52A7B27CE90E-timeline.json"
+            }
+          ],
+          "isAssociatedWithFailure" : false,
+          "startTime" : 1793595606.6,
+          "title" : "Added attachment name bridge61-175587D9-ADB4-4B63-AA87-52A7B27CE90E-timeline.json"
+        },
+        {
+          "activityType" : "com.apple.dt.xctest.activity-type.attachmentContainer",
+          "attachments" : [
+            {
+              "lifetime" : "keepAlways",
+              "name" : "sqlite-fixture-A6AC857D-CB28-471A-AEE2-59BBD38D01BD_0_A9528333-AD2A-462E-9C04-33E8D4F72A9C.json",
+              "payloadId" : "0~zWzkbJPyhaFJh-pGJesUjFsWbbRa0zdA7HrdrTftNXX6NqDF6C6I37BvEA5KzEb2HTqqdmIh5DgsWsg591Goyw==",
+              "timestamp" : 1793595606.615,
+              "uuid" : "9FEB1565-D163-4966-8161-F10820F1D4F0"
+            }
+          ],
+          "childActivities" : [
+            {
+              "isAssociatedWithFailure" : false,
+              "startTime" : 1793595606.615,
+              "title" : "sqlite-fixture-A6AC857D-CB28-471A-AEE2-59BBD38D01BD.json"
+            }
+          ],
+          "isAssociatedWithFailure" : false,
+          "startTime" : 1793595606.615,
+          "title" : "Added attachment name sqlite-fixture-A6AC857D-CB28-471A-AEE2-59BBD38D01BD.json"
+        },
+        {
+          "childActivities" : [
+            {
+              "isAssociatedWithFailure" : false,
+              "title" : ""
+            }
+          ],
+          "isAssociatedWithFailure" : true,
+          "startTime" : 1793595606.616,
+          "title" : "Caught error: .busy"
+        }
+      ],
+      "device" : {
+        "architecture" : "arm64",
+        "deviceId" : "00006040-000C51D93404801C",
+        "deviceName" : "My Mac",
+        "modelName" : "MacBook Pro",
+        "osBuildNumber" : "26A434",
+        "osVersion" : "27.0.1",
+        "platform" : "macOS"
+      },
+      "testPlanConfiguration" : {
+        "configurationId" : "1",
+        "configurationName" : "Test Scheme Action"
+      }
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "default_errors_total": 11,
+  "default_6922": 9,
+  "default_rollback1": 2,
+  "errors_while_root_absent": 8,
+  "retained_fixtures": 78,
+  "retained_errors": 0,
+  "identified_tests": [
+    "actualFileMonitorReconcilesExternalAtomicAndInPlaceTranscriptChangesWithoutUI()",
+    "concreteMetadataBridgeReceivesReadyEventWithoutLaunchingApplication()",
+    "defaultProducerHooksRunWithoutViewsAndTranscriptDoesNotWaitForLLMOrIndexing()",
+    "latestDisabledConfigurationWinsQueuedEnableAndBridgeStop()",
+    "metadataAndIndexSubscriptionsCoalesceAndSettingsCanStopThenResumeSameWorker()"
+  ],
+  "limits": "Original historical connection-to-test mapping unavailable. New mapping is from a separate temporary-copy observation. Root-exists true does not imply DB inode remained linked during recursive removal."
+}

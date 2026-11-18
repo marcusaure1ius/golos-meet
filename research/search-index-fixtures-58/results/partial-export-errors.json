@@ -1,0 +1,6 @@
+{
+  "summary-error.txt": "Error: Failed to create a new result bundle reader, underlying error: Info.plist at /private/tmp/golos58si-preserved-partial-full.xcresult/Info.plist does not exist, the result bundle might be corrupted or the provided path is not a result bundle\nUsage: xcresulttool <subcommand>\n  See 'xcresulttool --help' for more information.\n",
+  "tests-error.txt": "Error: Failed to create a new result bundle reader, underlying error: Info.plist at /private/tmp/golos58si-preserved-partial-full.xcresult/Info.plist does not exist, the result bundle might be corrupted or the provided path is not a result bundle\nUsage: xcresulttool <subcommand>\n  See 'xcresulttool --help' for more information.\n",
+  "diagnostics-export.log": "Error: root ID is missing, please check Info.plist\n",
+  "attachments-export.log": "Error: Failed to create a new result bundle reader, underlying error: Info.plist at /private/tmp/golos58si-preserved-partial-full.xcresult/Info.plist does not exist, the result bundle might be corrupted or the provided path is not a result bundle\nUsage: xcresulttool <subcommand>\n  See 'xcresulttool --help' for more information.\n"
+}

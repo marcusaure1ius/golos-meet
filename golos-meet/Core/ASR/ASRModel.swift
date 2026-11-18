@@ -35,7 +35,7 @@ enum ASRModelChoice: String, CaseIterable, Codable {
 enum ASRSettings {
     private static let key = "asrModelChoice"
     static var current: ASRModelChoice {
-        get { (UserDefaults.standard.string(forKey: key)).flatMap(ASRModelChoice.init) ?? .speed }
-        set { UserDefaults.standard.set(newValue.rawValue, forKey: key) }
+        get { (AppPreferences.current.string(forKey: key)).flatMap(ASRModelChoice.init) ?? .speed }
+        set { AppPreferences.current.set(newValue.rawValue, forKey: key) }
     }
 }

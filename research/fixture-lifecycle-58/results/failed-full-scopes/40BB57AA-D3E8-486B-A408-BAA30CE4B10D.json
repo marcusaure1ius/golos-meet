@@ -1,0 +1,50 @@
+[
+  {
+    "stage" : "scope-created",
+    "test" : "discoveryHasBoundedHotWindowAndDeferredJobIsClaimableWithoutDroppingMetadata()",
+    "uptime" : "332776.5844272917"
+  },
+  {
+    "root" : "memory-update-0698BB05-9296-4768-B06E-029B1FC1409D",
+    "stage" : "root-owned",
+    "uptime" : "332776.73828650004"
+  },
+  {
+    "stage" : "store-owned",
+    "uptime" : "332776.7383034584"
+  },
+  {
+    "connection" : "8ABD3CCC-4EBC-43F9-B18E-2B534ED64D5E",
+    "root" : "memory-update-0698BB05-9296-4768-B06E-029B1FC1409D",
+    "stage" : "opened",
+    "uptime" : "332777.1351157917"
+  },
+  {
+    "stage" : "queue-stop-requested",
+    "uptime" : "332799.61047220835"
+  },
+  {
+    "stage" : "queue-idle",
+    "uptime" : "332799.611025625"
+  },
+  {
+    "stage" : "update-callbacks-released",
+    "uptime" : "332799.6110324584"
+  },
+  {
+    "connection" : "8ABD3CCC-4EBC-43F9-B18E-2B534ED64D5E",
+    "result" : "0",
+    "stage" : "closed",
+    "uptime" : "332799.6111355"
+  },
+  {
+    "stage" : "body-finished",
+    "uptime" : "332799.6111685417"
+  },
+  {
+    "exists" : "false",
+    "root" : "memory-update-0698BB05-9296-4768-B06E-029B1FC1409D",
+    "stage" : "root-removed",
+    "uptime" : "332799.62773445837"
+  }
+]

@@ -1,0 +1,49 @@
+{
+  "raw_logs": {
+    "xcodebuild": {
+      "sha256": "29d2b8badc6fcd13d8f930b84e24441977b51a5094375e50abcf3deafee270ea",
+      "bytes": 111098
+    },
+    "stdout": {
+      "sha256": "545d37aa5fae74489243d58e9ec64a2e83bfde2a987d6b5a009231e714a0470a",
+      "bytes": 1218997
+    }
+  },
+  "attachment_matches": [
+    {
+      "test": "MemoryBridgeOverflowTests/overflowMustNotTurnARealStartupAcknowledgementIntoFalseAbsence()",
+      "name": "sqlite-fixture-738C4B74-77C8-47BC-B556-A90300A9D312_0_3D2D939D-73B0-4121-9428-075EE7D08CC3.json",
+      "sha256": "747c3aa9a4deba643ce2e885b9b460515e6c478d805102a04fc4f4a006095e2d"
+    },
+    {
+      "test": "MemoryBridgeOverflowTests/overflowMustNotTurnARealStartupAcknowledgementIntoFalseAbsence()",
+      "name": "bridge61-4598E6AE-5A1B-4763-9E35-ED39D1667DC9-timeline_0_DD148CD8-86B9-446D-AF30-4C32B01BA07A.json",
+      "sha256": "11f713933976d2ca65b58de8ba7203542208cdbacd1bdd62d2e03d3656f67502"
+    }
+  ],
+  "selected_native_lifecycle": [
+    {
+      "file": "738C4B74-77C8-47BC-B556-A90300A9D312.json",
+      "test": "overflowMustNotTurnARealStartupAcknowledgementIntoFalseAbsence()",
+      "counts": {
+        "scope-created": 1,
+        "root-owned": 1,
+        "store-owned": 1,
+        "opened": 1,
+        "queue-stop-requested": 1,
+        "queue-idle": 1,
+        "update-callbacks-released": 1,
+        "closed": 1,
+        "body-finished": 1,
+        "root-removed": 1
+      },
+      "errors": []
+    }
+  ],
+  "failure_captures": [],
+  "remaining_stdout": {
+    "sqlite_failure_lines": 0,
+    "unlink_warning_lines": 0,
+    "e5rt_lines": 0
+  }
+}

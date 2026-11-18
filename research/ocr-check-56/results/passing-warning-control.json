@@ -1,0 +1,10 @@
+{
+  "passing_run": "/tmp/golos56-baseline-instrumented-derived/Logs/Test/Test-golos-meet-2026.11.02_03-05-26-+0300.xcresult",
+  "matching_warning_lines": [
+    "2026-11-02 03:05:59.260088+0300 Golos Meet[90517:7350246] [e5rt] Unable to find a valid E5 in provided path /System/Library/PrivateFrameworks/TextRecognition.framework/Resources/cr_td_model_v3_e5.mlmodelc.bundle/. Found bundles : { }. Expected : { H16S.bundle H16P.bundle H16G.bundle H16C.bundle H16.bundle universal.bundle jit.bundle }. @ GetE5PathFromCompositeBundle",
+    "2026-11-02 03:05:59.362219+0300 Golos Meet[90517:7350332] [e5rt] Unable to find a valid E5 in provided path /System/Library/PrivateFrameworks/TextRecognition.framework/Resources/cr_tr_model_latincyrillic_v3_e5.mlmodelc.bundle/. Found bundles : { }. Expected : { H16S.bundle H16P.bundle H16G.bundle H16C.bundle H16.bundle universal.bundle jit.bundle }. @ GetE5PathFromCompositeBundle",
+    "2026-11-02 03:05:57.037778+0300 Golos Meet[90517:7350242] [e5rt] Unable to find a valid E5 in provided path /System/Library/PrivateFrameworks/TextRecognition.framework/Resources/cr_orientation_model_v1_e5.mlmodelc.bundle/. Found bundles : { }. Expected : { H16S.bundle H16P.bundle H16G.bundle H16C.bundle H16.bundle universal.bundle jit.bundle }. @ GetE5PathFromCompositeBundle"
+  ],
+  "e5rt_completion_errors": [],
+  "note": "A missing precompiled variant warning alone does not distinguish passing OCR from failure."
+}

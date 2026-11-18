@@ -1,0 +1,41 @@
+{
+  "selected": [
+    {
+      "file": "EDEF9C3E-91E8-4682-A5EE-D4FD96FE0D46.json",
+      "test": "concreteMetadataBridgeReceivesReadyEventWithoutLaunchingApplication()",
+      "opened": 1,
+      "close0": 1,
+      "removed": 1
+    },
+    {
+      "file": "4007957D-2469-434A-9E9B-25690FC6BFFC.json",
+      "test": "pausedStartupSeparatesRevisionFromStartAndExecutesFailureRecorderBeforeRecovery()",
+      "opened": 1,
+      "close0": 1,
+      "removed": 1
+    },
+    {
+      "file": "774B7357-0BBF-4BBE-AB0E-09BF0DE84656.json",
+      "test": "strongOwnerAndGateAreReleasedWhenBodyThrowsOrCancels(cancel:)",
+      "opened": 1,
+      "close0": 1,
+      "removed": 1
+    },
+    {
+      "file": "7EEE8DAA-42BE-4937-912E-05D60522A7CF.json",
+      "test": "strongOwnerAndGateAreReleasedWhenBodyThrowsOrCancels(cancel:)",
+      "opened": 1,
+      "close0": 1,
+      "removed": 1
+    },
+    {
+      "file": "D76BD425-C041-40B4-A4EB-1C3E7C4E129B.json",
+      "test": "releasingSoleOwnerIsAttributedToCreatingObserverAndDirectRestartRecovers()",
+      "opened": 1,
+      "close0": 1,
+      "removed": 1
+    }
+  ],
+  "all_closes_before_unlink": true,
+  "scope_errors": 0
+}

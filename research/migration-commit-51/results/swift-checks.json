@@ -1,0 +1,41 @@
+{
+  "targeted": {
+    "xcresult": "/tmp/golos-51-derived/Logs/Test/Test-golos-meet-2026.11.01_23-02-28-+0300.xcresult",
+    "passed_tests": 23,
+    "failed_tests": 0,
+    "skipped_tests": 0,
+    "passed_runs": 26,
+    "runtime_warnings": []
+  },
+  "stress-exact": {
+    "xcresult": "/tmp/golos-51-derived/Logs/Test/Test-golos-meet-2026.11.01_23-04-27-+0300.xcresult",
+    "passed_tests": 1,
+    "failed_tests": 0,
+    "skipped_tests": 0,
+    "passed_runs": 60,
+    "runtime_warnings": []
+  },
+  "strict-stress": {
+    "xcresult": "/tmp/golos-51-derived/Logs/Test/Test-golos-meet-2026.11.01_23-05-38-+0300.xcresult",
+    "passed_tests": 1,
+    "failed_tests": 0,
+    "skipped_tests": 0,
+    "passed_runs": 60,
+    "runtime_warnings": [],
+    "verified_strict_events": true
+  },
+  "full": {
+    "xcresult": "/tmp/golos-51-derived/Logs/Test/Test-golos-meet-2026.11.01_23-06-45-+0300.xcresult",
+    "passed_tests": 381,
+    "failed_tests": 0,
+    "skipped_tests": 6,
+    "passed_runs": 520,
+    "runtime_warnings": [
+      {
+        "message": "[Internal] Thread running at User-initiated quality-of-service class waiting on a thread without a QoS class specified (base priority 0). Investigate ways to avoid priority inversions",
+        "source": "LocalDocumentExtractorTests.swift"
+      }
+    ],
+    "trace_scenarios": 9
+  }
+}

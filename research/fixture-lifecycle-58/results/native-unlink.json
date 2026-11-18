@@ -1,0 +1,28 @@
+[
+  {
+    "early_unlink": true,
+    "begin": 0,
+    "begin_extended": 0,
+    "write": 8,
+    "write_extended": 1032,
+    "finish": 0,
+    "finish_extended": 0,
+    "close": 0,
+    "rows_before_cleanup": -1,
+    "root_exists": false,
+    "sqlite": "3.54.0"
+  },
+  {
+    "early_unlink": false,
+    "begin": 0,
+    "begin_extended": 0,
+    "write": 0,
+    "write_extended": 0,
+    "finish": 0,
+    "finish_extended": 0,
+    "close": 0,
+    "rows_before_cleanup": 2,
+    "root_exists": false,
+    "sqlite": "3.54.0"
+  }
+]

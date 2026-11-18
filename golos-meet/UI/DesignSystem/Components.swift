@@ -329,6 +329,8 @@ struct GNavRow: View {
             Text(title)
                 .font(.system(size: 14))
                 .foregroundStyle(labelColor)
+                .lineLimit(1)
+                .truncationMode(.tail)
             Spacer(minLength: 0)
             if soon {
                 Text("скоро")

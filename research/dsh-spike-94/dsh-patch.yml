@@ -1,0 +1,225 @@
+# Golos Meet spike overlay for the dsh web profile (issues #94, #119).
+# Applied with: dsh golos --patch ./dsh-patch.yml
+# The insert path is anchored relative to this file by the dsh loader.
+#
+# Profile contract (issue #119): the ONLY model-visible tools in this profile
+# are the golos-qa ones (search_meetings, summarize_meeting). Every built-in
+# harness tool — filesystem, terminal, browser/web, skills, subagents,
+# workflows, jobs, todos, goals, MCP resources, working-directory — is
+# disabled: either at the host plane (the disable rows below) or inside every
+# shipped agent preset (the preset-standard/ptc/minimal/cordis overrides, which
+# restate each declaration with infrastructure-only plugins, because the web
+# surface composes session tools from the selected preset, not from the host
+# rows the web bundle already disables). The composed tree is asserted by
+# test/profile-contract.sh and by the mock e2e (test/e2e-mock.sh); see the
+# spike README for the full contract text.
+
+- insert:
+    - id: golos-qa
+      name: ./plugins/golos-qa/index.js
+      config: {}
+
+# Deployment persona (issue #103): the model's answer must start with the
+# content itself — Russian only, no English meta-preamble like "I have enough
+# grounded material…", quotes verbatim with timecodes. This overrides the
+# headless bundle's personaPrefix ("You are a coding agent powered by …"),
+# so the identity line is repeated here in Russian.
+- id: system-prompt
+  config:
+    personaPrefix: >-
+      Ты — ассистент по встречам Golos Meet (модель {{model}}). Отвечай только
+      на русском языке. Начинай ответ сразу с содержимого: без служебных
+      фраз о наличии материала, планировании или инструментах (например,
+      «I have enough grounded material» или «Here's the answer»). Цитаты из
+      встреч приводи дословно, с таймкодами и указанием встречи-источника.
+      Не выдумывай: если данных недостаточно, честно скажи об этом.
+
+# Default model for agents: DeepSeek V4.1 Flash through OpenRouter.
+# The key comes from the OPENROUTER_API_KEY environment variable of the
+# dsh process (see run-web.sh); never put it in this file.
+- id: agent-default-model
+  config:
+    provider: openrouter
+    model: deepseek/deepseek-v4.1-flash
+
+# Register the OpenRouter route for the pi-ai adapter: the credential comes
+# from the OPENROUTER_API_KEY environment variable, the endpoint and wire
+# protocol default to the installed pi-ai catalog entry for openrouter.
+- id: llm-pi-ai
+  config:
+    providers:
+      openrouter:
+        apiKeyEnv: OPENROUTER_API_KEY
+
+# Night-run hygiene: no telemetry egress from the spike.
+- id: otel
+  disabled: true
+
+# ── No built-in tools at the host plane (issue #119) ────────────────────────
+# The web bundle already disables these rows; restating them here keeps the
+# contract self-contained in the spike overlay and covers the headless profile
+# (dsh-base only), where the same rows are active by default. Each row is a
+# model-visible tool provider or a tool-adjacent catalog:
+#   tool-fs (read/write/edit/apply_patch/read_image) and tool-fs-search
+#   (glob/grep) scan home directories and trigger macOS TCC prompts;
+#   tool-bash/tool-pwsh run shells; tool-jobs the job_* process controls;
+#   tool-web the network search/fetch tools; skill-filesystem + tool-skill the
+#   skill catalog; tool-subagent* delegation with a full child toolset;
+#   workflow-ptc + tool-workflow the run_code workflow engine; tool-todo,
+#   tool-goal, command-goal, plan-mode, tool-present-like surfaces;
+#   tool-working-directory the cwd switch; mcp-resources the MCP resource
+#   tools; tool-plugin-manager plugin administration.
+- id: tool-plugin-manager
+  disabled: true
+- id: tool-bash
+  disabled: true
+- id: tool-pwsh
+  disabled: true
+- id: tool-jobs
+  disabled: true
+- id: tool-fs
+  disabled: true
+- id: tool-fs-search
+  disabled: true
+- id: skill-filesystem
+  disabled: true
+- id: tool-skill
+  disabled: true
+- id: command-goal
+  disabled: true
+- id: tool-goal
+  disabled: true
+- id: plan-mode
+  disabled: true
+- id: tool-subagent-control
+  disabled: true
+- id: tool-subagent
+  disabled: true
+- id: tool-subagent-fork
+  disabled: true
+- id: workflow-ptc
+  disabled: true
+- id: tool-workflow
+  disabled: true
+- id: tool-todo
+  disabled: true
+- id: tool-web
+  disabled: true
+- id: tool-working-directory
+  disabled: true
+- id: mcp-resources
+  disabled: true
+
+# ── No built-in tools inside agent presets (issue #119) ─────────────────────
+# Web sessions compose their tools from the selected agent preset (default:
+# standard), and each shipped preset re-mounts tool-fs, tool-bash,
+# tool-fs-search, tool-web, skills, subagents, todos and goals per session —
+# that is what triggered the TCC prompts. A patch replaces a row's whole
+# config, so each override below restates the shipped declaration (same id and
+# order) with infrastructure-only plugins: the current time context and the
+# compaction group. No persona plugin: the Russian persona lives in the
+# system-prompt row above. All four shipped presets are overridden so that any
+# roster selection yields the same safe composition.
+- id: preset-standard
+  name: '@deepseek-ai/dsh-agent-preset'
+  config:
+    id: standard
+    order: 1
+    plugins:
+      - id: time-context
+        name: '@deepseek-ai/dsh-time-context'
+      - id: compaction
+        name: cordis:group
+        group: true
+        isolate:
+          compaction: true
+          toolResultPruner: true
+        config:
+          - id: compaction-basic
+            name: '@deepseek-ai/dsh-compaction-basic'
+          - id: command-compact
+            name: '@deepseek-ai/dsh-command-compact'
+          - id: tool-result-pruner
+            name: '@deepseek-ai/dsh-compaction-tool-result-pruner'
+            config:
+              thresholdChars: 8192
+              headChars: 4096
+              tailChars: 1024
+
+- id: preset-ptc
+  name: '@deepseek-ai/dsh-agent-preset'
+  config:
+    id: ptc
+    order: 2
+    plugins:
+      - id: time-context
+        name: '@deepseek-ai/dsh-time-context'
+      - id: compaction
+        name: cordis:group
+        group: true
+        isolate:
+          compaction: true
+          toolResultPruner: true
+        config:
+          - id: compaction-basic
+            name: '@deepseek-ai/dsh-compaction-basic'
+          - id: command-compact
+            name: '@deepseek-ai/dsh-command-compact'
+          - id: tool-result-pruner
+            name: '@deepseek-ai/dsh-compaction-tool-result-pruner'
+            config:
+              thresholdChars: 8192
+              headChars: 4096
+              tailChars: 1024
+
+- id: preset-minimal
+  name: '@deepseek-ai/dsh-agent-preset'
+  config:
+    id: minimal
+    order: 3
+    plugins:
+      - id: time-context
+        name: '@deepseek-ai/dsh-time-context'
+      - id: compaction
+        name: cordis:group
+        group: true
+        isolate:
+          compaction: true
+          toolResultPruner: true
+        config:
+          - id: compaction-basic
+            name: '@deepseek-ai/dsh-compaction-basic'
+          - id: command-compact
+            name: '@deepseek-ai/dsh-command-compact'
+          - id: tool-result-pruner
+            name: '@deepseek-ai/dsh-compaction-tool-result-pruner'
+            config:
+              thresholdChars: 8192
+              headChars: 4096
+              tailChars: 1024
+
+- id: preset-cordis
+  name: '@deepseek-ai/dsh-agent-preset'
+  config:
+    id: cordis
+    order: 4
+    plugins:
+      - id: time-context
+        name: '@deepseek-ai/dsh-time-context'
+      - id: compaction
+        name: cordis:group
+        group: true
+        isolate:
+          compaction: true
+          toolResultPruner: true
+        config:
+          - id: compaction-basic
+            name: '@deepseek-ai/dsh-compaction-basic'
+          - id: command-compact
+            name: '@deepseek-ai/dsh-command-compact'
+          - id: tool-result-pruner
+            name: '@deepseek-ai/dsh-compaction-tool-result-pruner'
+            config:
+              thresholdChars: 8192
+              headChars: 4096
+              tailChars: 1024

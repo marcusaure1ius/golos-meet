@@ -5,12 +5,15 @@ import os
 /// Детали встречи: хлебные крошки + шапка (дата/длительность/статус/модель) +
 /// действия (переобработать, открыть папку) + транскрипт.
 struct MeetingDetailView: View {
+    var backTitle: String = "Встречи"
+    var onSettings: (() -> Void)?
     @Environment(\.palette) var p
     @EnvironmentObject var library: MeetingLibrary
     @EnvironmentObject var processor: MeetingProcessor
     let meeting: MeetingSummary
     let onBack: () -> Void
 
+    @State private var showingMemory = false
     @State private var transcript: Transcript?
     @State private var insights: MeetingInsights?
     @State private var player: MeetingPlayer?
@@ -51,8 +54,12 @@ struct MeetingDetailView: View {
     private var folder: URL { AppPaths.meetingDir(meeting.id) }
 
     private var hasAudio: Bool {
-        FileManager.default.fileExists(atPath: folder.appendingPathComponent("mic.wav").path)
-            || FileManager.default.fileExists(atPath: folder.appendingPathComponent("system.wav").path)
+        // Архивная встреча (#129): lossless CAF-FLAC тоже аудио — плеер и
+        // переобработка остаются доступны.
+        ["wav", "caf"].contains { ext in
+            FileManager.default.fileExists(atPath: folder.appendingPathComponent("mic.\(ext)").path)
+                || FileManager.default.fileExists(atPath: folder.appendingPathComponent("system.\(ext)").path)
+        }
     }
 
     private var actionTitle: String {
@@ -69,6 +76,9 @@ struct MeetingDetailView: View {
                 }
                 .padding(.horizontal, 56).padding(.vertical, 24)
             }
+        }
+        .projectMemoryInspector(isPresented:$showingMemory) {
+            ProjectMemoryEntry(meetingID:meeting.id,onSettings:onSettings).id(meeting.id)
         }
         .task(id: meeting.id) {
             transcript = library.transcript(for: meeting.id)
@@ -126,7 +136,7 @@ struct MeetingDetailView: View {
                         .font(.system(size: 11, weight: .semibold))
                         .opacity(backHover ? 1 : 0)
                         .frame(width: 11, alignment: .leading)
-                    Text("Встречи").font(.system(size: 13))
+                    Text(backTitle).font(.system(size: 13))
                 }
                 .foregroundStyle(backHover ? p.ink : p.link)
                 .padding(.horizontal, 8)
@@ -138,7 +148,7 @@ struct MeetingDetailView: View {
             .buttonStyle(.plain)
             .onHover { backHover = $0 }
             .animation(.easeOut(duration: 0.12), value: backHover)
-            .help("Вернуться к списку встреч")
+            .help("Вернуться: \(backTitle)")
 
             Text("/").font(.system(size: 13)).foregroundStyle(p.muted2)
             Text(liveMeeting.title).font(.system(size: 13)).foregroundStyle(p.muted)
@@ -200,6 +210,13 @@ struct MeetingDetailView: View {
                 headerBadge
             }
             actions
+            HStack {
+                MeetingProjectButton(meetingID: meeting.id, meetingTitle: liveMeeting.title)
+                ProjectMemoryOpenButton { showingMemory.toggle() }
+            }
+            if let assignments = ProductionAssignments.shared {
+                MeetingAssignmentPanel(assignments: assignments, meetingID: meeting.id, meetingTitle: liveMeeting.title).id(meeting.id)
+            }
         }
     }
 
@@ -303,7 +320,13 @@ struct MeetingDetailView: View {
                     Text("Action points ещё не сгенерированы.")
                         .font(.system(size: 13)).foregroundStyle(p.muted2)
                 }
-                if let player { PlayerView(player: player) }
+                if let player {
+                    if meeting.hasArchivedAudio {
+                        Label("Аудио сжато в архиве", systemImage: "archivebox")
+                            .font(.system(size: 12)).foregroundStyle(p.muted2)
+                    }
+                    PlayerView(player: player)
+                }
                 TranscriptView(transcript: t, onSeek: player.map { pl in { pl.seek(to: $0); if !pl.isPlaying { pl.toggle() } } })
             }
         } else {
@@ -351,6 +374,9 @@ struct MeetingDetailView: View {
     private func runReprocessFlow() {
         Task {
             player?.stop()
+            // Архивная встреча: вернуть WAV из FLAC до постановки в очередь —
+            // sidecar читает только WAV; FLAC lossless, PCM байт-в-байт (#129).
+            try? MeetingArchiver.restoreWav(at: folder)
             let before = liveMeeting.title
             await processor.enqueueAndWait(.process(deleteShortAudio: false), id: meeting.id, folder: folder)
             transcript = library.transcript(for: meeting.id)

@@ -1,0 +1,950 @@
+{
+  "original_sha256": "b31783d04d15431185d9b4f82024df4519f87a72535a795ab4103ac2187dd04e",
+  "pid": 84693,
+  "records": [
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.TextRecognition",
+      "threadID": 7309798,
+      "timestamp": "2026-11-02 02:39:11.026561+0300",
+      "eventMessage": "CRImageReader.init(options:): options={\"CRImageReaderCoreMode\":true,\"CRImageReaderDisableLanguageCorrection\":false,\"CRImageReaderDisableScriptDetection\":false,\"CRImageReaderKeepResourcesLoaded\":false,\"CRImageReaderLanguageKey\":[\"ru-RU\",\"en-US\"],\"CRImageReaderNumTopStringCandidates\":10,\"CRImageReaderRevisionKey\":3,\"CRImageReaderSkipVerticalText\":true,\"CRImageReaderTextDetector\":\"CRImageReaderTextDetectorCR\",\"CRImageReaderTextRecognizer\":\"CRImageReaderTextRecognizerCR\"}",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.TextRecognition",
+      "threadID": 7309800,
+      "timestamp": "2026-11-02 02:39:11.037043+0300",
+      "eventMessage": "Attempting to compile E5 model: cr_orientation_model_v1_e5.mlmodelc.bundle",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.e5rt",
+      "threadID": 7309800,
+      "timestamp": "2026-11-02 02:39:11.037146+0300",
+      "eventMessage": "E5BundleCache exists at <user-home>/Library/Caches/com.golos.golos-meet/com.apple.e5rt.e5bundlecache",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.e5rt",
+      "threadID": 7309800,
+      "timestamp": "2026-11-02 02:39:11.037350+0300",
+      "eventMessage": "E5BundleCache Lookup: input=/System/Library/PrivateFrameworks/TextRecognition.framework/Resources/cr_orientation_model_v1_e5.mlmodelc.bundle/model.mil output=<user-home>/Library/Caches/com.golos.golos-meet/com.apple.e5rt.e5bundlecache/26A434/2F7922E42957B2AE59D54998552C43689F93E267FD641CCD1CFAFC4ADC36B439/4E334419A4BEB139E40DC7C12C5CFCB95B95EE8AB6561D6E23A50AD8D7866BDC.bundle exists=1",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.TextRecognition",
+      "threadID": 7309818,
+      "timestamp": "2026-11-02 02:39:11.053311+0300",
+      "eventMessage": "Attempting to compile E5 model: cr_td_model_v3_e5.mlmodelc.bundle",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.e5rt",
+      "threadID": 7309818,
+      "timestamp": "2026-11-02 02:39:11.053550+0300",
+      "eventMessage": "E5BundleCache Lookup: input=/System/Library/PrivateFrameworks/TextRecognition.framework/Resources/cr_td_model_v3_e5.mlmodelc.bundle/model.mil output=<user-home>/Library/Caches/com.golos.golos-meet/com.apple.e5rt.e5bundlecache/26A434/0DF0EC89023EE64A3FBB0E9B5DBF42A380FAB1BECABEE15D96EA4274223F509F/A357A9CEDAA64BCFAEEA4A1340C57836E889C2E3FC1670DA5775B7529D01266C.bundle exists=1",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.TextRecognition",
+      "threadID": 7309803,
+      "timestamp": "2026-11-02 02:39:11.089246+0300",
+      "eventMessage": "results(for:roi:options:withProgressHandler:): image={w:1800,h:2400} roi={x:0.000000,y:0.000000,w:1.000000,h:1.000000} options={\"CRImageReaderMinimumTextHeight\":0}",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.e5rt",
+      "threadID": 7309934,
+      "timestamp": "2026-11-02 02:39:22.791454+0300",
+      "eventMessage": "Submit Async failed for [1:3]: Async task: main__Op2_Cast has timed out. @ CancelTimedOutAsyncTask_block_invoke @ operator()",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.TextRecognition",
+      "threadID": 7309934,
+      "timestamp": "2026-11-02 02:39:22.791484+0300",
+      "eventMessage": "E5RT Error: e5rt_stream_completion_handler call failed (Code: 10)",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.TextRecognition",
+      "threadID": 7309934,
+      "timestamp": "2026-11-02 02:39:22.791638+0300",
+      "eventMessage": "Model prediction error: The operation couldn’t be completed. (TextRecognition.CRImageReaderError error 1.)",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.TextRecognition",
+      "threadID": 7309798,
+      "timestamp": "2026-11-02 02:39:22.830028+0300",
+      "eventMessage": "results(for:roi:options:withProgressHandler:): image={w:1800,h:2400} roi={x:0.000000,y:0.000000,w:1.000000,h:1.000000} options={\"CRImageReaderMinimumTextHeight\":0}",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.TextRecognition",
+      "threadID": 7310206,
+      "timestamp": "2026-11-02 02:39:22.913748+0300",
+      "eventMessage": "Attempting to compile E5 model: cr_tr_model_latincyrillic_v3_e5.mlmodelc.bundle",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.e5rt",
+      "threadID": 7310206,
+      "timestamp": "2026-11-02 02:39:22.913874+0300",
+      "eventMessage": "E5BundleCache Lookup: input=/System/Library/PrivateFrameworks/TextRecognition.framework/Resources/cr_tr_model_latincyrillic_v3_e5.mlmodelc.bundle/model.mil output=<user-home>/Library/Caches/com.golos.golos-meet/com.apple.e5rt.e5bundlecache/26A434/DFD288F0235AD059B4ACB4BAD93B46A5F3886027EAD27ACC3F657A16638BB837/D567C752DB57CCE6DC2C713AC6E8D86A805213043865AA22BBC58D2729AE0C94.bundle exists=1",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.TextRecognition",
+      "threadID": 7309801,
+      "timestamp": "2026-11-02 02:39:22.943680+0300",
+      "eventMessage": "results(for:roi:options:withProgressHandler:): image={w:1600,h:300} roi={x:0.000000,y:0.000000,w:1.000000,h:1.000000} options={\"CRImageReaderMinimumTextHeight\":0}",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.e5rt",
+      "threadID": 7310209,
+      "timestamp": "2026-11-02 02:39:23.385523+0300",
+      "eventMessage": "Loading a shared resource. URI = <user-home>/Library/Caches/com.golos.golos-meet/com.apple.e5rt.e5bundlecache/26A434/2F7922E42957B2AE59D54998552C43689F93E267FD641CCD1CFAFC4ADC36B439/4E334419A4BEB139E40DC7C12C5CFCB95B95EE8AB6561D6E23A50AD8D7866BDC.bundle/H16S.bundle/main_1024/main_ane/model.anehash",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.e5rt",
+      "threadID": 7310208,
+      "timestamp": "2026-11-02 02:39:23.388285+0300",
+      "eventMessage": "Loading a shared resource. URI = <user-home>/Library/Caches/com.golos.golos-meet/com.apple.e5rt.e5bundlecache/26A434/DFD288F0235AD059B4ACB4BAD93B46A5F3886027EAD27ACC3F657A16638BB837/D567C752DB57CCE6DC2C713AC6E8D86A805213043865AA22BBC58D2729AE0C94.bundle/H16S.bundle/main_1024/main_ane/model.anehash",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.TextRecognition",
+      "threadID": 7309807,
+      "timestamp": "2026-11-02 02:39:23.400616+0300",
+      "eventMessage": "results(for:roi:options:withProgressHandler:): image={w:1600,h:300} roi={x:0.000000,y:0.000000,w:1.000000,h:1.000000} options={\"CRImageReaderMinimumTextHeight\":0}",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.TextRecognition",
+      "threadID": 7309811,
+      "timestamp": "2026-11-02 02:39:23.429187+0300",
+      "eventMessage": "results(for:roi:options:withProgressHandler:): image={w:1800,h:2400} roi={x:0.000000,y:0.000000,w:1.000000,h:1.000000} options={\"CRImageReaderMinimumTextHeight\":0}",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.e5rt",
+      "threadID": 7309807,
+      "timestamp": "2026-11-02 02:39:23.484477+0300",
+      "eventMessage": "Loading a shared resource. URI = <user-home>/Library/Caches/com.golos.golos-meet/com.apple.e5rt.e5bundlecache/26A434/2F7922E42957B2AE59D54998552C43689F93E267FD641CCD1CFAFC4ADC36B439/4E334419A4BEB139E40DC7C12C5CFCB95B95EE8AB6561D6E23A50AD8D7866BDC.bundle/H16S.bundle/main_1024/main_ane/model.anehash",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.e5rt",
+      "threadID": 7309807,
+      "timestamp": "2026-11-02 02:39:23.486504+0300",
+      "eventMessage": "Loading a shared resource. URI = <user-home>/Library/Caches/com.golos.golos-meet/com.apple.e5rt.e5bundlecache/26A434/2F7922E42957B2AE59D54998552C43689F93E267FD641CCD1CFAFC4ADC36B439/4E334419A4BEB139E40DC7C12C5CFCB95B95EE8AB6561D6E23A50AD8D7866BDC.bundle/H16S.bundle/main_1024/main_ane/model.anehash",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.e5rt",
+      "threadID": 7310206,
+      "timestamp": "2026-11-02 02:39:23.487640+0300",
+      "eventMessage": "Loading a shared resource. URI = <user-home>/Library/Caches/com.golos.golos-meet/com.apple.e5rt.e5bundlecache/26A434/DFD288F0235AD059B4ACB4BAD93B46A5F3886027EAD27ACC3F657A16638BB837/D567C752DB57CCE6DC2C713AC6E8D86A805213043865AA22BBC58D2729AE0C94.bundle/H16S.bundle/main_1024/main_ane/model.anehash",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.TextRecognition",
+      "threadID": 7309755,
+      "timestamp": "2026-11-02 02:39:23.493720+0300",
+      "eventMessage": "results(for:roi:options:withProgressHandler:): image={w:1800,h:2400} roi={x:0.000000,y:0.000000,w:1.000000,h:1.000000} options={\"CRImageReaderMinimumTextHeight\":0}",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.e5rt",
+      "threadID": 7309811,
+      "timestamp": "2026-11-02 02:39:23.552077+0300",
+      "eventMessage": "Loading a shared resource. URI = <user-home>/Library/Caches/com.golos.golos-meet/com.apple.e5rt.e5bundlecache/26A434/DFD288F0235AD059B4ACB4BAD93B46A5F3886027EAD27ACC3F657A16638BB837/D567C752DB57CCE6DC2C713AC6E8D86A805213043865AA22BBC58D2729AE0C94.bundle/H16S.bundle/main_1024/main_ane/model.anehash",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.TextRecognition",
+      "threadID": 7309769,
+      "timestamp": "2026-11-02 02:39:23.553986+0300",
+      "eventMessage": "results(for:roi:options:withProgressHandler:): image={w:1800,h:2400} roi={x:0.000000,y:0.000000,w:1.000000,h:1.000000} options={\"CRImageReaderMinimumTextHeight\":0}",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.e5rt",
+      "threadID": 7309819,
+      "timestamp": "2026-11-02 02:39:23.607746+0300",
+      "eventMessage": "Loading a shared resource. URI = <user-home>/Library/Caches/com.golos.golos-meet/com.apple.e5rt.e5bundlecache/26A434/2F7922E42957B2AE59D54998552C43689F93E267FD641CCD1CFAFC4ADC36B439/4E334419A4BEB139E40DC7C12C5CFCB95B95EE8AB6561D6E23A50AD8D7866BDC.bundle/H16S.bundle/main_1024/main_ane/model.anehash",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.e5rt",
+      "threadID": 7309819,
+      "timestamp": "2026-11-02 02:39:23.609325+0300",
+      "eventMessage": "Loading a shared resource. URI = <user-home>/Library/Caches/com.golos.golos-meet/com.apple.e5rt.e5bundlecache/26A434/DFD288F0235AD059B4ACB4BAD93B46A5F3886027EAD27ACC3F657A16638BB837/D567C752DB57CCE6DC2C713AC6E8D86A805213043865AA22BBC58D2729AE0C94.bundle/H16S.bundle/main_1024/main_ane/model.anehash",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.TextRecognition",
+      "threadID": 7309797,
+      "timestamp": "2026-11-02 02:39:23.612969+0300",
+      "eventMessage": "results(for:roi:options:withProgressHandler:): image={w:1800,h:2400} roi={x:0.000000,y:0.000000,w:1.000000,h:1.000000} options={\"CRImageReaderMinimumTextHeight\":0}",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.e5rt",
+      "threadID": 7309811,
+      "timestamp": "2026-11-02 02:39:23.667779+0300",
+      "eventMessage": "Loading a shared resource. URI = <user-home>/Library/Caches/com.golos.golos-meet/com.apple.e5rt.e5bundlecache/26A434/2F7922E42957B2AE59D54998552C43689F93E267FD641CCD1CFAFC4ADC36B439/4E334419A4BEB139E40DC7C12C5CFCB95B95EE8AB6561D6E23A50AD8D7866BDC.bundle/H16S.bundle/main_1024/main_ane/model.anehash",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.e5rt",
+      "threadID": 7309811,
+      "timestamp": "2026-11-02 02:39:23.668944+0300",
+      "eventMessage": "Loading a shared resource. URI = <user-home>/Library/Caches/com.golos.golos-meet/com.apple.e5rt.e5bundlecache/26A434/DFD288F0235AD059B4ACB4BAD93B46A5F3886027EAD27ACC3F657A16638BB837/D567C752DB57CCE6DC2C713AC6E8D86A805213043865AA22BBC58D2729AE0C94.bundle/H16S.bundle/main_1024/main_ane/model.anehash",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.TextRecognition",
+      "threadID": 7309806,
+      "timestamp": "2026-11-02 02:39:23.670690+0300",
+      "eventMessage": "results(for:roi:options:withProgressHandler:): image={w:1600,h:250} roi={x:0.000000,y:0.000000,w:1.000000,h:1.000000} options={\"CRImageReaderMinimumTextHeight\":0}",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.e5rt",
+      "threadID": 7309821,
+      "timestamp": "2026-11-02 02:39:23.693084+0300",
+      "eventMessage": "Loading a shared resource. URI = <user-home>/Library/Caches/com.golos.golos-meet/com.apple.e5rt.e5bundlecache/26A434/2F7922E42957B2AE59D54998552C43689F93E267FD641CCD1CFAFC4ADC36B439/4E334419A4BEB139E40DC7C12C5CFCB95B95EE8AB6561D6E23A50AD8D7866BDC.bundle/H16S.bundle/main_1024/main_ane/model.anehash",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.e5rt",
+      "threadID": 7309769,
+      "timestamp": "2026-11-02 02:39:23.694886+0300",
+      "eventMessage": "Loading a shared resource. URI = <user-home>/Library/Caches/com.golos.golos-meet/com.apple.e5rt.e5bundlecache/26A434/DFD288F0235AD059B4ACB4BAD93B46A5F3886027EAD27ACC3F657A16638BB837/D567C752DB57CCE6DC2C713AC6E8D86A805213043865AA22BBC58D2729AE0C94.bundle/H16S.bundle/main_1024/main_ane/model.anehash",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.TextRecognition",
+      "threadID": 7309817,
+      "timestamp": "2026-11-02 02:39:23.698699+0300",
+      "eventMessage": "results(for:roi:options:withProgressHandler:): image={w:1800,h:514} roi={x:0.000000,y:0.000000,w:1.000000,h:1.000000} options={\"CRImageReaderMinimumTextHeight\":0}",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.e5rt",
+      "threadID": 7309811,
+      "timestamp": "2026-11-02 02:39:23.736471+0300",
+      "eventMessage": "Loading a shared resource. URI = <user-home>/Library/Caches/com.golos.golos-meet/com.apple.e5rt.e5bundlecache/26A434/2F7922E42957B2AE59D54998552C43689F93E267FD641CCD1CFAFC4ADC36B439/4E334419A4BEB139E40DC7C12C5CFCB95B95EE8AB6561D6E23A50AD8D7866BDC.bundle/H16S.bundle/main_1024/main_ane/model.anehash",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.e5rt",
+      "threadID": 7309797,
+      "timestamp": "2026-11-02 02:39:23.738842+0300",
+      "eventMessage": "Loading a shared resource. URI = <user-home>/Library/Caches/com.golos.golos-meet/com.apple.e5rt.e5bundlecache/26A434/DFD288F0235AD059B4ACB4BAD93B46A5F3886027EAD27ACC3F657A16638BB837/D567C752DB57CCE6DC2C713AC6E8D86A805213043865AA22BBC58D2729AE0C94.bundle/H16S.bundle/main_1024/main_ane/model.anehash",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.TextRecognition",
+      "threadID": 7309802,
+      "timestamp": "2026-11-02 02:39:23.744619+0300",
+      "eventMessage": "results(for:roi:options:withProgressHandler:): image={w:1800,h:2400} roi={x:0.000000,y:0.000000,w:1.000000,h:1.000000} options={\"CRImageReaderMinimumTextHeight\":0}",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.e5rt",
+      "threadID": 7309934,
+      "timestamp": "2026-11-02 02:39:23.810530+0300",
+      "eventMessage": "Loading a shared resource. URI = <user-home>/Library/Caches/com.golos.golos-meet/com.apple.e5rt.e5bundlecache/26A434/2F7922E42957B2AE59D54998552C43689F93E267FD641CCD1CFAFC4ADC36B439/4E334419A4BEB139E40DC7C12C5CFCB95B95EE8AB6561D6E23A50AD8D7866BDC.bundle/H16S.bundle/main_1024/main_ane/model.anehash",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.e5rt",
+      "threadID": 7309755,
+      "timestamp": "2026-11-02 02:39:23.812420+0300",
+      "eventMessage": "Loading a shared resource. URI = <user-home>/Library/Caches/com.golos.golos-meet/com.apple.e5rt.e5bundlecache/26A434/DFD288F0235AD059B4ACB4BAD93B46A5F3886027EAD27ACC3F657A16638BB837/D567C752DB57CCE6DC2C713AC6E8D86A805213043865AA22BBC58D2729AE0C94.bundle/H16S.bundle/main_1024/main_ane/model.anehash",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.TextRecognition",
+      "threadID": 7309809,
+      "timestamp": "2026-11-02 02:39:23.816161+0300",
+      "eventMessage": "results(for:roi:options:withProgressHandler:): image={w:1800,h:2400} roi={x:0.000000,y:0.000000,w:1.000000,h:1.000000} options={\"CRImageReaderMinimumTextHeight\":0}",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.e5rt",
+      "threadID": 7309806,
+      "timestamp": "2026-11-02 02:39:23.877973+0300",
+      "eventMessage": "Loading a shared resource. URI = <user-home>/Library/Caches/com.golos.golos-meet/com.apple.e5rt.e5bundlecache/26A434/2F7922E42957B2AE59D54998552C43689F93E267FD641CCD1CFAFC4ADC36B439/4E334419A4BEB139E40DC7C12C5CFCB95B95EE8AB6561D6E23A50AD8D7866BDC.bundle/H16S.bundle/main_1024/main_ane/model.anehash",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.e5rt",
+      "threadID": 7309797,
+      "timestamp": "2026-11-02 02:39:23.880528+0300",
+      "eventMessage": "Loading a shared resource. URI = <user-home>/Library/Caches/com.golos.golos-meet/com.apple.e5rt.e5bundlecache/26A434/DFD288F0235AD059B4ACB4BAD93B46A5F3886027EAD27ACC3F657A16638BB837/D567C752DB57CCE6DC2C713AC6E8D86A805213043865AA22BBC58D2729AE0C94.bundle/H16S.bundle/main_1024/main_ane/model.anehash",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.TextRecognition",
+      "threadID": 7309796,
+      "timestamp": "2026-11-02 02:39:23.885245+0300",
+      "eventMessage": "results(for:roi:options:withProgressHandler:): image={w:1800,h:496} roi={x:0.000000,y:0.000000,w:1.000000,h:1.000000} options={\"CRImageReaderMinimumTextHeight\":0}",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.e5rt",
+      "threadID": 7309934,
+      "timestamp": "2026-11-02 02:39:23.925210+0300",
+      "eventMessage": "Loading a shared resource. URI = <user-home>/Library/Caches/com.golos.golos-meet/com.apple.e5rt.e5bundlecache/26A434/2F7922E42957B2AE59D54998552C43689F93E267FD641CCD1CFAFC4ADC36B439/4E334419A4BEB139E40DC7C12C5CFCB95B95EE8AB6561D6E23A50AD8D7866BDC.bundle/H16S.bundle/main_1024/main_ane/model.anehash",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.e5rt",
+      "threadID": 7309797,
+      "timestamp": "2026-11-02 02:39:23.930370+0300",
+      "eventMessage": "Loading a shared resource. URI = <user-home>/Library/Caches/com.golos.golos-meet/com.apple.e5rt.e5bundlecache/26A434/DFD288F0235AD059B4ACB4BAD93B46A5F3886027EAD27ACC3F657A16638BB837/D567C752DB57CCE6DC2C713AC6E8D86A805213043865AA22BBC58D2729AE0C94.bundle/H16S.bundle/main_1024/main_ane/model.anehash",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.TextRecognition",
+      "threadID": 7309798,
+      "timestamp": "2026-11-02 02:39:23.936783+0300",
+      "eventMessage": "results(for:roi:options:withProgressHandler:): image={w:1800,h:2400} roi={x:0.000000,y:0.000000,w:1.000000,h:1.000000} options={\"CRImageReaderMinimumTextHeight\":0}",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.e5rt",
+      "threadID": 7309933,
+      "timestamp": "2026-11-02 02:39:24.000272+0300",
+      "eventMessage": "Loading a shared resource. URI = <user-home>/Library/Caches/com.golos.golos-meet/com.apple.e5rt.e5bundlecache/26A434/2F7922E42957B2AE59D54998552C43689F93E267FD641CCD1CFAFC4ADC36B439/4E334419A4BEB139E40DC7C12C5CFCB95B95EE8AB6561D6E23A50AD8D7866BDC.bundle/H16S.bundle/main_1024/main_ane/model.anehash",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.e5rt",
+      "threadID": 7309933,
+      "timestamp": "2026-11-02 02:39:24.002115+0300",
+      "eventMessage": "Loading a shared resource. URI = <user-home>/Library/Caches/com.golos.golos-meet/com.apple.e5rt.e5bundlecache/26A434/DFD288F0235AD059B4ACB4BAD93B46A5F3886027EAD27ACC3F657A16638BB837/D567C752DB57CCE6DC2C713AC6E8D86A805213043865AA22BBC58D2729AE0C94.bundle/H16S.bundle/main_1024/main_ane/model.anehash",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.TextRecognition",
+      "threadID": 7309802,
+      "timestamp": "2026-11-02 02:39:24.006597+0300",
+      "eventMessage": "results(for:roi:options:withProgressHandler:): image={w:1800,h:2400} roi={x:0.000000,y:0.000000,w:1.000000,h:1.000000} options={\"CRImageReaderMinimumTextHeight\":0}",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.e5rt",
+      "threadID": 7309806,
+      "timestamp": "2026-11-02 02:39:24.069056+0300",
+      "eventMessage": "Loading a shared resource. URI = <user-home>/Library/Caches/com.golos.golos-meet/com.apple.e5rt.e5bundlecache/26A434/2F7922E42957B2AE59D54998552C43689F93E267FD641CCD1CFAFC4ADC36B439/4E334419A4BEB139E40DC7C12C5CFCB95B95EE8AB6561D6E23A50AD8D7866BDC.bundle/H16S.bundle/main_1024/main_ane/model.anehash",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.e5rt",
+      "threadID": 7309806,
+      "timestamp": "2026-11-02 02:39:24.071969+0300",
+      "eventMessage": "Loading a shared resource. URI = <user-home>/Library/Caches/com.golos.golos-meet/com.apple.e5rt.e5bundlecache/26A434/DFD288F0235AD059B4ACB4BAD93B46A5F3886027EAD27ACC3F657A16638BB837/D567C752DB57CCE6DC2C713AC6E8D86A805213043865AA22BBC58D2729AE0C94.bundle/H16S.bundle/main_1024/main_ane/model.anehash",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.TextRecognition",
+      "threadID": 7309809,
+      "timestamp": "2026-11-02 02:39:24.076955+0300",
+      "eventMessage": "results(for:roi:options:withProgressHandler:): image={w:1800,h:2400} roi={x:0.000000,y:0.000000,w:1.000000,h:1.000000} options={\"CRImageReaderMinimumTextHeight\":0}",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.TextRecognition",
+      "threadID": 7309809,
+      "timestamp": "2026-11-02 02:39:24.160182+0300",
+      "eventMessage": "results(for:roi:options:withProgressHandler:): image={w:1800,h:2400} roi={x:0.000000,y:0.000000,w:1.000000,h:1.000000} options={\"CRImageReaderMinimumTextHeight\":0}",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.e5rt",
+      "threadID": 7309933,
+      "timestamp": "2026-11-02 02:39:24.223647+0300",
+      "eventMessage": "Loading a shared resource. URI = <user-home>/Library/Caches/com.golos.golos-meet/com.apple.e5rt.e5bundlecache/26A434/2F7922E42957B2AE59D54998552C43689F93E267FD641CCD1CFAFC4ADC36B439/4E334419A4BEB139E40DC7C12C5CFCB95B95EE8AB6561D6E23A50AD8D7866BDC.bundle/H16S.bundle/main_1024/main_ane/model.anehash",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.e5rt",
+      "threadID": 7309806,
+      "timestamp": "2026-11-02 02:39:24.225871+0300",
+      "eventMessage": "Loading a shared resource. URI = <user-home>/Library/Caches/com.golos.golos-meet/com.apple.e5rt.e5bundlecache/26A434/DFD288F0235AD059B4ACB4BAD93B46A5F3886027EAD27ACC3F657A16638BB837/D567C752DB57CCE6DC2C713AC6E8D86A805213043865AA22BBC58D2729AE0C94.bundle/H16S.bundle/main_1024/main_ane/model.anehash",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.TextRecognition",
+      "threadID": 7309819,
+      "timestamp": "2026-11-02 02:39:25.455487+0300",
+      "eventMessage": "CRImageReader.init(options:): options={\"CRImageReaderCoreMode\":false,\"CRImageReaderDisableLanguageCorrection\":false,\"CRImageReaderDisableScriptDetection\":false,\"CRImageReaderKeepResourcesLoaded\":false,\"CRImageReaderLanguageKey\":[\"en_US\"],\"CRImageReaderNumTopStringCandidates\":3,\"CRImageReaderOptimizeGroupsForStability\":false,\"CRImageReaderRevisionKey\":3,\"CRImageReaderSkipVerticalText\":false,\"CRImageReaderTextDetector\":\"CRImageReaderTextDetectorCR\",\"CRImageReaderTextRecognizer\":\"CRImageReaderTextRecognizerCR\"}",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.TextRecognition",
+      "threadID": 7309821,
+      "timestamp": "2026-11-02 02:39:25.455811+0300",
+      "eventMessage": "Attempting to compile E5 model: cr_td_model_v3_e5.mlmodelc.bundle",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.e5rt",
+      "threadID": 7309821,
+      "timestamp": "2026-11-02 02:39:25.456010+0300",
+      "eventMessage": "E5BundleCache Lookup: input=/System/Library/PrivateFrameworks/TextRecognition.framework/Resources/cr_td_model_v3_e5.mlmodelc.bundle/model.mil output=<user-home>/Library/Caches/com.golos.golos-meet/com.apple.e5rt.e5bundlecache/26A434/0DF0EC89023EE64A3FBB0E9B5DBF42A380FAB1BECABEE15D96EA4274223F509F/A357A9CEDAA64BCFAEEA4A1340C57836E889C2E3FC1670DA5775B7529D01266C.bundle exists=1",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.e5rt",
+      "threadID": 7309821,
+      "timestamp": "2026-11-02 02:39:25.456012+0300",
+      "eventMessage": "Loading a shared resource. URI = <user-home>/Library/Caches/com.golos.golos-meet/com.apple.e5rt.e5bundlecache/26A434/0DF0EC89023EE64A3FBB0E9B5DBF42A380FAB1BECABEE15D96EA4274223F509F/A357A9CEDAA64BCFAEEA4A1340C57836E889C2E3FC1670DA5775B7529D01266C.bundle",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.TextRecognition",
+      "threadID": 7309803,
+      "timestamp": "2026-11-02 02:39:25.456761+0300",
+      "eventMessage": "Attempting to compile E5 model: cr_orientation_model_v1_e5.mlmodelc.bundle",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.e5rt",
+      "threadID": 7309803,
+      "timestamp": "2026-11-02 02:39:25.456949+0300",
+      "eventMessage": "E5BundleCache Lookup: input=/System/Library/PrivateFrameworks/TextRecognition.framework/Resources/cr_orientation_model_v1_e5.mlmodelc.bundle/model.mil output=<user-home>/Library/Caches/com.golos.golos-meet/com.apple.e5rt.e5bundlecache/26A434/2F7922E42957B2AE59D54998552C43689F93E267FD641CCD1CFAFC4ADC36B439/4E334419A4BEB139E40DC7C12C5CFCB95B95EE8AB6561D6E23A50AD8D7866BDC.bundle exists=1",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.e5rt",
+      "threadID": 7309803,
+      "timestamp": "2026-11-02 02:39:25.456952+0300",
+      "eventMessage": "Loading a shared resource. URI = <user-home>/Library/Caches/com.golos.golos-meet/com.apple.e5rt.e5bundlecache/26A434/2F7922E42957B2AE59D54998552C43689F93E267FD641CCD1CFAFC4ADC36B439/4E334419A4BEB139E40DC7C12C5CFCB95B95EE8AB6561D6E23A50AD8D7866BDC.bundle",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.TextRecognition",
+      "threadID": 7309819,
+      "timestamp": "2026-11-02 02:39:25.457050+0300",
+      "eventMessage": "documentOutputRegion(for:options:roi:trackingSession:withProgressHandler:): image={w:1200,h:1600} roi={x:0.000000,y:0.000000,w:1.000000,h:1.000000} options={\"CRImageReaderDetectForms\":true,\"CRImageReaderDetectionOnly\":false,\"CRImageReaderFormFieldDetectionHighRecall\":false,\"CRImageReaderMinimumTextHeight\":0}",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.e5rt",
+      "threadID": 7309755,
+      "timestamp": "2026-11-02 02:39:25.560757+0300",
+      "eventMessage": "Loading a shared resource. URI = <user-home>/Library/Caches/com.golos.golos-meet/com.apple.e5rt.e5bundlecache/26A434/2F7922E42957B2AE59D54998552C43689F93E267FD641CCD1CFAFC4ADC36B439/4E334419A4BEB139E40DC7C12C5CFCB95B95EE8AB6561D6E23A50AD8D7866BDC.bundle/H16S.bundle/main_1024/main_ane/model.anehash",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.TextRecognition",
+      "threadID": 7309755,
+      "timestamp": "2026-11-02 02:39:25.565966+0300",
+      "eventMessage": "Attempting to compile E5 model: cr_tr_model_latincyrillic_v3_e5.mlmodelc.bundle",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.e5rt",
+      "threadID": 7309755,
+      "timestamp": "2026-11-02 02:39:25.566126+0300",
+      "eventMessage": "E5BundleCache Lookup: input=/System/Library/PrivateFrameworks/TextRecognition.framework/Resources/cr_tr_model_latincyrillic_v3_e5.mlmodelc.bundle/model.mil output=<user-home>/Library/Caches/com.golos.golos-meet/com.apple.e5rt.e5bundlecache/26A434/DFD288F0235AD059B4ACB4BAD93B46A5F3886027EAD27ACC3F657A16638BB837/D567C752DB57CCE6DC2C713AC6E8D86A805213043865AA22BBC58D2729AE0C94.bundle exists=1",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.e5rt",
+      "threadID": 7309755,
+      "timestamp": "2026-11-02 02:39:25.566128+0300",
+      "eventMessage": "Loading a shared resource. URI = <user-home>/Library/Caches/com.golos.golos-meet/com.apple.e5rt.e5bundlecache/26A434/DFD288F0235AD059B4ACB4BAD93B46A5F3886027EAD27ACC3F657A16638BB837/D567C752DB57CCE6DC2C713AC6E8D86A805213043865AA22BBC58D2729AE0C94.bundle",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.e5rt",
+      "threadID": 7309755,
+      "timestamp": "2026-11-02 02:39:25.567823+0300",
+      "eventMessage": "Loading a shared resource. URI = <user-home>/Library/Caches/com.golos.golos-meet/com.apple.e5rt.e5bundlecache/26A434/DFD288F0235AD059B4ACB4BAD93B46A5F3886027EAD27ACC3F657A16638BB837/D567C752DB57CCE6DC2C713AC6E8D86A805213043865AA22BBC58D2729AE0C94.bundle/H16S.bundle/main_1024/main_ane/model.anehash",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.coreml",
+      "threadID": 7309817,
+      "timestamp": "2026-11-02 02:39:25.643037+0300",
+      "eventMessage": "MLNeuralNetworkV1Engine class has successfully loaded the model at /System/Library/PrivateFrameworks/TextRecognition.framework/Versions/A/Resources/cr_form_detector.mlmodelc.bundle.",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.TextRecognition",
+      "threadID": 7309817,
+      "timestamp": "2026-11-02 02:39:25.651674+0300",
+      "eventMessage": "_loadFormAnalyzerIfNeeded(configuration:): Form analyzer loaded.",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.TextRecognition",
+      "threadID": 7309817,
+      "timestamp": "2026-11-02 02:39:25.651677+0300",
+      "eventMessage": "resultDocument(forDetectionResult:image:configuration:progressHandler:): Form detection is enabled (DetectForms:true, FormDetectionHighRecall:false).",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.TextRecognition",
+      "threadID": 7309817,
+      "timestamp": "2026-11-02 02:39:25.651750+0300",
+      "eventMessage": "resultDocument(forDetectionResult:image:configuration:progressHandler:): Skipping running form field detection for F4949B34-B5CE-44F5-8622-458CC700B03A (line count: 0).",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.TextRecognition",
+      "threadID": 7309819,
+      "timestamp": "2026-11-02 02:39:25.652013+0300",
+      "eventMessage": "-[CRDocumentOutputRegion detectedFieldRegionsExcludingFields:updateExcludedFields:]: #fields:0 updateExcludedFields:1",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.TextRecognition",
+      "threadID": 7309819,
+      "timestamp": "2026-11-02 02:39:25.664158+0300",
+      "eventMessage": "-[CRFormParser parseFieldsInDocument:allFields:shouldUpdateExternalFields:]: Content type prediction for locale ru-RU is enabled.",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.TextRecognition",
+      "threadID": 7309819,
+      "timestamp": "2026-11-02 02:39:25.665638+0300",
+      "eventMessage": "CRImageReader.init(options:): options={\"CRImageReaderCoreMode\":false,\"CRImageReaderDisableLanguageCorrection\":false,\"CRImageReaderDisableScriptDetection\":false,\"CRImageReaderKeepResourcesLoaded\":false,\"CRImageReaderLanguageKey\":[\"en_US\"],\"CRImageReaderNumTopStringCandidates\":3,\"CRImageReaderOptimizeGroupsForStability\":false,\"CRImageReaderRevisionKey\":3,\"CRImageReaderSkipVerticalText\":false,\"CRImageReaderTextDetector\":\"CRImageReaderTextDetectorCR\",\"CRImageReaderTextRecognizer\":\"CRImageReaderTextRecognizerCR\"}",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.TextRecognition",
+      "threadID": 7309797,
+      "timestamp": "2026-11-02 02:39:25.665973+0300",
+      "eventMessage": "Attempting to compile E5 model: cr_td_model_v3_e5.mlmodelc.bundle",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.e5rt",
+      "threadID": 7309797,
+      "timestamp": "2026-11-02 02:39:25.666124+0300",
+      "eventMessage": "E5BundleCache Lookup: input=/System/Library/PrivateFrameworks/TextRecognition.framework/Resources/cr_td_model_v3_e5.mlmodelc.bundle/model.mil output=<user-home>/Library/Caches/com.golos.golos-meet/com.apple.e5rt.e5bundlecache/26A434/0DF0EC89023EE64A3FBB0E9B5DBF42A380FAB1BECABEE15D96EA4274223F509F/A357A9CEDAA64BCFAEEA4A1340C57836E889C2E3FC1670DA5775B7529D01266C.bundle exists=1",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.e5rt",
+      "threadID": 7309797,
+      "timestamp": "2026-11-02 02:39:25.666127+0300",
+      "eventMessage": "Loading a shared resource. URI = <user-home>/Library/Caches/com.golos.golos-meet/com.apple.e5rt.e5bundlecache/26A434/0DF0EC89023EE64A3FBB0E9B5DBF42A380FAB1BECABEE15D96EA4274223F509F/A357A9CEDAA64BCFAEEA4A1340C57836E889C2E3FC1670DA5775B7529D01266C.bundle",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.TextRecognition",
+      "threadID": 7309819,
+      "timestamp": "2026-11-02 02:39:25.666593+0300",
+      "eventMessage": "documentOutputRegion(for:options:roi:trackingSession:withProgressHandler:): image={w:1200,h:1600} roi={x:0.000000,y:0.000000,w:1.000000,h:1.000000} options={\"CRImageReaderDetectForms\":true,\"CRImageReaderDetectionOnly\":false,\"CRImageReaderFormFieldDetectionHighRecall\":false,\"CRImageReaderMinimumTextHeight\":0}",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.TextRecognition",
+      "threadID": 7309792,
+      "timestamp": "2026-11-02 02:39:25.666779+0300",
+      "eventMessage": "Attempting to compile E5 model: cr_orientation_model_v1_e5.mlmodelc.bundle",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.e5rt",
+      "threadID": 7309792,
+      "timestamp": "2026-11-02 02:39:25.666898+0300",
+      "eventMessage": "E5BundleCache Lookup: input=/System/Library/PrivateFrameworks/TextRecognition.framework/Resources/cr_orientation_model_v1_e5.mlmodelc.bundle/model.mil output=<user-home>/Library/Caches/com.golos.golos-meet/com.apple.e5rt.e5bundlecache/26A434/2F7922E42957B2AE59D54998552C43689F93E267FD641CCD1CFAFC4ADC36B439/4E334419A4BEB139E40DC7C12C5CFCB95B95EE8AB6561D6E23A50AD8D7866BDC.bundle exists=1",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.e5rt",
+      "threadID": 7309792,
+      "timestamp": "2026-11-02 02:39:25.666899+0300",
+      "eventMessage": "Loading a shared resource. URI = <user-home>/Library/Caches/com.golos.golos-meet/com.apple.e5rt.e5bundlecache/26A434/2F7922E42957B2AE59D54998552C43689F93E267FD641CCD1CFAFC4ADC36B439/4E334419A4BEB139E40DC7C12C5CFCB95B95EE8AB6561D6E23A50AD8D7866BDC.bundle",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.e5rt",
+      "threadID": 7309797,
+      "timestamp": "2026-11-02 02:39:25.724329+0300",
+      "eventMessage": "Loading a shared resource. URI = <user-home>/Library/Caches/com.golos.golos-meet/com.apple.e5rt.e5bundlecache/26A434/2F7922E42957B2AE59D54998552C43689F93E267FD641CCD1CFAFC4ADC36B439/4E334419A4BEB139E40DC7C12C5CFCB95B95EE8AB6561D6E23A50AD8D7866BDC.bundle/H16S.bundle/main_1024/main_ane/model.anehash",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.TextRecognition",
+      "threadID": 7309802,
+      "timestamp": "2026-11-02 02:39:25.727701+0300",
+      "eventMessage": "Attempting to compile E5 model: cr_tr_model_latincyrillic_v3_e5.mlmodelc.bundle",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.e5rt",
+      "threadID": 7309802,
+      "timestamp": "2026-11-02 02:39:25.727827+0300",
+      "eventMessage": "E5BundleCache Lookup: input=/System/Library/PrivateFrameworks/TextRecognition.framework/Resources/cr_tr_model_latincyrillic_v3_e5.mlmodelc.bundle/model.mil output=<user-home>/Library/Caches/com.golos.golos-meet/com.apple.e5rt.e5bundlecache/26A434/DFD288F0235AD059B4ACB4BAD93B46A5F3886027EAD27ACC3F657A16638BB837/D567C752DB57CCE6DC2C713AC6E8D86A805213043865AA22BBC58D2729AE0C94.bundle exists=1",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.e5rt",
+      "threadID": 7309802,
+      "timestamp": "2026-11-02 02:39:25.727830+0300",
+      "eventMessage": "Loading a shared resource. URI = <user-home>/Library/Caches/com.golos.golos-meet/com.apple.e5rt.e5bundlecache/26A434/DFD288F0235AD059B4ACB4BAD93B46A5F3886027EAD27ACC3F657A16638BB837/D567C752DB57CCE6DC2C713AC6E8D86A805213043865AA22BBC58D2729AE0C94.bundle",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.e5rt",
+      "threadID": 7309755,
+      "timestamp": "2026-11-02 02:39:25.729119+0300",
+      "eventMessage": "Loading a shared resource. URI = <user-home>/Library/Caches/com.golos.golos-meet/com.apple.e5rt.e5bundlecache/26A434/DFD288F0235AD059B4ACB4BAD93B46A5F3886027EAD27ACC3F657A16638BB837/D567C752DB57CCE6DC2C713AC6E8D86A805213043865AA22BBC58D2729AE0C94.bundle/H16S.bundle/main_1024/main_ane/model.anehash",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.coreml",
+      "threadID": 7309808,
+      "timestamp": "2026-11-02 02:39:25.794680+0300",
+      "eventMessage": "MLNeuralNetworkV1Engine class has successfully loaded the model at /System/Library/PrivateFrameworks/TextRecognition.framework/Versions/A/Resources/cr_form_detector.mlmodelc.bundle.",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.TextRecognition",
+      "threadID": 7309808,
+      "timestamp": "2026-11-02 02:39:25.802049+0300",
+      "eventMessage": "_loadFormAnalyzerIfNeeded(configuration:): Form analyzer loaded.",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.TextRecognition",
+      "threadID": 7309808,
+      "timestamp": "2026-11-02 02:39:25.802051+0300",
+      "eventMessage": "resultDocument(forDetectionResult:image:configuration:progressHandler:): Form detection is enabled (DetectForms:true, FormDetectionHighRecall:false).",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.TextRecognition",
+      "threadID": 7309808,
+      "timestamp": "2026-11-02 02:39:25.802100+0300",
+      "eventMessage": "resultDocument(forDetectionResult:image:configuration:progressHandler:): Skipping running form field detection for 1FAE286D-A253-48C8-8BA7-1D77069BABD2 (line count: 0).",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.TextRecognition",
+      "threadID": 7309817,
+      "timestamp": "2026-11-02 02:39:25.802341+0300",
+      "eventMessage": "documentOutputRegion(for:options:roi:trackingSession:withProgressHandler:): image={w:1200,h:1600} roi={x:0.000000,y:0.000000,w:1.000000,h:1.000000} options={\"CRImageReaderDetectForms\":true,\"CRImageReaderDetectionOnly\":false,\"CRImageReaderFormFieldDetectionHighRecall\":false,\"CRImageReaderMinimumTextHeight\":0}",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.TextRecognition",
+      "threadID": 7309819,
+      "timestamp": "2026-11-02 02:39:25.802346+0300",
+      "eventMessage": "-[CRDocumentOutputRegion detectedFieldRegionsExcludingFields:updateExcludedFields:]: #fields:0 updateExcludedFields:1",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.TextRecognition",
+      "threadID": 7309819,
+      "timestamp": "2026-11-02 02:39:25.809266+0300",
+      "eventMessage": "-[CRFormParser parseFieldsInDocument:allFields:shouldUpdateExternalFields:]: Content type prediction for locale ru-RU is enabled.",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.e5rt",
+      "threadID": 7309934,
+      "timestamp": "2026-11-02 02:39:25.867289+0300",
+      "eventMessage": "Loading a shared resource. URI = <user-home>/Library/Caches/com.golos.golos-meet/com.apple.e5rt.e5bundlecache/26A434/2F7922E42957B2AE59D54998552C43689F93E267FD641CCD1CFAFC4ADC36B439/4E334419A4BEB139E40DC7C12C5CFCB95B95EE8AB6561D6E23A50AD8D7866BDC.bundle/H16S.bundle/main_1024/main_ane/model.anehash",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.e5rt",
+      "threadID": 7309819,
+      "timestamp": "2026-11-02 02:39:25.869370+0300",
+      "eventMessage": "Loading a shared resource. URI = <user-home>/Library/Caches/com.golos.golos-meet/com.apple.e5rt.e5bundlecache/26A434/DFD288F0235AD059B4ACB4BAD93B46A5F3886027EAD27ACC3F657A16638BB837/D567C752DB57CCE6DC2C713AC6E8D86A805213043865AA22BBC58D2729AE0C94.bundle/H16S.bundle/main_1024/main_ane/model.anehash",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.TextRecognition",
+      "threadID": 7309797,
+      "timestamp": "2026-11-02 02:39:25.872069+0300",
+      "eventMessage": "resultDocument(forDetectionResult:image:configuration:progressHandler:): Form detection is enabled (DetectForms:true, FormDetectionHighRecall:false).",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.TextRecognition",
+      "threadID": 7309797,
+      "timestamp": "2026-11-02 02:39:25.872081+0300",
+      "eventMessage": "resultDocument(forDetectionResult:image:configuration:progressHandler:): Skipping running form field detection for A666EC1A-BAEA-4659-B685-566AF268A330 (line count: 0).",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.TextRecognition",
+      "threadID": 7309817,
+      "timestamp": "2026-11-02 02:39:25.872218+0300",
+      "eventMessage": "-[CRDocumentOutputRegion detectedFieldRegionsExcludingFields:updateExcludedFields:]: #fields:0 updateExcludedFields:1",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.TextRecognition",
+      "threadID": 7309817,
+      "timestamp": "2026-11-02 02:39:25.878670+0300",
+      "eventMessage": "-[CRFormParser parseFieldsInDocument:allFields:shouldUpdateExternalFields:]: Content type prediction for locale ru-RU is enabled.",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.TextRecognition",
+      "threadID": 7309817,
+      "timestamp": "2026-11-02 02:39:25.879919+0300",
+      "eventMessage": "CRImageReader.init(options:): options={\"CRImageReaderCoreMode\":false,\"CRImageReaderDisableLanguageCorrection\":false,\"CRImageReaderDisableScriptDetection\":false,\"CRImageReaderKeepResourcesLoaded\":false,\"CRImageReaderLanguageKey\":[\"en_US\"],\"CRImageReaderNumTopStringCandidates\":3,\"CRImageReaderOptimizeGroupsForStability\":false,\"CRImageReaderRevisionKey\":3,\"CRImageReaderSkipVerticalText\":false,\"CRImageReaderTextDetector\":\"CRImageReaderTextDetectorCR\",\"CRImageReaderTextRecognizer\":\"CRImageReaderTextRecognizerCR\"}",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.TextRecognition",
+      "threadID": 7309797,
+      "timestamp": "2026-11-02 02:39:25.880220+0300",
+      "eventMessage": "Attempting to compile E5 model: cr_td_model_v3_e5.mlmodelc.bundle",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.e5rt",
+      "threadID": 7309797,
+      "timestamp": "2026-11-02 02:39:25.880363+0300",
+      "eventMessage": "E5BundleCache Lookup: input=/System/Library/PrivateFrameworks/TextRecognition.framework/Resources/cr_td_model_v3_e5.mlmodelc.bundle/model.mil output=<user-home>/Library/Caches/com.golos.golos-meet/com.apple.e5rt.e5bundlecache/26A434/0DF0EC89023EE64A3FBB0E9B5DBF42A380FAB1BECABEE15D96EA4274223F509F/A357A9CEDAA64BCFAEEA4A1340C57836E889C2E3FC1670DA5775B7529D01266C.bundle exists=1",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.e5rt",
+      "threadID": 7309797,
+      "timestamp": "2026-11-02 02:39:25.880366+0300",
+      "eventMessage": "Loading a shared resource. URI = <user-home>/Library/Caches/com.golos.golos-meet/com.apple.e5rt.e5bundlecache/26A434/0DF0EC89023EE64A3FBB0E9B5DBF42A380FAB1BECABEE15D96EA4274223F509F/A357A9CEDAA64BCFAEEA4A1340C57836E889C2E3FC1670DA5775B7529D01266C.bundle",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.TextRecognition",
+      "threadID": 7309817,
+      "timestamp": "2026-11-02 02:39:25.880870+0300",
+      "eventMessage": "documentOutputRegion(for:options:roi:trackingSession:withProgressHandler:): image={w:1200,h:1600} roi={x:0.000000,y:0.000000,w:1.000000,h:1.000000} options={\"CRImageReaderDetectForms\":true,\"CRImageReaderDetectionOnly\":false,\"CRImageReaderFormFieldDetectionHighRecall\":false,\"CRImageReaderMinimumTextHeight\":0}",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.TextRecognition",
+      "threadID": 7309819,
+      "timestamp": "2026-11-02 02:39:25.880925+0300",
+      "eventMessage": "Attempting to compile E5 model: cr_orientation_model_v1_e5.mlmodelc.bundle",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.e5rt",
+      "threadID": 7309819,
+      "timestamp": "2026-11-02 02:39:25.881040+0300",
+      "eventMessage": "E5BundleCache Lookup: input=/System/Library/PrivateFrameworks/TextRecognition.framework/Resources/cr_orientation_model_v1_e5.mlmodelc.bundle/model.mil output=<user-home>/Library/Caches/com.golos.golos-meet/com.apple.e5rt.e5bundlecache/26A434/2F7922E42957B2AE59D54998552C43689F93E267FD641CCD1CFAFC4ADC36B439/4E334419A4BEB139E40DC7C12C5CFCB95B95EE8AB6561D6E23A50AD8D7866BDC.bundle exists=1",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.e5rt",
+      "threadID": 7309819,
+      "timestamp": "2026-11-02 02:39:25.881041+0300",
+      "eventMessage": "Loading a shared resource. URI = <user-home>/Library/Caches/com.golos.golos-meet/com.apple.e5rt.e5bundlecache/26A434/2F7922E42957B2AE59D54998552C43689F93E267FD641CCD1CFAFC4ADC36B439/4E334419A4BEB139E40DC7C12C5CFCB95B95EE8AB6561D6E23A50AD8D7866BDC.bundle",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.e5rt",
+      "threadID": 7309796,
+      "timestamp": "2026-11-02 02:39:25.940019+0300",
+      "eventMessage": "Loading a shared resource. URI = <user-home>/Library/Caches/com.golos.golos-meet/com.apple.e5rt.e5bundlecache/26A434/2F7922E42957B2AE59D54998552C43689F93E267FD641CCD1CFAFC4ADC36B439/4E334419A4BEB139E40DC7C12C5CFCB95B95EE8AB6561D6E23A50AD8D7866BDC.bundle/H16S.bundle/main_1024/main_ane/model.anehash",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.TextRecognition",
+      "threadID": 7309792,
+      "timestamp": "2026-11-02 02:39:25.942328+0300",
+      "eventMessage": "Attempting to compile E5 model: cr_tr_model_latincyrillic_v3_e5.mlmodelc.bundle",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.e5rt",
+      "threadID": 7309792,
+      "timestamp": "2026-11-02 02:39:25.942456+0300",
+      "eventMessage": "E5BundleCache Lookup: input=/System/Library/PrivateFrameworks/TextRecognition.framework/Resources/cr_tr_model_latincyrillic_v3_e5.mlmodelc.bundle/model.mil output=<user-home>/Library/Caches/com.golos.golos-meet/com.apple.e5rt.e5bundlecache/26A434/DFD288F0235AD059B4ACB4BAD93B46A5F3886027EAD27ACC3F657A16638BB837/D567C752DB57CCE6DC2C713AC6E8D86A805213043865AA22BBC58D2729AE0C94.bundle exists=1",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.e5rt",
+      "threadID": 7309792,
+      "timestamp": "2026-11-02 02:39:25.942461+0300",
+      "eventMessage": "Loading a shared resource. URI = <user-home>/Library/Caches/com.golos.golos-meet/com.apple.e5rt.e5bundlecache/26A434/DFD288F0235AD059B4ACB4BAD93B46A5F3886027EAD27ACC3F657A16638BB837/D567C752DB57CCE6DC2C713AC6E8D86A805213043865AA22BBC58D2729AE0C94.bundle",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.e5rt",
+      "threadID": 7309796,
+      "timestamp": "2026-11-02 02:39:25.944320+0300",
+      "eventMessage": "Loading a shared resource. URI = <user-home>/Library/Caches/com.golos.golos-meet/com.apple.e5rt.e5bundlecache/26A434/DFD288F0235AD059B4ACB4BAD93B46A5F3886027EAD27ACC3F657A16638BB837/D567C752DB57CCE6DC2C713AC6E8D86A805213043865AA22BBC58D2729AE0C94.bundle/H16S.bundle/main_1024/main_ane/model.anehash",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.coreml",
+      "threadID": 7309756,
+      "timestamp": "2026-11-02 02:39:26.009352+0300",
+      "eventMessage": "MLNeuralNetworkV1Engine class has successfully loaded the model at /System/Library/PrivateFrameworks/TextRecognition.framework/Versions/A/Resources/cr_form_detector.mlmodelc.bundle.",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.TextRecognition",
+      "threadID": 7309756,
+      "timestamp": "2026-11-02 02:39:26.015573+0300",
+      "eventMessage": "_loadFormAnalyzerIfNeeded(configuration:): Form analyzer loaded.",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.TextRecognition",
+      "threadID": 7309756,
+      "timestamp": "2026-11-02 02:39:26.015575+0300",
+      "eventMessage": "resultDocument(forDetectionResult:image:configuration:progressHandler:): Form detection is enabled (DetectForms:true, FormDetectionHighRecall:false).",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.TextRecognition",
+      "threadID": 7309756,
+      "timestamp": "2026-11-02 02:39:26.015622+0300",
+      "eventMessage": "resultDocument(forDetectionResult:image:configuration:progressHandler:): Skipping running form field detection for B469F633-AA93-43CA-AD7B-246ED4552735 (line count: 0).",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.TextRecognition",
+      "threadID": 7309817,
+      "timestamp": "2026-11-02 02:39:26.015787+0300",
+      "eventMessage": "-[CRDocumentOutputRegion detectedFieldRegionsExcludingFields:updateExcludedFields:]: #fields:0 updateExcludedFields:1",
+      "parentActivityIdentifier": 0
+    },
+    {
+      "activityIdentifier": 0,
+      "subsystem": "com.apple.TextRecognition",
+      "threadID": 7309817,
+      "timestamp": "2026-11-02 02:39:26.021854+0300",
+      "eventMessage": "-[CRFormParser parseFieldsInDocument:allFields:shouldUpdateExternalFields:]: Content type prediction for locale ru-RU is enabled.",
+      "parentActivityIdentifier": 0
+    }
+  ]
+}

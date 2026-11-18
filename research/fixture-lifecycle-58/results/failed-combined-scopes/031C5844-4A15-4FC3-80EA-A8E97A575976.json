@@ -1,0 +1,38 @@
+[
+  {
+    "stage" : "scope-created",
+    "test" : "concreteMetadataBridgeReceivesReadyEventWithoutLaunchingApplication()",
+    "uptime" : "333037.9044536667"
+  },
+  {
+    "root" : "memory-update-5CB2FF71-57E4-4435-91FD-9538425FD2C3",
+    "stage" : "root-owned",
+    "uptime" : "333037.93036212504"
+  },
+  {
+    "stage" : "store-owned",
+    "uptime" : "333037.93038395833"
+  },
+  {
+    "connection" : "5C904298-5805-4335-8C69-303C3F5DE1D6",
+    "root" : "memory-update-5CB2FF71-57E4-4435-91FD-9538425FD2C3",
+    "stage" : "opened",
+    "uptime" : "333037.976323625"
+  },
+  {
+    "stage" : "body-finished",
+    "uptime" : "333046.3299855834"
+  },
+  {
+    "connection" : "5C904298-5805-4335-8C69-303C3F5DE1D6",
+    "result" : "0",
+    "stage" : "closed",
+    "uptime" : "333047.5190380834"
+  },
+  {
+    "exists" : "false",
+    "root" : "memory-update-5CB2FF71-57E4-4435-91FD-9538425FD2C3",
+    "stage" : "root-removed",
+    "uptime" : "333047.5293505417"
+  }
+]

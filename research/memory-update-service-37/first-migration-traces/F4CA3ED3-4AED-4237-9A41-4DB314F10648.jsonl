@@ -1,0 +1,14 @@
+{"name":"acquire","result":0,"extended":0,"strictPool":false,"milliseconds":0.6721666431985795}
+{"executor":"FAD7E846-E45C-4732-A522-0DE72561B27B","name":"second-task-start","milliseconds":12.353208323474973,"strictPool":false}
+{"executor":"0E9D1A69-BA57-44DA-81A5-1DFBE81DF643","name":"first-task-start","milliseconds":12.378624989651144,"strictPool":false}
+{"executor":"0E9D1A69-BA57-44DA-81A5-1DFBE81DF643","name":"first-sqlite-begin","milliseconds":12.87841668818146,"connection":"D9B1EBE2-FDB3-4C79-B40D-A6A623CB3976","strictPool":false}
+{"executor":"FAD7E846-E45C-4732-A522-0DE72561B27B","strictPool":false,"name":"second-sqlite-begin","milliseconds":13.989750004839152,"connection":"9D066795-451D-4985-AA20-99A3A1A5264A"}
+{"scheduledMilliseconds":518.9733333536424,"name":"schedule","milliseconds":18.974666658323258,"strictPool":false}
+{"name":"release-start","milliseconds":524.7242916375399,"strictPool":false}
+{"result":5,"name":"commit-result","milliseconds":524.8897083220072,"strictPool":false,"extended":5}
+{"result":0,"name":"cleanup-rollback","milliseconds":525.2935416647233,"strictPool":false}
+{"result":0,"name":"close-result","milliseconds":525.4506666678935,"strictPool":false}
+{"executor":"FAD7E846-E45C-4732-A522-0DE72561B27B","milliseconds":613.3680833154358,"name":"second-success","strictPool":false}
+{"name":"first-success","strictPool":false,"executor":"0E9D1A69-BA57-44DA-81A5-1DFBE81DF643","milliseconds":705.202333338093}
+{"name":"executors-joined","strictPool":false,"milliseconds":3006.5563333337195}
+{"name":"joined","strictPool":false,"milliseconds":3006.640541658271}

@@ -1,0 +1,25 @@
+{
+  "ref": "fc2a92956fd50bd791e4926d5b388c8fe39f84d4",
+  "retain_roots_control": false,
+  "patches": [
+    {
+      "path": "golos-meetTests/MeetingAssignmentTests.swift",
+      "before_sha256": "009efedb28b27a0d1c5f0f72719a59fa1e98cefbbc6a26aa7f9105e9d961dcb8",
+      "old": "@MainActor @Suite struct MeetingAssignmentTests",
+      "new": "@MainActor @Suite(AssignmentObservationTrait()) struct MeetingAssignmentTests"
+    },
+    {
+      "path": "golos-meetTests/MeetingAssignmentTests.swift",
+      "before_sha256": "3b49cdb60a15cf89ddef618a4e0deef379034e8d567861088a05f6eb71dd4e20",
+      "old": "            store = ProjectStore(url: root.appendingPathComponent(\"knowledge.sqlite\"))",
+      "new": "            AssignmentObservation.current?.note(\"root-created\", [\"root\":root.lastPathComponent])\n            store = ProjectStore(url: root.appendingPathComponent(\"knowledge.sqlite\"))"
+    },
+    {
+      "path": "golos-meetTests/MeetingAssignmentTests.swift",
+      "before_sha256": "75f4bc68839f0d849b0fa7dd0a5030c5709d4e3c6dd5b4dacb05e9c1ca053964",
+      "old": "        func cleanup() async { await indexer.stop(); try? FileManager.default.removeItem(at: root) }",
+      "new": "        func cleanup() async {\n            AssignmentObservation.current?.note(\"indexer-stop-enter\")\n            await indexer.stop()\n            AssignmentObservation.current?.note(\"indexer-stop-returned\")\n            try? FileManager.default.removeItem(at: root)\n            AssignmentObservation.current?.note(\"root-removed\", [\"root\":root.lastPathComponent,\"exists\":String(FileManager.default.fileExists(atPath:root.path))])\n        }"
+    }
+  ],
+  "observer_sha256": "302b835eaa7734ec011acfd8b895e966bb938234736098eb1c808d39979645ba"
+}

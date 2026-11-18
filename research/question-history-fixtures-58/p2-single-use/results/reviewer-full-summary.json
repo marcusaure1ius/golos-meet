@@ -1,0 +1,85 @@
+{
+  "devicesAndConfigurations" : [
+    {
+      "device" : {
+        "architecture" : "arm64",
+        "deviceId" : "00006040-000C51D93404801C",
+        "deviceName" : "My Mac",
+        "modelName" : "MacBook Pro",
+        "osBuildNumber" : "26A434",
+        "osVersion" : "27.0.1",
+        "platform" : "macOS"
+      },
+      "expectedFailures" : 0,
+      "failedTests" : 7,
+      "passedTests" : 605,
+      "skippedTests" : 0,
+      "testPlanConfiguration" : {
+        "configurationId" : "1",
+        "configurationName" : "Test Scheme Action"
+      }
+    }
+  ],
+  "environmentDescription" : "golos-meet · Built with macOS 27.0.1",
+  "expectedFailures" : 0,
+  "failedTests" : 3,
+  "finishTime" : 1793588221.59,
+  "passedTests" : 434,
+  "result" : "Failed",
+  "runtimeWarnings" : [
+
+  ],
+  "skippedTests" : 0,
+  "startTime" : 1793588149.854,
+  "statistics" : [
+    {
+      "subtitle" : "220 test runs",
+      "title" : "45 tests ran with dynamic parameters"
+    }
+  ],
+  "testFailures" : [
+    {
+      "failureText" : "Caught error: .e5rtError(\"e5rt_execution_stream_operation_create_precompiled_compute_operation_with_options call failed\", 13)",
+      "targetName" : "golos-meetTests",
+      "testIdentifier" : 373,
+      "testIdentifierString" : "LocalDocumentExtractorTests/concurrentOCRDoesNotOccupyTheCooperativePool()",
+      "testIdentifierURL" : "test://com.apple.xcode/golos-meet/golos-meetTests/LocalDocumentExtractorTests/concurrentOCRDoesNotOccupyTheCooperativePool()",
+      "testName" : "concurrentOCRDoesNotOccupyTheCooperativePool()"
+    },
+    {
+      "failureText" : "Caught error: .e5rtError(\"e5rt_execution_stream_operation_create_precompiled_compute_operation_with_options call failed\", 13)",
+      "targetName" : "golos-meetTests",
+      "testIdentifier" : 379,
+      "testIdentifierString" : "LocalDocumentExtractorTests/extractsTextFromPNGUsingLocalOCR(text:)",
+      "testIdentifierURL" : "test://com.apple.xcode/golos-meet/golos-meetTests/LocalDocumentExtractorTests/extractsTextFromPNGUsingLocalOCR(text:)",
+      "testName" : "extractsTextFromPNGUsingLocalOCR(text:)"
+    },
+    {
+      "failureText" : "Expectation failed: lines.filter { $0 == scanned }.count == 1\nlines.filter { $0 == scanned }.count → 0",
+      "targetName" : "golos-meetTests",
+      "testIdentifier" : 376,
+      "testIdentifierString" : "LocalDocumentExtractorTests/mixedPDFExtractsScanAndDoesNotDuplicateTextLayer(native:scanned:duplicateNative:)",
+      "testIdentifierURL" : "test://com.apple.xcode/golos-meet/golos-meetTests/LocalDocumentExtractorTests/mixedPDFExtractsScanAndDoesNotDuplicateTextLayer(native:scanned:duplicateNative:)",
+      "testName" : "mixedPDFExtractsScanAndDoesNotDuplicateTextLayer(native:scanned:duplicateNative:)"
+    }
+  ],
+  "title" : "Test - golos-meet",
+  "topInsights" : [
+    {
+      "category" : "Common Failures",
+      "impact" : "33% of failures",
+      "text" : "4 runs of 1 test failed with Expectation failed: lines.filter { $0 == scanned }.count == 1"
+    },
+    {
+      "category" : "Common Failures",
+      "impact" : "66% of failures",
+      "text" : "3 runs of 2 tests failed with Caught error: .e5rtError(\"e5rt_execution_stream_operation_create_precompiled_compute_operation_with_options call failed\", 13)"
+    },
+    {
+      "category" : "Longest Test Runs",
+      "impact" : "26% of duration",
+      "text" : "13 longest test runs with outlier durations exceeding 14.99s (three standard deviations)"
+    }
+  ],
+  "totalTestCount" : 437
+}

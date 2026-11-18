@@ -1,0 +1,194 @@
+{
+  "algorithm" : "explicit-name-margin-e5-v2",
+  "auto_threshold" : 0.90000000000000002,
+  "cases" : [
+    {
+      "actual" : [
+
+      ],
+      "expected" : [
+        "amber"
+      ],
+      "id" : "absent-name",
+      "milliseconds" : 13.545166671974584,
+      "scores" : [
+        {
+          "competing_similarity" : 0.86840691198649522,
+          "context_kind" : "document",
+          "context_text" : "Проект Янтарь: переносим складской учёт в новую систему. Проверяем остатки товаров, маркировку и обмен с кассами.",
+          "explicit_name" : false,
+          "meeting_text" : "Переносим складской учёт в новую систему. Проверяем остатки товаров, маркировку и обмен с кассами.",
+          "project" : "amber",
+          "similarity" : 0.94726669035156774
+        }
+      ],
+      "suggested_topic" : null
+    },
+    {
+      "actual" : [
+
+      ],
+      "expected" : [
+        "amber"
+      ],
+      "id" : "declined-name",
+      "milliseconds" : 12.755333358654752,
+      "scores" : [
+        {
+          "competing_similarity" : 0.84182590586648298,
+          "context_kind" : "document",
+          "context_text" : "Проект Янтарь: переносим складской учёт в новую систему. Проверяем остатки товаров, маркировку и обмен с кассами.",
+          "explicit_name" : false,
+          "meeting_text" : "Для Янтаря переносим складской учёт в новую систему. Проверяем остатки товаров, маркировку и обмен с кассами.",
+          "project" : "amber",
+          "similarity" : 0.97578791445280411
+        }
+      ],
+      "suggested_topic" : null
+    },
+    {
+      "actual" : [
+
+      ],
+      "expected" : [
+        "ai"
+      ],
+      "id" : "short-name",
+      "milliseconds" : 11.891166679561138,
+      "scores" : [
+        {
+          "competing_similarity" : 0.87987432704497226,
+          "context_kind" : "document",
+          "context_text" : "Проект ИИ: размечаем обращения клиентов для классификации. Проверяем датасет, качество разметки и согласие экспертов.",
+          "explicit_name" : false,
+          "meeting_text" : "Проект ИИ: размечаем обращения клиентов для классификации. Проверяем датасет, качество разметки и согласие экспертов.",
+          "project" : "ai",
+          "similarity" : 0.99999999599343381
+        }
+      ],
+      "suggested_topic" : null
+    },
+    {
+      "actual" : [
+
+      ],
+      "expected" : [
+        "ai"
+      ],
+      "id" : "short-name-absent",
+      "milliseconds" : 11.870208341861144,
+      "scores" : [
+        {
+          "competing_similarity" : 0.85589365876452994,
+          "context_kind" : "document",
+          "context_text" : "Проект ИИ: размечаем обращения клиентов для классификации. Проверяем датасет, качество разметки и согласие экспертов.",
+          "explicit_name" : false,
+          "meeting_text" : "Размечаем обращения клиентов для классификации. Проверяем датасет, качество разметки и согласие экспертов.",
+          "project" : "ai",
+          "similarity" : 0.9516570341789079
+        }
+      ],
+      "suggested_topic" : null
+    },
+    {
+      "actual" : [
+
+      ],
+      "expected" : [
+        "amber",
+        "ai"
+      ],
+      "id" : "both-without-exact-name",
+      "milliseconds" : 18.400500004645437,
+      "scores" : [
+        {
+          "competing_similarity" : 0.84690101662185691,
+          "context_kind" : "document",
+          "context_text" : "Проект Янтарь: переносим складской учёт в новую систему. Проверяем остатки товаров, маркировку и обмен с кассами.",
+          "explicit_name" : false,
+          "meeting_text" : "Для Янтаря переносим складской учёт. Проверяем остатки товаров и обмен с кассами.",
+          "project" : "amber",
+          "similarity" : 0.96582521508343211
+        },
+        {
+          "competing_similarity" : 0.87987432704497226,
+          "context_kind" : "document",
+          "context_text" : "Проект ИИ: размечаем обращения клиентов для классификации. Проверяем датасет, качество разметки и согласие экспертов.",
+          "explicit_name" : false,
+          "meeting_text" : "Проект ИИ: размечаем обращения клиентов для классификации. Проверяем датасет, качество разметки и согласие экспертов.",
+          "project" : "ai",
+          "similarity" : 0.99999999599343381
+        }
+      ],
+      "suggested_topic" : null
+    },
+    {
+      "actual" : [
+        "amber"
+      ],
+      "expected" : [
+        "amber"
+      ],
+      "id" : "literal-control",
+      "milliseconds" : 11.494541657157242,
+      "scores" : [
+        {
+          "competing_similarity" : 0.87987432704497226,
+          "context_kind" : "document",
+          "context_text" : "Проект Янтарь: переносим складской учёт в новую систему. Проверяем остатки товаров, маркировку и обмен с кассами.",
+          "explicit_name" : true,
+          "meeting_text" : "Проект Янтарь: переносим складской учёт в новую систему. Проверяем остатки товаров, маркировку и обмен с кассами.",
+          "project" : "amber",
+          "similarity" : 0.99999999893536751
+        }
+      ],
+      "suggested_topic" : null
+    },
+    {
+      "actual" : [
+
+      ],
+      "expected" : [
+
+      ],
+      "id" : "generic-negative",
+      "milliseconds" : 5.6644583237357438,
+      "scores" : [
+
+      ],
+      "suggested_topic" : "Назначили ответственных, согласовали бюджет и план работ."
+    },
+    {
+      "actual" : [
+
+      ],
+      "expected" : [
+
+      ],
+      "id" : "new-subject",
+      "milliseconds" : 5.2619166672229767,
+      "scores" : [
+
+      ],
+      "suggested_topic" : "Открываем мастерскую, выбираем гончарные круги и печь для керамики."
+    }
+  ],
+  "cold_index_seconds" : 1.1316664166806731,
+  "corpus_sha256" : "f4f2a6bbf6742db0adff91ad8f1897f9e98c1567d30af2b53e5f79caee7f6437",
+  "false_positive_links" : 0,
+  "idempotence_checked" : true,
+  "manual_inbox_restart_checked" : true,
+  "missed_links" : 6,
+  "model_id" : "multilingual-e5-small@fd1525a9fd15316a2d503bf26ab031a61d056e98\/unigram-v1\/mean-l2\/512\/overlap64",
+  "partition" : "evaluation",
+  "peak_cli_rss_bytes" : 1851031552,
+  "production_wiring" : false,
+  "proposal_threshold" : 0.90000000000000002,
+  "required_margin" : 0.040000000000000001,
+  "serial_worker" : true,
+  "stale_evidence_reindex_recovery" : true,
+  "synthetic_only" : true,
+  "timing_scope" : "prepare+unchanged commit+evidence opens after automatic drain",
+  "true_positive_links" : 1,
+  "worker_initial_drain_seconds" : 0.064738541666883975
+}

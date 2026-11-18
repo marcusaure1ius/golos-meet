@@ -1,0 +1,34 @@
+{
+  "command": [
+    "xcodebuild",
+    "test",
+    "-project",
+    "golos-meet.xcodeproj",
+    "-scheme",
+    "golos-meet",
+    "-destination",
+    "platform=macOS",
+    "-derivedDataPath",
+    "/private/tmp/golos58si-derived",
+    "-disableAutomaticPackageResolution",
+    "-skipPackageUpdates",
+    "-only-testing:golos-meetTests/KnowledgeSearchTests",
+    "-only-testing:golos-meetTests/LocalIndexingServiceTests",
+    "CODE_SIGNING_ALLOWED=NO"
+  ],
+  "cwd": "<user-home>/.codex/worktrees/58-search-index-fixture-lifecycle/golos-meet",
+  "base": "ec77fea89c480eb1d0db7a5cbc2a1ff452d5bc46",
+  "source_sha256": {
+    "golos-meetTests/KnowledgeSearchTests.swift": "72a958bbd24e9e80f3ef30746f41c969264e7302512ea8ef2a4b57faeeafab63",
+    "golos-meetTests/LocalIndexingServiceTests.swift": "6c7b148398ef1c48aaf7e49d7fbed268db08b63c548c1afec14dbca87482a818",
+    "golos-meetTests/SearchIndexFixtureCleanup.swift": "dd38d51b0361bd26e97a65baa2153dc1dc0c6c97d97471789a4288fc88322094"
+  },
+  "reserve_bytes": 6442450944,
+  "forecast_bytes": 1073741824,
+  "preflight_free_bytes": 7749394432,
+  "safe_test_environment": {
+    "TEST_RUNNER_GOLOS_FIXTURE_EVIDENCE": "/private/tmp/golos58si-after-events"
+  },
+  "exit_code": 65,
+  "elapsed": 46.305762416974176
+}

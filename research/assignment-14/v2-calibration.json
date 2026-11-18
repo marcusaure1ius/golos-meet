@@ -1,0 +1,109 @@
+{
+  "algorithm" : "explicit-name-margin-e5-v2",
+  "auto_threshold" : 0.90000000000000002,
+  "cases" : [
+    {
+      "actual" : [
+        "amber"
+      ],
+      "expected" : [
+        "amber"
+      ],
+      "id" : "c-amber",
+      "milliseconds" : 7.4148333224002272,
+      "scores" : [
+        {
+          "competing_similarity" : 0.8708219874588129,
+          "context_kind" : "document",
+          "context_text" : "Проект Янтарь: переносим складской учёт в новую систему. Проверяем остатки товаров, маркировку и обмен с кассами.",
+          "explicit_name" : true,
+          "meeting_text" : "Проект Янтарь: переносим складской учёт в новую систему. Проверяем остатки товаров, маркировку и обмен с кассами.",
+          "project" : "amber",
+          "similarity" : 0.99999999893536751
+        }
+      ],
+      "suggested_topic" : null
+    },
+    {
+      "actual" : [
+        "orbit"
+      ],
+      "expected" : [
+        "orbit"
+      ],
+      "id" : "c-orbit",
+      "milliseconds" : 7.20220833318308,
+      "scores" : [
+        {
+          "competing_similarity" : 0.8435856997964355,
+          "context_kind" : "meeting",
+          "context_text" : "Проект Орбита: запускаем спутниковую связь для судов. Проверяем антенну, радиоканал и покрытие в северных морях.",
+          "explicit_name" : true,
+          "meeting_text" : "Орбита: запуск спутниковой связи для судов. Проверка антенны, радиоканала и покрытия в северных морях.",
+          "project" : "orbit",
+          "similarity" : 0.97576224450480709
+        }
+      ],
+      "suggested_topic" : null
+    },
+    {
+      "actual" : [
+
+      ],
+      "expected" : [
+
+      ],
+      "id" : "c-generic",
+      "milliseconds" : 6.6741249756887555,
+      "scores" : [
+
+      ],
+      "suggested_topic" : "Обсуждаем сроки проекта, бюджет и распределение задач между коллегами."
+    },
+    {
+      "actual" : [
+
+      ],
+      "expected" : [
+
+      ],
+      "id" : "c-duplicate",
+      "milliseconds" : 6.6404166864231229,
+      "scores" : [
+        {
+          "competing_similarity" : 1,
+          "context_kind" : "document",
+          "context_text" : "Проект Платформа: строим конвейер аналитики платежей и витрины данных.",
+          "explicit_name" : false,
+          "meeting_text" : "Проект Платформа: строим конвейер аналитики платежей и витрины данных.",
+          "project" : "platform-a",
+          "similarity" : 1
+        },
+        {
+          "competing_similarity" : 1,
+          "context_kind" : "document",
+          "context_text" : "Проект Платформа: строим конвейер аналитики платежей и витрины данных.",
+          "explicit_name" : false,
+          "meeting_text" : "Проект Платформа: строим конвейер аналитики платежей и витрины данных.",
+          "project" : "platform-b",
+          "similarity" : 1
+        }
+      ],
+      "suggested_topic" : null
+    }
+  ],
+  "cold_index_seconds" : 1.1334744583291467,
+  "corpus_sha256" : "5bfea0841b58181eca855cbd81d0e3f141949a51850a88e2563dd91b1bf8db30",
+  "false_positive_links" : 0,
+  "idempotence_checked" : true,
+  "manual_inbox_restart_checked" : true,
+  "missed_links" : 0,
+  "model_id" : "multilingual-e5-small@fd1525a9fd15316a2d503bf26ab031a61d056e98\/unigram-v1\/mean-l2\/512\/overlap64",
+  "partition" : "calibration",
+  "peak_cli_rss_bytes" : 1856045056,
+  "production_wiring" : false,
+  "proposal_threshold" : 0.90000000000000002,
+  "required_margin" : 0.040000000000000001,
+  "synthetic_only" : true,
+  "true_positive_links" : 2
+}

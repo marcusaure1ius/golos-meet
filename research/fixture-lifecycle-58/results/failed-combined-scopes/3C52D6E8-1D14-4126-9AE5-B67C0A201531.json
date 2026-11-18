@@ -1,0 +1,42 @@
+[
+  {
+    "stage" : "scope-created",
+    "test" : "invalidStructuredResponseNeverPartiallyPublishes(_:)",
+    "uptime" : "333037.90725004167"
+  },
+  {
+    "root" : "memory-update-A5EF98BB-205D-4735-AB7D-D7D90D8AED99",
+    "stage" : "root-owned",
+    "uptime" : "333037.9819525"
+  },
+  {
+    "stage" : "store-owned",
+    "uptime" : "333037.98196845833"
+  },
+  {
+    "connection" : "4A216CAE-CD34-42D1-B80A-9A0A1F8CD530",
+    "root" : "memory-update-A5EF98BB-205D-4735-AB7D-D7D90D8AED99",
+    "stage" : "opened",
+    "uptime" : "333038.07083475"
+  },
+  {
+    "stage" : "update-callbacks-released",
+    "uptime" : "333042.51484645833"
+  },
+  {
+    "connection" : "4A216CAE-CD34-42D1-B80A-9A0A1F8CD530",
+    "result" : "0",
+    "stage" : "closed",
+    "uptime" : "333042.51494850003"
+  },
+  {
+    "stage" : "body-finished",
+    "uptime" : "333042.627041"
+  },
+  {
+    "exists" : "false",
+    "root" : "memory-update-A5EF98BB-205D-4735-AB7D-D7D90D8AED99",
+    "stage" : "root-removed",
+    "uptime" : "333042.6278114167"
+  }
+]

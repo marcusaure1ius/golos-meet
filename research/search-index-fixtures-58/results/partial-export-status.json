@@ -1,0 +1,9 @@
+{
+  "status": "interrupted; not a completed full check",
+  "exports": {
+    "summary": 64,
+    "tests": 64,
+    "diagnostics": 1,
+    "attachments": 64
+  }
+}

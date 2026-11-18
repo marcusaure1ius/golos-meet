@@ -1,0 +1,2 @@
+There has been no change in the accessibility tree for Window: "Golos Questions Preview · Synthetic".
+The focused UI element is 0 standard window Golos Questions Preview · Synthetic, ID: SwiftUI.WindowGroup<QuestionsPreview.QuestionPreviewRoot>-1-AppWindow-1, Secondary Actions: Raise

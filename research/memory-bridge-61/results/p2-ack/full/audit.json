@@ -1,0 +1,1874 @@
+{
+  "raw_logs": {
+    "xcodebuild": {
+      "sha256": "9d2397eeecc4aa08231de41d901be0170ad2ce8eb66eee574a6850951f33b261",
+      "bytes": 159251
+    },
+    "stdout": {
+      "sha256": "0996a46c14433ff41a9273d7760478c1c661e797d7461d35a6097d2d31ed8de5",
+      "bytes": 244389
+    }
+  },
+  "attachment_matches": [
+    {
+      "test": "MemoryBridgeDiagnosticsTests/releasingSoleOwnerIsAttributedToCreatingObserverAndDirectRestartRecovers()",
+      "name": "sqlite-fixture-B546A8E7-7AA4-40A7-B26D-216BA7FF62E7_0_DCDD39F8-00BE-4D5D-839F-FC963886BFEE.json",
+      "sha256": "265944da67f7b11a8e210c957978e8c8ef2a479e8f09beb8eca09102136cd39f"
+    },
+    {
+      "test": "MemoryBridgeDiagnosticsTests/releasingSoleOwnerIsAttributedToCreatingObserverAndDirectRestartRecovers()",
+      "name": "bridge61-258A6117-D714-48E8-AAB4-70A950F1E44C-timeline_0_A6F67DCB-3D93-4E6B-B256-91CF3F3E297F.json",
+      "sha256": "1a82ed237bff4c77d267b9ccbc24c5cb9d4fbc4c8f3f053f731a863ea2e72086"
+    },
+    {
+      "test": "MemoryBridgeDiagnosticsTests/releasingSoleOwnerIsAttributedToCreatingObserverAndDirectRestartRecovers()",
+      "name": "bridge61-258A6117-D714-48E8-AAB4-70A950F1E44C-failure_0_ECA920E4-02AB-4031-9C73-3299495EA8A5.json",
+      "sha256": "906322e2056993fe31fbf49550eff0ce08fa24c80b8cf66464bc1dbbd9f3bc64"
+    },
+    {
+      "test": "MemoryBridgeDiagnosticsTests/pausedStartupSeparatesRevisionFromStartAndExecutesFailureRecorderBeforeRecovery()",
+      "name": "sqlite-fixture-5F591C94-5961-4CED-B028-BA627225DB8B_0_91DB8824-FE2D-416B-825B-8878BFC25B46.json",
+      "sha256": "64b979a82c9bc09865e33eb67a0751ece39b6e5bfd4408c6adfc2b4d182a0ecc"
+    },
+    {
+      "test": "MemoryBridgeDiagnosticsTests/pausedStartupSeparatesRevisionFromStartAndExecutesFailureRecorderBeforeRecovery()",
+      "name": "bridge61-370B7F25-742F-4715-A10A-F2BDAAC68B0C-timeline_0_C6D34CD6-79C6-41A5-9144-A86E30884BB0.json",
+      "sha256": "7d0a1b78922b283ddfbe2a65d8840c9ef77863e6e160ddc91b1a15d8ba9812c9"
+    },
+    {
+      "test": "MemoryBridgeDiagnosticsTests/pausedStartupSeparatesRevisionFromStartAndExecutesFailureRecorderBeforeRecovery()",
+      "name": "bridge61-370B7F25-742F-4715-A10A-F2BDAAC68B0C-failure_0_4E9B73AF-3361-49A4-BDFB-724B9893A106.json",
+      "sha256": "1b733db702d2526d7e4aff9246125a31742cf2d4182ce58ddfcbe454c3458646"
+    },
+    {
+      "test": "MemoryBridgeDiagnosticsTests/strongOwnerAndGateAreReleasedWhenBodyThrowsOrCancels(cancel:)",
+      "name": "sqlite-fixture-4F91B9B0-7224-4AAD-9C2A-C38026FFF6E7_0_118C41E5-1B42-4B58-8554-09C14A75C655.json",
+      "sha256": "4b42154345caa5dfebef59f7db27f3fb6a46fc9dfd8f4ec2d59815ba211b759d"
+    },
+    {
+      "test": "MemoryBridgeDiagnosticsTests/strongOwnerAndGateAreReleasedWhenBodyThrowsOrCancels(cancel:)",
+      "name": "bridge61-4CA517F8-2472-477F-AC29-B1174F775A99-timeline_0_E99B7B9A-E434-4E89-A0C6-F819FFE9215B.json",
+      "sha256": "047bdc790fa298f7aebe375728d0773ae0be7023b8d7a496821eb6135428d38c"
+    },
+    {
+      "test": "MemoryBridgeDiagnosticsTests/strongOwnerAndGateAreReleasedWhenBodyThrowsOrCancels(cancel:)",
+      "name": "bridge61-4CA517F8-2472-477F-AC29-B1174F775A99-failure_0_57F0ABD6-C900-4181-88CC-4BDDDEE42214.json",
+      "sha256": "38627fdb639e284be2fbf8a3a4970b9a7780be9b799ce512e7701901d2692c9f"
+    },
+    {
+      "test": "MemoryBridgeDiagnosticsTests/strongOwnerAndGateAreReleasedWhenBodyThrowsOrCancels(cancel:)",
+      "name": "sqlite-fixture-0278BFD3-9C5F-4A97-8562-16761E03F483_0_7AB97E0A-9243-4509-A0A4-C5C277116DE8.json",
+      "sha256": "bba1cab0857ae6096c2289a5530993bd3c3913e7d5f23b0947457a37a9af1365"
+    },
+    {
+      "test": "MemoryBridgeDiagnosticsTests/strongOwnerAndGateAreReleasedWhenBodyThrowsOrCancels(cancel:)",
+      "name": "bridge61-BFC5B668-7C8E-4436-B5AC-505C3F41680D-timeline_0_3DEE35AF-397E-4262-9435-861CA43A202E.json",
+      "sha256": "c961e8fc0a7be3c0cd17eae47b6b09c577af43c2c472b40f352765dc62fdf6a3"
+    },
+    {
+      "test": "MemoryBridgeDiagnosticsTests/strongOwnerAndGateAreReleasedWhenBodyThrowsOrCancels(cancel:)",
+      "name": "bridge61-BFC5B668-7C8E-4436-B5AC-505C3F41680D-failure_0_97002049-1BAC-4683-B03E-EBA6F792C799.json",
+      "sha256": "cdabe3804c08094ae0225e5a8d4a71138f89f3c8a3e458c8bf0c3975e66bc1c0"
+    },
+    {
+      "test": "LocalIndexingNativeTests/nativeQueueResumesAfterInstallationWatchesTranscriptAndKeepsSameModelCache()",
+      "name": "sqlite-fixture-DED9D0EB-03FA-47C5-9205-57191CBBBB67_0_4AC9A3FE-CBCE-406A-AE19-2EAD11D41101.json",
+      "sha256": "75355ded15b1d29a49bb197fd3997a9b87712a3f3120affda063af7b663e082a"
+    },
+    {
+      "test": "SQLiteAsyncFaultExpectationTests/exactAsyncFaultPreservesBodyErrorAndClosesBeforeUnlink()",
+      "name": "sqlite-fixture-61B07300-DC40-455C-8AB5-0DAF781EFD79_0_FE616E76-AF48-487D-87CF-F4B3294B6544.json",
+      "sha256": "df729364eeeaac627a2e7f3371ec8cdc97763632eb72df4528d360a2c020744c"
+    },
+    {
+      "test": "SQLiteAsyncFaultExpectationTests/foreignAsyncFaultCannotBeConsumedByExpectedConnection()",
+      "name": "sqlite-fixture-3F154D50-ED68-42D0-9AD6-8A7F95AC180D_0_BE0DDCCB-B276-46E6-8529-E0A84E79090E.json",
+      "sha256": "b05dbd8686b3ba3892d47531a86747043717d8fc53f51f70cddf0b7f09de0df0"
+    },
+    {
+      "test": "SQLiteAsyncFaultExpectationTests/nestedAsyncExpectationsRequireSeparateNewConnectionsAndFaults(outerFault:)",
+      "name": "sqlite-fixture-E3211E24-E80F-4FCA-8234-A1B6C6FC0577_0_0C9319BD-417D-4423-95DE-7F684AFC266D.json",
+      "sha256": "16687b84dcf7dfecbedbdc83af3dd12220512bf946c0f48ee0398352af6f03d2"
+    },
+    {
+      "test": "SQLiteAsyncFaultExpectationTests/nestedAsyncExpectationsRequireSeparateNewConnectionsAndFaults(outerFault:)",
+      "name": "sqlite-fixture-C71C406C-470A-4E39-9321-74D7B00F179E_0_BE55012F-0E99-40DA-BB6B-A623CF2DC23E.json",
+      "sha256": "7bd768cab36213a5c134bd3e72262d0d36b72f04f252eeaf3bf9e8f1db9260c5"
+    },
+    {
+      "test": "SQLiteAsyncFaultExpectationTests/requiresOneNewNativeConnectionAtExactURL(count:)",
+      "name": "sqlite-fixture-C22BAFDD-4A23-4267-ADCC-F85CD8A74307_0_E2BACD56-0BA7-42D0-80C0-84C3AC073229.json",
+      "sha256": "f875c119c666b802a12f1d64022a5c036d6eb7319df013695d4955de19c3fa25"
+    },
+    {
+      "test": "SQLiteAsyncFaultExpectationTests/requiresOneNewNativeConnectionAtExactURL(count:)",
+      "name": "sqlite-fixture-42B6A499-B151-47D9-9D27-35CE8F58E2EF_0_EFE11DF4-B5C4-461D-AACC-9747E71EC30A.json",
+      "sha256": "ba0b146641a06bba16d21d15436ca13af893a59953d780fdb3f9a9a4bf6c901f"
+    },
+    {
+      "test": "SQLiteAsyncFaultExpectationTests/otherNativeFaultsRemainTeardownErrors(kind:)",
+      "name": "sqlite-fixture-67FC1B5A-4AD8-4A1F-9979-A25DB88F4256_0_9859DDEB-E62E-4921-877C-9B5B9CF52BD9.json",
+      "sha256": "649e1da36c09d38307d0e20554a9c53ebbbe9cf1bcff5c80a25e6283c0990623"
+    },
+    {
+      "test": "SQLiteAsyncFaultExpectationTests/otherNativeFaultsRemainTeardownErrors(kind:)",
+      "name": "sqlite-fixture-7353C3E5-5E6B-4518-A2F4-48D4D2929B34_0_A7584561-2B61-4332-BB06-B318D4FE61C5.json",
+      "sha256": "c3763a253ad9476edbb15fae35963af9e797ebb3b30b89e078ef18940c3fef74"
+    },
+    {
+      "test": "SQLiteAsyncFaultExpectationTests/otherNativeFaultsRemainTeardownErrors(kind:)",
+      "name": "sqlite-fixture-148A9789-85F6-4269-A8F6-DEAF8165FAB6_0_52E84771-938B-452F-B458-F9FF1D1825BF.json",
+      "sha256": "b3479a01748bac3dbc988337ee0bcd95dd8c87040ad3ffb21902647c48e32704"
+    },
+    {
+      "test": "ProjectMemoryUpdateTests/changesAtTransportBoundaryPreventSendingOrPublishing(_:)",
+      "name": "sqlite-fixture-FC7A3C8E-2022-43E1-8811-BF8221DBB7E4_0_08F09E74-87EF-4F32-9B98-2CF3FB166987.json",
+      "sha256": "c8489c716b58d2981a6665111651c2a5257e206298e5c55aabf19c8eeec8fd58"
+    },
+    {
+      "test": "ProjectMemoryUpdateTests/changesAtTransportBoundaryPreventSendingOrPublishing(_:)",
+      "name": "sqlite-fixture-B84393C6-3197-4B32-AB0A-1C507B6DF7F1_0_AE6BED77-8DA3-4696-B6C9-56CB767D1200.json",
+      "sha256": "b0569b51b4c89d2146e67c09996b345d9cc9f1cb928479200fab2a1ff459b9e8"
+    },
+    {
+      "test": "ProjectMemoryUpdateTests/changesAtTransportBoundaryPreventSendingOrPublishing(_:)",
+      "name": "sqlite-fixture-68A08279-53A8-4C9E-BB38-C9554242C06D_0_834A06E7-EEA0-419C-ABDE-03C3B2223B8E.json",
+      "sha256": "c0be148d3ee6e225966411c1c900ea819427072e666a605953727bdc4f78bd48"
+    },
+    {
+      "test": "ProjectMemoryUpdateTests/changesAtTransportBoundaryPreventSendingOrPublishing(_:)",
+      "name": "sqlite-fixture-AC604463-7D4A-45E5-930A-B4F2CA84AB16_0_A6C4AADA-2C59-4623-8DF6-9A6ECCF1D179.json",
+      "sha256": "e989c0890136c6df07697d7d1eec709d890a67afb3d39578a650605211d73286"
+    },
+    {
+      "test": "ProjectMemoryUpdateTests/changesAtTransportBoundaryPreventSendingOrPublishing(_:)",
+      "name": "sqlite-fixture-0D2CE005-3501-4DB1-A023-D1D8942DEE69_0_487BCBA4-5BE5-43E9-8324-EF9BACA933CE.json",
+      "sha256": "d4279b0b92ba58e8f82cf4ed89763427ac01dd03073322b6abb2976114ec4f52"
+    },
+    {
+      "test": "ProjectMemoryUpdateTests/changesAtTransportBoundaryPreventSendingOrPublishing(_:)",
+      "name": "sqlite-fixture-4C18A2F4-0FF0-4820-AB12-E59C3C831A83_0_6089445B-AE33-4E1C-8D3F-7A78B5D51095.json",
+      "sha256": "a7d0e3a9bc37740dbda8b9d0576bbf1280b3ad674332b4beb06fb6f6772e1c8a"
+    },
+    {
+      "test": "ProjectMemoryUpdateTests/changesAtTransportBoundaryPreventSendingOrPublishing(_:)",
+      "name": "sqlite-fixture-BFE61F01-0033-4D65-B455-5C97D0A7D176_0_D633B16E-5E56-4679-9517-C1DE7FA43121.json",
+      "sha256": "7059896095a356d2554884cdc5920c6fc9657bb7f65eb7e40e5afed1cd233803"
+    },
+    {
+      "test": "ProjectMemoryUpdateTests/changesAtTransportBoundaryPreventSendingOrPublishing(_:)",
+      "name": "sqlite-fixture-4AF4C2C0-D102-4C1C-B703-A7BAB76A4328_0_FC47D5B6-8123-4917-B634-B88AFEC36318.json",
+      "sha256": "f8a92bd9e6e6540602c8faf8655758a20bb00c8fd9cd5e0d083d990e5e3fc368"
+    },
+    {
+      "test": "ProjectMemoryUpdateTests/changesAtTransportBoundaryPreventSendingOrPublishing(_:)",
+      "name": "sqlite-fixture-B60CEA12-685B-4B3C-86D6-119F506B4D8A_0_6039A0CE-1036-4DDE-9825-1D6B83AEB99D.json",
+      "sha256": "a094cba14cc4ac4debd99c7dc19ac60b791f3a51eb5e4ebe17443823eb43f479"
+    },
+    {
+      "test": "ProjectMemoryUpdateTests/changesAtTransportBoundaryPreventSendingOrPublishing(_:)",
+      "name": "sqlite-fixture-C435747B-169B-47E1-9676-B3053DB198EA_0_952022E0-3367-475C-811A-262090CF0EF0.json",
+      "sha256": "5870d9a8a1d3dca7b4e272a62061c96347ba7fea68a2d49b7cda50492583aeb2"
+    },
+    {
+      "test": "ProjectMemoryUpdateTests/changesAtTransportBoundaryPreventSendingOrPublishing(_:)",
+      "name": "sqlite-fixture-DB57DA71-495C-4797-BB51-9340948E67F3_0_83AC396A-FAEC-4085-9DE5-C34BA831B934.json",
+      "sha256": "9d8cdce53b8d652bcffbf4dc00d4bd9750bc0e0a11d6bba093b50b52c3ded76d"
+    },
+    {
+      "test": "ProjectMemoryUpdateTests/changesAtTransportBoundaryPreventSendingOrPublishing(_:)",
+      "name": "sqlite-fixture-C62956BF-5223-4506-A91E-4C8F6D984019_0_584537B6-4E71-4B49-AA12-27066FDCEDDB.json",
+      "sha256": "0c58259fa0530163082ab5fce13a406dadd300e943b8c9e393c6a32385ec531a"
+    },
+    {
+      "test": "ProjectMemoryUpdateTests/cancellationOfNoncooperativeTransportCannotAppendAndNewSessionRequiresNewConsent()",
+      "name": "sqlite-fixture-3A6EE02B-5646-4867-91DD-79089C055F37_0_08FC41A2-8453-42E8-82C0-5137DCA5D31B.json",
+      "sha256": "9b05e96b58dc7f95aad7b1ed9c510059be7fe8957fe8a91f5e36ad868885b286"
+    },
+    {
+      "test": "ProjectMemoryUpdateTests/selectedInputChangesWithinSameFullClosureProduceNewFactsAndExactReplayAfterRestart(_:)",
+      "name": "sqlite-fixture-1D55D12A-32EC-4C37-8D0A-76159C2789DC_0_FACB72F2-4FC3-4F72-A978-8B9935BF1CF0.json",
+      "sha256": "ee573e0b16122b1ed3215714941a27faaf4e43970b7654ec6a12a459d7924b73"
+    },
+    {
+      "test": "ProjectMemoryUpdateTests/selectedInputChangesWithinSameFullClosureProduceNewFactsAndExactReplayAfterRestart(_:)",
+      "name": "sqlite-fixture-5DC9622F-6D0B-44E1-BBB1-B79A87A0EEF1_0_8A350C4E-73CC-4A90-B220-1FFB5718519C.json",
+      "sha256": "053155b45e52b65c32dd347fa4e9aa11d037d4a15583edf0b70ff6d8bfff7ec1"
+    },
+    {
+      "test": "ProjectMemoryUpdateTests/selectedInputChangesWithinSameFullClosureProduceNewFactsAndExactReplayAfterRestart(_:)",
+      "name": "sqlite-fixture-B81A881F-F6A6-42DE-BF0F-66AEBF4838C3_0_1A649DC2-937E-4865-82E3-D3F971670F4A.json",
+      "sha256": "e63bab65dac6f71a34830dd30358f80c99dfeef907c2e1d04df193c2fb98dba3"
+    },
+    {
+      "test": "ProjectMemoryUpdateTests/selectedInputChangesWithinSameFullClosureProduceNewFactsAndExactReplayAfterRestart(_:)",
+      "name": "sqlite-fixture-DA8FE268-B627-4B47-B2B1-FA68C3B460E4_0_6E16D18A-4D51-464E-B944-B6E110ADFCD3.json",
+      "sha256": "f345f90290acac43e222947cade16077f107db33778f3c729f41ab8b9d752be4"
+    },
+    {
+      "test": "ProjectMemoryUpdateTests/consentIsRequestSessionScopedConsumedOnFailureAndReplaySurvivesRestartWithoutExtraCloud()",
+      "name": "sqlite-fixture-471849BA-303E-4DC3-87E1-E03E95C5BE8D_0_C2A8D875-E140-4297-92E0-9616D9E61959.json",
+      "sha256": "4cf4414438d76a41f7ec5f37afed898fd2f24a6321904549d9c9ee2155c1c147"
+    },
+    {
+      "test": "ProjectMemoryUpdateTests/sequentialReadyMeetingsUpdateJournalKeepConflictDatesAndCompletionAsClaim()",
+      "name": "sqlite-fixture-B640947F-2CC1-4BF6-AB9B-FB8F4034F93D_0_54DDDA87-23E4-4DD0-858A-9C33756DA8B8.json",
+      "sha256": "1b4f1391ffa879b2b52d4c1352e24ebfc153f97b6b8e1215e302cbb25dabe7b3"
+    },
+    {
+      "test": "ProjectMemoryUpdateTests/ambiguousLegacyServiceBatchIsRetainedButCannotAuthorizeSelectedInputReplay()",
+      "name": "sqlite-fixture-AC54E5E2-677D-4C00-8C84-6B5830F63968_0_E74B08DE-6D09-4E24-8449-32DB38DA198F.json",
+      "sha256": "3974547901d7a0f7f23dbd0b32d42ce595c3082e7c558ac3003c1407f2381799"
+    },
+    {
+      "test": "ProjectMemoryUpdateTests/finalJournalTransactionRechecksModelAndForeignMemoryEvenAfterEarlierValidation(_:)",
+      "name": "sqlite-fixture-884BEF22-F7FD-4233-997C-2DC142B1097C_0_A889F7B9-033E-40B1-B878-E1C53D8B0037.json",
+      "sha256": "091e476bb841e42af4de4ecc614041052040cf90f590fd64dad430175b219871"
+    },
+    {
+      "test": "ProjectMemoryUpdateTests/finalJournalTransactionRechecksModelAndForeignMemoryEvenAfterEarlierValidation(_:)",
+      "name": "sqlite-fixture-40168B1F-A886-4250-9AF0-D4E7C075AEE3_0_6526CD48-09C0-4A98-A6F3-9F811AEF881E.json",
+      "sha256": "1dae906988891cbb05a050c35eb2efd1d092083149bd3a0ee5dc184789d4118a"
+    },
+    {
+      "test": "ProjectMemoryUpdateTests/limitedJournalHasExplicitTerminalStateWithoutDeletionOrAutomaticRetry()",
+      "name": "sqlite-fixture-8C622526-86A2-4BDA-B0BB-DC410D6C0575_0_DA044488-5C58-4276-B7A5-FDC6F92D0D1E.json",
+      "sha256": "0eebb7a25f2ab9188dbe462af268f878ca7ef26e5b86b85c4112e682914adbd8"
+    },
+    {
+      "test": "ProjectMemoryUpdateTests/invalidStructuredResponseNeverPartiallyPublishes(_:)",
+      "name": "sqlite-fixture-40DA55FC-75F1-4E5D-8083-74B3EAC6511B_0_0A12E5EF-C953-4CC7-873A-236B2A5E8CCB.json",
+      "sha256": "b3b9cb6f8c3b94b8feb05f89b27d96477841d86e8661128d4a11ca2d66204bc7"
+    },
+    {
+      "test": "ProjectMemoryUpdateTests/invalidStructuredResponseNeverPartiallyPublishes(_:)",
+      "name": "sqlite-fixture-9E732BE9-837C-49B7-AEDA-076DC0C344D9_0_C5906948-5D7E-493A-989B-F897F8B95FC5.json",
+      "sha256": "1412cb777c328d1840130fda6b3591c94be77320af3469eaecd4bb8ea0f5ec44"
+    },
+    {
+      "test": "ProjectMemoryUpdateTests/invalidStructuredResponseNeverPartiallyPublishes(_:)",
+      "name": "sqlite-fixture-CE5702E0-CEF1-4D9D-A2C5-3F72B69CD013_0_C09D5D5F-AA7D-4EB3-B94F-847453E794FD.json",
+      "sha256": "76ae701493bf84e721eea2ad90f70c79a2ae956b76d937554230baa3abf7a586"
+    },
+    {
+      "test": "ProjectMemoryUpdateTests/invalidStructuredResponseNeverPartiallyPublishes(_:)",
+      "name": "sqlite-fixture-FA870F4C-E06F-413F-9D7D-5E30C60BEAF7_0_E18D8080-CBB8-4F9B-AD6A-3438EC5FF3C4.json",
+      "sha256": "cc319bf5a6aa0c839d691ff3a043bb62bc1a82052cab656be9dd3e0c8626eddd"
+    },
+    {
+      "test": "ProjectMemoryUpdateTests/invalidStructuredResponseNeverPartiallyPublishes(_:)",
+      "name": "sqlite-fixture-43D9E12F-EFD6-424C-8752-DA42D990E1C9_0_E26F5722-1783-4681-99C8-EF0545CB29CC.json",
+      "sha256": "deb0219e0ea7d9fec1950344489fd7fffd075bea5dc3591f34159240dc676794"
+    },
+    {
+      "test": "ProjectMemoryUpdateTests/invalidStructuredResponseNeverPartiallyPublishes(_:)",
+      "name": "sqlite-fixture-AEBC9AD4-B83A-47C1-8B8F-495D9E3823E7_0_BC8FB648-69F0-4B39-A126-6DDFEA688C7B.json",
+      "sha256": "fec2dcdb664923b90c0202c6420aacea1d75f7d844872812071e678751f21d6e"
+    },
+    {
+      "test": "ProjectMemoryUpdateTests/invalidStructuredResponseNeverPartiallyPublishes(_:)",
+      "name": "sqlite-fixture-EFB89E13-E352-4618-A9CB-5451B79D328B_0_949A5237-2049-49A5-9C27-9F6BD652DFD4.json",
+      "sha256": "d793ecc004f31abfca3efb92fe3c9bdec3b0b4bf6e99eb4c4b45ceb12f4569c1"
+    },
+    {
+      "test": "ProjectMemoryUpdateTests/invalidStructuredResponseNeverPartiallyPublishes(_:)",
+      "name": "sqlite-fixture-791627EF-D398-4EB4-B5B3-560AB22BD278_0_EAD55755-8448-4043-8844-BDA4D63BD723.json",
+      "sha256": "8cfed09c5c26e57b2395dda5d650dade090ee17e86cc0708d1b7414cc24ba4cf"
+    },
+    {
+      "test": "ProjectMemoryUpdateTests/invalidStructuredResponseNeverPartiallyPublishes(_:)",
+      "name": "sqlite-fixture-F1A0F16C-6F48-449C-93D2-EDE41C6B0A3E_0_D6F360D7-138C-4B4B-9497-292E6D2DB9F0.json",
+      "sha256": "68b8fe2c57411cbb651ec12552a4039652ff4b360cd0a1eceaba29153051cbae"
+    },
+    {
+      "test": "ProjectMemoryUpdateTests/invalidStructuredResponseNeverPartiallyPublishes(_:)",
+      "name": "sqlite-fixture-B2F454EF-A5F0-427B-8D75-0383A118DA5F_0_6EE9FF4E-2B8C-471A-826F-C83FD28A7A80.json",
+      "sha256": "ad1414f439d0fa3d5991066f775e924f83e2ac7f69b9df243c6966b587f4934f"
+    },
+    {
+      "test": "ProjectMemoryUpdateTests/explicitReplacementRetractionAndManualPrecedenceKeepHistoryThroughActualExtractor()",
+      "name": "sqlite-fixture-8EC1E76D-FC11-45B5-867A-C0577A158893_0_1903A69C-D799-4A8B-9827-84CA29816FBC.json",
+      "sha256": "16945002ae230f70912a24464305519092ff7739b0e0473a7f84b0c6ded6d01e"
+    },
+    {
+      "test": "ProjectMemoryUpdateTests/everyRetryAndLateReplyRecheckAllOwnersAndForeignParentMemory()",
+      "name": "sqlite-fixture-AB9E4F75-E78E-453D-8CC4-DE8A093F4BB6_0_D15A9622-E75A-4CC4-A550-88C7458063D4.json",
+      "sha256": "3fbc77be0e37c8a6e407264d0ee91269118c40cf2eb8360833d64b2b3ac0f7bd"
+    },
+    {
+      "test": "ProjectMemoryUpdateTests/insufficientEvidenceNotReadyAndBudgetHaveExplicitStatesAndZeroHistory()",
+      "name": "sqlite-fixture-08C155F9-72A0-4526-B457-B0025E2C72EE_0_E348DCBA-A72C-461C-8AE2-06CFAD1E381D.json",
+      "sha256": "36ea3f1cbfcdff9e12dab0ddf769a3fe259830db9dea41a0d859e77242c89058"
+    },
+    {
+      "test": "ProjectMemoryUpdateTests/ancestorManualEditFencesDeepDerivedContextButCurrentCorrectionRetainsItsOwnHistory()",
+      "name": "sqlite-fixture-2D88915F-7D3E-4E8D-9BEE-140C2AC2D275_0_7421590C-AB7D-4084-81CE-00E368279CB4.json",
+      "sha256": "8c01e0a44315a0edb24d9772a25ba72794fb15d0711cb734867b2f0d476ccb3a"
+    },
+    {
+      "test": "ProjectMemoryUpdateTests/rawAndDerivedOwnersBlockCloudAndOnlyExplicitPayloadLeavesAfterPolicyChange()",
+      "name": "sqlite-fixture-8428EE11-40F5-49E8-9D46-54ED1992235C_0_73B9AADC-9333-4180-9D5C-F5705DFB7DD5.json",
+      "sha256": "68e5429a00cdabe4ef7039bee55c9d79472b91718b024701ce3e6a1f390b1711"
+    },
+    {
+      "test": "IndexingProductionHooksTests/actualFileMonitorReconcilesExternalAtomicAndInPlaceTranscriptChangesWithoutUI()",
+      "name": "sqlite-fixture-ED20DFC1-3FC5-476A-8C99-B2F1EB30B2A0_0_1B985821-9371-4B82-8744-03940958751D.json",
+      "sha256": "b95530643fc19c2236d59c81c612fd18e63e3db5290a9df032566c5b1a376940"
+    },
+    {
+      "test": "IndexingProductionHooksTests/eventPathKeepsDeletedAliasesAndFinalSymlinkInsideWatchedPrefix()",
+      "name": "sqlite-fixture-2385C392-FA38-4D20-8B9B-9B02EA32D6BE_0_FFB870AE-2E99-488A-B43C-E07D1AE83255.json",
+      "sha256": "e4885041ae3d9315d49b874e66b3d260e08aaf82f15466c0a403afabe5721ad5"
+    },
+    {
+      "test": "IndexingProductionHooksTests/defaultProducerHooksRunWithoutViewsAndTranscriptDoesNotWaitForLLMOrIndexing()",
+      "name": "sqlite-fixture-40DBDB68-2798-4339-9F82-EA6D301073FF_0_A6FC6AAE-6EB0-4046-8B4B-21349DE1D5AD.json",
+      "sha256": "05c8810784f7b126144f4aeaa798e450d0c626f658d3c6daeadb3b8924e58888"
+    },
+    {
+      "test": "MemoryBridgeOverflowTests/overflowPreservesNativeStartupTimeoutRecoveryAndDeinitJoin()",
+      "name": "sqlite-fixture-A81F6EF0-749D-48DB-9E95-C6D4FB765080_0_C2F2B765-A30C-4600-957E-D4BB44B6203D.json",
+      "sha256": "6aaaccecd100ec24cd9ef43c74f0e5ab606012f1000d2d5e4387a60f50eab304"
+    },
+    {
+      "test": "MemoryBridgeOverflowTests/overflowPreservesNativeStartupTimeoutRecoveryAndDeinitJoin()",
+      "name": "bridge61-5CCD63A7-1151-4249-8E54-B40D4DFEED0B-timeline_0_CDB1D6E9-DAA9-4A6C-A44F-D51A5C2E7717.json",
+      "sha256": "02e94be1c1f76e99e73448d684c1c1633b4ed1cf4d8295fdad6972b3e58a5e64"
+    },
+    {
+      "test": "MemoryBridgeOverflowTests/overflowPreservesNativeStartupTimeoutRecoveryAndDeinitJoin()",
+      "name": "bridge61-5CCD63A7-1151-4249-8E54-B40D4DFEED0B-failure_0_1DA50E67-10C7-441E-B798-DD2F7485D9DE.json",
+      "sha256": "629e9f94399008e21b4de49105e79e4dc441457a832b7790fe990078491e9d80"
+    },
+    {
+      "test": "MemoryBridgeOverflowTests/oldConfigurationReceiptCannotAcknowledgeNewNativeStartup()",
+      "name": "sqlite-fixture-0B95220B-AD15-4799-A97C-D97F4B29D65F_0_9F7AA2DB-1241-4650-86FA-7D5C28282818.json",
+      "sha256": "0bc24d4ae8fd061d367117cadc9c9d39d41639cbf8263b3e1ff123789fae0f53"
+    },
+    {
+      "test": "MemoryBridgeOverflowTests/oldConfigurationReceiptCannotAcknowledgeNewNativeStartup()",
+      "name": "bridge61-E09E6672-6E55-43E5-B72A-12008A7EEFB5-timeline_0_BACEAC12-B5C3-4AA3-A2E8-A979791C0DD9.json",
+      "sha256": "c2f30551226abc5fff14aa53630a96ff948db67ce10790bb93da8818fcb09124"
+    },
+    {
+      "test": "MemoryBridgeOverflowTests/boundedReceiptsRejectForeignOwnerKindRunAttemptAndReplay()",
+      "name": "sqlite-fixture-F0568E39-4FD2-4F67-B812-D9D0D9810A2E_0_995D0F6B-DBE7-45EA-ACDA-B5766F61A005.json",
+      "sha256": "ad3786ed47ff1307c7c696d08bdfff85748e520c3a761f1372e63c6369088afe"
+    },
+    {
+      "test": "MemoryHistoryFixtureLifecycleTests/exactJournalFaultDoesNotAuthorizeForeignConnectionOrLaterError()",
+      "name": "sqlite-fixture-DB393B89-5671-4144-8C4C-999BCB5FC066_0_749C6D60-5BB5-4E96-8F54-BF03A7E75529.json",
+      "sha256": "045730c5fdc2f9cf3e07df4b8ad444799d164235e205728ea8438a37677b2ab9"
+    },
+    {
+      "test": "MemoryHistoryFixtureLifecycleTests/throwingHistoryBodyPreservesErrorAndClosesStoreBeforeUnlink()",
+      "name": "sqlite-fixture-4EB0F4BA-0FBF-462C-BC9E-5A401365BD14_0_22E2E705-FB5C-4ABE-BBE4-3C0FE1CEF435.json",
+      "sha256": "99584de6b65e77998580ce1362b85c3d955274c4e6e0007e8706fb5f14a90c85"
+    },
+    {
+      "test": "KnowledgeQuestionServiceTests/retrievalEgressAnswerAndOpeningUseOnlySelectedVersionedFragmentsWithoutWeightsOrNetwork()",
+      "name": "sqlite-fixture-002DDEB3-A949-4506-B6B7-31D5157AF77C_0_04F19ABF-E12A-46CC-8F4C-8F8FB9DA81FC.json",
+      "sha256": "71cfc2760bd589be442fa010f3df8122199de22ed1118e2ea1b327d4a01a6b88"
+    },
+    {
+      "test": "KnowledgeQuestionServiceTests/finalTransportGateRejectsChangesAfterConsent(_:)",
+      "name": "sqlite-fixture-5CDB8CC8-4B73-410F-88E6-1C9911255AD7_0_05E6B952-8E6A-433A-BED2-6D3F730BCB4F.json",
+      "sha256": "01b8259f6d2002c053e3e236d17d832c731b987ce5f011d3bd529720a743bbbe"
+    },
+    {
+      "test": "KnowledgeQuestionServiceTests/finalTransportGateRejectsChangesAfterConsent(_:)",
+      "name": "sqlite-fixture-AFFAD1DE-2AF2-4B40-91BF-80EA513788D8_0_545D472A-EFF3-49A0-95B8-6CAB876EC86F.json",
+      "sha256": "a22b5aa96c20fc50c605fc71c60a04879144242d7b8ab79c34b80224c946b4e3"
+    },
+    {
+      "test": "KnowledgeQuestionServiceTests/finalTransportGateRejectsChangesAfterConsent(_:)",
+      "name": "sqlite-fixture-91260847-FDE4-4EBC-A4C9-1389BFCBE872_0_0C7717B6-4EA4-4A8E-9D22-96294F08CFB1.json",
+      "sha256": "29b60616292161214f3f043df67ff3de8631559adcd0c073941e18d6a70e36ef"
+    },
+    {
+      "test": "KnowledgeQuestionServiceTests/finalTransportGateRejectsChangesAfterConsent(_:)",
+      "name": "sqlite-fixture-37B0B84B-046C-41A0-BDC2-2D1FE3B76F2B_0_C44046C7-3BF5-4C2F-AA4A-0070C2E4A021.json",
+      "sha256": "e5591061290fe6948be5088807e77ac77b1b6ed08e2c18d264731959448ebb4a"
+    },
+    {
+      "test": "KnowledgeQuestionServiceTests/finalTransportGateRejectsChangesAfterConsent(_:)",
+      "name": "sqlite-fixture-CE75CBD4-739D-42C9-96C4-A142A07D1A30_0_DD46153C-6D8A-4F0C-991F-5EB357E27145.json",
+      "sha256": "92bfafee78fe8e2ad590d680b721ae2400a3537176df952407c1f5d2ddc920de"
+    },
+    {
+      "test": "KnowledgeQuestionServiceTests/finalTransportGateRejectsChangesAfterConsent(_:)",
+      "name": "sqlite-fixture-727476DA-42C3-4BEB-8BDE-869F162BE136_0_32D2575A-F63A-4676-B912-FC94FE1BDC8D.json",
+      "sha256": "e8aa4273e60e17bd2b42b7edc9dd4bb5e64a8508e3c8bc62216078e6394ee1f9"
+    },
+    {
+      "test": "KnowledgeQuestionServiceTests/finalTransportGateRejectsChangesAfterConsent(_:)",
+      "name": "sqlite-fixture-5A311671-DC77-4C88-A1BA-C18EC61C0D1D_0_7E01BABC-E6AF-48B3-BA37-0732764F74DE.json",
+      "sha256": "1367b1ba62c5bd78d5f245314d7943982ab6b1d00ca9528cbb0a856dfa4a823d"
+    },
+    {
+      "test": "KnowledgeQuestionServiceTests/finalTransportGateRejectsChangesAfterConsent(_:)",
+      "name": "sqlite-fixture-E07E7526-D134-4A8C-B323-C4BB8537249E_0_98F014D3-6D2B-4FCD-A037-47FC7001FE2D.json",
+      "sha256": "e7f1ec6a1497268a6a6fe481a0a3f0197ab985bb4ce69360c525579887208a13"
+    },
+    {
+      "test": "KnowledgeQuestionServiceTests/finalTransportGateRejectsChangesAfterConsent(_:)",
+      "name": "sqlite-fixture-836D03BA-74F1-471E-A4B5-ECE0106C63D2_0_FE9F32FA-451E-423D-8951-BA385DEC7094.json",
+      "sha256": "839deb2017b94268497b512064d30f879df34dbd781eaed23125cfc3ce21cc37"
+    },
+    {
+      "test": "KnowledgeQuestionServiceTests/finalTransportGateRejectsChangesAfterConsent(_:)",
+      "name": "sqlite-fixture-564155A1-B51C-46BC-AA96-AAB3E75E0FAD_0_9EE77894-D7B9-4551-80AD-D43A372AAA01.json",
+      "sha256": "9a579162e82037b73d062a977571b42a73eae7d446d9fe858c0812793ed556b8"
+    },
+    {
+      "test": "KnowledgeQuestionServiceTests/consentIsSingleUseAndBoundToExactQuestionProjectAndService()",
+      "name": "sqlite-fixture-AB20A5CD-99C9-4877-B35C-7177ADF4B6B9_0_76FE2FF7-29DF-4599-AEDB-6A9C230D7948.json",
+      "sha256": "97535c117d0c9f5e026e626eec921ab61fcbe87aa246550265f4c09377c29420"
+    },
+    {
+      "test": "KnowledgeQuestionServiceTests/changesDuringAsynchronousRetrievalCannotProduceReusablePreview(_:)",
+      "name": "sqlite-fixture-E16930DC-81B4-4F6E-8B72-DD5A4826AF42_0_12D8EC43-5C14-4470-988A-5266EC7AE4AD.json",
+      "sha256": "aed3db7210503eed357c2d59b6d11a0513ce7250efcd1c698bd382a34ee446fe"
+    },
+    {
+      "test": "KnowledgeQuestionServiceTests/changesDuringAsynchronousRetrievalCannotProduceReusablePreview(_:)",
+      "name": "sqlite-fixture-DF9D0DC3-4B38-482E-B3EA-A0D65869203A_0_5BADBA4A-E44F-44F9-BAE8-266C42FF87AB.json",
+      "sha256": "283c3eb5cb88be27e3c5d89c7057008f221621f6cf051a7675d9161e05c3a670"
+    },
+    {
+      "test": "KnowledgeQuestionServiceTests/changesDuringAsynchronousRetrievalCannotProduceReusablePreview(_:)",
+      "name": "sqlite-fixture-D037860A-3EE9-4699-8A96-1F4CEC0980CA_0_B9FA451E-C40F-45CC-8957-49BCB9A8B21C.json",
+      "sha256": "4e3e502d4088ee845b8e86ace43e392ddcbca169024818295a06f7e14e59ad09"
+    },
+    {
+      "test": "KnowledgeQuestionServiceTests/changesDuringAsynchronousRetrievalCannotProduceReusablePreview(_:)",
+      "name": "sqlite-fixture-59E19037-57F8-4C86-89FD-8AFBDCBDBA44_0_2C78CDC5-0A09-4C06-8CD4-98B22FC4C30A.json",
+      "sha256": "39676a51ec1b9764aafe44e38bd749f23d044a0c04843418188c19adb1d5d86f"
+    },
+    {
+      "test": "KnowledgeQuestionServiceTests/emptyContextAndInvalidQueriesNeverReachTransportAndPreviewIsBounded()",
+      "name": "sqlite-fixture-700E250B-2AB7-4438-8033-35F795403799_0_D86A372C-8474-4D3A-84D9-27E19E99199E.json",
+      "sha256": "f37e6c8c0b2bf9abaa8aace211da1f2a5c26604e9fad575c9b8803654ba7a221"
+    },
+    {
+      "test": "KnowledgeQuestionServiceTests/everyOwnerMustBeKnownAndAllowed(_:)",
+      "name": "sqlite-fixture-B0D7B140-8D2A-4BC7-9077-42F76CB80726_0_B65BD57D-D9B3-4D5E-B7FF-88F39768DCEB.json",
+      "sha256": "45059a5b04f6c265c277d46b3a9c467a2d12dff2fb2461bf2af2699a851a6e92"
+    },
+    {
+      "test": "KnowledgeQuestionServiceTests/everyOwnerMustBeKnownAndAllowed(_:)",
+      "name": "sqlite-fixture-4D0279F0-73B6-4B0A-8982-BF2ED78C4B2B_0_1E323287-BB6B-41B5-8DA1-76ABE87C47C4.json",
+      "sha256": "7209c7e0540282dd422a696abec03f900b5652cf2d3a153dc5d42330ee484b65"
+    },
+    {
+      "test": "KnowledgeQuestionServiceTests/cancellationAndLateRepliesCannotPublish(_:)",
+      "name": "sqlite-fixture-47800896-E70C-45A4-90B4-5F3464F16BB6_0_DE0B26C5-AEE0-4A83-A60B-801E60189A37.json",
+      "sha256": "fb7b1f86aeaf6160cf5b60470e89d7e10b906a218c6ab3a7f7162771915ad73f"
+    },
+    {
+      "test": "KnowledgeQuestionServiceTests/cancellationAndLateRepliesCannotPublish(_:)",
+      "name": "sqlite-fixture-E16B6EB9-7EDF-475F-B3C7-1D4F5CD9E453_0_DC037864-6CB3-4D24-9BB3-184718944958.json",
+      "sha256": "ff0d781db0bfe7c879981ba40c30505e0162474462bdf60891c2291e181788e6"
+    },
+    {
+      "test": "KnowledgeQuestionServiceTests/cancellationAndLateRepliesCannotPublish(_:)",
+      "name": "sqlite-fixture-326F1E07-257E-4FC6-867D-E7BA7D412790_0_D357C522-2F23-4B9D-9B2C-DD833B8B7BCD.json",
+      "sha256": "e69551eedfd4226677c911b7d9115548612380221363962f89d40698a74c3b3d"
+    },
+    {
+      "test": "KnowledgeQuestionServiceTests/cancellationAndLateRepliesCannotPublish(_:)",
+      "name": "sqlite-fixture-5017B9D6-8076-43BC-AB6E-21B07FC35B96_0_FC038671-4F66-47CD-932B-729C6EE9FB2F.json",
+      "sha256": "f0397a9a725aed65f7c29c191b37b2255e02bf9d9458be4563adb7e32c1db8c2"
+    },
+    {
+      "test": "KnowledgeQuestionServiceTests/cancellationAndLateRepliesCannotPublish(_:)",
+      "name": "sqlite-fixture-C3426374-859A-4217-9395-7DC8DC01FA65_0_89F42169-8A47-4953-B803-9C0C762FFB4E.json",
+      "sha256": "173950897b46f77a572d4d8d82dff99020a48555e852b299f260bd77c98f4f44"
+    },
+    {
+      "test": "KnowledgeQuestionServiceTests/meetingCitationKeepsExactReplicaAndRejectsTranscriptRecreation()",
+      "name": "sqlite-fixture-4135C7CB-F420-4A01-A07B-0902B97E558C_0_33D20FAB-786F-4FC8-9A10-6A1E54B0C526.json",
+      "sha256": "3ea50e82f2d89fac254d5783387e6bd9ebd7a704ce9a3fb66a5599d3614e6fce"
+    },
+    {
+      "test": "KnowledgeQuestionServiceTests/answerValidationAndProviderErrorsAreExplicit(_:)",
+      "name": "sqlite-fixture-AAD77222-8E31-417D-A374-92EF544808E9_0_B80FAE21-CA72-4488-AF18-03ECDD32FCB6.json",
+      "sha256": "fb8b7a32ce35ec2d322a8e0fa2519c387b81eccfdc0fd7f915bd0814bd31c284"
+    },
+    {
+      "test": "KnowledgeQuestionServiceTests/answerValidationAndProviderErrorsAreExplicit(_:)",
+      "name": "sqlite-fixture-70D7A25C-D845-4B54-AC18-FFAE67B889AB_0_02B17357-2206-457C-A62C-16AC52B2F534.json",
+      "sha256": "2ea4092861ecb7459ee897ceeaaf0922431bfd9bcad72a201b75aeab1fb047e1"
+    },
+    {
+      "test": "KnowledgeQuestionServiceTests/answerValidationAndProviderErrorsAreExplicit(_:)",
+      "name": "sqlite-fixture-511991CA-E588-4612-831E-D5B7075588FB_0_4592BCB8-D5FD-467E-B77D-DFFD2B71C98B.json",
+      "sha256": "b56ef74da9dfa2705b18cbdd12f184e14814d9671fb83f764aba5f3fdcf6f211"
+    },
+    {
+      "test": "KnowledgeQuestionServiceTests/answerValidationAndProviderErrorsAreExplicit(_:)",
+      "name": "sqlite-fixture-FD1BFF3F-4BDE-4332-9F5C-8C440FAC3BFD_0_9809A566-D9A0-4EBD-919F-B3148A6AE0E6.json",
+      "sha256": "5f6234aadc3f7efa11032323783d4554e08d5add541b130c167607771b185d56"
+    },
+    {
+      "test": "KnowledgeQuestionServiceTests/answerValidationAndProviderErrorsAreExplicit(_:)",
+      "name": "sqlite-fixture-17EF27FD-8F8F-4147-8E0E-341B611B4C47_0_A0E3A6BE-5A44-41F6-A16A-40193ADFA4EE.json",
+      "sha256": "c4697e215f1638fd3aef8e42314572db3a3d749ab83a90ac19cd1144fcd62a86"
+    },
+    {
+      "test": "KnowledgeQuestionServiceTests/answerValidationAndProviderErrorsAreExplicit(_:)",
+      "name": "sqlite-fixture-BE764D5D-AF09-40BA-B898-A62C9A45658E_0_A571F9F5-AE6D-4D3F-99E2-EF8EC7946097.json",
+      "sha256": "837c8a86370ef01833043cd8f48c9326628e42d0d2286577c4dd04af5acc217d"
+    },
+    {
+      "test": "KnowledgeQuestionServiceTests/answerValidationAndProviderErrorsAreExplicit(_:)",
+      "name": "sqlite-fixture-43181985-D6FD-4BC3-A2D9-1E9F459561AE_0_1651030D-71E5-435E-973A-E6FCB98F434F.json",
+      "sha256": "a85ddb50717402e8f0e336094df1561027ee60a30c78131da7fa475906a7d64a"
+    },
+    {
+      "test": "KnowledgeQuestionModelTests/localOnlyOwnerCannotBeOverriddenAndOnlyExplicitSettingsChangeIsPersisted()",
+      "name": "sqlite-fixture-7889B889-23CC-40ED-A539-15EA14EC8C42_0_D63C3591-49A8-4AFF-B20C-4B070574D90D.json",
+      "sha256": "1bcd342936580442625be773b5da1a040c4a74e2636b1315e3a4e40e737102cc"
+    },
+    {
+      "test": "KnowledgeQuestionModelTests/longQuestionIsKeptWholeAndExplicitShortSearchIsRequiredLocally()",
+      "name": "sqlite-fixture-2B04B731-E99E-43DF-B613-1AE8FB63F49F_0_DD04F5F8-A184-4AE2-8FC1-EF75E51EB015.json",
+      "sha256": "63f6ff5d5daf13fc2c4bcb10d5fea154fc51cb33534735c62a495b27f733bf27"
+    },
+    {
+      "test": "KnowledgeQuestionModelTests/actualModelPreparesLocallyThenExplicitConsentSendsAndSourceOpensWithoutAutoplay()",
+      "name": "sqlite-fixture-418A6F03-0EEB-425C-BA96-3F298096A59D_0_48A7E6A9-A160-4F4D-BD1F-8725A748C143.json",
+      "sha256": "814c853336dd9021b20db4d1a3930b42655c9494124904c36604da72b7278b9b"
+    },
+    {
+      "test": "KnowledgeQuestionModelTests/failedOpeningClearsOldAnswerInsteadOfPresentingChangedSource()",
+      "name": "sqlite-fixture-898C75C7-5F53-4C0C-9876-A2F1AFA2C79A_0_74A68E56-53CC-47F4-9CA8-8AB8AD836E9A.json",
+      "sha256": "06c0a3ada141a2b50a08ad6ec26287a67bd252a53481414110825b19c9bd1743"
+    },
+    {
+      "test": "KnowledgeQuestionModelTests/errorsAndInsufficientEvidenceHaveExplicitStateAndRetryPreparesNewConsent(_:)",
+      "name": "sqlite-fixture-0A268EC5-EB57-44DB-86A9-B66A6CAB732E_0_FCC1BE11-C5A5-4BFB-9573-1008FC5EF19B.json",
+      "sha256": "7ed2442756329e8658cc191958b4296f21ea59e06b4c99416833167d502d2da9"
+    },
+    {
+      "test": "KnowledgeQuestionModelTests/errorsAndInsufficientEvidenceHaveExplicitStateAndRetryPreparesNewConsent(_:)",
+      "name": "sqlite-fixture-8A5E6C94-66FA-4DC0-9F65-FC6ADE13676A_0_ECFCBCFA-40EA-4EE7-8A03-F052F84878D5.json",
+      "sha256": "99f3dc3e262c0f2e05ce02f3cda7e0ceb9c7aba1120bac31d8ca934004b098f9"
+    },
+    {
+      "test": "KnowledgeQuestionModelTests/errorsAndInsufficientEvidenceHaveExplicitStateAndRetryPreparesNewConsent(_:)",
+      "name": "sqlite-fixture-243BE392-FBDB-40B2-B36C-4A2F30B87BE6_0_D6034E3E-D5E6-46DA-A36A-F7E34C317875.json",
+      "sha256": "52994dd9cfdd36a8163c084cc33fb844982aa4fb0686c7a596ae37d0f8eeccf2"
+    },
+    {
+      "test": "KnowledgeQuestionModelTests/errorsAndInsufficientEvidenceHaveExplicitStateAndRetryPreparesNewConsent(_:)",
+      "name": "sqlite-fixture-054572A7-1266-4203-A6E5-6214AC64E7B5_0_5CB787C1-FAD0-4A7A-A1E0-0A4B253FB8DA.json",
+      "sha256": "9603f88afbdab7664f3a0dde098c2b20b5d4088b12eae2423ebf7c6e99f731ba"
+    },
+    {
+      "test": "KnowledgeQuestionModelTests/errorsAndInsufficientEvidenceHaveExplicitStateAndRetryPreparesNewConsent(_:)",
+      "name": "sqlite-fixture-0B1C3B20-4509-4BF4-9ABA-4F52AF6DDD78_0_E88CA780-969C-4B39-8AD5-A6388464BDE9.json",
+      "sha256": "a43b299496e3daedfcb166c5d90f37330f0389f1b4315edb0ba0a37269d21906"
+    },
+    {
+      "test": "KnowledgeQuestionModelTests/errorsAndInsufficientEvidenceHaveExplicitStateAndRetryPreparesNewConsent(_:)",
+      "name": "sqlite-fixture-13260B13-48E0-456E-9372-70C5173FB880_0_CF0096F3-9BAD-405C-BA99-1D1E115EC5B0.json",
+      "sha256": "74d9fe2723c53ed0a3f7b3225e30ee6f5c1641c97e22a5503a78b5b741260618"
+    },
+    {
+      "test": "KnowledgeQuestionModelTests/delayedReplyCannotReappearAfterUIChange(_:)",
+      "name": "sqlite-fixture-B89EF05A-A7A5-4652-B399-A4E5D968E887_0_E7B8FB8C-5F55-418A-B984-3928F2D378DE.json",
+      "sha256": "fa5dd655c55c089049fc037a0e9a76bdb1afee53fb751de675c4ba71fc3ad3cd"
+    },
+    {
+      "test": "KnowledgeQuestionModelTests/delayedReplyCannotReappearAfterUIChange(_:)",
+      "name": "sqlite-fixture-83DED6FD-9DDB-4714-9C9C-12D64002B4FA_0_9CAF0F98-79EE-41E6-8380-50E68E0083D3.json",
+      "sha256": "95b5bfb2867f2eb219bd0ccf14e67d2961eb775191eadfd051d3f91948476c77"
+    },
+    {
+      "test": "KnowledgeQuestionModelTests/delayedReplyCannotReappearAfterUIChange(_:)",
+      "name": "sqlite-fixture-6CF173C5-1993-4CAB-8318-6E67FE7ED306_0_353E9742-9AC4-4CC3-A07F-C38BE8B3C643.json",
+      "sha256": "e3eba931cd325122562aaf63aeaa7f95cc98c5ddc6bd13a3a4a704befc16e93e"
+    },
+    {
+      "test": "KnowledgeQuestionModelTests/delayedReplyCannotReappearAfterUIChange(_:)",
+      "name": "sqlite-fixture-7CA9CACD-C799-4C3B-8EFF-65CA49A9B56F_0_1FE13BFF-13E7-4757-A6BA-4EE5A6F31EFD.json",
+      "sha256": "f8a252c849400ac055096987f1e9b4df9b225eca914005b38ca18128d70f9d39"
+    },
+    {
+      "test": "KnowledgeQuestionModelTests/delayedRetrievalAndIndexEventsAreAlsoFenced()",
+      "name": "sqlite-fixture-2426F6F5-2669-443C-AC46-A50B5C3BF487_0_BD8C948B-CFC2-4CE4-B054-A8D08F7C48ED.json",
+      "sha256": "9a657a15943bde16e98bfdabb8ecdbd348f8e75e82ccc54b7398606820a91d90"
+    },
+    {
+      "test": "SQLiteFixtureLifecycleTests/throwingBodyReleasesStoreAndPreservesOriginalFailure()",
+      "name": "sqlite-fixture-C76552DD-BC3C-4295-9A6F-3E6FF4A2DF54_0_3DD4C53A-4A82-457A-8963-BD52A8B9FE7F.json",
+      "sha256": "91e7138de80b06e5d772a073ac23e6a5f5b24a57611b81d14742c9d844d4bd55"
+    },
+    {
+      "test": "SQLiteFixtureLifecycleTests/cleanupWaitsForLateTaskWriteAndNativeCloseBeforeUnlink()",
+      "name": "sqlite-fixture-C74056A4-6175-45F8-922D-507ED6F7E73D_0_266D49CB-94B7-4643-9D2B-8ABAF33F1014.json",
+      "sha256": "45a7386533816db4867756dc6945850b40493fd4638c939ba68bfd84d934f71e"
+    },
+    {
+      "test": "ProjectMemoryQueueTests/rawAndDerivedPrivateOwnersDenyWorkerWithoutReadingKeysOrCallingTransport()",
+      "name": "sqlite-fixture-DCB82D63-660E-4E19-9D73-3B867AA5286A_0_51415CEF-34AA-43FC-86FC-1EE709034114.json",
+      "sha256": "f7efc02e5974f001b0e9165700f469b5af9823d6902515dd48953eee3813605b"
+    },
+    {
+      "test": "ProjectMemoryQueueTests/preexistingExactJournalBatchRecordsUnchangedDispositionWithoutSendingAgain()",
+      "name": "sqlite-fixture-D0BADE4D-0422-46FB-88B8-AA82EA34CA0F_0_E1313907-FC77-41C9-89BD-6EF24F952336.json",
+      "sha256": "a0b8bb893955d837d87140bed9c3f12cb1c2b8439e800b3d5c80ad277741962a"
+    },
+    {
+      "test": "ProjectMemoryQueueTests/cancelRetryDrainsNoncooperativeAdapterBeforeStartingNextAttempt()",
+      "name": "sqlite-fixture-3D10E77B-5D94-4C4A-9247-516B6242979C_0_BBBF7767-1A39-4C68-8EFB-CF3D65A57B3C.json",
+      "sha256": "12558d6fcdb38a7f4db18316c5cef03c232103de2d043eefceb1a63f0ec8ed06"
+    },
+    {
+      "test": "ProjectMemoryQueueTests/insufficientCoveragePersistsAndRestartDoesNotAskModelAgain()",
+      "name": "sqlite-fixture-CF36751B-64CA-41F1-94D3-19206870018E_0_3825ED06-15ED-4E43-AC1A-2070D661564A.json",
+      "sha256": "8d7879541fb75d57784ad603480dea6f62e8a5b1fdd3a8cdcdc6fb836c8bbf32"
+    },
+    {
+      "test": "ProjectMemoryQueueTests/restartMidSourceKeepsCompletedCursorAndFencesNoncooperativeOldRun()",
+      "name": "sqlite-fixture-1B956709-ECD8-45EE-ADDD-9BFB8AAEFD2B_0_D6145147-573A-427A-999F-9598A9C55FF1.json",
+      "sha256": "3ed85477c65a551d8d56a5a8fd78e34ac6e237e00ec6ca01f0952e8ac24b2a7a"
+    },
+    {
+      "test": "ProjectMemoryQueueTests/oneTimeConsentIsFreshForEachBatchAndNotRestoredAsBackgroundPermission()",
+      "name": "sqlite-fixture-C3B26A4A-B242-4E78-AC2B-33B8380C0742_0_C4F5969B-D03B-42E9-B62B-F420D214F9AA.json",
+      "sha256": "92cd329c4567f267ce3865db14e3c4b28a9beea08060c934892cd97672662138"
+    },
+    {
+      "test": "ProjectMemoryQueueTests/longSourceCoversEveryChunkWithDurableBatchesAndNoSelfRegeneration()",
+      "name": "sqlite-fixture-404F99A9-43F1-4B2D-B29B-BF30F7965BC2_0_A32859D0-74A5-44A9-BF4B-47AD887DBA17.json",
+      "sha256": "02252acd967d8ac48b992a390c15157916bedb9c32cf30561d9e341d12eba56c"
+    },
+    {
+      "test": "ProjectMemoryQueueTests/retirementOfTransitiveAncestorResetsCoverageEvenWhenItWasNotSelectedAsMemory()",
+      "name": "sqlite-fixture-2E6B5B49-1B5B-45F9-BE59-6C5A6DB1F652_0_1A63140D-631A-49A2-92DD-3EE7B867BDF3.json",
+      "sha256": "a0ab94e385c5bde5a9d4c99528bfcf53d261e0ec4d67ca8ecc2f4158e1975eb0"
+    },
+    {
+      "test": "ProjectMemoryQueueTests/manualHeadSurvivesQueuedExtractionAndOnlyAffectedJobStartsNewCycle()",
+      "name": "sqlite-fixture-18DE4394-FE66-4529-9E92-442DE7FE1887_0_D4708DD2-54D3-45C6-B894-BE3FC6F4E0CA.json",
+      "sha256": "64220aba79846eb3db7172cc965c8f58d263121648b040723461a51658b4d7e5"
+    },
+    {
+      "test": "ProjectMemoryQueueTests/capAndInvalidReplyLeaveCursorUnchangedAndDoNotRetryOnDuplicateEvents()",
+      "name": "sqlite-fixture-31037E44-BDE9-4C40-B467-F4401E2A44E4_0_F3C3CC5E-870C-4C3E-B2D4-7E91C7D7DF20.json",
+      "sha256": "aef5c871276f084426a9aec8055d29f351efb80686c188bb6d5fbd5440a40b9e"
+    },
+    {
+      "test": "ProjectMemoryQueueTests/metadataAndIndexSubscriptionsCoalesceAndSettingsCanStopThenResumeSameWorker()",
+      "name": "sqlite-fixture-478BDBE1-FFF5-4C35-B403-D76FD676E099_0_74DFE96C-394E-4540-962E-00550697F3BC.json",
+      "sha256": "b24916d6313e3d515bc4a3c86a7b5e5193cddf9939a6ad041820b9fd23758d30"
+    },
+    {
+      "test": "ProjectMemoryQueueTests/workerRechecksAllOwnersBeforeEveryTransportAttempt()",
+      "name": "sqlite-fixture-D66730B0-39CF-4336-9E13-DEE5995FA1E3_0_14126C96-F48B-4DBE-B319-FBFD7C355ECE.json",
+      "sha256": "a8018457a5ab0fc39634fb24d23a7be7c808d09893a6c88da446ec3d4fbe2655"
+    },
+    {
+      "test": "ProjectMemoryQueueTests/concreteMetadataBridgeReceivesReadyEventWithoutLaunchingApplication()",
+      "name": "sqlite-fixture-83AF6F86-DF96-484E-A8F4-7402A007613C_0_1ABDE429-187B-4266-93D5-A6E8FD405922.json",
+      "sha256": "03a8b058a1508d5787d73a35c09acebb5b82bf8b335e832e777db89e63d5d0b2"
+    },
+    {
+      "test": "ProjectMemoryQueueTests/concreteMetadataBridgeReceivesReadyEventWithoutLaunchingApplication()",
+      "name": "bridge61-F1CFBD67-E4DB-42F2-AC61-9B62BD3611B6-timeline_0_6FBA83D6-01EC-44DF-89DB-C0087DC86CA7.json",
+      "sha256": "505fa536d62bce286306816d1a098096362bb13e4693b23807b58d24b40b9565"
+    },
+    {
+      "test": "ProjectMemoryQueueTests/concreteMetadataBridgeReceivesReadyEventWithoutLaunchingApplication()",
+      "name": "bridge61-F1CFBD67-E4DB-42F2-AC61-9B62BD3611B6-failure_0_8A2D45B3-9BFA-4F2F-9B34-768E386CAECA.json",
+      "sha256": "a5667cef65f60aa105fd089c3cc20bbcf775bec216d77f29633a616f35bd48a0"
+    },
+    {
+      "test": "ProjectMemoryQueueTests/changeBetweenBatchesStartsNewCycleAndNeverReportsOldPartialAsComplete(_:)",
+      "name": "sqlite-fixture-5B02302F-B27B-4501-A16F-93CAB83855D3_0_72C83315-F0B2-4544-BD1F-E49D19F4F1B8.json",
+      "sha256": "ecdd49239fed8038099514e5dc079470d05bd042b2b7961637437ad66489d3a8"
+    },
+    {
+      "test": "ProjectMemoryQueueTests/changeBetweenBatchesStartsNewCycleAndNeverReportsOldPartialAsComplete(_:)",
+      "name": "sqlite-fixture-0E88EE31-8B11-4C1A-B749-ADC42A1445FB_0_BFCF4920-CAC0-4575-859C-5F75F87E4A13.json",
+      "sha256": "5d5a2497d8f5788407f9cb505d5b51b9e5e4b881634e2bef5bc015294d9c82dc"
+    },
+    {
+      "test": "ProjectMemoryQueueTests/externalModelRetirementResetsOnlyDependentCoverageAndKeepsOwnBatchHistory(_:_:)",
+      "name": "sqlite-fixture-9717E4FE-CF02-4BBF-B79D-E0801C6DF8A4_0_0EC364A3-A2F7-4F1E-AAAA-59C7DBDD6113.json",
+      "sha256": "68fa3caa0fc6221b1cc32620ac7ead6b5cb50c2757e10fd11a7fffe4e73fb5e4"
+    },
+    {
+      "test": "ProjectMemoryQueueTests/externalModelRetirementResetsOnlyDependentCoverageAndKeepsOwnBatchHistory(_:_:)",
+      "name": "sqlite-fixture-56A497FA-6B49-47C6-A40D-53E27F05B3D7_0_56013BA8-3952-457C-81AB-315B020B14ED.json",
+      "sha256": "5d722279bff04f22dd971badb57403015e87b0c1628bb62252e99dc51c10a397"
+    },
+    {
+      "test": "ProjectMemoryQueueTests/externalModelRetirementResetsOnlyDependentCoverageAndKeepsOwnBatchHistory(_:_:)",
+      "name": "sqlite-fixture-C8DDB9E6-7A44-4601-806B-60C13E48EF4D_0_F76DA04C-C670-4D14-8DBD-A9B9AE85E9A8.json",
+      "sha256": "718d24ed1a439f73faae8851c6037860cf7bb653eb2766013c0105a939a57eda"
+    },
+    {
+      "test": "ProjectMemoryQueueTests/externalModelRetirementResetsOnlyDependentCoverageAndKeepsOwnBatchHistory(_:_:)",
+      "name": "sqlite-fixture-B85A3D48-5851-460E-82B7-B3A8D6376456_0_9A7FA84C-A459-4B08-9927-4C4EC92A27D4.json",
+      "sha256": "85cac7fabe9071fb56edc7b9eae1103949afe6c53488e04070ebba6f0ad1c5a7"
+    },
+    {
+      "test": "ProjectMemoryQueueTests/injectedDeadlineFencesLateReplyAndDoesNotStartOverlappingAttempt()",
+      "name": "sqlite-fixture-4BBD0A9E-72E7-405E-B360-ADE6B4F932F2_0_DB93E795-9CE4-46E4-A991-98D245715B35.json",
+      "sha256": "f6f58e6b0c4816055c3034e795c5a429e67cb421671ab9a3ef4da11e8182ec72"
+    },
+    {
+      "test": "ProjectMemoryQueueTests/latestDisabledConfigurationWinsQueuedEnableAndBridgeStop()",
+      "name": "sqlite-fixture-ABD13566-3878-43A4-A385-E5BED3F3F98D_0_C8FE6ACF-5B43-4A8C-8DEA-B8EDBC39A7D3.json",
+      "sha256": "aa90224483a9a719e26ab83806af010f3eb74f0fab57d2242456aa8c9c618e25"
+    },
+    {
+      "test": "ProjectMemoryQueueTests/roundRobinDoesNotStarveShortSourceBehindManyBatches()",
+      "name": "sqlite-fixture-927C288D-A39D-425F-A971-B2E83C3BC295_0_E45FF441-139F-4CBF-BDCB-8EAE7A596FFE.json",
+      "sha256": "fd9a42178ae195b9a1fc337860d7f4362f157162bd5905f170b350198e4cffd7"
+    },
+    {
+      "test": "ProjectMemoryQueueTests/changedAncestorInvalidatesPendingExactConsentAndLegacyCoverageIsResetOnce()",
+      "name": "sqlite-fixture-4964E577-BBC9-4989-9C7F-A4B6404CDA5B_0_FD3A602A-BE13-4A75-9025-AE95325E2102.json",
+      "sha256": "50f8943fe7d1557261cfc8380df2acf94c6ffb41b21532292e6319abe16a5b7c"
+    },
+    {
+      "test": "ProjectMemoryQueueTests/ownRetirementExemptionDoesNotHideLaterExternalRetirementOfItsPublisher()",
+      "name": "sqlite-fixture-723F2E0B-0651-4578-96E6-AF432820E4F7_0_F757FA71-0877-4681-A7E3-84244D372692.json",
+      "sha256": "39f66e24ca7c789ea0df8f1a0477e5ed51705e3ac3cbd20e53277acafa2fb794"
+    },
+    {
+      "test": "ProjectMemoryQueueTests/discoveryHasBoundedHotWindowAndDeferredJobIsClaimableWithoutDroppingMetadata()",
+      "name": "sqlite-fixture-511FBB07-DF93-4C71-B489-BF7A23179725_0_EDC64122-8B77-4719-A512-1756005222A8.json",
+      "sha256": "1a283dba75cf6f886ae43aba8bc815a36667c5f93cd936bc30376ec320ce8ad0"
+    },
+    {
+      "test": "ProjectMemoryQueueTests/queueFenceRejectsSkippedChunksEvenIfCallerClaimsWholeBatch()",
+      "name": "sqlite-fixture-C29FB40B-3BAD-488B-9A8E-3CF43C2E35A1_0_BAF35BF1-0F89-489D-8159-9F595FE7BDC2.json",
+      "sha256": "f4ccd00bc976c3a00bec4b5711228c1a9a07eee4539ac9c7eefec6d024455d38"
+    },
+    {
+      "test": "ProjectMemoryQueueTests/durableQueueFenceRejectsLateTransportWithoutRelyingOnTaskCancellation(_:)",
+      "name": "sqlite-fixture-CAEBB8F3-7A35-4DA4-B07A-CF7FF1AA2FC9_0_89293314-246F-4F35-92BF-F612422B1C04.json",
+      "sha256": "63d4b6d3f142250e8592088cc4045700b345be1cdd1c1b282bceaad451456dfc"
+    },
+    {
+      "test": "ProjectMemoryQueueTests/durableQueueFenceRejectsLateTransportWithoutRelyingOnTaskCancellation(_:)",
+      "name": "sqlite-fixture-81CB20B7-156F-4898-8EB6-4BA37FF2C10D_0_4FED5724-47C7-4219-AA43-0552590BE97A.json",
+      "sha256": "4be6488e899db47dc5784245d8a122945a9478388b96c5dd91aa57dd89f9ca68"
+    },
+    {
+      "test": "ProjectMemoryQueueTests/durableQueueFenceRejectsLateTransportWithoutRelyingOnTaskCancellation(_:)",
+      "name": "sqlite-fixture-3405EB27-CBC2-4AF3-9088-8BE52CA86D1B_0_8414F176-E034-4B57-A6CE-7299053F1CFD.json",
+      "sha256": "df804a1eca4d917a2f26c27eb25927fe033e46ba0ce84f2ae446d944abcb9c02"
+    },
+    {
+      "test": "ProjectMemoryQueueTests/durableQueueFenceRejectsLateTransportWithoutRelyingOnTaskCancellation(_:)",
+      "name": "sqlite-fixture-3F9F6AE2-604C-434A-A784-5AE1970E849C_0_814B3F04-27FB-4C62-8877-41E769E3A27D.json",
+      "sha256": "63af2f57a5704b88c68c78ba06487be9e5bf3bdde54f50285aaccffb83d8aa6b"
+    },
+    {
+      "test": "ProjectMemoryQueueTests/durableQueueFenceRejectsLateTransportWithoutRelyingOnTaskCancellation(_:)",
+      "name": "sqlite-fixture-F2FD109A-316A-4890-8E83-0E110B1A9AA6_0_6EAB798A-9D7A-4101-A73D-1F325084B6D8.json",
+      "sha256": "a3e966e7f8260a26574c449af9e6612135868e7940f012e88b917e543fd25f71"
+    },
+    {
+      "test": "ProjectMemoryQueueTests/durableQueueFenceRejectsLateTransportWithoutRelyingOnTaskCancellation(_:)",
+      "name": "sqlite-fixture-11B54E47-A392-4403-88E4-0606952DC294_0_27357F82-0AE3-4E61-909C-9D1D34D97578.json",
+      "sha256": "5e20b6b9abf1b99a3c5e8322cf376a31a9f6756883e1624ebc4ce1827b90758d"
+    },
+    {
+      "test": "ProjectMemoryQueueTests/durableQueueFenceRejectsLateTransportWithoutRelyingOnTaskCancellation(_:)",
+      "name": "sqlite-fixture-A81B7E4D-286E-4DCC-8EDD-3AD37FE0A204_0_670C2F09-34D4-4EF6-B2FA-6CABF1C137B7.json",
+      "sha256": "4d3678dfbf64b8a1be1ea7d5475ab0cb71e4df50f9cbe33b4a538f4100147cbd"
+    },
+    {
+      "test": "ProjectMemoryQueueTests/durableQueueFenceRejectsLateTransportWithoutRelyingOnTaskCancellation(_:)",
+      "name": "sqlite-fixture-07D2E017-547E-49DC-B985-F5893E9C67AA_0_234C4C6A-FE4E-4E4C-90EA-38198D097C26.json",
+      "sha256": "f811a9c265d944e40885827cfa2ee7972f433056109eb788dede6e0320bdd31f"
+    },
+    {
+      "test": "ProjectMemoryQueueTests/adaptiveJSONBudgetProcessesLongQuotedSourceWithoutSilentSkip()",
+      "name": "sqlite-fixture-9354F2F7-AB00-494F-AF80-8D73DCE70F4B_0_DEEB9C31-D179-4971-ABC5-E1C890AD0E5A.json",
+      "sha256": "ea30f7367164dfc98c19497d25bd8161bde75a0050be8d0a28fc9cc27d4b6be3"
+    },
+    {
+      "test": "ProjectMemoryQueueTests/invalidBatchRollsBackJournalAndCursorWhileErrorWaitsForExplicitRetry()",
+      "name": "sqlite-fixture-D0717D4A-62A1-417F-B799-B2A22E957B0D_0_0F7B56BF-6DC1-436F-BF23-0A7A98EB4014.json",
+      "sha256": "9c33fba4ddfe1777aea44e7cd96a0c7685f0b61f3d42496d34e5e4732c5d217a"
+    },
+    {
+      "test": "ProjectMemoryQueueTests/sequentialWorkerUpdatesKeepConflictingDeadlinesAndCompletionAsClaim()",
+      "name": "sqlite-fixture-3146D1D9-B619-4A21-B1F0-76051853D517_0_69A47AC6-C6D4-4C10-94AF-EFF5FCB5EAB1.json",
+      "sha256": "e6d9182b2dee0f7d7e33efcf382d51d766df521f11e19c878ab467feacbf92d5"
+    },
+    {
+      "test": "SQLiteFaultExpectationTests/thrownBodyKeepsOriginalErrorAfterAcceptingOneNewFault()",
+      "name": "sqlite-fixture-A9E64AE2-D8C7-4228-A020-7E5A96CD115E_0_73015530-3614-45D6-9BD0-FB22403E5369.json",
+      "sha256": "1460ec6695fd4f567cec3ad8a2acdbcb88914ff41652781dd49839c328adb1b5"
+    },
+    {
+      "test": "SQLiteFaultExpectationTests/nestedExpectationRejectsMissingOuterFaultAfterInnerConsumedSoleEvent()",
+      "name": "sqlite-fixture-47216C56-C069-4E2A-9EE5-A30424DED555_0_8BE09DDE-62CA-42AE-9D3E-DA02718F1F89.json",
+      "sha256": "0eecd4f8e9d8b32447bba0e4870e8bf57e9c152541772920e47403bb85c5d760"
+    },
+    {
+      "test": "SQLiteFaultExpectationTests/nestedExpectationsAcceptTwoDistinctNativeFaults(_:)",
+      "name": "sqlite-fixture-89D5AE45-2F6C-4528-B0C3-0CF178752906_0_1676091B-B49A-4EAD-ACAB-0155A26C1653.json",
+      "sha256": "852c8cc04656f1850c3d5e5f0bf59d2b8fa013c1362ae1ac5bfad96449c454c9"
+    },
+    {
+      "test": "SQLiteFaultExpectationTests/nestedExpectationsAcceptTwoDistinctNativeFaults(_:)",
+      "name": "sqlite-fixture-BC2DDC39-7230-40C0-BBD8-58698D8A0866_0_5094C47E-7CC6-4446-8A66-4EA7AF40313D.json",
+      "sha256": "8878de7146a2364beb7c39c9ca38cf64b31568686cf79abb9d23d29842c7f764"
+    },
+    {
+      "test": "SQLiteFaultExpectationTests/exactOneExpectationRejectsMissingAndDuplicateNativeFaults(_:)",
+      "name": "sqlite-fixture-4686399F-0616-4D62-9C83-9021401A1E88_0_5E89592F-DFCA-4919-8D14-A951BCD20C46.json",
+      "sha256": "6b93c9ce0d86191aa9d606660e36544ff83f9332cc1f4909c6df452a92b3d4c7"
+    },
+    {
+      "test": "SQLiteFaultExpectationTests/exactOneExpectationRejectsMissingAndDuplicateNativeFaults(_:)",
+      "name": "sqlite-fixture-F7CF6069-CEC4-466E-9EF1-03687853B85F_0_91D6E54E-10C9-437D-9D0C-AD68BBBE2F84.json",
+      "sha256": "020adf234ab0e5b14f9e0c65f68baa27e87bc71d7c64e803183540f699d26999"
+    },
+    {
+      "test": "SQLiteFaultExpectationTests/twelveOverlappingNativeScopesKeepSingleUseAcceptancesSeparate()",
+      "name": "sqlite-fixture-A9F356CB-43E8-4B48-BCAC-BDCBA96787EE_0_4D9BEB12-2E9C-4CBB-81D7-14D5A0D2AC5B.json",
+      "sha256": "e0eaadfbfca339005619ff8b219fe6b9c4422c7a69f927fb0923a4ecbae255dc"
+    },
+    {
+      "test": "SQLiteFaultExpectationTests/twelveOverlappingNativeScopesKeepSingleUseAcceptancesSeparate()",
+      "name": "sqlite-fixture-CE5144B9-D5EA-48C2-B42A-1679BCA0F148_0_6E1DBB9F-7D44-4F01-97F0-EF2AAD2816A3.json",
+      "sha256": "91ef73290f1bb070b4b61a5c9cb800cfa56c5a934af938322f632d951b506fe7"
+    },
+    {
+      "test": "SQLiteFaultExpectationTests/twelveOverlappingNativeScopesKeepSingleUseAcceptancesSeparate()",
+      "name": "sqlite-fixture-69419E45-F5B9-4A7D-9F24-1B3173C192D2_0_47A0C561-116B-4F50-A4F4-CCBC2D757BE5.json",
+      "sha256": "6019da2be48f7827a5a3390d3f0ca02d0dbca3e579a6362ff162472e28b2972f"
+    },
+    {
+      "test": "SQLiteFaultExpectationTests/twelveOverlappingNativeScopesKeepSingleUseAcceptancesSeparate()",
+      "name": "sqlite-fixture-369BDAA3-F989-40F8-A776-AD52C8E0AC14_0_DA85BEDF-ED6E-499C-A61E-C3642C361137.json",
+      "sha256": "fc7fa2366088088fa4b89a4be62b6a2576021a04397d424e22228dfd1db00b1d"
+    },
+    {
+      "test": "SQLiteFaultExpectationTests/twelveOverlappingNativeScopesKeepSingleUseAcceptancesSeparate()",
+      "name": "sqlite-fixture-4D3A9E8A-40DD-4CE5-8308-F71720524AC7_0_494F59C1-9F64-406C-BC1F-964239D6D284.json",
+      "sha256": "b19914211f931d5f61aaacd13e5d77216c4f7348194cc9296a9320babee6edb8"
+    },
+    {
+      "test": "SQLiteFaultExpectationTests/twelveOverlappingNativeScopesKeepSingleUseAcceptancesSeparate()",
+      "name": "sqlite-fixture-73CC3F10-E7F1-482D-B8B4-6651C4016AED_0_A6C68D2A-DEFB-4AD1-A581-488FA7E7BDB5.json",
+      "sha256": "df5e08fad73a3957df8ccc33bf1ba5632cd557aef71734c5da3700f7cb5392af"
+    },
+    {
+      "test": "SQLiteFaultExpectationTests/twelveOverlappingNativeScopesKeepSingleUseAcceptancesSeparate()",
+      "name": "sqlite-fixture-BC248C09-5E5F-4DA8-8AAE-41B7DB81AAD4_0_C9B706E0-E90E-45AC-9343-CFA65A2D7693.json",
+      "sha256": "647eb7bedf0a120b760e5d137a65514b5806cad7e0c387655c0de779d59fa58b"
+    },
+    {
+      "test": "SQLiteFaultExpectationTests/twelveOverlappingNativeScopesKeepSingleUseAcceptancesSeparate()",
+      "name": "sqlite-fixture-CE729384-A3E0-4538-ADDC-D011F1FB3F2D_0_4EFC3101-D2CE-48FA-919E-9FC8EC985A44.json",
+      "sha256": "74102b95504dbd13e07c4bcc61995f8540a1c82718a9da679fcd310c7a3f810e"
+    },
+    {
+      "test": "SQLiteFaultExpectationTests/twelveOverlappingNativeScopesKeepSingleUseAcceptancesSeparate()",
+      "name": "sqlite-fixture-D3E57CDA-44C4-4B1E-91A4-266E66DC4A47_0_029E48F8-EB1B-4540-8FD4-2DC2EFE39912.json",
+      "sha256": "865a2b76566f3c96a14b3e0c079dbc376158f4666a3107c5f37e698c7d23c56c"
+    },
+    {
+      "test": "SQLiteFaultExpectationTests/twelveOverlappingNativeScopesKeepSingleUseAcceptancesSeparate()",
+      "name": "sqlite-fixture-E6EF3304-642F-4B0E-A9FA-28CACCC7F18D_0_CE4E9FC4-536D-4934-BF87-F63350090736.json",
+      "sha256": "e38d360564ef78d6fb720e1d7919b38c6fe44f1dc8053acc6360b4f2b73b9318"
+    },
+    {
+      "test": "SQLiteFaultExpectationTests/twelveOverlappingNativeScopesKeepSingleUseAcceptancesSeparate()",
+      "name": "sqlite-fixture-77F83585-C48A-4AA8-9FE6-8C62FADE82B7_0_3FE3E92A-4B6E-42B2-9A74-A89AF035FB6C.json",
+      "sha256": "93ba9ac73ec9e89d98bf321fdb21f1d01fa98b512f787560993b102de7014d4f"
+    },
+    {
+      "test": "SQLiteFaultExpectationTests/twelveOverlappingNativeScopesKeepSingleUseAcceptancesSeparate()",
+      "name": "sqlite-fixture-F4865EDE-7DBC-4D64-AF9D-80BCDA51C384_0_1A599433-78EA-439A-BCF4-3F3A7A6EA856.json",
+      "sha256": "9e578bafb9b8eb3f67223ffdd0f6df26432b907ee0faa2e09a46dd62f0dcaa5d"
+    },
+    {
+      "test": "SQLiteFaultExpectationTests/allowanceDoesNotAbsorbForeignLateExtraOrMismatchedFault(_:)",
+      "name": "sqlite-fixture-A407C85A-80B5-49DD-9F3B-11C69A7B5FA4_0_101661DB-08CC-4C33-A3A4-BF440D324FFC.json",
+      "sha256": "b99b1a2010ca1c9e6dc9eed56e4279ce1220ac4dff9eef7b4998803f776c38ca"
+    },
+    {
+      "test": "SQLiteFaultExpectationTests/allowanceDoesNotAbsorbForeignLateExtraOrMismatchedFault(_:)",
+      "name": "sqlite-fixture-3C2239EB-9D97-4E5A-9229-AFEED475F95F_0_9FF6BAC4-F27D-4F36-8375-70CB2C67FC20.json",
+      "sha256": "58f56028f4662770004543654517591070ed9a2f493d23475dd1709bfbb6b861"
+    },
+    {
+      "test": "SQLiteFaultExpectationTests/allowanceDoesNotAbsorbForeignLateExtraOrMismatchedFault(_:)",
+      "name": "sqlite-fixture-5C97BC24-017B-42C9-A4C6-684181AFA8A6_0_6E70FF67-B2B4-4288-BCFB-3A3E1322E95A.json",
+      "sha256": "d9501024cc7e6891c168ecc84976cfaa53a4e26f6c6df8c22c60caa3740edf7a"
+    },
+    {
+      "test": "SQLiteFaultExpectationTests/allowanceDoesNotAbsorbForeignLateExtraOrMismatchedFault(_:)",
+      "name": "sqlite-fixture-EA04C369-7331-4196-9535-16C6257AFEC2_0_33CD3923-5DE5-4CA6-95D9-B7602DA11C55.json",
+      "sha256": "511b092f14b826f3a806eb23b99e63bfc2dfd70f7e720e2c7aa540ddf4fc508b"
+    },
+    {
+      "test": "SQLiteFaultExpectationTests/allowanceDoesNotAbsorbForeignLateExtraOrMismatchedFault(_:)",
+      "name": "sqlite-fixture-68B28D2E-F140-4986-99A9-6C6F26ADB74A_0_A28573D4-87C7-4DDE-A652-7EE59B965ECB.json",
+      "sha256": "9f2aea8f5245370b300e31c8e0bb04332277386c875f1edf2fbc4056a9b17586"
+    },
+    {
+      "test": "SQLiteFaultExpectationTests/allowanceDoesNotAbsorbForeignLateExtraOrMismatchedFault(_:)",
+      "name": "sqlite-fixture-4894FB10-4334-4A9B-8EE6-1781E2EEDE31_0_B1D5C1B4-6B7F-4C40-8F09-3D57D1CB4729.json",
+      "sha256": "de61a220d4e3e5d137bdbfe781753b9ca694d4ac258196e0b3da9a489b2157fe"
+    },
+    {
+      "test": "QuestionUIFixtureLifecycleTests/storedCallbackCycleIsReleasedEvenAfterOperationAlreadyFinished()",
+      "name": "sqlite-fixture-FC04FE9E-4656-4296-92F2-F448C3510BA0_0_F3F44862-0D0C-4F72-AF50-65554305FBCD.json",
+      "sha256": "719d08622ac1aa469043991cdb8f01b112a494eb9284d385d0b5e42445b660c1"
+    },
+    {
+      "test": "QuestionUIFixtureLifecycleTests/heldNoncooperativeOperationsAndCallbackCyclesFinishBeforeUnlink(kind:exit:)",
+      "name": "sqlite-fixture-AB9DFC90-349B-44E3-88EA-960689C2046D_0_4EDF42BC-DAEF-46C6-8ED2-CDA3DDACD7AB.json",
+      "sha256": "ed6c561f27eeb6dd23bfc37de744863a28e2be767efe300b3c66b62f33c65c14"
+    },
+    {
+      "test": "QuestionUIFixtureLifecycleTests/heldNoncooperativeOperationsAndCallbackCyclesFinishBeforeUnlink(kind:exit:)",
+      "name": "sqlite-fixture-35A4E9F1-D276-4D69-AAF3-49569583EE70_0_93348537-FB77-4503-930D-F344065553F3.json",
+      "sha256": "58903dcc1e966b5c541a6fd0ee224172bc9bb280948b5c364f7c894faba803fe"
+    },
+    {
+      "test": "QuestionUIFixtureLifecycleTests/heldNoncooperativeOperationsAndCallbackCyclesFinishBeforeUnlink(kind:exit:)",
+      "name": "sqlite-fixture-A1ABE55B-C24C-402F-BBCF-42050670A6DD_0_2448F2A7-E5A3-46FA-8E40-1250B65B27E5.json",
+      "sha256": "3308d5ad34e5b2d2f9e630de74bb7ba391f31af2b21834f8549280b94b35aff4"
+    },
+    {
+      "test": "QuestionUIFixtureLifecycleTests/heldNoncooperativeOperationsAndCallbackCyclesFinishBeforeUnlink(kind:exit:)",
+      "name": "sqlite-fixture-B109CB3A-B976-451B-8184-65CC9D279999_0_A2786D5C-683E-460E-96FC-B7AB4CC3FFD6.json",
+      "sha256": "eb329f1394a2caf2242f024caf6ad1afae022d9ccd946571ba8430642862ac8f"
+    },
+    {
+      "test": "QuestionUIFixtureLifecycleTests/heldNoncooperativeOperationsAndCallbackCyclesFinishBeforeUnlink(kind:exit:)",
+      "name": "sqlite-fixture-18E426E5-FB30-4D6D-985F-D7B742DF2ED0_0_12F7EDCE-D06B-4D3D-AEFE-9078C6749EA4.json",
+      "sha256": "ee57c4372792027ce2425b746874579f37c2e67dc4fcf821bfb17c6f3519a050"
+    },
+    {
+      "test": "QuestionUIFixtureLifecycleTests/heldNoncooperativeOperationsAndCallbackCyclesFinishBeforeUnlink(kind:exit:)",
+      "name": "sqlite-fixture-60C557F5-9F26-4A81-B26F-344E3B1666CC_0_AE8FB409-2C55-499C-8D72-756A410D77F4.json",
+      "sha256": "ae3917a893459b9d14c35810793714d3d41d06f5febf850b5142969d3fd2d2f8"
+    },
+    {
+      "test": "MeetingAssignmentTests/v4MigrationPreservesExplicitInboxAndMultipleOwnersAndRollsBackFailure()",
+      "name": "sqlite-fixture-9DD3FA46-8A28-4C8D-8DAA-0F28EABC40E7_0_8EC6D382-A148-4A70-84CC-45445F6FFF77.json",
+      "sha256": "4ce359ec9b2f8c446f675b38429b627f36bf10e45db3aae65b68dd3230a76ba8"
+    },
+    {
+      "test": "MeetingAssignmentTests/negatedSeparateChunkCannotBeOverriddenByTemptingPositiveEvidence()",
+      "name": "sqlite-fixture-B2F90CCB-E952-40B2-954E-EEBC43760675_0_0EBDBFA2-EE81-4924-A673-F9E65CF23EAE.json",
+      "sha256": "381ed3f06f82cfdb259fe5692f4a4c29ed9794fda8eae5aca818b5850364d48e"
+    },
+    {
+      "test": "MeetingAssignmentTests/latePlansCannotOverwriteChangedContext(change:)",
+      "name": "sqlite-fixture-BF9309D3-E6E6-44C9-9C48-9DD6C78AA75D_0_C851ADC8-42C5-4379-ACBF-7D8ACFCBAAD8.json",
+      "sha256": "fb91c49d936012c0771d023e31946ba40bd76d57ed98d1f9cafbfea1aef3da4c"
+    },
+    {
+      "test": "MeetingAssignmentTests/latePlansCannotOverwriteChangedContext(change:)",
+      "name": "sqlite-fixture-3C0B1835-8AE3-4B9F-81D4-869D0A0C1826_0_E92083B4-42AA-4A02-84C6-E45B1D1F6A2B.json",
+      "sha256": "35c2a7f26803151dbca0639e9749066ef6260ed3724d315f6051c7aebb707fee"
+    },
+    {
+      "test": "MeetingAssignmentTests/latePlansCannotOverwriteChangedContext(change:)",
+      "name": "sqlite-fixture-7B971A4E-CDAD-4520-A3B4-69FCF60A86A2_0_ABA47B65-2143-45DB-A744-FA9AB3FFE0BD.json",
+      "sha256": "75c3e63255e8cca68aab65723f963b6311192a9b77256c531e7fceab92dd1528"
+    },
+    {
+      "test": "MeetingAssignmentTests/latePlansCannotOverwriteChangedContext(change:)",
+      "name": "sqlite-fixture-05AD5FAA-C172-4E62-A64A-7B7948868A3F_0_2D201590-CD2A-42CD-B91A-3581CDCAAAA7.json",
+      "sha256": "b48bc102533f0d4237bbf2c878a40409e1e568ddae6a51c94413eff867392d2e"
+    },
+    {
+      "test": "MeetingAssignmentTests/latePlansCannotOverwriteChangedContext(change:)",
+      "name": "sqlite-fixture-87C01CD4-63B9-4785-8A2A-DE46A32646CC_0_097B46A3-79C5-45C9-B5B5-1B075B47F80D.json",
+      "sha256": "555eb9990c7f99c6053775b113ebd794d20722e22dd6b8e7400e745e365baf19"
+    },
+    {
+      "test": "MeetingAssignmentTests/latePlansCannotOverwriteChangedContext(change:)",
+      "name": "sqlite-fixture-038FE250-29B1-452B-AB88-9C3D67312164_0_5F1FD9E3-A547-431B-A167-830F857C6A8C.json",
+      "sha256": "dcf1fcd276db4e789066d9aa7a35934e3cafaed8e0c819abadcea9ff2bcade92"
+    },
+    {
+      "test": "MeetingAssignmentTests/latePlansCannotOverwriteChangedContext(change:)",
+      "name": "sqlite-fixture-6B4F8485-8A16-4D05-91DF-76A8021D153E_0_19B5E2E8-5308-46E0-A8DC-B155B69A4BEF.json",
+      "sha256": "daf116a666849953c6657cc2c42bcb5b94cd6c8d6295c315dc03a1839ecc5d57"
+    },
+    {
+      "test": "MeetingAssignmentTests/latePlansCannotOverwriteChangedContext(change:)",
+      "name": "sqlite-fixture-7CFB9D29-83BF-426F-BDB7-52EA93C6B782_0_D7471227-6FFF-4E69-9F11-D7FE2A7C00E2.json",
+      "sha256": "821fd06bdac2c9c203e9a271a51bf803aab2ecf75c8383d6e4c4192f8ce76eb6"
+    },
+    {
+      "test": "MeetingAssignmentTests/missingTrustedContextIsAnExplicitErrorInsteadOfSilentlyReducingCompetition()",
+      "name": "sqlite-fixture-EBA6995F-4B29-4232-9923-B9E46187E6AD_0_1AAF8294-153C-47FE-BD05-B8D01D1E7481.json",
+      "sha256": "b1cfa94dba4d9bd972b8c3345a91f5a41467b59d31f5bb4e28174e0b1cc70fcc"
+    },
+    {
+      "test": "MeetingAssignmentTests/semanticEvidenceDoesNotRequireProjectNameAndSurvivesRename(name:)",
+      "name": "sqlite-fixture-BE6789F8-96ED-4132-A0FB-0959A7E89428_0_908DD99E-6AC6-4D77-9B87-C0FD0D4AC17B.json",
+      "sha256": "734262e7b8233d46c98e668cad644a47eb4a9a291a56bb6c526e8406d77df47a"
+    },
+    {
+      "test": "MeetingAssignmentTests/semanticEvidenceDoesNotRequireProjectNameAndSurvivesRename(name:)",
+      "name": "sqlite-fixture-B5164164-07FE-449A-AFEF-6383EE7CF29E_0_2B7B39E0-8020-4A2A-8146-69847C31AC42.json",
+      "sha256": "79961898278050e6a070314a79e4558250b1dceb37900672907ff5d890902207"
+    },
+    {
+      "test": "MeetingAssignmentTests/semanticEvidenceDoesNotRequireProjectNameAndSurvivesRename(name:)",
+      "name": "sqlite-fixture-FCE11A41-E833-44F5-B772-172DC680BF3E_0_F61AFD4B-4A93-4777-96EE-D60CA1687929.json",
+      "sha256": "a0b96afaf532e99327076d294f9d9b32039ebbd5ae7b1311bf791306f8511da9"
+    },
+    {
+      "test": "MeetingAssignmentTests/ambiguousNamesAndGenericMatchesAreProposalsNotAutomaticContext()",
+      "name": "sqlite-fixture-A61B5A20-FDFC-4FAC-B14E-82FE0BFEEBD0_0_4240438F-380B-44C9-9CA0-5B4539AA0714.json",
+      "sha256": "49e94bbc8f599d5f48c8c54eb1059f54de69df3f6239d8b126b02ce6df2c758c"
+    },
+    {
+      "test": "MeetingAssignmentTests/manualSelectionIncludingInboxFencesAlreadyPreparedPlanAndSurvivesRestart(empty:)",
+      "name": "sqlite-fixture-064E2B80-E0AE-43FE-BBF2-839D202E4276_0_48C01E7E-0A9E-482C-BBCB-6B4B5B7427F2.json",
+      "sha256": "ab3cac4a2f12f5044693041af3f85b02de72743999eb0e4721d0cadb031c5cf0"
+    },
+    {
+      "test": "MeetingAssignmentTests/manualSelectionIncludingInboxFencesAlreadyPreparedPlanAndSurvivesRestart(empty:)",
+      "name": "sqlite-fixture-2B44D881-FF9D-4473-81F4-FBB93D7BC03C_0_5CB21102-29A3-497C-ACDF-839E2B1EE063.json",
+      "sha256": "29349eccff85f415e02375b793597cce8532af5d59044e56bf96dec9a48dbe37"
+    },
+    {
+      "test": "MeetingAssignmentTests/lexicalPreparationCannotPublishAConfidentPartialResultOverBudget()",
+      "name": "sqlite-fixture-7A082C5A-D2BD-483F-A202-7F1678E45098_0_CC600EF7-0DAC-4C66-9C6A-88330ED045A8.json",
+      "sha256": "6be7f792db02ff5936cf965b56a38695e8ffd40b9eb8fb8b11528b00e5ab7eed"
+    },
+    {
+      "test": "MeetingAssignmentTests/cancellationAndInvalidTranscriptCannotPublishAnyDecision()",
+      "name": "sqlite-fixture-23389398-E62D-496E-ADA8-2631EA316009_0_5D0169B6-685F-48E4-ADF2-A228683ED69C.json",
+      "sha256": "b7092d274725d1183d564cf2fe613ec12661cbd3ee7b24142128d11c6861b037"
+    },
+    {
+      "test": "MeetingAssignmentTests/automaticAssignmentsDoNotTrainOtherMeetingsButExplicitManualContextDoes()",
+      "name": "sqlite-fixture-1D21E25C-1097-4838-BB61-1F210C6D1584_0_A8447FE4-D542-4440-B774-E643A32F2377.json",
+      "sha256": "7ac3f696c2dbd0ebf697013cefd627782b8cc140462ead22d754ed8d72ea3530"
+    },
+    {
+      "test": "MeetingAssignmentTests/unavailableCancelledAndOverBudgetIndexesDoNotWriteAssignments()",
+      "name": "sqlite-fixture-045639D0-3785-4BA5-BE0C-174EFDFCB503_0_67C6DB42-E26C-46E9-B88C-CCD0E9052904.json",
+      "sha256": "fff73628eb023079c228a0e9fd7e97b7d17e7d39630e79b5afe7af2eb02940e9"
+    },
+    {
+      "test": "MeetingAssignmentTests/fixtureThrowAndCancellationDrainSuspendedIndexerBeforeNativeCloseAndUnlink(cancel:)",
+      "name": "sqlite-fixture-121CBA70-2010-4925-A7AA-314507B21F4F_0_0FCA0DF2-3BB6-4E6B-BED0-5FBE217C6742.json",
+      "sha256": "4c7694831ad475a5d472c10e0e40b9a81031d6d43638e0025e2086f87282a932"
+    },
+    {
+      "test": "MeetingAssignmentTests/fixtureThrowAndCancellationDrainSuspendedIndexerBeforeNativeCloseAndUnlink(cancel:)",
+      "name": "sqlite-fixture-72009386-AD7C-4EF5-A100-7F4939FA7E47_0_A5AC029C-57BA-4A1E-9761-968CEAA7E049.json",
+      "sha256": "e3b16c3276d785e27bc410dde31765a8c2031ac0441ecae5160070629be93837"
+    },
+    {
+      "test": "MeetingAssignmentTests/fixtureThrowAndCancellationDrainSuspendedIndexerBeforeNativeCloseAndUnlink(cancel:)",
+      "name": "sqlite-fixture-EF05CC33-3BC9-4376-9EFA-53358F5D621C_0_1D9029CD-EDFD-4802-87AD-36F200A8CBFD.json",
+      "sha256": "02d5518c348219cf5a856f6ddb28620229860599864127d978613c75395f0edd"
+    },
+    {
+      "test": "MeetingAssignmentTests/fixtureThrowAndCancellationDrainSuspendedIndexerBeforeNativeCloseAndUnlink(cancel:)",
+      "name": "sqlite-fixture-92DB8B07-0A15-4B9E-9625-0338AB3FF6E2_0_7C062725-EE65-4C1C-8002-C8A60ED131B3.json",
+      "sha256": "5cbbad01733224b3bc7bc119d56038fe1f932912e03914636a8df77b061f6f71"
+    },
+    {
+      "test": "MeetingAssignmentTests/automaticManyToManyPersistsAndRepeatingSameCalculationDoesNotChurnEpoch()",
+      "name": "sqlite-fixture-74F35B00-E505-4FAF-9C0D-07D9FA63B0D3_0_DB48AF07-2B62-4457-946B-1B92E362DD93.json",
+      "sha256": "0b4576582b15a5e2f1ddd42143cc6c270f2f15a219ca9616d4d08f64a5186532"
+    },
+    {
+      "test": "MeetingAssignmentTests/oldPayloadDecodesButCannotPublishUnderNewPolicy()",
+      "name": "sqlite-fixture-C313DC3D-7A83-443B-8D7D-E0EA16B7CC70_0_980C4387-7883-4067-8132-E3A2FB650A67.json",
+      "sha256": "cfaa7269f9d64430459aadb298ea7ef6ac1a1ac78590041a16571fdccc35f971"
+    },
+    {
+      "test": "ProjectMemoryHistoryTests/invalidBatchRollsBackAllRowsAndImmutableJournalAndPaginationAreReal()",
+      "name": "sqlite-fixture-8C9FB66C-9833-42A6-A35C-A0953506E7C8_0_B0CE3BE3-BB74-4C6D-962A-668749F5CA49.json",
+      "sha256": "1ff2dec79a6cce31bf796d3165f9506d8653c76cdfcf1f04a4b82b02463e7b65"
+    },
+    {
+      "test": "ProjectMemoryHistoryTests/sequentialMeetingsKeepBothDatedAssertionsAndRealStructuredDeadlineConflict()",
+      "name": "sqlite-fixture-49BD99A5-495F-4540-8161-0471DAA5CAFD_0_52D5E800-FBC9-4EB8-8898-87159D506384.json",
+      "sha256": "48c3f1540012741b4846ad47b6e22c99aada66944c8275520006f9a0b4c0d4ce"
+    },
+    {
+      "test": "ProjectMemoryHistoryTests/manualCorrectionSurvivesRestartReindexReplayAndNewModelVersionWithCompleteLineage()",
+      "name": "sqlite-fixture-CCBDE01D-DE31-4170-BA97-9135FAC14E21_0_773927AC-0598-4BDB-B073-A6594C24E5B6.json",
+      "sha256": "faea3e8a0cb4e17435407ae31b511bf5ecff97b7932cca1d0559976aff2c8d2a"
+    },
+    {
+      "test": "ProjectMemoryHistoryTests/finalCandidateBudgetAllows256Rejects257AndRollsBackAnOverflowLateInBatch()",
+      "name": "sqlite-fixture-2837A96B-9A72-40A4-A451-767223C3F39B_0_DC46A9BD-FC08-4B47-B813-15355587C2E4.json",
+      "sha256": "26f8ec39c92e8e83fe36f3bc3b44f7d7cf313c6452abe0996d8c8afd8dc37d08"
+    },
+    {
+      "test": "ProjectMemoryHistoryTests/explicitReplacementRetainsOldClaimAndCompletionClaimDoesNotChangeExternalOrLocalTask()",
+      "name": "sqlite-fixture-9CCA2F42-A197-4DEF-8A24-481F60856816_0_DC0B1864-2C2A-4A38-B05A-5F747F84F04E.json",
+      "sha256": "f8c949f05a03e51c9ee9ac0ebc3a7f8106f9b4138da0bdfc98fe046bc5382ea2"
+    },
+    {
+      "test": "ProjectMemoryHistoryTests/legacy257CanRecoverByExplicitManualRetirementsWithoutDiscardingHistory(_:)",
+      "name": "sqlite-fixture-962AA991-AF59-4B90-929E-E9341E24492A_0_726E0CAA-04D4-42CB-A4B5-62FE554036F3.json",
+      "sha256": "2aa1bc226730580728cbf64ea7042295217a0724fdbb1d0f674e08e32924deea"
+    },
+    {
+      "test": "ProjectMemoryHistoryTests/legacy257CanRecoverByExplicitManualRetirementsWithoutDiscardingHistory(_:)",
+      "name": "sqlite-fixture-C3EA5D47-1FDC-4685-9CB4-0A060DCF57AF_0_21EB2288-46B9-4435-9BB6-7BE8F3BB6089.json",
+      "sha256": "a2bd06ec51c4c0f009bf6016d6eb6cbdb612dd9f933a57403ca497bf1ed7cd58"
+    },
+    {
+      "test": "ProjectMemoryHistoryTests/selectionReadCannotReturnAnOlderHeadAfterConcurrentPublication()",
+      "name": "sqlite-fixture-A5CB0A97-9DF2-4129-A695-2267121A221E_0_01B77475-1E8F-4FA3-97DC-658BA1CE7FA4.json",
+      "sha256": "21ffc74a7101cce29d1d413e5bccae34c09f4ea1a5ac318888991688b7f0a25e"
+    },
+    {
+      "test": "ProjectMemoryHistoryTests/cancelledPublicationDoesNotAppendAnyHistoryOrSelection()",
+      "name": "sqlite-fixture-2F16B12B-77AF-48ED-B2C1-9C042D12E944_0_EBAED422-FAC9-4E90-A9D9-B6189B61517E.json",
+      "sha256": "e0aa3709a38bc2c6098fdfe0984bdc56e03869463af723b68377d4beef0d5cf4"
+    },
+    {
+      "test": "ProjectMemoryHistoryTests/manualCorrectionAndRetractionWorkAt256WithoutLosingPrecedenceOrBudget()",
+      "name": "sqlite-fixture-3EDEA4DF-2850-4D5A-88AA-E5EDCAA693C7_0_A040D9C7-DBE9-494A-AE7A-AA6122E66FA8.json",
+      "sha256": "065fa0c2bb5ffa3ef8c3420f471d0ac8d62aaf720ddefd8c66ee5a1489d0c01f"
+    },
+    {
+      "test": "ProjectMemoryHistoryTests/retractionIsVisibleHistoryButNotACurrentPositiveFactAndModelCannotRetireManualSelection()",
+      "name": "sqlite-fixture-C8BFB84F-B5DA-4A11-A194-9ADA02765EC3_0_01C83C22-2D24-4415-9891-B746114D3A50.json",
+      "sha256": "f319d0d078eca5c175a48f43a8cd163605d2cb2c84560e2eb7eab585f3a0fb27"
+    },
+    {
+      "test": "ProjectMemoryHistoryTests/compatibleRangesConditionsAndWordingAreNotInventedConflicts(_:)",
+      "name": "sqlite-fixture-4BF5386D-6B0E-4A11-9078-2CAFEAB8B773_0_1DAFD3DE-9D43-433D-AC0F-E9B93ABF2E16.json",
+      "sha256": "ef9839eab1f2979ce7447203ac3a95a9e2744b8ce4373059a65e1bb5f747ffe2"
+    },
+    {
+      "test": "ProjectMemoryHistoryTests/compatibleRangesConditionsAndWordingAreNotInventedConflicts(_:)",
+      "name": "sqlite-fixture-E96C2260-10D3-43D5-98D7-686425F2BE81_0_4FE9DEE8-4531-4DAD-B0BE-94A7724FF6EB.json",
+      "sha256": "4554ece80910e2157e8feb13d7ff685871e077059092b1f7ba74a2128240bd89"
+    },
+    {
+      "test": "ProjectMemoryHistoryTests/compatibleRangesConditionsAndWordingAreNotInventedConflicts(_:)",
+      "name": "sqlite-fixture-61169AD3-97FA-41F4-B874-9FAEC00BDA73_0_0CCB6C6C-4A06-4EDD-BAF6-059F51281F8A.json",
+      "sha256": "abe83689b60f9a26cabc9c5c0b7acb50e18d7c217681123ab07ef90f0d0cbd77"
+    },
+    {
+      "test": "ProjectMemoryHistoryTests/delayedPublicationCannotReplaceNewStateAndStoredHistoryBecomesNoncurrent(_:)",
+      "name": "sqlite-fixture-0DA1DF7C-4DD8-4AE9-9F72-07315023E098_0_EF920B9E-7439-4790-B74B-4FD9B3ACAF7C.json",
+      "sha256": "c9b324dad3af98255697466d97f05c2bb72bfaaadd6e489ce2e8d376591d3985"
+    },
+    {
+      "test": "ProjectMemoryHistoryTests/delayedPublicationCannotReplaceNewStateAndStoredHistoryBecomesNoncurrent(_:)",
+      "name": "sqlite-fixture-7C3D83AC-C167-4369-93A0-76937E59A792_0_29144996-1CA9-4AB3-A329-962793CF052A.json",
+      "sha256": "f6f3b4fcbfab6842e5ca645a1b2ec36f4544ead9ce8b5b1a37cdeae183531789"
+    },
+    {
+      "test": "ProjectMemoryHistoryTests/delayedPublicationCannotReplaceNewStateAndStoredHistoryBecomesNoncurrent(_:)",
+      "name": "sqlite-fixture-16178CDF-4D98-4929-A4CE-6BA0960A17DF_0_A9D87230-9BC2-49F7-8B31-141D41BABD06.json",
+      "sha256": "023a700a69cb46c791c62e1f90ae8f65e15723759f4ae97faf62e5d6cd949f3f"
+    },
+    {
+      "test": "ProjectMemoryHistoryTests/delayedPublicationCannotReplaceNewStateAndStoredHistoryBecomesNoncurrent(_:)",
+      "name": "sqlite-fixture-AF1C0F52-EAF3-4810-A832-C69D72F4DA63_0_CFEA00AB-D3D1-4E00-B70D-E66CCD2C08E9.json",
+      "sha256": "adf8976d54f6d18fa2e7690d948134c2f501b675fef70303e698c8410c6c0811"
+    },
+    {
+      "test": "ProjectMemoryHistoryTests/delayedPublicationCannotReplaceNewStateAndStoredHistoryBecomesNoncurrent(_:)",
+      "name": "sqlite-fixture-3A004426-1500-46B1-A7B4-E30DB106D000_0_3AB9F3D3-40FB-483A-861B-1C23758787C8.json",
+      "sha256": "ccac198299ca38b8a66a8c8fde80a83c8ca50401ec37d8969ee9b69519671953"
+    },
+    {
+      "test": "ProjectMemoryHistoryTests/delayedPublicationCannotReplaceNewStateAndStoredHistoryBecomesNoncurrent(_:)",
+      "name": "sqlite-fixture-DB4CF734-5163-4AD2-9B2C-54299701AEC1_0_61B56F6F-702B-4E61-9483-C0DD16810CF2.json",
+      "sha256": "48992146870e0e1bcafadf954ab65b6b05bb8b17e45d687b1baa3615783ffe9a"
+    },
+    {
+      "test": "ProjectMemoryHistoryTests/delayedPublicationCannotReplaceNewStateAndStoredHistoryBecomesNoncurrent(_:)",
+      "name": "sqlite-fixture-D355008F-5BA7-475F-91B5-78D9CE2AFDA3_0_3FA70157-AF66-4B97-9BEB-F26B50ED67F2.json",
+      "sha256": "f93c2a6081d231005bd20468c9e6c0b0f818cb510b9819d42018b48b4b30f2f6"
+    },
+    {
+      "test": "ProjectMemoryHistoryTests/delayedPublicationCannotReplaceNewStateAndStoredHistoryBecomesNoncurrent(_:)",
+      "name": "sqlite-fixture-EA83FC4C-158C-426F-9A1C-B87DD8346983_0_F39F5256-7D97-47C0-A7EC-44C972E33D7E.json",
+      "sha256": "3b1cf3bdd7b1bf8c1b014c74108dc6a0b6d198ba9bc12e469760e0f8616376ca"
+    },
+    {
+      "test": "ProjectMemoryHistoryTests/derivedCrossProjectAndManualTextCannotHideOriginalOwnerEvenAfterRemovalOrDeletion()",
+      "name": "sqlite-fixture-1105316F-F672-46FD-9D38-12010CDC8386_0_E4D2D4E4-14EE-4919-9A84-3532E0816743.json",
+      "sha256": "580bc0704a6be268485e283d4e12f949a9c06ab3a411ba0317adc569745bcd47"
+    },
+    {
+      "test": "QuestionFixtureLifecycleTests/throwingAndCancelledCallbacksReleaseFixtureBeforeRootRemoval(_:)",
+      "name": "sqlite-fixture-DD38D678-1D3F-4D8C-8582-AC90986A3E61_0_390ACC64-4153-41F7-A32E-4DB58A7CC482.json",
+      "sha256": "5ce82701bd61a1a2907188f31db49160633aae4777786a1d86cd600d6ec1efe5"
+    },
+    {
+      "test": "QuestionFixtureLifecycleTests/throwingAndCancelledCallbacksReleaseFixtureBeforeRootRemoval(_:)",
+      "name": "sqlite-fixture-D2FCE038-CCC3-4A79-82AC-313A82ADDFE0_0_FD3686ED-31DA-4576-A0EF-CDE7E5F82C5A.json",
+      "sha256": "7a52893066ce4f89ceb1e07f068e834093225b00afa94c5061ecf13ce42ae91a"
+    },
+    {
+      "test": "MeetingAssignmentRuntimeTests/stopRestartDoesNotOverlapOldCalculationAndManualInboxWinsItsLateResult()",
+      "name": "sqlite-fixture-9C619C9E-B2EC-4710-9D1D-FC75D5F64284_0_71D8B450-DCCC-4B95-B39A-D52D448F70A7.json",
+      "sha256": "57332f9f5f6de1cfe7aa7677357c5f729350a3f8986f93491349ec87085b60a3"
+    },
+    {
+      "test": "MeetingAssignmentRuntimeTests/deadlineFencesAnUncooperativeCalculationBeforeRetry()",
+      "name": "sqlite-fixture-D7AE4D02-DDFD-4B61-B392-8ECB4B70C06F_0_635D43AE-2B7E-46A4-BE8D-5FC74A2153DF.json",
+      "sha256": "68dc6a74d0a6750174528323de1fb38dc90ea1d2b906aac1610f63404e392d5e"
+    },
+    {
+      "test": "MeetingAssignmentRuntimeTests/readyIndexIsAutomaticallyAssignedWithoutMeetingScreenAndStaleLinksAreRemovedUntilRecovery()",
+      "name": "sqlite-fixture-DB75389A-86B4-4DFF-A757-25C3419AA436_0_C5C458CE-6CD9-4549-A019-A0DAA140C273.json",
+      "sha256": "6e7a3b2a4a334dd6ef9040d8d73f0e875ed1db2d9aea311921d676de1b3b58fe"
+    },
+    {
+      "test": "MeetingAssignmentRuntimeTests/missingRuntimeRemovesAutomaticLinksAndRecoverySchedulesSameReadyVectorsAgain()",
+      "name": "sqlite-fixture-28CD13DD-05A2-43B4-BB16-4A6F10E0AA44_0_64D893A4-005A-4DB9-93EF-DB4802B47F35.json",
+      "sha256": "b6aee7f1e760980534dc9b9d6fd4d7c415205c0160952e3ac834399c06fe62a9"
+    },
+    {
+      "test": "MeetingAssignmentRuntimeTests/openingSavedEvidenceRequiresCurrentRuntimeAndBothSourceRevisions(change:)",
+      "name": "sqlite-fixture-DC69ED53-6148-4544-BD84-7A5A523BDAE2_0_5B846199-5C16-4564-9C7A-644B292699C7.json",
+      "sha256": "45addd45833d94e6f2352e7642e7aef272fc1a0e8fd0d31afe685a51b1efca9d"
+    },
+    {
+      "test": "MeetingAssignmentRuntimeTests/openingSavedEvidenceRequiresCurrentRuntimeAndBothSourceRevisions(change:)",
+      "name": "sqlite-fixture-202EFDF5-8967-4713-A760-5AB5EC1210D8_0_25591D50-9CCF-4DA9-9052-9BEB19E7557E.json",
+      "sha256": "bbdaddcc3fdee6a7aa670a873cea82053d1d211ba5da70511eeee812948dae19"
+    },
+    {
+      "test": "MeetingAssignmentRuntimeTests/openingSavedEvidenceRequiresCurrentRuntimeAndBothSourceRevisions(change:)",
+      "name": "sqlite-fixture-D1E73739-ABA3-4043-99E4-A32432838140_0_65E9C2A0-6C27-40A6-AAF4-3EA6081648BB.json",
+      "sha256": "dc50d3528defdbd3003872dee0b29fcead828b26512fd2c58e07507cd9527263"
+    },
+    {
+      "test": "MeetingAssignmentRuntimeTests/openingSavedEvidenceRequiresCurrentRuntimeAndBothSourceRevisions(change:)",
+      "name": "sqlite-fixture-9DD48E52-2D85-44FC-9256-E508522AE2FE_0_B9D91A41-0AC5-4650-BA47-3472AA24641E.json",
+      "sha256": "5e675b18fac16c62b541a67d0b9f5ded9d5e353bb32f2a631314d9af7e7c3f3f"
+    },
+    {
+      "test": "MeetingAssignmentRuntimeTests/openingSavedEvidenceRequiresCurrentRuntimeAndBothSourceRevisions(change:)",
+      "name": "sqlite-fixture-410A07F4-075E-4EA5-85B0-C323F501D70A_0_61A642D6-2CD9-4538-80C8-3FAC5E5771C0.json",
+      "sha256": "01cdbcc566b1f3affa17d09f54e88e1171f3ff2ffbc3d4963e6789d3690a5a25"
+    },
+    {
+      "test": "MeetingAssignmentRuntimeTests/unrelatedIndexCompletionAutomaticallyRetriesSupersededPlanWithoutUserAction()",
+      "name": "sqlite-fixture-09624487-27E0-45A7-8719-3FF2BD8BDA9F_0_B055179B-800C-4743-8964-9A992CFDD7A6.json",
+      "sha256": "8a3de250c2fe8edd5ee8acf00e5755143d6193b5b19f791ab3e23bda41eacee6"
+    },
+    {
+      "test": "MeetingAssignmentRuntimeTests/failureDoesNotStarveFollowingMeetingsAndChangedSourceAutomaticallyRetries()",
+      "name": "sqlite-fixture-064A71BD-2274-443A-9508-40214F2CA1E6_0_CE2825EA-F490-4694-BBA1-6425820C2F96.json",
+      "sha256": "8ca3ef4e748e36a318a20e326c9100ad9ff7ed0e10bb4e608f56a74b29c1c9fc"
+    },
+    {
+      "test": "MeetingAssignmentRuntimeTests/cancellationSurvivesRestartAndLateNoncooperativePublisherCannotRestoreLinks()",
+      "name": "sqlite-fixture-0C2A0802-13FD-4E75-AC3A-F83AE39DA0F9_0_708BB80F-B55F-4C87-9768-D0900D44CA36.json",
+      "sha256": "9c8b656ed3fdb42b31bc091cf21918d72128c10113f963ec7df87b42ca373286"
+    },
+    {
+      "test": "MeetingAssignmentRuntimeTests/indexUpdateBridgeRunsWhileNoScreenIsOpenAndManualEventsDoNotReindex()",
+      "name": "sqlite-fixture-CE5A7FA2-33D5-45AA-A03E-DAB421533BD8_0_57D954EF-C4DD-4B8E-A582-B35F8E1F2AF1.json",
+      "sha256": "f50493592a14002e5494863209aefbb78d870b6b33b5b790ebf5d736779d2180"
+    }
+  ],
+  "selected_native_lifecycle": [
+    {
+      "file": "0B95220B-AD15-4799-A97C-D97F4B29D65F.json",
+      "test": "oldConfigurationReceiptCannotAcknowledgeNewNativeStartup()",
+      "counts": {
+        "scope-created": 1,
+        "root-owned": 1,
+        "store-owned": 1,
+        "opened": 1,
+        "queue-stop-requested": 1,
+        "queue-idle": 1,
+        "update-callbacks-released": 1,
+        "body-finished": 1,
+        "closed": 1,
+        "root-removed": 1
+      },
+      "errors": []
+    },
+    {
+      "file": "0278BFD3-9C5F-4A97-8562-16761E03F483.json",
+      "test": "strongOwnerAndGateAreReleasedWhenBodyThrowsOrCancels(cancel:)",
+      "counts": {
+        "scope-created": 1,
+        "root-owned": 1,
+        "store-owned": 1,
+        "opened": 1,
+        "queue-stop-requested": 1,
+        "queue-idle": 1,
+        "update-callbacks-released": 1,
+        "closed": 1,
+        "body-finished": 1,
+        "root-removed": 1
+      },
+      "errors": []
+    },
+    {
+      "file": "B546A8E7-7AA4-40A7-B26D-216BA7FF62E7.json",
+      "test": "releasingSoleOwnerIsAttributedToCreatingObserverAndDirectRestartRecovers()",
+      "counts": {
+        "scope-created": 1,
+        "root-owned": 1,
+        "store-owned": 1,
+        "opened": 1,
+        "queue-stop-requested": 1,
+        "queue-idle": 1,
+        "update-callbacks-released": 1,
+        "body-finished": 1,
+        "closed": 1,
+        "root-removed": 1
+      },
+      "errors": []
+    },
+    {
+      "file": "4F91B9B0-7224-4AAD-9C2A-C38026FFF6E7.json",
+      "test": "strongOwnerAndGateAreReleasedWhenBodyThrowsOrCancels(cancel:)",
+      "counts": {
+        "scope-created": 1,
+        "root-owned": 1,
+        "store-owned": 1,
+        "opened": 1,
+        "queue-stop-requested": 1,
+        "queue-idle": 1,
+        "update-callbacks-released": 1,
+        "closed": 1,
+        "body-finished": 1,
+        "root-removed": 1
+      },
+      "errors": []
+    },
+    {
+      "file": "A81F6EF0-749D-48DB-9E95-C6D4FB765080.json",
+      "test": "overflowPreservesNativeStartupTimeoutRecoveryAndDeinitJoin()",
+      "counts": {
+        "scope-created": 1,
+        "root-owned": 1,
+        "store-owned": 1,
+        "opened": 1,
+        "queue-stop-requested": 1,
+        "queue-idle": 1,
+        "update-callbacks-released": 1,
+        "body-finished": 1,
+        "closed": 1,
+        "root-removed": 1
+      },
+      "errors": []
+    },
+    {
+      "file": "5F591C94-5961-4CED-B028-BA627225DB8B.json",
+      "test": "pausedStartupSeparatesRevisionFromStartAndExecutesFailureRecorderBeforeRecovery()",
+      "counts": {
+        "scope-created": 1,
+        "root-owned": 1,
+        "store-owned": 1,
+        "opened": 1,
+        "queue-stop-requested": 1,
+        "queue-idle": 1,
+        "update-callbacks-released": 1,
+        "closed": 1,
+        "body-finished": 1,
+        "root-removed": 1
+      },
+      "errors": []
+    },
+    {
+      "file": "83AF6F86-DF96-484E-A8F4-7402A007613C.json",
+      "test": "concreteMetadataBridgeReceivesReadyEventWithoutLaunchingApplication()",
+      "counts": {
+        "scope-created": 1,
+        "root-owned": 1,
+        "store-owned": 1,
+        "opened": 1,
+        "queue-stop-requested": 1,
+        "queue-idle": 1,
+        "update-callbacks-released": 1,
+        "body-finished": 1,
+        "closed": 1,
+        "root-removed": 1
+      },
+      "errors": []
+    }
+  ],
+  "failure_captures": [
+    {
+      "scenario": "controlled-startup-pause",
+      "phase": "ready-source coverage",
+      "elapsed": 10.162839708325919,
+      "beforeUnwind": true,
+      "atomic": false,
+      "timelineDropped": 0,
+      "reads": [
+        {
+          "begin": 349571.03425333335,
+          "end": 349571.03426754166,
+          "fields": {
+            "bridgeID": "B3ACD652-ED26-4F82-8AD7-B39C072E7BF9",
+            "configurationID": "4FC59F86-8F75-40C1-8F21-AED77ACDC7F2",
+            "dirty": "false",
+            "enabled": "true",
+            "model": "fake-only",
+            "revision": "2",
+            "startReturnedConfigurationID": "",
+            "started": "true",
+            "weakAlive": "true",
+            "workerID": "6ACF672E-5C87-4FE5-ADE9-FBEF6A263286",
+            "workerRunID": "",
+            "workerStarted": "false"
+          },
+          "name": "bridge.weak/configuration",
+          "rows": []
+        },
+        {
+          "begin": 349571.03427075,
+          "end": 349571.0342746667,
+          "fields": {
+            "draining": "false",
+            "loadingPreview": "false",
+            "model": "fake-only",
+            "refreshPending": "false",
+            "revision": "2",
+            "runID": "",
+            "started": "false",
+            "workerID": "6ACF672E-5C87-4FE5-ADE9-FBEF6A263286"
+          },
+          "name": "worker.run/attempt/lease",
+          "rows": []
+        },
+        {
+          "begin": 349571.03427683335,
+          "end": 349571.0342800417,
+          "fields": {
+            "entered": "0",
+            "fakeCalls": "0",
+            "inFlight": "0",
+            "maxPhysical": "0",
+            "returned": "0",
+            "transportID": "F1290A80-6482-4145-8B7B-73C54FCD4026"
+          },
+          "name": "physical.enter/return",
+          "rows": []
+        },
+        {
+          "begin": 349571.03428195836,
+          "end": 349571.0406255417,
+          "fields": {
+            "limited": "false"
+          },
+          "name": "durable.sql",
+          "rows": [
+            {
+              "attemptID": "",
+              "cursor": "0",
+              "cycleID": "A8B37AFA-08DD-4163-A1A0-4403EE504713",
+              "generation": "54BA412D-3CB6-445F-8945-20DC7A80CE4F",
+              "model": "fake-only",
+              "projectID": "D560FDF1-E2BB-4204-9C1E-9E1F232940CF",
+              "runID": "7b192ffccb4ee97483f37053275ee784",
+              "sequence": "1",
+              "sourceKey": "meeting:late",
+              "state": "queued",
+              "total": "1"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": "overflow-native-startup",
+      "phase": "overflow held ACK",
+      "elapsed": 8.022554083319847,
+      "beforeUnwind": true,
+      "atomic": false,
+      "timelineDropped": 459,
+      "reads": [
+        {
+          "begin": 349569.057581375,
+          "end": 349569.057589375,
+          "fields": {
+            "bridgeID": "28610421-7684-4844-BC0A-0E0F33566849",
+            "configurationID": "BDFCFF56-BFCC-4C78-A676-B7AC2CE022DF",
+            "dirty": "false",
+            "enabled": "true",
+            "model": "fake-only",
+            "revision": "1",
+            "startReturnedConfigurationID": "",
+            "started": "true",
+            "weakAlive": "true",
+            "workerID": "4A8B9514-F699-4684-92F3-F7D2F8E11FCC",
+            "workerRunID": "",
+            "workerStarted": "false"
+          },
+          "name": "bridge.weak/configuration",
+          "rows": []
+        },
+        {
+          "begin": 349569.05759225,
+          "end": 349569.05759541667,
+          "fields": {
+            "draining": "false",
+            "loadingPreview": "false",
+            "model": "fake-only",
+            "refreshPending": "false",
+            "revision": "1",
+            "runID": "",
+            "started": "false",
+            "workerID": "4A8B9514-F699-4684-92F3-F7D2F8E11FCC"
+          },
+          "name": "worker.run/attempt/lease",
+          "rows": []
+        },
+        {
+          "begin": 349569.05759779166,
+          "end": 349569.05760145833,
+          "fields": {
+            "entered": "0",
+            "fakeCalls": "0",
+            "inFlight": "0",
+            "maxPhysical": "0",
+            "returned": "0",
+            "transportID": "5ED99360-DD45-4130-9620-2AFF512E7300"
+          },
+          "name": "physical.enter/return",
+          "rows": []
+        },
+        {
+          "begin": 349569.05760425003,
+          "end": 349569.05876708333,
+          "fields": {
+            "limited": "false"
+          },
+          "name": "durable.sql",
+          "rows": []
+        }
+      ]
+    },
+    {
+      "scenario": "controlled-body-exit-true",
+      "phase": "body",
+      "elapsed": 3.0735350000322796,
+      "beforeUnwind": true,
+      "atomic": false,
+      "timelineDropped": 35,
+      "reads": [
+        {
+          "begin": 349564.05616375,
+          "end": 349564.05617087503,
+          "fields": {
+            "bridgeID": "622F9BCA-8964-44DF-9BD5-E20FEB7A6869",
+            "configurationID": "AA844E65-FBEB-497B-A506-41D9A7EB35E1",
+            "dirty": "false",
+            "enabled": "true",
+            "model": "fake-only",
+            "revision": "1",
+            "startReturnedConfigurationID": "",
+            "started": "true",
+            "weakAlive": "true",
+            "workerID": "CFCE6A91-6B16-4ADF-9D7F-09064DEF765F",
+            "workerRunID": "",
+            "workerStarted": "false"
+          },
+          "name": "bridge.weak/configuration",
+          "rows": []
+        },
+        {
+          "begin": 349564.056173625,
+          "end": 349564.0561769167,
+          "fields": {
+            "draining": "false",
+            "loadingPreview": "false",
+            "model": "fake-only",
+            "refreshPending": "false",
+            "revision": "1",
+            "runID": "",
+            "started": "false",
+            "workerID": "CFCE6A91-6B16-4ADF-9D7F-09064DEF765F"
+          },
+          "name": "worker.run/attempt/lease",
+          "rows": []
+        },
+        {
+          "begin": 349564.05617895833,
+          "end": 349564.0561825833,
+          "fields": {
+            "entered": "0",
+            "fakeCalls": "0",
+            "inFlight": "0",
+            "maxPhysical": "0",
+            "returned": "0",
+            "transportID": "38716632-B785-416D-BC85-3845532454B4"
+          },
+          "name": "physical.enter/return",
+          "rows": []
+        },
+        {
+          "begin": 349564.05618508335,
+          "end": 349564.09859866666,
+          "fields": {
+            "limited": "false"
+          },
+          "name": "durable.sql",
+          "rows": []
+        }
+      ]
+    },
+    {
+      "scenario": "original-ready-event",
+      "phase": "ready-source coverage",
+      "elapsed": 9.082953833334614,
+      "beforeUnwind": true,
+      "atomic": false,
+      "timelineDropped": 0,
+      "reads": [
+        {
+          "begin": 349570.12437383336,
+          "end": 349570.12439454166,
+          "fields": {
+            "bridgeID": "B08C0296-CB8F-490E-B2CC-BA79BA4208BA",
+            "configurationID": "A55AD227-3B59-47FA-8EFF-E3987D991155",
+            "dirty": "false",
+            "enabled": "true",
+            "model": "fake-only",
+            "revision": "5",
+            "startReturnedConfigurationID": "A55AD227-3B59-47FA-8EFF-E3987D991155",
+            "started": "true",
+            "weakAlive": "true",
+            "workerID": "A2962955-0851-46CC-9997-A9C0210912B9",
+            "workerRunID": "21C48DF0-E4EC-4485-A9A7-E7DBC06393B4",
+            "workerStarted": "true"
+          },
+          "name": "bridge.weak/configuration",
+          "rows": []
+        },
+        {
+          "begin": 349570.12439725,
+          "end": 349570.1244034167,
+          "fields": {
+            "attemptID": "7CD551B6-3867-4722-94B5-304446900389",
+            "count": "1",
+            "cursor": "0",
+            "cycleID": "E6543AA2-DAA7-43B1-9D60-60C7EB0B95E8",
+            "draining": "true",
+            "jobGeneration": "174A126C-A05D-4FBA-90ED-D4C815FF2F68",
+            "loadingPreview": "false",
+            "model": "fake-only",
+            "refreshPending": "false",
+            "revision": "5",
+            "runID": "21C48DF0-E4EC-4485-A9A7-E7DBC06393B4",
+            "sequence": "1",
+            "started": "true",
+            "workerID": "A2962955-0851-46CC-9997-A9C0210912B9"
+          },
+          "name": "worker.run/attempt/lease",
+          "rows": []
+        },
+        {
+          "begin": 349570.12440575,
+          "end": 349570.124409125,
+          "fields": {
+            "entered": "0",
+            "fakeCalls": "0",
+            "inFlight": "0",
+            "maxPhysical": "0",
+            "returned": "0",
+            "transportID": "90BFFDF5-F63E-491B-AB1C-6C733820F53F"
+          },
+          "name": "physical.enter/return",
+          "rows": []
+        },
+        {
+          "begin": 349570.124411375,
+          "end": 349570.3351693334,
+          "fields": {
+            "limited": "false"
+          },
+          "name": "durable.sql",
+          "rows": [
+            {
+              "attemptID": "7CD551B6-3867-4722-94B5-304446900389",
+              "cursor": "0",
+              "cycleID": "E6543AA2-DAA7-43B1-9D60-60C7EB0B95E8",
+              "generation": "174A126C-A05D-4FBA-90ED-D4C815FF2F68",
+              "model": "fake-only",
+              "projectID": "7FF4CD43-B3E9-41AC-9F6E-5CE8D02BF683",
+              "runID": "21C48DF0-E4EC-4485-A9A7-E7DBC06393B4",
+              "sequence": "1",
+              "sourceKey": "meeting:late",
+              "state": "running",
+              "total": "1"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": "controlled-owner-release",
+      "phase": "direct restart coverage",
+      "elapsed": 10.165582208312117,
+      "beforeUnwind": true,
+      "atomic": false,
+      "timelineDropped": 0,
+      "reads": [
+        {
+          "begin": 349571.0343844167,
+          "end": 349571.03438716667,
+          "fields": {
+            "weakAlive": "false"
+          },
+          "name": "bridge.weak/configuration",
+          "rows": []
+        },
+        {
+          "begin": 349571.0343883333,
+          "end": 349571.03439875,
+          "fields": {
+            "attemptID": "D99B1E3F-A373-43B8-ADEC-DFB90DB2709E",
+            "count": "1",
+            "cursor": "0",
+            "cycleID": "030D615E-F97E-4F55-B22C-F22D561954AB",
+            "draining": "true",
+            "jobGeneration": "4AA32759-0F8A-4AC6-AC1E-EB75A51980D1",
+            "loadingPreview": "false",
+            "model": "fake-only",
+            "refreshPending": "false",
+            "revision": "6",
+            "runID": "5327511E-B932-4CAF-88AD-B4CA30185E86",
+            "sequence": "1",
+            "started": "true",
+            "workerID": "1B3A73B1-601E-4EBD-A219-3E7CDE4365BC"
+          },
+          "name": "worker.run/attempt/lease",
+          "rows": []
+        },
+        {
+          "begin": 349571.03439975,
+          "end": 349571.03440137504,
+          "fields": {
+            "entered": "0",
+            "fakeCalls": "0",
+            "inFlight": "0",
+            "maxPhysical": "0",
+            "returned": "0",
+            "transportID": "DE2F7752-F6FA-4920-87B7-8E2F60F0CD98"
+          },
+          "name": "physical.enter/return",
+          "rows": []
+        },
+        {
+          "begin": 349571.0344022917,
+          "end": 349571.0438985417,
+          "fields": {
+            "limited": "false"
+          },
+          "name": "durable.sql",
+          "rows": [
+            {
+              "attemptID": "D99B1E3F-A373-43B8-ADEC-DFB90DB2709E",
+              "cursor": "0",
+              "cycleID": "030D615E-F97E-4F55-B22C-F22D561954AB",
+              "generation": "4AA32759-0F8A-4AC6-AC1E-EB75A51980D1",
+              "model": "fake-only",
+              "projectID": "C094BF9C-0799-4077-AF09-8F6415CBC550",
+              "runID": "5327511E-B932-4CAF-88AD-B4CA30185E86",
+              "sequence": "1",
+              "sourceKey": "meeting:late",
+              "state": "running",
+              "total": "1"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": "controlled-body-exit-false",
+      "phase": "body",
+      "elapsed": 3.0546987499692477,
+      "beforeUnwind": true,
+      "atomic": false,
+      "timelineDropped": 35,
+      "reads": [
+        {
+          "begin": 349564.05611133337,
+          "end": 349564.056119875,
+          "fields": {
+            "bridgeID": "A1091E0F-6E86-497E-B2B4-77342E11066A",
+            "configurationID": "876B8E62-734E-4B1D-BC2A-F3DF0B89AE6A",
+            "dirty": "false",
+            "enabled": "true",
+            "model": "fake-only",
+            "revision": "1",
+            "startReturnedConfigurationID": "",
+            "started": "true",
+            "weakAlive": "true",
+            "workerID": "60AEFCCD-E8F9-4A1E-95B4-B079E9E284DE",
+            "workerRunID": "",
+            "workerStarted": "false"
+          },
+          "name": "bridge.weak/configuration",
+          "rows": []
+        },
+        {
+          "begin": 349564.05614070833,
+          "end": 349564.056143625,
+          "fields": {
+            "draining": "false",
+            "loadingPreview": "false",
+            "model": "fake-only",
+            "refreshPending": "false",
+            "revision": "1",
+            "runID": "",
+            "started": "false",
+            "workerID": "60AEFCCD-E8F9-4A1E-95B4-B079E9E284DE"
+          },
+          "name": "worker.run/attempt/lease",
+          "rows": []
+        },
+        {
+          "begin": 349564.05614545837,
+          "end": 349564.0561485417,
+          "fields": {
+            "entered": "0",
+            "fakeCalls": "0",
+            "inFlight": "0",
+            "maxPhysical": "0",
+            "returned": "0",
+            "transportID": "BBB6A7DB-7FE7-4FB2-ACF8-22763DE0AD13"
+          },
+          "name": "physical.enter/return",
+          "rows": []
+        },
+        {
+          "begin": 349564.0561503334,
+          "end": 349564.07932208333,
+          "fields": {
+            "limited": "false"
+          },
+          "name": "durable.sql",
+          "rows": []
+        }
+      ]
+    }
+  ],
+  "remaining_stdout": {
+    "sqlite_failure_lines": 69,
+    "unlink_warning_lines": 6,
+    "e5rt_lines": 3
+  }
+}

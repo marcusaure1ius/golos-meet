@@ -1,0 +1,17 @@
+{"utc": "2026-11-02T06:48:50.906069+00:00", "elapsed": 0.0004308330244384706, "free_bytes": 6869188608, "log_bytes": 0, "observed_stages": [], "process_exit": null}
+{"utc": "2026-11-02T06:48:50.909099+00:00", "elapsed": 0.0030878750258125365, "free_bytes": 6869172224, "log_bytes": 0, "observed_stages": [], "process_exit": null}
+{"utc": "2026-11-02T06:48:51.914696+00:00", "elapsed": 1.0086976250167936, "free_bytes": 6869008384, "log_bytes": 578, "observed_stages": [], "process_exit": null}
+{"utc": "2026-11-02T06:48:52.920327+00:00", "elapsed": 2.0142957500065677, "free_bytes": 6868746240, "log_bytes": 600, "observed_stages": ["Resolve Package Graph"], "process_exit": null}
+{"utc": "2026-11-02T06:48:53.924906+00:00", "elapsed": 3.018873375025578, "free_bytes": 6868451328, "log_bytes": 600, "observed_stages": ["Resolve Package Graph"], "process_exit": null}
+{"utc": "2026-11-02T06:48:54.930351+00:00", "elapsed": 4.024313041009009, "free_bytes": 6868623360, "log_bytes": 600, "observed_stages": ["Resolve Package Graph"], "process_exit": null}
+{"utc": "2026-11-02T06:48:55.935785+00:00", "elapsed": 5.029744958039373, "free_bytes": 6868484096, "log_bytes": 600, "observed_stages": ["Resolve Package Graph"], "process_exit": null}
+{"utc": "2026-11-02T06:48:56.941194+00:00", "elapsed": 6.035148750001099, "free_bytes": 6868393984, "log_bytes": 1598, "observed_stages": ["Resolve Package Graph"], "process_exit": null}
+{"utc": "2026-11-02T06:48:57.946476+00:00", "elapsed": 7.040428500040434, "free_bytes": 6867439616, "log_bytes": 7569, "observed_stages": ["Resolve Package Graph"], "process_exit": null}
+{"utc": "2026-11-02T06:48:58.952011+00:00", "elapsed": 8.045959125040099, "free_bytes": 6861619200, "log_bytes": 9531, "observed_stages": ["Resolve Package Graph", "Build description signature"], "process_exit": null}
+{"utc": "2026-11-02T06:48:59.964148+00:00", "elapsed": 9.058101125003304, "free_bytes": 6856998912, "log_bytes": 25335, "observed_stages": ["Resolve Package Graph", "Build description signature", "Testing started"], "process_exit": null}
+{"utc": "2026-11-02T06:49:01.022952+00:00", "elapsed": 10.117113833024632, "free_bytes": 6797783040, "log_bytes": 33527, "observed_stages": ["Resolve Package Graph", "Build description signature", "Testing started"], "process_exit": null}
+{"utc": "2026-11-02T06:49:02.036966+00:00", "elapsed": 11.131701708014589, "free_bytes": 6778621952, "log_bytes": 37623, "observed_stages": ["Resolve Package Graph", "Build description signature", "Testing started"], "process_exit": null}
+{"utc": "2026-11-02T06:49:03.161232+00:00", "elapsed": 12.255169958050828, "free_bytes": 6760558592, "log_bytes": 54007, "observed_stages": ["Resolve Package Graph", "Build description signature", "Testing started"], "process_exit": null}
+{"utc": "2026-11-02T06:49:04.192448+00:00", "elapsed": 13.286391208006535, "free_bytes": 6576300032, "log_bytes": 58103, "observed_stages": ["Resolve Package Graph", "Build description signature", "Testing started"], "process_exit": null}
+{"utc": "2026-11-02T06:49:05.256565+00:00", "elapsed": 14.350564291002229, "free_bytes": 6288420864, "log_bytes": 70391, "observed_stages": ["Resolve Package Graph", "Build description signature", "Testing started"], "process_exit": null}
+{"utc": "2026-11-02T06:49:05.461594+00:00", "elapsed": 14.555530250014272, "free_bytes": 6289088512, "log_bytes": 70447, "observed_stages": ["Resolve Package Graph", "Build description signature", "Testing started"], "process_exit": -15}

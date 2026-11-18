@@ -1,0 +1,584 @@
+{
+  "tested_source_commit": "e38a65a09adb1a335578ec5fa71dff073d773aa0",
+  "accepted_base": "7be254c4a1eceb28755ad60d718a4ed72cb21179",
+  "checked62": "c9831bc4e15aecd42f95f11454e1b19f34a9ae63",
+  "ordinary_merge": "b8d44a2e8aa0342158f3ccaae043cae1804862c5",
+  "final_full": {
+    "result": "Failed",
+    "total_tests": 452,
+    "ordinary_passed_tests": 446,
+    "expected_failures_reported_tests": 4,
+    "failed_tests": 2,
+    "ordinary_passed_runs": 626,
+    "expected_runs": 12,
+    "failed_runs": 2,
+    "skipped": 0,
+    "runtimeWarnings": [],
+    "preserved_bundle": "/tmp/golos61-final-preserved.xcresult"
+  },
+  "targeted": {
+    "devicesAndConfigurations": [
+      {
+        "device": {
+          "architecture": "arm64",
+          "deviceId": "00006040-000C51D93404801C",
+          "deviceName": "My Mac",
+          "modelName": "MacBook Pro",
+          "osBuildNumber": "26A434",
+          "osVersion": "27.0.1",
+          "platform": "macOS"
+        },
+        "expectedFailures": 0,
+        "failedTests": 0,
+        "passedTests": 41,
+        "skippedTests": 0,
+        "testPlanConfiguration": {
+          "configurationId": "1",
+          "configurationName": "Test Scheme Action"
+        }
+      }
+    ],
+    "environmentDescription": "golos-meet · Built with macOS 27.0.1",
+    "expectedFailures": 0,
+    "failedTests": 0,
+    "finishTime": 1793595851.301,
+    "passedTests": 29,
+    "result": "Passed",
+    "runtimeWarnings": [],
+    "skippedTests": 0,
+    "startTime": 1793595838.292,
+    "statistics": [
+      {
+        "subtitle": "16 test runs",
+        "title": "4 tests ran with dynamic parameters"
+      }
+    ],
+    "testFailures": [],
+    "title": "Test - golos-meet",
+    "topInsights": [
+      {
+        "category": "Longest Test Runs",
+        "impact": "13% of duration",
+        "text": "1 longest test run with outlier durations exceeding 3.51s (three standard deviations)"
+      }
+    ],
+    "totalTestCount": 29
+  },
+  "space": {
+    "mode": "full",
+    "command": [
+      "make",
+      "check"
+    ],
+    "cwd": "/Users/alfa/.codex/worktrees/61-memory-bridge-test-diagnostics/golos-meet",
+    "explicitEnvironment": {
+      "TEST_RUNNER_GOLOS_MEET_E5_FOLDER": "/tmp/golos-embedding-native/e5-small",
+      "TEST_RUNNER_GOLOS_MEET_RENDER_TALK_SETTINGS": "1",
+      "TEST_RUNNER_GOLOS_MEET_MENU_PREVIEW": "1",
+      "TEST_RUNNER_GOLOS_FIXTURE_EVIDENCE": "/tmp/golos61-final-scopes",
+      "TEST_RUNNER_GOLOS_BRIDGE_EVIDENCE": "/tmp/golos61-final-bridge",
+      "TEST_RUNNER_GOLOS_MEET_MIGRATION_TRACE_DIR": "/tmp/golos61-final-migration"
+    },
+    "startedEpoch": 1793595948.498498,
+    "duration": 62.653712034225464,
+    "returncode": 2,
+    "minimumFreeBytes": 7682637824,
+    "samples": [
+      {
+        "elapsed": 0.002671957015991211,
+        "freeBytes": 9121300480
+      },
+      {
+        "elapsed": 1.0077080726623535,
+        "freeBytes": 9120894976
+      },
+      {
+        "elapsed": 2.0182321071624756,
+        "freeBytes": 9117102080
+      },
+      {
+        "elapsed": 3.024780035018921,
+        "freeBytes": 9109483520
+      },
+      {
+        "elapsed": 4.034949064254761,
+        "freeBytes": 9109626880
+      },
+      {
+        "elapsed": 5.04469895362854,
+        "freeBytes": 9109389312
+      },
+      {
+        "elapsed": 6.049011945724487,
+        "freeBytes": 9109245952
+      },
+      {
+        "elapsed": 7.054213047027588,
+        "freeBytes": 9094270976
+      },
+      {
+        "elapsed": 8.057143211364746,
+        "freeBytes": 9027289088
+      },
+      {
+        "elapsed": 9.096705198287964,
+        "freeBytes": 8914194432
+      },
+      {
+        "elapsed": 10.10521411895752,
+        "freeBytes": 8495808512
+      },
+      {
+        "elapsed": 11.12182092666626,
+        "freeBytes": 8130146304
+      },
+      {
+        "elapsed": 12.238956212997437,
+        "freeBytes": 8530178048
+      },
+      {
+        "elapsed": 13.249175071716309,
+        "freeBytes": 8517488640
+      },
+      {
+        "elapsed": 14.308840990066528,
+        "freeBytes": 8507088896
+      },
+      {
+        "elapsed": 15.344708919525146,
+        "freeBytes": 8499724288
+      },
+      {
+        "elapsed": 16.346863985061646,
+        "freeBytes": 8501678080
+      },
+      {
+        "elapsed": 17.357396125793457,
+        "freeBytes": 8499879936
+      },
+      {
+        "elapsed": 18.36031699180603,
+        "freeBytes": 8505749504
+      },
+      {
+        "elapsed": 19.36894392967224,
+        "freeBytes": 7950245888
+      },
+      {
+        "elapsed": 20.37920594215393,
+        "freeBytes": 7861628928
+      },
+      {
+        "elapsed": 21.38909387588501,
+        "freeBytes": 7798689792
+      },
+      {
+        "elapsed": 22.396605968475342,
+        "freeBytes": 7735152640
+      },
+      {
+        "elapsed": 23.405405044555664,
+        "freeBytes": 7682637824
+      },
+      {
+        "elapsed": 24.415699005126953,
+        "freeBytes": 8563302400
+      },
+      {
+        "elapsed": 25.42477798461914,
+        "freeBytes": 8489811968
+      },
+      {
+        "elapsed": 26.428030014038086,
+        "freeBytes": 8384868352
+      },
+      {
+        "elapsed": 27.43831515312195,
+        "freeBytes": 8279904256
+      },
+      {
+        "elapsed": 28.447127103805542,
+        "freeBytes": 8154071040
+      },
+      {
+        "elapsed": 29.455255031585693,
+        "freeBytes": 8091066368
+      },
+      {
+        "elapsed": 30.461370944976807,
+        "freeBytes": 7996686336
+      },
+      {
+        "elapsed": 31.461874961853027,
+        "freeBytes": 7902552064
+      },
+      {
+        "elapsed": 32.463829040527344,
+        "freeBytes": 9050189824
+      },
+      {
+        "elapsed": 33.47066807746887,
+        "freeBytes": 9050144768
+      },
+      {
+        "elapsed": 34.47793698310852,
+        "freeBytes": 9047912448
+      },
+      {
+        "elapsed": 35.48402690887451,
+        "freeBytes": 8978685952
+      },
+      {
+        "elapsed": 36.491639137268066,
+        "freeBytes": 8884310016
+      },
+      {
+        "elapsed": 37.50180625915527,
+        "freeBytes": 8810901504
+      },
+      {
+        "elapsed": 38.5112829208374,
+        "freeBytes": 8716509184
+      },
+      {
+        "elapsed": 39.520808935165405,
+        "freeBytes": 8653590528
+      },
+      {
+        "elapsed": 40.52466011047363,
+        "freeBytes": 8559194112
+      },
+      {
+        "elapsed": 41.53088116645813,
+        "freeBytes": 8496242688
+      },
+      {
+        "elapsed": 42.53646111488342,
+        "freeBytes": 8391335936
+      },
+      {
+        "elapsed": 43.54631996154785,
+        "freeBytes": 8296947712
+      },
+      {
+        "elapsed": 44.556459188461304,
+        "freeBytes": 8202469376
+      },
+      {
+        "elapsed": 45.56195902824402,
+        "freeBytes": 8097521664
+      },
+      {
+        "elapsed": 46.572131872177124,
+        "freeBytes": 8017649664
+      },
+      {
+        "elapsed": 47.57813000679016,
+        "freeBytes": 7933734912
+      },
+      {
+        "elapsed": 48.588425159454346,
+        "freeBytes": 9050292224
+      },
+      {
+        "elapsed": 49.59209990501404,
+        "freeBytes": 9050599424
+      },
+      {
+        "elapsed": 50.594297885894775,
+        "freeBytes": 9050898432
+      },
+      {
+        "elapsed": 51.6013400554657,
+        "freeBytes": 9050804224
+      },
+      {
+        "elapsed": 52.60174608230591,
+        "freeBytes": 9051148288
+      },
+      {
+        "elapsed": 53.60289001464844,
+        "freeBytes": 9049747456
+      },
+      {
+        "elapsed": 54.606608867645264,
+        "freeBytes": 9049690112
+      },
+      {
+        "elapsed": 55.61683011054993,
+        "freeBytes": 9026609152
+      },
+      {
+        "elapsed": 56.61710500717163,
+        "freeBytes": 8983142400
+      },
+      {
+        "elapsed": 57.61986422538757,
+        "freeBytes": 8976429056
+      },
+      {
+        "elapsed": 58.62151002883911,
+        "freeBytes": 8976728064
+      },
+      {
+        "elapsed": 59.628093004226685,
+        "freeBytes": 8976269312
+      },
+      {
+        "elapsed": 60.63647794723511,
+        "freeBytes": 8523251712
+      },
+      {
+        "elapsed": 61.64273691177368,
+        "freeBytes": 8389517312
+      },
+      {
+        "elapsed": 62.65314483642578,
+        "freeBytes": 8880726016
+      }
+    ]
+  },
+  "selected_scopes": [
+    {
+      "scope": "8D819757-B5EC-48DD-BC8B-550056178D5F.json",
+      "test": "strongOwnerAndGateAreReleasedWhenBodyThrowsOrCancels(cancel:)",
+      "nativeClose0": 1,
+      "removed": 1
+    },
+    {
+      "scope": "0E6C29CE-FB9A-4087-ABA1-8C36B0ECE406.json",
+      "test": "releasingSoleOwnerIsAttributedToCreatingObserverAndDirectRestartRecovers()",
+      "nativeClose0": 1,
+      "removed": 1
+    },
+    {
+      "scope": "B8058219-D9D0-4C69-ACC8-E13443105EC1.json",
+      "test": "pausedStartupSeparatesRevisionFromStartAndExecutesFailureRecorderBeforeRecovery()",
+      "nativeClose0": 1,
+      "removed": 1
+    },
+    {
+      "scope": "5554CFBF-6593-404D-9775-3545BA2E939C.json",
+      "test": "strongOwnerAndGateAreReleasedWhenBodyThrowsOrCancels(cancel:)",
+      "nativeClose0": 1,
+      "removed": 1
+    },
+    {
+      "scope": "B34FE318-0083-4F7F-BA94-E3A755C10361.json",
+      "test": "concreteMetadataBridgeReceivesReadyEventWithoutLaunchingApplication()",
+      "nativeClose0": 1,
+      "removed": 1
+    }
+  ],
+  "attachment_count": 309,
+  "matched_scope_bridge_attachments": 227,
+  "ocr_reports": 41,
+  "new_episodes": [
+    {
+      "file": "bridge61-21F4B46E-D735-4886-A094-2AFE0B0C9E59-failure.json",
+      "scenario": "original-ready-event",
+      "phase": "ready-source coverage",
+      "elapsed": 7.662812999973539,
+      "bridgeID": "AE4954A7-1DD3-421A-9990-4E9F1D98F742",
+      "workerID": "E758307E-88BA-4955-BC67-B5E8337364CA",
+      "reads": [
+        {
+          "begin": 346228.14603891666,
+          "end": 346228.1460691667,
+          "fields": {
+            "bridgeID": "AE4954A7-1DD3-421A-9990-4E9F1D98F742",
+            "configurationID": "A2AE8914-F642-4CB9-B31D-15F36E18675C",
+            "dirty": "false",
+            "enabled": "true",
+            "model": "fake-only",
+            "revision": "5",
+            "startReturnedConfigurationID": "A2AE8914-F642-4CB9-B31D-15F36E18675C",
+            "started": "true",
+            "weakAlive": "true",
+            "workerID": "E758307E-88BA-4955-BC67-B5E8337364CA",
+            "workerRunID": "7D6A55CA-A3C8-46E9-8836-80AD40C0EDB3",
+            "workerStarted": "true"
+          },
+          "name": "bridge.weak/configuration",
+          "rows": []
+        },
+        {
+          "begin": 346228.146072125,
+          "end": 346228.14607758337,
+          "fields": {
+            "attemptID": "962063DB-361E-410A-A916-A79BF6DF9923",
+            "count": "1",
+            "cursor": "0",
+            "cycleID": "D7B2916D-A338-49DA-AB65-DAE60F86A2E2",
+            "draining": "true",
+            "jobGeneration": "55F6ED10-AE8A-4761-99AF-8D8E9861B0E9",
+            "loadingPreview": "false",
+            "model": "fake-only",
+            "refreshPending": "false",
+            "revision": "5",
+            "runID": "7D6A55CA-A3C8-46E9-8836-80AD40C0EDB3",
+            "sequence": "1",
+            "started": "true",
+            "workerID": "E758307E-88BA-4955-BC67-B5E8337364CA"
+          },
+          "name": "worker.run/attempt/lease",
+          "rows": []
+        },
+        {
+          "begin": 346228.14607841667,
+          "end": 346228.14607995836,
+          "fields": {
+            "entered": "0",
+            "fakeCalls": "0",
+            "inFlight": "0",
+            "maxPhysical": "0",
+            "returned": "0",
+            "transportID": "4B795D0D-68DD-40AE-9C3D-81A8C1DFB85E"
+          },
+          "name": "physical.enter/return",
+          "rows": []
+        },
+        {
+          "begin": 346228.146080625,
+          "end": 346228.1464564167,
+          "fields": {
+            "limited": "false"
+          },
+          "name": "durable.sql",
+          "rows": [
+            {
+              "attemptID": "962063DB-361E-410A-A916-A79BF6DF9923",
+              "cursor": "0",
+              "cycleID": "D7B2916D-A338-49DA-AB65-DAE60F86A2E2",
+              "generation": "55F6ED10-AE8A-4761-99AF-8D8E9861B0E9",
+              "model": "fake-only",
+              "projectID": "B97A477B-51A6-42AC-A69F-C7EF93E80A1D",
+              "runID": "7D6A55CA-A3C8-46E9-8836-80AD40C0EDB3",
+              "sequence": "1",
+              "sourceKey": "meeting:late",
+              "state": "running",
+              "total": "1"
+            }
+          ]
+        }
+      ],
+      "atomic": false,
+      "timelineDropped": 0,
+      "eventReceived": true,
+      "startupReturnObserved": true,
+      "deinitStopReturned": false
+    },
+    {
+      "file": "bridge61-A5BC3D77-E514-44E1-A5E8-B94D699029C8-failure.json",
+      "scenario": "controlled-owner-release",
+      "phase": "direct restart coverage",
+      "elapsed": 9.393049833364785,
+      "bridgeID": "381EFB73-0120-4EA6-A245-0612F8A83FE5",
+      "workerID": "E2FECE52-8E7F-4272-B754-BFA5EA89E7C5",
+      "reads": [
+        {
+          "begin": 346230.0220697917,
+          "end": 346230.02207375003,
+          "fields": {
+            "weakAlive": "false"
+          },
+          "name": "bridge.weak/configuration",
+          "rows": []
+        },
+        {
+          "begin": 346230.0220754584,
+          "end": 346230.02209104167,
+          "fields": {
+            "attemptID": "7D9E9F7F-803C-4CC3-A322-69454CB6CACE",
+            "count": "1",
+            "cursor": "0",
+            "cycleID": "45D60772-73F4-4677-90D0-29DBAB79159E",
+            "draining": "true",
+            "jobGeneration": "34E5DEBB-004A-405E-913D-BC62AE0A4F8B",
+            "loadingPreview": "false",
+            "model": "fake-only",
+            "refreshPending": "false",
+            "revision": "6",
+            "runID": "42B20064-FD23-4A48-9A54-FA98206C3907",
+            "sequence": "1",
+            "started": "true",
+            "workerID": "E2FECE52-8E7F-4272-B754-BFA5EA89E7C5"
+          },
+          "name": "worker.run/attempt/lease",
+          "rows": []
+        },
+        {
+          "begin": 346230.0220924167,
+          "end": 346230.02209495835,
+          "fields": {
+            "entered": "0",
+            "fakeCalls": "0",
+            "inFlight": "0",
+            "maxPhysical": "0",
+            "returned": "0",
+            "transportID": "2582D235-2E09-4D4F-AB76-2403B9BDF9DE"
+          },
+          "name": "physical.enter/return",
+          "rows": []
+        },
+        {
+          "begin": 346230.022095875,
+          "end": 346230.0234845417,
+          "fields": {
+            "limited": "false"
+          },
+          "name": "durable.sql",
+          "rows": [
+            {
+              "attemptID": "7D9E9F7F-803C-4CC3-A322-69454CB6CACE",
+              "cursor": "0",
+              "cycleID": "45D60772-73F4-4677-90D0-29DBAB79159E",
+              "generation": "34E5DEBB-004A-405E-913D-BC62AE0A4F8B",
+              "model": "fake-only",
+              "projectID": "6F7023E2-6B90-400A-BE6A-D1C34387F736",
+              "runID": "42B20064-FD23-4A48-9A54-FA98206C3907",
+              "sequence": "1",
+              "sourceKey": "meeting:late",
+              "state": "running",
+              "total": "1"
+            }
+          ]
+        }
+      ],
+      "atomic": false,
+      "timelineDropped": 0,
+      "eventReceived": false,
+      "startupReturnObserved": true,
+      "deinitStopReturned": true
+    }
+  ],
+  "raw_logs": {
+    "xcodebuild.log.gz": {
+      "raw_sha256": "b837b759c965d303a603f4f6d85c4a33e605e8db452e8940232f2c06c0299f19",
+      "bytes": 117146
+    },
+    "stdout.txt.gz": {
+      "raw_sha256": "841245d576cf9f6763121f48c7370ea8131ab2df7181d6e4b8c73429abbc31ca",
+      "bytes": 246344
+    },
+    "targeted.log.gz": {
+      "raw_sha256": "b1547fa80e49ec4cea488426b69c74cbcf35a43916adb8a09ff640918fada793",
+      "bytes": 59259
+    }
+  },
+  "source_sha256": {
+    "golos-meetTests/MemoryBridgeDiagnosticsTests.swift": "b578273ce2616531a8c8db21c7a6107b8467b88e16566217a66ab006b9dc6fc3",
+    "golos-meetTests/SQLiteFixtureScope.swift": "4a77deea563a53eb81f7c64d5651f53da1755478c836149da87ba96ee0b7ad8e"
+  },
+  "limits": "New episodes only; physical snapshots0/calls0, worker leased/running. Original bridge alive/startup ack/event received; owner-release bridge absent intentionally and direct worker restarted. Pre-adapter delay cause unknown, no automatic relation to old episodes. No further source/full reruns after this final run.",
+  "full_runs_by_distinct_tree": [
+    "d1aeb2f onfc2 Passed",
+    "b8d44a2 after62 Failed: original coverage + control observation race",
+    "e38a65a control race fix after62 Failed: original coverage + direct restart coverage"
+  ],
+  "remaining_stdout": {
+    "sqlite_failure_lines": 69,
+    "unlink_warning_lines": 26,
+    "e5rt_lines": 3
+  }
+}

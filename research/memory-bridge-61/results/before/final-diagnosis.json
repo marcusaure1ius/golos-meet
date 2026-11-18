@@ -1,0 +1,38 @@
+{
+  "source": "fc2a92956fd50bd791e4926d5b388c8fe39f84d4",
+  "historicalRootCauseProven": false,
+  "newP1P2": [],
+  "historicalStage": "ready-source coverage; initial marker passed",
+  "historicalAttachmentCount": 1,
+  "historicalRichSnapshots": false,
+  "controls": {
+    "cases": 3,
+    "errors": 0,
+    "calls": 3,
+    "maxPhysicalPerCase": 1,
+    "nativeCloseZero": 3,
+    "elapsedSeconds": 1.8350510409800336,
+    "minimumFreeBytes": 9587568640,
+    "network": "sandbox deny network*",
+    "data": "synthetic TEMP actual SQLite;2D supplied vectors, no inference"
+  },
+  "confirmed": [
+    "revision>0 is not start/config acknowledgement",
+    "event received before startup can durably queue then complete after start",
+    "intentional owner release has deinit/stop signature and recovers after direct restart"
+  ],
+  "notProven": [
+    "historical production event loss",
+    "historical unexpected bridge deinit",
+    "historical startup/SQLite/executor delay",
+    "restored mandatory full stability"
+  ],
+  "next": "Narrow test-only read-only stage/state instrumentation plus deterministic startup/ownership controls; no timeout increase or production API/workaround justified",
+  "limits": [
+    "Diagnostic worker/bridge copied accepted source with disclosed trace and explicit gate additions; no production branch edits",
+    "One process/3 serial controls, not full-suite workload or original unexpected timeout reproduction",
+    "Historical bundle cannot be enriched retrospectively",
+    "Later field/durable snapshots would be separate timed observations, not an atomic snapshot",
+    "Generic worker trace markers omit owner IDs; deinit stop from previous case can arrive after next case.begin. Conclusions use case-local weak witness/state/run and native connection IDs; future parallel instrumentation must tag each instance/config/run/attempt."
+  ]
+}

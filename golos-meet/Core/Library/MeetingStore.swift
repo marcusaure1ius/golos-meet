@@ -11,6 +11,7 @@ enum MeetingStore {
         let dir = root.appendingPathComponent(id, isDirectory: true)
         guard FileManager.default.fileExists(atPath: dir.path) else { return }
         try FileManager.default.removeItem(at: dir)
+        KnowledgeIndexEvents.post(.removedMeeting(id))
         Log.pipeline.info("delete: \(id, privacy: .public)")
     }
 

@@ -1,0 +1,50 @@
+[
+  {
+    "stage" : "scope-created",
+    "test" : "roundRobinDoesNotStarveShortSourceBehindManyBatches()",
+    "uptime" : "333037.8996258334"
+  },
+  {
+    "root" : "memory-update-F1812057-1212-4DFA-9E20-F40B0CBE0BD6",
+    "stage" : "root-owned",
+    "uptime" : "333037.9265116667"
+  },
+  {
+    "stage" : "store-owned",
+    "uptime" : "333037.926536625"
+  },
+  {
+    "connection" : "B2747A6F-63F5-42D0-A2AD-D3FC276F0AC8",
+    "root" : "memory-update-F1812057-1212-4DFA-9E20-F40B0CBE0BD6",
+    "stage" : "opened",
+    "uptime" : "333037.9609035417"
+  },
+  {
+    "stage" : "queue-stop-requested",
+    "uptime" : "333046.53147875"
+  },
+  {
+    "stage" : "queue-idle",
+    "uptime" : "333046.53239141667"
+  },
+  {
+    "stage" : "update-callbacks-released",
+    "uptime" : "333046.532401625"
+  },
+  {
+    "stage" : "body-finished",
+    "uptime" : "333046.53243125003"
+  },
+  {
+    "connection" : "B2747A6F-63F5-42D0-A2AD-D3FC276F0AC8",
+    "result" : "0",
+    "stage" : "closed",
+    "uptime" : "333046.93275570835"
+  },
+  {
+    "exists" : "false",
+    "root" : "memory-update-F1812057-1212-4DFA-9E20-F40B0CBE0BD6",
+    "stage" : "root-removed",
+    "uptime" : "333046.93703487504"
+  }
+]

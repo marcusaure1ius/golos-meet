@@ -1,0 +1,32 @@
+{
+  "iterations": 100,
+  "cases": 400,
+  "sqlite_versions": [
+    "3.54.0"
+  ],
+  "outcomes": [
+    {
+      "initialized": 0,
+      "action": "commit",
+      "cases": 100
+    },
+    {
+      "initialized": 0,
+      "action": "rollback",
+      "cases": 100
+    },
+    {
+      "initialized": 1,
+      "action": "commit",
+      "cases": 100
+    },
+    {
+      "initialized": 1,
+      "action": "rollback",
+      "cases": 100
+    }
+  ],
+  "probe_source_sha256": "addf7292a145cf8f95aacd895468d2d1d12618548d185098e4203621bf316949",
+  "raw_sha256": "84765590c11b99dff16117cc59d83e925008ff5b71d54b99e93a4f22c5f1b950",
+  "all_expected_outcomes": true
+}

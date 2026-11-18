@@ -1,0 +1,100 @@
+[
+  {
+    "fake_calls" : 1,
+    "file" : "loading-light.png",
+    "height" : 1200,
+    "sha256" : "220ae53a93cfdf5aca6d4f88e2ec0b654e9a67191e32406c38535c77d6b49437",
+    "width" : 540
+  },
+  {
+    "fake_calls" : 1,
+    "file" : "loading-dark.png",
+    "height" : 1200,
+    "sha256" : "83d46196fb7fcb37daf73239550f8688c046377468457f877e7362044bb51d2d",
+    "width" : 540
+  },
+  {
+    "fake_calls" : 1,
+    "file" : "overview-light.png",
+    "height" : 1200,
+    "sha256" : "f56555a92e4bd9ab8a29156d7e8f752651d32fd729b4d39a423708d2c5e7858e",
+    "width" : 540
+  },
+  {
+    "fake_calls" : 1,
+    "file" : "overview-dark.png",
+    "height" : 1200,
+    "sha256" : "5dff5f92066988da00de5ed8992697ec3bc938250c60e80e26f733e92454ba69",
+    "width" : 540
+  },
+  {
+    "fake_calls" : 1,
+    "file" : "queue-light.png",
+    "height" : 1200,
+    "sha256" : "118251a88241b63ad6f593d7fe7377c9ec25ef46bd4d59e5a7d6b61a475ccdb2",
+    "width" : 540
+  },
+  {
+    "fake_calls" : 1,
+    "file" : "queue-dark.png",
+    "height" : 1200,
+    "sha256" : "3dce287ae5c3babe2a3022c076e4f33765f288ad45f3f1d7ae2ae92ba15764ab",
+    "width" : 540
+  },
+  {
+    "fake_calls" : 1,
+    "file" : "provenance-light.png",
+    "height" : 1200,
+    "sha256" : "471a7d9e381310ad78f3d91986449248916aa3b1b161fb260ee1506a7764a41d",
+    "width" : 540
+  },
+  {
+    "fake_calls" : 1,
+    "file" : "provenance-dark.png",
+    "height" : 1200,
+    "sha256" : "277702c2c3b26a9442605c99a0d5cbe83560c1dd2450298ceab9bc090fed7f1d",
+    "width" : 540
+  },
+  {
+    "fake_calls" : 1,
+    "file" : "checked-source-light.png",
+    "height" : 1200,
+    "sha256" : "47a70250fa663a784e4ada9d1425c667abf72419e80c9cb1ecdab1f3608fc9b3",
+    "width" : 540
+  },
+  {
+    "fake_calls" : 1,
+    "file" : "checked-source-dark.png",
+    "height" : 1200,
+    "sha256" : "8a70c8c1158e34e6c5d7668ee259dab799b822022810e9552b10138eb5509d7d",
+    "width" : 540
+  },
+  {
+    "fake_calls" : 1,
+    "file" : "history-light.png",
+    "height" : 1200,
+    "sha256" : "4a3b659ae18ae0ba8b463adc84b8548129bb9c47f9c62a2d0b33bed8f0ff2aab",
+    "width" : 540
+  },
+  {
+    "fake_calls" : 1,
+    "file" : "history-dark.png",
+    "height" : 1200,
+    "sha256" : "606ffd6f959f30b873ce53eef65944b7782d969ff51e003dc05a1c081b843222",
+    "width" : 540
+  },
+  {
+    "fake_calls" : 1,
+    "file" : "empty-light.png",
+    "height" : 1200,
+    "sha256" : "c4041026fd44d68fddd64ad69d8e9fb3e5f6fb18562b435d1311fc3ce8a6d795",
+    "width" : 540
+  },
+  {
+    "fake_calls" : 1,
+    "file" : "empty-dark.png",
+    "height" : 1200,
+    "sha256" : "71b6de520c6b352825dfb3bafe0cf480b6fcda85b49eb6ab0da55ef6fef3d6cf",
+    "width" : 540
+  }
+]

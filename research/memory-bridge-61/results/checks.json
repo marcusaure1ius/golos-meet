@@ -1,0 +1,82 @@
+{
+  "base": "fc2a92956fd50bd791e4926d5b388c8fe39f84d4",
+  "tested_source_commit": "d1aeb2f7bc30aa5de69e1f1d8e4d36f76af61041",
+  "full": {
+    "result": "Passed",
+    "total_tests": 446,
+    "ordinary_passed_tests": 444,
+    "expected_failures_reported_tests": 2,
+    "ordinary_passed_runs": 622,
+    "expected_runs": 7,
+    "total_runs_including_expected": 629,
+    "failed": 0,
+    "skipped": 0,
+    "runtimeWarnings": [],
+    "expected_note": "Pre-existing accepted SQLiteFaultExpectationTests negative controls; no OCR/bridge test marked expected or skipped. See exact summary and test tree."
+  },
+  "targeted": {
+    "result": "Passed",
+    "tests": 29,
+    "runs": 41,
+    "failed": 0,
+    "skipped": 0,
+    "runtimeWarnings": []
+  },
+  "release": {
+    "build": "Passed",
+    "debug_contract_symbols_in_release": 0,
+    "source_release_tokens_match_base": true
+  },
+  "full_minimum_free_bytes": 6146646016,
+  "full_run_count": 1,
+  "extra_ocr_probes": 0,
+  "scope_audit": {
+    "cases": 5,
+    "roots": 5,
+    "nativeClose0": 5,
+    "errors": 0
+  },
+  "attachment_matches": 189,
+  "attachment_mismatches": 0,
+  "ocr_invocations": 41,
+  "bridge_control_failure_reports": 3,
+  "remaining_stdout": {
+    "sqlite_failure_lines": 55,
+    "unlink_warning_lines": 40,
+    "e5rt_lines": 3,
+    "note": "Whole stdout retained. Negative controls and other fixture families remain separate; no claim of global warning cleanup."
+  },
+  "raw_logs": {
+    "full/stdout.txt.gz": {
+      "raw_sha256": "2b035a5912e764b4e81a5d80363da19bb026aa548cb752fa485fa99673a2774b",
+      "raw_bytes": 236793
+    },
+    "full/xcodebuild.log.gz": {
+      "raw_sha256": "7d91e7c56d642e27a545bc148934a063c3b1842da519eb8f4f896a3b19413f1f",
+      "raw_bytes": 697944
+    },
+    "targeted/xcodebuild.log.gz": {
+      "raw_sha256": "f9d280c5a80656824c7b32be781cc2ea6c843704db1f0842584868614b47d9bf",
+      "raw_bytes": 106525
+    },
+    "release-build.log.gz": {
+      "raw_sha256": "833d06258d6b560686e1440526ce6749e75b624e0fea597f6504710945e9334c",
+      "raw_bytes": 670214
+    },
+    "initial-targeted-build.log.gz": {
+      "raw_sha256": "5e777c092d447f3d9cad8fe9328ba46ffdd568adaaf1b5e790fd8d628e79753d",
+      "raw_bytes": 1037474
+    }
+  },
+  "source_sha256": {
+    "golos-meet/Core/Knowledge/MemoryQueueDiagnostics.swift": "671507489db4babfdd07de9c7743841bd368c631440e107359a57525a9796627",
+    "golos-meet/Core/Knowledge/ProjectMemoryQueueWorker.swift": "7d21ce1037c5b372ae1586a6e460f7e7749cc8f91914dd5edc22c0e6381870a7",
+    "golos-meet/UI/Projects/KnowledgeMemoryQueue.swift": "966383d6eaa997b99dce7ab29e39bcb5f1be276df3b9b9342f44d709c22d9782",
+    "golos-meetTests/ProjectMemoryQueueTests.swift": "9d0b42246e85749cdaed16483381be2cb1665258ddd72e7e58e348cf1e0cb709",
+    "golos-meetTests/MemoryBridgeTestSession.swift": "a469d6b3be2b97eb352fdd5ad0166e2c923220e8ec1a4dd26d9293889a04734f",
+    "golos-meetTests/MemoryBridgeDiagnosticsTests.swift": "83c9c963f6eb9c14d69483d196fd77162866bba289484a95e7949cb3de50426c"
+  },
+  "historical_cause": "Unknown; successful controls/full do not establish old OCR/bridge cause. Before evidence has no rich historical snapshots.",
+  "UI_and_PR55": "No CUA/GUI; PR55 worktree/head50e22e0 unchanged.",
+  "live_cloud_user_data_downloads": false
+}

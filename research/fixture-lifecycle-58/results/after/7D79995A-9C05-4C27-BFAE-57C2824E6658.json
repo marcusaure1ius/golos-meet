@@ -1,0 +1,38 @@
+[
+  {
+    "stage" : "scope-created",
+    "test" : "missingRuntimeRemovesAutomaticLinksAndRecoverySchedulesSameReadyVectorsAgain()",
+    "uptime" : "333293.553347625"
+  },
+  {
+    "root" : "assignment-runtime-E202DB03-BF4C-4CE3-B692-31E86BDB5FF5",
+    "stage" : "root-owned",
+    "uptime" : "333293.6219815"
+  },
+  {
+    "stage" : "store-owned",
+    "uptime" : "333293.621999125"
+  },
+  {
+    "connection" : "28FD49DF-9CBD-408D-AA74-B4EDD010923C",
+    "root" : "assignment-runtime-E202DB03-BF4C-4CE3-B692-31E86BDB5FF5",
+    "stage" : "opened",
+    "uptime" : "333293.68475450005"
+  },
+  {
+    "connection" : "28FD49DF-9CBD-408D-AA74-B4EDD010923C",
+    "result" : "0",
+    "stage" : "closed",
+    "uptime" : "333296.0005571667"
+  },
+  {
+    "stage" : "body-finished",
+    "uptime" : "333296.00736225"
+  },
+  {
+    "exists" : "false",
+    "root" : "assignment-runtime-E202DB03-BF4C-4CE3-B692-31E86BDB5FF5",
+    "stage" : "root-removed",
+    "uptime" : "333296.00900475"
+  }
+]

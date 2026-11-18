@@ -1,0 +1,1264 @@
+{
+  "summary": {
+    "command": [
+      "/private/tmp/golos56-matched-reference-probe/ocr-probe",
+      "/private/tmp/golos56-frozen-inputs",
+      "/private/tmp/golos56-matched-reference",
+      "fanout",
+      "default",
+      "4"
+    ],
+    "seconds": 90.02476745797321,
+    "returncode": null,
+    "timeout": true,
+    "outcomes": {
+      "incomplete": 14
+    },
+    "expected_invocations": 32,
+    "observed_invocations": 14,
+    "strict_pool_requested": false,
+    "isolated_home": "/private/tmp/golos56-home-matched-reference"
+  },
+  "streams": [
+    {
+      "id": "0-20",
+      "raw_sha256": "f46151704686f72d3da731d693a9e8c0e58ce0f3e1be058aae4af13ae8e8c72b",
+      "events": [
+        {
+          "bytes": 21495,
+          "cpuControl": false,
+          "id": "0-20",
+          "input": "20.pdf",
+          "preflight": false,
+          "sha256": "243d5331e61658a7baa559bd214309203a224dd534280b032d472387aba5c35b",
+          "stage": "extract-begin",
+          "strictPool": false,
+          "uptime": 330308.16454325,
+          "wall": 1793580043.568783
+        },
+        {
+          "bytes": 21495,
+          "cpuControl": false,
+          "id": "0-20",
+          "input": "0-20.pdf",
+          "preflight": false,
+          "sha256": "243d5331e61658a7baa559bd214309203a224dd534280b032d472387aba5c35b",
+          "stage": "input",
+          "strictPool": false,
+          "uptime": 330308.1701500417,
+          "wall": 1793580043.574389
+        },
+        {
+          "cpuControl": false,
+          "id": "0-20",
+          "native": "2026",
+          "page": 1,
+          "preflight": false,
+          "stage": "pdf-native",
+          "strictPool": false,
+          "uptime": 330308.21826650004,
+          "wall": 1793580043.6225061
+        },
+        {
+          "bitsPerPixel": 32,
+          "bytesPerRow": 7200,
+          "cpuControl": false,
+          "height": 2400,
+          "id": "0-20",
+          "image": "0-20-0e5e0d92af32c8dbcf4f4e4055fa450fde53c242363af02785df70f5ed995831.png",
+          "preflight": false,
+          "sha256": "0e5e0d92af32c8dbcf4f4e4055fa450fde53c242363af02785df70f5ed995831",
+          "stage": "ocr-input",
+          "strictPool": false,
+          "uptime": 330308.2565402917,
+          "wall": 1793580043.660779,
+          "width": 1800
+        },
+        {
+          "automaticLanguage": true,
+          "cpuControl": false,
+          "id": "0-20",
+          "languageCorrection": true,
+          "languages": [
+            "ru-RU",
+            "en-US"
+          ],
+          "preflight": false,
+          "revision": 3,
+          "stage": "request-options",
+          "strictPool": false,
+          "uptime": 330308.2569437917,
+          "wall": 1793580043.6611838
+        },
+        {
+          "cpuControl": false,
+          "id": "0-20",
+          "preflight": false,
+          "stage": "perform-begin",
+          "strictPool": false,
+          "uptime": 330308.25709279167,
+          "wall": 1793580043.6613321
+        }
+      ]
+    },
+    {
+      "id": "0-26",
+      "raw_sha256": "c5cbf6bd1d67b0bec7234d96394f3a928de2769d0a1a1dd09a68cad5a648ff9e",
+      "events": [
+        {
+          "bytes": 21549,
+          "cpuControl": false,
+          "id": "0-26",
+          "input": "26.pdf",
+          "preflight": false,
+          "sha256": "e1e25777769cf421e9a869e44ca102348d4f2da46302135493f2005f6befd92a",
+          "stage": "extract-begin",
+          "strictPool": false,
+          "uptime": 330308.1645412917,
+          "wall": 1793580043.5687819
+        },
+        {
+          "bytes": 21549,
+          "cpuControl": false,
+          "id": "0-26",
+          "input": "0-26.pdf",
+          "preflight": false,
+          "sha256": "e1e25777769cf421e9a869e44ca102348d4f2da46302135493f2005f6befd92a",
+          "stage": "input",
+          "strictPool": false,
+          "uptime": 330308.1703042917,
+          "wall": 1793580043.574544
+        },
+        {
+          "cpuControl": false,
+          "id": "0-26",
+          "native": "2026",
+          "page": 1,
+          "preflight": false,
+          "stage": "pdf-native",
+          "strictPool": false,
+          "uptime": 330308.2182477917,
+          "wall": 1793580043.622487
+        },
+        {
+          "bitsPerPixel": 32,
+          "bytesPerRow": 7200,
+          "cpuControl": false,
+          "height": 2400,
+          "id": "0-26",
+          "image": "0-26-ed81cb04fddb07561b7087d54646c8dda614c678115347c82f8fd2c0df7c7b87.png",
+          "preflight": false,
+          "sha256": "ed81cb04fddb07561b7087d54646c8dda614c678115347c82f8fd2c0df7c7b87",
+          "stage": "ocr-input",
+          "strictPool": false,
+          "uptime": 330308.25629658333,
+          "wall": 1793580043.660536,
+          "width": 1800
+        },
+        {
+          "automaticLanguage": true,
+          "cpuControl": false,
+          "id": "0-26",
+          "languageCorrection": true,
+          "languages": [
+            "ru-RU",
+            "en-US"
+          ],
+          "preflight": false,
+          "revision": 3,
+          "stage": "request-options",
+          "strictPool": false,
+          "uptime": 330308.25649187504,
+          "wall": 1793580043.6607308
+        },
+        {
+          "cpuControl": false,
+          "id": "0-26",
+          "preflight": false,
+          "stage": "perform-begin",
+          "strictPool": false,
+          "uptime": 330308.25666379166,
+          "wall": 1793580043.660903
+        }
+      ]
+    },
+    {
+      "id": "0-distinct",
+      "raw_sha256": "4b687c4e7d71dbd5acccba43854e1b6a56e5856d316a9b7fadc3a543722778a4",
+      "events": [
+        {
+          "bytes": 24231,
+          "cpuControl": false,
+          "id": "0-distinct",
+          "input": "distinct.pdf",
+          "preflight": false,
+          "sha256": "454af4bf489515e6f9c9397dbd3dfbabed667efd675e4808db41a251bebdeb10",
+          "stage": "extract-begin",
+          "strictPool": false,
+          "uptime": 330308.164543,
+          "wall": 1793580043.568784
+        },
+        {
+          "bytes": 24231,
+          "cpuControl": false,
+          "id": "0-distinct",
+          "input": "0-distinct.pdf",
+          "preflight": false,
+          "sha256": "454af4bf489515e6f9c9397dbd3dfbabed667efd675e4808db41a251bebdeb10",
+          "stage": "input",
+          "strictPool": false,
+          "uptime": 330308.1720119167,
+          "wall": 1793580043.576251
+        },
+        {
+          "cpuControl": false,
+          "id": "0-distinct",
+          "native": "Not approved",
+          "page": 1,
+          "preflight": false,
+          "stage": "pdf-native",
+          "strictPool": false,
+          "uptime": 330308.21823495836,
+          "wall": 1793580043.622474
+        },
+        {
+          "bitsPerPixel": 32,
+          "bytesPerRow": 7200,
+          "cpuControl": false,
+          "height": 2400,
+          "id": "0-distinct",
+          "image": "0-distinct-14a5184eacdcb275a78cf4ed069202a3158961339f61bc863e7b8b334b4fea52.png",
+          "preflight": false,
+          "sha256": "14a5184eacdcb275a78cf4ed069202a3158961339f61bc863e7b8b334b4fea52",
+          "stage": "ocr-input",
+          "strictPool": false,
+          "uptime": 330308.25555570837,
+          "wall": 1793580043.659795,
+          "width": 1800
+        },
+        {
+          "automaticLanguage": true,
+          "cpuControl": false,
+          "id": "0-distinct",
+          "languageCorrection": true,
+          "languages": [
+            "ru-RU",
+            "en-US"
+          ],
+          "preflight": false,
+          "revision": 3,
+          "stage": "request-options",
+          "strictPool": false,
+          "uptime": 330308.255759625,
+          "wall": 1793580043.659999
+        },
+        {
+          "cpuControl": false,
+          "id": "0-distinct",
+          "preflight": false,
+          "stage": "perform-begin",
+          "strictPool": false,
+          "uptime": 330308.255867125,
+          "wall": 1793580043.660106
+        }
+      ]
+    },
+    {
+      "id": "0-duplicate",
+      "raw_sha256": "7def7f7dc480b723f0adeb37cf55de82819ac598264c4c611cea4f1f6dd4cea3",
+      "events": [
+        {
+          "bytes": 31299,
+          "cpuControl": false,
+          "id": "0-duplicate",
+          "input": "duplicate.pdf",
+          "preflight": false,
+          "sha256": "0e941594e6739a8a1ff1965a2e88cf1e443a72ac42506858c7ac6ff7e526061e",
+          "stage": "extract-begin",
+          "strictPool": false,
+          "uptime": 330308.1645416667,
+          "wall": 1793580043.568785
+        },
+        {
+          "bytes": 31299,
+          "cpuControl": false,
+          "id": "0-duplicate",
+          "input": "0-duplicate.pdf",
+          "preflight": false,
+          "sha256": "0e941594e6739a8a1ff1965a2e88cf1e443a72ac42506858c7ac6ff7e526061e",
+          "stage": "input",
+          "strictPool": false,
+          "uptime": 330308.1727885417,
+          "wall": 1793580043.577028
+        },
+        {
+          "cpuControl": false,
+          "id": "0-duplicate",
+          "native": "Decision: launch postponed to December\nPage 1",
+          "page": 1,
+          "preflight": false,
+          "stage": "pdf-native",
+          "strictPool": false,
+          "uptime": 330308.2182426667,
+          "wall": 1793580043.6224818
+        },
+        {
+          "bitsPerPixel": 32,
+          "bytesPerRow": 7200,
+          "cpuControl": false,
+          "height": 2400,
+          "id": "0-duplicate",
+          "image": "0-duplicate-06a03cc4a095f7a057faa63febaca970e1b3cce558da4e203a2c41b8ae35a90f.png",
+          "preflight": false,
+          "sha256": "06a03cc4a095f7a057faa63febaca970e1b3cce558da4e203a2c41b8ae35a90f",
+          "stage": "ocr-input",
+          "strictPool": false,
+          "uptime": 330308.257361375,
+          "wall": 1793580043.661601,
+          "width": 1800
+        },
+        {
+          "automaticLanguage": true,
+          "cpuControl": false,
+          "id": "0-duplicate",
+          "languageCorrection": true,
+          "languages": [
+            "ru-RU",
+            "en-US"
+          ],
+          "preflight": false,
+          "revision": 3,
+          "stage": "request-options",
+          "strictPool": false,
+          "uptime": 330308.257540625,
+          "wall": 1793580043.6617799
+        },
+        {
+          "cpuControl": false,
+          "id": "0-duplicate",
+          "preflight": false,
+          "stage": "perform-begin",
+          "strictPool": false,
+          "uptime": 330308.2576604167,
+          "wall": 1793580043.6619
+        }
+      ]
+    },
+    {
+      "id": "0-mixed",
+      "raw_sha256": "8844cd8ac4523ba2e6edd90e1245c1f3d450351ca2e823cb94e9f7c236dd10c2",
+      "events": [
+        {
+          "bytes": 28138,
+          "cpuControl": false,
+          "id": "0-mixed",
+          "input": "mixed.pdf",
+          "preflight": false,
+          "sha256": "36b576d202b516cc5862661ae6b1925eb10c4bd87170f8db2cfc158f8531e2f3",
+          "stage": "extract-begin",
+          "strictPool": false,
+          "uptime": 330308.16454595834,
+          "wall": 1793580043.5687861
+        },
+        {
+          "bytes": 28138,
+          "cpuControl": false,
+          "id": "0-mixed",
+          "input": "0-mixed.pdf",
+          "preflight": false,
+          "sha256": "36b576d202b516cc5862661ae6b1925eb10c4bd87170f8db2cfc158f8531e2f3",
+          "stage": "input",
+          "strictPool": false,
+          "uptime": 330308.17024450004,
+          "wall": 1793580043.5744839
+        },
+        {
+          "cpuControl": false,
+          "id": "0-mixed",
+          "native": "Page 1",
+          "page": 1,
+          "preflight": false,
+          "stage": "pdf-native",
+          "strictPool": false,
+          "uptime": 330308.21823995834,
+          "wall": 1793580043.622479
+        },
+        {
+          "bitsPerPixel": 32,
+          "bytesPerRow": 7200,
+          "cpuControl": false,
+          "height": 2400,
+          "id": "0-mixed",
+          "image": "0-mixed-facb4e7b8aa93c9cdd9e29c8ba27942099dcb671963b4b68c5e4a85ad7b6017c.png",
+          "preflight": false,
+          "sha256": "facb4e7b8aa93c9cdd9e29c8ba27942099dcb671963b4b68c5e4a85ad7b6017c",
+          "stage": "ocr-input",
+          "strictPool": false,
+          "uptime": 330308.2560741667,
+          "wall": 1793580043.6603131,
+          "width": 1800
+        },
+        {
+          "automaticLanguage": true,
+          "cpuControl": false,
+          "id": "0-mixed",
+          "languageCorrection": true,
+          "languages": [
+            "ru-RU",
+            "en-US"
+          ],
+          "preflight": false,
+          "revision": 3,
+          "stage": "request-options",
+          "strictPool": false,
+          "uptime": 330308.256259625,
+          "wall": 1793580043.660499
+        },
+        {
+          "cpuControl": false,
+          "id": "0-mixed",
+          "preflight": false,
+          "stage": "perform-begin",
+          "strictPool": false,
+          "uptime": 330308.25639183336,
+          "wall": 1793580043.660631
+        }
+      ]
+    },
+    {
+      "id": "0-native",
+      "raw_sha256": "e6529f8671792762ed2c4a9b06a3de9d30d06f88b50fd789240eb284e4fadfef",
+      "events": [
+        {
+          "bytes": 8205,
+          "cpuControl": false,
+          "id": "0-native",
+          "input": "native.pdf",
+          "preflight": false,
+          "sha256": "c49439b2b7d57ff4ed0a53fd05736699e85b4214c4ccce0956ea5da92002d9a9",
+          "stage": "extract-begin",
+          "strictPool": false,
+          "uptime": 330308.16462162504,
+          "wall": 1793580043.568861
+        },
+        {
+          "bytes": 8205,
+          "cpuControl": false,
+          "id": "0-native",
+          "input": "0-native.pdf",
+          "preflight": false,
+          "sha256": "c49439b2b7d57ff4ed0a53fd05736699e85b4214c4ccce0956ea5da92002d9a9",
+          "stage": "input",
+          "strictPool": false,
+          "uptime": 330308.172189,
+          "wall": 1793580043.576428
+        },
+        {
+          "cpuControl": false,
+          "id": "0-native",
+          "native": "Project alpha launch",
+          "page": 1,
+          "preflight": false,
+          "stage": "pdf-native",
+          "strictPool": false,
+          "uptime": 330308.21823554166,
+          "wall": 1793580043.6224751
+        },
+        {
+          "bitsPerPixel": 32,
+          "bytesPerRow": 7200,
+          "cpuControl": false,
+          "height": 2400,
+          "id": "0-native",
+          "image": "0-native-519c66ffa5ee209d22d22f97216f5e539515783538256c5fe34b955e3dd6445d.png",
+          "preflight": false,
+          "sha256": "519c66ffa5ee209d22d22f97216f5e539515783538256c5fe34b955e3dd6445d",
+          "stage": "ocr-input",
+          "strictPool": false,
+          "uptime": 330308.24877995835,
+          "wall": 1793580043.653019,
+          "width": 1800
+        },
+        {
+          "automaticLanguage": true,
+          "cpuControl": false,
+          "id": "0-native",
+          "languageCorrection": true,
+          "languages": [
+            "ru-RU",
+            "en-US"
+          ],
+          "preflight": false,
+          "revision": 3,
+          "stage": "request-options",
+          "strictPool": false,
+          "uptime": 330308.249048,
+          "wall": 1793580043.653288
+        },
+        {
+          "cpuControl": false,
+          "id": "0-native",
+          "preflight": false,
+          "stage": "perform-begin",
+          "strictPool": false,
+          "uptime": 330308.2491437084,
+          "wall": 1793580043.653383
+        }
+      ]
+    },
+    {
+      "id": "0-png-en",
+      "raw_sha256": "f4d2b5d91238f76425a72d5911cc2714a470f7bc62d447007ca451896ed0fc7f",
+      "events": [
+        {
+          "bytes": 23567,
+          "cpuControl": false,
+          "id": "0-png-en",
+          "input": "png-en.png",
+          "preflight": false,
+          "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+          "stage": "extract-begin",
+          "strictPool": false,
+          "uptime": 330308.1645525,
+          "wall": 1793580043.568793
+        },
+        {
+          "bytes": 23567,
+          "cpuControl": false,
+          "id": "0-png-en",
+          "input": "0-png-en.png",
+          "preflight": false,
+          "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+          "stage": "input",
+          "strictPool": false,
+          "uptime": 330308.17142720835,
+          "wall": 1793580043.575666
+        },
+        {
+          "bitsPerPixel": 32,
+          "bytesPerRow": 6400,
+          "cpuControl": false,
+          "height": 300,
+          "id": "0-png-en",
+          "image": "0-png-en-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+          "preflight": false,
+          "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0",
+          "stage": "ocr-input",
+          "strictPool": false,
+          "uptime": 330308.18259708333,
+          "wall": 1793580043.5868359,
+          "width": 1600
+        },
+        {
+          "automaticLanguage": true,
+          "cpuControl": false,
+          "id": "0-png-en",
+          "languageCorrection": true,
+          "languages": [
+            "ru-RU",
+            "en-US"
+          ],
+          "preflight": false,
+          "revision": 3,
+          "stage": "request-options",
+          "strictPool": false,
+          "uptime": 330308.19065350003,
+          "wall": 1793580043.594893
+        },
+        {
+          "cpuControl": false,
+          "id": "0-png-en",
+          "preflight": false,
+          "stage": "perform-begin",
+          "strictPool": false,
+          "uptime": 330308.19083670835,
+          "wall": 1793580043.595076
+        }
+      ]
+    },
+    {
+      "id": "0-png-ru",
+      "raw_sha256": "2d47ca027180463be09ccb5afb0a4cfcd9b39523dc70a0562ae13d1927d847c6",
+      "events": [
+        {
+          "bytes": 23283,
+          "cpuControl": false,
+          "id": "0-png-ru",
+          "input": "png-ru.png",
+          "preflight": false,
+          "sha256": "666a19cf8a8ac85e56ccabc0cc911b5d0f570b22c534aff08c942531e46b9b5a",
+          "stage": "extract-begin",
+          "strictPool": false,
+          "uptime": 330308.16460358334,
+          "wall": 1793580043.568843
+        },
+        {
+          "bytes": 23283,
+          "cpuControl": false,
+          "id": "0-png-ru",
+          "input": "0-png-ru.png",
+          "preflight": false,
+          "sha256": "666a19cf8a8ac85e56ccabc0cc911b5d0f570b22c534aff08c942531e46b9b5a",
+          "stage": "input",
+          "strictPool": false,
+          "uptime": 330308.1702485417,
+          "wall": 1793580043.5744882
+        },
+        {
+          "bitsPerPixel": 32,
+          "bytesPerRow": 6400,
+          "cpuControl": false,
+          "height": 300,
+          "id": "0-png-ru",
+          "image": "0-png-ru-e1183c6d804b89a27f0146202d71c2569fe688e26399387fe6255f5e0251c0f9.png",
+          "preflight": false,
+          "sha256": "e1183c6d804b89a27f0146202d71c2569fe688e26399387fe6255f5e0251c0f9",
+          "stage": "ocr-input",
+          "strictPool": false,
+          "uptime": 330308.18261041667,
+          "wall": 1793580043.5868502,
+          "width": 1600
+        },
+        {
+          "automaticLanguage": true,
+          "cpuControl": false,
+          "id": "0-png-ru",
+          "languageCorrection": true,
+          "languages": [
+            "ru-RU",
+            "en-US"
+          ],
+          "preflight": false,
+          "revision": 3,
+          "stage": "request-options",
+          "strictPool": false,
+          "uptime": 330308.1906535417,
+          "wall": 1793580043.594894
+        },
+        {
+          "cpuControl": false,
+          "id": "0-png-ru",
+          "preflight": false,
+          "stage": "perform-begin",
+          "strictPool": false,
+          "uptime": 330308.19103125,
+          "wall": 1793580043.595271
+        }
+      ]
+    },
+    {
+      "id": "1-20",
+      "raw_sha256": "bf22c94a633cd18cd5ef3b4146b8c4c8987f9ab17cef035c17cb3fb83d85f396",
+      "events": [
+        {
+          "bytes": 21495,
+          "cpuControl": false,
+          "id": "1-20",
+          "input": "20.pdf",
+          "preflight": false,
+          "sha256": "243d5331e61658a7baa559bd214309203a224dd534280b032d472387aba5c35b",
+          "stage": "extract-begin",
+          "strictPool": false,
+          "uptime": 330308.164629,
+          "wall": 1793580043.5688682
+        },
+        {
+          "bytes": 21495,
+          "cpuControl": false,
+          "id": "1-20",
+          "input": "1-20.pdf",
+          "preflight": false,
+          "sha256": "243d5331e61658a7baa559bd214309203a224dd534280b032d472387aba5c35b",
+          "stage": "input",
+          "strictPool": false,
+          "uptime": 330308.1709534167,
+          "wall": 1793580043.575193
+        },
+        {
+          "cpuControl": false,
+          "id": "1-20",
+          "native": "2026",
+          "page": 1,
+          "preflight": false,
+          "stage": "pdf-native",
+          "strictPool": false,
+          "uptime": 330308.21824791667,
+          "wall": 1793580043.622487
+        },
+        {
+          "bitsPerPixel": 32,
+          "bytesPerRow": 7200,
+          "cpuControl": false,
+          "height": 2400,
+          "id": "1-20",
+          "image": "1-20-0e5e0d92af32c8dbcf4f4e4055fa450fde53c242363af02785df70f5ed995831.png",
+          "preflight": false,
+          "sha256": "0e5e0d92af32c8dbcf4f4e4055fa450fde53c242363af02785df70f5ed995831",
+          "stage": "ocr-input",
+          "strictPool": false,
+          "uptime": 330308.2565280417,
+          "wall": 1793580043.660767,
+          "width": 1800
+        },
+        {
+          "automaticLanguage": true,
+          "cpuControl": false,
+          "id": "1-20",
+          "languageCorrection": true,
+          "languages": [
+            "ru-RU",
+            "en-US"
+          ],
+          "preflight": false,
+          "revision": 3,
+          "stage": "request-options",
+          "strictPool": false,
+          "uptime": 330308.2567835834,
+          "wall": 1793580043.6610231
+        },
+        {
+          "cpuControl": false,
+          "id": "1-20",
+          "preflight": false,
+          "stage": "perform-begin",
+          "strictPool": false,
+          "uptime": 330308.2570231667,
+          "wall": 1793580043.661262
+        }
+      ]
+    },
+    {
+      "id": "1-distinct",
+      "raw_sha256": "8f123c6c062b4b3fe75dc598b16d80b78f8b9309d1a37efdf21658dc043b00aa",
+      "events": [
+        {
+          "bytes": 24231,
+          "cpuControl": false,
+          "id": "1-distinct",
+          "input": "distinct.pdf",
+          "preflight": false,
+          "sha256": "454af4bf489515e6f9c9397dbd3dfbabed667efd675e4808db41a251bebdeb10",
+          "stage": "extract-begin",
+          "strictPool": false,
+          "uptime": 330308.1645406667,
+          "wall": 1793580043.568785
+        },
+        {
+          "bytes": 24231,
+          "cpuControl": false,
+          "id": "1-distinct",
+          "input": "1-distinct.pdf",
+          "preflight": false,
+          "sha256": "454af4bf489515e6f9c9397dbd3dfbabed667efd675e4808db41a251bebdeb10",
+          "stage": "input",
+          "strictPool": false,
+          "uptime": 330308.1701531667,
+          "wall": 1793580043.5743918
+        },
+        {
+          "cpuControl": false,
+          "id": "1-distinct",
+          "native": "Not approved",
+          "page": 1,
+          "preflight": false,
+          "stage": "pdf-native",
+          "strictPool": false,
+          "uptime": 330308.218244125,
+          "wall": 1793580043.622483
+        },
+        {
+          "bitsPerPixel": 32,
+          "bytesPerRow": 7200,
+          "cpuControl": false,
+          "height": 2400,
+          "id": "1-distinct",
+          "image": "1-distinct-14a5184eacdcb275a78cf4ed069202a3158961339f61bc863e7b8b334b4fea52.png",
+          "preflight": false,
+          "sha256": "14a5184eacdcb275a78cf4ed069202a3158961339f61bc863e7b8b334b4fea52",
+          "stage": "ocr-input",
+          "strictPool": false,
+          "uptime": 330308.25571212504,
+          "wall": 1793580043.659951,
+          "width": 1800
+        },
+        {
+          "automaticLanguage": true,
+          "cpuControl": false,
+          "id": "1-distinct",
+          "languageCorrection": true,
+          "languages": [
+            "ru-RU",
+            "en-US"
+          ],
+          "preflight": false,
+          "revision": 3,
+          "stage": "request-options",
+          "strictPool": false,
+          "uptime": 330308.25586208334,
+          "wall": 1793580043.660102
+        },
+        {
+          "cpuControl": false,
+          "id": "1-distinct",
+          "preflight": false,
+          "stage": "perform-begin",
+          "strictPool": false,
+          "uptime": 330308.2559534167,
+          "wall": 1793580043.660193
+        }
+      ]
+    },
+    {
+      "id": "1-duplicate",
+      "raw_sha256": "5440e7f86ab20bb968f59632d113155918fd9722c86a07a047cdda820d1a04bb",
+      "events": [
+        {
+          "bytes": 31299,
+          "cpuControl": false,
+          "id": "1-duplicate",
+          "input": "duplicate.pdf",
+          "preflight": false,
+          "sha256": "0e941594e6739a8a1ff1965a2e88cf1e443a72ac42506858c7ac6ff7e526061e",
+          "stage": "extract-begin",
+          "strictPool": false,
+          "uptime": 330308.16454075003,
+          "wall": 1793580043.568785
+        },
+        {
+          "bytes": 31299,
+          "cpuControl": false,
+          "id": "1-duplicate",
+          "input": "1-duplicate.pdf",
+          "preflight": false,
+          "sha256": "0e941594e6739a8a1ff1965a2e88cf1e443a72ac42506858c7ac6ff7e526061e",
+          "stage": "input",
+          "strictPool": false,
+          "uptime": 330308.1706047084,
+          "wall": 1793580043.574844
+        },
+        {
+          "cpuControl": false,
+          "id": "1-duplicate",
+          "native": "Decision: launch postponed to December\nPage 1",
+          "page": 1,
+          "preflight": false,
+          "stage": "pdf-native",
+          "strictPool": false,
+          "uptime": 330308.2182375,
+          "wall": 1793580043.622477
+        },
+        {
+          "bitsPerPixel": 32,
+          "bytesPerRow": 7200,
+          "cpuControl": false,
+          "height": 2400,
+          "id": "1-duplicate",
+          "image": "1-duplicate-06a03cc4a095f7a057faa63febaca970e1b3cce558da4e203a2c41b8ae35a90f.png",
+          "preflight": false,
+          "sha256": "06a03cc4a095f7a057faa63febaca970e1b3cce558da4e203a2c41b8ae35a90f",
+          "stage": "ocr-input",
+          "strictPool": false,
+          "uptime": 330308.2562156667,
+          "wall": 1793580043.660455,
+          "width": 1800
+        },
+        {
+          "automaticLanguage": true,
+          "cpuControl": false,
+          "id": "1-duplicate",
+          "languageCorrection": true,
+          "languages": [
+            "ru-RU",
+            "en-US"
+          ],
+          "preflight": false,
+          "revision": 3,
+          "stage": "request-options",
+          "strictPool": false,
+          "uptime": 330308.25638104166,
+          "wall": 1793580043.6606212
+        },
+        {
+          "cpuControl": false,
+          "id": "1-duplicate",
+          "preflight": false,
+          "stage": "perform-begin",
+          "strictPool": false,
+          "uptime": 330308.25653504167,
+          "wall": 1793580043.660774
+        }
+      ]
+    },
+    {
+      "id": "1-mixed",
+      "raw_sha256": "b21983530093162e15860b458a87d969014a068c4c7487a5122d00f4819d9f1e",
+      "events": [
+        {
+          "bytes": 28138,
+          "cpuControl": false,
+          "id": "1-mixed",
+          "input": "mixed.pdf",
+          "preflight": false,
+          "sha256": "36b576d202b516cc5862661ae6b1925eb10c4bd87170f8db2cfc158f8531e2f3",
+          "stage": "extract-begin",
+          "strictPool": false,
+          "uptime": 330308.16454020835,
+          "wall": 1793580043.56878
+        },
+        {
+          "bytes": 28138,
+          "cpuControl": false,
+          "id": "1-mixed",
+          "input": "1-mixed.pdf",
+          "preflight": false,
+          "sha256": "36b576d202b516cc5862661ae6b1925eb10c4bd87170f8db2cfc158f8531e2f3",
+          "stage": "input",
+          "strictPool": false,
+          "uptime": 330308.17187225004,
+          "wall": 1793580043.5761108
+        },
+        {
+          "cpuControl": false,
+          "id": "1-mixed",
+          "native": "Page 1",
+          "page": 1,
+          "preflight": false,
+          "stage": "pdf-native",
+          "strictPool": false,
+          "uptime": 330308.2182349167,
+          "wall": 1793580043.6224751
+        },
+        {
+          "bitsPerPixel": 32,
+          "bytesPerRow": 7200,
+          "cpuControl": false,
+          "height": 2400,
+          "id": "1-mixed",
+          "image": "1-mixed-facb4e7b8aa93c9cdd9e29c8ba27942099dcb671963b4b68c5e4a85ad7b6017c.png",
+          "preflight": false,
+          "sha256": "facb4e7b8aa93c9cdd9e29c8ba27942099dcb671963b4b68c5e4a85ad7b6017c",
+          "stage": "ocr-input",
+          "strictPool": false,
+          "uptime": 330308.25721687503,
+          "wall": 1793580043.661456,
+          "width": 1800
+        },
+        {
+          "automaticLanguage": true,
+          "cpuControl": false,
+          "id": "1-mixed",
+          "languageCorrection": true,
+          "languages": [
+            "ru-RU",
+            "en-US"
+          ],
+          "preflight": false,
+          "revision": 3,
+          "stage": "request-options",
+          "strictPool": false,
+          "uptime": 330308.25735458336,
+          "wall": 1793580043.661594
+        },
+        {
+          "cpuControl": false,
+          "id": "1-mixed",
+          "preflight": false,
+          "stage": "perform-begin",
+          "strictPool": false,
+          "uptime": 330308.2574541667,
+          "wall": 1793580043.661693
+        }
+      ]
+    },
+    {
+      "id": "1-png-en",
+      "raw_sha256": "137de5d3130fc2e54b4cec478f88dc98f4fde03ad5cf082d3073b0b2b9dc331f",
+      "events": [
+        {
+          "bytes": 23567,
+          "cpuControl": false,
+          "id": "1-png-en",
+          "input": "png-en.png",
+          "preflight": false,
+          "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+          "stage": "extract-begin",
+          "strictPool": false,
+          "uptime": 330308.16454520833,
+          "wall": 1793580043.568785
+        },
+        {
+          "bytes": 23567,
+          "cpuControl": false,
+          "id": "1-png-en",
+          "input": "1-png-en.png",
+          "preflight": false,
+          "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+          "stage": "input",
+          "strictPool": false,
+          "uptime": 330308.1728865834,
+          "wall": 1793580043.577126
+        },
+        {
+          "bitsPerPixel": 32,
+          "bytesPerRow": 6400,
+          "cpuControl": false,
+          "height": 300,
+          "id": "1-png-en",
+          "image": "1-png-en-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+          "preflight": false,
+          "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0",
+          "stage": "ocr-input",
+          "strictPool": false,
+          "uptime": 330308.182612875,
+          "wall": 1793580043.586852,
+          "width": 1600
+        },
+        {
+          "automaticLanguage": true,
+          "cpuControl": false,
+          "id": "1-png-en",
+          "languageCorrection": true,
+          "languages": [
+            "ru-RU",
+            "en-US"
+          ],
+          "preflight": false,
+          "revision": 3,
+          "stage": "request-options",
+          "strictPool": false,
+          "uptime": 330308.1906529167,
+          "wall": 1793580043.594893
+        },
+        {
+          "cpuControl": false,
+          "id": "1-png-en",
+          "preflight": false,
+          "stage": "perform-begin",
+          "strictPool": false,
+          "uptime": 330308.19110195833,
+          "wall": 1793580043.595341
+        }
+      ]
+    },
+    {
+      "id": "1-png-ru",
+      "raw_sha256": "31b8741337e664c39a2afa77bd26ed3f337497d51c922a4c70cd6b4497e5c20c",
+      "events": [
+        {
+          "bytes": 23283,
+          "cpuControl": false,
+          "id": "1-png-ru",
+          "input": "png-ru.png",
+          "preflight": false,
+          "sha256": "666a19cf8a8ac85e56ccabc0cc911b5d0f570b22c534aff08c942531e46b9b5a",
+          "stage": "extract-begin",
+          "strictPool": false,
+          "uptime": 330308.16456604167,
+          "wall": 1793580043.5688062
+        },
+        {
+          "bytes": 23283,
+          "cpuControl": false,
+          "id": "1-png-ru",
+          "input": "1-png-ru.png",
+          "preflight": false,
+          "sha256": "666a19cf8a8ac85e56ccabc0cc911b5d0f570b22c534aff08c942531e46b9b5a",
+          "stage": "input",
+          "strictPool": false,
+          "uptime": 330308.17124708334,
+          "wall": 1793580043.575486
+        },
+        {
+          "bitsPerPixel": 32,
+          "bytesPerRow": 6400,
+          "cpuControl": false,
+          "height": 300,
+          "id": "1-png-ru",
+          "image": "1-png-ru-e1183c6d804b89a27f0146202d71c2569fe688e26399387fe6255f5e0251c0f9.png",
+          "preflight": false,
+          "sha256": "e1183c6d804b89a27f0146202d71c2569fe688e26399387fe6255f5e0251c0f9",
+          "stage": "ocr-input",
+          "strictPool": false,
+          "uptime": 330308.18258070835,
+          "wall": 1793580043.5868201,
+          "width": 1600
+        },
+        {
+          "automaticLanguage": true,
+          "cpuControl": false,
+          "id": "1-png-ru",
+          "languageCorrection": true,
+          "languages": [
+            "ru-RU",
+            "en-US"
+          ],
+          "preflight": false,
+          "revision": 3,
+          "stage": "request-options",
+          "strictPool": false,
+          "uptime": 330308.19065325,
+          "wall": 1793580043.594893
+        },
+        {
+          "cpuControl": false,
+          "id": "1-png-ru",
+          "preflight": false,
+          "stage": "perform-begin",
+          "strictPool": false,
+          "uptime": 330308.19093358336,
+          "wall": 1793580043.595173
+        }
+      ]
+    }
+  ],
+  "assets": {
+    "0-20.pdf": {
+      "asset": "assets/243d5331e61658a7baa559bd214309203a224dd534280b032d472387aba5c35b.pdf",
+      "bytes": 21495,
+      "sha256": "243d5331e61658a7baa559bd214309203a224dd534280b032d472387aba5c35b"
+    },
+    "0-20-0e5e0d92af32c8dbcf4f4e4055fa450fde53c242363af02785df70f5ed995831.png": {
+      "asset": "assets/0e5e0d92af32c8dbcf4f4e4055fa450fde53c242363af02785df70f5ed995831.png",
+      "bytes": 94857,
+      "sha256": "0e5e0d92af32c8dbcf4f4e4055fa450fde53c242363af02785df70f5ed995831"
+    },
+    "0-26.pdf": {
+      "asset": "assets/e1e25777769cf421e9a869e44ca102348d4f2da46302135493f2005f6befd92a.pdf",
+      "bytes": 21549,
+      "sha256": "e1e25777769cf421e9a869e44ca102348d4f2da46302135493f2005f6befd92a"
+    },
+    "0-26-ed81cb04fddb07561b7087d54646c8dda614c678115347c82f8fd2c0df7c7b87.png": {
+      "asset": "assets/ed81cb04fddb07561b7087d54646c8dda614c678115347c82f8fd2c0df7c7b87.png",
+      "bytes": 94605,
+      "sha256": "ed81cb04fddb07561b7087d54646c8dda614c678115347c82f8fd2c0df7c7b87"
+    },
+    "0-distinct.pdf": {
+      "asset": "assets/454af4bf489515e6f9c9397dbd3dfbabed667efd675e4808db41a251bebdeb10.pdf",
+      "bytes": 24231,
+      "sha256": "454af4bf489515e6f9c9397dbd3dfbabed667efd675e4808db41a251bebdeb10"
+    },
+    "0-distinct-14a5184eacdcb275a78cf4ed069202a3158961339f61bc863e7b8b334b4fea52.png": {
+      "asset": "assets/14a5184eacdcb275a78cf4ed069202a3158961339f61bc863e7b8b334b4fea52.png",
+      "bytes": 103962,
+      "sha256": "14a5184eacdcb275a78cf4ed069202a3158961339f61bc863e7b8b334b4fea52"
+    },
+    "0-duplicate.pdf": {
+      "asset": "assets/0e941594e6739a8a1ff1965a2e88cf1e443a72ac42506858c7ac6ff7e526061e.pdf",
+      "bytes": 31299,
+      "sha256": "0e941594e6739a8a1ff1965a2e88cf1e443a72ac42506858c7ac6ff7e526061e"
+    },
+    "0-duplicate-06a03cc4a095f7a057faa63febaca970e1b3cce558da4e203a2c41b8ae35a90f.png": {
+      "asset": "assets/06a03cc4a095f7a057faa63febaca970e1b3cce558da4e203a2c41b8ae35a90f.png",
+      "bytes": 120625,
+      "sha256": "06a03cc4a095f7a057faa63febaca970e1b3cce558da4e203a2c41b8ae35a90f"
+    },
+    "0-mixed.pdf": {
+      "asset": "assets/36b576d202b516cc5862661ae6b1925eb10c4bd87170f8db2cfc158f8531e2f3.pdf",
+      "bytes": 28138,
+      "sha256": "36b576d202b516cc5862661ae6b1925eb10c4bd87170f8db2cfc158f8531e2f3"
+    },
+    "0-mixed-facb4e7b8aa93c9cdd9e29c8ba27942099dcb671963b4b68c5e4a85ad7b6017c.png": {
+      "asset": "assets/facb4e7b8aa93c9cdd9e29c8ba27942099dcb671963b4b68c5e4a85ad7b6017c.png",
+      "bytes": 117329,
+      "sha256": "facb4e7b8aa93c9cdd9e29c8ba27942099dcb671963b4b68c5e4a85ad7b6017c"
+    },
+    "0-native.pdf": {
+      "asset": "assets/c49439b2b7d57ff4ed0a53fd05736699e85b4214c4ccce0956ea5da92002d9a9.pdf",
+      "bytes": 8205,
+      "sha256": "c49439b2b7d57ff4ed0a53fd05736699e85b4214c4ccce0956ea5da92002d9a9"
+    },
+    "0-native-519c66ffa5ee209d22d22f97216f5e539515783538256c5fe34b955e3dd6445d.png": {
+      "asset": "assets/519c66ffa5ee209d22d22f97216f5e539515783538256c5fe34b955e3dd6445d.png",
+      "bytes": 95566,
+      "sha256": "519c66ffa5ee209d22d22f97216f5e539515783538256c5fe34b955e3dd6445d"
+    },
+    "0-png-en.png": {
+      "asset": "assets/8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8.png",
+      "bytes": 23567,
+      "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8"
+    },
+    "0-png-en-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png": {
+      "asset": "assets/20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+      "bytes": 23579,
+      "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0"
+    },
+    "0-png-ru.png": {
+      "asset": "assets/666a19cf8a8ac85e56ccabc0cc911b5d0f570b22c534aff08c942531e46b9b5a.png",
+      "bytes": 23283,
+      "sha256": "666a19cf8a8ac85e56ccabc0cc911b5d0f570b22c534aff08c942531e46b9b5a"
+    },
+    "0-png-ru-e1183c6d804b89a27f0146202d71c2569fe688e26399387fe6255f5e0251c0f9.png": {
+      "asset": "assets/e1183c6d804b89a27f0146202d71c2569fe688e26399387fe6255f5e0251c0f9.png",
+      "bytes": 23295,
+      "sha256": "e1183c6d804b89a27f0146202d71c2569fe688e26399387fe6255f5e0251c0f9"
+    },
+    "1-20.pdf": {
+      "asset": "assets/243d5331e61658a7baa559bd214309203a224dd534280b032d472387aba5c35b.pdf",
+      "bytes": 21495,
+      "sha256": "243d5331e61658a7baa559bd214309203a224dd534280b032d472387aba5c35b"
+    },
+    "1-20-0e5e0d92af32c8dbcf4f4e4055fa450fde53c242363af02785df70f5ed995831.png": {
+      "asset": "assets/0e5e0d92af32c8dbcf4f4e4055fa450fde53c242363af02785df70f5ed995831.png",
+      "bytes": 94857,
+      "sha256": "0e5e0d92af32c8dbcf4f4e4055fa450fde53c242363af02785df70f5ed995831"
+    },
+    "1-distinct.pdf": {
+      "asset": "assets/454af4bf489515e6f9c9397dbd3dfbabed667efd675e4808db41a251bebdeb10.pdf",
+      "bytes": 24231,
+      "sha256": "454af4bf489515e6f9c9397dbd3dfbabed667efd675e4808db41a251bebdeb10"
+    },
+    "1-distinct-14a5184eacdcb275a78cf4ed069202a3158961339f61bc863e7b8b334b4fea52.png": {
+      "asset": "assets/14a5184eacdcb275a78cf4ed069202a3158961339f61bc863e7b8b334b4fea52.png",
+      "bytes": 103962,
+      "sha256": "14a5184eacdcb275a78cf4ed069202a3158961339f61bc863e7b8b334b4fea52"
+    },
+    "1-duplicate.pdf": {
+      "asset": "assets/0e941594e6739a8a1ff1965a2e88cf1e443a72ac42506858c7ac6ff7e526061e.pdf",
+      "bytes": 31299,
+      "sha256": "0e941594e6739a8a1ff1965a2e88cf1e443a72ac42506858c7ac6ff7e526061e"
+    },
+    "1-duplicate-06a03cc4a095f7a057faa63febaca970e1b3cce558da4e203a2c41b8ae35a90f.png": {
+      "asset": "assets/06a03cc4a095f7a057faa63febaca970e1b3cce558da4e203a2c41b8ae35a90f.png",
+      "bytes": 120625,
+      "sha256": "06a03cc4a095f7a057faa63febaca970e1b3cce558da4e203a2c41b8ae35a90f"
+    },
+    "1-mixed.pdf": {
+      "asset": "assets/36b576d202b516cc5862661ae6b1925eb10c4bd87170f8db2cfc158f8531e2f3.pdf",
+      "bytes": 28138,
+      "sha256": "36b576d202b516cc5862661ae6b1925eb10c4bd87170f8db2cfc158f8531e2f3"
+    },
+    "1-mixed-facb4e7b8aa93c9cdd9e29c8ba27942099dcb671963b4b68c5e4a85ad7b6017c.png": {
+      "asset": "assets/facb4e7b8aa93c9cdd9e29c8ba27942099dcb671963b4b68c5e4a85ad7b6017c.png",
+      "bytes": 117329,
+      "sha256": "facb4e7b8aa93c9cdd9e29c8ba27942099dcb671963b4b68c5e4a85ad7b6017c"
+    },
+    "1-png-en.png": {
+      "asset": "assets/8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8.png",
+      "bytes": 23567,
+      "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8"
+    },
+    "1-png-en-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png": {
+      "asset": "assets/20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+      "bytes": 23579,
+      "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0"
+    },
+    "1-png-ru.png": {
+      "asset": "assets/666a19cf8a8ac85e56ccabc0cc911b5d0f570b22c534aff08c942531e46b9b5a.png",
+      "bytes": 23283,
+      "sha256": "666a19cf8a8ac85e56ccabc0cc911b5d0f570b22c534aff08c942531e46b9b5a"
+    },
+    "1-png-ru-e1183c6d804b89a27f0146202d71c2569fe688e26399387fe6255f5e0251c0f9.png": {
+      "asset": "assets/e1183c6d804b89a27f0146202d71c2569fe688e26399387fe6255f5e0251c0f9.png",
+      "bytes": 23295,
+      "sha256": "e1183c6d804b89a27f0146202d71c2569fe688e26399387fe6255f5e0251c0f9"
+    }
+  },
+  "stdout.txt": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "stderr.txt": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  }
+}

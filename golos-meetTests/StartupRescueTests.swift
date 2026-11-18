@@ -48,6 +48,7 @@ import Foundation
         #expect(meta.durationSeconds == 10)
         #expect(meta.endedAt == meta.startedAt.addingTimeInterval(10))
         #expect(meta.status == .recording)
+        #expect(meta.preserveAudio == true)
         // Заголовок починен.
         let wav = try Data(contentsOf: dir.appendingPathComponent("mic.wav"))
         let dataField = wav.subdata(in: 40..<44).withUnsafeBytes { UInt32(littleEndian: $0.loadUnaligned(as: UInt32.self)) }
@@ -61,6 +62,63 @@ import Foundation
         #expect(rescued == [dir])
         let meta = try MeetingMeta.decoded(Data(contentsOf: dir.appendingPathComponent("meta.json")))
         #expect(meta.status == .processing)
+    }
+
+    @Test func shortInterruptedCaptureSurvivesRescueAndDefaultPipeline() async throws {
+        let root = try makeRoot()
+        defer { try? FileManager.default.removeItem(at: root) }
+        let dir = try makeMeeting(in: root, id: "short-interrupted", status: .recording,
+                                  brokenWavDataBytes: 320_000)
+        #expect(StartupRescue.run(root: root) == [dir])
+        let repaired = try Data(contentsOf: dir.appendingPathComponent("mic.wav"))
+        let pipeline = ProcessingPipeline(asrFactory: { ProcessingPipelineTests.StubASR() })
+        await pipeline.process(folder: dir)
+        let meta = try MeetingMeta.decoded(Data(contentsOf: dir.appendingPathComponent("meta.json")))
+        #expect(meta.status == .ready)
+        #expect(meta.preserveAudio == true)
+        #expect(try Data(contentsOf: dir.appendingPathComponent("mic.wav")) == repaired)
+    }
+
+    @Test func failedProtectionWriteDoesNotEnqueueLegacyShortAudio() async throws {
+        let root = try makeRoot()
+        let dir = try makeMeeting(in: root, id: "legacy-short", status: .recording)
+        let metaURL = dir.appendingPathComponent("meta.json")
+        defer {
+            try? FileManager.default.setAttributes([.immutable: false], ofItemAtPath: metaURL.path)
+            try? FileManager.default.removeItem(at: root)
+        }
+        for name in ["mic.wav", "system.wav"] {
+            let writer = try WavWriter(url: dir.appendingPathComponent(name))
+            await writer.append(Data(repeating: 0, count: 32_000))
+            try await writer.finalize()
+        }
+        let micBefore = try Data(contentsOf: dir.appendingPathComponent("mic.wav"))
+        let systemBefore = try Data(contentsOf: dir.appendingPathComponent("system.wav"))
+        let metadataBefore = try Data(contentsOf: metaURL)
+        var protected = try MeetingMeta.decoded(metadataBefore)
+        #expect(protected.preserveAudio == nil)
+        protected.preserveAudio = true
+        // Real APFS failure of Foundation's atomic replacement, no injected throw.
+        try FileManager.default.setAttributes([.immutable: true], ofItemAtPath: metaURL.path)
+        #expect(throws: (any Error).self) { try protected.write(to: metaURL) }
+        let rescued = StartupRescue.run(root: root)
+        #expect(rescued.isEmpty)
+        var asrCreated = false
+        let pipeline = ProcessingPipeline(asrFactory: {
+            asrCreated = true
+            return ProcessingPipelineTests.StubASR()
+        })
+        for folder in rescued { await pipeline.process(folder: folder) }
+        #expect(!asrCreated)
+        #expect(try Data(contentsOf: metaURL) == metadataBefore)
+        #expect(try Data(contentsOf: dir.appendingPathComponent("mic.wav")) == micBefore)
+        #expect(try Data(contentsOf: dir.appendingPathComponent("system.wav")) == systemBefore)
+        // Once saving is possible, the same folder can safely be rescued and processed.
+        try FileManager.default.setAttributes([.immutable: false], ofItemAtPath: metaURL.path)
+        #expect(StartupRescue.run(root: root) == [dir])
+        await pipeline.process(folder: dir)
+        #expect(asrCreated)
+        #expect(try Data(contentsOf: dir.appendingPathComponent("mic.wav")) == micBefore)
     }
 
     @Test func summarizing_becomesReady_notReturned() throws {

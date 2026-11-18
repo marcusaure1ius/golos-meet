@@ -1,0 +1,32 @@
+import Foundation
+import Testing
+@testable import golos_meet
+
+nonisolated private final class Review63Events: @unchecked Sendable {
+    private let lock = NSLock()
+    private var events: [MemoryQueueDiagnostics.Event] = []
+    func observe(_ event: MemoryQueueDiagnostics.Event) { lock.withLock { events.append(event) } }
+    func has(_ stage: String, owner: UUID) -> Bool { lock.withLock { events.contains { $0.stage == stage && $0.ownerID == owner } } }
+    var rows: [MemoryQueueDiagnostics.Event] { lock.withLock { events } }
+}
+@MainActor @Suite(SQLiteFixtureTrait()) struct MemoryBridgeOverflowTests {
+    @Test func overflowMustNotTurnARealStartupAcknowledgementIntoFalseAbsence() async throws {
+        let trace = MemoryBridgeTestTrace("review63-overflow"), actual = Review63Events()
+        try await MemoryQueueDiagnostics.$observer.withValue({ event in trace.observe(event); actual.observe(event) }) {
+            let session = try MemoryBridgeTestSession(trace)
+            for i in 0..<4100 { trace.mark("review63.fill", ["index": String(i)]) }
+            #expect(trace.rows.count == 4096 && trace.droppedCount > 0)
+            session.start()
+            try await session.fixture.until("independent native startup ACK") { actual.has("configuration.start.return", owner: session.bridgeID) }
+            #expect(session.fixture.worker.diagnosticSnapshot()["started"] == "true")
+            // Actual callback was received by the independent observer; a
+            // bounded diagnostic buffer must not make a control report it absent.
+            #expect(trace.has("configuration.start.return", owner: session.bridgeID))
+            session.bridge?.stop(); session.bridge = nil
+            await session.gate.signal(); await session.fixture.cleanup()
+            try await session.fixture.until("independent deinit join") { actual.has("deinit.stop.return", owner: session.bridgeID) }
+            trace.mark("review63.actual-ACKs-confirmed")
+            try trace.attachTimeline()
+        }
+    }
+}

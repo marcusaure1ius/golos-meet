@@ -2,11 +2,24 @@ import SwiftUI
 
 /// Карточка встречи в ленте/календаре: заголовок + время·длительность + статус-бейдж.
 /// Во время записи (совпал id с `RecordingState`) — бегущий таймер и пульсирующая точка.
-struct MeetingCard: View {
+struct MeetingCard<Footer: View>: View {
     @Environment(\.palette) var p
     @EnvironmentObject var processor: MeetingProcessor
     @EnvironmentObject var recordingState: RecordingState
     let meeting: MeetingSummary
+    /// Дополнительная строка под шапкой карточки (инлайн-предложение Входящих).
+    /// Содержимое само отвечает за внутренние отступы; фон карточки общий.
+    private let footer: Footer
+
+    init(meeting: MeetingSummary) where Footer == EmptyView {
+        self.meeting = meeting
+        self.footer = EmptyView()
+    }
+
+    init(meeting: MeetingSummary, @ViewBuilder footer: () -> Footer) {
+        self.meeting = meeting
+        self.footer = footer()
+    }
 
     @State private var hovering = false
 
@@ -29,10 +42,6 @@ struct MeetingCard: View {
         }
     }
 
-    private static let timeFmt: DateFormatter = {
-        let f = DateFormatter(); f.locale = Locale(identifier: "ru_RU"); f.timeZone = .current; f.dateFormat = "HH:mm"; return f
-    }()
-
     @ViewBuilder private var durationView: some View {
         if let live {
             TimelineView(.periodic(from: live.startedAt, by: 1)) { ctx in
@@ -46,22 +55,25 @@ struct MeetingCard: View {
 
     var body: some View {
         GCard {
-            HStack(alignment: .top, spacing: 12) {
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(meeting.title)
-                        .font(.system(size: 15, weight: .semibold))
-                        .foregroundStyle(p.ink)
-                    HStack(spacing: 8) {
-                        Text(Self.timeFmt.string(from: meeting.startedAt))
-                            .font(.system(size: 13, design: .monospaced)).foregroundStyle(p.muted)
-                        Text("·").foregroundStyle(p.muted2)
-                        durationView
+            VStack(alignment: .leading, spacing: 0) {
+                HStack(alignment: .top, spacing: 12) {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(meeting.title)
+                            .font(.system(size: 15, weight: .semibold))
+                            .foregroundStyle(p.ink)
+                        HStack(spacing: 8) {
+                            Text(CardTime.timeFormatter.string(from: meeting.startedAt))
+                                .font(.system(size: 13, design: .monospaced)).foregroundStyle(p.muted)
+                            Text("·").foregroundStyle(p.muted2)
+                            durationView
+                        }
                     }
+                    Spacer(minLength: 0)
+                    badge
                 }
-                Spacer(minLength: 0)
-                badge
+                .padding(.horizontal, 16).padding(.vertical, 13)
+                footer
             }
-            .padding(.horizontal, 16).padding(.vertical, 13)
         }
         .overlay(
             RoundedRectangle(cornerRadius: 12, style: .continuous)
@@ -88,4 +100,11 @@ private struct RecordingBadge: View {
         .background(p.danger.opacity(0.12)).clipShape(Capsule())
         .onAppear { pulse = true }
     }
+}
+
+/// Форматтер времени карточки: общий для всех инстансов, вне generic-типа.
+private enum CardTime {
+    static let timeFormatter: DateFormatter = {
+        let f = DateFormatter(); f.locale = Locale(identifier: "ru_RU"); f.timeZone = .current; f.dateFormat = "HH:mm"; return f
+    }()
 }

@@ -1,0 +1,277 @@
+[
+  {
+    "root": "memory-history-03746BCE-A430-4AA5-A012-9D14C264E10A",
+    "existed_after_host": true,
+    "exists_after_cleanup": false
+  },
+  {
+    "root": "memory-history-273A2D68-91EC-4D15-A3FE-4E54FA981886",
+    "existed_after_host": true,
+    "exists_after_cleanup": false
+  },
+  {
+    "root": "memory-history-320F7424-E291-4672-920C-B3D1546C647C",
+    "existed_after_host": true,
+    "exists_after_cleanup": false
+  },
+  {
+    "root": "memory-history-3A41516D-8A34-4175-B3B0-88D9BB33308F",
+    "existed_after_host": true,
+    "exists_after_cleanup": false
+  },
+  {
+    "root": "memory-history-4711EED9-6EAC-4BD9-B3CE-B27379311B6E",
+    "existed_after_host": true,
+    "exists_after_cleanup": false
+  },
+  {
+    "root": "memory-history-50102F4F-D30F-4448-A130-863346164223",
+    "existed_after_host": true,
+    "exists_after_cleanup": false
+  },
+  {
+    "root": "memory-history-5A0E6857-79CD-4ACF-A397-8D5940E7CE71",
+    "existed_after_host": true,
+    "exists_after_cleanup": false
+  },
+  {
+    "root": "memory-history-6D091FBB-A805-42CA-95CD-F2BD18F23E20",
+    "existed_after_host": true,
+    "exists_after_cleanup": false
+  },
+  {
+    "root": "memory-history-6D6B07E4-4D1E-4469-B0B7-6C196B92F1BB",
+    "existed_after_host": true,
+    "exists_after_cleanup": false
+  },
+  {
+    "root": "memory-history-6E9FA4F6-19D7-4F1C-BD3F-A525DC06DD79",
+    "existed_after_host": true,
+    "exists_after_cleanup": false
+  },
+  {
+    "root": "memory-history-6F23107E-D07C-45B3-82DD-6F2D16364658",
+    "existed_after_host": true,
+    "exists_after_cleanup": false
+  },
+  {
+    "root": "memory-history-71DE2E4C-E1B8-4BF4-81D8-059310552395",
+    "existed_after_host": true,
+    "exists_after_cleanup": false
+  },
+  {
+    "root": "memory-history-72CE252F-C98B-4016-85E4-4FBCE23498E3",
+    "existed_after_host": true,
+    "exists_after_cleanup": false
+  },
+  {
+    "root": "memory-history-7BC090BE-A636-4DF6-9DC5-BBD3F5190EF3",
+    "existed_after_host": true,
+    "exists_after_cleanup": false
+  },
+  {
+    "root": "memory-history-8FD3E1CC-1010-4FFB-8E05-D6C25DAF6CC9",
+    "existed_after_host": true,
+    "exists_after_cleanup": false
+  },
+  {
+    "root": "memory-history-96F5FBA8-B3C8-4F32-A954-752505A74DCB",
+    "existed_after_host": true,
+    "exists_after_cleanup": false
+  },
+  {
+    "root": "memory-history-BEAC49DD-632F-4ED4-9DD9-CEDB37939FAA",
+    "existed_after_host": true,
+    "exists_after_cleanup": false
+  },
+  {
+    "root": "memory-history-CCB3B7AB-B0F2-412F-8546-E1D2299D5A01",
+    "existed_after_host": true,
+    "exists_after_cleanup": false
+  },
+  {
+    "root": "memory-history-CF7CFBA4-3D06-4F38-8B4C-1ACD07C06404",
+    "existed_after_host": true,
+    "exists_after_cleanup": false
+  },
+  {
+    "root": "memory-history-E9957E24-A3C6-44CF-B038-B3BAF4C985CB",
+    "existed_after_host": true,
+    "exists_after_cleanup": false
+  },
+  {
+    "root": "memory-history-EFDFAB80-534B-4F8F-917A-67B1667AA249",
+    "existed_after_host": true,
+    "exists_after_cleanup": false
+  },
+  {
+    "root": "memory-history-F7D1511F-2FED-43A7-9933-839C0638AA65",
+    "existed_after_host": true,
+    "exists_after_cleanup": false
+  },
+  {
+    "root": "memory-history-FC373DF8-938B-4BB6-BF46-A9DAA54D0BE0",
+    "existed_after_host": true,
+    "exists_after_cleanup": false
+  },
+  {
+    "root": "question-service-001850DE-1D65-487A-A90D-A117A8F0D85E",
+    "existed_after_host": true,
+    "exists_after_cleanup": false
+  },
+  {
+    "root": "question-service-043D032E-6021-4305-BA03-1934BDD79F3C",
+    "existed_after_host": true,
+    "exists_after_cleanup": false
+  },
+  {
+    "root": "question-service-082B0CC5-B271-467D-8C99-C77CCA4F70B0",
+    "existed_after_host": true,
+    "exists_after_cleanup": false
+  },
+  {
+    "root": "question-service-25AEF036-5841-4F3D-9FC4-4BF9A51086C7",
+    "existed_after_host": true,
+    "exists_after_cleanup": false
+  },
+  {
+    "root": "question-service-25EADF3F-92EC-45D9-AD58-D09FBE646BAD",
+    "existed_after_host": true,
+    "exists_after_cleanup": false
+  },
+  {
+    "root": "question-service-2EC8C4D5-AE3A-49A6-8554-8715240D148D",
+    "existed_after_host": true,
+    "exists_after_cleanup": false
+  },
+  {
+    "root": "question-service-30D16DB2-EA1D-413F-AEA0-20253CEC2CB7",
+    "existed_after_host": true,
+    "exists_after_cleanup": false
+  },
+  {
+    "root": "question-service-392D55B4-961B-4072-8453-919D1F0E7FE0",
+    "existed_after_host": true,
+    "exists_after_cleanup": false
+  },
+  {
+    "root": "question-service-40A9C29E-F4B6-4C0D-986D-3A4C2ABE132F",
+    "existed_after_host": true,
+    "exists_after_cleanup": false
+  },
+  {
+    "root": "question-service-442A6423-6FD4-4EF4-9773-8534EAFA7B9F",
+    "existed_after_host": true,
+    "exists_after_cleanup": false
+  },
+  {
+    "root": "question-service-651D9FEB-C62B-4B40-8E08-2EF01C24DC3E",
+    "existed_after_host": true,
+    "exists_after_cleanup": false
+  },
+  {
+    "root": "question-service-6EFD4931-2B07-4187-ADA9-8A21BF4757A8",
+    "existed_after_host": true,
+    "exists_after_cleanup": false
+  },
+  {
+    "root": "question-service-74694048-0716-4489-B638-458575A3CF45",
+    "existed_after_host": true,
+    "exists_after_cleanup": false
+  },
+  {
+    "root": "question-service-7E6F587E-078B-4BD3-BD9E-B6E1739FEA35",
+    "existed_after_host": true,
+    "exists_after_cleanup": false
+  },
+  {
+    "root": "question-service-9889D497-A1AD-4E41-BDA0-40EBA9984803",
+    "existed_after_host": true,
+    "exists_after_cleanup": false
+  },
+  {
+    "root": "question-service-9E659042-3E69-4F86-9CC9-2F39DB5029CB",
+    "existed_after_host": true,
+    "exists_after_cleanup": false
+  },
+  {
+    "root": "question-service-A40C9276-BB82-45DF-A47C-8C42305B419E",
+    "existed_after_host": true,
+    "exists_after_cleanup": false
+  },
+  {
+    "root": "question-service-A5E85591-797B-4194-8A6D-5F74C0EA6E62",
+    "existed_after_host": true,
+    "exists_after_cleanup": false
+  },
+  {
+    "root": "question-service-B0168EF9-140B-4050-B70C-E4BADED70224",
+    "existed_after_host": true,
+    "exists_after_cleanup": false
+  },
+  {
+    "root": "question-service-B05BF015-8623-449F-B448-F05C2CA9C43D",
+    "existed_after_host": true,
+    "exists_after_cleanup": false
+  },
+  {
+    "root": "question-service-B1E66E4D-647E-4B0E-A5F0-14A0922BA777",
+    "existed_after_host": true,
+    "exists_after_cleanup": false
+  },
+  {
+    "root": "question-service-B69DA490-48C5-442A-B225-63A1892565E6",
+    "existed_after_host": true,
+    "exists_after_cleanup": false
+  },
+  {
+    "root": "question-service-BD1698F9-DD91-451E-B6F4-B3E7D4EAD937",
+    "existed_after_host": true,
+    "exists_after_cleanup": false
+  },
+  {
+    "root": "question-service-C03D10BA-6417-419E-BB57-CF226C034664",
+    "existed_after_host": true,
+    "exists_after_cleanup": false
+  },
+  {
+    "root": "question-service-D018B918-4990-48D5-A972-29411440C64A",
+    "existed_after_host": true,
+    "exists_after_cleanup": false
+  },
+  {
+    "root": "question-service-D25AFBF9-F03F-45B7-9A61-4CC700610EE6",
+    "existed_after_host": true,
+    "exists_after_cleanup": false
+  },
+  {
+    "root": "question-service-D3E2850E-827C-4012-8D8E-E09A4C475851",
+    "existed_after_host": true,
+    "exists_after_cleanup": false
+  },
+  {
+    "root": "question-service-D79636AE-ACE0-4441-B33B-294FC5C7E68F",
+    "existed_after_host": true,
+    "exists_after_cleanup": false
+  },
+  {
+    "root": "question-service-D835777A-48D0-4FA8-AC43-63CBF5C2096B",
+    "existed_after_host": true,
+    "exists_after_cleanup": false
+  },
+  {
+    "root": "question-service-E92A2BDB-20A9-4738-B90B-022035B667BC",
+    "existed_after_host": true,
+    "exists_after_cleanup": false
+  },
+  {
+    "root": "question-service-F0D5024A-9113-4BAF-9DA0-5E523EF0F7E9",
+    "existed_after_host": true,
+    "exists_after_cleanup": false
+  },
+  {
+    "root": "question-service-FF693A58-6DE6-4EB9-BAB3-E0F68E05F12B",
+    "existed_after_host": true,
+    "exists_after_cleanup": false
+  }
+]

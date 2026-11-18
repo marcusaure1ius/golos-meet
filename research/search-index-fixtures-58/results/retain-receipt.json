@@ -1,0 +1,56 @@
+{
+  "ref": "ec77fea89c480eb1d0db7a5cbc2a1ff452d5bc46",
+  "retain_roots_control": true,
+  "patches": [
+    {
+      "path": "golos-meetTests/KnowledgeSearchTests.swift",
+      "before_sha256": "e612ee81fc0f2c02a897c7f29b9344c24b078902072fad3316dfa41c4e9a3551",
+      "old": "@MainActor @Suite struct KnowledgeSearchTests",
+      "new": "@MainActor @Suite(SearchIndexObservationTrait()) struct KnowledgeSearchTests"
+    },
+    {
+      "path": "golos-meetTests/LocalIndexingServiceTests.swift",
+      "before_sha256": "8d64816e6f3d5d545b6e6f3371c3810ce3c7577477d401806edddaa3f539c0d1",
+      "old": "@MainActor @Suite struct LocalIndexingServiceTests",
+      "new": "@MainActor @Suite(SearchIndexObservationTrait()) struct LocalIndexingServiceTests"
+    },
+    {
+      "path": "golos-meetTests/KnowledgeSearchTests.swift",
+      "before_sha256": "3e3a42a1cdc8272ae0ce88f0739d82b851eb815e9558157d8b7d7314ed011613",
+      "old": "            store = ProjectStore(url: root.appendingPathComponent(\"knowledge.sqlite\"))",
+      "new": "            SearchIndexObservation.current?.note(\"root-created\", [\"root\":root.lastPathComponent])\n            store = ProjectStore(url: root.appendingPathComponent(\"knowledge.sqlite\"))"
+    },
+    {
+      "path": "golos-meetTests/KnowledgeSearchTests.swift",
+      "before_sha256": "d337cb7c4d7d186bc6acb91d502e783c49c5fd55042f943afd4cb10d5dc41141",
+      "old": "        func cleanup() async { await indexer.stop(); try? FileManager.default.removeItem(at: root) }",
+      "new": "        func cleanup() async {\n            SearchIndexObservation.current?.note(\"index-stop-enter\")\n            await indexer.stop()\n            SearchIndexObservation.current?.note(\"index-stop-returned\")\n            SearchIndexObservation.current?.note(\"control-root-retained\", [\"root\":root.lastPathComponent])\n            SearchIndexObservation.current?.note(\"control-root-not-removed\", [\"root\":root.lastPathComponent,\"exists\":String(FileManager.default.fileExists(atPath:root.path))])\n        }"
+    },
+    {
+      "path": "golos-meetTests/LocalIndexingServiceTests.swift",
+      "before_sha256": "4fb3c8c32fc2d612efdf239357271f4046c7c1aceea53c6f6346d3cca8b54475",
+      "old": "        return root\n",
+      "new": "        SearchIndexObservation.current?.note(\"root-created\", [\"root\":root.lastPathComponent])\n        return root\n"
+    },
+    {
+      "path": "golos-meetTests/LocalIndexingServiceTests.swift",
+      "before_sha256": "e73ad8b7419d50a5770ea648ea884d3db9954b046f6d225988e153be0ee0bae7",
+      "old": "defer { try? FileManager.default.removeItem(at: root) }",
+      "new": "defer { SearchIndexObservation.current?.note(\"control-root-retained\", [\"root\":root.lastPathComponent]); SearchIndexObservation.current?.note(\"control-root-not-removed\", [\"root\":root.lastPathComponent,\"exists\":String(FileManager.default.fileExists(atPath:root.path))]) }"
+    },
+    {
+      "path": "golos-meetTests/KnowledgeSearchTests.swift",
+      "before_sha256": "82cbdf75c3769067474dc7cc15bed8eb86affcb8e17bb29ffb1102c6494327e7",
+      "old": "\n        defer { sqlite3_close(db) }",
+      "new": "\n        let connection = UUID(), observer = SearchIndexObservation.current\n        observer?.observe(.opened(connection, url))\n        defer { let code = sqlite3_close(db); observer?.observe(.closed(connection, code)) }"
+    },
+    {
+      "path": "golos-meetTests/KnowledgeSearchTests.swift",
+      "before_sha256": "d9484f329e3b4c2a318c40cd0e12988467508279e34d55d01575a8fd5437a65b",
+      "old": "            defer { sqlite3_close(db) }",
+      "new": "            let connection = UUID(), observer = SearchIndexObservation.current\n            if db != nil { observer?.observe(.opened(connection, url)) }\n            defer { let code = sqlite3_close(db); if db != nil { observer?.observe(.closed(connection, code)) } }"
+    }
+  ],
+  "probe_sha256": "7ef4111cfebd66ff5aef9e00d1a3fc1368650558d81e6fb81bd0c6e32656d752",
+  "observer_sha256": "1f2264085509a4989189d03ab9444fdc904d729a388d03c1f641739c3e5b2728"
+}

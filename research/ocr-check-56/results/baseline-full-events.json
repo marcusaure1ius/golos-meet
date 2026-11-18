@@ -1,0 +1,1785 @@
+[
+  {
+    "id": "155FA5F1-852E-4841-ADB5-E07BB5DC0365",
+    "raw_sha256": "797f69839eba1e2bad97672253d050f3e8188242a2189bdbbe011fe83b938d92",
+    "events": [
+      {
+        "bytes": 9395,
+        "cpuControl": false,
+        "id": "155FA5F1-852E-4841-ADB5-E07BB5DC0365",
+        "input": "155FA5F1-852E-4841-ADB5-E07BB5DC0365.pdf",
+        "sha256": "13d10de0a4b90ce6ce15d07f346dcaaca697f4a5a92e859beab99feba3dcbc28",
+        "stage": "input",
+        "uptime": 328224.00242933334,
+        "wall": 1793577959.40245
+      },
+      {
+        "cpuControl": false,
+        "id": "155FA5F1-852E-4841-ADB5-E07BB5DC0365",
+        "native": "Проеĸт Альфа: запусĸ согласован на деĸабрь.",
+        "page": 1,
+        "stage": "pdf-native",
+        "uptime": 328224.00320845837,
+        "wall": 1793577959.403229
+      },
+      {
+        "bitsPerPixel": 32,
+        "bytesPerRow": 7200,
+        "cpuControl": false,
+        "height": 495,
+        "id": "155FA5F1-852E-4841-ADB5-E07BB5DC0365",
+        "image": "155FA5F1-852E-4841-ADB5-E07BB5DC0365-3935d87e19369d33fc09618604c0d38bc58deb947ee3181fc334b5999a202531.png",
+        "sha256": "3935d87e19369d33fc09618604c0d38bc58deb947ee3181fc334b5999a202531",
+        "stage": "ocr-input",
+        "uptime": 328224.00900670834,
+        "wall": 1793577959.409027,
+        "width": 1800
+      },
+      {
+        "automaticLanguage": true,
+        "cpuControl": false,
+        "id": "155FA5F1-852E-4841-ADB5-E07BB5DC0365",
+        "languageCorrection": true,
+        "languages": [
+          "ru-RU",
+          "en-US"
+        ],
+        "revision": 3,
+        "stage": "request-options",
+        "uptime": 328224.0092014167,
+        "wall": 1793577959.4092221
+      },
+      {
+        "cpuControl": false,
+        "id": "155FA5F1-852E-4841-ADB5-E07BB5DC0365",
+        "stage": "perform-begin",
+        "uptime": 328224.00925458333,
+        "wall": 1793577959.409275
+      },
+      {
+        "cpuControl": false,
+        "id": "155FA5F1-852E-4841-ADB5-E07BB5DC0365",
+        "observations": [
+          {
+            "candidates": [
+              {
+                "confidence": 1,
+                "text": "Проект Альфа: запуск согласован на декабрь."
+              },
+              {
+                "confidence": 1,
+                "text": "Проект Альфа: запуск согласован на декабрь"
+              },
+              {
+                "confidence": 1,
+                "text": "Прокт Альфа: запуск согласован на декабрь."
+              },
+              {
+                "confidence": 0.5,
+                "text": "Проект Альфа: запуск согласован на декабр."
+              },
+              {
+                "confidence": 0.5,
+                "text": "Проект Альфа: запук согласован на декабрь."
+              }
+            ],
+            "height": 0.1049731200741183,
+            "width": 0.6280137803819443,
+            "x": 0.032146955913372355,
+            "y": 0.4958333320640935
+          }
+        ],
+        "stage": "perform-end",
+        "uptime": 328229.9146332917,
+        "wall": 1793577965.314661
+      },
+      {
+        "cpuControl": false,
+        "id": "155FA5F1-852E-4841-ADB5-E07BB5DC0365",
+        "lines": [
+          "Проеĸт Альфа: запусĸ согласован на деĸабрь.\nПроект Альфа: запуск согласован на декабрь."
+        ],
+        "stage": "extract-result",
+        "uptime": 328229.91491,
+        "wall": 1793577965.314937,
+        "warnings": []
+      }
+    ],
+    "assets": {
+      "155FA5F1-852E-4841-ADB5-E07BB5DC0365.pdf": {
+        "asset": "assets/13d10de0a4b90ce6ce15d07f346dcaaca697f4a5a92e859beab99feba3dcbc28.pdf",
+        "bytes": 9395,
+        "sha256": "13d10de0a4b90ce6ce15d07f346dcaaca697f4a5a92e859beab99feba3dcbc28"
+      },
+      "155FA5F1-852E-4841-ADB5-E07BB5DC0365-3935d87e19369d33fc09618604c0d38bc58deb947ee3181fc334b5999a202531.png": {
+        "asset": "assets/3935d87e19369d33fc09618604c0d38bc58deb947ee3181fc334b5999a202531.png",
+        "bytes": 35047,
+        "sha256": "3935d87e19369d33fc09618604c0d38bc58deb947ee3181fc334b5999a202531"
+      }
+    }
+  },
+  {
+    "id": "23BAC010-5C4B-4F8D-9D3D-C4C4A4257EE4",
+    "raw_sha256": "14cc6b38f8a3238107cd304ae331a978a6cb073d146acfcdaf8b1cf98edd0814",
+    "events": [
+      {
+        "bytes": 23283,
+        "cpuControl": false,
+        "id": "23BAC010-5C4B-4F8D-9D3D-C4C4A4257EE4",
+        "input": "23BAC010-5C4B-4F8D-9D3D-C4C4A4257EE4.png",
+        "sha256": "666a19cf8a8ac85e56ccabc0cc911b5d0f570b22c534aff08c942531e46b9b5a",
+        "stage": "input",
+        "uptime": 328221.5190561667,
+        "wall": 1793577956.919074
+      },
+      {
+        "bitsPerPixel": 32,
+        "bytesPerRow": 6400,
+        "cpuControl": false,
+        "height": 300,
+        "id": "23BAC010-5C4B-4F8D-9D3D-C4C4A4257EE4",
+        "image": "23BAC010-5C4B-4F8D-9D3D-C4C4A4257EE4-e1183c6d804b89a27f0146202d71c2569fe688e26399387fe6255f5e0251c0f9.png",
+        "sha256": "e1183c6d804b89a27f0146202d71c2569fe688e26399387fe6255f5e0251c0f9",
+        "stage": "ocr-input",
+        "uptime": 328221.5261697917,
+        "wall": 1793577956.926187,
+        "width": 1600
+      },
+      {
+        "automaticLanguage": true,
+        "cpuControl": false,
+        "id": "23BAC010-5C4B-4F8D-9D3D-C4C4A4257EE4",
+        "languageCorrection": true,
+        "languages": [
+          "ru-RU",
+          "en-US"
+        ],
+        "revision": 3,
+        "stage": "request-options",
+        "uptime": 328221.52636325004,
+        "wall": 1793577956.926381
+      },
+      {
+        "cpuControl": false,
+        "id": "23BAC010-5C4B-4F8D-9D3D-C4C4A4257EE4",
+        "stage": "perform-begin",
+        "uptime": 328221.526547375,
+        "wall": 1793577956.9265652
+      },
+      {
+        "cpuControl": false,
+        "id": "23BAC010-5C4B-4F8D-9D3D-C4C4A4257EE4",
+        "observations": [
+          {
+            "candidates": [
+              {
+                "confidence": 1,
+                "text": "Решение: запуск проекта в ноябре"
+              },
+              {
+                "confidence": 1,
+                "text": "Решение запуск проекта в ноябре"
+              },
+              {
+                "confidence": 0.5,
+                "text": "Решение: запус проекта в ноябре"
+              },
+              {
+                "confidence": 0.5,
+                "text": "Решение: запук проекта в ноябре"
+              },
+              {
+                "confidence": 0.5,
+                "text": "Решение: запуск проекта в ноябр"
+              }
+            ],
+            "height": 0.24444445292154948,
+            "width": 0.6166666793823242,
+            "x": 0.02916666008681844,
+            "y": 0.3999999958506608
+          }
+        ],
+        "stage": "perform-end",
+        "uptime": 328229.37804908335,
+        "wall": 1793577964.7780762
+      },
+      {
+        "cpuControl": false,
+        "id": "23BAC010-5C4B-4F8D-9D3D-C4C4A4257EE4",
+        "lines": [
+          "Решение: запуск проекта в ноябре"
+        ],
+        "stage": "extract-result",
+        "uptime": 328229.37827441667,
+        "wall": 1793577964.778301,
+        "warnings": []
+      }
+    ],
+    "assets": {
+      "23BAC010-5C4B-4F8D-9D3D-C4C4A4257EE4.png": {
+        "asset": "assets/666a19cf8a8ac85e56ccabc0cc911b5d0f570b22c534aff08c942531e46b9b5a.png",
+        "bytes": 23283,
+        "sha256": "666a19cf8a8ac85e56ccabc0cc911b5d0f570b22c534aff08c942531e46b9b5a"
+      },
+      "23BAC010-5C4B-4F8D-9D3D-C4C4A4257EE4-e1183c6d804b89a27f0146202d71c2569fe688e26399387fe6255f5e0251c0f9.png": {
+        "asset": "assets/e1183c6d804b89a27f0146202d71c2569fe688e26399387fe6255f5e0251c0f9.png",
+        "bytes": 23295,
+        "sha256": "e1183c6d804b89a27f0146202d71c2569fe688e26399387fe6255f5e0251c0f9"
+      }
+    }
+  },
+  {
+    "id": "4E692ACF-0AE9-48A3-BBCD-AE0549CC4C70",
+    "raw_sha256": "27ef7ccecb34563e60f96f509dbdd9bf00ac28b8adc9a7f259e89a4ccef30d55",
+    "events": [
+      {
+        "bytes": 11145,
+        "cpuControl": false,
+        "id": "4E692ACF-0AE9-48A3-BBCD-AE0549CC4C70",
+        "input": "4E692ACF-0AE9-48A3-BBCD-AE0549CC4C70.pdf",
+        "sha256": "8afda33edcb8fc7aefa19e8261955ae17dd3977e128886b3e15d2d30db568ce8",
+        "stage": "input",
+        "uptime": 328223.6770645,
+        "wall": 1793577959.077085
+      },
+      {
+        "cpuControl": false,
+        "id": "4E692ACF-0AE9-48A3-BBCD-AE0549CC4C70",
+        "native": "Общие сведения о проеĸте Север",
+        "page": 1,
+        "stage": "pdf-native",
+        "uptime": 328223.677966375,
+        "wall": 1793577959.077986
+      },
+      {
+        "bitsPerPixel": 32,
+        "bytesPerRow": 7200,
+        "cpuControl": false,
+        "height": 2400,
+        "id": "4E692ACF-0AE9-48A3-BBCD-AE0549CC4C70",
+        "image": "4E692ACF-0AE9-48A3-BBCD-AE0549CC4C70-3bebd4c72af39d48ec4974555b963cdbcdffe232c22a5a3cd08c1bd03400d173.png",
+        "sha256": "3bebd4c72af39d48ec4974555b963cdbcdffe232c22a5a3cd08c1bd03400d173",
+        "stage": "ocr-input",
+        "uptime": 328223.70129533333,
+        "wall": 1793577959.101316,
+        "width": 1800
+      },
+      {
+        "automaticLanguage": true,
+        "cpuControl": false,
+        "id": "4E692ACF-0AE9-48A3-BBCD-AE0549CC4C70",
+        "languageCorrection": true,
+        "languages": [
+          "ru-RU",
+          "en-US"
+        ],
+        "revision": 3,
+        "stage": "request-options",
+        "uptime": 328223.70155645837,
+        "wall": 1793577959.101577
+      },
+      {
+        "cpuControl": false,
+        "id": "4E692ACF-0AE9-48A3-BBCD-AE0549CC4C70",
+        "stage": "perform-begin",
+        "uptime": 328223.7016577083,
+        "wall": 1793577959.101678
+      },
+      {
+        "cpuControl": false,
+        "id": "4E692ACF-0AE9-48A3-BBCD-AE0549CC4C70",
+        "observations": [
+          {
+            "candidates": [
+              {
+                "confidence": 1,
+                "text": "Общие сведения о проекте Север"
+              },
+              {
+                "confidence": 0.5,
+                "text": "Общие сведения о прокте Север"
+              },
+              {
+                "confidence": 0.5,
+                "text": "Общие сведения проекте Север"
+              },
+              {
+                "confidence": 0.5,
+                "text": "Общи сведения о проекте Север"
+              },
+              {
+                "confidence": 0.5,
+                "text": "Общие сведения о проект Север"
+              }
+            ],
+            "height": 0.023459302584330266,
+            "width": 0.5251937866210938,
+            "x": 0.06782946316597632,
+            "y": 0.8762499997278691
+          }
+        ],
+        "stage": "perform-end",
+        "uptime": 328229.87100670836,
+        "wall": 1793577965.271034
+      },
+      {
+        "cpuControl": false,
+        "id": "4E692ACF-0AE9-48A3-BBCD-AE0549CC4C70",
+        "native": "Команда перенесла релиз на 26 ноября.",
+        "page": 2,
+        "stage": "pdf-native",
+        "uptime": 328229.87139437505,
+        "wall": 1793577965.271422
+      },
+      {
+        "bitsPerPixel": 32,
+        "bytesPerRow": 7200,
+        "cpuControl": false,
+        "height": 2400,
+        "id": "4E692ACF-0AE9-48A3-BBCD-AE0549CC4C70",
+        "image": "4E692ACF-0AE9-48A3-BBCD-AE0549CC4C70-b6cadea2db3e999a065eb25c27ce83666eb94a3da8e6eca1956e76de76340bfd.png",
+        "sha256": "b6cadea2db3e999a065eb25c27ce83666eb94a3da8e6eca1956e76de76340bfd",
+        "stage": "ocr-input",
+        "uptime": 328229.89528187504,
+        "wall": 1793577965.295309,
+        "width": 1800
+      },
+      {
+        "automaticLanguage": true,
+        "cpuControl": false,
+        "id": "4E692ACF-0AE9-48A3-BBCD-AE0549CC4C70",
+        "languageCorrection": true,
+        "languages": [
+          "ru-RU",
+          "en-US"
+        ],
+        "revision": 3,
+        "stage": "request-options",
+        "uptime": 328229.8954655417,
+        "wall": 1793577965.2954931
+      },
+      {
+        "cpuControl": false,
+        "id": "4E692ACF-0AE9-48A3-BBCD-AE0549CC4C70",
+        "stage": "perform-begin",
+        "uptime": 328229.8955505834,
+        "wall": 1793577965.295578
+      },
+      {
+        "cpuControl": false,
+        "id": "4E692ACF-0AE9-48A3-BBCD-AE0549CC4C70",
+        "observations": [
+          {
+            "candidates": [
+              {
+                "confidence": 1,
+                "text": "Команда перенесла релиз на 26 ноября."
+              },
+              {
+                "confidence": 1,
+                "text": "Команда перенесла релиз на 26 ноября"
+              },
+              {
+                "confidence": 1,
+                "text": "Команда перенесла рели на 26 ноября."
+              },
+              {
+                "confidence": 0.5,
+                "text": "Комана перенесла релиз на 26 ноября."
+              },
+              {
+                "confidence": 0.5,
+                "text": "Команда перенесла релиз а 26 ноября."
+              }
+            ],
+            "height": 0.02470930258433024,
+            "width": 0.6279069688585068,
+            "x": 0.06782946120272654,
+            "y": 0.8749999998748136
+          }
+        ],
+        "stage": "perform-end",
+        "uptime": 328230.0453562917,
+        "wall": 1793577965.445384
+      },
+      {
+        "cpuControl": false,
+        "id": "4E692ACF-0AE9-48A3-BBCD-AE0549CC4C70",
+        "native": "Перед запусĸом нужна проверĸа нагрузĸи.",
+        "page": 3,
+        "stage": "pdf-native",
+        "uptime": 328230.045725875,
+        "wall": 1793577965.445753
+      },
+      {
+        "bitsPerPixel": 32,
+        "bytesPerRow": 7200,
+        "cpuControl": false,
+        "height": 2400,
+        "id": "4E692ACF-0AE9-48A3-BBCD-AE0549CC4C70",
+        "image": "4E692ACF-0AE9-48A3-BBCD-AE0549CC4C70-dede35315f202b26b25e867fc99c71f9ee78c26c4940f0ce144fa44229df5342.png",
+        "sha256": "dede35315f202b26b25e867fc99c71f9ee78c26c4940f0ce144fa44229df5342",
+        "stage": "ocr-input",
+        "uptime": 328230.06897766667,
+        "wall": 1793577965.469005,
+        "width": 1800
+      },
+      {
+        "automaticLanguage": true,
+        "cpuControl": false,
+        "id": "4E692ACF-0AE9-48A3-BBCD-AE0549CC4C70",
+        "languageCorrection": true,
+        "languages": [
+          "ru-RU",
+          "en-US"
+        ],
+        "revision": 3,
+        "stage": "request-options",
+        "uptime": 328230.06917308335,
+        "wall": 1793577965.469201
+      },
+      {
+        "cpuControl": false,
+        "id": "4E692ACF-0AE9-48A3-BBCD-AE0549CC4C70",
+        "stage": "perform-begin",
+        "uptime": 328230.0692429167,
+        "wall": 1793577965.46927
+      },
+      {
+        "cpuControl": false,
+        "id": "4E692ACF-0AE9-48A3-BBCD-AE0549CC4C70",
+        "observations": [
+          {
+            "candidates": [
+              {
+                "confidence": 1,
+                "text": "Перед запуском нужна проверка нагрузки."
+              },
+              {
+                "confidence": 1,
+                "text": "Перед запуском нужна проверка нагрузки"
+              },
+              {
+                "confidence": 0.5,
+                "text": "Перед запуском нужна проверка нагрузк."
+              },
+              {
+                "confidence": 0.5,
+                "text": "Перед запуском нуна проверка нагрузки."
+              },
+              {
+                "confidence": 0.5,
+                "text": "Перед запуском нужна поверка нагрузки."
+              }
+            ],
+            "height": 0.028276179631551157,
+            "width": 0.6671282280815972,
+            "x": 0.06951630968829035,
+            "y": 0.8715385825427205
+          }
+        ],
+        "stage": "perform-end",
+        "uptime": 328230.1393365,
+        "wall": 1793577965.5393639
+      },
+      {
+        "cpuControl": false,
+        "id": "4E692ACF-0AE9-48A3-BBCD-AE0549CC4C70",
+        "lines": [
+          "Общие сведения о проеĸте Север\nОбщие сведения о проекте Север",
+          "Команда перенесла релиз на 26 ноября.",
+          "Перед запусĸом нужна проверĸа нагрузĸи.\nПеред запуском нужна проверка нагрузки."
+        ],
+        "stage": "extract-result",
+        "uptime": 328230.13959820836,
+        "wall": 1793577965.5396261,
+        "warnings": []
+      }
+    ],
+    "assets": {
+      "4E692ACF-0AE9-48A3-BBCD-AE0549CC4C70.pdf": {
+        "asset": "assets/8afda33edcb8fc7aefa19e8261955ae17dd3977e128886b3e15d2d30db568ce8.pdf",
+        "bytes": 11145,
+        "sha256": "8afda33edcb8fc7aefa19e8261955ae17dd3977e128886b3e15d2d30db568ce8"
+      },
+      "4E692ACF-0AE9-48A3-BBCD-AE0549CC4C70-3bebd4c72af39d48ec4974555b963cdbcdffe232c22a5a3cd08c1bd03400d173.png": {
+        "asset": "assets/3bebd4c72af39d48ec4974555b963cdbcdffe232c22a5a3cd08c1bd03400d173.png",
+        "bytes": 99971,
+        "sha256": "3bebd4c72af39d48ec4974555b963cdbcdffe232c22a5a3cd08c1bd03400d173"
+      },
+      "4E692ACF-0AE9-48A3-BBCD-AE0549CC4C70-b6cadea2db3e999a065eb25c27ce83666eb94a3da8e6eca1956e76de76340bfd.png": {
+        "asset": "assets/b6cadea2db3e999a065eb25c27ce83666eb94a3da8e6eca1956e76de76340bfd.png",
+        "bytes": 102735,
+        "sha256": "b6cadea2db3e999a065eb25c27ce83666eb94a3da8e6eca1956e76de76340bfd"
+      },
+      "4E692ACF-0AE9-48A3-BBCD-AE0549CC4C70-dede35315f202b26b25e867fc99c71f9ee78c26c4940f0ce144fa44229df5342.png": {
+        "asset": "assets/dede35315f202b26b25e867fc99c71f9ee78c26c4940f0ce144fa44229df5342.png",
+        "bytes": 101587,
+        "sha256": "dede35315f202b26b25e867fc99c71f9ee78c26c4940f0ce144fa44229df5342"
+      }
+    }
+  },
+  {
+    "id": "526EFD33-C0D7-46AF-B81B-7FB0D9339C33",
+    "raw_sha256": "46331980f96b4a7fc0800d3cb8340cd4240c9eaeea7f1621066029e630f5a783",
+    "events": [
+      {
+        "bytes": 28138,
+        "cpuControl": false,
+        "id": "526EFD33-C0D7-46AF-B81B-7FB0D9339C33",
+        "input": "526EFD33-C0D7-46AF-B81B-7FB0D9339C33.pdf",
+        "sha256": "b6c7b58dc337cc408c778aca725043a3d148a911d95da41f6888541e6d8077a3",
+        "stage": "input",
+        "uptime": 328221.5065250417,
+        "wall": 1793577956.906543
+      },
+      {
+        "cpuControl": false,
+        "id": "526EFD33-C0D7-46AF-B81B-7FB0D9339C33",
+        "native": "Page 1",
+        "page": 1,
+        "stage": "pdf-native",
+        "uptime": 328221.5094689167,
+        "wall": 1793577956.909486
+      },
+      {
+        "bitsPerPixel": 32,
+        "bytesPerRow": 7200,
+        "cpuControl": false,
+        "height": 2400,
+        "id": "526EFD33-C0D7-46AF-B81B-7FB0D9339C33",
+        "image": "526EFD33-C0D7-46AF-B81B-7FB0D9339C33-facb4e7b8aa93c9cdd9e29c8ba27942099dcb671963b4b68c5e4a85ad7b6017c.png",
+        "sha256": "facb4e7b8aa93c9cdd9e29c8ba27942099dcb671963b4b68c5e4a85ad7b6017c",
+        "stage": "ocr-input",
+        "uptime": 328221.5451315417,
+        "wall": 1793577956.945149,
+        "width": 1800
+      },
+      {
+        "automaticLanguage": true,
+        "cpuControl": false,
+        "id": "526EFD33-C0D7-46AF-B81B-7FB0D9339C33",
+        "languageCorrection": true,
+        "languages": [
+          "ru-RU",
+          "en-US"
+        ],
+        "revision": 3,
+        "stage": "request-options",
+        "uptime": 328221.5458659167,
+        "wall": 1793577956.945884
+      },
+      {
+        "cpuControl": false,
+        "id": "526EFD33-C0D7-46AF-B81B-7FB0D9339C33",
+        "stage": "perform-begin",
+        "uptime": 328221.54639516666,
+        "wall": 1793577956.946413
+      },
+      {
+        "cpuControl": false,
+        "id": "526EFD33-C0D7-46AF-B81B-7FB0D9339C33",
+        "observations": [
+          {
+            "candidates": [
+              {
+                "confidence": 1,
+                "text": "Decision: launch postponed to December"
+              },
+              {
+                "confidence": 1,
+                "text": "Decision launch postponed to December"
+              },
+              {
+                "confidence": 1,
+                "text": "Decision: aunch postponed to December"
+              },
+              {
+                "confidence": 1,
+                "text": "Decision: lunch postponed to December"
+              },
+              {
+                "confidence": 1,
+                "text": "Decision: launch postpone to December"
+              }
+            ],
+            "height": 0.023362402915954594,
+            "width": 0.5852713351779514,
+            "x": 0.03488371215430959,
+            "y": 0.5304166668370995
+          },
+          {
+            "candidates": [
+              {
+                "confidence": 1,
+                "text": "Page 1"
+              },
+              {
+                "confidence": 0.30000001192092896,
+                "text": "Page1"
+              },
+              {
+                "confidence": 0.30000001192092896,
+                "text": "Page"
+              },
+              {
+                "confidence": 0.30000001192092896,
+                "text": "age 1"
+              },
+              {
+                "confidence": 0.30000001192092896,
+                "text": "Pag 1"
+              }
+            ],
+            "height": 0.018934109210968053,
+            "width": 0.07945736355251737,
+            "x": 0.41666666696647386,
+            "y": 0.0508333330057934
+          }
+        ],
+        "stage": "perform-end",
+        "uptime": 328229.73196629167,
+        "wall": 1793577965.131994
+      },
+      {
+        "cpuControl": false,
+        "id": "526EFD33-C0D7-46AF-B81B-7FB0D9339C33",
+        "lines": [
+          "Page 1\nDecision: launch postponed to December"
+        ],
+        "stage": "extract-result",
+        "uptime": 328229.73221620836,
+        "wall": 1793577965.1322432,
+        "warnings": []
+      }
+    ],
+    "assets": {
+      "526EFD33-C0D7-46AF-B81B-7FB0D9339C33.pdf": {
+        "asset": "assets/b6c7b58dc337cc408c778aca725043a3d148a911d95da41f6888541e6d8077a3.pdf",
+        "bytes": 28138,
+        "sha256": "b6c7b58dc337cc408c778aca725043a3d148a911d95da41f6888541e6d8077a3"
+      },
+      "526EFD33-C0D7-46AF-B81B-7FB0D9339C33-facb4e7b8aa93c9cdd9e29c8ba27942099dcb671963b4b68c5e4a85ad7b6017c.png": {
+        "asset": "assets/facb4e7b8aa93c9cdd9e29c8ba27942099dcb671963b4b68c5e4a85ad7b6017c.png",
+        "bytes": 117329,
+        "sha256": "facb4e7b8aa93c9cdd9e29c8ba27942099dcb671963b4b68c5e4a85ad7b6017c"
+      }
+    }
+  },
+  {
+    "id": "5AF85DF8-2CA5-4FC7-BA4A-CB5A0F86A72A",
+    "raw_sha256": "fec4e59929a196621e2f199ff713b4f43f8bf0c7337c2449923851692de1830c",
+    "events": [
+      {
+        "bytes": 31299,
+        "cpuControl": false,
+        "id": "5AF85DF8-2CA5-4FC7-BA4A-CB5A0F86A72A",
+        "input": "5AF85DF8-2CA5-4FC7-BA4A-CB5A0F86A72A.pdf",
+        "sha256": "d1020c06b55acdf95de7126fd6133e5bb1ad480bb1e9b5e23f452911aa6a8929",
+        "stage": "input",
+        "uptime": 328221.47606429167,
+        "wall": 1793577956.876082
+      },
+      {
+        "cpuControl": false,
+        "id": "5AF85DF8-2CA5-4FC7-BA4A-CB5A0F86A72A",
+        "native": "Decision: launch postponed to December\nPage 1",
+        "page": 1,
+        "stage": "pdf-native",
+        "uptime": 328221.476879125,
+        "wall": 1793577956.8768969
+      },
+      {
+        "bitsPerPixel": 32,
+        "bytesPerRow": 7200,
+        "cpuControl": false,
+        "height": 2400,
+        "id": "5AF85DF8-2CA5-4FC7-BA4A-CB5A0F86A72A",
+        "image": "5AF85DF8-2CA5-4FC7-BA4A-CB5A0F86A72A-06a03cc4a095f7a057faa63febaca970e1b3cce558da4e203a2c41b8ae35a90f.png",
+        "sha256": "06a03cc4a095f7a057faa63febaca970e1b3cce558da4e203a2c41b8ae35a90f",
+        "stage": "ocr-input",
+        "uptime": 328221.51200808334,
+        "wall": 1793577956.912026,
+        "width": 1800
+      },
+      {
+        "automaticLanguage": true,
+        "cpuControl": false,
+        "id": "5AF85DF8-2CA5-4FC7-BA4A-CB5A0F86A72A",
+        "languageCorrection": true,
+        "languages": [
+          "ru-RU",
+          "en-US"
+        ],
+        "revision": 3,
+        "stage": "request-options",
+        "uptime": 328221.51288833335,
+        "wall": 1793577956.9129071
+      },
+      {
+        "cpuControl": false,
+        "id": "5AF85DF8-2CA5-4FC7-BA4A-CB5A0F86A72A",
+        "stage": "perform-begin",
+        "uptime": 328221.512993875,
+        "wall": 1793577956.913011
+      },
+      {
+        "cpuControl": false,
+        "id": "5AF85DF8-2CA5-4FC7-BA4A-CB5A0F86A72A",
+        "observations": [
+          {
+            "candidates": [
+              {
+                "confidence": 1,
+                "text": "Decision: launch postporebttoDeeembler"
+              },
+              {
+                "confidence": 1,
+                "text": "Decision: launch postporebttoDeembler"
+              },
+              {
+                "confidence": 1,
+                "text": "Decision: launch post porebttoDeembler"
+              },
+              {
+                "confidence": 1,
+                "text": "Decision: launch postporebttoDeeembleer"
+              },
+              {
+                "confidence": 1,
+                "text": "Decision: launch postporebttoDeembleer"
+              }
+            ],
+            "height": 0.027136732737223168,
+            "width": 0.606769273546007,
+            "x": 0.03285736628284945,
+            "y": 0.5296818403596832
+          },
+          {
+            "candidates": [
+              {
+                "confidence": 1,
+                "text": "Page 1"
+              },
+              {
+                "confidence": 0.30000001192092896,
+                "text": "Page1"
+              },
+              {
+                "confidence": 0.30000001192092896,
+                "text": "Page"
+              },
+              {
+                "confidence": 0.30000001192092896,
+                "text": "age 1"
+              },
+              {
+                "confidence": 0.30000001192092896,
+                "text": "Pag 1"
+              }
+            ],
+            "height": 0.018934109210968053,
+            "width": 0.07945736355251737,
+            "x": 0.41666666696647386,
+            "y": 0.0508333330057934
+          }
+        ],
+        "stage": "perform-end",
+        "uptime": 328229.3352011667,
+        "wall": 1793577964.735228
+      },
+      {
+        "cpuControl": false,
+        "id": "5AF85DF8-2CA5-4FC7-BA4A-CB5A0F86A72A",
+        "lines": [
+          "Decision: launch postponed to December\nPage 1\nDecision: launch postporebttoDeeembler"
+        ],
+        "stage": "extract-result",
+        "uptime": 328229.33554245834,
+        "wall": 1793577964.735569,
+        "warnings": []
+      }
+    ],
+    "assets": {
+      "5AF85DF8-2CA5-4FC7-BA4A-CB5A0F86A72A.pdf": {
+        "asset": "assets/d1020c06b55acdf95de7126fd6133e5bb1ad480bb1e9b5e23f452911aa6a8929.pdf",
+        "bytes": 31299,
+        "sha256": "d1020c06b55acdf95de7126fd6133e5bb1ad480bb1e9b5e23f452911aa6a8929"
+      },
+      "5AF85DF8-2CA5-4FC7-BA4A-CB5A0F86A72A-06a03cc4a095f7a057faa63febaca970e1b3cce558da4e203a2c41b8ae35a90f.png": {
+        "asset": "assets/06a03cc4a095f7a057faa63febaca970e1b3cce558da4e203a2c41b8ae35a90f.png",
+        "bytes": 120625,
+        "sha256": "06a03cc4a095f7a057faa63febaca970e1b3cce558da4e203a2c41b8ae35a90f"
+      }
+    }
+  },
+  {
+    "id": "64AA0E89-E11A-4FC3-A1F7-03695F845AB7",
+    "raw_sha256": "128e2446fb810b20d63a8997d50fa071d26bdb002b8aa079b6ad3a5387e20ba2",
+    "events": [
+      {
+        "bytes": 24231,
+        "cpuControl": false,
+        "id": "64AA0E89-E11A-4FC3-A1F7-03695F845AB7",
+        "input": "64AA0E89-E11A-4FC3-A1F7-03695F845AB7.pdf",
+        "sha256": "c4853893f27697a5befbe5c689dc2fce023d40c9e8fddd396dc27f921df43834",
+        "stage": "input",
+        "uptime": 328221.506351875,
+        "wall": 1793577956.9063702
+      },
+      {
+        "cpuControl": false,
+        "id": "64AA0E89-E11A-4FC3-A1F7-03695F845AB7",
+        "native": "Not approved",
+        "page": 1,
+        "stage": "pdf-native",
+        "uptime": 328221.5094689167,
+        "wall": 1793577956.909487
+      },
+      {
+        "bitsPerPixel": 32,
+        "bytesPerRow": 7200,
+        "cpuControl": false,
+        "height": 2400,
+        "id": "64AA0E89-E11A-4FC3-A1F7-03695F845AB7",
+        "image": "64AA0E89-E11A-4FC3-A1F7-03695F845AB7-14a5184eacdcb275a78cf4ed069202a3158961339f61bc863e7b8b334b4fea52.png",
+        "sha256": "14a5184eacdcb275a78cf4ed069202a3158961339f61bc863e7b8b334b4fea52",
+        "stage": "ocr-input",
+        "uptime": 328221.54469862505,
+        "wall": 1793577956.944716,
+        "width": 1800
+      },
+      {
+        "automaticLanguage": true,
+        "cpuControl": false,
+        "id": "64AA0E89-E11A-4FC3-A1F7-03695F845AB7",
+        "languageCorrection": true,
+        "languages": [
+          "ru-RU",
+          "en-US"
+        ],
+        "revision": 3,
+        "stage": "request-options",
+        "uptime": 328221.54513491667,
+        "wall": 1793577956.9451551
+      },
+      {
+        "cpuControl": false,
+        "id": "64AA0E89-E11A-4FC3-A1F7-03695F845AB7",
+        "stage": "perform-begin",
+        "uptime": 328221.54572670837,
+        "wall": 1793577956.945744
+      },
+      {
+        "cpuControl": false,
+        "id": "64AA0E89-E11A-4FC3-A1F7-03695F845AB7",
+        "observations": [
+          {
+            "candidates": [
+              {
+                "confidence": 1,
+                "text": "Approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Approved"
+              },
+              {
+                "confidence": 0.5,
+                "text": "Approve"
+              },
+              {
+                "confidence": 0.5,
+                "text": "Approve"
+              },
+              {
+                "confidence": 0.5,
+                "text": "Aproved"
+              }
+            ],
+            "height": 0.02693046569824209,
+            "width": 0.14020431518554688,
+            "x": 0.032611020605454004,
+            "y": 0.5294126741478844
+          },
+          {
+            "candidates": [
+              {
+                "confidence": 1,
+                "text": "Not approved"
+              },
+              {
+                "confidence": 1,
+                "text": "No approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Not approve"
+              },
+              {
+                "confidence": 1,
+                "text": "ot approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Not aproved"
+              }
+            ],
+            "height": 0.01991864363352458,
+            "width": 0.16518888685438365,
+            "x": 0.41644341493485565,
+            "y": 0.04995987001281588
+          }
+        ],
+        "stage": "perform-end",
+        "uptime": 328229.5985225,
+        "wall": 1793577964.99855
+      },
+      {
+        "cpuControl": false,
+        "id": "64AA0E89-E11A-4FC3-A1F7-03695F845AB7",
+        "lines": [
+          "Not approved\nApproved"
+        ],
+        "stage": "extract-result",
+        "uptime": 328229.5987839167,
+        "wall": 1793577964.998811,
+        "warnings": []
+      }
+    ],
+    "assets": {
+      "64AA0E89-E11A-4FC3-A1F7-03695F845AB7.pdf": {
+        "asset": "assets/c4853893f27697a5befbe5c689dc2fce023d40c9e8fddd396dc27f921df43834.pdf",
+        "bytes": 24231,
+        "sha256": "c4853893f27697a5befbe5c689dc2fce023d40c9e8fddd396dc27f921df43834"
+      },
+      "64AA0E89-E11A-4FC3-A1F7-03695F845AB7-14a5184eacdcb275a78cf4ed069202a3158961339f61bc863e7b8b334b4fea52.png": {
+        "asset": "assets/14a5184eacdcb275a78cf4ed069202a3158961339f61bc863e7b8b334b4fea52.png",
+        "bytes": 103962,
+        "sha256": "14a5184eacdcb275a78cf4ed069202a3158961339f61bc863e7b8b334b4fea52"
+      }
+    }
+  },
+  {
+    "id": "6DE2B782-55A2-478B-B515-422A6F60DF0A",
+    "raw_sha256": "73993aeb51037a80fbbc4ca9f09fd557918d92c58c20de0c684128bd94660c6f",
+    "events": [
+      {
+        "bytes": 23567,
+        "cpuControl": false,
+        "id": "6DE2B782-55A2-478B-B515-422A6F60DF0A",
+        "input": "6DE2B782-55A2-478B-B515-422A6F60DF0A.png",
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+        "stage": "input",
+        "uptime": 328221.53533370834,
+        "wall": 1793577956.9353518
+      },
+      {
+        "bitsPerPixel": 32,
+        "bytesPerRow": 6400,
+        "cpuControl": false,
+        "height": 300,
+        "id": "6DE2B782-55A2-478B-B515-422A6F60DF0A",
+        "image": "6DE2B782-55A2-478B-B515-422A6F60DF0A-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+        "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0",
+        "stage": "ocr-input",
+        "uptime": 328221.5439275417,
+        "wall": 1793577956.943946,
+        "width": 1600
+      },
+      {
+        "automaticLanguage": true,
+        "cpuControl": false,
+        "id": "6DE2B782-55A2-478B-B515-422A6F60DF0A",
+        "languageCorrection": true,
+        "languages": [
+          "ru-RU",
+          "en-US"
+        ],
+        "revision": 3,
+        "stage": "request-options",
+        "uptime": 328221.54466841667,
+        "wall": 1793577956.9446878
+      },
+      {
+        "cpuControl": false,
+        "id": "6DE2B782-55A2-478B-B515-422A6F60DF0A",
+        "stage": "perform-begin",
+        "uptime": 328221.54497004166,
+        "wall": 1793577956.944989
+      },
+      {
+        "cpuControl": false,
+        "id": "6DE2B782-55A2-478B-B515-422A6F60DF0A",
+        "observations": [
+          {
+            "candidates": [
+              {
+                "confidence": 1,
+                "text": "Project Alpha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project A pha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Apha budget approved"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Alpha budget approve"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Alpha budge approved"
+              }
+            ],
+            "height": 0.19457364400227872,
+            "width": 0.5174418640136719,
+            "x": 0.03197674233930247,
+            "y": 0.4333333312911074
+          }
+        ],
+        "stage": "perform-end",
+        "uptime": 328229.4760234167,
+        "wall": 1793577964.876051
+      },
+      {
+        "cpuControl": false,
+        "id": "6DE2B782-55A2-478B-B515-422A6F60DF0A",
+        "lines": [
+          "Project Alpha budget approved"
+        ],
+        "stage": "extract-result",
+        "uptime": 328229.47627491667,
+        "wall": 1793577964.876302,
+        "warnings": []
+      }
+    ],
+    "assets": {
+      "6DE2B782-55A2-478B-B515-422A6F60DF0A.png": {
+        "asset": "assets/8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8.png",
+        "bytes": 23567,
+        "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8"
+      },
+      "6DE2B782-55A2-478B-B515-422A6F60DF0A-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png": {
+        "asset": "assets/20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+        "bytes": 23579,
+        "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0"
+      }
+    }
+  },
+  {
+    "id": "8F4DDE59-CD07-43EA-970E-9A7A637E118C",
+    "raw_sha256": "58189c382fc318e31bf97e5ceb779462e0dada1c7538f08daaf0fd0c6634a23f",
+    "events": [
+      {
+        "bytes": 21495,
+        "cpuControl": false,
+        "id": "8F4DDE59-CD07-43EA-970E-9A7A637E118C",
+        "input": "8F4DDE59-CD07-43EA-970E-9A7A637E118C.pdf",
+        "sha256": "fef92534e811045e953514247daa8ef330345ba32126c1da6b67d1955951c71e",
+        "stage": "input",
+        "uptime": 328221.50660716667,
+        "wall": 1793577956.906625
+      },
+      {
+        "cpuControl": false,
+        "id": "8F4DDE59-CD07-43EA-970E-9A7A637E118C",
+        "native": "2026",
+        "page": 1,
+        "stage": "pdf-native",
+        "uptime": 328221.5106996667,
+        "wall": 1793577956.910717
+      },
+      {
+        "bitsPerPixel": 32,
+        "bytesPerRow": 7200,
+        "cpuControl": false,
+        "height": 2400,
+        "id": "8F4DDE59-CD07-43EA-970E-9A7A637E118C",
+        "image": "8F4DDE59-CD07-43EA-970E-9A7A637E118C-0e5e0d92af32c8dbcf4f4e4055fa450fde53c242363af02785df70f5ed995831.png",
+        "sha256": "0e5e0d92af32c8dbcf4f4e4055fa450fde53c242363af02785df70f5ed995831",
+        "stage": "ocr-input",
+        "uptime": 328221.5450601667,
+        "wall": 1793577956.945078,
+        "width": 1800
+      },
+      {
+        "automaticLanguage": true,
+        "cpuControl": false,
+        "id": "8F4DDE59-CD07-43EA-970E-9A7A637E118C",
+        "languageCorrection": true,
+        "languages": [
+          "ru-RU",
+          "en-US"
+        ],
+        "revision": 3,
+        "stage": "request-options",
+        "uptime": 328221.54540087504,
+        "wall": 1793577956.9454188
+      },
+      {
+        "cpuControl": false,
+        "id": "8F4DDE59-CD07-43EA-970E-9A7A637E118C",
+        "stage": "perform-begin",
+        "uptime": 328221.54581437504,
+        "wall": 1793577956.945832
+      },
+      {
+        "cpuControl": false,
+        "id": "8F4DDE59-CD07-43EA-970E-9A7A637E118C",
+        "observations": [
+          {
+            "candidates": [
+              {
+                "confidence": 1,
+                "text": "20"
+              },
+              {
+                "confidence": 0.30000001192092896,
+                "text": "0"
+              },
+              {
+                "confidence": 0.30000001192092896,
+                "text": "2"
+              }
+            ],
+            "height": 0.01889534950256344,
+            "width": 0.04069767422146267,
+            "x": 0.03294573644116358,
+            "y": 0.5348837206500425
+          },
+          {
+            "candidates": [
+              {
+                "confidence": 1,
+                "text": "2026"
+              },
+              {
+                "confidence": 0.30000001192092896,
+                "text": "202"
+              },
+              {
+                "confidence": 0.30000001192092896,
+                "text": "206"
+              },
+              {
+                "confidence": 0.30000001192092896,
+                "text": "226"
+              },
+              {
+                "confidence": 0.30000001192092896,
+                "text": "026"
+              }
+            ],
+            "height": 0.017441860834757517,
+            "width": 0.06589147355821401,
+            "x": 0.4166666667092651,
+            "y": 0.05377906975703994
+          }
+        ],
+        "stage": "perform-end",
+        "uptime": 328229.5393376667,
+        "wall": 1793577964.939365
+      },
+      {
+        "cpuControl": false,
+        "id": "8F4DDE59-CD07-43EA-970E-9A7A637E118C",
+        "lines": [
+          "2026\n20"
+        ],
+        "stage": "extract-result",
+        "uptime": 328229.53961020836,
+        "wall": 1793577964.939637,
+        "warnings": []
+      }
+    ],
+    "assets": {
+      "8F4DDE59-CD07-43EA-970E-9A7A637E118C.pdf": {
+        "asset": "assets/fef92534e811045e953514247daa8ef330345ba32126c1da6b67d1955951c71e.pdf",
+        "bytes": 21495,
+        "sha256": "fef92534e811045e953514247daa8ef330345ba32126c1da6b67d1955951c71e"
+      },
+      "8F4DDE59-CD07-43EA-970E-9A7A637E118C-0e5e0d92af32c8dbcf4f4e4055fa450fde53c242363af02785df70f5ed995831.png": {
+        "asset": "assets/0e5e0d92af32c8dbcf4f4e4055fa450fde53c242363af02785df70f5ed995831.png",
+        "bytes": 94857,
+        "sha256": "0e5e0d92af32c8dbcf4f4e4055fa450fde53c242363af02785df70f5ed995831"
+      }
+    }
+  },
+  {
+    "id": "9276B722-D7D9-4FE6-87ED-BBCD151DD432",
+    "raw_sha256": "21facdcbce70f78c0d8b7d13be13bdf9f3200214981e270bd882d7599b3e18cf",
+    "events": [
+      {
+        "bytes": 21549,
+        "cpuControl": false,
+        "id": "9276B722-D7D9-4FE6-87ED-BBCD151DD432",
+        "input": "9276B722-D7D9-4FE6-87ED-BBCD151DD432.pdf",
+        "sha256": "cce9fdd7fd8a4f17393ae4e795ba20d2752ad7a65cf0e417e4cd160cb29f9253",
+        "stage": "input",
+        "uptime": 328221.506924125,
+        "wall": 1793577956.906942
+      },
+      {
+        "cpuControl": false,
+        "id": "9276B722-D7D9-4FE6-87ED-BBCD151DD432",
+        "native": "2026",
+        "page": 1,
+        "stage": "pdf-native",
+        "uptime": 328221.51076095836,
+        "wall": 1793577956.910779
+      },
+      {
+        "bitsPerPixel": 32,
+        "bytesPerRow": 7200,
+        "cpuControl": false,
+        "height": 2400,
+        "id": "9276B722-D7D9-4FE6-87ED-BBCD151DD432",
+        "image": "9276B722-D7D9-4FE6-87ED-BBCD151DD432-ed81cb04fddb07561b7087d54646c8dda614c678115347c82f8fd2c0df7c7b87.png",
+        "sha256": "ed81cb04fddb07561b7087d54646c8dda614c678115347c82f8fd2c0df7c7b87",
+        "stage": "ocr-input",
+        "uptime": 328221.54683970835,
+        "wall": 1793577956.946857,
+        "width": 1800
+      },
+      {
+        "automaticLanguage": true,
+        "cpuControl": false,
+        "id": "9276B722-D7D9-4FE6-87ED-BBCD151DD432",
+        "languageCorrection": true,
+        "languages": [
+          "ru-RU",
+          "en-US"
+        ],
+        "revision": 3,
+        "stage": "request-options",
+        "uptime": 328221.550885375,
+        "wall": 1793577956.950903
+      },
+      {
+        "cpuControl": false,
+        "id": "9276B722-D7D9-4FE6-87ED-BBCD151DD432",
+        "stage": "perform-begin",
+        "uptime": 328221.55097158335,
+        "wall": 1793577956.950989
+      },
+      {
+        "cpuControl": false,
+        "id": "9276B722-D7D9-4FE6-87ED-BBCD151DD432",
+        "observations": [
+          {
+            "candidates": [
+              {
+                "confidence": 1,
+                "text": "26"
+              },
+              {
+                "confidence": 0.30000001192092896,
+                "text": "6"
+              },
+              {
+                "confidence": 0.30000001192092896,
+                "text": "2"
+              }
+            ],
+            "height": 0.01889534950256344,
+            "width": 0.04263565911187066,
+            "x": 0.03294573623863831,
+            "y": 0.5348837206500425
+          },
+          {
+            "candidates": [
+              {
+                "confidence": 1,
+                "text": "2026"
+              },
+              {
+                "confidence": 0.30000001192092896,
+                "text": "202"
+              },
+              {
+                "confidence": 0.30000001192092896,
+                "text": "206"
+              },
+              {
+                "confidence": 0.30000001192092896,
+                "text": "226"
+              },
+              {
+                "confidence": 0.30000001192092896,
+                "text": "026"
+              }
+            ],
+            "height": 0.017441860834757517,
+            "width": 0.06589147355821401,
+            "x": 0.4166666667092651,
+            "y": 0.05377906975703994
+          }
+        ],
+        "stage": "perform-end",
+        "uptime": 328229.661792,
+        "wall": 1793577965.061819
+      },
+      {
+        "cpuControl": false,
+        "id": "9276B722-D7D9-4FE6-87ED-BBCD151DD432",
+        "lines": [
+          "2026\n26"
+        ],
+        "stage": "extract-result",
+        "uptime": 328229.6620574167,
+        "wall": 1793577965.062084,
+        "warnings": []
+      }
+    ],
+    "assets": {
+      "9276B722-D7D9-4FE6-87ED-BBCD151DD432.pdf": {
+        "asset": "assets/cce9fdd7fd8a4f17393ae4e795ba20d2752ad7a65cf0e417e4cd160cb29f9253.pdf",
+        "bytes": 21549,
+        "sha256": "cce9fdd7fd8a4f17393ae4e795ba20d2752ad7a65cf0e417e4cd160cb29f9253"
+      },
+      "9276B722-D7D9-4FE6-87ED-BBCD151DD432-ed81cb04fddb07561b7087d54646c8dda614c678115347c82f8fd2c0df7c7b87.png": {
+        "asset": "assets/ed81cb04fddb07561b7087d54646c8dda614c678115347c82f8fd2c0df7c7b87.png",
+        "bytes": 94605,
+        "sha256": "ed81cb04fddb07561b7087d54646c8dda614c678115347c82f8fd2c0df7c7b87"
+      }
+    }
+  },
+  {
+    "id": "9E7F6ADB-A06B-4DCA-92E9-AA69E3B1618B",
+    "raw_sha256": "348e5c704d1813fd0fb753f66a357a6cb659527f4164ba6d996b24424b3d78ab",
+    "events": [
+      {
+        "bytes": 7543,
+        "cpuControl": false,
+        "id": "9E7F6ADB-A06B-4DCA-92E9-AA69E3B1618B",
+        "input": "9E7F6ADB-A06B-4DCA-92E9-AA69E3B1618B.pdf",
+        "sha256": "4950ba729a8f63f0905ea32d125ad963216c48a0c8612d3576c976dfb60e470a",
+        "stage": "input",
+        "uptime": 328221.676962625,
+        "wall": 1793577957.076981
+      },
+      {
+        "cpuControl": false,
+        "id": "9E7F6ADB-A06B-4DCA-92E9-AA69E3B1618B",
+        "native": "Project Alpha launch in November",
+        "page": 1,
+        "stage": "pdf-native",
+        "uptime": 328221.67755658337,
+        "wall": 1793577957.077574
+      },
+      {
+        "bitsPerPixel": 32,
+        "bytesPerRow": 7200,
+        "cpuControl": false,
+        "height": 514,
+        "id": "9E7F6ADB-A06B-4DCA-92E9-AA69E3B1618B",
+        "image": "9E7F6ADB-A06B-4DCA-92E9-AA69E3B1618B-ee7e8dbfc3df4e11fbf4e8565a16d7f1a298df948400818fb885f4a302452213.png",
+        "sha256": "ee7e8dbfc3df4e11fbf4e8565a16d7f1a298df948400818fb885f4a302452213",
+        "stage": "ocr-input",
+        "uptime": 328221.6834745417,
+        "wall": 1793577957.083492,
+        "width": 1800
+      },
+      {
+        "automaticLanguage": true,
+        "cpuControl": false,
+        "id": "9E7F6ADB-A06B-4DCA-92E9-AA69E3B1618B",
+        "languageCorrection": true,
+        "languages": [
+          "ru-RU",
+          "en-US"
+        ],
+        "revision": 3,
+        "stage": "request-options",
+        "uptime": 328221.6836681667,
+        "wall": 1793577957.0836868
+      },
+      {
+        "cpuControl": false,
+        "id": "9E7F6ADB-A06B-4DCA-92E9-AA69E3B1618B",
+        "stage": "perform-begin",
+        "uptime": 328221.68373370834,
+        "wall": 1793577957.0837522
+      },
+      {
+        "cpuControl": false,
+        "id": "9E7F6ADB-A06B-4DCA-92E9-AA69E3B1618B",
+        "observations": [
+          {
+            "candidates": [
+              {
+                "confidence": 1,
+                "text": "Project Alpha launch in November"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Alpha aunch in November"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Alpha launch inNovember"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Alpha launchin November"
+              },
+              {
+                "confidence": 1,
+                "text": "Project Alphalaunch in November"
+              }
+            ],
+            "height": 0.11838251700197211,
+            "width": 0.49719702826605894,
+            "x": 0.02963188183058861,
+            "y": 0.495657749231849
+          }
+        ],
+        "stage": "perform-end",
+        "uptime": 328229.7765254584,
+        "wall": 1793577965.176553
+      },
+      {
+        "cpuControl": false,
+        "id": "9E7F6ADB-A06B-4DCA-92E9-AA69E3B1618B",
+        "lines": [
+          "Project Alpha launch in November"
+        ],
+        "stage": "extract-result",
+        "uptime": 328229.77681708336,
+        "wall": 1793577965.1768441,
+        "warnings": []
+      }
+    ],
+    "assets": {
+      "9E7F6ADB-A06B-4DCA-92E9-AA69E3B1618B.pdf": {
+        "asset": "assets/4950ba729a8f63f0905ea32d125ad963216c48a0c8612d3576c976dfb60e470a.pdf",
+        "bytes": 7543,
+        "sha256": "4950ba729a8f63f0905ea32d125ad963216c48a0c8612d3576c976dfb60e470a"
+      },
+      "9E7F6ADB-A06B-4DCA-92E9-AA69E3B1618B-ee7e8dbfc3df4e11fbf4e8565a16d7f1a298df948400818fb885f4a302452213.png": {
+        "asset": "assets/ee7e8dbfc3df4e11fbf4e8565a16d7f1a298df948400818fb885f4a302452213.png",
+        "bytes": 34993,
+        "sha256": "ee7e8dbfc3df4e11fbf4e8565a16d7f1a298df948400818fb885f4a302452213"
+      }
+    }
+  },
+  {
+    "id": "BD9C0D77-93B4-4539-ACDD-06C5259B1BC3",
+    "raw_sha256": "bc43cb3b8f81c4b6488057001582abf204473e8f8cb61f6a85bf5f131919b42b",
+    "events": [
+      {
+        "bytes": 18893,
+        "cpuControl": false,
+        "id": "BD9C0D77-93B4-4539-ACDD-06C5259B1BC3",
+        "input": "BD9C0D77-93B4-4539-ACDD-06C5259B1BC3.png",
+        "sha256": "953237e11108c9c3ac54649b97996e7661ce726244bbcb9dbc73bf11f9ca573c",
+        "stage": "input",
+        "uptime": 328221.68457825005,
+        "wall": 1793577957.0845962
+      },
+      {
+        "bitsPerPixel": 32,
+        "bytesPerRow": 6400,
+        "cpuControl": false,
+        "height": 250,
+        "id": "BD9C0D77-93B4-4539-ACDD-06C5259B1BC3",
+        "image": "BD9C0D77-93B4-4539-ACDD-06C5259B1BC3-132416c332f1b2866336400c8b8ed94b10eb3a3431af005aca796c66bfbf350a.png",
+        "sha256": "132416c332f1b2866336400c8b8ed94b10eb3a3431af005aca796c66bfbf350a",
+        "stage": "ocr-input",
+        "uptime": 328221.6883391667,
+        "wall": 1793577957.088357,
+        "width": 1600
+      },
+      {
+        "automaticLanguage": true,
+        "cpuControl": false,
+        "id": "BD9C0D77-93B4-4539-ACDD-06C5259B1BC3",
+        "languageCorrection": true,
+        "languages": [
+          "ru-RU",
+          "en-US"
+        ],
+        "revision": 3,
+        "stage": "request-options",
+        "uptime": 328221.6884945,
+        "wall": 1793577957.088513
+      },
+      {
+        "cpuControl": false,
+        "id": "BD9C0D77-93B4-4539-ACDD-06C5259B1BC3",
+        "stage": "perform-begin",
+        "uptime": 328221.688545625,
+        "wall": 1793577957.088563
+      },
+      {
+        "cpuControl": false,
+        "id": "BD9C0D77-93B4-4539-ACDD-06C5259B1BC3",
+        "observations": [
+          {
+            "candidates": [
+              {
+                "confidence": 1,
+                "text": "Решение: запуск проекта в ноябре"
+              },
+              {
+                "confidence": 1,
+                "text": "Решение запуск проекта в ноябре"
+              },
+              {
+                "confidence": 1,
+                "text": "Решение: запук проекта в ноябре"
+              },
+              {
+                "confidence": 1,
+                "text": "Решение: запус проекта в ноябре"
+              },
+              {
+                "confidence": 0.5,
+                "text": "Решение: запуск проекта в ноябр"
+              }
+            ],
+            "height": 0.2639999999999999,
+            "width": 0.5,
+            "x": 0.008333337166666581,
+            "y": 0.36800000263157895
+          }
+        ],
+        "stage": "perform-end",
+        "uptime": 328229.80657420837,
+        "wall": 1793577965.206602
+      },
+      {
+        "cpuControl": false,
+        "id": "BD9C0D77-93B4-4539-ACDD-06C5259B1BC3",
+        "lines": [
+          "Решение: запуск проекта в ноябре"
+        ],
+        "stage": "extract-result",
+        "uptime": 328229.80676579167,
+        "wall": 1793577965.2067928,
+        "warnings": []
+      }
+    ],
+    "assets": {
+      "BD9C0D77-93B4-4539-ACDD-06C5259B1BC3.png": {
+        "asset": "assets/953237e11108c9c3ac54649b97996e7661ce726244bbcb9dbc73bf11f9ca573c.png",
+        "bytes": 18893,
+        "sha256": "953237e11108c9c3ac54649b97996e7661ce726244bbcb9dbc73bf11f9ca573c"
+      },
+      "BD9C0D77-93B4-4539-ACDD-06C5259B1BC3-132416c332f1b2866336400c8b8ed94b10eb3a3431af005aca796c66bfbf350a.png": {
+        "asset": "assets/132416c332f1b2866336400c8b8ed94b10eb3a3431af005aca796c66bfbf350a.png",
+        "bytes": 18905,
+        "sha256": "132416c332f1b2866336400c8b8ed94b10eb3a3431af005aca796c66bfbf350a"
+      }
+    }
+  },
+  {
+    "id": "C1513513-50E5-4C0A-A96A-ECAB3EAD8EC8",
+    "raw_sha256": "b32590d49afff042931e374ee22b9726dd949cdd8276af349f2b0b9ff646857a",
+    "events": [
+      {
+        "bytes": 8205,
+        "cpuControl": false,
+        "id": "C1513513-50E5-4C0A-A96A-ECAB3EAD8EC8",
+        "input": "C1513513-50E5-4C0A-A96A-ECAB3EAD8EC8.pdf",
+        "sha256": "945820cbf112e35ed6c8d494c9c42f8dccebb9cff765c95a702bc4a5da5804cd",
+        "stage": "input",
+        "uptime": 328221.475337875,
+        "wall": 1793577956.875356
+      },
+      {
+        "cpuControl": false,
+        "id": "C1513513-50E5-4C0A-A96A-ECAB3EAD8EC8",
+        "native": "Project alpha launch",
+        "page": 1,
+        "stage": "pdf-native",
+        "uptime": 328221.4762032917,
+        "wall": 1793577956.876221
+      },
+      {
+        "bitsPerPixel": 32,
+        "bytesPerRow": 7200,
+        "cpuControl": false,
+        "height": 2400,
+        "id": "C1513513-50E5-4C0A-A96A-ECAB3EAD8EC8",
+        "image": "C1513513-50E5-4C0A-A96A-ECAB3EAD8EC8-519c66ffa5ee209d22d22f97216f5e539515783538256c5fe34b955e3dd6445d.png",
+        "sha256": "519c66ffa5ee209d22d22f97216f5e539515783538256c5fe34b955e3dd6445d",
+        "stage": "ocr-input",
+        "uptime": 328221.50117933337,
+        "wall": 1793577956.901197,
+        "width": 1800
+      },
+      {
+        "automaticLanguage": true,
+        "cpuControl": false,
+        "id": "C1513513-50E5-4C0A-A96A-ECAB3EAD8EC8",
+        "languageCorrection": true,
+        "languages": [
+          "ru-RU",
+          "en-US"
+        ],
+        "revision": 3,
+        "stage": "request-options",
+        "uptime": 328221.50260575,
+        "wall": 1793577956.9026241
+      },
+      {
+        "cpuControl": false,
+        "id": "C1513513-50E5-4C0A-A96A-ECAB3EAD8EC8",
+        "stage": "perform-begin",
+        "uptime": 328221.5027109167,
+        "wall": 1793577956.902728
+      },
+      {
+        "cpuControl": false,
+        "id": "C1513513-50E5-4C0A-A96A-ECAB3EAD8EC8",
+        "observations": [
+          {
+            "candidates": [
+              {
+                "confidence": 1,
+                "text": "Project alpha launch"
+              },
+              {
+                "confidence": 1,
+                "text": "Project alphalaunch"
+              },
+              {
+                "confidence": 1,
+                "text": "Project alpha aunch"
+              },
+              {
+                "confidence": 1,
+                "text": "Project alpha lunch"
+              },
+              {
+                "confidence": 1,
+                "text": "Project apha launch"
+              }
+            ],
+            "height": 0.023459302584330155,
+            "width": 0.2965116373697917,
+            "x": 0.06782945255434608,
+            "y": 0.876249999731925
+          }
+        ],
+        "stage": "perform-end",
+        "uptime": 328229.44477733335,
+        "wall": 1793577964.844804
+      },
+      {
+        "cpuControl": false,
+        "id": "C1513513-50E5-4C0A-A96A-ECAB3EAD8EC8",
+        "native": "Decision: ship in November",
+        "page": 2,
+        "stage": "pdf-native",
+        "uptime": 328229.44508845836,
+        "wall": 1793577964.845115
+      },
+      {
+        "bitsPerPixel": 32,
+        "bytesPerRow": 7200,
+        "cpuControl": false,
+        "height": 2400,
+        "id": "C1513513-50E5-4C0A-A96A-ECAB3EAD8EC8",
+        "image": "C1513513-50E5-4C0A-A96A-ECAB3EAD8EC8-3422cced33fa0611b8ea88a554ab96fa231c83027d0696a70ebc5a3b616b4280.png",
+        "sha256": "3422cced33fa0611b8ea88a554ab96fa231c83027d0696a70ebc5a3b616b4280",
+        "stage": "ocr-input",
+        "uptime": 328229.4680035834,
+        "wall": 1793577964.86803,
+        "width": 1800
+      },
+      {
+        "automaticLanguage": true,
+        "cpuControl": false,
+        "id": "C1513513-50E5-4C0A-A96A-ECAB3EAD8EC8",
+        "languageCorrection": true,
+        "languages": [
+          "ru-RU",
+          "en-US"
+        ],
+        "revision": 3,
+        "stage": "request-options",
+        "uptime": 328229.4681954167,
+        "wall": 1793577964.868222
+      },
+      {
+        "cpuControl": false,
+        "id": "C1513513-50E5-4C0A-A96A-ECAB3EAD8EC8",
+        "stage": "perform-begin",
+        "uptime": 328229.4682460417,
+        "wall": 1793577964.868273
+      },
+      {
+        "cpuControl": false,
+        "id": "C1513513-50E5-4C0A-A96A-ECAB3EAD8EC8",
+        "observations": [
+          {
+            "candidates": [
+              {
+                "confidence": 1,
+                "text": "Decision: ship in November"
+              },
+              {
+                "confidence": 1,
+                "text": "Decision ship in November"
+              },
+              {
+                "confidence": 1,
+                "text": "Decision:ship in November"
+              },
+              {
+                "confidence": 1,
+                "text": "Decision: ship in Novembe"
+              },
+              {
+                "confidence": 1,
+                "text": "Decision: shipin November"
+              }
+            ],
+            "height": 0.02470930258433024,
+            "width": 0.3992248196072049,
+            "x": 0.06976743505231266,
+            "y": 0.8749999998773401
+          }
+        ],
+        "stage": "perform-end",
+        "uptime": 328229.9800484583,
+        "wall": 1793577965.380076
+      },
+      {
+        "cpuControl": false,
+        "id": "C1513513-50E5-4C0A-A96A-ECAB3EAD8EC8",
+        "lines": [
+          "Project alpha launch",
+          "Decision: ship in November"
+        ],
+        "stage": "extract-result",
+        "uptime": 328229.98029895837,
+        "wall": 1793577965.380326,
+        "warnings": []
+      }
+    ],
+    "assets": {
+      "C1513513-50E5-4C0A-A96A-ECAB3EAD8EC8.pdf": {
+        "asset": "assets/945820cbf112e35ed6c8d494c9c42f8dccebb9cff765c95a702bc4a5da5804cd.pdf",
+        "bytes": 8205,
+        "sha256": "945820cbf112e35ed6c8d494c9c42f8dccebb9cff765c95a702bc4a5da5804cd"
+      },
+      "C1513513-50E5-4C0A-A96A-ECAB3EAD8EC8-519c66ffa5ee209d22d22f97216f5e539515783538256c5fe34b955e3dd6445d.png": {
+        "asset": "assets/519c66ffa5ee209d22d22f97216f5e539515783538256c5fe34b955e3dd6445d.png",
+        "bytes": 95566,
+        "sha256": "519c66ffa5ee209d22d22f97216f5e539515783538256c5fe34b955e3dd6445d"
+      },
+      "C1513513-50E5-4C0A-A96A-ECAB3EAD8EC8-3422cced33fa0611b8ea88a554ab96fa231c83027d0696a70ebc5a3b616b4280.png": {
+        "asset": "assets/3422cced33fa0611b8ea88a554ab96fa231c83027d0696a70ebc5a3b616b4280.png",
+        "bytes": 98598,
+        "sha256": "3422cced33fa0611b8ea88a554ab96fa231c83027d0696a70ebc5a3b616b4280"
+      }
+    }
+  }
+]

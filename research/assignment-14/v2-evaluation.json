@@ -1,0 +1,264 @@
+{
+  "algorithm" : "explicit-name-margin-e5-v2",
+  "auto_threshold" : 0.90000000000000002,
+  "cases" : [
+    {
+      "actual" : [
+        "amber"
+      ],
+      "expected" : [
+        "amber"
+      ],
+      "id" : "h-amber",
+      "milliseconds" : 8.268208330264315,
+      "scores" : [
+        {
+          "competing_similarity" : 0.87083528806304755,
+          "context_kind" : "document",
+          "context_text" : "Проект Янтарь: переносим складской учёт в новую систему. Проверяем остатки товаров, маркировку и обмен с кассами.",
+          "explicit_name" : true,
+          "meeting_text" : "В проекте Янтарь тестируем обмен с кассами, сверяем товарные остатки и маркировку после переноса складского учёта.",
+          "project" : "amber",
+          "similarity" : 0.9600796867924386
+        }
+      ],
+      "suggested_topic" : null
+    },
+    {
+      "actual" : [
+        "orbit"
+      ],
+      "expected" : [
+        "orbit"
+      ],
+      "id" : "h-orbit",
+      "milliseconds" : 6.6941250115633011,
+      "scores" : [
+        {
+          "competing_similarity" : 0.83672202372456672,
+          "context_kind" : "meeting",
+          "context_text" : "Проект Орбита: запускаем спутниковую связь для судов. Проверяем антенну, радиоканал и покрытие в северных морях.",
+          "explicit_name" : true,
+          "meeting_text" : "Проект Орбита обеспечивает спутниковую связь судов: сегодня тестировали антенну, радиоканал и покрытие северных морей.",
+          "project" : "orbit",
+          "similarity" : 0.9702972428894755
+        }
+      ],
+      "suggested_topic" : null
+    },
+    {
+      "actual" : [
+        "amber",
+        "orbit"
+      ],
+      "expected" : [
+        "amber",
+        "orbit"
+      ],
+      "id" : "h-both",
+      "milliseconds" : 8.6732500058133155,
+      "scores" : [
+        {
+          "competing_similarity" : 0.85933467856602119,
+          "context_kind" : "document",
+          "context_text" : "Проект Янтарь: переносим складской учёт в новую систему. Проверяем остатки товаров, маркировку и обмен с кассами.",
+          "explicit_name" : true,
+          "meeting_text" : "В проекте Янтарь сверяем товарные остатки и маркировку после переноса складского учёта в новую систему. Тестируем обмен с кассами.",
+          "project" : "amber",
+          "similarity" : 0.97174368590959448
+        },
+        {
+          "competing_similarity" : 0.85356481785781224,
+          "context_kind" : "meeting",
+          "context_text" : "Проект Орбита: запускаем спутниковую связь для судов. Проверяем антенну, радиоканал и покрытие в северных морях.",
+          "explicit_name" : true,
+          "meeting_text" : "В проекте Орбита проверяем антенну и радиоканал для спутниковой связи судов в северных морях.",
+          "project" : "orbit",
+          "similarity" : 0.96842145734092444
+        }
+      ],
+      "suggested_topic" : null
+    },
+    {
+      "actual" : [
+
+      ],
+      "expected" : [
+
+      ],
+      "id" : "h-wrong-name",
+      "milliseconds" : 8.2199166645295918,
+      "scores" : [
+        {
+          "competing_similarity" : 0.89329674873658493,
+          "context_kind" : "document",
+          "context_text" : "Проект Янтарь: переносим складской учёт в новую систему. Проверяем остатки товаров, маркировку и обмен с кассами.",
+          "explicit_name" : false,
+          "meeting_text" : "Проект Орбита сверяет остатки на складе и маркировку товаров, настраивает обмен с кассовыми аппаратами после переноса учёта.",
+          "project" : "amber",
+          "similarity" : 0.90909141628213108
+        }
+      ],
+      "suggested_topic" : null
+    },
+    {
+      "actual" : [
+
+      ],
+      "expected" : [
+
+      ],
+      "id" : "h-wrong-name-reverse",
+      "milliseconds" : 8.0248749873135239,
+      "scores" : [
+        {
+          "competing_similarity" : 0.88190409165242711,
+          "context_kind" : "meeting",
+          "context_text" : "Проект Орбита: запускаем спутниковую связь для судов. Проверяем антенну, радиоканал и покрытие в северных морях.",
+          "explicit_name" : false,
+          "meeting_text" : "Команда проекта Янтарь запускает спутниковую связь для судов, тестирует радиоканал и покрытие в северных морях.",
+          "project" : "orbit",
+          "similarity" : 0.90976877574926773
+        }
+      ],
+      "suggested_topic" : null
+    },
+    {
+      "actual" : [
+
+      ],
+      "expected" : [
+
+      ],
+      "id" : "h-no-name",
+      "milliseconds" : 8.0892916594166309,
+      "scores" : [
+
+      ],
+      "suggested_topic" : "Команда проводит инвентаризацию товаров, сверяет маркировку и тестирует обмен складской системы с ка"
+    },
+    {
+      "actual" : [
+
+      ],
+      "expected" : [
+
+      ],
+      "id" : "h-generic",
+      "milliseconds" : 7.7872083347756416,
+      "scores" : [
+
+      ],
+      "suggested_topic" : "Сегодня согласовали сроки, назначили ответственных, обновили бюджет и список рисков. Нужен ещё один "
+    },
+    {
+      "actual" : [
+
+      ],
+      "expected" : [
+
+      ],
+      "id" : "h-duplicate",
+      "milliseconds" : 7.2226666670758277,
+      "scores" : [
+        {
+          "competing_similarity" : 0.94554528345568023,
+          "context_kind" : "document",
+          "context_text" : "Проект Платформа: строим конвейер аналитики платежей и витрины данных.",
+          "explicit_name" : false,
+          "meeting_text" : "В проекте Платформа готовим витрины данных для аналитики платежей, согласовали конвейер загрузки.",
+          "project" : "platform-a",
+          "similarity" : 0.94554528345568023
+        },
+        {
+          "competing_similarity" : 0.94554528345568023,
+          "context_kind" : "document",
+          "context_text" : "Проект Платформа: строим конвейер аналитики платежей и витрины данных.",
+          "explicit_name" : false,
+          "meeting_text" : "В проекте Платформа готовим витрины данных для аналитики платежей, согласовали конвейер загрузки.",
+          "project" : "platform-b",
+          "similarity" : 0.94554528345568023
+        }
+      ],
+      "suggested_topic" : null
+    },
+    {
+      "actual" : [
+
+      ],
+      "expected" : [
+
+      ],
+      "id" : "h-negated",
+      "milliseconds" : 8.4614166407845914,
+      "scores" : [
+        {
+          "competing_similarity" : 0.84360394407612305,
+          "context_kind" : "meeting",
+          "context_text" : "Проект Орбита: запускаем спутниковую связь для судов. Проверяем антенну, радиоканал и покрытие в северных морях.",
+          "explicit_name" : false,
+          "meeting_text" : "Проект Орбита не обсуждаем: спутниковая связь судов, антенна и радиоканал не входят в эту повестку.",
+          "project" : "orbit",
+          "similarity" : 0.91807791320869714
+        }
+      ],
+      "suggested_topic" : null
+    },
+    {
+      "actual" : [
+
+      ],
+      "expected" : [
+
+      ],
+      "id" : "h-novel",
+      "milliseconds" : 7.6070000068284571,
+      "scores" : [
+
+      ],
+      "suggested_topic" : "Для нового проекта выбираем рецепты выпечки, заказываем муку и печи, ищем помещение для пекарни."
+    },
+    {
+      "actual" : [
+
+      ],
+      "expected" : [
+
+      ],
+      "id" : "h-word-collision",
+      "milliseconds" : 7.0529166841879487,
+      "scores" : [
+
+      ],
+      "suggested_topic" : "В магазине Янтарь обсуждали выставку камней, огранку украшений и ювелирную оценку браслетов."
+    },
+    {
+      "actual" : [
+
+      ],
+      "expected" : [
+
+      ],
+      "id" : "h-empty-meaning",
+      "milliseconds" : 6.6375833412166685,
+      "scores" : [
+
+      ],
+      "suggested_topic" : "Всем спасибо, начинаем завтра, поговорим позже, пока."
+    }
+  ],
+  "cold_index_seconds" : 1.1990595000097528,
+  "corpus_sha256" : "5bfea0841b58181eca855cbd81d0e3f141949a51850a88e2563dd91b1bf8db30",
+  "false_positive_links" : 0,
+  "idempotence_checked" : true,
+  "manual_inbox_restart_checked" : true,
+  "missed_links" : 0,
+  "model_id" : "multilingual-e5-small@fd1525a9fd15316a2d503bf26ab031a61d056e98\/unigram-v1\/mean-l2\/512\/overlap64",
+  "partition" : "evaluation",
+  "peak_cli_rss_bytes" : 1864351744,
+  "production_wiring" : false,
+  "proposal_threshold" : 0.90000000000000002,
+  "required_margin" : 0.040000000000000001,
+  "synthetic_only" : true,
+  "true_positive_links" : 4
+}

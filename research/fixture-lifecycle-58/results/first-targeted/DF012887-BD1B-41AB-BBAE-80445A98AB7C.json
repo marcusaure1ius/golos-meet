@@ -1,0 +1,22 @@
+[
+  {
+    "stage" : "scope-created",
+    "test" : "eventPathKeepsDeletedAliasesAndFinalSymlinkInsideWatchedPrefix()",
+    "uptime" : "332466.49050066667"
+  },
+  {
+    "root" : "index-hooks-D2C12E46-013B-4319-A3CA-D873D74DD2A0",
+    "stage" : "root-owned",
+    "uptime" : "332466.5587811667"
+  },
+  {
+    "stage" : "body-finished",
+    "uptime" : "332466.6002431667"
+  },
+  {
+    "exists" : "false",
+    "root" : "index-hooks-D2C12E46-013B-4319-A3CA-D873D74DD2A0",
+    "stage" : "root-removed",
+    "uptime" : "332466.60142220836"
+  }
+]

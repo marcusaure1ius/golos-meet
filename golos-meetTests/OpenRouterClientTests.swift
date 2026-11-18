@@ -91,4 +91,35 @@ final class MockURLProtocol: URLProtocol {
         }
         #expect(MockURLProtocol.stubs.isEmpty)         // ровно одна попытка (без ретрая)
     }
+    @Test func guardedTransportDoesNotSendWhenInitialGateRejects() async throws {
+        MockURLProtocol.lastRequest = nil
+        MockURLProtocol.stubs = [.init(status: 200, body: chatBody("unused"))]
+        let client: ChatCompleter = makeClient()
+        await #expect(throws: KnowledgeQuestionError.staleContext) {
+            _ = try await client.complete(model: "test", messages: [.init(role: "user", content: "synthetic")],
+                responseFormat: nil, beforeSending: { throw KnowledgeQuestionError.staleContext })
+        }
+        #expect(MockURLProtocol.lastRequest == nil && MockURLProtocol.stubs.count == 1)
+    }
+
+    @Test func guardedTransportRevalidatesEachRetryAndDoesNotRetryRejectedGate() async throws {
+        MockURLProtocol.stubs = [.init(status: 503, body: Data("retry".utf8)), .init(status: 200, body: chatBody("must not send"))]
+        let gate = RetryEgressGate()
+        let client: ChatCompleter = makeClient() // protocol dispatch must reach the retry-aware override
+        await #expect(throws: KnowledgeQuestionError.staleContext) {
+            _ = try await client.complete(model: "test", messages: [.init(role: "user", content: "synthetic")],
+                responseFormat: nil, beforeSending: { try await gate.check() })
+        }
+        #expect(await gate.calls == 2 && MockURLProtocol.stubs.count == 1)
+    }
+
+}
+
+
+private actor RetryEgressGate {
+    var calls = 0
+    func check() throws {
+        calls += 1
+        if calls > 1 { throw KnowledgeQuestionError.staleContext }
+    }
 }

@@ -1,0 +1,308 @@
+{
+  "baseline-sequential-default": {
+    "summary": {
+      "command": [
+        "/private/tmp/golos56-baseline-probe/ocr-probe",
+        "/private/tmp/golos56-frozen-inputs",
+        "/private/tmp/golos56-baseline-sequential-default",
+        "sequential",
+        "default",
+        "3"
+      ],
+      "seconds": 30.813166541978717,
+      "returncode": 0,
+      "timeout": false,
+      "outcomes": {
+        "success": 24
+      },
+      "expected_invocations": 24,
+      "observed_invocations": 24
+    },
+    "report": "baseline-sequential-default.json"
+  },
+  "baseline-parallel-default": {
+    "summary": {
+      "command": [
+        "/private/tmp/golos56-baseline-probe/ocr-probe",
+        "/private/tmp/golos56-frozen-inputs",
+        "/private/tmp/golos56-baseline-parallel-default",
+        "parallel",
+        "default",
+        "3"
+      ],
+      "seconds": 1.8233208329766057,
+      "returncode": 0,
+      "timeout": false,
+      "outcomes": {
+        "success": 24
+      },
+      "expected_invocations": 24,
+      "observed_invocations": 24
+    },
+    "report": "baseline-parallel-default.json"
+  },
+  "candidate-parallel-default": {
+    "summary": {
+      "command": [
+        "/private/tmp/golos56-candidate-probe/ocr-probe",
+        "/private/tmp/golos56-frozen-inputs",
+        "/private/tmp/golos56-candidate-parallel-default",
+        "parallel",
+        "default",
+        "3"
+      ],
+      "seconds": 2.1412152080447413,
+      "returncode": 0,
+      "timeout": false,
+      "outcomes": {
+        "success": 24
+      },
+      "expected_invocations": 24,
+      "observed_invocations": 24
+    },
+    "report": "candidate-parallel-default.json"
+  },
+  "baseline-parallel-cpu": {
+    "summary": {
+      "command": [
+        "/private/tmp/golos56-baseline-probe/ocr-probe",
+        "/private/tmp/golos56-frozen-inputs",
+        "/private/tmp/golos56-baseline-parallel-cpu",
+        "parallel",
+        "cpu",
+        "3"
+      ],
+      "seconds": 1.7026798750157468,
+      "returncode": 0,
+      "timeout": false,
+      "outcomes": {
+        "success": 24
+      },
+      "expected_invocations": 24,
+      "observed_invocations": 24
+    },
+    "report": "baseline-parallel-cpu.json"
+  },
+  "isolated-default": {
+    "summary": {
+      "command": [
+        "/private/tmp/golos56-traced-baseline-probe/ocr-probe",
+        "/private/tmp/golos56-frozen-inputs",
+        "/private/tmp/golos56-isolated-default",
+        "parallel",
+        "default",
+        "3"
+      ],
+      "seconds": 28.950719125044998,
+      "returncode": 0,
+      "timeout": false,
+      "outcomes": {
+        "success": 24
+      },
+      "expected_invocations": 24,
+      "observed_invocations": 24,
+      "isolated_home": "/private/tmp/golos56-home-default"
+    },
+    "report": "isolated-default.json"
+  },
+  "isolated-cpu": {
+    "summary": {
+      "command": [
+        "/private/tmp/golos56-traced-baseline-probe/ocr-probe",
+        "/private/tmp/golos56-frozen-inputs",
+        "/private/tmp/golos56-isolated-cpu",
+        "parallel",
+        "cpu",
+        "3"
+      ],
+      "seconds": 27.614211167034227,
+      "returncode": 0,
+      "timeout": false,
+      "outcomes": {
+        "success": 24
+      },
+      "expected_invocations": 24,
+      "observed_invocations": 24,
+      "isolated_home": "/private/tmp/golos56-home-cpu"
+    },
+    "report": "isolated-cpu.json"
+  },
+  "fanout-default": {
+    "summary": {
+      "command": [
+        "/private/tmp/golos56-final-probe/ocr-probe",
+        "/private/tmp/golos56-frozen-inputs",
+        "/private/tmp/golos56-fanout-default",
+        "fanout",
+        "default",
+        "4"
+      ],
+      "seconds": 180.03270408400567,
+      "returncode": null,
+      "timeout": true,
+      "outcomes": {
+        "incomplete": 14
+      },
+      "expected_invocations": 32,
+      "observed_invocations": 14,
+      "isolated_home": "/private/tmp/golos56-home-fanout-default"
+    },
+    "report": "fanout-default.json"
+  },
+  "fanout-preflight-default": {
+    "summary": {
+      "command": [
+        "/private/tmp/golos56-final-probe/ocr-probe",
+        "/private/tmp/golos56-frozen-inputs",
+        "/private/tmp/golos56-fanout-preflight-default",
+        "fanout",
+        "preflight-default",
+        "4"
+      ],
+      "seconds": 180.02574233297491,
+      "returncode": null,
+      "timeout": true,
+      "outcomes": {
+        "incomplete": 14
+      },
+      "expected_invocations": 32,
+      "observed_invocations": 14,
+      "isolated_home": "/private/tmp/golos56-home-fanout-preflight-default"
+    },
+    "report": "fanout-preflight-default.json"
+  },
+  "fanout-cpu": {
+    "summary": {
+      "command": [
+        "/private/tmp/golos56-final-probe/ocr-probe",
+        "/private/tmp/golos56-frozen-inputs",
+        "/private/tmp/golos56-fanout-cpu",
+        "fanout",
+        "cpu",
+        "4"
+      ],
+      "seconds": 180.01695237500826,
+      "returncode": null,
+      "timeout": true,
+      "outcomes": {
+        "incomplete": 14
+      },
+      "expected_invocations": 32,
+      "observed_invocations": 14,
+      "isolated_home": "/private/tmp/golos56-home-fanout-cpu"
+    },
+    "report": "fanout-cpu.json"
+  },
+  "threads-default": {
+    "summary": {
+      "command": [
+        "/private/tmp/golos56-executor-probe/ocr-probe",
+        "/private/tmp/golos56-frozen-inputs",
+        "/private/tmp/golos56-threads-default",
+        "threads",
+        "default",
+        "4"
+      ],
+      "seconds": 28.936111084010918,
+      "returncode": 0,
+      "timeout": false,
+      "outcomes": {
+        "success": 32
+      },
+      "expected_invocations": 32,
+      "observed_invocations": 32,
+      "isolated_home": "/private/tmp/golos56-home-threads-default"
+    },
+    "report": "threads-default.json"
+  },
+  "queue-fanout-default": {
+    "summary": {
+      "command": [
+        "/private/tmp/golos56-queue-probe/ocr-probe",
+        "/private/tmp/golos56-frozen-inputs",
+        "/private/tmp/golos56-queue-fanout-default",
+        "fanout",
+        "default",
+        "4"
+      ],
+      "seconds": 28.526167666947003,
+      "returncode": 0,
+      "timeout": false,
+      "outcomes": {
+        "success": 32
+      },
+      "expected_invocations": 32,
+      "observed_invocations": 32,
+      "isolated_home": "/private/tmp/golos56-home-queue-fanout-default"
+    },
+    "report": "queue-fanout-default.json"
+  },
+  "worker-fanout-default": {
+    "summary": {
+      "command": [
+        "/private/tmp/golos56-worker-probe/ocr-probe",
+        "/private/tmp/golos56-frozen-inputs",
+        "/private/tmp/golos56-worker-fanout-default",
+        "fanout",
+        "default",
+        "4"
+      ],
+      "seconds": 28.925268625025637,
+      "returncode": 0,
+      "timeout": false,
+      "outcomes": {
+        "success": 32
+      },
+      "expected_invocations": 32,
+      "observed_invocations": 32,
+      "isolated_home": "/private/tmp/golos56-home-worker-fanout-default"
+    },
+    "report": "worker-fanout-default.json"
+  },
+  "matched-reference": {
+    "summary": {
+      "command": [
+        "/private/tmp/golos56-matched-reference-probe/ocr-probe",
+        "/private/tmp/golos56-frozen-inputs",
+        "/private/tmp/golos56-matched-reference",
+        "fanout",
+        "default",
+        "4"
+      ],
+      "seconds": 90.02476745797321,
+      "returncode": null,
+      "timeout": true,
+      "outcomes": {
+        "incomplete": 14
+      },
+      "expected_invocations": 32,
+      "observed_invocations": 14,
+      "strict_pool_requested": false,
+      "isolated_home": "/private/tmp/golos56-home-matched-reference"
+    },
+    "report": "matched-reference.json"
+  },
+  "matched-queue": {
+    "summary": {
+      "command": [
+        "/private/tmp/golos56-matched-queue-probe/ocr-probe",
+        "/private/tmp/golos56-frozen-inputs",
+        "/private/tmp/golos56-matched-queue",
+        "fanout",
+        "default",
+        "4"
+      ],
+      "seconds": 29.190053250000346,
+      "returncode": 0,
+      "timeout": false,
+      "outcomes": {
+        "success": 32
+      },
+      "expected_invocations": 32,
+      "observed_invocations": 32,
+      "strict_pool_requested": false,
+      "isolated_home": "/private/tmp/golos56-home-matched-queue"
+    },
+    "report": "matched-queue.json"
+  }
+}

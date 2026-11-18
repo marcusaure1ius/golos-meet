@@ -1,0 +1,68 @@
+{
+  "testIdentifier": "ProjectMemoryQueueTests/concreteMetadataBridgeReceivesReadyEventWithoutLaunchingApplication()",
+  "testIdentifierURL": "test://com.apple.xcode/golos-meet/golos-meetTests/ProjectMemoryQueueTests/concreteMetadataBridgeReceivesReadyEventWithoutLaunchingApplication()",
+  "testName": "concreteMetadataBridgeReceivesReadyEventWithoutLaunchingApplication()",
+  "testRuns": [
+    {
+      "activities": [
+        {
+          "childActivities": [
+            {
+              "isAssociatedWithFailure": false,
+              "title": ""
+            }
+          ],
+          "isAssociatedWithFailure": true,
+          "startTime": 1793582781.737,
+          "title": "Issue recorded: Timed out waiting for synthetic worker state"
+        },
+        {
+          "activityType": "com.apple.dt.xctest.activity-type.attachmentContainer",
+          "attachments": [
+            {
+              "lifetime": "keepAlways",
+              "name": "sqlite-fixture-031C5844-4A15-4FC3-80EA-A8E97A575976_0_69ACC719-6F19-4016-98AC-6E5AAF20C0AC.json",
+              "payloadId": "0~zaR8lLzEmVvoUTQ5MflXu2VKsVuBIw8nXdTwUfFsindPtKVIXKpkhrvxl6vWkYdB-c99TnrnDeDG6W7iRCuEWA==",
+              "timestamp": 1793582782.936,
+              "uuid": "8FD7DA5B-1844-43A9-8F25-9588A9838DE0"
+            }
+          ],
+          "childActivities": [
+            {
+              "isAssociatedWithFailure": false,
+              "startTime": 1793582782.936,
+              "title": "sqlite-fixture-031C5844-4A15-4FC3-80EA-A8E97A575976.json"
+            }
+          ],
+          "isAssociatedWithFailure": false,
+          "startTime": 1793582782.936,
+          "title": "Added attachment name sqlite-fixture-031C5844-4A15-4FC3-80EA-A8E97A575976.json"
+        },
+        {
+          "childActivities": [
+            {
+              "isAssociatedWithFailure": false,
+              "title": ""
+            }
+          ],
+          "isAssociatedWithFailure": true,
+          "startTime": 1793582782.941,
+          "title": "Caught error: .busy"
+        }
+      ],
+      "device": {
+        "architecture": "arm64",
+        "deviceId": "00006040-000C51D93404801C",
+        "deviceName": "My Mac",
+        "modelName": "MacBook Pro",
+        "osBuildNumber": "26A434",
+        "osVersion": "27.0.1",
+        "platform": "macOS"
+      },
+      "testPlanConfiguration": {
+        "configurationId": "1",
+        "configurationName": "Test Scheme Action"
+      }
+    }
+  ]
+}

@@ -1,0 +1,1 @@
+REPRO a-parent event automatically replaced by c-replacement; dependent job remains COMPLETE/samecycle with no recomputation; service rejects its stored derivedevent as stale due ancestor retirement; calls 2 oldcycle 5D316392-461C-485A-95F3-1496794D7124 aftercycle 5D316392-461C-485A-95F3-1496794D7124 ROOT /tmp/review54-887699CC-50EC-45D3-941C-5926751FED9E

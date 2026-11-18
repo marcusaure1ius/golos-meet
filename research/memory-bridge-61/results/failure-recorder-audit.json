@@ -1,0 +1,39 @@
+{
+  "before_unwind": true,
+  "non_atomic": true,
+  "reports": [
+    {
+      "file": "bridge61-65E38A0D-2216-4A2B-9504-9E1F31CAD7F3-failure.json",
+      "scenario": "controlled-startup-pause",
+      "phase": "ready-source coverage",
+      "caseElapsed": 8.863893041678239,
+      "lastWaitToCaptureSeconds": 5.360043750028126,
+      "caseID": "65E38A0D-2216-4A2B-9504-9E1F31CAD7F3",
+      "workerID": "166447F7-069E-4A5A-A6EA-AC06012AD089",
+      "bridgeID": "68A01F4F-D7B1-4552-9FAE-C97FF69FF052",
+      "transportID": "4C8CD6EA-E4D9-4415-87A0-43C8538F5691"
+    },
+    {
+      "file": "bridge61-64FDCA0D-49AC-4985-85AD-DF6363EC3A92-failure.json",
+      "scenario": "controlled-body-exit-false",
+      "phase": "body",
+      "caseElapsed": 1.3184245832962915,
+      "lastWaitToCaptureSeconds": null,
+      "caseID": "64FDCA0D-49AC-4985-85AD-DF6363EC3A92",
+      "workerID": "6D138D0D-75DB-47AB-84FD-D320BD2856A1",
+      "bridgeID": "2CF97703-716D-47B8-ADCF-EF2C1AEA6711",
+      "transportID": "03685BFB-0C18-448F-B878-3469C223CF20"
+    },
+    {
+      "file": "bridge61-7135F12F-FCEF-40C4-AF2D-2568327DFA99-failure.json",
+      "scenario": "controlled-body-exit-true",
+      "phase": "body",
+      "caseElapsed": 1.317783958336804,
+      "lastWaitToCaptureSeconds": null,
+      "caseID": "7135F12F-FCEF-40C4-AF2D-2568327DFA99",
+      "workerID": "D203E608-05E7-4913-AD40-79AE91DA3496",
+      "bridgeID": "25CCF7AC-0E2C-4CC4-8C0B-B59B3C32DA3A",
+      "transportID": "53D7E663-94AE-4502-8868-D273A7F861FC"
+    }
+  ]
+}

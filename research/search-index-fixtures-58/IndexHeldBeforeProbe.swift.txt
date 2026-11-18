@@ -1,0 +1,36 @@
+
+@MainActor private final class IndexBeforeProbeState {
+    weak var service: LocalIndexingService?
+    weak var source: CandidateSource?
+}
+@MainActor extension LocalIndexingServiceTests {
+    private enum BeforeIndexBodyError: Error { case sentinel }
+    private func beforeIndexThrowingBody(_ state: IndexBeforeProbeState, entered: IndexGate, release: IndexGate) async throws {
+        let root = try root()
+        defer {
+            try? FileManager.default.removeItem(at: root)
+            SearchIndexObservation.current?.note("root-removed", ["root":root.lastPathComponent,"exists":String(FileManager.default.fileExists(atPath:root.path))])
+        }
+        try meeting(root, id: "held", text: "Synthetic held indexing source")
+        let store = ProjectStore(url: root.appendingPathComponent("knowledge.sqlite")), source = CandidateSource()
+        let encoder = LifecycleEncoder(entered: entered, release: release)
+        await source.set(candidate(encoder, source: source))
+        let service = service(root, store: store, source: source)
+        state.service = service; state.source = source
+        await service.start(); await entered.wait()
+        throw BeforeIndexBodyError.sentinel
+    }
+    @Test func throwingIndexBodyRecordsLateWorkerWritesAfterDeferredUnlink() async throws {
+        let state = IndexBeforeProbeState(), entered = IndexGate(), release = IndexGate()
+        await #expect(throws: BeforeIndexBodyError.sentinel) { try await beforeIndexThrowingBody(state, entered: entered, release: release) }
+        SearchIndexObservation.current?.note("body-threw-while-index-held")
+        await release.signal()
+        if let service = state.service {
+            await service.waitUntilIdle()
+            let snapshot = await service.snapshot()
+            SearchIndexObservation.current?.note("index-worker-drained", ["hadStorageMessage":String(snapshot.storageMessage != nil)])
+            await service.stop()
+        }
+        await state.source?.set(nil) // probe-only release of the fake candidate cycle
+    }
+}

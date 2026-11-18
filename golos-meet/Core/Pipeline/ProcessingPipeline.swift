@@ -14,15 +14,18 @@ final class ProcessingPipeline {
     /// Идентификатор ASR-модели; пишется в meta.asrModel и шапку транскрипта.
     private let modelId: String
     private let insightsGenerator: InsightsGenerator?
+    private let onTranscriptCommitted: @Sendable (String) -> Void
 
     init(asrFactory: @escaping () -> ASRClient,
          config: PipelineConfig = .init(),
          modelId: String = "gigaam-v3",
-         insightsGenerator: InsightsGenerator? = nil) {
+         insightsGenerator: InsightsGenerator? = nil,
+         onTranscriptCommitted: @escaping @Sendable (String) -> Void = { KnowledgeIndexEvents.post(.meeting($0)) }) {
         self.asrFactory = asrFactory
         self.config = config
         self.modelId = modelId
         self.insightsGenerator = insightsGenerator
+        self.onTranscriptCommitted = onTranscriptCommitted
     }
 
     func process(folder: URL) async {
@@ -33,7 +36,7 @@ final class ProcessingPipeline {
         }
 
         // Короткая встреча в авто-режиме — выбросить.
-        if meta.durationSeconds <= config.thresholdSeconds && config.deleteShortAudio {
+        if meta.durationSeconds <= config.thresholdSeconds && config.deleteShortAudio && meta.preserveAudio != true {
             meta.status = .discarded
             do { try meta.write(to: metaURL) } catch { Log.pipeline.error("meta.write failed for \(meta.id, privacy: .public): \(error.localizedDescription, privacy: .public)") }
             try? FileManager.default.removeItem(at: folder.appendingPathComponent("mic.wav"))
@@ -43,6 +46,16 @@ final class ProcessingPipeline {
         }
 
         Log.pipeline.info("processing \(meta.id, privacy: .public) engine=\(self.modelId, privacy: .public)")
+
+        // Обе дорожки отсутствуют (встреча архивирована, #129, или дорожки потеряны) —
+        // ASR выполнять не по чему, а пустой транскрипт нельзя перезаписью «стирать»
+        // существующий (ревью #130, P1-1). Статус не меняем: встреча остаётся как была.
+        if !FileManager.default.fileExists(atPath: folder.appendingPathComponent("mic.wav").path),
+           !FileManager.default.fileExists(atPath: folder.appendingPathComponent("system.wav").path) {
+            Log.pipeline.info("\(meta.id, privacy: .public): дорожек нет (архив/потеря) — обработка пропущена, транскрипт сохранён")
+            return
+        }
+
         meta.status = .processing
         writePreservingManualTitle(&meta, to: metaURL)
 
@@ -57,6 +70,7 @@ final class ProcessingPipeline {
             let title = "Встреча \(meta.id)"
             try TranscriptMerger.renderJSON(transcript)
                 .write(to: folder.appendingPathComponent("transcript.json"), options: .atomic)
+            onTranscriptCommitted(meta.id)
             try Data(TranscriptMerger.renderMarkdown(transcript, title: title).utf8)
                 .write(to: folder.appendingPathComponent("transcript.md"), options: .atomic)
             meta.asrModel = modelId

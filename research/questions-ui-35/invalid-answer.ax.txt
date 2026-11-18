@@ -1,0 +1,35 @@
+Window: "Golos Questions Preview · Synthetic", App: Golos Questions Preview.
+0 standard window Golos Questions Preview · Synthetic, ID: SwiftUI.WindowGroup<QuestionsPreview.QuestionPreviewRoot>-1-AppWindow-1, Secondary Actions: Raise
+	1 container
+		2 text Настоящая E5 с диска · synthetic источники · генератор по-прежнему подставной
+		3 pop up button Fake LLM, Value: Неверный ответ
+		4 button Удержать ответ
+		5 button Отпустить
+		6 text Вызовов fake: 6
+		7 switch Тёмная, Value: on
+		8 button Включить E5 с диска
+		9 button Изменить источники
+		10 button Восстановить источники
+		11 scroll area
+			12 text Вопросы по проекту
+			13 button Разрешения
+			14 text Найдём материалы на этом Mac. Для ответа можно отправить выбранные фрагменты в подставной генератор · без сети.
+			15 pop up button Проект, Value: Лира, ID: question.project
+			16 text field (settable) Description: Вопрос по проекту, Value: Когда релиз?, Placeholder: Например: на какую дату перенесли релиз?, ID: question.text
+			17 text Полный вопрос: 12 из 4000 символов
+			18 button Description: Подготовить заново, ID: question.prepare
+			19 container
+				20 text Ответ не прошёл проверку Ответ пуст, имеет неверный формат или содержит неподтверждённую ссылку. Подготовьте контекст заново и повторите запрос.
+	21 close button
+	22 full screen button Help: this button also has an action to zoom the window, Secondary Actions: zoom the window
+	23 minimize button
+	24 text Golos Questions Preview · Synthetic
+25 menu bar
+	26 Golos Questions Preview
+	27 File
+	28 Edit
+	29 View
+	30 Window
+	31 Help
+
+The focused UI element is 0 standard window Golos Questions Preview · Synthetic, ID: SwiftUI.WindowGroup<QuestionsPreview.QuestionPreviewRoot>-1-AppWindow-1, Secondary Actions: Raise

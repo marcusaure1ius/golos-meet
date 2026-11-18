@@ -1,0 +1,73 @@
+{
+  "base_sha": "75b17ace1d44b712bca9dbb7ffa51fc1eb45311d",
+  "schema": 7,
+  "scope": "guarded extraction/update service only; durable worker and UI pending",
+  "runs": {
+    "first_full": {
+      "result": "Failed",
+      "tests": 398,
+      "runs": 557,
+      "failed": 1,
+      "skipped": 0,
+      "runtime_warnings": [
+        {
+          "source": "LocalDocumentExtractorTests.swift",
+          "message": "[Internal] Thread running at User-initiated quality-of-service class waiting on a thread without a QoS class specified (base priority 0). Investigate ways to avoid priority inversions"
+        }
+      ],
+      "xcresult": "/Users/alfa/.codex/worktrees/project-memory-worker/golos-meet/.build/xcode/Logs/Test/Test-golos-meet-2026.11.01_22-51-01-+0300.xcresult",
+      "raw_log": "/tmp/golos37-service-check.log",
+      "failures": [
+        {
+          "failureText": "Expectation failed: release.commit == SQLITE_OK && release.close == SQLITE_OK\nrelease.commit == SQLITE_OK → false\nrelease.close == SQLITE_OK → <not evaluated>: scenario=F4CA3ED3-4AED-4237-9A41-4DB314F10648 version=0 [{\"milliseconds\":0.6721666431985795,\"strictPool\":false,\"extended\":0,\"result\":0,\"name\":\"acquire\"},{\"milliseconds\":12.353208323474973,\"strictPool\":false,\"executor\":\"FAD7E846-E45C-4732-A522-0DE72561B27B\",\"name\":\"second-task-start\"},{\"milliseconds\":12.378624989651144,\"strictPool\":false,\"executor\":\"0E9D1A69-BA57-44DA-81A5-1DFBE81DF643\",\"name\":\"first-task-start\"},{\"milliseconds\":12.87841668818146,\"connection\":\"D9B1EBE2-FDB3-4C79-B40D-A6A623CB3976\",\"strictPool\":false,\"executor\":\"0E9D1A69-BA57-44DA-81A5-1DFBE81DF643\",\"name\":\"first-sqlite-begin\"},{\"milliseconds\":13.989750004839152,\"connection\":\"9D066795-451D-4985-AA20-99A3A1A5264A\",\"strictPool\":false,\"executor\":\"FAD7E846-E45C-4732-A522-0DE72561B27B\",\"name\":\"second-sqlite-begin\"},{\"milliseconds\":18.974666658323258,\"scheduledMilliseconds\":518.9733333536424,\"strictPool\":false,\"name\":\"schedule\"},{\"milliseconds\":524.7242916375399,\"strictPool\":false,\"name\":\"release-start\"},{\"milliseconds\":524.8897083220072,\"strictPool\":false,\"extended\":5,\"result\":5,\"name\":\"commit-result\"},{\"milliseconds\":525.2935416647233,\"strictPool\":false,\"result\":0,\"name\":\"cleanup-rollback\"},{\"milliseconds\":525.4506666678935,\"strictPool\":false,\"result\":0,\"name\":\"close-result\"},{\"milliseconds\":613.3680833154358,\"strictPool\":false,\"executor\":\"FAD7E846-E45C-4732-A522-0DE72561B27B\",\"name\":\"second-success\"},{\"milliseconds\":705.202333338093,\"strictPool\":false,\"executor\":\"0E9D1A69-BA57-44DA-81A5-1DFBE81DF643\",\"name\":\"first-success\"},{\"milliseconds\":3006.5563333337195,\"strictPool\":false,\"name\":\"executors-joined\"},{\"milliseconds\":3006.640541658271,\"strictPool\":false,\"name\":\"joined\"}]",
+          "targetName": "golos-meetTests",
+          "testIdentifier": 171,
+          "testIdentifierString": "EmbeddingMigrationRaceTests/concurrentConnectionsReadSchemaOnlyAfterAcquiringMigrationLock(version:)",
+          "testIdentifierURL": "test://com.apple.xcode/golos-meet/golos-meetTests/EmbeddingMigrationRaceTests/concurrentConnectionsReadSchemaOnlyAfterAcquiringMigrationLock(version:)",
+          "testName": "concurrentConnectionsReadSchemaOnlyAfterAcquiringMigrationLock(version:)"
+        }
+      ]
+    },
+    "final_full": {
+      "result": "Passed",
+      "tests": 398,
+      "runs": 557,
+      "failed": 0,
+      "skipped": 0,
+      "runtime_warnings": [],
+      "xcresult": "/Users/alfa/.codex/worktrees/project-memory-worker/golos-meet/.build/xcode/Logs/Test/Test-golos-meet-2026.11.01_22-52-23-+0300.xcresult",
+      "raw_log": "/tmp/golos37-final-check.log",
+      "failures": []
+    },
+    "targeted": {
+      "result": "Passed",
+      "tests": 12,
+      "runs": 33,
+      "failed": 0,
+      "skipped": 0,
+      "runtime_warnings": [],
+      "xcresult": "/Users/alfa/.codex/worktrees/project-memory-worker/golos-meet/.build/xcode/Logs/Test/Test-golos-meet-2026.11.01_22-53-54-+0300.xcresult",
+      "raw_log": "/tmp/golos37-final-targeted.log",
+      "failures": []
+    }
+  },
+  "first_trace_files": 7,
+  "final_trace_files": 7,
+  "first_full_preserved_xcresult": "/tmp/golos37-first-full.xcresult",
+  "native_preview_build": {
+    "result": "Passed",
+    "command": "python3 research/build_search_preview.py --weights /tmp/golos-embedding-native/e5-small",
+    "raw_log": "/tmp/golos37-final-search-build.log",
+    "launched": false
+  },
+  "full_environment": {
+    "TEST_RUNNER_GOLOS_MEET_E5_FOLDER": "/tmp/golos-embedding-native/e5-small",
+    "TEST_RUNNER_GOLOS_MEET_RENDER_TALK_SETTINGS": "1",
+    "TEST_RUNNER_GOLOS_MEET_MENU_PREVIEW": "1",
+    "TEST_RUNNER_GOLOS_MEET_MIGRATION_TRACE_DIR": "/tmp/golos37-final-migration-traces"
+  },
+  "real_user_materials": false,
+  "live_llm_or_asr": false,
+  "new_weights": false,
+  "rust_changed": false
+}

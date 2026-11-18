@@ -1,0 +1,12 @@
+{
+  "golos-meet/Core/Knowledge/ProjectMemoryQueueWorker.swift": {
+    "normalizedReleaseTokensEqual": true,
+    "sha256": "07b95cba9a5e1f308df0301668db979901f12c0b0fc960f2c863ebba3b74c91b",
+    "normalization": "Whitespace and optional statement semicolons only; DEBUG blocks excluded."
+  },
+  "golos-meet/UI/Projects/KnowledgeMemoryQueue.swift": {
+    "normalizedReleaseTokensEqual": true,
+    "sha256": "1ed519c789f6e2524043a3ba797115689dee2fdda5769941f0f952274a19695b",
+    "normalization": "Whitespace and optional statement semicolons only; DEBUG blocks excluded."
+  }
+}

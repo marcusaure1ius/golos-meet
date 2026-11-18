@@ -1,0 +1,101 @@
+{
+  "testIdentifier" : "MemoryBridgeDiagnosticsTests/pausedStartupSeparatesRevisionFromStartAndExecutesFailureRecorderBeforeRecovery()",
+  "testIdentifierURL" : "test://com.apple.xcode/golos-meet/golos-meetTests/MemoryBridgeDiagnosticsTests/pausedStartupSeparatesRevisionFromStartAndExecutesFailureRecorderBeforeRecovery()",
+  "testName" : "pausedStartupSeparatesRevisionFromStartAndExecutesFailureRecorderBeforeRecovery()",
+  "testRuns" : [
+    {
+      "activities" : [
+        {
+          "activityType" : "com.apple.dt.xctest.activity-type.attachmentContainer",
+          "attachments" : [
+            {
+              "lifetime" : "keepAlways",
+              "name" : "bridge61-441D9A84-520B-44AC-ADD0-224D6BF6309B-failure_0_2FA0C344-BA13-4F21-B19D-09B70ACABD2C.json",
+              "payloadId" : "0~GlCX3oNFjcyg3-2SfyRNc8hOrba75mSXo2B0pYpQSkj8rEh-j1ja1nos7QQgUeXETDqaQdkKDKUvuw097rHCaw==",
+              "timestamp" : 1793595606.592,
+              "uuid" : "CD5AA0EC-B358-4FAB-9EEE-E0DC73857465"
+            }
+          ],
+          "childActivities" : [
+            {
+              "isAssociatedWithFailure" : false,
+              "startTime" : 1793595606.592,
+              "title" : "bridge61-441D9A84-520B-44AC-ADD0-224D6BF6309B-failure.json"
+            }
+          ],
+          "isAssociatedWithFailure" : false,
+          "startTime" : 1793595606.592,
+          "title" : "Added attachment name bridge61-441D9A84-520B-44AC-ADD0-224D6BF6309B-failure.json"
+        },
+        {
+          "activityType" : "com.apple.dt.xctest.activity-type.attachmentContainer",
+          "attachments" : [
+            {
+              "lifetime" : "keepAlways",
+              "name" : "bridge61-441D9A84-520B-44AC-ADD0-224D6BF6309B-timeline_0_3A6B28D6-BD82-41F0-94D4-1F69C07D8922.json",
+              "payloadId" : "0~QwYGq_RlEBe0Jh7YsRSeNcM7ct8J-IirpEAtOm3R0sL9vvS-KvOZGDswOLLRKO-y8zr-78-mXSv7P2cmwP26Wg==",
+              "timestamp" : 1793595606.705,
+              "uuid" : "CD0B0905-A1DB-4802-B3BA-69D66A1CA69C"
+            }
+          ],
+          "childActivities" : [
+            {
+              "isAssociatedWithFailure" : false,
+              "startTime" : 1793595606.705,
+              "title" : "bridge61-441D9A84-520B-44AC-ADD0-224D6BF6309B-timeline.json"
+            }
+          ],
+          "isAssociatedWithFailure" : false,
+          "startTime" : 1793595606.705,
+          "title" : "Added attachment name bridge61-441D9A84-520B-44AC-ADD0-224D6BF6309B-timeline.json"
+        },
+        {
+          "childActivities" : [
+            {
+              "isAssociatedWithFailure" : false,
+              "title" : ""
+            }
+          ],
+          "isAssociatedWithFailure" : true,
+          "startTime" : 1793595606.706,
+          "title" : "Expectation failed: session.trace.has(\"publication.inserted.return\", owner: report.workerID)\nsession.trace → golos_meetTests.MemoryBridgeTestTrace\nreport.workerID → 1FB3BCEE-359E-4617-8018-C8A5358B0646"
+        },
+        {
+          "activityType" : "com.apple.dt.xctest.activity-type.attachmentContainer",
+          "attachments" : [
+            {
+              "lifetime" : "keepAlways",
+              "name" : "sqlite-fixture-45E91C72-2951-44AA-8BDA-7782B856EFD3_0_522B2051-8364-4030-AB59-3911B35A9FD4.json",
+              "payloadId" : "0~2LuCQUXer14Bbf9gnfVjyh2UiyI5OxZ1V3LPiBFFt1kFXlkZtWIhDWeu2BBrHUSxbE3UmYs7_himAC7_UcgYiA==",
+              "timestamp" : 1793595606.71,
+              "uuid" : "57DF2B9C-E686-4F76-99DB-6D2B350B6967"
+            }
+          ],
+          "childActivities" : [
+            {
+              "isAssociatedWithFailure" : false,
+              "startTime" : 1793595606.71,
+              "title" : "sqlite-fixture-45E91C72-2951-44AA-8BDA-7782B856EFD3.json"
+            }
+          ],
+          "isAssociatedWithFailure" : false,
+          "startTime" : 1793595606.71,
+          "title" : "Added attachment name sqlite-fixture-45E91C72-2951-44AA-8BDA-7782B856EFD3.json"
+        }
+      ],
+      "device" : {
+        "architecture" : "arm64",
+        "deviceId" : "00006040-000C51D93404801C",
+        "deviceName" : "My Mac",
+        "modelName" : "MacBook Pro",
+        "osBuildNumber" : "26A434",
+        "osVersion" : "27.0.1",
+        "platform" : "macOS"
+      },
+      "testPlanConfiguration" : {
+        "configurationId" : "1",
+        "configurationName" : "Test Scheme Action"
+      }
+    }
+  ]
+}

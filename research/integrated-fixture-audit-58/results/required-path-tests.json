@@ -1,0 +1,137 @@
+[
+  {
+    "duration": "6 с",
+    "durationInSeconds": 6.921641826629639,
+    "name": "nativeProjectImportFindPageAndReplicaThenRejectUpdatedSources()",
+    "nodeIdentifier": "KnowledgeSearchNativeTests/nativeProjectImportFindPageAndReplicaThenRejectUpdatedSources()",
+    "nodeIdentifierURL": "test://com.apple.xcode/golos-meet/golos-meetTests/KnowledgeSearchNativeTests/nativeProjectImportFindPageAndReplicaThenRejectUpdatedSources()",
+    "nodeType": "Test Case",
+    "result": "Passed"
+  },
+  {
+    "duration": "2 с",
+    "durationInSeconds": 2.381415843963623,
+    "name": "nativeParityRussianRetrievalAndLongPassageCoverage()",
+    "nodeIdentifier": "E5NativeTests/nativeParityRussianRetrievalAndLongPassageCoverage()",
+    "nodeIdentifierURL": "test://com.apple.xcode/golos-meet/golos-meetTests/E5NativeTests/nativeParityRussianRetrievalAndLongPassageCoverage()",
+    "nodeType": "Test Case",
+    "result": "Passed"
+  },
+  {
+    "duration": "4 с",
+    "durationInSeconds": 4.1241700649261475,
+    "name": "releasingSoleOwnerIsAttributedToCreatingObserverAndDirectRestartRecovers()",
+    "nodeIdentifier": "MemoryBridgeDiagnosticsTests/releasingSoleOwnerIsAttributedToCreatingObserverAndDirectRestartRecovers()",
+    "nodeIdentifierURL": "test://com.apple.xcode/golos-meet/golos-meetTests/MemoryBridgeDiagnosticsTests/releasingSoleOwnerIsAttributedToCreatingObserverAndDirectRestartRecovers()",
+    "nodeType": "Test Case",
+    "result": "Passed"
+  },
+  {
+    "children": [
+      {
+        "duration": "2 с",
+        "durationInSeconds": 2.614772081375122,
+        "name": "false",
+        "nodeIdentifierURL": "test://com.apple.xcode/golos-meet/golos-meetTests/MemoryBridgeDiagnosticsTests/strongOwnerAndGateAreReleasedWhenBodyThrowsOrCancels(cancel:)?args=fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "nodeType": "Arguments",
+        "result": "Passed"
+      },
+      {
+        "duration": "2 с",
+        "durationInSeconds": 2.609879970550537,
+        "name": "true",
+        "nodeIdentifierURL": "test://com.apple.xcode/golos-meet/golos-meetTests/MemoryBridgeDiagnosticsTests/strongOwnerAndGateAreReleasedWhenBodyThrowsOrCancels(cancel:)?args=b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+        "nodeType": "Arguments",
+        "result": "Passed"
+      }
+    ],
+    "duration": "2 с",
+    "durationInSeconds": 2.6123260259628296,
+    "name": "strongOwnerAndGateAreReleasedWhenBodyThrowsOrCancels(cancel:)",
+    "nodeIdentifier": "MemoryBridgeDiagnosticsTests/strongOwnerAndGateAreReleasedWhenBodyThrowsOrCancels(cancel:)",
+    "nodeIdentifierURL": "test://com.apple.xcode/golos-meet/golos-meetTests/MemoryBridgeDiagnosticsTests/strongOwnerAndGateAreReleasedWhenBodyThrowsOrCancels(cancel:)",
+    "nodeType": "Test Case",
+    "result": "Passed"
+  },
+  {
+    "duration": "7 с",
+    "durationInSeconds": 7.775781154632568,
+    "name": "pausedStartupSeparatesRevisionFromStartAndExecutesFailureRecorderBeforeRecovery()",
+    "nodeIdentifier": "MemoryBridgeDiagnosticsTests/pausedStartupSeparatesRevisionFromStartAndExecutesFailureRecorderBeforeRecovery()",
+    "nodeIdentifierURL": "test://com.apple.xcode/golos-meet/golos-meetTests/MemoryBridgeDiagnosticsTests/pausedStartupSeparatesRevisionFromStartAndExecutesFailureRecorderBeforeRecovery()",
+    "nodeType": "Test Case",
+    "result": "Passed"
+  },
+  {
+    "duration": "7 с",
+    "durationInSeconds": 7.363872051239014,
+    "name": "persistsRealDocumentAndMeetingWindowsAndRejectsFilesystemChangesDuringCalculation()",
+    "nodeIdentifier": "EmbeddingIndexNativeTests/persistsRealDocumentAndMeetingWindowsAndRejectsFilesystemChangesDuringCalculation()",
+    "nodeIdentifierURL": "test://com.apple.xcode/golos-meet/golos-meetTests/EmbeddingIndexNativeTests/persistsRealDocumentAndMeetingWindowsAndRejectsFilesystemChangesDuringCalculation()",
+    "nodeType": "Test Case",
+    "result": "Passed"
+  },
+  {
+    "duration": "10 с",
+    "durationInSeconds": 10.578672170639038,
+    "name": "nativeQueueResumesAfterInstallationWatchesTranscriptAndKeepsSameModelCache()",
+    "nodeIdentifier": "LocalIndexingNativeTests/nativeQueueResumesAfterInstallationWatchesTranscriptAndKeepsSameModelCache()",
+    "nodeIdentifierURL": "test://com.apple.xcode/golos-meet/golos-meetTests/LocalIndexingNativeTests/nativeQueueResumesAfterInstallationWatchesTranscriptAndKeepsSameModelCache()",
+    "nodeType": "Test Case",
+    "result": "Passed"
+  },
+  {
+    "duration": "2 с",
+    "durationInSeconds": 2.052835702896118,
+    "name": "renderConnectionStates()",
+    "nodeIdentifier": "TalkConnectionRenderTests/renderConnectionStates()",
+    "nodeIdentifierURL": "test://com.apple.xcode/golos-meet/golos-meetTests/TalkConnectionRenderTests/renderConnectionStates()",
+    "nodeType": "Test Case",
+    "result": "Passed"
+  },
+  {
+    "duration": "4 с",
+    "durationInSeconds": 4.085045099258423,
+    "name": "concreteMetadataBridgeReceivesReadyEventWithoutLaunchingApplication()",
+    "nodeIdentifier": "ProjectMemoryQueueTests/concreteMetadataBridgeReceivesReadyEventWithoutLaunchingApplication()",
+    "nodeIdentifierURL": "test://com.apple.xcode/golos-meet/golos-meetTests/ProjectMemoryQueueTests/concreteMetadataBridgeReceivesReadyEventWithoutLaunchingApplication()",
+    "nodeType": "Test Case",
+    "result": "Passed"
+  },
+  {
+    "duration": "1 с",
+    "durationInSeconds": 1.735476016998291,
+    "name": "nativeMenuConstructionAndRendering()",
+    "nodeIdentifier": "MenuBarRenderTests/nativeMenuConstructionAndRendering()",
+    "nodeIdentifierURL": "test://com.apple.xcode/golos-meet/golos-meetTests/MenuBarRenderTests/nativeMenuConstructionAndRendering()",
+    "nodeType": "Test Case",
+    "result": "Passed"
+  },
+  {
+    "duration": "1 с",
+    "durationInSeconds": 1.7329111099243164,
+    "name": "boundedReceiptsRejectForeignOwnerKindRunAttemptAndReplay()",
+    "nodeIdentifier": "MemoryBridgeOverflowTests/boundedReceiptsRejectForeignOwnerKindRunAttemptAndReplay()",
+    "nodeIdentifierURL": "test://com.apple.xcode/golos-meet/golos-meetTests/MemoryBridgeOverflowTests/boundedReceiptsRejectForeignOwnerKindRunAttemptAndReplay()",
+    "nodeType": "Test Case",
+    "result": "Passed"
+  },
+  {
+    "duration": "7 с",
+    "durationInSeconds": 7.135488033294678,
+    "name": "overflowPreservesNativeStartupTimeoutRecoveryAndDeinitJoin()",
+    "nodeIdentifier": "MemoryBridgeOverflowTests/overflowPreservesNativeStartupTimeoutRecoveryAndDeinitJoin()",
+    "nodeIdentifierURL": "test://com.apple.xcode/golos-meet/golos-meetTests/MemoryBridgeOverflowTests/overflowPreservesNativeStartupTimeoutRecoveryAndDeinitJoin()",
+    "nodeType": "Test Case",
+    "result": "Passed"
+  },
+  {
+    "duration": "2 с",
+    "durationInSeconds": 2.7076821327209473,
+    "name": "oldConfigurationReceiptCannotAcknowledgeNewNativeStartup()",
+    "nodeIdentifier": "MemoryBridgeOverflowTests/oldConfigurationReceiptCannotAcknowledgeNewNativeStartup()",
+    "nodeIdentifierURL": "test://com.apple.xcode/golos-meet/golos-meetTests/MemoryBridgeOverflowTests/oldConfigurationReceiptCannotAcknowledgeNewNativeStartup()",
+    "nodeType": "Test Case",
+    "result": "Passed"
+  }
+]

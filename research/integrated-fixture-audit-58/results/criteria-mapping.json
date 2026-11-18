@@ -1,0 +1,64 @@
+[
+  {
+    "id": 1,
+    "criterion": "Реальная причина unlink сопоставлена с fixture/resource path без приписывания OCR",
+    "status": "supported for observed families",
+    "proof_prs": [
+      59,
+      60,
+      62,
+      64,
+      65
+    ],
+    "limits": "Не universal lifetime proof всех объектов/будущих interleavings"
+  },
+  {
+    "id": 2,
+    "criterion": "Before/control/after live handles/task drain; отсутствие6922/rollback при фактической очистке",
+    "status": "combined observed ledger supported",
+    "proof_prs": [
+      59,
+      60,
+      62,
+      64,
+      65
+    ],
+    "limits": "Сохраняются intentional faults/negative controls. В global stdout один rollback result1; в зарегистрированных scopes rollback faults0. Исторический unlink-associated rollback не приписывается этому контролю без connection trace."
+  },
+  {
+    "id": 3,
+    "criterion": "Предсказуемый unlink после освобождения resources, без retain-all-roots/hangs masking",
+    "status": "supported for registered roots in completed combined workload",
+    "proof_prs": [
+      59,
+      60,
+      62,
+      64,
+      65
+    ],
+    "limits": "Child body cancel не parent scope/process death;8s начинается после cleanup requests"
+  },
+  {
+    "id": 4,
+    "criterion": "make check и native/fixture controls пройдены; raw failures/stdout сохранены",
+    "status": "one accepted combined make check Passed",
+    "proof_prs": [
+      63,
+      65
+    ],
+    "limits": "Один новый Passed не отменяет historical red/partial и не устанавливает причину bridge61/OCR56; ASR E2E исключён штатным target"
+  },
+  {
+    "id": 5,
+    "criterion": "Отдельные PR вpreview, независимый exact review, merge root",
+    "status": "components accepted; new audit PR/review pending",
+    "proof_prs": [
+      59,
+      60,
+      62,
+      64,
+      65
+    ],
+    "limits": "Эта author matrix не independent verdict; новый artifact SHA требует своего review"
+  }
+]

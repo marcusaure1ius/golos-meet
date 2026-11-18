@@ -1,0 +1,50 @@
+[
+  {
+    "stage" : "scope-created",
+    "test" : "latestDisabledConfigurationWinsQueuedEnableAndBridgeStop()",
+    "uptime" : "332776.5850160417"
+  },
+  {
+    "root" : "memory-update-F482DE4B-EC64-4A67-B9CC-D8D4D1DFE78A",
+    "stage" : "root-owned",
+    "uptime" : "332776.73962445837"
+  },
+  {
+    "stage" : "store-owned",
+    "uptime" : "332776.7396377917"
+  },
+  {
+    "connection" : "CD270D10-1836-4CEF-8C5C-49E6EC3BB19A",
+    "root" : "memory-update-F482DE4B-EC64-4A67-B9CC-D8D4D1DFE78A",
+    "stage" : "opened",
+    "uptime" : "332777.16794845834"
+  },
+  {
+    "stage" : "queue-stop-requested",
+    "uptime" : "332796.1150704167"
+  },
+  {
+    "stage" : "queue-idle",
+    "uptime" : "332796.73493525"
+  },
+  {
+    "stage" : "update-callbacks-released",
+    "uptime" : "332796.73494316667"
+  },
+  {
+    "stage" : "body-finished",
+    "uptime" : "332796.75123558333"
+  },
+  {
+    "connection" : "CD270D10-1836-4CEF-8C5C-49E6EC3BB19A",
+    "result" : "0",
+    "stage" : "closed",
+    "uptime" : "332796.75141545833"
+  },
+  {
+    "exists" : "false",
+    "root" : "memory-update-F482DE4B-EC64-4A67-B9CC-D8D4D1DFE78A",
+    "stage" : "root-removed",
+    "uptime" : "332796.8242009167"
+  }
+]

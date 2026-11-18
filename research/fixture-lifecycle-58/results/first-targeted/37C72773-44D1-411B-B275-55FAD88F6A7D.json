@@ -1,0 +1,74 @@
+[
+  {
+    "stage" : "scope-created",
+    "test" : "externalModelRetirementResetsOnlyDependentCoverageAndKeepsOwnBatchHistory(_:_:)",
+    "uptime" : "332466.494570125"
+  },
+  {
+    "root" : "memory-update-DFC6DDCB-23D6-44B2-AE01-3D201355BB11",
+    "stage" : "root-owned",
+    "uptime" : "332466.51885158336"
+  },
+  {
+    "stage" : "store-owned",
+    "uptime" : "332466.51886675"
+  },
+  {
+    "connection" : "D6AB1620-209E-4A5D-81D3-72B4C2D58D47",
+    "root" : "memory-update-DFC6DDCB-23D6-44B2-AE01-3D201355BB11",
+    "stage" : "opened",
+    "uptime" : "332466.54104070837"
+  },
+  {
+    "connection" : "D1B29F72-8121-46B5-813B-17E735677656",
+    "root" : "memory-update-DFC6DDCB-23D6-44B2-AE01-3D201355BB11",
+    "stage" : "opened",
+    "uptime" : "332467.0827662917"
+  },
+  {
+    "connection" : "D9C1B0F1-1A0C-42FF-AC04-E440F1A2425E",
+    "root" : "memory-update-DFC6DDCB-23D6-44B2-AE01-3D201355BB11",
+    "stage" : "opened",
+    "uptime" : "332467.08368275"
+  },
+  {
+    "connection" : "31A6458F-B05D-4C00-895D-71188FB09DD7",
+    "root" : "memory-update-DFC6DDCB-23D6-44B2-AE01-3D201355BB11",
+    "stage" : "opened",
+    "uptime" : "332467.42492433335"
+  },
+  {
+    "connection" : "31A6458F-B05D-4C00-895D-71188FB09DD7",
+    "result" : "0",
+    "stage" : "closed",
+    "uptime" : "332467.4298709167"
+  },
+  {
+    "connection" : "D9C1B0F1-1A0C-42FF-AC04-E440F1A2425E",
+    "result" : "0",
+    "stage" : "closed",
+    "uptime" : "332467.429942"
+  },
+  {
+    "connection" : "D1B29F72-8121-46B5-813B-17E735677656",
+    "result" : "0",
+    "stage" : "closed",
+    "uptime" : "332467.42999050004"
+  },
+  {
+    "connection" : "D6AB1620-209E-4A5D-81D3-72B4C2D58D47",
+    "result" : "0",
+    "stage" : "closed",
+    "uptime" : "332467.4300706667"
+  },
+  {
+    "stage" : "body-finished",
+    "uptime" : "332467.4300942917"
+  },
+  {
+    "exists" : "false",
+    "root" : "memory-update-DFC6DDCB-23D6-44B2-AE01-3D201355BB11",
+    "stage" : "root-removed",
+    "uptime" : "332467.43077491666"
+  }
+]

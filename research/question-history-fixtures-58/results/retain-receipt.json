@@ -1,0 +1,49 @@
+{
+  "ref": "9dfdf8feecf83e94782c0e78acfdd0b2d920a37e",
+  "retain_roots_control": true,
+  "patches": [
+    {
+      "path": "golos-meetTests/KnowledgeQuestionServiceTests.swift",
+      "before_sha256": "9b21c28a4129a73c53be38bbd1ecaf72d3c8b0cf0b7d2c8020d54b33c465dff7",
+      "old": "@MainActor @Suite struct KnowledgeQuestionServiceTests",
+      "new": "@MainActor @Suite(QuestionHistoryObservationTrait()) struct KnowledgeQuestionServiceTests"
+    },
+    {
+      "path": "golos-meetTests/KnowledgeQuestionServiceTests.swift",
+      "before_sha256": "1708627e9480ced1b8d06c23ae575755a83bcf60db8226df10c613ef925df586",
+      "old": "        store = ProjectStore(url: root.appendingPathComponent(\"knowledge.sqlite\"))",
+      "new": "        QuestionHistoryObservation.current?.note(\"root-created\", [\"root\":root.lastPathComponent])\n        store = ProjectStore(url: root.appendingPathComponent(\"knowledge.sqlite\"))"
+    },
+    {
+      "path": "golos-meetTests/KnowledgeQuestionServiceTests.swift",
+      "before_sha256": "f07156242fb09dab064bc5feb6d31c334aa08a28b5f89624f25f82ce07c27572",
+      "old": "        defer { sqlite3_close(db) }",
+      "new": "        let connection=UUID();QuestionHistoryObservation.current?.observe(.opened(connection,root.appendingPathComponent(\"knowledge.sqlite\")))\n        defer {let code=sqlite3_close(db);QuestionHistoryObservation.current?.observe(.closed(connection,code))}"
+    },
+    {
+      "path": "golos-meetTests/KnowledgeQuestionServiceTests.swift",
+      "before_sha256": "dca71a051acf23468d63369bd7712b01af15597dad92f704a66e2abe90bfdbef",
+      "old": "    func cleanup() { service.cancel(); try? FileManager.default.removeItem(at: root) }",
+      "new": "    func cleanup() { service.cancel(); QuestionHistoryObservation.current?.note(\"question-cancel-requested\")\n        QuestionHistoryObservation.current?.note(\"control-root-retained\", [\"root\":root.lastPathComponent])\n        QuestionHistoryObservation.current?.note(\"control-root-not-removed\", [\"root\":root.lastPathComponent,\"exists\":String(FileManager.default.fileExists(atPath:root.path))])\n    }"
+    },
+    {
+      "path": "golos-meetTests/ProjectMemoryHistoryTests.swift",
+      "before_sha256": "5278812e29efe5af53873f5cc574c8ebcc2d243d0ddc45e53f6410384954dd89",
+      "old": "@MainActor @Suite struct ProjectMemoryHistoryTests",
+      "new": "@MainActor @Suite(QuestionHistoryObservationTrait()) struct ProjectMemoryHistoryTests"
+    },
+    {
+      "path": "golos-meetTests/ProjectMemoryHistoryTests.swift",
+      "before_sha256": "480563f1d0df2ef8e6ba329dde60c42687ed3558e3f64ee6a1c1eeab92ff4464",
+      "old": "        store = ProjectStore(url: root.appendingPathComponent(\"knowledge.sqlite\"))",
+      "new": "        QuestionHistoryObservation.current?.note(\"root-created\", [\"root\":root.lastPathComponent])\n        store = ProjectStore(url: root.appendingPathComponent(\"knowledge.sqlite\"))"
+    },
+    {
+      "path": "golos-meetTests/ProjectMemoryHistoryTests.swift",
+      "before_sha256": "cb8adbc6b5763ca800d9f0eee7f16b8133c86a3a2b8afc026577156650dcaba4",
+      "old": "    func cleanup() { try? FileManager.default.removeItem(at: root) }",
+      "new": "    func cleanup() { QuestionHistoryObservation.current?.note(\"control-root-retained\", [\"root\":root.lastPathComponent])\n        QuestionHistoryObservation.current?.note(\"control-root-not-removed\", [\"root\":root.lastPathComponent,\"exists\":String(FileManager.default.fileExists(atPath:root.path))])\n    }"
+    }
+  ],
+  "observer_sha256": "c675aafa080b2b9800adac067640b3ec0bf8055c9aa73037b01c3b4a7dcc2b46"
+}

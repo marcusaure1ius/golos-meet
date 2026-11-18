@@ -1,0 +1,86 @@
+[
+  {
+    "stage" : "scope-created",
+    "test" : "selectedInputChangesWithinSameFullClosureProduceNewFactsAndExactReplayAfterRestart(_:)",
+    "uptime" : "332466.4883465833"
+  },
+  {
+    "root" : "memory-update-DD45E655-AB41-4BB2-8D3E-C97D6AA644DF",
+    "stage" : "root-owned",
+    "uptime" : "332466.49575991667"
+  },
+  {
+    "stage" : "store-owned",
+    "uptime" : "332466.4957755417"
+  },
+  {
+    "connection" : "304AFFDF-EF4E-4D7D-B0B7-4670B6A21F7B",
+    "root" : "memory-update-DD45E655-AB41-4BB2-8D3E-C97D6AA644DF",
+    "stage" : "opened",
+    "uptime" : "332466.50802058337"
+  },
+  {
+    "connection" : "9636FA9C-F440-4E7A-94A4-B8930A0C3FDB",
+    "root" : "memory-update-DD45E655-AB41-4BB2-8D3E-C97D6AA644DF",
+    "stage" : "opened",
+    "uptime" : "332466.86947045836"
+  },
+  {
+    "connection" : "24E4726E-4214-4CC4-B761-882A988ACBBC",
+    "root" : "memory-update-DD45E655-AB41-4BB2-8D3E-C97D6AA644DF",
+    "stage" : "opened",
+    "uptime" : "332466.918004875"
+  },
+  {
+    "connection" : "5428744B-8A78-47AE-B491-F190BF6629A7",
+    "root" : "memory-update-DD45E655-AB41-4BB2-8D3E-C97D6AA644DF",
+    "stage" : "opened",
+    "uptime" : "332466.91835175"
+  },
+  {
+    "connection" : "63D9ADF9-B6F8-47F6-8436-C513A35FEA31",
+    "root" : "memory-update-DD45E655-AB41-4BB2-8D3E-C97D6AA644DF",
+    "stage" : "opened",
+    "uptime" : "332466.9538907917"
+  },
+  {
+    "connection" : "63D9ADF9-B6F8-47F6-8436-C513A35FEA31",
+    "result" : "0",
+    "stage" : "closed",
+    "uptime" : "332467.0105617917"
+  },
+  {
+    "connection" : "5428744B-8A78-47AE-B491-F190BF6629A7",
+    "result" : "0",
+    "stage" : "closed",
+    "uptime" : "332467.0106245"
+  },
+  {
+    "connection" : "24E4726E-4214-4CC4-B761-882A988ACBBC",
+    "result" : "0",
+    "stage" : "closed",
+    "uptime" : "332467.0106745"
+  },
+  {
+    "connection" : "9636FA9C-F440-4E7A-94A4-B8930A0C3FDB",
+    "result" : "0",
+    "stage" : "closed",
+    "uptime" : "332467.01074191666"
+  },
+  {
+    "connection" : "304AFFDF-EF4E-4D7D-B0B7-4670B6A21F7B",
+    "result" : "0",
+    "stage" : "closed",
+    "uptime" : "332467.01084370835"
+  },
+  {
+    "stage" : "body-finished",
+    "uptime" : "332467.01087237505"
+  },
+  {
+    "exists" : "false",
+    "root" : "memory-update-DD45E655-AB41-4BB2-8D3E-C97D6AA644DF",
+    "stage" : "root-removed",
+    "uptime" : "332467.01163329167"
+  }
+]

@@ -1,0 +1,9 @@
+{
+  "scope": "final code; semantic thresholds unchanged after v4 freeze; subsequent service changes only budget accounting and unused-binding cleanup",
+  "sources": {
+    "golos-meet/Core/Knowledge/MeetingAssignmentPolicy.swift": "916d3d8d31e718fe7d48b875235e424210a901630583249befa1d502de066f1d",
+    "golos-meet/Core/Knowledge/MeetingAssignmentService.swift": "ef65628babcc29e810cc6b91f93b462a15dc7f4a5ed9b7d614ac761521b2770a",
+    "golos-meet/Core/Knowledge/MeetingAssignmentInputReader.swift": "b6f164d5b14576f83176243fd1502b8d223a116312b37a4d6bf6ba15e1869d0d",
+    "golos-meet/Core/Knowledge/ProjectStore.swift": "3d9c6f4655afd04bd02768c41dbfc71b4cee5f8934becc3be93caf282cd2ed8f"
+  }
+}

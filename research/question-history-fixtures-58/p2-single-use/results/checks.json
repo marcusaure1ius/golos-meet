@@ -1,0 +1,99 @@
+{
+  "before": {
+    "result": "Failed",
+    "total_tests": 6,
+    "passed_tests": 3,
+    "failed_tests": 2,
+    "expected_tests": 1,
+    "skipped_tests": 0,
+    "passed_runs": 4,
+    "failed_runs": 3,
+    "expected_runs": 6,
+    "warnings": [],
+    "failures": [
+      {
+        "failureText": "Known issue was not recorded: This negative control requires the helper to reject a missing or nonunique fault",
+        "targetName": "golos-meetTests",
+        "testIdentifier": 4,
+        "testIdentifierString": "SQLiteFaultExpectationTests/nestedExpectationRejectsMissingOuterFaultAfterInnerConsumedSoleEvent()",
+        "testIdentifierURL": "test://com.apple.xcode/golos-meet/golos-meetTests/SQLiteFaultExpectationTests/nestedExpectationRejectsMissingOuterFaultAfterInnerConsumedSoleEvent()",
+        "testName": "nestedExpectationRejectsMissingOuterFaultAfterInnerConsumedSoleEvent()"
+      },
+      {
+        "failureText": "Expectation failed: count == 1\ncount → 2: Expected one exact SQLite fault; the original assertion and raw diagnostics are preserved",
+        "targetName": "golos-meetTests",
+        "testIdentifier": 2,
+        "testIdentifierString": "SQLiteFaultExpectationTests/nestedExpectationsAcceptTwoDistinctNativeFaults(_:)",
+        "testIdentifierURL": "test://com.apple.xcode/golos-meet/golos-meetTests/SQLiteFaultExpectationTests/nestedExpectationsAcceptTwoDistinctNativeFaults(_:)",
+        "testName": "nestedExpectationsAcceptTwoDistinctNativeFaults(_:)"
+      }
+    ]
+  },
+  "targeted": {
+    "result": "Passed",
+    "total_tests": 31,
+    "passed_tests": 29,
+    "failed_tests": 0,
+    "expected_tests": 2,
+    "skipped_tests": 0,
+    "passed_runs": 65,
+    "failed_runs": 0,
+    "expected_runs": 7,
+    "warnings": [],
+    "failures": []
+  },
+  "full": {
+    "result": "Failed",
+    "total_tests": 443,
+    "passed_tests": 436,
+    "failed_tests": 5,
+    "expected_tests": 2,
+    "skipped_tests": 0,
+    "passed_runs": 610,
+    "failed_runs": 8,
+    "expected_runs": 7,
+    "warnings": [],
+    "failures": [
+      {
+        "failureText": "Caught error: .e5rtError(\"e5rt_execution_stream_operation_create_precompiled_compute_operation_with_options call failed\", 13)",
+        "targetName": "golos-meetTests",
+        "testIdentifier": 289,
+        "testIdentifierString": "DocumentFormatImportTests/actualLocalExtractorFeedsPersistedChunks(ext:)",
+        "testIdentifierURL": "test://com.apple.xcode/golos-meet/golos-meetTests/DocumentFormatImportTests/actualLocalExtractorFeedsPersistedChunks(ext:)",
+        "testName": "actualLocalExtractorFeedsPersistedChunks(ext:)"
+      },
+      {
+        "failureText": "Issue recorded: Timed out waiting for metadata bridge ready-source coverage",
+        "targetName": "golos-meetTests",
+        "testIdentifier": 156,
+        "testIdentifierString": "ProjectMemoryQueueTests/concreteMetadataBridgeReceivesReadyEventWithoutLaunchingApplication()",
+        "testIdentifierURL": "test://com.apple.xcode/golos-meet/golos-meetTests/ProjectMemoryQueueTests/concreteMetadataBridgeReceivesReadyEventWithoutLaunchingApplication()",
+        "testName": "concreteMetadataBridgeReceivesReadyEventWithoutLaunchingApplication()"
+      },
+      {
+        "failureText": "Caught error: .e5rtError(\"e5rt_execution_stream_operation_create_precompiled_compute_operation_with_options call failed\", 13)",
+        "targetName": "golos-meetTests",
+        "testIdentifier": 173,
+        "testIdentifierString": "LocalDocumentExtractorTests/concurrentOCRDoesNotOccupyTheCooperativePool()",
+        "testIdentifierURL": "test://com.apple.xcode/golos-meet/golos-meetTests/LocalDocumentExtractorTests/concurrentOCRDoesNotOccupyTheCooperativePool()",
+        "testName": "concurrentOCRDoesNotOccupyTheCooperativePool()"
+      },
+      {
+        "failureText": "Caught error: .e5rtError(\"e5rt_execution_stream_operation_create_precompiled_compute_operation_with_options call failed\", 13)",
+        "targetName": "golos-meetTests",
+        "testIdentifier": 169,
+        "testIdentifierString": "LocalDocumentExtractorTests/extractsTextFromPNGUsingLocalOCR(text:)",
+        "testIdentifierURL": "test://com.apple.xcode/golos-meet/golos-meetTests/LocalDocumentExtractorTests/extractsTextFromPNGUsingLocalOCR(text:)",
+        "testName": "extractsTextFromPNGUsingLocalOCR(text:)"
+      },
+      {
+        "failureText": "Expectation failed: lines.filter { $0 == scanned }.count == 1\nlines.filter { $0 == scanned }.count → 0",
+        "targetName": "golos-meetTests",
+        "testIdentifier": 175,
+        "testIdentifierString": "LocalDocumentExtractorTests/mixedPDFExtractsScanAndDoesNotDuplicateTextLayer(native:scanned:duplicateNative:)",
+        "testIdentifierURL": "test://com.apple.xcode/golos-meet/golos-meetTests/LocalDocumentExtractorTests/mixedPDFExtractsScanAndDoesNotDuplicateTextLayer(native:scanned:duplicateNative:)",
+        "testName": "mixedPDFExtractsScanAndDoesNotDuplicateTextLayer(native:scanned:duplicateNative:)"
+      }
+    ]
+  }
+}

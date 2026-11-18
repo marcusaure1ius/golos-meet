@@ -1,0 +1,141 @@
+{
+  "source_base": "3961bd25521eea6bae6fa124b9e28f85ce57d8a9",
+  "preregistered_corpus_commit": "3961bd25521eea6bae6fa124b9e28f85ce57d8a9",
+  "binary_sha256": "3b9f942980423365052b33914b062da4fde2b3b467faff2ee4cbd9a986980c6f",
+  "research_hashes": {
+    "build.py": "04f2e93632f5558275649cef91f348df8757d8b4c1ae9fff127503c10f102658",
+    "run.py": "c76fe003d06d0ec960459b4092dde15772d0065117706440e2fd586070f3fb3d",
+    "token-fixtures.json": "c6dd5fd91f492d4aae8f20ae08eb22d88bf1f70d4586f5713d78a52751b828a1",
+    "corpus.json": "1e1173bfa57d645539117f3752ba54b00c82670980c88b5026a42aa764eeb5a0",
+    "models.json": "6f29efdac5937084f067e0237039a028ca319be417c55cdabb6fe1d058ed77a5",
+    "test_metrics.py": "221adcaebe4c58c6c156602e80d04062adb57fe8de9642a23b165b311967f2fb",
+    "validate.py": "71bb7d348306d4ed1fe3eff786ed0b33660c165b67784d68dce10c2033a329c3",
+    "Compare.swift": "6574bcb6150a197afbe6a18f3c95a3072a278af898720c2ce5a37375bd8e7c65",
+    "token_references.py": "899123ba2a1a2caedb260099e5925eb913de4b55e5d393f42afe914f97d5bd23",
+    "prepare.py": "045f08608a2d5cb136333e016f443a878f24eb112cc84b8f130c2cd70cea8ba0",
+    "PROTOCOL.md": "74c5b678b1746156580dcd4cc4c7ba9d0c998297227cadf2f0f18692311b9b97"
+  },
+  "macos": "27.0.1",
+  "architecture": "arm64",
+  "machine": "Mac16,7",
+  "memory_bytes": 25769803776,
+  "cpu": "Apple M4 Pro",
+  "xcode": "Xcode 27.1\nBuild version 27A9275",
+  "swift": "Apple Swift version 6.4 (swiftlang-6.4.0.34.1 clang-2100.3.34.1)\nTarget: arm64-apple-macosx27.0.0",
+  "runtime": "ONNX Runtime 1.24.2; Swift Transformers 1.3.5; CPU intra-op=2, batch=1, spin=0",
+  "build": "Standalone Swift default -Onone, linked pinned Debug SwiftPM objects; no app linkage",
+  "network_profile": "(version 1)(allow default)(deny network*)",
+  "disk_cache_reset": false,
+  "order": [
+    "e5-small",
+    "minilm",
+    "minilm",
+    "e5-small",
+    "e5-small",
+    "minilm"
+  ],
+  "runs": [
+    {
+      "candidate": "e5-small",
+      "repetition": 0,
+      "argv": [
+        "sandbox-exec",
+        "-p",
+        "(version 1)(allow default)(deny network*)",
+        "/private/tmp/golos-model-comparison-28/compare",
+        "e5-small",
+        "/private/tmp/golos-embedding-native/e5-small",
+        "/Users/alfa/.codex/worktrees/d23d/golos-meet/research/model-comparison-28",
+        "/private/tmp/golos-model-comparison-28/measured-final/e5-small-0.json",
+        "/private/tmp/golos-model-comparison-28/measured-final/e5-small-0-vectors.json",
+        "0"
+      ],
+      "whole_process_seconds": 4.047583457984729
+    },
+    {
+      "candidate": "minilm",
+      "repetition": 0,
+      "argv": [
+        "sandbox-exec",
+        "-p",
+        "(version 1)(allow default)(deny network*)",
+        "/private/tmp/golos-model-comparison-28/compare",
+        "minilm",
+        "/private/tmp/golos-model-comparison-28/minilm",
+        "/Users/alfa/.codex/worktrees/d23d/golos-meet/research/model-comparison-28",
+        "/private/tmp/golos-model-comparison-28/measured-final/minilm-0.json",
+        "/private/tmp/golos-model-comparison-28/measured-final/minilm-0-vectors.json",
+        "0"
+      ],
+      "whole_process_seconds": 3.370614042010857
+    },
+    {
+      "candidate": "minilm",
+      "repetition": 1,
+      "argv": [
+        "sandbox-exec",
+        "-p",
+        "(version 1)(allow default)(deny network*)",
+        "/private/tmp/golos-model-comparison-28/compare",
+        "minilm",
+        "/private/tmp/golos-model-comparison-28/minilm",
+        "/Users/alfa/.codex/worktrees/d23d/golos-meet/research/model-comparison-28",
+        "/private/tmp/golos-model-comparison-28/measured-final/minilm-1.json",
+        "/private/tmp/golos-model-comparison-28/measured-final/minilm-1-vectors.json",
+        "1"
+      ],
+      "whole_process_seconds": 3.356773291976424
+    },
+    {
+      "candidate": "e5-small",
+      "repetition": 1,
+      "argv": [
+        "sandbox-exec",
+        "-p",
+        "(version 1)(allow default)(deny network*)",
+        "/private/tmp/golos-model-comparison-28/compare",
+        "e5-small",
+        "/private/tmp/golos-embedding-native/e5-small",
+        "/Users/alfa/.codex/worktrees/d23d/golos-meet/research/model-comparison-28",
+        "/private/tmp/golos-model-comparison-28/measured-final/e5-small-1.json",
+        "/private/tmp/golos-model-comparison-28/measured-final/e5-small-1-vectors.json",
+        "1"
+      ],
+      "whole_process_seconds": 3.3860453749948647
+    },
+    {
+      "candidate": "e5-small",
+      "repetition": 2,
+      "argv": [
+        "sandbox-exec",
+        "-p",
+        "(version 1)(allow default)(deny network*)",
+        "/private/tmp/golos-model-comparison-28/compare",
+        "e5-small",
+        "/private/tmp/golos-embedding-native/e5-small",
+        "/Users/alfa/.codex/worktrees/d23d/golos-meet/research/model-comparison-28",
+        "/private/tmp/golos-model-comparison-28/measured-final/e5-small-2.json",
+        "/private/tmp/golos-model-comparison-28/measured-final/e5-small-2-vectors.json",
+        "2"
+      ],
+      "whole_process_seconds": 3.3723939580086153
+    },
+    {
+      "candidate": "minilm",
+      "repetition": 2,
+      "argv": [
+        "sandbox-exec",
+        "-p",
+        "(version 1)(allow default)(deny network*)",
+        "/private/tmp/golos-model-comparison-28/compare",
+        "minilm",
+        "/private/tmp/golos-model-comparison-28/minilm",
+        "/Users/alfa/.codex/worktrees/d23d/golos-meet/research/model-comparison-28",
+        "/private/tmp/golos-model-comparison-28/measured-final/minilm-2.json",
+        "/private/tmp/golos-model-comparison-28/measured-final/minilm-2-vectors.json",
+        "2"
+      ],
+      "whole_process_seconds": 3.326007584022591
+    }
+  ]
+}

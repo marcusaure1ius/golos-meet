@@ -1,0 +1,50 @@
+[
+  {
+    "xcresult": "Test-golos-meet-2026.10.31_22-59-26-+0300.xcresult",
+    "scope": "v3 before alias fix",
+    "result": "Passed",
+    "passed": 352,
+    "runs_passed": 449,
+    "failed": 0,
+    "skipped": 0,
+    "bundle_still_available": false,
+    "provenance": "xcresult summary observed during this run before Xcode pruned old bundle; counts preserved, full bundle unavailable"
+  },
+  {
+    "xcresult": "Test-golos-meet-2026.10.31_23-04-49-+0300.xcresult",
+    "scope": "v4 before readiness fixture fix",
+    "result": "Failed",
+    "passed": 351,
+    "runs_passed": 448,
+    "failed": 1,
+    "skipped": 0,
+    "bundle_still_available": false,
+    "provenance": "xcresult summary observed during this run before Xcode pruned old bundle; counts preserved, full bundle unavailable"
+  },
+  {
+    "xcresult": "Test-golos-meet-2026.10.31_23-06-37-+0300.xcresult",
+    "scope": "v4 plus budget test before readiness fixture fix",
+    "result": "Failed",
+    "passed": 352,
+    "runs_passed": 449,
+    "failed": 1,
+    "skipped": 0,
+    "bundle_still_available": true,
+    "failure_text": [
+      "Caught error: .database(\"Library unavailable\")"
+    ],
+    "runtime_warning_files": []
+  },
+  {
+    "xcresult": "Test-golos-meet-2026.10.31_23-28-04-+0300.xcresult",
+    "scope": "final v4 plus readiness fixture fix",
+    "result": "Passed",
+    "passed": 353,
+    "runs_passed": 450,
+    "failed": 0,
+    "skipped": 0,
+    "bundle_still_available": true,
+    "failure_text": [],
+    "runtime_warning_files": []
+  }
+]

@@ -1,0 +1,85 @@
+{
+  "reviewed_previous_sha": "1b8817d9e4ba2e34e4617bbf95e25a1d9354e5b9",
+  "schema_changed": false,
+  "timeouts_retries_fixture_conditions_changed": false,
+  "runs": {
+    "targeted": {
+      "result": "Passed",
+      "tests": 13,
+      "runs": 23,
+      "failed": 0,
+      "skipped": 0,
+      "runtime_warnings": [],
+      "xcresult": "/Users/alfa/.codex/worktrees/project-memory-history/golos-meet/.build/xcode/Logs/Test/Test-golos-meet-2026.11.01_22-11-30-+0300.xcresult",
+      "raw_log": "/tmp/golos36-cap-targeted.log",
+      "failures": []
+    },
+    "failed_full": {
+      "result": "Failed",
+      "tests": 386,
+      "runs": 524,
+      "failed": 1,
+      "skipped": 0,
+      "runtime_warnings": [
+        {
+          "source": "LocalDocumentExtractorTests.swift",
+          "message": "[Internal] Thread running at User-initiated quality-of-service class waiting on a thread without a QoS class specified (base priority 0). Investigate ways to avoid priority inversions"
+        }
+      ],
+      "xcresult": "/Users/alfa/.codex/worktrees/project-memory-history/golos-meet/.build/xcode/Logs/Test/Test-golos-meet-2026.11.01_22-12-14-+0300.xcresult",
+      "raw_log": "/tmp/golos36-cap-check.log",
+      "failures": [
+        {
+          "failureText": "Expectation failed: release.commit == SQLITE_OK && release.close == SQLITE_OK\nrelease.commit == SQLITE_OK → false\nrelease.close == SQLITE_OK → <not evaluated>: scenario=A5C7E4ED-F2A9-415D-9603-68941EFD4563 version=0 [{\"result\":0,\"strictPool\":false,\"extended\":0,\"name\":\"acquire\",\"milliseconds\":0.5283750360831618},{\"executor\":\"A47A1A83-628D-475D-AD98-CCA81C3620E0\",\"strictPool\":false,\"name\":\"first-task-start\",\"milliseconds\":9.127416706178337},{\"executor\":\"8A3885DF-CBFC-4844-BFA6-E9780A10250B\",\"strictPool\":false,\"name\":\"second-task-start\",\"milliseconds\":9.174458333291113},{\"executor\":\"A47A1A83-628D-475D-AD98-CCA81C3620E0\",\"strictPool\":false,\"name\":\"first-sqlite-begin\",\"milliseconds\":15.148375008720905,\"connection\":\"36C79C25-576F-4FE1-BEFB-05200EB61757\"},{\"executor\":\"8A3885DF-CBFC-4844-BFA6-E9780A10250B\",\"strictPool\":false,\"name\":\"second-sqlite-begin\",\"milliseconds\":18.382375012151897,\"connection\":\"1C5FCA6E-8021-4557-A64E-D0A396CD2370\"},{\"strictPool\":false,\"name\":\"schedule\",\"milliseconds\":22.705541690811515,\"scheduledMilliseconds\":522.7034583222121},{\"strictPool\":false,\"name\":\"release-start\",\"milliseconds\":524.0994166815653},{\"result\":5,\"strictPool\":false,\"extended\":5,\"name\":\"commit-result\",\"milliseconds\":524.3403750355355},{\"result\":0,\"strictPool\":false,\"name\":\"cleanup-rollback\",\"milliseconds\":524.8266250127926},{\"result\":0,\"strictPool\":false,\"name\":\"close-result\",\"milliseconds\":524.9266666942276},{\"executor\":\"A47A1A83-628D-475D-AD98-CCA81C3620E0\",\"strictPool\":false,\"name\":\"first-success\",\"milliseconds\":675.3369166981429},{\"executor\":\"8A3885DF-CBFC-4844-BFA6-E9780A10250B\",\"strictPool\":false,\"name\":\"second-success\",\"milliseconds\":925.2228333498351},{\"strictPool\":false,\"name\":\"executors-joined\",\"milliseconds\":3784.726166690234},{\"strictPool\":false,\"name\":\"joined\",\"milliseconds\":3784.838124993257}]",
+          "targetName": "golos-meetTests",
+          "testIdentifier": 75,
+          "testIdentifierString": "EmbeddingMigrationRaceTests/concurrentConnectionsReadSchemaOnlyAfterAcquiringMigrationLock(version:)",
+          "testIdentifierURL": "test://com.apple.xcode/golos-meet/golos-meetTests/EmbeddingMigrationRaceTests/concurrentConnectionsReadSchemaOnlyAfterAcquiringMigrationLock(version:)",
+          "testName": "concurrentConnectionsReadSchemaOnlyAfterAcquiringMigrationLock(version:)"
+        }
+      ],
+      "preserved_xcresult": "/tmp/golos36-cap-failed-full.xcresult",
+      "preserved_raw_log": "/tmp/golos36-cap-failed-full.log"
+    },
+    "final_full": {
+      "result": "Passed",
+      "tests": 386,
+      "runs": 524,
+      "failed": 0,
+      "skipped": 0,
+      "runtime_warnings": [
+        {
+          "source": "LocalDocumentExtractorTests.swift",
+          "message": "[Internal] Thread running at User-initiated quality-of-service class waiting on a thread without a QoS class specified (base priority 0). Investigate ways to avoid priority inversions"
+        }
+      ],
+      "xcresult": "/Users/alfa/.codex/worktrees/project-memory-history/golos-meet/.build/xcode/Logs/Test/Test-golos-meet-2026.11.01_22-13-52-+0300.xcresult",
+      "raw_log": "/tmp/golos36-cap-final-check.log",
+      "failures": []
+    }
+  },
+  "failed_trace_files": 7,
+  "final_trace_files": 7,
+  "actual_legacy_database_probe": {
+    "result": "Passed",
+    "modes": [
+      "correction",
+      "retraction"
+    ],
+    "final_active_assertions_each": 256,
+    "original_db_sha256_before_and_after": "c8748b5b19445bc55fadcf10448c64b90f9a6d25456bbb150401d37f73524d78",
+    "original_db_current_sha256": "c8748b5b19445bc55fadcf10448c64b90f9a6d25456bbb150401d37f73524d78",
+    "raw_log": "/tmp/golos36-cap-driver.log",
+    "build_log": "/tmp/golos36-cap-driver-build.log"
+  },
+  "independent_previous_sha_full": {
+    "tests": 383,
+    "runs": 520,
+    "failed": 0,
+    "skipped": 0,
+    "runtime_warnings": [
+      "QoS in DocumentFormatImportTests"
+    ],
+    "reported_by": "independent reviewer via coordinator"
+  }
+}

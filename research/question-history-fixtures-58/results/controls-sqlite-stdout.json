@@ -1,0 +1,5 @@
+[
+  "2026-11-02 05:18:53.407836+0300 Golos Meet[14546:7552347] [library] SQLite failure {\"connection\":\"3C811A9F-3762-4E2F-A55F-75C69750EB09\",\"elapsedMilliseconds\":0.022291671484708786,\"extended\":1811,\"operation\":\"update\",\"phase\":\"step\",\"result\":19}",
+  "2026-11-02 05:18:53.408278+0300 Golos Meet[14546:7552347] [library] SQLite failure {\"connection\":\"7ABA6C5E-EFD3-4C1A-93F6-3A57F6C99309\",\"elapsedMilliseconds\":0.01779163721948862,\"extended\":1811,\"operation\":\"update\",\"phase\":\"step\",\"result\":19}",
+  "2026-11-02 05:18:53.408405+0300 Golos Meet[14546:7552347] [library] SQLite failure {\"connection\":\"7ABA6C5E-EFD3-4C1A-93F6-3A57F6C99309\",\"elapsedMilliseconds\":0.014874967746436596,\"extended\":1811,\"operation\":\"update\",\"phase\":\"step\",\"result\":19}"
+]

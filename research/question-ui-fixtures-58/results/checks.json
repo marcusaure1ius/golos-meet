@@ -1,0 +1,91 @@
+{
+  "before": {
+    "result": "Passed",
+    "totalTestCount": 7,
+    "passedTests": 7,
+    "failedTests": 0,
+    "expectedFailures": 0,
+    "skippedTests": 0,
+    "runtimeWarnings": [],
+    "testFailures": [],
+    "runs": {
+      "passedTests": 15,
+      "failedTests": 0,
+      "expectedFailures": 0,
+      "skippedTests": 0
+    }
+  },
+  "before-probe": {
+    "result": "Passed",
+    "totalTestCount": 1,
+    "passedTests": 1,
+    "failedTests": 0,
+    "expectedFailures": 0,
+    "skippedTests": 0,
+    "runtimeWarnings": [],
+    "testFailures": [],
+    "runs": {
+      "passedTests": 1,
+      "failedTests": 0,
+      "expectedFailures": 0,
+      "skippedTests": 0
+    }
+  },
+  "retain": {
+    "result": "Passed",
+    "totalTestCount": 8,
+    "passedTests": 8,
+    "failedTests": 0,
+    "expectedFailures": 0,
+    "skippedTests": 0,
+    "runtimeWarnings": [],
+    "testFailures": [],
+    "runs": {
+      "passedTests": 16,
+      "failedTests": 0,
+      "expectedFailures": 0,
+      "skippedTests": 0
+    }
+  },
+  "after": {
+    "result": "Passed",
+    "totalTestCount": 9,
+    "passedTests": 9,
+    "failedTests": 0,
+    "expectedFailures": 0,
+    "skippedTests": 0,
+    "runtimeWarnings": [],
+    "testFailures": [],
+    "runs": {
+      "passedTests": 22,
+      "failedTests": 0,
+      "expectedFailures": 0,
+      "skippedTests": 0
+    }
+  },
+  "full": {
+    "result": "Failed",
+    "totalTestCount": 451,
+    "passedTests": 446,
+    "failedTests": 1,
+    "expectedFailures": 4,
+    "skippedTests": 0,
+    "runtimeWarnings": [],
+    "testFailures": [
+      {
+        "failureText": "Issue recorded: Timed out waiting for metadata bridge ready-source coverage",
+        "targetName": "golos-meetTests",
+        "testIdentifier": 339,
+        "testIdentifierString": "ProjectMemoryQueueTests/concreteMetadataBridgeReceivesReadyEventWithoutLaunchingApplication()",
+        "testIdentifierURL": "test://com.apple.xcode/golos-meet/golos-meetTests/ProjectMemoryQueueTests/concreteMetadataBridgeReceivesReadyEventWithoutLaunchingApplication()",
+        "testName": "concreteMetadataBridgeReceivesReadyEventWithoutLaunchingApplication()"
+      }
+    ],
+    "runs": {
+      "passedTests": 630,
+      "failedTests": 1,
+      "expectedFailures": 12,
+      "skippedTests": 0
+    }
+  }
+}

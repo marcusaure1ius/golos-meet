@@ -1,0 +1,28 @@
+import Foundation
+nonisolated enum FixtureBefore58 {
+    private static let lock = NSRecursiveLock()
+    nonisolated(unsafe) private static var owners: [ObjectIdentifier: URL] = [:]
+    nonisolated(unsafe) private static var connections: [UUID: URL] = [:]
+    nonisolated(unsafe) private static var tests: [String: String] = [:]
+    private static func allowed(_ root: URL) -> Bool { root.lastPathComponent.hasPrefix("memory-update-") || root.lastPathComponent.hasPrefix("index-hooks-") }
+    private static func write(_ stage: String, root: URL, fields: [String:String] = [:]) {
+        guard allowed(root), let folder=ProcessInfo.processInfo.environment["GOLOS_FIXTURE_BEFORE"] else { return }
+        var row=fields; row["stage"]=stage; row["root"]=root.lastPathComponent; row["test"]=tests[root.lastPathComponent] ?? "unknown"; row["uptime"]=String(ProcessInfo.processInfo.systemUptime)
+        row["rootExists"]=String(FileManager.default.fileExists(atPath:root.path))
+        do {
+            let output=URL(fileURLWithPath:folder);try FileManager.default.createDirectory(at:output,withIntermediateDirectories:true)
+            let file=output.appendingPathComponent("events.jsonl")
+            if !FileManager.default.fileExists(atPath:file.path) {try Data().write(to:file)}
+            let handle=try FileHandle(forWritingTo:file);try handle.seekToEnd();try handle.write(contentsOf:JSONSerialization.data(withJSONObject:row,options:.sortedKeys)+Data([10]));try handle.close()
+        } catch { fatalError("Synthetic trace failed") }
+    }
+    static func fixture(_ root: URL, test: String) {lock.lock();defer{lock.unlock()};tests[root.lastPathComponent]=test;write("fixture-created",root:root)}
+    static func owner(_ object: AnyObject, url: URL) {lock.lock();defer{lock.unlock()};owners[ObjectIdentifier(object)]=url;write("owner-created",root:url,fields:["owner":String(describing:ObjectIdentifier(object))])}
+    static func child(_ object: AnyObject, of parent: AnyObject) {lock.lock();defer{lock.unlock()};if let root=owners[ObjectIdentifier(parent)] {owners[ObjectIdentifier(object)]=root}}
+    static func mark(_ stage: String, _ object: AnyObject) {lock.lock();defer{lock.unlock()};if let root=owners[ObjectIdentifier(object)] {write(stage,root:root,fields:["owner":String(describing:ObjectIdentifier(object))])}}
+    static func connection(_ id: UUID, _ url: URL) {lock.lock();defer{lock.unlock()};connections[id]=url.deletingLastPathComponent();write("opened",root:url.deletingLastPathComponent(),fields:["connection":id.uuidString])}
+    static func close(_ id: UUID, result: Int32) {lock.lock();defer{lock.unlock()};if let root=connections[id] {write("closed",root:root,fields:["connection":id.uuidString,"result":String(result)])}}
+    static func failure(_ id: UUID, result: Int32, extended: Int32, operation: String) {lock.lock();defer{lock.unlock()};if let root=connections[id] {write("sqlite-failure",root:root,fields:["connection":id.uuidString,"result":String(result),"extended":String(extended),"operation":operation])}}
+    static func retained(_ root: URL) {lock.lock();defer{lock.unlock()};write("control-root-retained",root:root)}
+    static func removed(_ root: URL) {lock.lock();defer{lock.unlock()};write("root-removed",root:root)}
+}

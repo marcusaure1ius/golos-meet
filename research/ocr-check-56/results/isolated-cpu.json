@@ -1,0 +1,4392 @@
+{
+  "summary": {
+    "command": [
+      "/private/tmp/golos56-traced-baseline-probe/ocr-probe",
+      "/private/tmp/golos56-frozen-inputs",
+      "/private/tmp/golos56-isolated-cpu",
+      "parallel",
+      "cpu",
+      "3"
+    ],
+    "seconds": 27.614211167034227,
+    "returncode": 0,
+    "timeout": false,
+    "outcomes": {
+      "success": 24
+    },
+    "expected_invocations": 24,
+    "observed_invocations": 24,
+    "isolated_home": "/private/tmp/golos56-home-cpu"
+  },
+  "streams": [
+    {
+      "id": "0-20",
+      "raw_sha256": "d151adcf100e0b9360d4598589cb417a03604f835d6411058f26434fc40cb41f",
+      "events": [
+        {
+          "bytes": 21495,
+          "cpuControl": true,
+          "id": "0-20",
+          "input": "20.pdf",
+          "sha256": "243d5331e61658a7baa559bd214309203a224dd534280b032d472387aba5c35b",
+          "stage": "extract-begin",
+          "uptime": 328483.261282625,
+          "wall": 1793578218.6616
+        },
+        {
+          "bytes": 21495,
+          "cpuControl": true,
+          "id": "0-20",
+          "input": "0-20.pdf",
+          "sha256": "243d5331e61658a7baa559bd214309203a224dd534280b032d472387aba5c35b",
+          "stage": "input",
+          "uptime": 328483.2649338333,
+          "wall": 1793578218.665251
+        },
+        {
+          "cpuControl": true,
+          "id": "0-20",
+          "native": "2026",
+          "page": 1,
+          "stage": "pdf-native",
+          "uptime": 328483.2954456667,
+          "wall": 1793578218.695763
+        },
+        {
+          "bitsPerPixel": 32,
+          "bytesPerRow": 7200,
+          "cpuControl": true,
+          "height": 2400,
+          "id": "0-20",
+          "image": "0-20-0e5e0d92af32c8dbcf4f4e4055fa450fde53c242363af02785df70f5ed995831.png",
+          "sha256": "0e5e0d92af32c8dbcf4f4e4055fa450fde53c242363af02785df70f5ed995831",
+          "stage": "ocr-input",
+          "uptime": 328483.32967916667,
+          "wall": 1793578218.729996,
+          "width": 1800
+        },
+        {
+          "automaticLanguage": true,
+          "cpuControl": true,
+          "id": "0-20",
+          "languageCorrection": true,
+          "languages": [
+            "ru-RU",
+            "en-US"
+          ],
+          "revision": 3,
+          "stage": "request-options",
+          "uptime": 328483.3298300417,
+          "wall": 1793578218.730147
+        },
+        {
+          "cpuControl": true,
+          "devices": {
+            "VNComputeStageMain": [
+              "<MLNeuralEngineComputeDevice: 0x1030a02f0>",
+              "<MLGPUComputeDevice: 0x1030b4390> Apple M4 Pro",
+              "<MLCPUComputeDevice: 0x1030b45b0>"
+            ]
+          },
+          "id": "0-20",
+          "stage": "cpu-supported-devices",
+          "uptime": 328483.33001000003,
+          "wall": 1793578218.7303271
+        },
+        {
+          "cpuControl": true,
+          "id": "0-20",
+          "stage": "perform-begin",
+          "uptime": 328483.330092375,
+          "wall": 1793578218.7304091
+        },
+        {
+          "cpuControl": true,
+          "id": "0-20",
+          "observations": [
+            {
+              "candidates": [
+                {
+                  "confidence": 1,
+                  "text": "20"
+                },
+                {
+                  "confidence": 0.30000001192092896,
+                  "text": "0"
+                },
+                {
+                  "confidence": 0.30000001192092896,
+                  "text": "2"
+                }
+              ],
+              "height": 0.01889534950256344,
+              "width": 0.04069767422146267,
+              "x": 0.03294573644116358,
+              "y": 0.5348837206500425
+            },
+            {
+              "candidates": [
+                {
+                  "confidence": 1,
+                  "text": "2026"
+                },
+                {
+                  "confidence": 0.30000001192092896,
+                  "text": "202"
+                },
+                {
+                  "confidence": 0.30000001192092896,
+                  "text": "206"
+                },
+                {
+                  "confidence": 0.30000001192092896,
+                  "text": "226"
+                },
+                {
+                  "confidence": 0.30000001192092896,
+                  "text": "026"
+                }
+              ],
+              "height": 0.017441860834757517,
+              "width": 0.06589147355821401,
+              "x": 0.4166666667092651,
+              "y": 0.05377906975703994
+            }
+          ],
+          "stage": "perform-end",
+          "uptime": 328509.513808875,
+          "wall": 1793578244.914156
+        },
+        {
+          "cpuControl": true,
+          "id": "0-20",
+          "lines": [
+            "2026\n20"
+          ],
+          "stage": "extract-result",
+          "uptime": 328509.5147185834,
+          "wall": 1793578244.915066,
+          "warnings": []
+        },
+        {
+          "cpuControl": true,
+          "expected": "20",
+          "id": "0-20",
+          "lines": [
+            "2026",
+            "20"
+          ],
+          "matched": true,
+          "outcome": "success",
+          "stage": "extract-end",
+          "uptime": 328509.5147881667,
+          "wall": 1793578244.915135,
+          "warnings": []
+        }
+      ]
+    },
+    {
+      "id": "0-26",
+      "raw_sha256": "3403eb3175a88698ddc361e9af83538d4e628bef45dd57f70770ae81951a90dc",
+      "events": [
+        {
+          "bytes": 21549,
+          "cpuControl": true,
+          "id": "0-26",
+          "input": "26.pdf",
+          "sha256": "e1e25777769cf421e9a869e44ca102348d4f2da46302135493f2005f6befd92a",
+          "stage": "extract-begin",
+          "uptime": 328483.2612827084,
+          "wall": 1793578218.6616
+        },
+        {
+          "bytes": 21549,
+          "cpuControl": true,
+          "id": "0-26",
+          "input": "0-26.pdf",
+          "sha256": "e1e25777769cf421e9a869e44ca102348d4f2da46302135493f2005f6befd92a",
+          "stage": "input",
+          "uptime": 328483.26494175004,
+          "wall": 1793578218.665259
+        },
+        {
+          "cpuControl": true,
+          "id": "0-26",
+          "native": "2026",
+          "page": 1,
+          "stage": "pdf-native",
+          "uptime": 328483.295445375,
+          "wall": 1793578218.695763
+        },
+        {
+          "bitsPerPixel": 32,
+          "bytesPerRow": 7200,
+          "cpuControl": true,
+          "height": 2400,
+          "id": "0-26",
+          "image": "0-26-ed81cb04fddb07561b7087d54646c8dda614c678115347c82f8fd2c0df7c7b87.png",
+          "sha256": "ed81cb04fddb07561b7087d54646c8dda614c678115347c82f8fd2c0df7c7b87",
+          "stage": "ocr-input",
+          "uptime": 328483.3294309167,
+          "wall": 1793578218.729748,
+          "width": 1800
+        },
+        {
+          "automaticLanguage": true,
+          "cpuControl": true,
+          "id": "0-26",
+          "languageCorrection": true,
+          "languages": [
+            "ru-RU",
+            "en-US"
+          ],
+          "revision": 3,
+          "stage": "request-options",
+          "uptime": 328483.3295691667,
+          "wall": 1793578218.729886
+        },
+        {
+          "cpuControl": true,
+          "devices": {
+            "VNComputeStageMain": [
+              "<MLNeuralEngineComputeDevice: 0x1030a02f0>",
+              "<MLGPUComputeDevice: 0x1030b4390> Apple M4 Pro",
+              "<MLCPUComputeDevice: 0x1030b45b0>"
+            ]
+          },
+          "id": "0-26",
+          "stage": "cpu-supported-devices",
+          "uptime": 328483.3296562917,
+          "wall": 1793578218.7299728
+        },
+        {
+          "cpuControl": true,
+          "id": "0-26",
+          "stage": "perform-begin",
+          "uptime": 328483.32970320835,
+          "wall": 1793578218.73002
+        },
+        {
+          "cpuControl": true,
+          "id": "0-26",
+          "observations": [
+            {
+              "candidates": [
+                {
+                  "confidence": 1,
+                  "text": "26"
+                },
+                {
+                  "confidence": 0.30000001192092896,
+                  "text": "6"
+                },
+                {
+                  "confidence": 0.30000001192092896,
+                  "text": "2"
+                }
+              ],
+              "height": 0.01889534950256344,
+              "width": 0.04263565911187066,
+              "x": 0.03294573623863831,
+              "y": 0.5348837206500425
+            },
+            {
+              "candidates": [
+                {
+                  "confidence": 1,
+                  "text": "2026"
+                },
+                {
+                  "confidence": 0.30000001192092896,
+                  "text": "202"
+                },
+                {
+                  "confidence": 0.30000001192092896,
+                  "text": "206"
+                },
+                {
+                  "confidence": 0.30000001192092896,
+                  "text": "226"
+                },
+                {
+                  "confidence": 0.30000001192092896,
+                  "text": "026"
+                }
+              ],
+              "height": 0.017441860834757517,
+              "width": 0.06589147355821401,
+              "x": 0.4166666667092651,
+              "y": 0.05377906975703994
+            }
+          ],
+          "stage": "perform-end",
+          "uptime": 328509.4575165,
+          "wall": 1793578244.857864
+        },
+        {
+          "cpuControl": true,
+          "id": "0-26",
+          "lines": [
+            "2026\n26"
+          ],
+          "stage": "extract-result",
+          "uptime": 328509.45794575004,
+          "wall": 1793578244.858293,
+          "warnings": []
+        },
+        {
+          "cpuControl": true,
+          "expected": "26",
+          "id": "0-26",
+          "lines": [
+            "2026",
+            "26"
+          ],
+          "matched": true,
+          "outcome": "success",
+          "stage": "extract-end",
+          "uptime": 328509.45803020836,
+          "wall": 1793578244.858377,
+          "warnings": []
+        }
+      ]
+    },
+    {
+      "id": "0-distinct",
+      "raw_sha256": "355c5fa2fc4007345590dad46e0b06eb31bc136ffafa1e4eca10ce42d4f5f474",
+      "events": [
+        {
+          "bytes": 24231,
+          "cpuControl": true,
+          "id": "0-distinct",
+          "input": "distinct.pdf",
+          "sha256": "454af4bf489515e6f9c9397dbd3dfbabed667efd675e4808db41a251bebdeb10",
+          "stage": "extract-begin",
+          "uptime": 328483.26126679167,
+          "wall": 1793578218.661584
+        },
+        {
+          "bytes": 24231,
+          "cpuControl": true,
+          "id": "0-distinct",
+          "input": "0-distinct.pdf",
+          "sha256": "454af4bf489515e6f9c9397dbd3dfbabed667efd675e4808db41a251bebdeb10",
+          "stage": "input",
+          "uptime": 328483.26474037505,
+          "wall": 1793578218.665057
+        },
+        {
+          "cpuControl": true,
+          "id": "0-distinct",
+          "native": "Not approved",
+          "page": 1,
+          "stage": "pdf-native",
+          "uptime": 328483.2954454584,
+          "wall": 1793578218.6957622
+        },
+        {
+          "bitsPerPixel": 32,
+          "bytesPerRow": 7200,
+          "cpuControl": true,
+          "height": 2400,
+          "id": "0-distinct",
+          "image": "0-distinct-14a5184eacdcb275a78cf4ed069202a3158961339f61bc863e7b8b334b4fea52.png",
+          "sha256": "14a5184eacdcb275a78cf4ed069202a3158961339f61bc863e7b8b334b4fea52",
+          "stage": "ocr-input",
+          "uptime": 328483.33005370834,
+          "wall": 1793578218.730371,
+          "width": 1800
+        },
+        {
+          "automaticLanguage": true,
+          "cpuControl": true,
+          "id": "0-distinct",
+          "languageCorrection": true,
+          "languages": [
+            "ru-RU",
+            "en-US"
+          ],
+          "revision": 3,
+          "stage": "request-options",
+          "uptime": 328483.3302351667,
+          "wall": 1793578218.730552
+        },
+        {
+          "cpuControl": true,
+          "devices": {
+            "VNComputeStageMain": [
+              "<MLNeuralEngineComputeDevice: 0x1030a02f0>",
+              "<MLGPUComputeDevice: 0x1030b4390> Apple M4 Pro",
+              "<MLCPUComputeDevice: 0x1030b45b0>"
+            ]
+          },
+          "id": "0-distinct",
+          "stage": "cpu-supported-devices",
+          "uptime": 328483.330383125,
+          "wall": 1793578218.7307
+        },
+        {
+          "cpuControl": true,
+          "id": "0-distinct",
+          "stage": "perform-begin",
+          "uptime": 328483.3304372917,
+          "wall": 1793578218.730754
+        },
+        {
+          "cpuControl": true,
+          "id": "0-distinct",
+          "observations": [
+            {
+              "candidates": [
+                {
+                  "confidence": 1,
+                  "text": "Approved"
+                },
+                {
+                  "confidence": 1,
+                  "text": "Approved"
+                },
+                {
+                  "confidence": 0.5,
+                  "text": "Approve"
+                },
+                {
+                  "confidence": 0.5,
+                  "text": "Approve"
+                },
+                {
+                  "confidence": 0.5,
+                  "text": "Aproved"
+                }
+              ],
+              "height": 0.02693046569824209,
+              "width": 0.14020431518554688,
+              "x": 0.032611020605454004,
+              "y": 0.5294126741478844
+            },
+            {
+              "candidates": [
+                {
+                  "confidence": 1,
+                  "text": "Not approved"
+                },
+                {
+                  "confidence": 1,
+                  "text": "No approved"
+                },
+                {
+                  "confidence": 1,
+                  "text": "Not approve"
+                },
+                {
+                  "confidence": 1,
+                  "text": "ot approved"
+                },
+                {
+                  "confidence": 1,
+                  "text": "Not aproved"
+                }
+              ],
+              "height": 0.01991864363352458,
+              "width": 0.16518888685438365,
+              "x": 0.41644341493485565,
+              "y": 0.04995987001281588
+            }
+          ],
+          "stage": "perform-end",
+          "uptime": 328509.70506083337,
+          "wall": 1793578245.1054091
+        },
+        {
+          "cpuControl": true,
+          "id": "0-distinct",
+          "lines": [
+            "Not approved\nApproved"
+          ],
+          "stage": "extract-result",
+          "uptime": 328509.705436625,
+          "wall": 1793578245.105784,
+          "warnings": []
+        },
+        {
+          "cpuControl": true,
+          "expected": "Approved",
+          "id": "0-distinct",
+          "lines": [
+            "Not approved",
+            "Approved"
+          ],
+          "matched": true,
+          "outcome": "success",
+          "stage": "extract-end",
+          "uptime": 328509.7055138334,
+          "wall": 1793578245.105861,
+          "warnings": []
+        }
+      ]
+    },
+    {
+      "id": "0-duplicate",
+      "raw_sha256": "8fa071b16816dd6118096c4d861e891de94316454ff1bb4b17fc5d4857980300",
+      "events": [
+        {
+          "bytes": 31299,
+          "cpuControl": true,
+          "id": "0-duplicate",
+          "input": "duplicate.pdf",
+          "sha256": "0e941594e6739a8a1ff1965a2e88cf1e443a72ac42506858c7ac6ff7e526061e",
+          "stage": "extract-begin",
+          "uptime": 328483.2612661667,
+          "wall": 1793578218.661583
+        },
+        {
+          "bytes": 31299,
+          "cpuControl": true,
+          "id": "0-duplicate",
+          "input": "0-duplicate.pdf",
+          "sha256": "0e941594e6739a8a1ff1965a2e88cf1e443a72ac42506858c7ac6ff7e526061e",
+          "stage": "input",
+          "uptime": 328483.2647082917,
+          "wall": 1793578218.665025
+        },
+        {
+          "cpuControl": true,
+          "id": "0-duplicate",
+          "native": "Decision: launch postponed to December\nPage 1",
+          "page": 1,
+          "stage": "pdf-native",
+          "uptime": 328483.29549683334,
+          "wall": 1793578218.6958141
+        },
+        {
+          "bitsPerPixel": 32,
+          "bytesPerRow": 7200,
+          "cpuControl": true,
+          "height": 2400,
+          "id": "0-duplicate",
+          "image": "0-duplicate-06a03cc4a095f7a057faa63febaca970e1b3cce558da4e203a2c41b8ae35a90f.png",
+          "sha256": "06a03cc4a095f7a057faa63febaca970e1b3cce558da4e203a2c41b8ae35a90f",
+          "stage": "ocr-input",
+          "uptime": 328483.3304720417,
+          "wall": 1793578218.730789,
+          "width": 1800
+        },
+        {
+          "automaticLanguage": true,
+          "cpuControl": true,
+          "id": "0-duplicate",
+          "languageCorrection": true,
+          "languages": [
+            "ru-RU",
+            "en-US"
+          ],
+          "revision": 3,
+          "stage": "request-options",
+          "uptime": 328483.33061783336,
+          "wall": 1793578218.730935
+        },
+        {
+          "cpuControl": true,
+          "devices": {
+            "VNComputeStageMain": [
+              "<MLNeuralEngineComputeDevice: 0x1030a02f0>",
+              "<MLGPUComputeDevice: 0x1030b4390> Apple M4 Pro",
+              "<MLCPUComputeDevice: 0x1030b45b0>"
+            ]
+          },
+          "id": "0-duplicate",
+          "stage": "cpu-supported-devices",
+          "uptime": 328483.3307057917,
+          "wall": 1793578218.7310228
+        },
+        {
+          "cpuControl": true,
+          "id": "0-duplicate",
+          "stage": "perform-begin",
+          "uptime": 328483.3307545417,
+          "wall": 1793578218.731071
+        },
+        {
+          "cpuControl": true,
+          "id": "0-duplicate",
+          "observations": [
+            {
+              "candidates": [
+                {
+                  "confidence": 1,
+                  "text": "Decision: launch postporebttoDeeembler"
+                },
+                {
+                  "confidence": 1,
+                  "text": "Decision: launch postporebttoDeembler"
+                },
+                {
+                  "confidence": 1,
+                  "text": "Decision: launch post porebttoDeembler"
+                },
+                {
+                  "confidence": 1,
+                  "text": "Decision: launch postporebttoDeeembleer"
+                },
+                {
+                  "confidence": 1,
+                  "text": "Decision: launch postporebttoDeembleer"
+                }
+              ],
+              "height": 0.027136732737223168,
+              "width": 0.606769273546007,
+              "x": 0.03285736628284945,
+              "y": 0.5296818403596832
+            },
+            {
+              "candidates": [
+                {
+                  "confidence": 1,
+                  "text": "Page 1"
+                },
+                {
+                  "confidence": 0.30000001192092896,
+                  "text": "Page1"
+                },
+                {
+                  "confidence": 0.30000001192092896,
+                  "text": "Page"
+                },
+                {
+                  "confidence": 0.30000001192092896,
+                  "text": "age 1"
+                },
+                {
+                  "confidence": 0.30000001192092896,
+                  "text": "Pag 1"
+                }
+              ],
+              "height": 0.018934109210968053,
+              "width": 0.07945736355251737,
+              "x": 0.41666666696647386,
+              "y": 0.0508333330057934
+            }
+          ],
+          "stage": "perform-end",
+          "uptime": 328509.64443729166,
+          "wall": 1793578245.044785
+        },
+        {
+          "cpuControl": true,
+          "id": "0-duplicate",
+          "lines": [
+            "Decision: launch postponed to December\nPage 1\nDecision: launch postporebttoDeeembler"
+          ],
+          "stage": "extract-result",
+          "uptime": 328509.6448420417,
+          "wall": 1793578245.045189,
+          "warnings": []
+        },
+        {
+          "cpuControl": true,
+          "expected": "Decision: launch postponed to December",
+          "id": "0-duplicate",
+          "lines": [
+            "Decision: launch postponed to December",
+            "Page 1",
+            "Decision: launch postporebttoDeeembler"
+          ],
+          "matched": true,
+          "outcome": "success",
+          "stage": "extract-end",
+          "uptime": 328509.64490379166,
+          "wall": 1793578245.045251,
+          "warnings": []
+        }
+      ]
+    },
+    {
+      "id": "0-mixed",
+      "raw_sha256": "ab1c6ade589c9c08e4e7d65f66ee23026ac3759df3545935f42f55d6e45fbc23",
+      "events": [
+        {
+          "bytes": 28138,
+          "cpuControl": true,
+          "id": "0-mixed",
+          "input": "mixed.pdf",
+          "sha256": "36b576d202b516cc5862661ae6b1925eb10c4bd87170f8db2cfc158f8531e2f3",
+          "stage": "extract-begin",
+          "uptime": 328483.261266125,
+          "wall": 1793578218.661583
+        },
+        {
+          "bytes": 28138,
+          "cpuControl": true,
+          "id": "0-mixed",
+          "input": "0-mixed.pdf",
+          "sha256": "36b576d202b516cc5862661ae6b1925eb10c4bd87170f8db2cfc158f8531e2f3",
+          "stage": "input",
+          "uptime": 328483.264913375,
+          "wall": 1793578218.66523
+        },
+        {
+          "cpuControl": true,
+          "id": "0-mixed",
+          "native": "Page 1",
+          "page": 1,
+          "stage": "pdf-native",
+          "uptime": 328483.2954480417,
+          "wall": 1793578218.695765
+        },
+        {
+          "bitsPerPixel": 32,
+          "bytesPerRow": 7200,
+          "cpuControl": true,
+          "height": 2400,
+          "id": "0-mixed",
+          "image": "0-mixed-facb4e7b8aa93c9cdd9e29c8ba27942099dcb671963b4b68c5e4a85ad7b6017c.png",
+          "sha256": "facb4e7b8aa93c9cdd9e29c8ba27942099dcb671963b4b68c5e4a85ad7b6017c",
+          "stage": "ocr-input",
+          "uptime": 328483.3298010417,
+          "wall": 1793578218.730118,
+          "width": 1800
+        },
+        {
+          "automaticLanguage": true,
+          "cpuControl": true,
+          "id": "0-mixed",
+          "languageCorrection": true,
+          "languages": [
+            "ru-RU",
+            "en-US"
+          ],
+          "revision": 3,
+          "stage": "request-options",
+          "uptime": 328483.32990891667,
+          "wall": 1793578218.730226
+        },
+        {
+          "cpuControl": true,
+          "devices": {
+            "VNComputeStageMain": [
+              "<MLNeuralEngineComputeDevice: 0x1030a02f0>",
+              "<MLGPUComputeDevice: 0x1030b4390> Apple M4 Pro",
+              "<MLCPUComputeDevice: 0x1030b45b0>"
+            ]
+          },
+          "id": "0-mixed",
+          "stage": "cpu-supported-devices",
+          "uptime": 328483.3300511667,
+          "wall": 1793578218.7303681
+        },
+        {
+          "cpuControl": true,
+          "id": "0-mixed",
+          "stage": "perform-begin",
+          "uptime": 328483.33013345837,
+          "wall": 1793578218.730451
+        },
+        {
+          "cpuControl": true,
+          "id": "0-mixed",
+          "observations": [
+            {
+              "candidates": [
+                {
+                  "confidence": 1,
+                  "text": "Decision: launch postponed to December"
+                },
+                {
+                  "confidence": 1,
+                  "text": "Decision launch postponed to December"
+                },
+                {
+                  "confidence": 1,
+                  "text": "Decision: aunch postponed to December"
+                },
+                {
+                  "confidence": 1,
+                  "text": "Decision: lunch postponed to December"
+                },
+                {
+                  "confidence": 1,
+                  "text": "Decision: launch postpone to December"
+                }
+              ],
+              "height": 0.023362402915954594,
+              "width": 0.5852713351779514,
+              "x": 0.03488371215430959,
+              "y": 0.5304166668370995
+            },
+            {
+              "candidates": [
+                {
+                  "confidence": 1,
+                  "text": "Page 1"
+                },
+                {
+                  "confidence": 0.30000001192092896,
+                  "text": "Page1"
+                },
+                {
+                  "confidence": 0.30000001192092896,
+                  "text": "Page"
+                },
+                {
+                  "confidence": 0.30000001192092896,
+                  "text": "age 1"
+                },
+                {
+                  "confidence": 0.30000001192092896,
+                  "text": "Pag 1"
+                }
+              ],
+              "height": 0.018934109210968053,
+              "width": 0.07945736355251737,
+              "x": 0.41666666696647386,
+              "y": 0.0508333330057934
+            }
+          ],
+          "stage": "perform-end",
+          "uptime": 328509.5806885417,
+          "wall": 1793578244.981036
+        },
+        {
+          "cpuControl": true,
+          "id": "0-mixed",
+          "lines": [
+            "Page 1\nDecision: launch postponed to December"
+          ],
+          "stage": "extract-result",
+          "uptime": 328509.581709875,
+          "wall": 1793578244.982057,
+          "warnings": []
+        },
+        {
+          "cpuControl": true,
+          "expected": "Decision: launch postponed to December",
+          "id": "0-mixed",
+          "lines": [
+            "Page 1",
+            "Decision: launch postponed to December"
+          ],
+          "matched": true,
+          "outcome": "success",
+          "stage": "extract-end",
+          "uptime": 328509.58179716667,
+          "wall": 1793578244.9821439,
+          "warnings": []
+        }
+      ]
+    },
+    {
+      "id": "0-native",
+      "raw_sha256": "2079c0743edb2e190004fdd6e7485f9dba96ca7ffbf2696a435d45d7c4521ee4",
+      "events": [
+        {
+          "bytes": 8205,
+          "cpuControl": true,
+          "id": "0-native",
+          "input": "native.pdf",
+          "sha256": "c49439b2b7d57ff4ed0a53fd05736699e85b4214c4ccce0956ea5da92002d9a9",
+          "stage": "extract-begin",
+          "uptime": 328483.2612866667,
+          "wall": 1793578218.661604
+        },
+        {
+          "bytes": 8205,
+          "cpuControl": true,
+          "id": "0-native",
+          "input": "0-native.pdf",
+          "sha256": "c49439b2b7d57ff4ed0a53fd05736699e85b4214c4ccce0956ea5da92002d9a9",
+          "stage": "input",
+          "uptime": 328483.26505962503,
+          "wall": 1793578218.6653771
+        },
+        {
+          "cpuControl": true,
+          "id": "0-native",
+          "native": "Project alpha launch",
+          "page": 1,
+          "stage": "pdf-native",
+          "uptime": 328483.29541200004,
+          "wall": 1793578218.695729
+        },
+        {
+          "bitsPerPixel": 32,
+          "bytesPerRow": 7200,
+          "cpuControl": true,
+          "height": 2400,
+          "id": "0-native",
+          "image": "0-native-519c66ffa5ee209d22d22f97216f5e539515783538256c5fe34b955e3dd6445d.png",
+          "sha256": "519c66ffa5ee209d22d22f97216f5e539515783538256c5fe34b955e3dd6445d",
+          "stage": "ocr-input",
+          "uptime": 328483.3224729167,
+          "wall": 1793578218.72279,
+          "width": 1800
+        },
+        {
+          "automaticLanguage": true,
+          "cpuControl": true,
+          "id": "0-native",
+          "languageCorrection": true,
+          "languages": [
+            "ru-RU",
+            "en-US"
+          ],
+          "revision": 3,
+          "stage": "request-options",
+          "uptime": 328483.32269508333,
+          "wall": 1793578218.723012
+        },
+        {
+          "cpuControl": true,
+          "devices": {
+            "VNComputeStageMain": [
+              "<MLNeuralEngineComputeDevice: 0x1030a02f0>",
+              "<MLGPUComputeDevice: 0x1030b4390> Apple M4 Pro",
+              "<MLCPUComputeDevice: 0x1030b45b0>"
+            ]
+          },
+          "id": "0-native",
+          "stage": "cpu-supported-devices",
+          "uptime": 328483.32280175004,
+          "wall": 1793578218.723119
+        },
+        {
+          "cpuControl": true,
+          "id": "0-native",
+          "stage": "perform-begin",
+          "uptime": 328483.32284895837,
+          "wall": 1793578218.723166
+        },
+        {
+          "cpuControl": true,
+          "id": "0-native",
+          "observations": [
+            {
+              "candidates": [
+                {
+                  "confidence": 1,
+                  "text": "Project alpha launch"
+                },
+                {
+                  "confidence": 1,
+                  "text": "Project alphalaunch"
+                },
+                {
+                  "confidence": 1,
+                  "text": "Project alpha aunch"
+                },
+                {
+                  "confidence": 1,
+                  "text": "Project alpha lunch"
+                },
+                {
+                  "confidence": 1,
+                  "text": "Project apha launch"
+                }
+              ],
+              "height": 0.023459302584330155,
+              "width": 0.2965116373697917,
+              "x": 0.06782945255434608,
+              "y": 0.876249999731925
+            }
+          ],
+          "stage": "perform-end",
+          "uptime": 328509.40316262504,
+          "wall": 1793578244.80351
+        },
+        {
+          "cpuControl": true,
+          "id": "0-native",
+          "native": "Decision: ship in November",
+          "page": 2,
+          "stage": "pdf-native",
+          "uptime": 328509.4062586667,
+          "wall": 1793578244.8066049
+        },
+        {
+          "bitsPerPixel": 32,
+          "bytesPerRow": 7200,
+          "cpuControl": true,
+          "height": 2400,
+          "id": "0-native",
+          "image": "0-native-3422cced33fa0611b8ea88a554ab96fa231c83027d0696a70ebc5a3b616b4280.png",
+          "sha256": "3422cced33fa0611b8ea88a554ab96fa231c83027d0696a70ebc5a3b616b4280",
+          "stage": "ocr-input",
+          "uptime": 328509.4284360417,
+          "wall": 1793578244.828783,
+          "width": 1800
+        },
+        {
+          "automaticLanguage": true,
+          "cpuControl": true,
+          "id": "0-native",
+          "languageCorrection": true,
+          "languages": [
+            "ru-RU",
+            "en-US"
+          ],
+          "revision": 3,
+          "stage": "request-options",
+          "uptime": 328509.42863516667,
+          "wall": 1793578244.8289819
+        },
+        {
+          "cpuControl": true,
+          "devices": {
+            "VNComputeStageMain": [
+              "<MLNeuralEngineComputeDevice: 0x1030a02f0>",
+              "<MLGPUComputeDevice: 0x1030b4390> Apple M4 Pro",
+              "<MLCPUComputeDevice: 0x1030b45b0>"
+            ]
+          },
+          "id": "0-native",
+          "stage": "cpu-supported-devices",
+          "uptime": 328509.4287247917,
+          "wall": 1793578244.829072
+        },
+        {
+          "cpuControl": true,
+          "id": "0-native",
+          "stage": "perform-begin",
+          "uptime": 328509.4287717917,
+          "wall": 1793578244.829119
+        },
+        {
+          "cpuControl": true,
+          "id": "0-native",
+          "observations": [
+            {
+              "candidates": [
+                {
+                  "confidence": 1,
+                  "text": "Decision: ship in November"
+                },
+                {
+                  "confidence": 1,
+                  "text": "Decision ship in November"
+                },
+                {
+                  "confidence": 1,
+                  "text": "Decision:ship in November"
+                },
+                {
+                  "confidence": 1,
+                  "text": "Decision: ship in Novembe"
+                },
+                {
+                  "confidence": 1,
+                  "text": "Decision: shipin November"
+                }
+              ],
+              "height": 0.02470930258433024,
+              "width": 0.3992248196072049,
+              "x": 0.06976743505231266,
+              "y": 0.8749999998773401
+            }
+          ],
+          "stage": "perform-end",
+          "uptime": 328509.767693625,
+          "wall": 1793578245.168041
+        },
+        {
+          "cpuControl": true,
+          "id": "0-native",
+          "lines": [
+            "Project alpha launch",
+            "Decision: ship in November"
+          ],
+          "stage": "extract-result",
+          "uptime": 328509.767898625,
+          "wall": 1793578245.168246,
+          "warnings": []
+        },
+        {
+          "cpuControl": true,
+          "expected": "Decision: ship in November",
+          "id": "0-native",
+          "lines": [
+            "Project alpha launch",
+            "Decision: ship in November"
+          ],
+          "matched": true,
+          "outcome": "success",
+          "stage": "extract-end",
+          "uptime": 328509.76796175004,
+          "wall": 1793578245.168309,
+          "warnings": []
+        }
+      ]
+    },
+    {
+      "id": "0-png-en",
+      "raw_sha256": "6921e2ce37944ec068cb4ca8d8a0bd43eeccb95c12aa62a183c5d981f7048270",
+      "events": [
+        {
+          "bytes": 23567,
+          "cpuControl": true,
+          "id": "0-png-en",
+          "input": "png-en.png",
+          "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+          "stage": "extract-begin",
+          "uptime": 328483.261266375,
+          "wall": 1793578218.661583
+        },
+        {
+          "bytes": 23567,
+          "cpuControl": true,
+          "id": "0-png-en",
+          "input": "0-png-en.png",
+          "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+          "stage": "input",
+          "uptime": 328483.26492233336,
+          "wall": 1793578218.6652389
+        },
+        {
+          "bitsPerPixel": 32,
+          "bytesPerRow": 6400,
+          "cpuControl": true,
+          "height": 300,
+          "id": "0-png-en",
+          "image": "0-png-en-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+          "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0",
+          "stage": "ocr-input",
+          "uptime": 328483.2708027917,
+          "wall": 1793578218.6711202,
+          "width": 1600
+        },
+        {
+          "automaticLanguage": true,
+          "cpuControl": true,
+          "id": "0-png-en",
+          "languageCorrection": true,
+          "languages": [
+            "ru-RU",
+            "en-US"
+          ],
+          "revision": 3,
+          "stage": "request-options",
+          "uptime": 328483.2761581667,
+          "wall": 1793578218.676476
+        },
+        {
+          "cpuControl": true,
+          "devices": {
+            "VNComputeStageMain": [
+              "<MLNeuralEngineComputeDevice: 0x1030a02f0>",
+              "<MLGPUComputeDevice: 0x1030b4390> Apple M4 Pro",
+              "<MLCPUComputeDevice: 0x1030b45b0>"
+            ]
+          },
+          "id": "0-png-en",
+          "stage": "cpu-supported-devices",
+          "uptime": 328483.27871800005,
+          "wall": 1793578218.679035
+        },
+        {
+          "cpuControl": true,
+          "id": "0-png-en",
+          "stage": "perform-begin",
+          "uptime": 328483.27883620834,
+          "wall": 1793578218.679153
+        },
+        {
+          "cpuControl": true,
+          "id": "0-png-en",
+          "observations": [
+            {
+              "candidates": [
+                {
+                  "confidence": 1,
+                  "text": "Project Alpha budget approved"
+                },
+                {
+                  "confidence": 1,
+                  "text": "Project A pha budget approved"
+                },
+                {
+                  "confidence": 1,
+                  "text": "Project Apha budget approved"
+                },
+                {
+                  "confidence": 1,
+                  "text": "Project Alpha budget approve"
+                },
+                {
+                  "confidence": 1,
+                  "text": "Project Alpha budge approved"
+                }
+              ],
+              "height": 0.19457364400227872,
+              "width": 0.5174418640136719,
+              "x": 0.03197674233930247,
+              "y": 0.4333333312911074
+            }
+          ],
+          "stage": "perform-end",
+          "uptime": 328509.2944215,
+          "wall": 1793578244.694769
+        },
+        {
+          "cpuControl": true,
+          "id": "0-png-en",
+          "lines": [
+            "Project Alpha budget approved"
+          ],
+          "stage": "extract-result",
+          "uptime": 328509.29604987503,
+          "wall": 1793578244.6963968,
+          "warnings": []
+        },
+        {
+          "cpuControl": true,
+          "expected": "Project Alpha budget approved",
+          "id": "0-png-en",
+          "lines": [
+            "Project Alpha budget approved"
+          ],
+          "matched": true,
+          "outcome": "success",
+          "stage": "extract-end",
+          "uptime": 328509.2989227084,
+          "wall": 1793578244.69927,
+          "warnings": []
+        }
+      ]
+    },
+    {
+      "id": "0-png-ru",
+      "raw_sha256": "eeda087668a73c232b3293517bcc5e8bd78d40fe874a5f738bf2b780fe4d05e7",
+      "events": [
+        {
+          "bytes": 23283,
+          "cpuControl": true,
+          "id": "0-png-ru",
+          "input": "png-ru.png",
+          "sha256": "666a19cf8a8ac85e56ccabc0cc911b5d0f570b22c534aff08c942531e46b9b5a",
+          "stage": "extract-begin",
+          "uptime": 328483.26126625005,
+          "wall": 1793578218.661583
+        },
+        {
+          "bytes": 23283,
+          "cpuControl": true,
+          "id": "0-png-ru",
+          "input": "0-png-ru.png",
+          "sha256": "666a19cf8a8ac85e56ccabc0cc911b5d0f570b22c534aff08c942531e46b9b5a",
+          "stage": "input",
+          "uptime": 328483.26485983335,
+          "wall": 1793578218.6651769
+        },
+        {
+          "bitsPerPixel": 32,
+          "bytesPerRow": 6400,
+          "cpuControl": true,
+          "height": 300,
+          "id": "0-png-ru",
+          "image": "0-png-ru-e1183c6d804b89a27f0146202d71c2569fe688e26399387fe6255f5e0251c0f9.png",
+          "sha256": "e1183c6d804b89a27f0146202d71c2569fe688e26399387fe6255f5e0251c0f9",
+          "stage": "ocr-input",
+          "uptime": 328483.2708030417,
+          "wall": 1793578218.6711202,
+          "width": 1600
+        },
+        {
+          "automaticLanguage": true,
+          "cpuControl": true,
+          "id": "0-png-ru",
+          "languageCorrection": true,
+          "languages": [
+            "ru-RU",
+            "en-US"
+          ],
+          "revision": 3,
+          "stage": "request-options",
+          "uptime": 328483.2761579584,
+          "wall": 1793578218.676475
+        },
+        {
+          "cpuControl": true,
+          "devices": {
+            "VNComputeStageMain": [
+              "<MLNeuralEngineComputeDevice: 0x1030a02f0>",
+              "<MLGPUComputeDevice: 0x1030b4390> Apple M4 Pro",
+              "<MLCPUComputeDevice: 0x1030b45b0>"
+            ]
+          },
+          "id": "0-png-ru",
+          "stage": "cpu-supported-devices",
+          "uptime": 328483.278717375,
+          "wall": 1793578218.679035
+        },
+        {
+          "cpuControl": true,
+          "id": "0-png-ru",
+          "stage": "perform-begin",
+          "uptime": 328483.27878783335,
+          "wall": 1793578218.679105
+        },
+        {
+          "cpuControl": true,
+          "id": "0-png-ru",
+          "observations": [
+            {
+              "candidates": [
+                {
+                  "confidence": 1,
+                  "text": "Решение: запуск проекта в ноябре"
+                },
+                {
+                  "confidence": 1,
+                  "text": "Решение запуск проекта в ноябре"
+                },
+                {
+                  "confidence": 0.5,
+                  "text": "Решение: запус проекта в ноябре"
+                },
+                {
+                  "confidence": 0.5,
+                  "text": "Решение: запук проекта в ноябре"
+                },
+                {
+                  "confidence": 0.5,
+                  "text": "Решение: запуск проекта в ноябр"
+                }
+              ],
+              "height": 0.24444445292154948,
+              "width": 0.6166666793823242,
+              "x": 0.02916666008681844,
+              "y": 0.3999999958506608
+            }
+          ],
+          "stage": "perform-end",
+          "uptime": 328509.3416975417,
+          "wall": 1793578244.742045
+        },
+        {
+          "cpuControl": true,
+          "id": "0-png-ru",
+          "lines": [
+            "Решение: запуск проекта в ноябре"
+          ],
+          "stage": "extract-result",
+          "uptime": 328509.342180375,
+          "wall": 1793578244.742527,
+          "warnings": []
+        },
+        {
+          "cpuControl": true,
+          "expected": "Решение: запуск проекта в ноябре",
+          "id": "0-png-ru",
+          "lines": [
+            "Решение: запуск проекта в ноябре"
+          ],
+          "matched": true,
+          "outcome": "success",
+          "stage": "extract-end",
+          "uptime": 328509.3422692917,
+          "wall": 1793578244.7426162,
+          "warnings": []
+        }
+      ]
+    },
+    {
+      "id": "1-20",
+      "raw_sha256": "f47d836703184feb5338b4f3619cffa5ff2a37e6eba4714a0b294d98c40d8bcd",
+      "events": [
+        {
+          "bytes": 21495,
+          "cpuControl": true,
+          "id": "1-20",
+          "input": "20.pdf",
+          "sha256": "243d5331e61658a7baa559bd214309203a224dd534280b032d472387aba5c35b",
+          "stage": "extract-begin",
+          "uptime": 328509.76829645835,
+          "wall": 1793578245.168644
+        },
+        {
+          "bytes": 21495,
+          "cpuControl": true,
+          "id": "1-20",
+          "input": "1-20.pdf",
+          "sha256": "243d5331e61658a7baa559bd214309203a224dd534280b032d472387aba5c35b",
+          "stage": "input",
+          "uptime": 328509.76911308337,
+          "wall": 1793578245.16946
+        },
+        {
+          "cpuControl": true,
+          "id": "1-20",
+          "native": "2026",
+          "page": 1,
+          "stage": "pdf-native",
+          "uptime": 328509.77008783334,
+          "wall": 1793578245.170435
+        },
+        {
+          "bitsPerPixel": 32,
+          "bytesPerRow": 7200,
+          "cpuControl": true,
+          "height": 2400,
+          "id": "1-20",
+          "image": "1-20-0e5e0d92af32c8dbcf4f4e4055fa450fde53c242363af02785df70f5ed995831.png",
+          "sha256": "0e5e0d92af32c8dbcf4f4e4055fa450fde53c242363af02785df70f5ed995831",
+          "stage": "ocr-input",
+          "uptime": 328509.80325683334,
+          "wall": 1793578245.203604,
+          "width": 1800
+        },
+        {
+          "automaticLanguage": true,
+          "cpuControl": true,
+          "id": "1-20",
+          "languageCorrection": true,
+          "languages": [
+            "ru-RU",
+            "en-US"
+          ],
+          "revision": 3,
+          "stage": "request-options",
+          "uptime": 328509.803528875,
+          "wall": 1793578245.203876
+        },
+        {
+          "cpuControl": true,
+          "devices": {
+            "VNComputeStageMain": [
+              "<MLNeuralEngineComputeDevice: 0x1030a02f0>",
+              "<MLGPUComputeDevice: 0x1030b4390> Apple M4 Pro",
+              "<MLCPUComputeDevice: 0x1030b45b0>"
+            ]
+          },
+          "id": "1-20",
+          "stage": "cpu-supported-devices",
+          "uptime": 328509.8037606667,
+          "wall": 1793578245.204108
+        },
+        {
+          "cpuControl": true,
+          "id": "1-20",
+          "stage": "perform-begin",
+          "uptime": 328509.8039015417,
+          "wall": 1793578245.204249
+        },
+        {
+          "cpuControl": true,
+          "id": "1-20",
+          "observations": [
+            {
+              "candidates": [
+                {
+                  "confidence": 1,
+                  "text": "20"
+                },
+                {
+                  "confidence": 0.30000001192092896,
+                  "text": "0"
+                },
+                {
+                  "confidence": 0.30000001192092896,
+                  "text": "2"
+                }
+              ],
+              "height": 0.01889534950256344,
+              "width": 0.04069767422146267,
+              "x": 0.03294573644116358,
+              "y": 0.5348837206500425
+            },
+            {
+              "candidates": [
+                {
+                  "confidence": 1,
+                  "text": "2026"
+                },
+                {
+                  "confidence": 0.30000001192092896,
+                  "text": "202"
+                },
+                {
+                  "confidence": 0.30000001192092896,
+                  "text": "206"
+                },
+                {
+                  "confidence": 0.30000001192092896,
+                  "text": "226"
+                },
+                {
+                  "confidence": 0.30000001192092896,
+                  "text": "026"
+                }
+              ],
+              "height": 0.017441860834757517,
+              "width": 0.06589147355821401,
+              "x": 0.4166666667092651,
+              "y": 0.05377906975703994
+            }
+          ],
+          "stage": "perform-end",
+          "uptime": 328510.2201839167,
+          "wall": 1793578245.620532
+        },
+        {
+          "cpuControl": true,
+          "id": "1-20",
+          "lines": [
+            "2026\n20"
+          ],
+          "stage": "extract-result",
+          "uptime": 328510.22042545833,
+          "wall": 1793578245.6207728,
+          "warnings": []
+        },
+        {
+          "cpuControl": true,
+          "expected": "20",
+          "id": "1-20",
+          "lines": [
+            "2026",
+            "20"
+          ],
+          "matched": true,
+          "outcome": "success",
+          "stage": "extract-end",
+          "uptime": 328510.2204996667,
+          "wall": 1793578245.620847,
+          "warnings": []
+        }
+      ]
+    },
+    {
+      "id": "1-26",
+      "raw_sha256": "4140fce10336d4b981bb40aaec084cef18dc7659869aae21068ca593388b174a",
+      "events": [
+        {
+          "bytes": 21549,
+          "cpuControl": true,
+          "id": "1-26",
+          "input": "26.pdf",
+          "sha256": "e1e25777769cf421e9a869e44ca102348d4f2da46302135493f2005f6befd92a",
+          "stage": "extract-begin",
+          "uptime": 328509.76829495834,
+          "wall": 1793578245.168642
+        },
+        {
+          "bytes": 21549,
+          "cpuControl": true,
+          "id": "1-26",
+          "input": "1-26.pdf",
+          "sha256": "e1e25777769cf421e9a869e44ca102348d4f2da46302135493f2005f6befd92a",
+          "stage": "input",
+          "uptime": 328509.7690389167,
+          "wall": 1793578245.169386
+        },
+        {
+          "cpuControl": true,
+          "id": "1-26",
+          "native": "2026",
+          "page": 1,
+          "stage": "pdf-native",
+          "uptime": 328509.76999145834,
+          "wall": 1793578245.170339
+        },
+        {
+          "bitsPerPixel": 32,
+          "bytesPerRow": 7200,
+          "cpuControl": true,
+          "height": 2400,
+          "id": "1-26",
+          "image": "1-26-ed81cb04fddb07561b7087d54646c8dda614c678115347c82f8fd2c0df7c7b87.png",
+          "sha256": "ed81cb04fddb07561b7087d54646c8dda614c678115347c82f8fd2c0df7c7b87",
+          "stage": "ocr-input",
+          "uptime": 328509.802943125,
+          "wall": 1793578245.203291,
+          "width": 1800
+        },
+        {
+          "automaticLanguage": true,
+          "cpuControl": true,
+          "id": "1-26",
+          "languageCorrection": true,
+          "languages": [
+            "ru-RU",
+            "en-US"
+          ],
+          "revision": 3,
+          "stage": "request-options",
+          "uptime": 328509.8031129583,
+          "wall": 1793578245.2034612
+        },
+        {
+          "cpuControl": true,
+          "devices": {
+            "VNComputeStageMain": [
+              "<MLNeuralEngineComputeDevice: 0x1030a02f0>",
+              "<MLGPUComputeDevice: 0x1030b4390> Apple M4 Pro",
+              "<MLCPUComputeDevice: 0x1030b45b0>"
+            ]
+          },
+          "id": "1-26",
+          "stage": "cpu-supported-devices",
+          "uptime": 328509.8032434167,
+          "wall": 1793578245.2035909
+        },
+        {
+          "cpuControl": true,
+          "id": "1-26",
+          "stage": "perform-begin",
+          "uptime": 328509.8033339584,
+          "wall": 1793578245.203681
+        },
+        {
+          "cpuControl": true,
+          "id": "1-26",
+          "observations": [
+            {
+              "candidates": [
+                {
+                  "confidence": 1,
+                  "text": "26"
+                },
+                {
+                  "confidence": 0.30000001192092896,
+                  "text": "6"
+                },
+                {
+                  "confidence": 0.30000001192092896,
+                  "text": "2"
+                }
+              ],
+              "height": 0.01889534950256344,
+              "width": 0.04263565911187066,
+              "x": 0.03294573623863831,
+              "y": 0.5348837206500425
+            },
+            {
+              "candidates": [
+                {
+                  "confidence": 1,
+                  "text": "2026"
+                },
+                {
+                  "confidence": 0.30000001192092896,
+                  "text": "202"
+                },
+                {
+                  "confidence": 0.30000001192092896,
+                  "text": "206"
+                },
+                {
+                  "confidence": 0.30000001192092896,
+                  "text": "226"
+                },
+                {
+                  "confidence": 0.30000001192092896,
+                  "text": "026"
+                }
+              ],
+              "height": 0.017441860834757517,
+              "width": 0.06589147355821401,
+              "x": 0.4166666667092651,
+              "y": 0.05377906975703994
+            }
+          ],
+          "stage": "perform-end",
+          "uptime": 328509.95120762504,
+          "wall": 1793578245.3515549
+        },
+        {
+          "cpuControl": true,
+          "id": "1-26",
+          "lines": [
+            "2026\n26"
+          ],
+          "stage": "extract-result",
+          "uptime": 328509.9514349584,
+          "wall": 1793578245.3517818,
+          "warnings": []
+        },
+        {
+          "cpuControl": true,
+          "expected": "26",
+          "id": "1-26",
+          "lines": [
+            "2026",
+            "26"
+          ],
+          "matched": true,
+          "outcome": "success",
+          "stage": "extract-end",
+          "uptime": 328509.9515016667,
+          "wall": 1793578245.351849,
+          "warnings": []
+        }
+      ]
+    },
+    {
+      "id": "1-distinct",
+      "raw_sha256": "ec8ce50558beac1af99d975e254368861d06a5c27525ec5df4d0a59a29aeff78",
+      "events": [
+        {
+          "bytes": 24231,
+          "cpuControl": true,
+          "id": "1-distinct",
+          "input": "distinct.pdf",
+          "sha256": "454af4bf489515e6f9c9397dbd3dfbabed667efd675e4808db41a251bebdeb10",
+          "stage": "extract-begin",
+          "uptime": 328509.76829933334,
+          "wall": 1793578245.168647
+        },
+        {
+          "bytes": 24231,
+          "cpuControl": true,
+          "id": "1-distinct",
+          "input": "1-distinct.pdf",
+          "sha256": "454af4bf489515e6f9c9397dbd3dfbabed667efd675e4808db41a251bebdeb10",
+          "stage": "input",
+          "uptime": 328509.76943295833,
+          "wall": 1793578245.16978
+        },
+        {
+          "cpuControl": true,
+          "id": "1-distinct",
+          "native": "Not approved",
+          "page": 1,
+          "stage": "pdf-native",
+          "uptime": 328509.770215875,
+          "wall": 1793578245.170563
+        },
+        {
+          "bitsPerPixel": 32,
+          "bytesPerRow": 7200,
+          "cpuControl": true,
+          "height": 2400,
+          "id": "1-distinct",
+          "image": "1-distinct-14a5184eacdcb275a78cf4ed069202a3158961339f61bc863e7b8b334b4fea52.png",
+          "sha256": "14a5184eacdcb275a78cf4ed069202a3158961339f61bc863e7b8b334b4fea52",
+          "stage": "ocr-input",
+          "uptime": 328509.80333150004,
+          "wall": 1793578245.203679,
+          "width": 1800
+        },
+        {
+          "automaticLanguage": true,
+          "cpuControl": true,
+          "id": "1-distinct",
+          "languageCorrection": true,
+          "languages": [
+            "ru-RU",
+            "en-US"
+          ],
+          "revision": 3,
+          "stage": "request-options",
+          "uptime": 328509.8034402084,
+          "wall": 1793578245.203788
+        },
+        {
+          "cpuControl": true,
+          "devices": {
+            "VNComputeStageMain": [
+              "<MLNeuralEngineComputeDevice: 0x1030a02f0>",
+              "<MLGPUComputeDevice: 0x1030b4390> Apple M4 Pro",
+              "<MLCPUComputeDevice: 0x1030b45b0>"
+            ]
+          },
+          "id": "1-distinct",
+          "stage": "cpu-supported-devices",
+          "uptime": 328509.80362666666,
+          "wall": 1793578245.203974
+        },
+        {
+          "cpuControl": true,
+          "id": "1-distinct",
+          "stage": "perform-begin",
+          "uptime": 328509.80378200003,
+          "wall": 1793578245.204129
+        },
+        {
+          "cpuControl": true,
+          "id": "1-distinct",
+          "observations": [
+            {
+              "candidates": [
+                {
+                  "confidence": 1,
+                  "text": "Approved"
+                },
+                {
+                  "confidence": 1,
+                  "text": "Approved"
+                },
+                {
+                  "confidence": 0.5,
+                  "text": "Approve"
+                },
+                {
+                  "confidence": 0.5,
+                  "text": "Approve"
+                },
+                {
+                  "confidence": 0.5,
+                  "text": "Aproved"
+                }
+              ],
+              "height": 0.02693046569824209,
+              "width": 0.14020431518554688,
+              "x": 0.032611020605454004,
+              "y": 0.5294126741478844
+            },
+            {
+              "candidates": [
+                {
+                  "confidence": 1,
+                  "text": "Not approved"
+                },
+                {
+                  "confidence": 1,
+                  "text": "No approved"
+                },
+                {
+                  "confidence": 1,
+                  "text": "Not approve"
+                },
+                {
+                  "confidence": 1,
+                  "text": "ot approved"
+                },
+                {
+                  "confidence": 1,
+                  "text": "Not aproved"
+                }
+              ],
+              "height": 0.01991864363352458,
+              "width": 0.16518888685438365,
+              "x": 0.41644341493485565,
+              "y": 0.04995987001281588
+            }
+          ],
+          "stage": "perform-end",
+          "uptime": 328510.083128,
+          "wall": 1793578245.4834762
+        },
+        {
+          "cpuControl": true,
+          "id": "1-distinct",
+          "lines": [
+            "Not approved\nApproved"
+          ],
+          "stage": "extract-result",
+          "uptime": 328510.08335383335,
+          "wall": 1793578245.483701,
+          "warnings": []
+        },
+        {
+          "cpuControl": true,
+          "expected": "Approved",
+          "id": "1-distinct",
+          "lines": [
+            "Not approved",
+            "Approved"
+          ],
+          "matched": true,
+          "outcome": "success",
+          "stage": "extract-end",
+          "uptime": 328510.08356837503,
+          "wall": 1793578245.483916,
+          "warnings": []
+        }
+      ]
+    },
+    {
+      "id": "1-duplicate",
+      "raw_sha256": "c75da3f3293285c9d6fd437d6bfb58e1b63930962bd51b3b5584a2db330d4159",
+      "events": [
+        {
+          "bytes": 31299,
+          "cpuControl": true,
+          "id": "1-duplicate",
+          "input": "duplicate.pdf",
+          "sha256": "0e941594e6739a8a1ff1965a2e88cf1e443a72ac42506858c7ac6ff7e526061e",
+          "stage": "extract-begin",
+          "uptime": 328509.76818125,
+          "wall": 1793578245.168529
+        },
+        {
+          "bytes": 31299,
+          "cpuControl": true,
+          "id": "1-duplicate",
+          "input": "1-duplicate.pdf",
+          "sha256": "0e941594e6739a8a1ff1965a2e88cf1e443a72ac42506858c7ac6ff7e526061e",
+          "stage": "input",
+          "uptime": 328509.76947170834,
+          "wall": 1793578245.1698189
+        },
+        {
+          "cpuControl": true,
+          "id": "1-duplicate",
+          "native": "Decision: launch postponed to December\nPage 1",
+          "page": 1,
+          "stage": "pdf-native",
+          "uptime": 328509.77034700004,
+          "wall": 1793578245.1706939
+        },
+        {
+          "bitsPerPixel": 32,
+          "bytesPerRow": 7200,
+          "cpuControl": true,
+          "height": 2400,
+          "id": "1-duplicate",
+          "image": "1-duplicate-06a03cc4a095f7a057faa63febaca970e1b3cce558da4e203a2c41b8ae35a90f.png",
+          "sha256": "06a03cc4a095f7a057faa63febaca970e1b3cce558da4e203a2c41b8ae35a90f",
+          "stage": "ocr-input",
+          "uptime": 328509.80348470836,
+          "wall": 1793578245.2038321,
+          "width": 1800
+        },
+        {
+          "automaticLanguage": true,
+          "cpuControl": true,
+          "id": "1-duplicate",
+          "languageCorrection": true,
+          "languages": [
+            "ru-RU",
+            "en-US"
+          ],
+          "revision": 3,
+          "stage": "request-options",
+          "uptime": 328509.80371875,
+          "wall": 1793578245.204066
+        },
+        {
+          "cpuControl": true,
+          "devices": {
+            "VNComputeStageMain": [
+              "<MLNeuralEngineComputeDevice: 0x1030a02f0>",
+              "<MLGPUComputeDevice: 0x1030b4390> Apple M4 Pro",
+              "<MLCPUComputeDevice: 0x1030b45b0>"
+            ]
+          },
+          "id": "1-duplicate",
+          "stage": "cpu-supported-devices",
+          "uptime": 328509.803850125,
+          "wall": 1793578245.204197
+        },
+        {
+          "cpuControl": true,
+          "id": "1-duplicate",
+          "stage": "perform-begin",
+          "uptime": 328509.8039906667,
+          "wall": 1793578245.204338
+        },
+        {
+          "cpuControl": true,
+          "id": "1-duplicate",
+          "observations": [
+            {
+              "candidates": [
+                {
+                  "confidence": 1,
+                  "text": "Decision: launch postporebttoDeeembler"
+                },
+                {
+                  "confidence": 1,
+                  "text": "Decision: launch postporebttoDeembler"
+                },
+                {
+                  "confidence": 1,
+                  "text": "Decision: launch post porebttoDeembler"
+                },
+                {
+                  "confidence": 1,
+                  "text": "Decision: launch postporebttoDeeembleer"
+                },
+                {
+                  "confidence": 1,
+                  "text": "Decision: launch postporebttoDeembleer"
+                }
+              ],
+              "height": 0.027136732737223168,
+              "width": 0.606769273546007,
+              "x": 0.03285736628284945,
+              "y": 0.5296818403596832
+            },
+            {
+              "candidates": [
+                {
+                  "confidence": 1,
+                  "text": "Page 1"
+                },
+                {
+                  "confidence": 0.30000001192092896,
+                  "text": "Page1"
+                },
+                {
+                  "confidence": 0.30000001192092896,
+                  "text": "Page"
+                },
+                {
+                  "confidence": 0.30000001192092896,
+                  "text": "age 1"
+                },
+                {
+                  "confidence": 0.30000001192092896,
+                  "text": "Pag 1"
+                }
+              ],
+              "height": 0.018934109210968053,
+              "width": 0.07945736355251737,
+              "x": 0.41666666696647386,
+              "y": 0.0508333330057934
+            }
+          ],
+          "stage": "perform-end",
+          "uptime": 328510.15271083335,
+          "wall": 1793578245.553059
+        },
+        {
+          "cpuControl": true,
+          "id": "1-duplicate",
+          "lines": [
+            "Decision: launch postponed to December\nPage 1\nDecision: launch postporebttoDeeembler"
+          ],
+          "stage": "extract-result",
+          "uptime": 328510.15296133334,
+          "wall": 1793578245.553309,
+          "warnings": []
+        },
+        {
+          "cpuControl": true,
+          "expected": "Decision: launch postponed to December",
+          "id": "1-duplicate",
+          "lines": [
+            "Decision: launch postponed to December",
+            "Page 1",
+            "Decision: launch postporebttoDeeembler"
+          ],
+          "matched": true,
+          "outcome": "success",
+          "stage": "extract-end",
+          "uptime": 328510.15317858336,
+          "wall": 1793578245.553526,
+          "warnings": []
+        }
+      ]
+    },
+    {
+      "id": "1-mixed",
+      "raw_sha256": "e29f8364f93c8b410d0401534652ce0a99527452be0e789cb58d8cd9882ea3a1",
+      "events": [
+        {
+          "bytes": 28138,
+          "cpuControl": true,
+          "id": "1-mixed",
+          "input": "mixed.pdf",
+          "sha256": "36b576d202b516cc5862661ae6b1925eb10c4bd87170f8db2cfc158f8531e2f3",
+          "stage": "extract-begin",
+          "uptime": 328509.7681795,
+          "wall": 1793578245.1685271
+        },
+        {
+          "bytes": 28138,
+          "cpuControl": true,
+          "id": "1-mixed",
+          "input": "1-mixed.pdf",
+          "sha256": "36b576d202b516cc5862661ae6b1925eb10c4bd87170f8db2cfc158f8531e2f3",
+          "stage": "input",
+          "uptime": 328509.76872420835,
+          "wall": 1793578245.169071
+        },
+        {
+          "cpuControl": true,
+          "id": "1-mixed",
+          "native": "Page 1",
+          "page": 1,
+          "stage": "pdf-native",
+          "uptime": 328509.76981983334,
+          "wall": 1793578245.170167
+        },
+        {
+          "bitsPerPixel": 32,
+          "bytesPerRow": 7200,
+          "cpuControl": true,
+          "height": 2400,
+          "id": "1-mixed",
+          "image": "1-mixed-facb4e7b8aa93c9cdd9e29c8ba27942099dcb671963b4b68c5e4a85ad7b6017c.png",
+          "sha256": "facb4e7b8aa93c9cdd9e29c8ba27942099dcb671963b4b68c5e4a85ad7b6017c",
+          "stage": "ocr-input",
+          "uptime": 328509.80307662504,
+          "wall": 1793578245.203424,
+          "width": 1800
+        },
+        {
+          "automaticLanguage": true,
+          "cpuControl": true,
+          "id": "1-mixed",
+          "languageCorrection": true,
+          "languages": [
+            "ru-RU",
+            "en-US"
+          ],
+          "revision": 3,
+          "stage": "request-options",
+          "uptime": 328509.80318025005,
+          "wall": 1793578245.203528
+        },
+        {
+          "cpuControl": true,
+          "devices": {
+            "VNComputeStageMain": [
+              "<MLNeuralEngineComputeDevice: 0x1030a02f0>",
+              "<MLGPUComputeDevice: 0x1030b4390> Apple M4 Pro",
+              "<MLCPUComputeDevice: 0x1030b45b0>"
+            ]
+          },
+          "id": "1-mixed",
+          "stage": "cpu-supported-devices",
+          "uptime": 328509.8032918334,
+          "wall": 1793578245.203639
+        },
+        {
+          "cpuControl": true,
+          "id": "1-mixed",
+          "stage": "perform-begin",
+          "uptime": 328509.8034540417,
+          "wall": 1793578245.2038012
+        },
+        {
+          "cpuControl": true,
+          "id": "1-mixed",
+          "observations": [
+            {
+              "candidates": [
+                {
+                  "confidence": 1,
+                  "text": "Decision: launch postponed to December"
+                },
+                {
+                  "confidence": 1,
+                  "text": "Decision launch postponed to December"
+                },
+                {
+                  "confidence": 1,
+                  "text": "Decision: aunch postponed to December"
+                },
+                {
+                  "confidence": 1,
+                  "text": "Decision: lunch postponed to December"
+                },
+                {
+                  "confidence": 1,
+                  "text": "Decision: launch postpone to December"
+                }
+              ],
+              "height": 0.023362402915954594,
+              "width": 0.5852713351779514,
+              "x": 0.03488371215430959,
+              "y": 0.5304166668370995
+            },
+            {
+              "candidates": [
+                {
+                  "confidence": 1,
+                  "text": "Page 1"
+                },
+                {
+                  "confidence": 0.30000001192092896,
+                  "text": "Page1"
+                },
+                {
+                  "confidence": 0.30000001192092896,
+                  "text": "Page"
+                },
+                {
+                  "confidence": 0.30000001192092896,
+                  "text": "age 1"
+                },
+                {
+                  "confidence": 0.30000001192092896,
+                  "text": "Pag 1"
+                }
+              ],
+              "height": 0.018934109210968053,
+              "width": 0.07945736355251737,
+              "x": 0.41666666696647386,
+              "y": 0.0508333330057934
+            }
+          ],
+          "stage": "perform-end",
+          "uptime": 328510.0168244584,
+          "wall": 1793578245.417172
+        },
+        {
+          "cpuControl": true,
+          "id": "1-mixed",
+          "lines": [
+            "Page 1\nDecision: launch postponed to December"
+          ],
+          "stage": "extract-result",
+          "uptime": 328510.0170539584,
+          "wall": 1793578245.4174008,
+          "warnings": []
+        },
+        {
+          "cpuControl": true,
+          "expected": "Decision: launch postponed to December",
+          "id": "1-mixed",
+          "lines": [
+            "Page 1",
+            "Decision: launch postponed to December"
+          ],
+          "matched": true,
+          "outcome": "success",
+          "stage": "extract-end",
+          "uptime": 328510.01726754167,
+          "wall": 1793578245.417615,
+          "warnings": []
+        }
+      ]
+    },
+    {
+      "id": "1-native",
+      "raw_sha256": "cfebf29fd8e15f618f22fe5c9a5c5fc10f10b6fdc165a14e91e8d74e51f0549e",
+      "events": [
+        {
+          "bytes": 8205,
+          "cpuControl": true,
+          "id": "1-native",
+          "input": "native.pdf",
+          "sha256": "c49439b2b7d57ff4ed0a53fd05736699e85b4214c4ccce0956ea5da92002d9a9",
+          "stage": "extract-begin",
+          "uptime": 328509.768297125,
+          "wall": 1793578245.168644
+        },
+        {
+          "bytes": 8205,
+          "cpuControl": true,
+          "id": "1-native",
+          "input": "1-native.pdf",
+          "sha256": "c49439b2b7d57ff4ed0a53fd05736699e85b4214c4ccce0956ea5da92002d9a9",
+          "stage": "input",
+          "uptime": 328509.7692319584,
+          "wall": 1793578245.169579
+        },
+        {
+          "cpuControl": true,
+          "id": "1-native",
+          "native": "Project alpha launch",
+          "page": 1,
+          "stage": "pdf-native",
+          "uptime": 328509.7701189584,
+          "wall": 1793578245.170466
+        },
+        {
+          "bitsPerPixel": 32,
+          "bytesPerRow": 7200,
+          "cpuControl": true,
+          "height": 2400,
+          "id": "1-native",
+          "image": "1-native-519c66ffa5ee209d22d22f97216f5e539515783538256c5fe34b955e3dd6445d.png",
+          "sha256": "519c66ffa5ee209d22d22f97216f5e539515783538256c5fe34b955e3dd6445d",
+          "stage": "ocr-input",
+          "uptime": 328509.794188125,
+          "wall": 1793578245.194536,
+          "width": 1800
+        },
+        {
+          "automaticLanguage": true,
+          "cpuControl": true,
+          "id": "1-native",
+          "languageCorrection": true,
+          "languages": [
+            "ru-RU",
+            "en-US"
+          ],
+          "revision": 3,
+          "stage": "request-options",
+          "uptime": 328509.79437425,
+          "wall": 1793578245.1947222
+        },
+        {
+          "cpuControl": true,
+          "devices": {
+            "VNComputeStageMain": [
+              "<MLNeuralEngineComputeDevice: 0x1030a02f0>",
+              "<MLGPUComputeDevice: 0x1030b4390> Apple M4 Pro",
+              "<MLCPUComputeDevice: 0x1030b45b0>"
+            ]
+          },
+          "id": "1-native",
+          "stage": "cpu-supported-devices",
+          "uptime": 328509.79447200004,
+          "wall": 1793578245.194819
+        },
+        {
+          "cpuControl": true,
+          "id": "1-native",
+          "stage": "perform-begin",
+          "uptime": 328509.79451854166,
+          "wall": 1793578245.194866
+        },
+        {
+          "cpuControl": true,
+          "id": "1-native",
+          "observations": [
+            {
+              "candidates": [
+                {
+                  "confidence": 1,
+                  "text": "Project alpha launch"
+                },
+                {
+                  "confidence": 1,
+                  "text": "Project alphalaunch"
+                },
+                {
+                  "confidence": 1,
+                  "text": "Project alpha aunch"
+                },
+                {
+                  "confidence": 1,
+                  "text": "Project alpha lunch"
+                },
+                {
+                  "confidence": 1,
+                  "text": "Project apha launch"
+                }
+              ],
+              "height": 0.023459302584330155,
+              "width": 0.2965116373697917,
+              "x": 0.06782945255434608,
+              "y": 0.876249999731925
+            }
+          ],
+          "stage": "perform-end",
+          "uptime": 328509.8963765,
+          "wall": 1793578245.2967238
+        },
+        {
+          "cpuControl": true,
+          "id": "1-native",
+          "native": "Decision: ship in November",
+          "page": 2,
+          "stage": "pdf-native",
+          "uptime": 328509.8966675,
+          "wall": 1793578245.297015
+        },
+        {
+          "bitsPerPixel": 32,
+          "bytesPerRow": 7200,
+          "cpuControl": true,
+          "height": 2400,
+          "id": "1-native",
+          "image": "1-native-3422cced33fa0611b8ea88a554ab96fa231c83027d0696a70ebc5a3b616b4280.png",
+          "sha256": "3422cced33fa0611b8ea88a554ab96fa231c83027d0696a70ebc5a3b616b4280",
+          "stage": "ocr-input",
+          "uptime": 328509.9188360417,
+          "wall": 1793578245.3191838,
+          "width": 1800
+        },
+        {
+          "automaticLanguage": true,
+          "cpuControl": true,
+          "id": "1-native",
+          "languageCorrection": true,
+          "languages": [
+            "ru-RU",
+            "en-US"
+          ],
+          "revision": 3,
+          "stage": "request-options",
+          "uptime": 328509.91900058335,
+          "wall": 1793578245.3193479
+        },
+        {
+          "cpuControl": true,
+          "devices": {
+            "VNComputeStageMain": [
+              "<MLNeuralEngineComputeDevice: 0x1030a02f0>",
+              "<MLGPUComputeDevice: 0x1030b4390> Apple M4 Pro",
+              "<MLCPUComputeDevice: 0x1030b45b0>"
+            ]
+          },
+          "id": "1-native",
+          "stage": "cpu-supported-devices",
+          "uptime": 328509.9190917917,
+          "wall": 1793578245.319439
+        },
+        {
+          "cpuControl": true,
+          "id": "1-native",
+          "stage": "perform-begin",
+          "uptime": 328509.9191361667,
+          "wall": 1793578245.319484
+        },
+        {
+          "cpuControl": true,
+          "id": "1-native",
+          "observations": [
+            {
+              "candidates": [
+                {
+                  "confidence": 1,
+                  "text": "Decision: ship in November"
+                },
+                {
+                  "confidence": 1,
+                  "text": "Decision ship in November"
+                },
+                {
+                  "confidence": 1,
+                  "text": "Decision:ship in November"
+                },
+                {
+                  "confidence": 1,
+                  "text": "Decision: ship in Novembe"
+                },
+                {
+                  "confidence": 1,
+                  "text": "Decision: shipin November"
+                }
+              ],
+              "height": 0.02470930258433024,
+              "width": 0.3992248196072049,
+              "x": 0.06976743505231266,
+              "y": 0.8749999998773401
+            }
+          ],
+          "stage": "perform-end",
+          "uptime": 328510.2880100417,
+          "wall": 1793578245.6883578
+        },
+        {
+          "cpuControl": true,
+          "id": "1-native",
+          "lines": [
+            "Project alpha launch",
+            "Decision: ship in November"
+          ],
+          "stage": "extract-result",
+          "uptime": 328510.2882932917,
+          "wall": 1793578245.688641,
+          "warnings": []
+        },
+        {
+          "cpuControl": true,
+          "expected": "Decision: ship in November",
+          "id": "1-native",
+          "lines": [
+            "Project alpha launch",
+            "Decision: ship in November"
+          ],
+          "matched": true,
+          "outcome": "success",
+          "stage": "extract-end",
+          "uptime": 328510.28852033336,
+          "wall": 1793578245.688868,
+          "warnings": []
+        }
+      ]
+    },
+    {
+      "id": "1-png-en",
+      "raw_sha256": "e0c582a13b1d4e48178cac6a8276bf17c3fa7b1f96711196221188dbb9b713e0",
+      "events": [
+        {
+          "bytes": 23567,
+          "cpuControl": true,
+          "id": "1-png-en",
+          "input": "png-en.png",
+          "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+          "stage": "extract-begin",
+          "uptime": 328509.76817920833,
+          "wall": 1793578245.1685262
+        },
+        {
+          "bytes": 23567,
+          "cpuControl": true,
+          "id": "1-png-en",
+          "input": "1-png-en.png",
+          "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+          "stage": "input",
+          "uptime": 328509.768603875,
+          "wall": 1793578245.168951
+        },
+        {
+          "bitsPerPixel": 32,
+          "bytesPerRow": 6400,
+          "cpuControl": true,
+          "height": 300,
+          "id": "1-png-en",
+          "image": "1-png-en-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+          "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0",
+          "stage": "ocr-input",
+          "uptime": 328509.77302295837,
+          "wall": 1793578245.17337,
+          "width": 1600
+        },
+        {
+          "automaticLanguage": true,
+          "cpuControl": true,
+          "id": "1-png-en",
+          "languageCorrection": true,
+          "languages": [
+            "ru-RU",
+            "en-US"
+          ],
+          "revision": 3,
+          "stage": "request-options",
+          "uptime": 328509.7731503334,
+          "wall": 1793578245.1734982
+        },
+        {
+          "cpuControl": true,
+          "devices": {
+            "VNComputeStageMain": [
+              "<MLNeuralEngineComputeDevice: 0x1030a02f0>",
+              "<MLGPUComputeDevice: 0x1030b4390> Apple M4 Pro",
+              "<MLCPUComputeDevice: 0x1030b45b0>"
+            ]
+          },
+          "id": "1-png-en",
+          "stage": "cpu-supported-devices",
+          "uptime": 328509.7732338334,
+          "wall": 1793578245.1735811
+        },
+        {
+          "cpuControl": true,
+          "id": "1-png-en",
+          "stage": "perform-begin",
+          "uptime": 328509.77327708335,
+          "wall": 1793578245.173624
+        },
+        {
+          "cpuControl": true,
+          "id": "1-png-en",
+          "observations": [
+            {
+              "candidates": [
+                {
+                  "confidence": 1,
+                  "text": "Project Alpha budget approved"
+                },
+                {
+                  "confidence": 1,
+                  "text": "Project A pha budget approved"
+                },
+                {
+                  "confidence": 1,
+                  "text": "Project Apha budget approved"
+                },
+                {
+                  "confidence": 1,
+                  "text": "Project Alpha budget approve"
+                },
+                {
+                  "confidence": 1,
+                  "text": "Project Alpha budge approved"
+                }
+              ],
+              "height": 0.19457364400227872,
+              "width": 0.5174418640136719,
+              "x": 0.03197674233930247,
+              "y": 0.4333333312911074
+            }
+          ],
+          "stage": "perform-end",
+          "uptime": 328509.8043034167,
+          "wall": 1793578245.2046509
+        },
+        {
+          "cpuControl": true,
+          "id": "1-png-en",
+          "lines": [
+            "Project Alpha budget approved"
+          ],
+          "stage": "extract-result",
+          "uptime": 328509.8044542917,
+          "wall": 1793578245.204802,
+          "warnings": []
+        },
+        {
+          "cpuControl": true,
+          "expected": "Project Alpha budget approved",
+          "id": "1-png-en",
+          "lines": [
+            "Project Alpha budget approved"
+          ],
+          "matched": true,
+          "outcome": "success",
+          "stage": "extract-end",
+          "uptime": 328509.80453095835,
+          "wall": 1793578245.2048779,
+          "warnings": []
+        }
+      ]
+    },
+    {
+      "id": "1-png-ru",
+      "raw_sha256": "a768e79d533e7f3dcc6c59de54c6ed061bebbe5cdb4b8209be2ed77f18033c85",
+      "events": [
+        {
+          "bytes": 23283,
+          "cpuControl": true,
+          "id": "1-png-ru",
+          "input": "png-ru.png",
+          "sha256": "666a19cf8a8ac85e56ccabc0cc911b5d0f570b22c534aff08c942531e46b9b5a",
+          "stage": "extract-begin",
+          "uptime": 328509.7681805417,
+          "wall": 1793578245.168528
+        },
+        {
+          "bytes": 23283,
+          "cpuControl": true,
+          "id": "1-png-ru",
+          "input": "1-png-ru.png",
+          "sha256": "666a19cf8a8ac85e56ccabc0cc911b5d0f570b22c534aff08c942531e46b9b5a",
+          "stage": "input",
+          "uptime": 328509.76887641667,
+          "wall": 1793578245.169224
+        },
+        {
+          "bitsPerPixel": 32,
+          "bytesPerRow": 6400,
+          "cpuControl": true,
+          "height": 300,
+          "id": "1-png-ru",
+          "image": "1-png-ru-e1183c6d804b89a27f0146202d71c2569fe688e26399387fe6255f5e0251c0f9.png",
+          "sha256": "e1183c6d804b89a27f0146202d71c2569fe688e26399387fe6255f5e0251c0f9",
+          "stage": "ocr-input",
+          "uptime": 328509.77375704166,
+          "wall": 1793578245.174104,
+          "width": 1600
+        },
+        {
+          "automaticLanguage": true,
+          "cpuControl": true,
+          "id": "1-png-ru",
+          "languageCorrection": true,
+          "languages": [
+            "ru-RU",
+            "en-US"
+          ],
+          "revision": 3,
+          "stage": "request-options",
+          "uptime": 328509.7738554167,
+          "wall": 1793578245.174203
+        },
+        {
+          "cpuControl": true,
+          "devices": {
+            "VNComputeStageMain": [
+              "<MLNeuralEngineComputeDevice: 0x1030a02f0>",
+              "<MLGPUComputeDevice: 0x1030b4390> Apple M4 Pro",
+              "<MLCPUComputeDevice: 0x1030b45b0>"
+            ]
+          },
+          "id": "1-png-ru",
+          "stage": "cpu-supported-devices",
+          "uptime": 328509.773954625,
+          "wall": 1793578245.174302
+        },
+        {
+          "cpuControl": true,
+          "id": "1-png-ru",
+          "stage": "perform-begin",
+          "uptime": 328509.77400525,
+          "wall": 1793578245.1743522
+        },
+        {
+          "cpuControl": true,
+          "id": "1-png-ru",
+          "observations": [
+            {
+              "candidates": [
+                {
+                  "confidence": 1,
+                  "text": "Решение: запуск проекта в ноябре"
+                },
+                {
+                  "confidence": 1,
+                  "text": "Решение запуск проекта в ноябре"
+                },
+                {
+                  "confidence": 0.5,
+                  "text": "Решение: запус проекта в ноябре"
+                },
+                {
+                  "confidence": 0.5,
+                  "text": "Решение: запук проекта в ноябре"
+                },
+                {
+                  "confidence": 0.5,
+                  "text": "Решение: запуск проекта в ноябр"
+                }
+              ],
+              "height": 0.24444445292154948,
+              "width": 0.6166666793823242,
+              "x": 0.02916666008681844,
+              "y": 0.3999999958506608
+            }
+          ],
+          "stage": "perform-end",
+          "uptime": 328509.83446800004,
+          "wall": 1793578245.234816
+        },
+        {
+          "cpuControl": true,
+          "id": "1-png-ru",
+          "lines": [
+            "Решение: запуск проекта в ноябре"
+          ],
+          "stage": "extract-result",
+          "uptime": 328509.8346602917,
+          "wall": 1793578245.235008,
+          "warnings": []
+        },
+        {
+          "cpuControl": true,
+          "expected": "Решение: запуск проекта в ноябре",
+          "id": "1-png-ru",
+          "lines": [
+            "Решение: запуск проекта в ноябре"
+          ],
+          "matched": true,
+          "outcome": "success",
+          "stage": "extract-end",
+          "uptime": 328509.8347527083,
+          "wall": 1793578245.2351,
+          "warnings": []
+        }
+      ]
+    },
+    {
+      "id": "2-20",
+      "raw_sha256": "b92a0189fefdbd46e3290e88615e7933f86cd8579cc7d5a2fe984296dbafb83f",
+      "events": [
+        {
+          "bytes": 21495,
+          "cpuControl": true,
+          "id": "2-20",
+          "input": "20.pdf",
+          "sha256": "243d5331e61658a7baa559bd214309203a224dd534280b032d472387aba5c35b",
+          "stage": "extract-begin",
+          "uptime": 328510.288869125,
+          "wall": 1793578245.689217
+        },
+        {
+          "bytes": 21495,
+          "cpuControl": true,
+          "id": "2-20",
+          "input": "2-20.pdf",
+          "sha256": "243d5331e61658a7baa559bd214309203a224dd534280b032d472387aba5c35b",
+          "stage": "input",
+          "uptime": 328510.2901280417,
+          "wall": 1793578245.690476
+        },
+        {
+          "cpuControl": true,
+          "id": "2-20",
+          "native": "2026",
+          "page": 1,
+          "stage": "pdf-native",
+          "uptime": 328510.29212216666,
+          "wall": 1793578245.69247
+        },
+        {
+          "bitsPerPixel": 32,
+          "bytesPerRow": 7200,
+          "cpuControl": true,
+          "height": 2400,
+          "id": "2-20",
+          "image": "2-20-0e5e0d92af32c8dbcf4f4e4055fa450fde53c242363af02785df70f5ed995831.png",
+          "sha256": "0e5e0d92af32c8dbcf4f4e4055fa450fde53c242363af02785df70f5ed995831",
+          "stage": "ocr-input",
+          "uptime": 328510.3276876667,
+          "wall": 1793578245.728036,
+          "width": 1800
+        },
+        {
+          "automaticLanguage": true,
+          "cpuControl": true,
+          "id": "2-20",
+          "languageCorrection": true,
+          "languages": [
+            "ru-RU",
+            "en-US"
+          ],
+          "revision": 3,
+          "stage": "request-options",
+          "uptime": 328510.32790670835,
+          "wall": 1793578245.728255
+        },
+        {
+          "cpuControl": true,
+          "devices": {
+            "VNComputeStageMain": [
+              "<MLNeuralEngineComputeDevice: 0x1030a02f0>",
+              "<MLGPUComputeDevice: 0x1030b4390> Apple M4 Pro",
+              "<MLCPUComputeDevice: 0x1030b45b0>"
+            ]
+          },
+          "id": "2-20",
+          "stage": "cpu-supported-devices",
+          "uptime": 328510.328030375,
+          "wall": 1793578245.728378
+        },
+        {
+          "cpuControl": true,
+          "id": "2-20",
+          "stage": "perform-begin",
+          "uptime": 328510.328085875,
+          "wall": 1793578245.728434
+        },
+        {
+          "cpuControl": true,
+          "id": "2-20",
+          "observations": [
+            {
+              "candidates": [
+                {
+                  "confidence": 1,
+                  "text": "20"
+                },
+                {
+                  "confidence": 0.30000001192092896,
+                  "text": "0"
+                },
+                {
+                  "confidence": 0.30000001192092896,
+                  "text": "2"
+                }
+              ],
+              "height": 0.01889534950256344,
+              "width": 0.04069767422146267,
+              "x": 0.03294573644116358,
+              "y": 0.5348837206500425
+            },
+            {
+              "candidates": [
+                {
+                  "confidence": 1,
+                  "text": "2026"
+                },
+                {
+                  "confidence": 0.30000001192092896,
+                  "text": "202"
+                },
+                {
+                  "confidence": 0.30000001192092896,
+                  "text": "206"
+                },
+                {
+                  "confidence": 0.30000001192092896,
+                  "text": "226"
+                },
+                {
+                  "confidence": 0.30000001192092896,
+                  "text": "026"
+                }
+              ],
+              "height": 0.017441860834757517,
+              "width": 0.06589147355821401,
+              "x": 0.4166666667092651,
+              "y": 0.05377906975703994
+            }
+          ],
+          "stage": "perform-end",
+          "uptime": 328510.6870407917,
+          "wall": 1793578246.08739
+        },
+        {
+          "cpuControl": true,
+          "id": "2-20",
+          "lines": [
+            "2026\n20"
+          ],
+          "stage": "extract-result",
+          "uptime": 328510.68728820834,
+          "wall": 1793578246.087637,
+          "warnings": []
+        },
+        {
+          "cpuControl": true,
+          "expected": "20",
+          "id": "2-20",
+          "lines": [
+            "2026",
+            "20"
+          ],
+          "matched": true,
+          "outcome": "success",
+          "stage": "extract-end",
+          "uptime": 328510.6873695417,
+          "wall": 1793578246.087718,
+          "warnings": []
+        }
+      ]
+    },
+    {
+      "id": "2-26",
+      "raw_sha256": "f61496f7a362881cd8506619507bf9c9dafc3313b4145035682564bbee608d3b",
+      "events": [
+        {
+          "bytes": 21549,
+          "cpuControl": true,
+          "id": "2-26",
+          "input": "26.pdf",
+          "sha256": "e1e25777769cf421e9a869e44ca102348d4f2da46302135493f2005f6befd92a",
+          "stage": "extract-begin",
+          "uptime": 328510.288936375,
+          "wall": 1793578245.6892838
+        },
+        {
+          "bytes": 21549,
+          "cpuControl": true,
+          "id": "2-26",
+          "input": "2-26.pdf",
+          "sha256": "e1e25777769cf421e9a869e44ca102348d4f2da46302135493f2005f6befd92a",
+          "stage": "input",
+          "uptime": 328510.290343125,
+          "wall": 1793578245.690691
+        },
+        {
+          "cpuControl": true,
+          "id": "2-26",
+          "native": "2026",
+          "page": 1,
+          "stage": "pdf-native",
+          "uptime": 328510.2909401667,
+          "wall": 1793578245.691288
+        },
+        {
+          "bitsPerPixel": 32,
+          "bytesPerRow": 7200,
+          "cpuControl": true,
+          "height": 2400,
+          "id": "2-26",
+          "image": "2-26-ed81cb04fddb07561b7087d54646c8dda614c678115347c82f8fd2c0df7c7b87.png",
+          "sha256": "ed81cb04fddb07561b7087d54646c8dda614c678115347c82f8fd2c0df7c7b87",
+          "stage": "ocr-input",
+          "uptime": 328510.32956333336,
+          "wall": 1793578245.7299109,
+          "width": 1800
+        },
+        {
+          "automaticLanguage": true,
+          "cpuControl": true,
+          "id": "2-26",
+          "languageCorrection": true,
+          "languages": [
+            "ru-RU",
+            "en-US"
+          ],
+          "revision": 3,
+          "stage": "request-options",
+          "uptime": 328510.32977791666,
+          "wall": 1793578245.730126
+        },
+        {
+          "cpuControl": true,
+          "devices": {
+            "VNComputeStageMain": [
+              "<MLNeuralEngineComputeDevice: 0x1030a02f0>",
+              "<MLGPUComputeDevice: 0x1030b4390> Apple M4 Pro",
+              "<MLCPUComputeDevice: 0x1030b45b0>"
+            ]
+          },
+          "id": "2-26",
+          "stage": "cpu-supported-devices",
+          "uptime": 328510.32988933334,
+          "wall": 1793578245.730237
+        },
+        {
+          "cpuControl": true,
+          "id": "2-26",
+          "stage": "perform-begin",
+          "uptime": 328510.3299406667,
+          "wall": 1793578245.730288
+        },
+        {
+          "cpuControl": true,
+          "id": "2-26",
+          "observations": [
+            {
+              "candidates": [
+                {
+                  "confidence": 1,
+                  "text": "26"
+                },
+                {
+                  "confidence": 0.30000001192092896,
+                  "text": "6"
+                },
+                {
+                  "confidence": 0.30000001192092896,
+                  "text": "2"
+                }
+              ],
+              "height": 0.01889534950256344,
+              "width": 0.04263565911187066,
+              "x": 0.03294573623863831,
+              "y": 0.5348837206500425
+            },
+            {
+              "candidates": [
+                {
+                  "confidence": 1,
+                  "text": "2026"
+                },
+                {
+                  "confidence": 0.30000001192092896,
+                  "text": "202"
+                },
+                {
+                  "confidence": 0.30000001192092896,
+                  "text": "206"
+                },
+                {
+                  "confidence": 0.30000001192092896,
+                  "text": "226"
+                },
+                {
+                  "confidence": 0.30000001192092896,
+                  "text": "026"
+                }
+              ],
+              "height": 0.017441860834757517,
+              "width": 0.06589147355821401,
+              "x": 0.4166666667092651,
+              "y": 0.05377906975703994
+            }
+          ],
+          "stage": "perform-end",
+          "uptime": 328510.7565702917,
+          "wall": 1793578246.156919
+        },
+        {
+          "cpuControl": true,
+          "id": "2-26",
+          "lines": [
+            "2026\n26"
+          ],
+          "stage": "extract-result",
+          "uptime": 328510.7568225417,
+          "wall": 1793578246.157171,
+          "warnings": []
+        },
+        {
+          "cpuControl": true,
+          "expected": "26",
+          "id": "2-26",
+          "lines": [
+            "2026",
+            "26"
+          ],
+          "matched": true,
+          "outcome": "success",
+          "stage": "extract-end",
+          "uptime": 328510.756905625,
+          "wall": 1793578246.157254,
+          "warnings": []
+        }
+      ]
+    },
+    {
+      "id": "2-distinct",
+      "raw_sha256": "23ba581169f539232feeb14474309e700df263823be98849e7d6511b1b21469d",
+      "events": [
+        {
+          "bytes": 24231,
+          "cpuControl": true,
+          "id": "2-distinct",
+          "input": "distinct.pdf",
+          "sha256": "454af4bf489515e6f9c9397dbd3dfbabed667efd675e4808db41a251bebdeb10",
+          "stage": "extract-begin",
+          "uptime": 328510.2888379167,
+          "wall": 1793578245.689186
+        },
+        {
+          "bytes": 24231,
+          "cpuControl": true,
+          "id": "2-distinct",
+          "input": "2-distinct.pdf",
+          "sha256": "454af4bf489515e6f9c9397dbd3dfbabed667efd675e4808db41a251bebdeb10",
+          "stage": "input",
+          "uptime": 328510.2899337917,
+          "wall": 1793578245.6902819
+        },
+        {
+          "cpuControl": true,
+          "id": "2-distinct",
+          "native": "Not approved",
+          "page": 1,
+          "stage": "pdf-native",
+          "uptime": 328510.2909730417,
+          "wall": 1793578245.691321
+        },
+        {
+          "bitsPerPixel": 32,
+          "bytesPerRow": 7200,
+          "cpuControl": true,
+          "height": 2400,
+          "id": "2-distinct",
+          "image": "2-distinct-14a5184eacdcb275a78cf4ed069202a3158961339f61bc863e7b8b334b4fea52.png",
+          "sha256": "14a5184eacdcb275a78cf4ed069202a3158961339f61bc863e7b8b334b4fea52",
+          "stage": "ocr-input",
+          "uptime": 328510.3256001667,
+          "wall": 1793578245.7259479,
+          "width": 1800
+        },
+        {
+          "automaticLanguage": true,
+          "cpuControl": true,
+          "id": "2-distinct",
+          "languageCorrection": true,
+          "languages": [
+            "ru-RU",
+            "en-US"
+          ],
+          "revision": 3,
+          "stage": "request-options",
+          "uptime": 328510.32576045836,
+          "wall": 1793578245.726109
+        },
+        {
+          "cpuControl": true,
+          "devices": {
+            "VNComputeStageMain": [
+              "<MLNeuralEngineComputeDevice: 0x1030a02f0>",
+              "<MLGPUComputeDevice: 0x1030b4390> Apple M4 Pro",
+              "<MLCPUComputeDevice: 0x1030b45b0>"
+            ]
+          },
+          "id": "2-distinct",
+          "stage": "cpu-supported-devices",
+          "uptime": 328510.3258575,
+          "wall": 1793578245.7262049
+        },
+        {
+          "cpuControl": true,
+          "id": "2-distinct",
+          "stage": "perform-begin",
+          "uptime": 328510.3259039167,
+          "wall": 1793578245.726252
+        },
+        {
+          "cpuControl": true,
+          "id": "2-distinct",
+          "observations": [
+            {
+              "candidates": [
+                {
+                  "confidence": 1,
+                  "text": "Approved"
+                },
+                {
+                  "confidence": 1,
+                  "text": "Approved"
+                },
+                {
+                  "confidence": 0.5,
+                  "text": "Approve"
+                },
+                {
+                  "confidence": 0.5,
+                  "text": "Approve"
+                },
+                {
+                  "confidence": 0.5,
+                  "text": "Aproved"
+                }
+              ],
+              "height": 0.02693046569824209,
+              "width": 0.14020431518554688,
+              "x": 0.032611020605454004,
+              "y": 0.5294126741478844
+            },
+            {
+              "candidates": [
+                {
+                  "confidence": 1,
+                  "text": "Not approved"
+                },
+                {
+                  "confidence": 1,
+                  "text": "No approved"
+                },
+                {
+                  "confidence": 1,
+                  "text": "Not approve"
+                },
+                {
+                  "confidence": 1,
+                  "text": "ot approved"
+                },
+                {
+                  "confidence": 1,
+                  "text": "Not aproved"
+                }
+              ],
+              "height": 0.01991864363352458,
+              "width": 0.16518888685438365,
+              "x": 0.41644341493485565,
+              "y": 0.04995987001281588
+            }
+          ],
+          "stage": "perform-end",
+          "uptime": 328510.6210399584,
+          "wall": 1793578246.021389
+        },
+        {
+          "cpuControl": true,
+          "id": "2-distinct",
+          "lines": [
+            "Not approved\nApproved"
+          ],
+          "stage": "extract-result",
+          "uptime": 328510.6212777917,
+          "wall": 1793578246.021626,
+          "warnings": []
+        },
+        {
+          "cpuControl": true,
+          "expected": "Approved",
+          "id": "2-distinct",
+          "lines": [
+            "Not approved",
+            "Approved"
+          ],
+          "matched": true,
+          "outcome": "success",
+          "stage": "extract-end",
+          "uptime": 328510.6214878333,
+          "wall": 1793578246.021836,
+          "warnings": []
+        }
+      ]
+    },
+    {
+      "id": "2-duplicate",
+      "raw_sha256": "90a15ef2d37ac58a340fe54b00228a9116553a4e3502fd8dee4cfa2897b4aed4",
+      "events": [
+        {
+          "bytes": 31299,
+          "cpuControl": true,
+          "id": "2-duplicate",
+          "input": "duplicate.pdf",
+          "sha256": "0e941594e6739a8a1ff1965a2e88cf1e443a72ac42506858c7ac6ff7e526061e",
+          "stage": "extract-begin",
+          "uptime": 328510.288782875,
+          "wall": 1793578245.689131
+        },
+        {
+          "bytes": 31299,
+          "cpuControl": true,
+          "id": "2-duplicate",
+          "input": "2-duplicate.pdf",
+          "sha256": "0e941594e6739a8a1ff1965a2e88cf1e443a72ac42506858c7ac6ff7e526061e",
+          "stage": "input",
+          "uptime": 328510.28976875,
+          "wall": 1793578245.690117
+        },
+        {
+          "cpuControl": true,
+          "id": "2-duplicate",
+          "native": "Decision: launch postponed to December\nPage 1",
+          "page": 1,
+          "stage": "pdf-native",
+          "uptime": 328510.2913861667,
+          "wall": 1793578245.6917338
+        },
+        {
+          "bitsPerPixel": 32,
+          "bytesPerRow": 7200,
+          "cpuControl": true,
+          "height": 2400,
+          "id": "2-duplicate",
+          "image": "2-duplicate-06a03cc4a095f7a057faa63febaca970e1b3cce558da4e203a2c41b8ae35a90f.png",
+          "sha256": "06a03cc4a095f7a057faa63febaca970e1b3cce558da4e203a2c41b8ae35a90f",
+          "stage": "ocr-input",
+          "uptime": 328510.32429508335,
+          "wall": 1793578245.724643,
+          "width": 1800
+        },
+        {
+          "automaticLanguage": true,
+          "cpuControl": true,
+          "id": "2-duplicate",
+          "languageCorrection": true,
+          "languages": [
+            "ru-RU",
+            "en-US"
+          ],
+          "revision": 3,
+          "stage": "request-options",
+          "uptime": 328510.324459875,
+          "wall": 1793578245.724808
+        },
+        {
+          "cpuControl": true,
+          "devices": {
+            "VNComputeStageMain": [
+              "<MLNeuralEngineComputeDevice: 0x1030a02f0>",
+              "<MLGPUComputeDevice: 0x1030b4390> Apple M4 Pro",
+              "<MLCPUComputeDevice: 0x1030b45b0>"
+            ]
+          },
+          "id": "2-duplicate",
+          "stage": "cpu-supported-devices",
+          "uptime": 328510.324561375,
+          "wall": 1793578245.7249088
+        },
+        {
+          "cpuControl": true,
+          "id": "2-duplicate",
+          "stage": "perform-begin",
+          "uptime": 328510.324611,
+          "wall": 1793578245.724959
+        },
+        {
+          "cpuControl": true,
+          "id": "2-duplicate",
+          "observations": [
+            {
+              "candidates": [
+                {
+                  "confidence": 1,
+                  "text": "Decision: launch postporebttoDeeembler"
+                },
+                {
+                  "confidence": 1,
+                  "text": "Decision: launch postporebttoDeembler"
+                },
+                {
+                  "confidence": 1,
+                  "text": "Decision: launch post porebttoDeembler"
+                },
+                {
+                  "confidence": 1,
+                  "text": "Decision: launch postporebttoDeeembleer"
+                },
+                {
+                  "confidence": 1,
+                  "text": "Decision: launch postporebttoDeembleer"
+                }
+              ],
+              "height": 0.027136732737223168,
+              "width": 0.606769273546007,
+              "x": 0.03285736628284945,
+              "y": 0.5296818403596832
+            },
+            {
+              "candidates": [
+                {
+                  "confidence": 1,
+                  "text": "Page 1"
+                },
+                {
+                  "confidence": 0.30000001192092896,
+                  "text": "Page1"
+                },
+                {
+                  "confidence": 0.30000001192092896,
+                  "text": "Page"
+                },
+                {
+                  "confidence": 0.30000001192092896,
+                  "text": "age 1"
+                },
+                {
+                  "confidence": 0.30000001192092896,
+                  "text": "Pag 1"
+                }
+              ],
+              "height": 0.018934109210968053,
+              "width": 0.07945736355251737,
+              "x": 0.41666666696647386,
+              "y": 0.0508333330057934
+            }
+          ],
+          "stage": "perform-end",
+          "uptime": 328510.554870875,
+          "wall": 1793578245.955219
+        },
+        {
+          "cpuControl": true,
+          "id": "2-duplicate",
+          "lines": [
+            "Decision: launch postponed to December\nPage 1\nDecision: launch postporebttoDeeembler"
+          ],
+          "stage": "extract-result",
+          "uptime": 328510.55511075,
+          "wall": 1793578245.955459,
+          "warnings": []
+        },
+        {
+          "cpuControl": true,
+          "expected": "Decision: launch postponed to December",
+          "id": "2-duplicate",
+          "lines": [
+            "Decision: launch postponed to December",
+            "Page 1",
+            "Decision: launch postporebttoDeeembler"
+          ],
+          "matched": true,
+          "outcome": "success",
+          "stage": "extract-end",
+          "uptime": 328510.5553037917,
+          "wall": 1793578245.955652,
+          "warnings": []
+        }
+      ]
+    },
+    {
+      "id": "2-mixed",
+      "raw_sha256": "2920c772e14dae9055baf3b91163ba6e51b412110d1394e1e0f495d4c9be1adc",
+      "events": [
+        {
+          "bytes": 28138,
+          "cpuControl": true,
+          "id": "2-mixed",
+          "input": "mixed.pdf",
+          "sha256": "36b576d202b516cc5862661ae6b1925eb10c4bd87170f8db2cfc158f8531e2f3",
+          "stage": "extract-begin",
+          "uptime": 328510.28878187505,
+          "wall": 1793578245.6891298
+        },
+        {
+          "bytes": 28138,
+          "cpuControl": true,
+          "id": "2-mixed",
+          "input": "2-mixed.pdf",
+          "sha256": "36b576d202b516cc5862661ae6b1925eb10c4bd87170f8db2cfc158f8531e2f3",
+          "stage": "input",
+          "uptime": 328510.2894997917,
+          "wall": 1793578245.689848
+        },
+        {
+          "cpuControl": true,
+          "id": "2-mixed",
+          "native": "Page 1",
+          "page": 1,
+          "stage": "pdf-native",
+          "uptime": 328510.2907972084,
+          "wall": 1793578245.691145
+        },
+        {
+          "bitsPerPixel": 32,
+          "bytesPerRow": 7200,
+          "cpuControl": true,
+          "height": 2400,
+          "id": "2-mixed",
+          "image": "2-mixed-facb4e7b8aa93c9cdd9e29c8ba27942099dcb671963b4b68c5e4a85ad7b6017c.png",
+          "sha256": "facb4e7b8aa93c9cdd9e29c8ba27942099dcb671963b4b68c5e4a85ad7b6017c",
+          "stage": "ocr-input",
+          "uptime": 328510.32313145837,
+          "wall": 1793578245.72348,
+          "width": 1800
+        },
+        {
+          "automaticLanguage": true,
+          "cpuControl": true,
+          "id": "2-mixed",
+          "languageCorrection": true,
+          "languages": [
+            "ru-RU",
+            "en-US"
+          ],
+          "revision": 3,
+          "stage": "request-options",
+          "uptime": 328510.32330908335,
+          "wall": 1793578245.7236571
+        },
+        {
+          "cpuControl": true,
+          "devices": {
+            "VNComputeStageMain": [
+              "<MLNeuralEngineComputeDevice: 0x1030a02f0>",
+              "<MLGPUComputeDevice: 0x1030b4390> Apple M4 Pro",
+              "<MLCPUComputeDevice: 0x1030b45b0>"
+            ]
+          },
+          "id": "2-mixed",
+          "stage": "cpu-supported-devices",
+          "uptime": 328510.32340345834,
+          "wall": 1793578245.723751
+        },
+        {
+          "cpuControl": true,
+          "id": "2-mixed",
+          "stage": "perform-begin",
+          "uptime": 328510.32345075003,
+          "wall": 1793578245.723799
+        },
+        {
+          "cpuControl": true,
+          "id": "2-mixed",
+          "observations": [
+            {
+              "candidates": [
+                {
+                  "confidence": 1,
+                  "text": "Decision: launch postponed to December"
+                },
+                {
+                  "confidence": 1,
+                  "text": "Decision launch postponed to December"
+                },
+                {
+                  "confidence": 1,
+                  "text": "Decision: aunch postponed to December"
+                },
+                {
+                  "confidence": 1,
+                  "text": "Decision: lunch postponed to December"
+                },
+                {
+                  "confidence": 1,
+                  "text": "Decision: launch postpone to December"
+                }
+              ],
+              "height": 0.023362402915954594,
+              "width": 0.5852713351779514,
+              "x": 0.03488371215430959,
+              "y": 0.5304166668370995
+            },
+            {
+              "candidates": [
+                {
+                  "confidence": 1,
+                  "text": "Page 1"
+                },
+                {
+                  "confidence": 0.30000001192092896,
+                  "text": "Page1"
+                },
+                {
+                  "confidence": 0.30000001192092896,
+                  "text": "Page"
+                },
+                {
+                  "confidence": 0.30000001192092896,
+                  "text": "age 1"
+                },
+                {
+                  "confidence": 0.30000001192092896,
+                  "text": "Pag 1"
+                }
+              ],
+              "height": 0.018934109210968053,
+              "width": 0.07945736355251737,
+              "x": 0.41666666696647386,
+              "y": 0.0508333330057934
+            }
+          ],
+          "stage": "perform-end",
+          "uptime": 328510.49081908335,
+          "wall": 1793578245.891168
+        },
+        {
+          "cpuControl": true,
+          "id": "2-mixed",
+          "lines": [
+            "Page 1\nDecision: launch postponed to December"
+          ],
+          "stage": "extract-result",
+          "uptime": 328510.4910642917,
+          "wall": 1793578245.891412,
+          "warnings": []
+        },
+        {
+          "cpuControl": true,
+          "expected": "Decision: launch postponed to December",
+          "id": "2-mixed",
+          "lines": [
+            "Page 1",
+            "Decision: launch postponed to December"
+          ],
+          "matched": true,
+          "outcome": "success",
+          "stage": "extract-end",
+          "uptime": 328510.49113283335,
+          "wall": 1793578245.891481,
+          "warnings": []
+        }
+      ]
+    },
+    {
+      "id": "2-native",
+      "raw_sha256": "f602777d76474c098ef8f96e4e32653d2fa5d240da8539f590c972ff89eabe59",
+      "events": [
+        {
+          "bytes": 8205,
+          "cpuControl": true,
+          "id": "2-native",
+          "input": "native.pdf",
+          "sha256": "c49439b2b7d57ff4ed0a53fd05736699e85b4214c4ccce0956ea5da92002d9a9",
+          "stage": "extract-begin",
+          "uptime": 328510.2888947917,
+          "wall": 1793578245.6892428
+        },
+        {
+          "bytes": 8205,
+          "cpuControl": true,
+          "id": "2-native",
+          "input": "2-native.pdf",
+          "sha256": "c49439b2b7d57ff4ed0a53fd05736699e85b4214c4ccce0956ea5da92002d9a9",
+          "stage": "input",
+          "uptime": 328510.29023233335,
+          "wall": 1793578245.69058
+        },
+        {
+          "cpuControl": true,
+          "id": "2-native",
+          "native": "Project alpha launch",
+          "page": 1,
+          "stage": "pdf-native",
+          "uptime": 328510.29101108335,
+          "wall": 1793578245.691359
+        },
+        {
+          "bitsPerPixel": 32,
+          "bytesPerRow": 7200,
+          "cpuControl": true,
+          "height": 2400,
+          "id": "2-native",
+          "image": "2-native-519c66ffa5ee209d22d22f97216f5e539515783538256c5fe34b955e3dd6445d.png",
+          "sha256": "519c66ffa5ee209d22d22f97216f5e539515783538256c5fe34b955e3dd6445d",
+          "stage": "ocr-input",
+          "uptime": 328510.314917,
+          "wall": 1793578245.715265,
+          "width": 1800
+        },
+        {
+          "automaticLanguage": true,
+          "cpuControl": true,
+          "id": "2-native",
+          "languageCorrection": true,
+          "languages": [
+            "ru-RU",
+            "en-US"
+          ],
+          "revision": 3,
+          "stage": "request-options",
+          "uptime": 328510.31513995834,
+          "wall": 1793578245.715488
+        },
+        {
+          "cpuControl": true,
+          "devices": {
+            "VNComputeStageMain": [
+              "<MLNeuralEngineComputeDevice: 0x1030a02f0>",
+              "<MLGPUComputeDevice: 0x1030b4390> Apple M4 Pro",
+              "<MLCPUComputeDevice: 0x1030b45b0>"
+            ]
+          },
+          "id": "2-native",
+          "stage": "cpu-supported-devices",
+          "uptime": 328510.31525445834,
+          "wall": 1793578245.715602
+        },
+        {
+          "cpuControl": true,
+          "id": "2-native",
+          "stage": "perform-begin",
+          "uptime": 328510.3153049584,
+          "wall": 1793578245.715653
+        },
+        {
+          "cpuControl": true,
+          "id": "2-native",
+          "observations": [
+            {
+              "candidates": [
+                {
+                  "confidence": 1,
+                  "text": "Project alpha launch"
+                },
+                {
+                  "confidence": 1,
+                  "text": "Project alphalaunch"
+                },
+                {
+                  "confidence": 1,
+                  "text": "Project alpha aunch"
+                },
+                {
+                  "confidence": 1,
+                  "text": "Project alpha lunch"
+                },
+                {
+                  "confidence": 1,
+                  "text": "Project apha launch"
+                }
+              ],
+              "height": 0.023459302584330155,
+              "width": 0.2965116373697917,
+              "x": 0.06782945255434608,
+              "y": 0.876249999731925
+            }
+          ],
+          "stage": "perform-end",
+          "uptime": 328510.4273150417,
+          "wall": 1793578245.827663
+        },
+        {
+          "cpuControl": true,
+          "id": "2-native",
+          "native": "Decision: ship in November",
+          "page": 2,
+          "stage": "pdf-native",
+          "uptime": 328510.42763654166,
+          "wall": 1793578245.827985
+        },
+        {
+          "bitsPerPixel": 32,
+          "bytesPerRow": 7200,
+          "cpuControl": true,
+          "height": 2400,
+          "id": "2-native",
+          "image": "2-native-3422cced33fa0611b8ea88a554ab96fa231c83027d0696a70ebc5a3b616b4280.png",
+          "sha256": "3422cced33fa0611b8ea88a554ab96fa231c83027d0696a70ebc5a3b616b4280",
+          "stage": "ocr-input",
+          "uptime": 328510.45041937503,
+          "wall": 1793578245.8507671,
+          "width": 1800
+        },
+        {
+          "automaticLanguage": true,
+          "cpuControl": true,
+          "id": "2-native",
+          "languageCorrection": true,
+          "languages": [
+            "ru-RU",
+            "en-US"
+          ],
+          "revision": 3,
+          "stage": "request-options",
+          "uptime": 328510.45061787503,
+          "wall": 1793578245.850966
+        },
+        {
+          "cpuControl": true,
+          "devices": {
+            "VNComputeStageMain": [
+              "<MLNeuralEngineComputeDevice: 0x1030a02f0>",
+              "<MLGPUComputeDevice: 0x1030b4390> Apple M4 Pro",
+              "<MLCPUComputeDevice: 0x1030b45b0>"
+            ]
+          },
+          "id": "2-native",
+          "stage": "cpu-supported-devices",
+          "uptime": 328510.4507135833,
+          "wall": 1793578245.851062
+        },
+        {
+          "cpuControl": true,
+          "id": "2-native",
+          "stage": "perform-begin",
+          "uptime": 328510.45075645833,
+          "wall": 1793578245.851104
+        },
+        {
+          "cpuControl": true,
+          "id": "2-native",
+          "observations": [
+            {
+              "candidates": [
+                {
+                  "confidence": 1,
+                  "text": "Decision: ship in November"
+                },
+                {
+                  "confidence": 1,
+                  "text": "Decision ship in November"
+                },
+                {
+                  "confidence": 1,
+                  "text": "Decision:ship in November"
+                },
+                {
+                  "confidence": 1,
+                  "text": "Decision: ship in Novembe"
+                },
+                {
+                  "confidence": 1,
+                  "text": "Decision: shipin November"
+                }
+              ],
+              "height": 0.02470930258433024,
+              "width": 0.3992248196072049,
+              "x": 0.06976743505231266,
+              "y": 0.8749999998773401
+            }
+          ],
+          "stage": "perform-end",
+          "uptime": 328510.826748875,
+          "wall": 1793578246.227098
+        },
+        {
+          "cpuControl": true,
+          "id": "2-native",
+          "lines": [
+            "Project alpha launch",
+            "Decision: ship in November"
+          ],
+          "stage": "extract-result",
+          "uptime": 328510.82698525,
+          "wall": 1793578246.227334,
+          "warnings": []
+        },
+        {
+          "cpuControl": true,
+          "expected": "Decision: ship in November",
+          "id": "2-native",
+          "lines": [
+            "Project alpha launch",
+            "Decision: ship in November"
+          ],
+          "matched": true,
+          "outcome": "success",
+          "stage": "extract-end",
+          "uptime": 328510.8272234583,
+          "wall": 1793578246.227572,
+          "warnings": []
+        }
+      ]
+    },
+    {
+      "id": "2-png-en",
+      "raw_sha256": "445cf2fa0e2624e7690b451a4f62b1b9c29a1b04a4b46e55462a3d95fccd1289",
+      "events": [
+        {
+          "bytes": 23567,
+          "cpuControl": true,
+          "id": "2-png-en",
+          "input": "png-en.png",
+          "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+          "stage": "extract-begin",
+          "uptime": 328510.28878183337,
+          "wall": 1793578245.6891298
+        },
+        {
+          "bytes": 23567,
+          "cpuControl": true,
+          "id": "2-png-en",
+          "input": "2-png-en.png",
+          "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8",
+          "stage": "input",
+          "uptime": 328510.28930995835,
+          "wall": 1793578245.6896582
+        },
+        {
+          "bitsPerPixel": 32,
+          "bytesPerRow": 6400,
+          "cpuControl": true,
+          "height": 300,
+          "id": "2-png-en",
+          "image": "2-png-en-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+          "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0",
+          "stage": "ocr-input",
+          "uptime": 328510.29474754166,
+          "wall": 1793578245.695095,
+          "width": 1600
+        },
+        {
+          "automaticLanguage": true,
+          "cpuControl": true,
+          "id": "2-png-en",
+          "languageCorrection": true,
+          "languages": [
+            "ru-RU",
+            "en-US"
+          ],
+          "revision": 3,
+          "stage": "request-options",
+          "uptime": 328510.29584325,
+          "wall": 1793578245.696192
+        },
+        {
+          "cpuControl": true,
+          "devices": {
+            "VNComputeStageMain": [
+              "<MLNeuralEngineComputeDevice: 0x1030a02f0>",
+              "<MLGPUComputeDevice: 0x1030b4390> Apple M4 Pro",
+              "<MLCPUComputeDevice: 0x1030b45b0>"
+            ]
+          },
+          "id": "2-png-en",
+          "stage": "cpu-supported-devices",
+          "uptime": 328510.296708,
+          "wall": 1793578245.697057
+        },
+        {
+          "cpuControl": true,
+          "id": "2-png-en",
+          "stage": "perform-begin",
+          "uptime": 328510.29728808335,
+          "wall": 1793578245.6976361
+        },
+        {
+          "cpuControl": true,
+          "id": "2-png-en",
+          "observations": [
+            {
+              "candidates": [
+                {
+                  "confidence": 1,
+                  "text": "Project Alpha budget approved"
+                },
+                {
+                  "confidence": 1,
+                  "text": "Project A pha budget approved"
+                },
+                {
+                  "confidence": 1,
+                  "text": "Project Apha budget approved"
+                },
+                {
+                  "confidence": 1,
+                  "text": "Project Alpha budget approve"
+                },
+                {
+                  "confidence": 1,
+                  "text": "Project Alpha budge approved"
+                }
+              ],
+              "height": 0.19457364400227872,
+              "width": 0.5174418640136719,
+              "x": 0.03197674233930247,
+              "y": 0.4333333312911074
+            }
+          ],
+          "stage": "perform-end",
+          "uptime": 328510.33199433336,
+          "wall": 1793578245.732342
+        },
+        {
+          "cpuControl": true,
+          "id": "2-png-en",
+          "lines": [
+            "Project Alpha budget approved"
+          ],
+          "stage": "extract-result",
+          "uptime": 328510.33220545837,
+          "wall": 1793578245.732553,
+          "warnings": []
+        },
+        {
+          "cpuControl": true,
+          "expected": "Project Alpha budget approved",
+          "id": "2-png-en",
+          "lines": [
+            "Project Alpha budget approved"
+          ],
+          "matched": true,
+          "outcome": "success",
+          "stage": "extract-end",
+          "uptime": 328510.33229125,
+          "wall": 1793578245.7326388,
+          "warnings": []
+        }
+      ]
+    },
+    {
+      "id": "2-png-ru",
+      "raw_sha256": "2ea0e5b53fff595b332f7d288dc2e1422091b1947bbe61cdd966ba2dbaaaadb8",
+      "events": [
+        {
+          "bytes": 23283,
+          "cpuControl": true,
+          "id": "2-png-ru",
+          "input": "png-ru.png",
+          "sha256": "666a19cf8a8ac85e56ccabc0cc911b5d0f570b22c534aff08c942531e46b9b5a",
+          "stage": "extract-begin",
+          "uptime": 328510.288783875,
+          "wall": 1793578245.689132
+        },
+        {
+          "bytes": 23283,
+          "cpuControl": true,
+          "id": "2-png-ru",
+          "input": "2-png-ru.png",
+          "sha256": "666a19cf8a8ac85e56ccabc0cc911b5d0f570b22c534aff08c942531e46b9b5a",
+          "stage": "input",
+          "uptime": 328510.2895939167,
+          "wall": 1793578245.689942
+        },
+        {
+          "bitsPerPixel": 32,
+          "bytesPerRow": 6400,
+          "cpuControl": true,
+          "height": 300,
+          "id": "2-png-ru",
+          "image": "2-png-ru-e1183c6d804b89a27f0146202d71c2569fe688e26399387fe6255f5e0251c0f9.png",
+          "sha256": "e1183c6d804b89a27f0146202d71c2569fe688e26399387fe6255f5e0251c0f9",
+          "stage": "ocr-input",
+          "uptime": 328510.2947176667,
+          "wall": 1793578245.695066,
+          "width": 1600
+        },
+        {
+          "automaticLanguage": true,
+          "cpuControl": true,
+          "id": "2-png-ru",
+          "languageCorrection": true,
+          "languages": [
+            "ru-RU",
+            "en-US"
+          ],
+          "revision": 3,
+          "stage": "request-options",
+          "uptime": 328510.2955067084,
+          "wall": 1793578245.6958551
+        },
+        {
+          "cpuControl": true,
+          "devices": {
+            "VNComputeStageMain": [
+              "<MLNeuralEngineComputeDevice: 0x1030a02f0>",
+              "<MLGPUComputeDevice: 0x1030b4390> Apple M4 Pro",
+              "<MLCPUComputeDevice: 0x1030b45b0>"
+            ]
+          },
+          "id": "2-png-ru",
+          "stage": "cpu-supported-devices",
+          "uptime": 328510.2972944584,
+          "wall": 1793578245.697643
+        },
+        {
+          "cpuControl": true,
+          "id": "2-png-ru",
+          "stage": "perform-begin",
+          "uptime": 328510.2976625,
+          "wall": 1793578245.698011
+        },
+        {
+          "cpuControl": true,
+          "id": "2-png-ru",
+          "observations": [
+            {
+              "candidates": [
+                {
+                  "confidence": 1,
+                  "text": "Решение: запуск проекта в ноябре"
+                },
+                {
+                  "confidence": 1,
+                  "text": "Решение запуск проекта в ноябре"
+                },
+                {
+                  "confidence": 0.5,
+                  "text": "Решение: запус проекта в ноябре"
+                },
+                {
+                  "confidence": 0.5,
+                  "text": "Решение: запук проекта в ноябре"
+                },
+                {
+                  "confidence": 0.5,
+                  "text": "Решение: запуск проекта в ноябр"
+                }
+              ],
+              "height": 0.24444445292154948,
+              "width": 0.6166666793823242,
+              "x": 0.02916666008681844,
+              "y": 0.3999999958506608
+            }
+          ],
+          "stage": "perform-end",
+          "uptime": 328510.3609145,
+          "wall": 1793578245.761263
+        },
+        {
+          "cpuControl": true,
+          "id": "2-png-ru",
+          "lines": [
+            "Решение: запуск проекта в ноябре"
+          ],
+          "stage": "extract-result",
+          "uptime": 328510.36111887504,
+          "wall": 1793578245.761467,
+          "warnings": []
+        },
+        {
+          "cpuControl": true,
+          "expected": "Решение: запуск проекта в ноябре",
+          "id": "2-png-ru",
+          "lines": [
+            "Решение: запуск проекта в ноябре"
+          ],
+          "matched": true,
+          "outcome": "success",
+          "stage": "extract-end",
+          "uptime": 328510.3611984167,
+          "wall": 1793578245.7615461,
+          "warnings": []
+        }
+      ]
+    }
+  ],
+  "assets": {
+    "0-20.pdf": {
+      "asset": "assets/243d5331e61658a7baa559bd214309203a224dd534280b032d472387aba5c35b.pdf",
+      "bytes": 21495,
+      "sha256": "243d5331e61658a7baa559bd214309203a224dd534280b032d472387aba5c35b"
+    },
+    "0-20-0e5e0d92af32c8dbcf4f4e4055fa450fde53c242363af02785df70f5ed995831.png": {
+      "asset": "assets/0e5e0d92af32c8dbcf4f4e4055fa450fde53c242363af02785df70f5ed995831.png",
+      "bytes": 94857,
+      "sha256": "0e5e0d92af32c8dbcf4f4e4055fa450fde53c242363af02785df70f5ed995831"
+    },
+    "0-26.pdf": {
+      "asset": "assets/e1e25777769cf421e9a869e44ca102348d4f2da46302135493f2005f6befd92a.pdf",
+      "bytes": 21549,
+      "sha256": "e1e25777769cf421e9a869e44ca102348d4f2da46302135493f2005f6befd92a"
+    },
+    "0-26-ed81cb04fddb07561b7087d54646c8dda614c678115347c82f8fd2c0df7c7b87.png": {
+      "asset": "assets/ed81cb04fddb07561b7087d54646c8dda614c678115347c82f8fd2c0df7c7b87.png",
+      "bytes": 94605,
+      "sha256": "ed81cb04fddb07561b7087d54646c8dda614c678115347c82f8fd2c0df7c7b87"
+    },
+    "0-distinct.pdf": {
+      "asset": "assets/454af4bf489515e6f9c9397dbd3dfbabed667efd675e4808db41a251bebdeb10.pdf",
+      "bytes": 24231,
+      "sha256": "454af4bf489515e6f9c9397dbd3dfbabed667efd675e4808db41a251bebdeb10"
+    },
+    "0-distinct-14a5184eacdcb275a78cf4ed069202a3158961339f61bc863e7b8b334b4fea52.png": {
+      "asset": "assets/14a5184eacdcb275a78cf4ed069202a3158961339f61bc863e7b8b334b4fea52.png",
+      "bytes": 103962,
+      "sha256": "14a5184eacdcb275a78cf4ed069202a3158961339f61bc863e7b8b334b4fea52"
+    },
+    "0-duplicate.pdf": {
+      "asset": "assets/0e941594e6739a8a1ff1965a2e88cf1e443a72ac42506858c7ac6ff7e526061e.pdf",
+      "bytes": 31299,
+      "sha256": "0e941594e6739a8a1ff1965a2e88cf1e443a72ac42506858c7ac6ff7e526061e"
+    },
+    "0-duplicate-06a03cc4a095f7a057faa63febaca970e1b3cce558da4e203a2c41b8ae35a90f.png": {
+      "asset": "assets/06a03cc4a095f7a057faa63febaca970e1b3cce558da4e203a2c41b8ae35a90f.png",
+      "bytes": 120625,
+      "sha256": "06a03cc4a095f7a057faa63febaca970e1b3cce558da4e203a2c41b8ae35a90f"
+    },
+    "0-mixed.pdf": {
+      "asset": "assets/36b576d202b516cc5862661ae6b1925eb10c4bd87170f8db2cfc158f8531e2f3.pdf",
+      "bytes": 28138,
+      "sha256": "36b576d202b516cc5862661ae6b1925eb10c4bd87170f8db2cfc158f8531e2f3"
+    },
+    "0-mixed-facb4e7b8aa93c9cdd9e29c8ba27942099dcb671963b4b68c5e4a85ad7b6017c.png": {
+      "asset": "assets/facb4e7b8aa93c9cdd9e29c8ba27942099dcb671963b4b68c5e4a85ad7b6017c.png",
+      "bytes": 117329,
+      "sha256": "facb4e7b8aa93c9cdd9e29c8ba27942099dcb671963b4b68c5e4a85ad7b6017c"
+    },
+    "0-native.pdf": {
+      "asset": "assets/c49439b2b7d57ff4ed0a53fd05736699e85b4214c4ccce0956ea5da92002d9a9.pdf",
+      "bytes": 8205,
+      "sha256": "c49439b2b7d57ff4ed0a53fd05736699e85b4214c4ccce0956ea5da92002d9a9"
+    },
+    "0-native-519c66ffa5ee209d22d22f97216f5e539515783538256c5fe34b955e3dd6445d.png": {
+      "asset": "assets/519c66ffa5ee209d22d22f97216f5e539515783538256c5fe34b955e3dd6445d.png",
+      "bytes": 95566,
+      "sha256": "519c66ffa5ee209d22d22f97216f5e539515783538256c5fe34b955e3dd6445d"
+    },
+    "0-native-3422cced33fa0611b8ea88a554ab96fa231c83027d0696a70ebc5a3b616b4280.png": {
+      "asset": "assets/3422cced33fa0611b8ea88a554ab96fa231c83027d0696a70ebc5a3b616b4280.png",
+      "bytes": 98598,
+      "sha256": "3422cced33fa0611b8ea88a554ab96fa231c83027d0696a70ebc5a3b616b4280"
+    },
+    "0-png-en.png": {
+      "asset": "assets/8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8.png",
+      "bytes": 23567,
+      "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8"
+    },
+    "0-png-en-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png": {
+      "asset": "assets/20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+      "bytes": 23579,
+      "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0"
+    },
+    "0-png-ru.png": {
+      "asset": "assets/666a19cf8a8ac85e56ccabc0cc911b5d0f570b22c534aff08c942531e46b9b5a.png",
+      "bytes": 23283,
+      "sha256": "666a19cf8a8ac85e56ccabc0cc911b5d0f570b22c534aff08c942531e46b9b5a"
+    },
+    "0-png-ru-e1183c6d804b89a27f0146202d71c2569fe688e26399387fe6255f5e0251c0f9.png": {
+      "asset": "assets/e1183c6d804b89a27f0146202d71c2569fe688e26399387fe6255f5e0251c0f9.png",
+      "bytes": 23295,
+      "sha256": "e1183c6d804b89a27f0146202d71c2569fe688e26399387fe6255f5e0251c0f9"
+    },
+    "1-20.pdf": {
+      "asset": "assets/243d5331e61658a7baa559bd214309203a224dd534280b032d472387aba5c35b.pdf",
+      "bytes": 21495,
+      "sha256": "243d5331e61658a7baa559bd214309203a224dd534280b032d472387aba5c35b"
+    },
+    "1-20-0e5e0d92af32c8dbcf4f4e4055fa450fde53c242363af02785df70f5ed995831.png": {
+      "asset": "assets/0e5e0d92af32c8dbcf4f4e4055fa450fde53c242363af02785df70f5ed995831.png",
+      "bytes": 94857,
+      "sha256": "0e5e0d92af32c8dbcf4f4e4055fa450fde53c242363af02785df70f5ed995831"
+    },
+    "1-26.pdf": {
+      "asset": "assets/e1e25777769cf421e9a869e44ca102348d4f2da46302135493f2005f6befd92a.pdf",
+      "bytes": 21549,
+      "sha256": "e1e25777769cf421e9a869e44ca102348d4f2da46302135493f2005f6befd92a"
+    },
+    "1-26-ed81cb04fddb07561b7087d54646c8dda614c678115347c82f8fd2c0df7c7b87.png": {
+      "asset": "assets/ed81cb04fddb07561b7087d54646c8dda614c678115347c82f8fd2c0df7c7b87.png",
+      "bytes": 94605,
+      "sha256": "ed81cb04fddb07561b7087d54646c8dda614c678115347c82f8fd2c0df7c7b87"
+    },
+    "1-distinct.pdf": {
+      "asset": "assets/454af4bf489515e6f9c9397dbd3dfbabed667efd675e4808db41a251bebdeb10.pdf",
+      "bytes": 24231,
+      "sha256": "454af4bf489515e6f9c9397dbd3dfbabed667efd675e4808db41a251bebdeb10"
+    },
+    "1-distinct-14a5184eacdcb275a78cf4ed069202a3158961339f61bc863e7b8b334b4fea52.png": {
+      "asset": "assets/14a5184eacdcb275a78cf4ed069202a3158961339f61bc863e7b8b334b4fea52.png",
+      "bytes": 103962,
+      "sha256": "14a5184eacdcb275a78cf4ed069202a3158961339f61bc863e7b8b334b4fea52"
+    },
+    "1-duplicate.pdf": {
+      "asset": "assets/0e941594e6739a8a1ff1965a2e88cf1e443a72ac42506858c7ac6ff7e526061e.pdf",
+      "bytes": 31299,
+      "sha256": "0e941594e6739a8a1ff1965a2e88cf1e443a72ac42506858c7ac6ff7e526061e"
+    },
+    "1-duplicate-06a03cc4a095f7a057faa63febaca970e1b3cce558da4e203a2c41b8ae35a90f.png": {
+      "asset": "assets/06a03cc4a095f7a057faa63febaca970e1b3cce558da4e203a2c41b8ae35a90f.png",
+      "bytes": 120625,
+      "sha256": "06a03cc4a095f7a057faa63febaca970e1b3cce558da4e203a2c41b8ae35a90f"
+    },
+    "1-mixed.pdf": {
+      "asset": "assets/36b576d202b516cc5862661ae6b1925eb10c4bd87170f8db2cfc158f8531e2f3.pdf",
+      "bytes": 28138,
+      "sha256": "36b576d202b516cc5862661ae6b1925eb10c4bd87170f8db2cfc158f8531e2f3"
+    },
+    "1-mixed-facb4e7b8aa93c9cdd9e29c8ba27942099dcb671963b4b68c5e4a85ad7b6017c.png": {
+      "asset": "assets/facb4e7b8aa93c9cdd9e29c8ba27942099dcb671963b4b68c5e4a85ad7b6017c.png",
+      "bytes": 117329,
+      "sha256": "facb4e7b8aa93c9cdd9e29c8ba27942099dcb671963b4b68c5e4a85ad7b6017c"
+    },
+    "1-native.pdf": {
+      "asset": "assets/c49439b2b7d57ff4ed0a53fd05736699e85b4214c4ccce0956ea5da92002d9a9.pdf",
+      "bytes": 8205,
+      "sha256": "c49439b2b7d57ff4ed0a53fd05736699e85b4214c4ccce0956ea5da92002d9a9"
+    },
+    "1-native-519c66ffa5ee209d22d22f97216f5e539515783538256c5fe34b955e3dd6445d.png": {
+      "asset": "assets/519c66ffa5ee209d22d22f97216f5e539515783538256c5fe34b955e3dd6445d.png",
+      "bytes": 95566,
+      "sha256": "519c66ffa5ee209d22d22f97216f5e539515783538256c5fe34b955e3dd6445d"
+    },
+    "1-native-3422cced33fa0611b8ea88a554ab96fa231c83027d0696a70ebc5a3b616b4280.png": {
+      "asset": "assets/3422cced33fa0611b8ea88a554ab96fa231c83027d0696a70ebc5a3b616b4280.png",
+      "bytes": 98598,
+      "sha256": "3422cced33fa0611b8ea88a554ab96fa231c83027d0696a70ebc5a3b616b4280"
+    },
+    "1-png-en.png": {
+      "asset": "assets/8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8.png",
+      "bytes": 23567,
+      "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8"
+    },
+    "1-png-en-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png": {
+      "asset": "assets/20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+      "bytes": 23579,
+      "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0"
+    },
+    "1-png-ru.png": {
+      "asset": "assets/666a19cf8a8ac85e56ccabc0cc911b5d0f570b22c534aff08c942531e46b9b5a.png",
+      "bytes": 23283,
+      "sha256": "666a19cf8a8ac85e56ccabc0cc911b5d0f570b22c534aff08c942531e46b9b5a"
+    },
+    "1-png-ru-e1183c6d804b89a27f0146202d71c2569fe688e26399387fe6255f5e0251c0f9.png": {
+      "asset": "assets/e1183c6d804b89a27f0146202d71c2569fe688e26399387fe6255f5e0251c0f9.png",
+      "bytes": 23295,
+      "sha256": "e1183c6d804b89a27f0146202d71c2569fe688e26399387fe6255f5e0251c0f9"
+    },
+    "2-20.pdf": {
+      "asset": "assets/243d5331e61658a7baa559bd214309203a224dd534280b032d472387aba5c35b.pdf",
+      "bytes": 21495,
+      "sha256": "243d5331e61658a7baa559bd214309203a224dd534280b032d472387aba5c35b"
+    },
+    "2-20-0e5e0d92af32c8dbcf4f4e4055fa450fde53c242363af02785df70f5ed995831.png": {
+      "asset": "assets/0e5e0d92af32c8dbcf4f4e4055fa450fde53c242363af02785df70f5ed995831.png",
+      "bytes": 94857,
+      "sha256": "0e5e0d92af32c8dbcf4f4e4055fa450fde53c242363af02785df70f5ed995831"
+    },
+    "2-26.pdf": {
+      "asset": "assets/e1e25777769cf421e9a869e44ca102348d4f2da46302135493f2005f6befd92a.pdf",
+      "bytes": 21549,
+      "sha256": "e1e25777769cf421e9a869e44ca102348d4f2da46302135493f2005f6befd92a"
+    },
+    "2-26-ed81cb04fddb07561b7087d54646c8dda614c678115347c82f8fd2c0df7c7b87.png": {
+      "asset": "assets/ed81cb04fddb07561b7087d54646c8dda614c678115347c82f8fd2c0df7c7b87.png",
+      "bytes": 94605,
+      "sha256": "ed81cb04fddb07561b7087d54646c8dda614c678115347c82f8fd2c0df7c7b87"
+    },
+    "2-distinct.pdf": {
+      "asset": "assets/454af4bf489515e6f9c9397dbd3dfbabed667efd675e4808db41a251bebdeb10.pdf",
+      "bytes": 24231,
+      "sha256": "454af4bf489515e6f9c9397dbd3dfbabed667efd675e4808db41a251bebdeb10"
+    },
+    "2-distinct-14a5184eacdcb275a78cf4ed069202a3158961339f61bc863e7b8b334b4fea52.png": {
+      "asset": "assets/14a5184eacdcb275a78cf4ed069202a3158961339f61bc863e7b8b334b4fea52.png",
+      "bytes": 103962,
+      "sha256": "14a5184eacdcb275a78cf4ed069202a3158961339f61bc863e7b8b334b4fea52"
+    },
+    "2-duplicate.pdf": {
+      "asset": "assets/0e941594e6739a8a1ff1965a2e88cf1e443a72ac42506858c7ac6ff7e526061e.pdf",
+      "bytes": 31299,
+      "sha256": "0e941594e6739a8a1ff1965a2e88cf1e443a72ac42506858c7ac6ff7e526061e"
+    },
+    "2-duplicate-06a03cc4a095f7a057faa63febaca970e1b3cce558da4e203a2c41b8ae35a90f.png": {
+      "asset": "assets/06a03cc4a095f7a057faa63febaca970e1b3cce558da4e203a2c41b8ae35a90f.png",
+      "bytes": 120625,
+      "sha256": "06a03cc4a095f7a057faa63febaca970e1b3cce558da4e203a2c41b8ae35a90f"
+    },
+    "2-mixed.pdf": {
+      "asset": "assets/36b576d202b516cc5862661ae6b1925eb10c4bd87170f8db2cfc158f8531e2f3.pdf",
+      "bytes": 28138,
+      "sha256": "36b576d202b516cc5862661ae6b1925eb10c4bd87170f8db2cfc158f8531e2f3"
+    },
+    "2-mixed-facb4e7b8aa93c9cdd9e29c8ba27942099dcb671963b4b68c5e4a85ad7b6017c.png": {
+      "asset": "assets/facb4e7b8aa93c9cdd9e29c8ba27942099dcb671963b4b68c5e4a85ad7b6017c.png",
+      "bytes": 117329,
+      "sha256": "facb4e7b8aa93c9cdd9e29c8ba27942099dcb671963b4b68c5e4a85ad7b6017c"
+    },
+    "2-native.pdf": {
+      "asset": "assets/c49439b2b7d57ff4ed0a53fd05736699e85b4214c4ccce0956ea5da92002d9a9.pdf",
+      "bytes": 8205,
+      "sha256": "c49439b2b7d57ff4ed0a53fd05736699e85b4214c4ccce0956ea5da92002d9a9"
+    },
+    "2-native-519c66ffa5ee209d22d22f97216f5e539515783538256c5fe34b955e3dd6445d.png": {
+      "asset": "assets/519c66ffa5ee209d22d22f97216f5e539515783538256c5fe34b955e3dd6445d.png",
+      "bytes": 95566,
+      "sha256": "519c66ffa5ee209d22d22f97216f5e539515783538256c5fe34b955e3dd6445d"
+    },
+    "2-native-3422cced33fa0611b8ea88a554ab96fa231c83027d0696a70ebc5a3b616b4280.png": {
+      "asset": "assets/3422cced33fa0611b8ea88a554ab96fa231c83027d0696a70ebc5a3b616b4280.png",
+      "bytes": 98598,
+      "sha256": "3422cced33fa0611b8ea88a554ab96fa231c83027d0696a70ebc5a3b616b4280"
+    },
+    "2-png-en.png": {
+      "asset": "assets/8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8.png",
+      "bytes": 23567,
+      "sha256": "8213da102153ffe2e42b9f467db74580447c7549478ff28d5281271592281cc8"
+    },
+    "2-png-en-20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png": {
+      "asset": "assets/20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0.png",
+      "bytes": 23579,
+      "sha256": "20fb594dd4f280562b9ba67151829318741ff06943494ac336cc81ace43eaee0"
+    },
+    "2-png-ru.png": {
+      "asset": "assets/666a19cf8a8ac85e56ccabc0cc911b5d0f570b22c534aff08c942531e46b9b5a.png",
+      "bytes": 23283,
+      "sha256": "666a19cf8a8ac85e56ccabc0cc911b5d0f570b22c534aff08c942531e46b9b5a"
+    },
+    "2-png-ru-e1183c6d804b89a27f0146202d71c2569fe688e26399387fe6255f5e0251c0f9.png": {
+      "asset": "assets/e1183c6d804b89a27f0146202d71c2569fe688e26399387fe6255f5e0251c0f9.png",
+      "bytes": 23295,
+      "sha256": "e1183c6d804b89a27f0146202d71c2569fe688e26399387fe6255f5e0251c0f9"
+    }
+  },
+  "stdout.txt": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "stderr.txt": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  }
+}

@@ -13,14 +13,18 @@ private final class SpyDetectorDelegate: MeetingDetectorDelegate {
 
 // MARK: - Tests
 
-/// Проверяет OR-логику AppCoordinator: встреча активна, если активен ХОТЯ БЫ ОДИН сигнал
+/// Проверяет только явно выбранный legacy-режим AppCoordinator: встреча активна, если активен ХОТЯ БЫ ОДИН сигнал
 /// (аудио ИЛИ окно). Регрессия здесь сломала бы всё обнаружение встреч.
 @MainActor
 @Suite struct AppCoordinatorTests {
 
     /// Только аудио-сигнал истинен → детектор получает active=true → meetingStarted
     @Test func audioSignalAloneActivatesMeeting() {
-        let coordinator = AppCoordinator()
+        let coordinator = AppCoordinator(dependencies: .init(
+            recorder: Recorder(makeMicTrack: { fatalError("Synthetic delegate must intercept capture") }, makeSysTrack: { fatalError("No real capture") }),
+            state: RecordingState(), observer: TalkRoomObserver(), selection: { .legacy }, now: { Date() }))
+        coordinator.start()
+        defer { coordinator.prepareForTermination() }
         let spy = SpyDetectorDelegate()
         coordinator.detector.delegate = spy
         coordinator.update(audio: true)
@@ -29,7 +33,11 @@ private final class SpyDetectorDelegate: MeetingDetectorDelegate {
 
     /// Только оконный сигнал истинен → детектор получает active=true → meetingStarted
     @Test func windowSignalAloneActivatesMeeting() {
-        let coordinator = AppCoordinator()
+        let coordinator = AppCoordinator(dependencies: .init(
+            recorder: Recorder(makeMicTrack: { fatalError("Synthetic delegate must intercept capture") }, makeSysTrack: { fatalError("No real capture") }),
+            state: RecordingState(), observer: TalkRoomObserver(), selection: { .legacy }, now: { Date() }))
+        coordinator.start()
+        defer { coordinator.prepareForTermination() }
         let spy = SpyDetectorDelegate()
         coordinator.detector.delegate = spy
         coordinator.update(window: true)
@@ -38,7 +46,11 @@ private final class SpyDetectorDelegate: MeetingDetectorDelegate {
 
     /// Оба сигнала ложны → детектор получает active=false → встреча не начинается
     @Test func bothSignalsFalseDoesNotStartMeeting() {
-        let coordinator = AppCoordinator()
+        let coordinator = AppCoordinator(dependencies: .init(
+            recorder: Recorder(makeMicTrack: { fatalError("Synthetic delegate must intercept capture") }, makeSysTrack: { fatalError("No real capture") }),
+            state: RecordingState(), observer: TalkRoomObserver(), selection: { .legacy }, now: { Date() }))
+        coordinator.start()
+        defer { coordinator.prepareForTermination() }
         let spy = SpyDetectorDelegate()
         coordinator.detector.delegate = spy
         coordinator.update(audio: false)

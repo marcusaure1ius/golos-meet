@@ -1,0 +1,10 @@
+{"phase":"retrieving","prepared":false,"fake_calls":0,"answer":false,"time":1793538534.8560162,"source":false}
+{"prepared":true,"phase":"prepared","source":false,"answer":false,"fake_calls":0,"time":1793538534.874536}
+{"source":false,"answer":false,"time":1793538543.184819,"phase":"cancelled","fake_calls":0,"prepared":false}
+{"fake_calls":0,"source":false,"phase":"retrieving","prepared":false,"answer":false,"time":1793538574.4152489}
+{"answer":false,"source":false,"fake_calls":0,"time":1793538574.4467349,"prepared":true,"phase":"prepared"}
+{"time":1793538587.331316,"phase":"generating","prepared":true,"source":false,"answer":false,"fake_calls":0}
+{"phase":"cancelled","prepared":false,"source":false,"answer":false,"time":1793538626.821404,"fake_calls":1}
+{"source":false,"phase":"idle","answer":false,"fake_calls":1,"time":1793538626.9384131,"prepared":false}
+{"fake_calls":1,"time":1793538638.2129421,"source":false,"phase":"retrieving","prepared":false,"answer":false}
+{"answer":false,"source":false,"fake_calls":1,"phase":"prepared","prepared":true,"time":1793538638.2421141}

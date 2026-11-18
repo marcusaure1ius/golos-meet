@@ -1,0 +1,32 @@
+{
+  "ref": "7be254c4a1eceb28755ad60d718a4ed72cb21179",
+  "retain_roots_control": false,
+  "patches": [
+    {
+      "before_sha256": "82926f1fe0faae969d3114d34b4e5c6047f3a6133929200c4c51c6b55750c195",
+      "old": "@MainActor @Suite struct KnowledgeQuestionModelTests",
+      "new": "@MainActor @Suite(QuestionUIObservationTrait()) struct KnowledgeQuestionModelTests"
+    },
+    {
+      "before_sha256": "6c19de8841e05504aab54405e0a7b7563821b910c0fa08fc6ca93843576408ba",
+      "old": "        store = ProjectStore(url: root.appendingPathComponent(\"knowledge.sqlite\"))",
+      "new": "        QuestionUIObservation.current?.note(\"root-created\", [\"root\":root.lastPathComponent])\n        store = ProjectStore(url: root.appendingPathComponent(\"knowledge.sqlite\"))"
+    },
+    {
+      "before_sha256": "b40e251d5ed6971b4d18fb5ae6afb8c31247c1ab3a08067cb881cfafd8f3c5c4",
+      "old": "    private func dispatch(_ messages: [ChatMessage]) async throws -> String {\n",
+      "new": "    private func dispatch(_ messages: [ChatMessage]) async throws -> String {\n        let observer = QuestionUIObservation.current\n        observer?.note(\"transport-enter\")\n        defer { observer?.note(\"transport-returned\") }\n"
+    },
+    {
+      "before_sha256": "62fd79281b21c4e6f0809d0920b1b55ecdf0d178e896d4b40eec9e11893199b1",
+      "old": "queryEmbedding: query)",
+      "new": "queryEmbedding: { text in\n            let observer = QuestionUIObservation.current\n            observer?.note(\"retrieval-enter\")\n            defer { observer?.note(\"retrieval-returned\") }\n            return try await query(text)\n        })"
+    },
+    {
+      "before_sha256": "703d3d260ff30f5c4d3a3d5110518b492cce27c52a8cb6e7f6b406164ff43ea0",
+      "old": "    func cleanup() { model.cancel(); try? FileManager.default.removeItem(at: root) }",
+      "new": "    func cleanup() {\n        QuestionUIObservation.current?.note(\"model-cancel-requested\")\n        model.cancel()\n        QuestionUIObservation.current?.note(\"model-cancel-returned\")\n        try? FileManager.default.removeItem(at: root)\n        QuestionUIObservation.current?.note(\"root-removed\", [\"root\":root.lastPathComponent,\"exists\":String(FileManager.default.fileExists(atPath:root.path))])\n    }"
+    }
+  ],
+  "observer_sha256": "8293eb8eeec2b00186fd7cd06ebd6d16eb8ba52136cd3f5361bd36bb34fb88bd"
+}

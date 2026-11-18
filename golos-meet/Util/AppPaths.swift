@@ -4,8 +4,10 @@ import Foundation
 enum AppPaths {
     /// `~/Library/Application Support/golos-meet/`
     static var appSupport: URL {
+        if AppRuntime.isTestHost { return AppRuntime.testStorage }
+        let profile = AppRuntime.requireProfile()
         let base = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
-        let dir = base.appendingPathComponent("golos-meet", isDirectory: true)
+        let dir = profile.storageRoot(applicationSupport:base)
         try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
         return dir
     }
@@ -22,6 +24,21 @@ enum AppPaths {
         meetingsRoot.appendingPathComponent(id, isDirectory: true)
     }
 
+    /// `…/golos-meet/agent/` — каталог агент-профиля (issue #117).
+    static var agentRoot: URL {
+        let dir = appSupport.appendingPathComponent("agent", isDirectory: true)
+        try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+        return dir
+    }
+
+    /// `…/golos-meet/agent/sessions/` — JSON-файлы сессий чата «Агент»
+    /// (одна сессия = один файл `<uuid>.json`, как meetings/).
+    static var agentSessionsRoot: URL {
+        let dir = agentRoot.appendingPathComponent("sessions", isDirectory: true)
+        try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+        return dir
+    }
+
     /// `…/golos-meet/models/`
     static var modelsRoot: URL {
         let dir = appSupport.appendingPathComponent("models", isDirectory: true)
@@ -36,7 +53,8 @@ enum AppPaths {
 
     /// Бинарь sidecar. В релизе — из бандла; в dev — из env GOLOS_MEET_ASR_BIN.
     static var sidecarBinary: URL {
-        if let p = ProcessInfo.processInfo.environment["GOLOS_MEET_ASR_BIN"] {
+        if (AppRuntime.isTestHost || !AppRuntime.requireProfile().isQA),
+           let p = ProcessInfo.processInfo.environment["GOLOS_MEET_ASR_BIN"] {
             return URL(fileURLWithPath: p)
         }
         if let url = Bundle.main.url(forResource: "golos-asr", withExtension: nil) {

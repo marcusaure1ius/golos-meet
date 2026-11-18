@@ -1,0 +1,47 @@
+{
+  "before": {
+    "result": "Passed",
+    "passed_tests": 22,
+    "failed_tests": 0,
+    "skipped_tests": 0,
+    "passed_runs": 55,
+    "warnings": [],
+    "failures": []
+  },
+  "retain": {
+    "result": "Passed",
+    "passed_tests": 22,
+    "failed_tests": 0,
+    "skipped_tests": 0,
+    "passed_runs": 55,
+    "warnings": [],
+    "failures": []
+  },
+  "after": {
+    "result": "Passed",
+    "passed_tests": 22,
+    "failed_tests": 0,
+    "skipped_tests": 0,
+    "passed_runs": 55,
+    "warnings": [],
+    "failures": []
+  },
+  "controls": {
+    "result": "Passed",
+    "passed_tests": 3,
+    "failed_tests": 0,
+    "skipped_tests": 0,
+    "passed_runs": 4,
+    "warnings": [],
+    "failures": []
+  },
+  "full": {
+    "result": "Passed",
+    "passed_tests": 437,
+    "failed_tests": 0,
+    "skipped_tests": 0,
+    "passed_runs": 612,
+    "warnings": [],
+    "failures": []
+  }
+}
